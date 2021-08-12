@@ -1,5 +1,7 @@
 This branch adds music from the Generation IV Pokémon games to the Pokeemerald decompilations. It is recommended that your repository is up to date as long as this branch is too. Feel free to use the voice groups to make your own music.
 
+This branch also implements Ipatix's HQ m4a mixer and *15 voice direct sound polyphony*. I also recommend keeping the sample rate the default value of 13379 Hz, as to prevent vanilla music from breaking.
+
 Check out my other branches for other music from select soundtracks:
 * [**DPPt Music**](https://github.com/CyanSMP64/pokeemerald/tree/dppt_music). (Requires 1687104 bytes (~1.61 MB) of free space.)
 * [**HGSS Music**.](https://github.com/CyanSMP64/pokeemerald/tree/hgss_music) (Requires 1439184 bytes (~1.37 MB) of free space.)
