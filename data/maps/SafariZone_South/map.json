@@ -41,7 +41,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "SafariZone_South_EventScript_ExitAttendant",
-      "flag": "0"
+      "flag": "FLAG_HIDE_SAFARI_ZONE_WORKER_WITHOUT_PASS"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_BOY_1",
@@ -83,30 +83,17 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_CAMPER",
-      "x": 36,
-      "y": 16,
+      "graphics_id": "OBJ_EVENT_GFX_TM_BALL",
+      "x": 26,
+      "y": 7,
       "elevation": 3,
-      "movement_type": "MOVEMENT_TYPE_FACE_LEFT",
-      "movement_range_x": 1,
-      "movement_range_y": 1,
+      "movement_type": "MOVEMENT_TYPE_NONE",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "SafariZone_South_EventScript_ConstructionWorker1",
-      "flag": "FLAG_HIDE_SAFARI_ZONE_SOUTH_CONSTRUCTION_WORKERS"
-    },
-    {
-      "graphics_id": "OBJ_EVENT_GFX_CAMPER",
-      "x": 36,
-      "y": 17,
-      "elevation": 3,
-      "movement_type": "MOVEMENT_TYPE_FACE_LEFT",
-      "movement_range_x": 1,
-      "movement_range_y": 1,
-      "trainer_type": "TRAINER_TYPE_NONE",
-      "trainer_sight_or_berry_tree_id": "0",
-      "script": "SafariZone_South_EventScript_ConstructionWorker2",
-      "flag": "FLAG_HIDE_SAFARI_ZONE_SOUTH_CONSTRUCTION_WORKERS"
+      "script": "MegaStone_EventScript_ItemLopunnite",
+      "flag": "FLAG_UNUSED_0x275"
     }
   ],
   "warp_events": [
@@ -118,6 +105,10 @@
       "dest_warp_id": 0
     }
   ],
-  "coord_events": [],
-  "bg_events": []
+  "coord_events": [
+
+  ],
+  "bg_events": [
+
+  ]
 }

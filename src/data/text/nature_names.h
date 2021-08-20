@@ -1,3 +1,30 @@
+#if GAME_LANGUAGE == LANGUAGE_SPANISH
+static const u8 sHardyNatureName[]   = _("Fuerte");
+static const u8 sLonelyNatureName[]  = _("Huraña");
+static const u8 sBraveNatureName[]   = _("Audaz");
+static const u8 sAdamantNatureName[] = _("Firme");
+static const u8 sNaughtyNatureName[] = _("Pícara");
+static const u8 sBoldNatureName[]    = _("Osada");
+static const u8 sDocileNatureName[]  = _("Dócil");
+static const u8 sRelaxedNatureName[] = _("Plácida");
+static const u8 sImpishNatureName[]  = _("Agitada");
+static const u8 sLaxNatureName[]     = _("Floja");
+static const u8 sTimidNatureName[]   = _("Miedosa");
+static const u8 sHastyNatureName[]   = _("Activa");
+static const u8 sSeriousNatureName[] = _("Seria");
+static const u8 sJollyNatureName[]   = _("Alegre");
+static const u8 sNaiveNatureName[]   = _("Ingenua");
+static const u8 sModestNatureName[]  = _("Modesta");
+static const u8 sMildNatureName[]    = _("Afable");
+static const u8 sQuietNatureName[]   = _("Mansa");
+static const u8 sBashfulNatureName[] = _("Tímida");
+static const u8 sRashNatureName[]    = _("Alocada");
+static const u8 sCalmNatureName[]    = _("Serena");
+static const u8 sGentleNatureName[]  = _("Amable");
+static const u8 sSassyNatureName[]   = _("Grosera");
+static const u8 sCarefulNatureName[] = _("Cauta");
+static const u8 sQuirkyNatureName[]  = _("Rara");
+#else
 static const u8 sHardyNatureName[] = _("Hardy");
 static const u8 sLonelyNatureName[] = _("Lonely");
 static const u8 sBraveNatureName[] = _("Brave");
@@ -23,6 +50,7 @@ static const u8 sGentleNatureName[] = _("Gentle");
 static const u8 sSassyNatureName[] = _("Sassy");
 static const u8 sCarefulNatureName[] = _("Careful");
 static const u8 sQuirkyNatureName[] = _("Quirky");
+#endif
 
 const u8 *const gNatureNamePointers[NUM_NATURES] = 
 {

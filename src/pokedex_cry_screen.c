@@ -70,7 +70,11 @@ static const u8 sCryMeterNeedle_Gfx[] = INCBIN_U8("graphics/pokedex/cry_meter_ne
 
 static const u16 sCryMeter_Tilemap[] = INCBIN_U16("graphics/pokedex/cry_meter_map.bin"); // Unused
 static const u16 sCryMeter_Pal[] = INCBIN_U16("graphics/pokedex/cry_meter.gbapal");
+#if GAME_LANGUAGE == LANGUAGE_SPANISH
+static const u8 sCryMeter_Gfx[] = INCBIN_U8("graphics/pokedex/cry_meter_es.4bpp.lz");
+#else
 static const u8 sCryMeter_Gfx[] = INCBIN_U8("graphics/pokedex/cry_meter.4bpp.lz");
+#endif
 
 static const u16 sWaveformOffsets[][72] =
 {
@@ -188,7 +192,7 @@ static const union AnimCmd *const sSpriteAnimTable_CryMeterNeedle[] =
 
 static const struct OamData sOamData_CryMeterNeedle =
 {
-    .y = DISPLAY_HEIGHT,
+    .y = 160,
     .affineMode = ST_OAM_AFFINE_NORMAL,
     .objMode = ST_OAM_OBJ_NORMAL,
     .bpp = ST_OAM_4BPP,
@@ -560,8 +564,8 @@ static void SpriteCB_CryMeterNeedle(struct Sprite *sprite)
     SetOamMatrix(0, matrix.a, matrix.b, matrix.c, matrix.d);
     x = gSineTable[((sCryMeterNeedle->rotation + 0x7F) & 0xFF)];
     y = gSineTable[((sCryMeterNeedle->rotation + 0x7F) & 0xFF) + 64];
-    sprite->x2 = x * 24 / 256;
-    sprite->y2 = y * 24 / 256;
+    sprite->pos2.x = x * 24 / 256;
+    sprite->pos2.y = y * 24 / 256;
 }
 
 static void SetCryMeterNeedleTarget(s8 offset)

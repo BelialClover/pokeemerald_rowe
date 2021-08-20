@@ -218,6 +218,7 @@ bool8 MEScrCmd_runscript(struct ScriptContext *ctx)
 
 bool8 MEScrCmd_setenigmaberry(struct ScriptContext *ctx)
 {
+    /*
     u8 *str;
     const u8 *message;
     bool32 haveBerry = IsEnigmaBerryValid();
@@ -250,7 +251,7 @@ bool8 MEScrCmd_setenigmaberry(struct ScriptContext *ctx)
         VarSet(VAR_ENIGMA_BERRY_AVAILABLE, 1);
     else
         ctx->data[2] = 1;
-
+    */
     return FALSE;
 }
 
@@ -325,7 +326,7 @@ bool8 MEScrCmd_givepokemon(struct ScriptContext *ctx)
     }
     else
     {
-        memcpy(&gPlayerParty[PARTY_SIZE - 1], pokemonPtr, sizeof(struct Pokemon));
+        memcpy(&gPlayerParty[5], pokemonPtr, sizeof(struct Pokemon));
         memcpy(&mail, mailPtr, sizeof(struct MailStruct));
 
         if (species != SPECIES_EGG)
@@ -335,9 +336,9 @@ bool8 MEScrCmd_givepokemon(struct ScriptContext *ctx)
             GetSetPokedexFlag(pokedexNum, FLAG_SET_CAUGHT);
         }
 
-        heldItem = GetMonData(&gPlayerParty[PARTY_SIZE - 1], MON_DATA_HELD_ITEM);
+        heldItem = GetMonData(&gPlayerParty[5], MON_DATA_HELD_ITEM);
         if (ItemIsMail(heldItem))
-            GiveMailToMon2(&gPlayerParty[PARTY_SIZE - 1], &mail);
+            GiveMailToMon2(&gPlayerParty[5], &mail);
         CompactPartySlots();
         CalculatePlayerPartyCount();
         StringExpandPlaceholders(gStringVar4, gText_MysteryGiftSentOver);
@@ -350,7 +351,7 @@ bool8 MEScrCmd_givepokemon(struct ScriptContext *ctx)
 bool8 MEScrCmd_addtrainer(struct ScriptContext *ctx)
 {
     u32 data = ScriptReadWord(ctx) - ctx->data[1] + ctx->data[0];
-    memcpy(&gSaveBlock2Ptr->frontier.ereaderTrainer, (void *)data, sizeof(gSaveBlock2Ptr->frontier.ereaderTrainer));
+    memcpy((void*)(gSaveBlock2Ptr) + 0xBEC, (void *)data, 0xBC);
     ValidateEReaderTrainer();
     StringExpandPlaceholders(gStringVar4, gText_MysteryGiftNewTrainer);
     ctx->data[2] = 2;

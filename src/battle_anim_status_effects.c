@@ -17,16 +17,18 @@ extern const u8 *const gBattleAnims_StatusConditions[];
 extern const struct OamData gOamData_AffineOff_ObjNormal_8x8;
 extern const struct OamData gOamData_AffineOff_ObjBlend_64x64;
 
-static void Task_UpdateFlashingCircleImpacts(u8 taskId);
+// This file's functions.
+static void sub_80A9DB4(u8 taskId);
 static void AnimTask_FrozenIceCube_Step1(u8 taskId);
 static void AnimTask_FrozenIceCube_Step2(u8 taskId);
 static void AnimTask_FrozenIceCube_Step3(u8 taskId);
 static void AnimTask_FrozenIceCube_Step4(u8 taskId);
 static void Task_DoStatusAnimation(u8 taskId);
-static void AnimFlashingCircleImpact(struct Sprite *sprite);
-static void AnimFlashingCircleImpact_Step(struct Sprite *sprite);
+static void sub_80A9E44(struct Sprite *sprite);
+static void sub_80A9E78(struct Sprite *sprite);
 
-static const union AnimCmd sAnim_FlickeringOrb[] =
+// const rom data
+static const union AnimCmd sSpriteAnim_853EDE4[] =
 {
     ANIMCMD_FRAME(0, 3),
     ANIMCMD_FRAME(4, 3),
@@ -35,33 +37,33 @@ static const union AnimCmd sAnim_FlickeringOrb[] =
     ANIMCMD_JUMP(0)
 };
 
-static const union AnimCmd *const sAnims_FlickeringOrb[] =
+static const union AnimCmd *const sSpriteAnimTable_853EDF8[] =
 {
-    sAnim_FlickeringOrb
+    sSpriteAnim_853EDE4
 };
 
 // Unused
-static const struct SpriteTemplate sFlickeringOrbSpriteTemplate =
+const struct SpriteTemplate gUnknown_0853EDFC =
 {
     .tileTag = ANIM_TAG_ORB,
     .paletteTag = ANIM_TAG_ORB,
     .oam = &gOamData_AffineOff_ObjNormal_16x16,
-    .anims = sAnims_FlickeringOrb,
+    .anims = sSpriteAnimTable_853EDF8,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = AnimTranslateLinearAndFlicker,
+    .callback = sub_80A8AEC,
 };
 
 // Unused
-static const struct SpriteTemplate sFlickeringOrbFlippedSpriteTemplate =
+const struct SpriteTemplate gUnknown_0853EE14 =
 {
     .tileTag = ANIM_TAG_ORB,
     .paletteTag = ANIM_TAG_ORB,
     .oam = &gOamData_AffineOff_ObjNormal_16x16,
-    .anims = sAnims_FlickeringOrb,
+    .anims = sSpriteAnimTable_853EDF8,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = AnimTranslateLinearAndFlicker_Flipped,
+    .callback = sub_80A8A6C,
 };
 
 static const union AnimCmd sAnim_WeatherBallNormal[] =
@@ -97,7 +99,7 @@ const struct SpriteTemplate gWeatherBallNormalDownSpriteTemplate =
     .callback = AnimWeatherBallDown,
 };
 
-static const union AnimCmd sAnim_SpinningSparkle[] =
+static const union AnimCmd sSpriteAnim_853EE68[] =
 {
     ANIMCMD_FRAME(0, 3),
     ANIMCMD_FRAME(16, 3),
@@ -107,9 +109,9 @@ static const union AnimCmd sAnim_SpinningSparkle[] =
     ANIMCMD_END
 };
 
-static const union AnimCmd *const sAnims_SpinningSparkle[] =
+static const union AnimCmd *const sSpriteAnimTable_853EE80[] =
 {
-    sAnim_SpinningSparkle
+    sSpriteAnim_853EE68
 };
 
 const struct SpriteTemplate gSpinningSparkleSpriteTemplate =
@@ -117,14 +119,14 @@ const struct SpriteTemplate gSpinningSparkleSpriteTemplate =
     .tileTag = ANIM_TAG_SPARKLE_4,
     .paletteTag = ANIM_TAG_SPARKLE_4,
     .oam = &gOamData_AffineOff_ObjNormal_32x32,
-    .anims = sAnims_SpinningSparkle,
+    .anims = sSpriteAnimTable_853EE80,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = AnimSpinningSparkle,
 };
 
 // Unused
-static const struct SpriteTemplate sFlickeringFootSpriteTemplate =
+const struct SpriteTemplate gUnknown_0853EE9C =
 {
     .tileTag = ANIM_TAG_MONSTER_FOOT,
     .paletteTag = ANIM_TAG_MONSTER_FOOT,
@@ -132,79 +134,78 @@ static const struct SpriteTemplate sFlickeringFootSpriteTemplate =
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = AnimTranslateLinearAndFlicker,
+    .callback = sub_80A8AEC,
 };
 
-static const union AnimCmd sAnim_FlickeringImpact_0[] =
+static const union AnimCmd sSpriteAnim_853EEB4[] =
 {
     ANIMCMD_FRAME(0, 5),
     ANIMCMD_JUMP(0)
 };
 
-static const union AnimCmd sAnim_FlickeringImpact_1[] =
+static const union AnimCmd sSpriteAnim_853EEBC[] =
 {
     ANIMCMD_FRAME(0, 5),
     ANIMCMD_JUMP(0)
 };
 
-static const union AnimCmd sAnim_FlickeringImpact_2[] =
+static const union AnimCmd sSpriteAnim_853EEC4[] =
 {
     ANIMCMD_FRAME(0, 5),
     ANIMCMD_JUMP(0)
 };
 
-static const union AnimCmd *const sAnims_FlickeringImpact[] =
+static const union AnimCmd *const sSpriteAnimTable_853EECC[] =
 {
-    sAnim_FlickeringImpact_0,
-    sAnim_FlickeringImpact_1,
-    sAnim_FlickeringImpact_2,
+    sSpriteAnim_853EEB4,
+    sSpriteAnim_853EEBC,
+    sSpriteAnim_853EEC4
 };
 
 // Unused
-static const struct SpriteTemplate sFlickeringImpactSpriteTemplate =
+const struct SpriteTemplate gUnknown_0853EED8 =
 {
     .tileTag = ANIM_TAG_IMPACT,
     .paletteTag = ANIM_TAG_IMPACT,
     .oam = &gOamData_AffineOff_ObjNormal_32x32,
-    .anims = sAnims_FlickeringImpact,
+    .anims = sSpriteAnimTable_853EECC,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = AnimTranslateLinearAndFlicker,
+    .callback = sub_80A8AEC,
 };
 
-static const union AnimCmd sAnim_FlickeringShrinkOrb[] =
+static const union AnimCmd sSpriteAnim_853EEF0[] =
 {
     ANIMCMD_FRAME(0, 15),
     ANIMCMD_JUMP(0)
 };
 
-static const union AnimCmd *const sAnims_FlickeringShrinkOrb[] =
+static const union AnimCmd *const sSpriteAnimTable_853EEF8[] =
 {
-    sAnim_FlickeringShrinkOrb
+    sSpriteAnim_853EEF0
 };
 
-static const union AffineAnimCmd sAffineAnim_FlickeringShrinkOrb[] =
+static const union AffineAnimCmd sSpriteAffineAnim_853EEFC[] =
 {
     AFFINEANIMCMD_FRAME(96, 96, 0, 0),
     AFFINEANIMCMD_FRAME(2, 2, 0, 1),
     AFFINEANIMCMD_JUMP(1)
 };
 
-static const union AffineAnimCmd *const sAffineAnims_FlickeringShrinkOrb[] =
+static const union AffineAnimCmd *const sSpriteAffineAnimTable_853EEF8[] =
 {
-    sAffineAnim_FlickeringShrinkOrb
+    sSpriteAffineAnim_853EEFC
 };
 
-// Unused
-static const struct SpriteTemplate sFlickeringShrinkOrbSpriteTemplate =
+const struct SpriteTemplate gUnknown_0853EF18 =
 {
     .tileTag = ANIM_TAG_ORB,
     .paletteTag = ANIM_TAG_ORB,
     .oam = &gOamData_AffineDouble_ObjNormal_16x16,
-    .anims = sAnims_FlickeringShrinkOrb,
+    .anims = sSpriteAnimTable_853EEF8,
     .images = NULL,
-    .affineAnims = sAffineAnims_FlickeringShrinkOrb,
-    .callback = AnimTranslateLinearAndFlicker_Flipped,
+    .affineAnims = sSpriteAffineAnimTable_853EEF8,
+    .callback = sub_80A8A6C,
 };
 
 static const struct Subsprite sFrozenIceCubeSubsprites[] =
@@ -259,7 +260,7 @@ static const struct SpriteTemplate gFrozenIceCubeSpriteTemplate =
     .callback = SpriteCallbackDummy,
 };
 
-static const struct SpriteTemplate sFlashingCircleImpactSpriteTemplate =
+static const struct SpriteTemplate gUnknown_0853EF60 =
 {
     .tileTag = ANIM_TAG_CIRCLE_IMPACT,
     .paletteTag = ANIM_TAG_CIRCLE_IMPACT,
@@ -267,31 +268,31 @@ static const struct SpriteTemplate sFlashingCircleImpactSpriteTemplate =
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = AnimFlashingCircleImpact,
+    .callback = sub_80A9E44,
 };
 
 // Unused
-static u8 Task_FlashingCircleImpacts(u8 battlerId, bool8 red)
+u8 sub_80A9C70(u8 battlerId, bool8 b)
 {
     u8 battlerSpriteId = gBattlerSpriteIds[battlerId];
-    u8 taskId = CreateTask(Task_UpdateFlashingCircleImpacts, 10);
-    u8 spriteId;
+    u8 taskId = CreateTask(sub_80A9DB4, 10);
+    u8 spriteId2;
     u8 i;
 
     LoadCompressedSpriteSheetUsingHeap(&gBattleAnimPicTable[GET_TRUE_SPRITE_INDEX(ANIM_TAG_CIRCLE_IMPACT)]);
     LoadCompressedSpritePaletteUsingHeap(&gBattleAnimPaletteTable[GET_TRUE_SPRITE_INDEX(ANIM_TAG_CIRCLE_IMPACT)]);
     gTasks[taskId].data[0] = battlerId;
-    if (red)
+    if (b)
     {
         gTasks[taskId].data[1] = RGB_RED;
         for (i = 0; i < 10; i++)
         {
-            spriteId = CreateSprite(&sFlashingCircleImpactSpriteTemplate, gSprites[battlerSpriteId].x, gSprites[battlerSpriteId].y + 32, 0);
-            gSprites[spriteId].data[0] = i * 51;
-            gSprites[spriteId].data[1] = -256;
-            gSprites[spriteId].invisible = TRUE;
+            spriteId2 = CreateSprite(&gUnknown_0853EF60, gSprites[battlerSpriteId].pos1.x, gSprites[battlerSpriteId].pos1.y + 32, 0);
+            gSprites[spriteId2].data[0] = i * 51;
+            gSprites[spriteId2].data[1] = -256;
+            gSprites[spriteId2].invisible = TRUE;
             if (i > 4)
-                gSprites[spriteId].data[6] = 21;
+                gSprites[spriteId2].data[6] = 21;
         }
     }
     else
@@ -299,19 +300,19 @@ static u8 Task_FlashingCircleImpacts(u8 battlerId, bool8 red)
         gTasks[taskId].data[1] = RGB_BLUE;
         for (i = 0; i < 10; i++)
         {
-            spriteId = CreateSprite(&sFlashingCircleImpactSpriteTemplate, gSprites[battlerSpriteId].x, gSprites[battlerSpriteId].y - 32, 0);
-            gSprites[spriteId].data[0] = i * 51;
-            gSprites[spriteId].data[1] = 256;
-            gSprites[spriteId].invisible = TRUE;
+            spriteId2 = CreateSprite(&gUnknown_0853EF60, gSprites[battlerSpriteId].pos1.x, gSprites[battlerSpriteId].pos1.y - 32, 0);
+            gSprites[spriteId2].data[0] = i * 51;
+            gSprites[spriteId2].data[1] = 256;
+            gSprites[spriteId2].invisible = TRUE;
             if (i > 4)
-                gSprites[spriteId].data[6] = 21;
+                gSprites[spriteId2].data[6] = 21;
         }
     }
-    gSprites[spriteId].data[7] = 1;
+    gSprites[spriteId2].data[7] = 1;
     return taskId;
 }
 
-static void Task_UpdateFlashingCircleImpacts(u8 taskId)
+static void sub_80A9DB4(u8 taskId)
 {
     if (gTasks[taskId].data[2] == 2)
     {
@@ -344,13 +345,13 @@ static void Task_UpdateFlashingCircleImpacts(u8 taskId)
     }
 }
 
-static void AnimFlashingCircleImpact(struct Sprite *sprite)
+static void sub_80A9E44(struct Sprite *sprite)
 {
     if (sprite->data[6] == 0)
     {
         sprite->invisible = FALSE;
-        sprite->callback = AnimFlashingCircleImpact_Step;
-        AnimFlashingCircleImpact_Step(sprite);
+        sprite->callback = sub_80A9E78;
+        sub_80A9E78(sprite);
     }
     else
     {
@@ -358,17 +359,17 @@ static void AnimFlashingCircleImpact(struct Sprite *sprite)
     }
 }
 
-static void AnimFlashingCircleImpact_Step(struct Sprite *sprite)
+static void sub_80A9E78(struct Sprite *sprite)
 {
-    sprite->x2 = Cos(sprite->data[0], 32);
-    sprite->y2 = Sin(sprite->data[0], 8);
+    sprite->pos2.x = Cos(sprite->data[0], 32);
+    sprite->pos2.y = Sin(sprite->data[0], 8);
     if (sprite->data[0] < 128)
         sprite->subpriority = 29;
     else
         sprite->subpriority = 31;
     sprite->data[0] = (sprite->data[0] + 8) & 0xFF;
     sprite->data[5] += sprite->data[1];
-    sprite->y2 += sprite->data[5] >> 8;
+    sprite->pos2.y += sprite->data[5] >> 8;
     sprite->data[2]++;
     if (sprite->data[2] == 52)
     {
@@ -537,8 +538,8 @@ void AnimTask_StatsChange(u8 taskId)
     gBattleAnimArgs[2] = 0;
     gBattleAnimArgs[3] = 0;
     gBattleAnimArgs[4] = sharply;
-    gTasks[taskId].func = InitStatsChangeAnimation;
-    InitStatsChangeAnimation(taskId);
+    gTasks[taskId].func = sub_8116EB4;
+    sub_8116EB4(taskId);
 }
 
 #undef CASE

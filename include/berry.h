@@ -24,15 +24,15 @@ void ObjectEventInteractionPlantBerryTree(void);
 void ObjectEventInteractionPickBerryTree(void);
 void ObjectEventInteractionRemoveBerryTree(void);
 bool8 PlayerHasBerries(void);
-void SetBerryTreesSeen(void);
+void ResetBerryTreeSparkleFlags(void);
 
 extern const struct Berry gBerries[];
 
-struct BerryCrushBerryData {
-    u8 difficulty; // The number of A presses required to crush it
-    u16 powder;
+struct UnkStruct_0858AB24 {
+    u8 unk0;
+    u16 unk1;
 };
 
-extern const struct BerryCrushBerryData gBerryCrush_BerryData[];
+extern const struct UnkStruct_0858AB24 gUnknown_0858AB24[];
 
 #endif // GUARD_BERRY_H

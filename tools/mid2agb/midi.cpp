@@ -932,7 +932,7 @@ void ReadMidiTracks()
 
             if (s_minNote != 0xFF)
             {
-#ifdef DEBUG
+#ifdef DEBUG_MENU
                 printf("Track%d = Midi-Ch.%d\n", g_agbTrack, g_midiChan + 1);
 #endif
 

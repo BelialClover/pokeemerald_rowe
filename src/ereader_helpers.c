@@ -14,64 +14,34 @@
 #include "constants/trainers.h"
 #include "constants/moves.h"
 #include "constants/items.h"
-#include "constants/trainer_hill.h"
 
-enum {
-    EREADER_XFR_STATE_INIT = 0,
-    EREADER_XFR_STATE_HANDSHAKE,
-    EREADER_XFR_STATE_START,
-    EREADER_XFR_STATE_TRANSFER,
-    EREADER_XFR_STATE_TRANSFER_DONE,
-    EREADER_XFR_STATE_CHECKSUM,
-    EREADER_XFR_STATE_DONE
-};
-
-#define EREADER_XFER_EXE 1
-#define EREADER_XFER_CHK 2
-#define EREADER_XFER_SHIFT 0
-#define EREADER_XFER_MASK  3
-
-#define EREADER_CANCEL_TIMEOUT 1
-#define EREADER_CANCEL_KEY     2
-#define EREADER_CANCEL_MASK  0xC
-#define EREADER_CANCEL_SHIFT 2
-
-#define EREADER_CHECKSUM_OK  1
-#define EREADER_CHECKSUM_ERR 2
-#define EREADER_CHECKSUM_MASK  0x30
-#define EREADER_CHECKSUM_SHIFT 4
-
-struct SendRecvMgr
+struct Unknown030012C8
 {
-    bool8 isParent;
-    u8 state;              // EREADER_XFR_STATE_*
-    u8 xferState;          // EREADER_XFER_*
-    u8 checksumResult;     // EREADER_CHECKSUM_*
-    u8 cancellationReason; // EREADER_CANCEL_*
-    u32 *data;             // Payload source or destination
-    int cursor;            // Index of the next word
-    int size;              // Last word index
-    int checksum;
+    u8 unk0[8];
+    u32 *unk8;
+    int unkC;
+    int unk10;
+    int unk14;
 };
 
-static void GetKeyInput(void);
-static u16 DetermineSendRecvState(u8);
-static void EnableSio(void);
-static void DisableTm3(void);
-static void SetUpTransferManager(size_t, const void *, void *);
-static void StartTm3(void);
+static void sub_81D4170(void);
+static u16 sub_81D3EE8(u8);
+static void sub_81D413C(void);
+static void sub_81D414C(void);
+static void sub_81D3F1C(u32, u32*, u32*);
+static void sub_81D3F68(void);
 
-static struct SendRecvMgr sSendRecvMgr;
-static u16 sJoyNewOrRepeated;
-static u16 sJoyNew;
-static u16 sSendRecvStatus;
-static u16 sCounter1;
-static u32 sCounter2;
-static u16 sSavedIme;
-static u16 sSavedIe;
-static u16 sSavedTm3Cnt;
-static u16 sSavedSioCnt;
-static u16 sSavedRCnt;
+static struct Unknown030012C8 gUnknown_030012C8;
+static u16 gUnknown_030012E0;
+static u16 gUnknown_030012E2;
+static u16 gUnknown_030012E4;
+static u16 gUnknown_030012E6;
+static u32 gUnknown_030012E8;
+static u16 gUnknown_030012EC;
+static u16 gUnknown_030012EE;
+static u16 gUnknown_030012F0;
+static u16 gUnknown_030012F2;
+static u16 gUnknown_030012F4;
 
 static const struct TrainerHillTrainer sTrainerHillTrainerTemplates_JP[] = {
     [0] = {
@@ -164,10 +134,10 @@ static const struct TrainerHillTrainer sTrainerHillTrainerTemplates_JP[] = {
         .name = __("ハルヒト$$$$   "),
         .facilityClass = FACILITY_CLASS_CAMPER,
         .unused = 0x1,
-        .speechBefore = { EC_MOVE2(BOUNCE), EC_WORD_AS_MUCH_AS, EC_EMPTY_WORD, EC_WORD_THEY_RE, EC_WORD_STRONG, EC_WORD_EXCL },
-        .speechWin = { EC_MOVE(FLY), EC_WORD_AS_MUCH_AS, EC_EMPTY_WORD, EC_WORD_THEY_RE, EC_WORD_HAPPY, EC_WORD_EXCL },
-        .speechLose = { EC_MOVE2(MINIMIZE), EC_WORD_AS_MUCH_AS, EC_EMPTY_WORD, EC_WORD_THEY_RE, EC_WORD_SAD, EC_WORD_EXCL },
-        .speechAfter = { EC_MOVE(BITE), EC_WORD_AS_MUCH_AS, EC_EMPTY_WORD, EC_WORD_THEY_RE, EC_WORD_ANGRY, EC_WORD_EXCL },
+        .speechBefore = { EC_MOVE2(BOUNCE), EC_WORD_AS_MUCH_AS, 0xFFFF, EC_WORD_THEY_RE, EC_WORD_STRONG, EC_WORD_EXCL },
+        .speechWin = { EC_MOVE(FLY), EC_WORD_AS_MUCH_AS, 0xFFFF, EC_WORD_THEY_RE, EC_WORD_HAPPY, EC_WORD_EXCL },
+        .speechLose = { EC_MOVE2(MINIMIZE), EC_WORD_AS_MUCH_AS, 0xFFFF, EC_WORD_THEY_RE, EC_WORD_SAD, EC_WORD_EXCL },
+        .speechAfter = { EC_MOVE(BITE), EC_WORD_AS_MUCH_AS, 0xFFFF, EC_WORD_THEY_RE, EC_WORD_ANGRY, EC_WORD_EXCL },
         .mons = {
             [0] = NULL_BATTLE_TOWER_POKEMON,
             [1] = NULL_BATTLE_TOWER_POKEMON,
@@ -175,7 +145,7 @@ static const struct TrainerHillTrainer sTrainerHillTrainerTemplates_JP[] = {
             [3] = {
                 .species = SPECIES_CACTURNE,
                 .heldItem = ITEM_QUICK_CLAW,
-                .moves = { MOVE_GIGA_DRAIN, MOVE_FEINT_ATTACK, MOVE_THUNDER_PUNCH, MOVE_GROWTH },
+                .moves = { MOVE_GIGA_DRAIN, MOVE_FAINT_ATTACK, MOVE_THUNDER_PUNCH, MOVE_GROWTH },
                 .level = 0,
                 .ppBonuses = 0x0,
                 .hpEV = 55,
@@ -253,7 +223,7 @@ static const struct TrainerHillTrainer sTrainerHillTrainerTemplates_JP[] = {
         .speechBefore = { EC_WORD_SHINE, EC_WORD_POKEMON, EC_WORD_RELEASE, EC_WORD_WAS, EC_MOVE2(FRUSTRATION), EC_WORD_WITHOUT },
         .speechWin = { EC_WORD_SHINE, EC_WORD_POKEMON, EC_WORD_TO_HER, EC_MOVE2(PRESENT), EC_WORD_KNOWS, EC_WORD_WITHOUT },
         .speechLose = { EC_WORD_THAT, EC_WORD_ABOVE, EC_WORD_LOST, EC_WORD_STORES, EC_WORD_JOKING, EC_WORD_ELLIPSIS_ELLIPSIS_ELLIPSIS },
-        .speechAfter = { EC_WORD_ENTERTAINING, EC_WORD_NONE, EC_WORD_HEY_QUES, EC_WORD_ALMOST, EC_WORD_EXCL, EC_EMPTY_WORD },
+        .speechAfter = { EC_WORD_ENTERTAINING, EC_WORD_NONE, EC_WORD_HEY_QUES, EC_WORD_ALMOST, EC_WORD_EXCL, 0xFFFF },
         .mons = {
             [0] = NULL_BATTLE_TOWER_POKEMON,
             [1] = NULL_BATTLE_TOWER_POKEMON,
@@ -337,7 +307,7 @@ static const struct TrainerHillTrainer sTrainerHillTrainerTemplates_JP[] = {
         .facilityClass = FACILITY_CLASS_GENTLEMAN,
         .unused = 0x1,
         .speechBefore = { EC_WORD_SHE_WAS, EC_WORD_NO_1, EC_WORD_STRONG, EC_WORD_UNCLE, EC_WORD_THERE, EC_WORD_EXCL },
-        .speechWin = { EC_WORD_HAHAHA, EC_WORD_TEACHER, EC_WORD_BECOMES, EC_WORD_GIVE, EC_WORD_IS_IT_QUES, EC_EMPTY_WORD },
+        .speechWin = { EC_WORD_HAHAHA, EC_WORD_TEACHER, EC_WORD_BECOMES, EC_WORD_GIVE, EC_WORD_IS_IT_QUES, 0xFFFF },
         .speechLose = { EC_WORD_OUTSIDE, EC_WORD_UNCLE, EC_WORD_SURPRISE, EC_WORD_THESE, EC_WORD_HEY_QUES, EC_WORD_ELLIPSIS_EXCL },
         .speechAfter = { EC_WORD_HE_S, EC_WORD_NO_1, EC_WORD_STRONG, EC_WORD_CHILDREN, EC_WORD_CAN_T, EC_WORD_EXCL_EXCL },
         .mons = {
@@ -420,217 +390,217 @@ static const struct TrainerHillTrainer sTrainerHillTrainerTemplates_JP[] = {
     },
 };
 
-static u8 GetTrainerHillUnkVal(void)
+static u8 sub_81D38D4(void)
 {
     return (gSaveBlock1Ptr->trainerHill.unused + 1) % 256;
 }
 
-static bool32 ValidateTrainerChecksum(struct EReaderTrainerHillTrainer * hillTrainer)
+static bool32 Struct_EReaderTrainerHillTrainer_ValidateChecksum(struct EReaderTrainerHillTrainer *arg0)
 {
-    int checksum = CalcByteArraySum((u8 *)hillTrainer, offsetof(typeof(*hillTrainer), checksum));
-    if (checksum != hillTrainer->checksum)
+    int checksum = CalcByteArraySum((u8 *)arg0, 0x270);
+    if (checksum != arg0->checksum)
         return FALSE;
 
     return TRUE;
 }
 
-bool8 ValidateTrainerHillData(struct EReaderTrainerHillSet * hillSet)
+bool8 EReader_IsReceivedDataValid(struct EReaderTrainerHillSet *buffer)
 {
     u32 i;
     u32 checksum;
-    int numTrainers = hillSet->numTrainers;
-
-    // Validate number of trainers
-    if (numTrainers < 1 || numTrainers > NUM_TRAINER_HILL_TRAINERS)
+    int var0 = buffer->count;
+    if (var0 < 1 || var0 > 8)
         return FALSE;
 
-    // Validate trainers
-    for (i = 0; i < numTrainers; i++)
+    for (i = 0; i < var0; i++)
     {
-        if (!ValidateTrainerChecksum(&hillSet->trainers[i]))
+        if (!Struct_EReaderTrainerHillTrainer_ValidateChecksum(&buffer->unk_8[i]))
             return FALSE;
     }
 
-    // Validate checksum
-    checksum = CalcByteArraySum((u8 *)hillSet->trainers, numTrainers * sizeof(struct EReaderTrainerHillTrainer));
-    if (checksum != hillSet->checksum)
+    checksum = CalcByteArraySum((u8 *)buffer->unk_8, var0 * sizeof(struct EReaderTrainerHillTrainer));
+    if (checksum != buffer->checksum)
         return FALSE;
 
     return TRUE;
 }
 
-static bool32 ValidateTrainerHillChecksum(struct EReaderTrainerHillSet *hillSet)
+static bool32 TrainerHill_VerifyChecksum(struct EReaderTrainerHillSet *buffer)
 {
     u32 checksum;
-    int numTrainers = hillSet->numTrainers;
-    if (numTrainers < 1 || numTrainers > NUM_TRAINER_HILL_TRAINERS)
+    int var0 = buffer->count;
+    if (var0 < 1 || var0 > 8)
         return FALSE;
 
-    checksum = CalcByteArraySum((u8 *)hillSet->trainers, sizeof(struct EReaderTrainerHillSet) - offsetof(struct EReaderTrainerHillSet, trainers));
-    if (checksum != hillSet->checksum)
+    checksum = CalcByteArraySum((u8 *)buffer->unk_8, sizeof(struct EReaderTrainerHillSet) - offsetof(struct EReaderTrainerHillSet, unk_8));
+    if (checksum != buffer->checksum)
         return FALSE;
 
     return TRUE;
 }
 
-static bool32 TryWriteTrainerHill_Internal(struct EReaderTrainerHillSet * hillSet, struct TrHillTag * hillTag)
+static bool32 TryWriteTrainerHill_r(struct EReaderTrainerHillSet *ttdata, struct TrHillTag *buffer2)
 {
     int i;
 
-    AGB_ASSERT_EX(hillSet->dummy == 0, "cereader_tool.c", 450);
-    AGB_ASSERT_EX(hillSet->id == 0, "cereader_tool.c", 452);
+    AGB_ASSERT_EX(ttdata->dummy == 0, "cereader_tool.c", 450);
+    AGB_ASSERT_EX(ttdata->id == 0, "cereader_tool.c", 452);
 
-    memset(hillTag, 0, SECTOR_SIZE);
-    hillTag->numTrainers = hillSet->numTrainers;
-    hillTag->unused1 = GetTrainerHillUnkVal();
-    hillTag->numFloors = (hillSet->numTrainers + 1) / TRAINER_HILL_TRAINERS_PER_FLOOR;
+    memset(buffer2, 0, 0x1000);
+    buffer2->numTrainers = ttdata->count;
+    buffer2->unused1 = sub_81D38D4();
+    buffer2->numFloors = (ttdata->count + 1) / 2;
 
-    for (i = 0; i < hillSet->numTrainers; i++)
+    for (i = 0; i < ttdata->count; i++)
     {
         if (!(i & 1))
         {
-            hillTag->floors[i / TRAINER_HILL_TRAINERS_PER_FLOOR].trainerNum1 = hillSet->trainers[i].trainerNum;
-            hillTag->floors[i / TRAINER_HILL_TRAINERS_PER_FLOOR].display = hillSet->trainers[i].display;
-            hillTag->floors[i / TRAINER_HILL_TRAINERS_PER_FLOOR].trainers[0] = hillSet->trainers[i].trainer;
+            buffer2->floors[i / 2].trainerNum1 = ttdata->unk_8[i].unk0;
+            buffer2->floors[i / 2].display = ttdata->unk_8[i].unk14C;
+            buffer2->floors[i / 2].trainers[0] = ttdata->unk_8[i].unk4;
         }
         else
         {
-            hillTag->floors[i / TRAINER_HILL_TRAINERS_PER_FLOOR].trainerNum2 = hillSet->trainers[i].trainerNum;
-            hillTag->floors[i / TRAINER_HILL_TRAINERS_PER_FLOOR].trainers[1] = hillSet->trainers[i].trainer;
+            buffer2->floors[i / 2].trainerNum2 = ttdata->unk_8[i].unk0;
+            buffer2->floors[i / 2].trainers[1] = ttdata->unk_8[i].unk4;
         }
     }
 
     if (i & 1)
     {
-        hillTag->floors[i / TRAINER_HILL_TRAINERS_PER_FLOOR].trainers[1] = sTrainerHillTrainerTemplates_JP[i / TRAINER_HILL_TRAINERS_PER_FLOOR];
+        buffer2->floors[i / 2].trainers[1] = sTrainerHillTrainerTemplates_JP[i / 2];
     }
 
-    hillTag->checksum = CalcByteArraySum((u8 *)hillTag->floors, NUM_TRAINER_HILL_FLOORS * sizeof(struct TrHillFloor));
-    if (TryWriteSpecialSaveSection(SECTOR_ID_TRAINER_HILL, (u8 *)hillTag) != SAVE_STATUS_OK)
+    buffer2->checksum = CalcByteArraySum((u8 *)buffer2->floors, 4 * sizeof(struct TrHillFloor));
+    if (TryWriteSpecialSaveSection(SECTOR_ID_TRAINER_HILL, (u8 *)buffer2) != SAVE_STATUS_OK)
         return FALSE;
 
     return TRUE;
 }
 
-bool32 TryWriteTrainerHill(struct EReaderTrainerHillSet * hillSet)
+bool32 TryWriteTrainerHill(struct EReaderTrainerHillSet *arg0)
 {
-    void *buffer = AllocZeroed(SECTOR_SIZE);
-    bool32 result = TryWriteTrainerHill_Internal(hillSet, buffer);
-    Free(buffer);
+    void *var0 = AllocZeroed(0x1000);
+    bool32 result = TryWriteTrainerHill_r(arg0, var0);
+    Free(var0);
     return result;
 }
 
-static bool32 TryReadTrainerHill_Internal(struct EReaderTrainerHillSet * dest, u8 * buffer)
+static bool32 TryReadTrainerHill_r(struct EReaderTrainerHillSet *dst, u8 *buffer)
 {
     if (TryReadSpecialSaveSection(SECTOR_ID_TRAINER_HILL, buffer) != SAVE_STATUS_OK)
         return FALSE;
 
-    memcpy(dest, buffer, sizeof(struct EReaderTrainerHillSet));
-    if (!ValidateTrainerHillChecksum(dest))
+    memcpy(dst, buffer, sizeof(struct EReaderTrainerHillSet));
+    if (!TrainerHill_VerifyChecksum(dst))
         return FALSE;
 
     return TRUE;
 }
 
-static bool32 TryReadTrainerHill(struct EReaderTrainerHillSet * hillSet)
+static bool32 TryReadTrainerHill(struct EReaderTrainerHillSet *arg0)
 {
-    u8 *buffer = AllocZeroed(SECTOR_SIZE);
-    bool32 result = TryReadTrainerHill_Internal(hillSet, buffer);
-    Free(buffer);
+    u8 *var0 = AllocZeroed(0x1000);
+    bool32 result = TryReadTrainerHill_r(arg0, var0);
+    Free(var0);
     return result;
 }
 
 bool32 ReadTrainerHillAndValidate(void)
 {
-    struct EReaderTrainerHillSet *hillSet = AllocZeroed(SECTOR_SIZE);
-    bool32 result = TryReadTrainerHill(hillSet);
-    Free(hillSet);
+    struct EReaderTrainerHillSet *var0 = AllocZeroed(0x1000);
+    bool32 result = TryReadTrainerHill(var0);
+    Free(var0);
     return result;
 }
 
-int EReader_Send(int size, const void * src)
+int EReader_Send(int arg0, u32 *arg1)
 {
     int result;
-    int sendStatus;
+    u16 var0;
+    int var1;
 
     EReaderHelper_SaveRegsState();
     while (1)
     {
-        GetKeyInput();
-        if (sJoyNew & B_BUTTON)
+        sub_81D4170();
+        if (gUnknown_030012E2 & 2)
             gShouldAdvanceLinkState = 2;
 
-        sendStatus = EReaderHandleTransfer(1, size, src, NULL);
-        sSendRecvStatus = sendStatus;
-        if ((sSendRecvStatus & 0x13) == 0x10)
+        var1 = EReaderHandleTransfer(1, arg0, arg1, NULL);
+        gUnknown_030012E4 = var1;
+        if ((gUnknown_030012E4 & 0x13) == 0x10)
         {
             result = 0;
             break;
         }
-        else if (sSendRecvStatus & 0x8)
+
+        if (gUnknown_030012E4 & 0x8)
         {
             result = 1;
             break;
         }
-        else if (sSendRecvStatus & 0x4)
+
+        var0 = gUnknown_030012E4 & 0x4;
+        if (var0)
         {
             result = 2;
             break;
         }
-        else
-        {
-            gShouldAdvanceLinkState = 0;
-            VBlankIntrWait();
-        }
+
+        gShouldAdvanceLinkState = var0;
+        VBlankIntrWait();
     }
 
-    CpuFill32(0, &sSendRecvMgr, sizeof(sSendRecvMgr));
+    CpuFill32(0, &gUnknown_030012C8, sizeof(struct Unknown030012C8));
     EReaderHelper_RestoreRegsState();
     return result;
 }
 
-int EReader_Recv(void * dest)
+int EReader_Recv(u32 *arg0)
 {
     int result;
-    int recvStatus;
+    u16 var0;
+    int var1;
 
     EReaderHelper_SaveRegsState();
     while (1)
     {
-        GetKeyInput();
-        if (sJoyNew & B_BUTTON)
+        sub_81D4170();
+        if (gUnknown_030012E2 & 2)
             gShouldAdvanceLinkState = 2;
 
-        recvStatus = EReaderHandleTransfer(0, 0, NULL, dest);
-        sSendRecvStatus = recvStatus;
-        if ((sSendRecvStatus & 0x13) == 0x10)
+        var1 = EReaderHandleTransfer(0, 0, NULL, arg0);
+        gUnknown_030012E4 = var1;
+        if ((gUnknown_030012E4 & 0x13) == 0x10)
         {
             result = 0;
             break;
         }
-        else if (sSendRecvStatus & 0x8)
+
+        if (gUnknown_030012E4 & 0x8)
         {
             result = 1;
             break;
         }
-        else if (sSendRecvStatus & 0x4)
+
+        var0 = gUnknown_030012E4 & 0x4;
+        if (var0)
         {
             result = 2;
             break;
         }
-        else
-        {
-            gShouldAdvanceLinkState = 0;
-            VBlankIntrWait();
-        }
+
+        gShouldAdvanceLinkState = var0;
+        VBlankIntrWait();
     }
 
-    CpuFill32(0, &sSendRecvMgr, sizeof(sSendRecvMgr));
+    CpuFill32(0, &gUnknown_030012C8, sizeof(struct Unknown030012C8));
     EReaderHelper_RestoreRegsState();
     return result;
 }
 
-static void CloseSerial(void)
+static void sub_81D3C7C(void)
 {
     REG_IME = 0;
     REG_IE &= ~(INTR_FLAG_TIMER3 | INTR_FLAG_SERIAL);
@@ -640,7 +610,7 @@ static void CloseSerial(void)
     REG_IF = INTR_FLAG_TIMER3 | INTR_FLAG_SERIAL;
 }
 
-static void OpenSerialMulti(void)
+static void sub_81D3CBC(void)
 {
     REG_IME = 0;
     REG_IE &= ~(INTR_FLAG_TIMER3 | INTR_FLAG_SERIAL);
@@ -652,271 +622,273 @@ static void OpenSerialMulti(void)
     REG_IE |= INTR_FLAG_SERIAL;
     REG_IME = 1;
 
-    if (sSendRecvMgr.state == 0)
-        CpuFill32(0, &sSendRecvMgr, sizeof(sSendRecvMgr));
+    if (!gUnknown_030012C8.unk0[1])
+        CpuFill32(0, &gUnknown_030012C8, sizeof(struct Unknown030012C8));
 }
 
-static void OpenSerial32(void)
+static void sub_81D3D34(void)
 {
     REG_RCNT = 0;
     REG_SIOCNT = SIO_32BIT_MODE | SIO_INTR_ENABLE;
     REG_SIOCNT |= SIO_MULTI_SD;
     gShouldAdvanceLinkState = 0;
-    sCounter1 = 0;
-    sCounter2 = 0;
+    gUnknown_030012E6 = 0;
+    gUnknown_030012E8 = 0;
 }
 
-int EReaderHandleTransfer(u8 mode, size_t size, const void * data, void * recvBuffer)
+int EReaderHandleTransfer(u8 arg0, u32 arg1, u32 *arg2, u32 *arg3)
 {
-    switch (sSendRecvMgr.state)
+    switch (gUnknown_030012C8.unk0[1])
     {
-    case EREADER_XFR_STATE_INIT:
-        OpenSerialMulti();
-        sSendRecvMgr.xferState = EREADER_XFER_EXE;
-        sSendRecvMgr.state = EREADER_XFR_STATE_HANDSHAKE;
+    case 0:
+        sub_81D3CBC();
+        gUnknown_030012C8.unk0[2] = 1;
+        gUnknown_030012C8.unk0[1] = 1;
         break;
-    case EREADER_XFR_STATE_HANDSHAKE:
-        if (DetermineSendRecvState(mode))
-            EnableSio();
+    case 1:
+        if (sub_81D3EE8(arg0))
+            sub_81D413C();
 
         if (gShouldAdvanceLinkState == 2)
         {
-            sSendRecvMgr.cancellationReason = EREADER_CANCEL_KEY;
-            sSendRecvMgr.state = EREADER_XFR_STATE_DONE;
+            gUnknown_030012C8.unk0[4] = 2;
+            gUnknown_030012C8.unk0[1] = 6;
         }
         break;
-    case EREADER_XFR_STATE_START:
-        OpenSerial32();
-        SetUpTransferManager(size, data, recvBuffer);
-        sSendRecvMgr.state = EREADER_XFR_STATE_TRANSFER;
+    case 2:
+        sub_81D3D34();
+        sub_81D3F1C(arg1, arg2, arg3);
+        gUnknown_030012C8.unk0[1] = 3;
         // fall through
-    case EREADER_XFR_STATE_TRANSFER:
+    case 3:
         if (gShouldAdvanceLinkState == 2)
         {
-            sSendRecvMgr.cancellationReason = EREADER_CANCEL_KEY;
-            sSendRecvMgr.state = EREADER_XFR_STATE_DONE;
+            gUnknown_030012C8.unk0[4] = 2;
+            gUnknown_030012C8.unk0[1] = 6;
         }
         else
         {
-            sCounter1++;
-            sCounter2++;
-            if (!sSendRecvMgr.isParent && sCounter2 > 60)
+            gUnknown_030012E6++;
+            gUnknown_030012E8++;
+            if (!gUnknown_030012C8.unk0[0] && gUnknown_030012E8 > 60)
             {
-                sSendRecvMgr.cancellationReason = EREADER_CANCEL_TIMEOUT;
-                sSendRecvMgr.state = EREADER_XFR_STATE_DONE;
+                gUnknown_030012C8.unk0[4] = 1;
+                gUnknown_030012C8.unk0[1] = 6;
             }
 
-            if (sSendRecvMgr.xferState != EREADER_XFER_CHK)
+            if (gUnknown_030012C8.unk0[2] != 2)
             {
-                if (sSendRecvMgr.isParent && sCounter1 > 2)
+                if (gUnknown_030012C8.unk0[0] && gUnknown_030012E6 > 2)
                 {
-                    EnableSio();
-                    sSendRecvMgr.xferState = EREADER_XFER_CHK;
+                    sub_81D413C();
+                    gUnknown_030012C8.unk0[2] = 2;
                 }
                 else
                 {
-                    EnableSio();
-                    sSendRecvMgr.xferState = EREADER_XFER_CHK;
+                    sub_81D413C();
+                    gUnknown_030012C8.unk0[2] = 2;
                 }
             }
         }
         break;
-    case EREADER_XFR_STATE_TRANSFER_DONE:
-        OpenSerialMulti();
-        sSendRecvMgr.state = EREADER_XFR_STATE_CHECKSUM;
+    case 4:
+        sub_81D3CBC();
+        gUnknown_030012C8.unk0[1] = 5;
         break;
-    case EREADER_XFR_STATE_CHECKSUM:
-        if (sSendRecvMgr.isParent == TRUE && sCounter1 > 2)
-            EnableSio();
+    case 5:
+        if (gUnknown_030012C8.unk0[0] == 1 && gUnknown_030012E6 > 2)
+            sub_81D413C();
 
-        if (++sCounter1 > 60)
+        if (++gUnknown_030012E6 > 60)
         {
-            sSendRecvMgr.cancellationReason = EREADER_CANCEL_TIMEOUT;
-            sSendRecvMgr.state = EREADER_XFR_STATE_DONE;
+            gUnknown_030012C8.unk0[4] = 1;
+            gUnknown_030012C8.unk0[1] = 6;
         }
         break;
-    case EREADER_XFR_STATE_DONE:
-        if (sSendRecvMgr.xferState)
+    case 6:
+        if (gUnknown_030012C8.unk0[2])
         {
-            CloseSerial();
-            sSendRecvMgr.xferState = 0;
+            sub_81D3C7C();
+            gUnknown_030012C8.unk0[2] = 0;
         }
         break;
     }
 
-    return (sSendRecvMgr.xferState << EREADER_XFER_SHIFT)
-         | (sSendRecvMgr.cancellationReason << EREADER_CANCEL_SHIFT) 
-         | (sSendRecvMgr.checksumResult << EREADER_CHECKSUM_SHIFT);
+    return gUnknown_030012C8.unk0[2] | (gUnknown_030012C8.unk0[4] << 2) | (gUnknown_030012C8.unk0[3] << 4);
 }
 
-static u16 DetermineSendRecvState(u8 mode)
+static u16 sub_81D3EE8(u8 arg0)
 {
-    bool16 resp;
-    if ((*(vu32 *)REG_ADDR_SIOCNT & (SIO_MULTI_SI | SIO_MULTI_SD)) == SIO_MULTI_SD && mode)
-        resp = sSendRecvMgr.isParent = TRUE;
+    u16 terminal = (*(vu32 *)REG_ADDR_SIOCNT) & (SIO_MULTI_SI | SIO_MULTI_SD);
+    if (terminal == SIO_MULTI_SD && arg0)
+    {
+        gUnknown_030012C8.unk0[0] = 1;
+        return 1;
+    }
     else
-        resp = sSendRecvMgr.isParent = FALSE;
-    return resp;
+    {
+        gUnknown_030012C8.unk0[0] = 0;
+        return 0;
+    }
 }
 
-static void SetUpTransferManager(size_t size, const void * data, void * recvBuffer)
+static void sub_81D3F1C(u32 arg0, u32 *arg1, u32 *arg2)
 {
-    if (sSendRecvMgr.isParent)
+    if (gUnknown_030012C8.unk0[0])
     {
         REG_SIOCNT |= SIO_38400_BPS;
-        sSendRecvMgr.data = (void *)data;
-        REG_SIODATA32 = size;
-        sSendRecvMgr.size = size / 4 + 1;
-        StartTm3();
+        gUnknown_030012C8.unk8 = arg1;
+        REG_SIODATA32 = arg0;
+        gUnknown_030012C8.unk10 = arg0 / 4 + 1;
+        sub_81D3F68();
     }
     else
     {
         REG_SIOCNT = REG_SIOCNT;
-        sSendRecvMgr.data = recvBuffer;
+        gUnknown_030012C8.unk8 = arg2;
     }
 }
 
-static void StartTm3(void)
+static void sub_81D3F68(void)
 {
-    REG_TM3CNT_L = -601;
+    REG_TM3CNT_L = 0xFDA7;
     REG_TM3CNT_H = TIMER_INTR_ENABLE;
     REG_IME = 0;
     REG_IE |= INTR_FLAG_TIMER3;
     REG_IME = 1;
 }
 
-void EReaderHelper_Timer3Callback(void)
+void sub_81D3F9C(void)
 {
-    DisableTm3();
-    EnableSio();
+    sub_81D414C();
+    sub_81D413C();
 }
 
-void EReaderHelper_SerialCallback(void)
+void sub_81D3FAC(void)
 {
-    u16 i, cnt1, cnt2;
-    u32 recv32;
-    u16 recv[4];
+    u16 i, playerCount, k;
+    u32 value;
+    u16 var0;
+    u16 recvBuffer[4];
 
-    switch (sSendRecvMgr.state)
+    switch (gUnknown_030012C8.unk0[1])
     {
-    case EREADER_XFR_STATE_HANDSHAKE:
+    case 1:
         REG_SIOMLT_SEND = 0xCCD0; // Handshake id
-        *(u64 *)recv = REG_SIOMLT_RECV;
-        for (i = 0, cnt1 = 0, cnt2 = 0; i < 4; i++)
+        *(u64 *)recvBuffer = REG_SIOMLT_RECV;
+        for (i = 0, playerCount = 0, k = 0; i < 4; i++)
         {
-            if (recv[i] == 0xCCD0)
-                cnt1++;
-            else if (recv[i] != 0xFFFF)
-                cnt2++;
+            if (recvBuffer[i] == 0xCCD0)
+                playerCount++;
+            else if (recvBuffer[i] != 0xFFFF)
+                k++;
         }
 
-        if (cnt1 == 2 && cnt2 == 0)
-            sSendRecvMgr.state = 2;
+        if (playerCount == 2 && k == 0)
+            gUnknown_030012C8.unk0[1] = 2;
         break;
-    case EREADER_XFR_STATE_TRANSFER:
-        recv32 = REG_SIODATA32;
-        // The first value sent by the EReader is the payload size
-        if (!sSendRecvMgr.cursor && !sSendRecvMgr.isParent)
-            sSendRecvMgr.size = recv32 / 4 + 1;
+    case 3:
+        value = REG_SIODATA32;
+        if (!gUnknown_030012C8.unkC && !gUnknown_030012C8.unk0[0])
+            gUnknown_030012C8.unk10 = value / 4 + 1;
 
-        if (sSendRecvMgr.isParent == TRUE)
+        if (gUnknown_030012C8.unk0[0] == 1)
         {
-            // Send mode
-            if (sSendRecvMgr.cursor < sSendRecvMgr.size)
+            if (gUnknown_030012C8.unkC < gUnknown_030012C8.unk10)
             {
-                REG_SIODATA32 = sSendRecvMgr.data[sSendRecvMgr.cursor];
-                sSendRecvMgr.checksum += sSendRecvMgr.data[sSendRecvMgr.cursor];
+                REG_SIODATA32 = gUnknown_030012C8.unk8[gUnknown_030012C8.unkC];
+                gUnknown_030012C8.unk14 += gUnknown_030012C8.unk8[gUnknown_030012C8.unkC];
             }
             else
             {
-                REG_SIODATA32 = sSendRecvMgr.checksum;
+                REG_SIODATA32 = gUnknown_030012C8.unk14;
             }
         }
         else
         {
-            // Receive mode
-            if (sSendRecvMgr.cursor > 0 && sSendRecvMgr.cursor < sSendRecvMgr.size + 1)
+            if (gUnknown_030012C8.unkC > 0 && gUnknown_030012C8.unkC < gUnknown_030012C8.unk10 + 1)
             {
-                sSendRecvMgr.data[sSendRecvMgr.cursor - 1] = recv32;
-                sSendRecvMgr.checksum += recv32;
+                gUnknown_030012C8.unk8[gUnknown_030012C8.unkC - 1] = value;
+                gUnknown_030012C8.unk14 += value;
             }
-            else if (sSendRecvMgr.cursor)
+            else if (gUnknown_030012C8.unkC)
             {
-                if (sSendRecvMgr.checksum == recv32)
-                    sSendRecvMgr.checksumResult = EREADER_CHECKSUM_OK;
+                if (gUnknown_030012C8.unk14 == value)
+                    gUnknown_030012C8.unk0[3] = 1;
                 else
-                    sSendRecvMgr.checksumResult = EREADER_CHECKSUM_ERR;
+                    gUnknown_030012C8.unk0[3] = 2;
             }
 
-            sCounter2 = 0;
+            gUnknown_030012E8 = 0;
         }
 
-        if (++sSendRecvMgr.cursor < sSendRecvMgr.size + 2)
+        if (++gUnknown_030012C8.unkC < gUnknown_030012C8.unk10 + 2)
         {
-            if (sSendRecvMgr.isParent)
+            if (gUnknown_030012C8.unk0[0])
                 REG_TM3CNT_H |= TIMER_ENABLE;
             else
-                EnableSio();
+                sub_81D413C();
         }
         else
         {
-            sSendRecvMgr.state = EREADER_XFR_STATE_TRANSFER_DONE;
-            sCounter1 = 0;
+            gUnknown_030012C8.unk0[1] = 4;
+            gUnknown_030012E6 = 0;
         }
         break;
-    case EREADER_XFR_STATE_CHECKSUM:
-        if (!sSendRecvMgr.isParent)
-            REG_SIOMLT_SEND = sSendRecvMgr.checksumResult;
+    case 5:
+        if (!gUnknown_030012C8.unk0[0])
+            REG_SIOMLT_SEND = gUnknown_030012C8.unk0[3];
 
-        *(vu64 *)recv = REG_SIOMLT_RECV;
-        if (recv[1] == EREADER_CHECKSUM_OK || recv[1] == EREADER_CHECKSUM_ERR)
+        *(u64 *)recvBuffer = REG_SIOMLT_RECV;
+        var0 = recvBuffer[1] - 1;
+        if (var0 < 2)
         {
-            if (sSendRecvMgr.isParent == TRUE)
-                sSendRecvMgr.checksumResult = recv[1]; // EReader has (in)validated the payload
+            if (gUnknown_030012C8.unk0[0] == 1)
+                gUnknown_030012C8.unk0[3] = recvBuffer[1];
 
-            sSendRecvMgr.state = EREADER_XFR_STATE_DONE;
+            gUnknown_030012C8.unk0[1] = 6;
         }
         break;
     }
 }
 
-static void EnableSio(void)
+static void sub_81D413C(void)
 {
     REG_SIOCNT |= SIO_ENABLE;
 }
 
-static void DisableTm3(void)
+static void sub_81D414C(void)
 {
     REG_TM3CNT_H &= ~TIMER_ENABLE;
     REG_TM3CNT_L = 0xFDA7;
 }
 
-static void GetKeyInput(void)
+static void sub_81D4170(void)
 {
-    int rawKeys = REG_KEYINPUT ^ KEYS_MASK;
-    sJoyNew = rawKeys & ~sJoyNewOrRepeated;
-    sJoyNewOrRepeated = rawKeys;
+    int keysMask = REG_KEYINPUT ^ KEYS_MASK;
+    gUnknown_030012E2 = keysMask & ~gUnknown_030012E0;
+    gUnknown_030012E0 = keysMask;
 }
 
 void EReaderHelper_SaveRegsState(void)
 {
-    sSavedIme = REG_IME;
-    sSavedIe = REG_IE;
-    sSavedTm3Cnt = REG_TM3CNT_H;
-    sSavedSioCnt = REG_SIOCNT;
-    sSavedRCnt = REG_RCNT;
+    gUnknown_030012EC = REG_IME;
+    gUnknown_030012EE = REG_IE;
+    gUnknown_030012F0 = REG_TM3CNT_H;
+    gUnknown_030012F2 = REG_SIOCNT;
+    gUnknown_030012F4 = REG_RCNT;
 }
 
 void EReaderHelper_RestoreRegsState(void)
 {
-    REG_IME = sSavedIme;
-    REG_IE = sSavedIe;
-    REG_TM3CNT_H = sSavedTm3Cnt;
-    REG_SIOCNT = sSavedSioCnt;
-    REG_RCNT = sSavedRCnt;
+    REG_IME = gUnknown_030012EC;
+    REG_IE = gUnknown_030012EE;
+    REG_TM3CNT_H = gUnknown_030012F0;
+    REG_SIOCNT = gUnknown_030012F2;
+    REG_RCNT = gUnknown_030012F4;
 }
 
-void EReaderHelper_ClearSendRecvMgr(void)
+void sub_81D4238(void)
 {
-    CpuFill32(0, &sSendRecvMgr, sizeof(sSendRecvMgr));
+    CpuFill32(0, &gUnknown_030012C8, sizeof(struct Unknown030012C8));
 }

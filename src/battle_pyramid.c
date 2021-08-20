@@ -933,7 +933,7 @@ static void SavePyramidChallenge(void)
     gSaveBlock2Ptr->frontier.challengeStatus = gSpecialVar_0x8005;
     VarSet(VAR_TEMP_0, 0);
     gSaveBlock2Ptr->frontier.challengePaused = TRUE;
-    SaveMapView();
+    save_serialize_map();
     TrySavingData(SAVE_LINK);
 }
 
@@ -1399,12 +1399,8 @@ void GenerateBattlePyramidWildMon(void)
     for (i = 0; i < MAX_MON_MOVES; i++)
         SetMonMoveSlot(&gEnemyParty[0], wildMons[id].moves[i], i);
 
-    // UB: Reading outside the array as lvl was used for mon level instead of frontier lvl mode.
-    #ifndef UBFIX
+    // BUG: Reading outside the array as lvl was used for mon level instead of frontier lvl mode.
     if (gSaveBlock2Ptr->frontier.pyramidWinStreaks[lvl] >= 140)
-    #else
-    if (gSaveBlock2Ptr->frontier.pyramidWinStreaks[gSaveBlock2Ptr->frontier.lvlMode] >= 140)
-    #endif
     {
         id = (Random() % 17) + 15;
         for (i = 0; i < NUM_STATS; i++)
@@ -1761,9 +1757,7 @@ static bool8 SetPyramidObjectPositionsInAndNearSquare(u8 objType, u8 squareId)
 
         r7 &= 1;
     }
-    #ifdef BUGFIX
-    free(floorLayoutOffsets);
-    #endif
+    // free(floorLayoutOffsets); BUG: floorLayoutOffsets memory not freed
 
     return (numObjects / 2) > numPlacedObjects;
 }
@@ -1815,9 +1809,7 @@ static bool8 SetPyramidObjectPositionsNearSquare(u8 objType, u8 squareId)
         if (r8 == 4)
             break;
     }
-    #ifdef BUGFIX
-    free(floorLayoutOffsets);
-    #endif
+    // free(floorLayoutOffsets); BUG: floorLayoutOffsets memory not freed
 
     return (numObjects / 2) > numPlacedObjects;
 }

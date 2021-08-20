@@ -1,5 +1,6 @@
 #ifndef GUARD_EVENT_DATA_H
 #define GUARD_EVENT_DATA_H
+#define NUM_SOFT_CAPS 9
 
 void InitEventData(void);
 void ClearTempFieldEventData(void);
@@ -20,10 +21,12 @@ void EnableResetRTC(void);
 bool32 CanResetRTC(void);
 u16 *GetVarPointer(u16 id);
 u16 VarGet(u16 id);
+u16 VarGetIfExist(u16 id);
 bool8 VarSet(u16 id, u16 value);
 u8 VarGetObjectEventGraphicsId(u8 id);
 u8 *GetFlagPointer(u16 id);
 u8 FlagSet(u16 id);
+u8 FlagToggle(u16 id);
 u8 FlagClear(u16 id);
 bool8 FlagGet(u16 id);
 
@@ -45,5 +48,8 @@ extern u16 gSpecialVar_Facing;
 extern u16 gSpecialVar_MonBoxId;
 extern u16 gSpecialVar_MonBoxPos;
 extern u16 gSpecialVar_Unused_0x8014;
+
+extern const u16 sLevelCapFlags[NUM_SOFT_CAPS];
+extern const u16 sLevelCaps[NUM_SOFT_CAPS];
 
 #endif // GUARD_EVENT_DATA_H

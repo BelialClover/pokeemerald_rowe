@@ -401,7 +401,7 @@
 #define TRAINER_AARON                       397
 #define TRAINER_PERRY                       398
 #define TRAINER_HUGH                        399
-#define TRAINER_PHIL                        400
+#define TRAINER_DANNY                        400
 #define TRAINER_JARED                       401
 #define TRAINER_HUMBERTO                    402
 #define TRAINER_PRESLEY                     403
@@ -509,7 +509,7 @@
 #define TRAINER_KAYLEY                      505
 #define TRAINER_AURON                       506
 #define TRAINER_KELVIN                      507
-#define TRAINER_MARLEY                      508
+#define TRAINER_TYLER                       508
 #define TRAINER_REYNA                       509
 #define TRAINER_HUDSON                      510
 #define TRAINER_CONOR                       511

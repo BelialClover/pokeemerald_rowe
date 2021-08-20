@@ -53,6 +53,7 @@
 	.include "src/pokenav_conditions_2.o"
 	.include "src/pokenav_ribbons_2.o"
 	.include "src/ereader_helpers.o"
+	.include "src/soar.o"
 	.include "src/faraway_island.o"
 	.include "src/m4a_1.o"
 	.include "src/agb_flash.o"

@@ -48,12 +48,6 @@
 
 #define FLYDESTICON_RED_OUTLINE 6
 
-enum {
-    TAG_CURSOR,
-    TAG_PLAYER_ICON,
-    TAG_FLY_ICON,
-};
-
 // Static type declarations
 
 struct MultiNameFlyDest
@@ -77,7 +71,7 @@ static EWRAM_DATA struct {
     bool8 choseFlyLocation;
 } *sFlyMap = NULL;
 
-static bool32 sDrawFlyDestTextWindow;
+static bool32 gUnknown_03001180;
 
 // Static ROM declarations
 
@@ -90,7 +84,7 @@ static u16 GetMapSecIdAt(u16 x, u16 y);
 static void RegionMap_SetBG2XAndBG2Y(s16 x, s16 y);
 static void InitMapBasedOnPlayerLocation(void);
 static void RegionMap_InitializeStateBasedOnSSTidalLocation(void);
-static u8 GetMapsecType(u16 mapSecId);
+u8 GetMapsecType(u16 mapSecId);
 static u16 CorrectSpecialMapSecId_Internal(u16 mapSecId);
 static u16 GetTerraOrMarineCaveMapSecId(void);
 static void GetMarineCaveCoords(u16 *x, u16 *y);
@@ -121,9 +115,9 @@ static void CB_ExitFlyMap(void);
 static const u16 sRegionMapCursorPal[] = INCBIN_U16("graphics/pokenav/cursor.gbapal");
 static const u32 sRegionMapCursorSmallGfxLZ[] = INCBIN_U32("graphics/pokenav/cursor_small.4bpp.lz");
 static const u32 sRegionMapCursorLargeGfxLZ[] = INCBIN_U32("graphics/pokenav/cursor_large.4bpp.lz");
-static const u16 sRegionMapBg_Pal[] = INCBIN_U16("graphics/pokenav/region_map.gbapal");
-static const u32 sRegionMapBg_GfxLZ[] = INCBIN_U32("graphics/pokenav/region_map.8bpp.lz");
-static const u32 sRegionMapBg_TilemapLZ[] = INCBIN_U32("graphics/pokenav/region_map_map.bin.lz");
+const u16 sRegionMapBg_Pal[] = INCBIN_U16("graphics/pokenav/region_map.gbapal");
+const u32 sRegionMapBg_GfxLZ[] = INCBIN_U32("graphics/pokenav/region_map.8bpp.lz");
+const u32 sRegionMapBg_TilemapLZ[] = INCBIN_U32("graphics/pokenav/region_map_map.bin.lz");
 static const u16 sRegionMapPlayerIcon_BrendanPal[] = INCBIN_U16("graphics/pokenav/brendan_icon.gbapal");
 static const u8 sRegionMapPlayerIcon_BrendanGfx[] = INCBIN_U8("graphics/pokenav/brendan_icon.4bpp");
 static const u16 sRegionMapPlayerIcon_MayPal[] = INCBIN_U16("graphics/pokenav/may_icon.gbapal");
@@ -137,11 +131,7 @@ static const u16 sRegionMap_SpecialPlaceLocations[][2] =
 {
     {MAPSEC_UNDERWATER_105,             MAPSEC_ROUTE_105},
     {MAPSEC_UNDERWATER_124,             MAPSEC_ROUTE_124},
-    #ifdef BUGFIX
-    {MAPSEC_UNDERWATER_125,             MAPSEC_ROUTE_125},
-    #else
     {MAPSEC_UNDERWATER_125,             MAPSEC_ROUTE_129}, // BUG: Map will incorrectly display the name of Route 129 when diving on Route 125 (for Marine Cave only)
-    #endif
     {MAPSEC_UNDERWATER_126,             MAPSEC_ROUTE_126},
     {MAPSEC_UNDERWATER_127,             MAPSEC_ROUTE_127},
     {MAPSEC_UNDERWATER_128,             MAPSEC_ROUTE_128},
@@ -243,13 +233,13 @@ static const union AnimCmd *const sRegionMapCursorAnimTable[] =
 static const struct SpritePalette sRegionMapCursorSpritePalette =
 {
     .data = sRegionMapCursorPal,
-    .tag = TAG_CURSOR
+    .tag = 0
 };
 
 static const struct SpriteTemplate sRegionMapCursorSpriteTemplate =
 {
-    .tileTag = TAG_CURSOR,
-    .paletteTag = TAG_CURSOR,
+    .tileTag = 0,
+    .paletteTag = 0,
     .oam = &sRegionMapCursorOam,
     .anims = sRegionMapCursorAnimTable,
     .images = NULL,
@@ -293,7 +283,7 @@ static const u16 sFlyTargetIcons_Pal[] = INCBIN_U16("graphics/pokenav/fly_target
 
 static const u32 sFlyTargetIcons_Gfx[] = INCBIN_U32("graphics/pokenav/fly_target_icons.4bpp.lz");
 
-static const u8 sMapHealLocations[][3] =
+const u8 sMapHealLocations[][3] =
 {
     {MAP_GROUP(LITTLEROOT_TOWN), MAP_NUM(LITTLEROOT_TOWN), HEAL_LOCATION_LITTLEROOT_TOWN_BRENDANS_HOUSE_2F},
     {MAP_GROUP(OLDALE_TOWN), MAP_NUM(OLDALE_TOWN), HEAL_LOCATION_OLDALE_TOWN},
@@ -311,40 +301,41 @@ static const u8 sMapHealLocations[][3] =
     {MAP_GROUP(MOSSDEEP_CITY), MAP_NUM(MOSSDEEP_CITY), HEAL_LOCATION_MOSSDEEP_CITY},
     {MAP_GROUP(SOOTOPOLIS_CITY), MAP_NUM(SOOTOPOLIS_CITY), HEAL_LOCATION_SOOTOPOLIS_CITY},
     {MAP_GROUP(EVER_GRANDE_CITY), MAP_NUM(EVER_GRANDE_CITY), HEAL_LOCATION_EVER_GRANDE_CITY},
-    {MAP_GROUP(ROUTE101), MAP_NUM(ROUTE101), 0},
-    {MAP_GROUP(ROUTE102), MAP_NUM(ROUTE102), 0},
-    {MAP_GROUP(ROUTE103), MAP_NUM(ROUTE103), 0},
-    {MAP_GROUP(ROUTE104), MAP_NUM(ROUTE104), 0},
-    {MAP_GROUP(ROUTE105), MAP_NUM(ROUTE105), 0},
-    {MAP_GROUP(ROUTE106), MAP_NUM(ROUTE106), 0},
-    {MAP_GROUP(ROUTE107), MAP_NUM(ROUTE107), 0},
-    {MAP_GROUP(ROUTE108), MAP_NUM(ROUTE108), 0},
-    {MAP_GROUP(ROUTE109), MAP_NUM(ROUTE109), 0},
-    {MAP_GROUP(ROUTE110), MAP_NUM(ROUTE110), 0},
-    {MAP_GROUP(ROUTE111), MAP_NUM(ROUTE111), 0},
-    {MAP_GROUP(ROUTE112), MAP_NUM(ROUTE112), 0},
-    {MAP_GROUP(ROUTE113), MAP_NUM(ROUTE113), 0},
-    {MAP_GROUP(ROUTE114), MAP_NUM(ROUTE114), 0},
-    {MAP_GROUP(ROUTE115), MAP_NUM(ROUTE115), 0},
-    {MAP_GROUP(ROUTE116), MAP_NUM(ROUTE116), 0},
-    {MAP_GROUP(ROUTE117), MAP_NUM(ROUTE117), 0},
-    {MAP_GROUP(ROUTE118), MAP_NUM(ROUTE118), 0},
-    {MAP_GROUP(ROUTE119), MAP_NUM(ROUTE119), 0},
-    {MAP_GROUP(ROUTE120), MAP_NUM(ROUTE120), 0},
-    {MAP_GROUP(ROUTE121), MAP_NUM(ROUTE121), 0},
-    {MAP_GROUP(ROUTE122), MAP_NUM(ROUTE122), 0},
-    {MAP_GROUP(ROUTE123), MAP_NUM(ROUTE123), 0},
-    {MAP_GROUP(ROUTE124), MAP_NUM(ROUTE124), 0},
-    {MAP_GROUP(ROUTE125), MAP_NUM(ROUTE125), 0},
-    {MAP_GROUP(ROUTE126), MAP_NUM(ROUTE126), 0},
-    {MAP_GROUP(ROUTE127), MAP_NUM(ROUTE127), 0},
-    {MAP_GROUP(ROUTE128), MAP_NUM(ROUTE128), 0},
-    {MAP_GROUP(ROUTE129), MAP_NUM(ROUTE129), 0},
-    {MAP_GROUP(ROUTE130), MAP_NUM(ROUTE130), 0},
-    {MAP_GROUP(ROUTE131), MAP_NUM(ROUTE131), 0},
-    {MAP_GROUP(ROUTE132), MAP_NUM(ROUTE132), 0},
-    {MAP_GROUP(ROUTE133), MAP_NUM(ROUTE133), 0},
-    {MAP_GROUP(ROUTE134), MAP_NUM(ROUTE134), 0}
+	{MAP_GROUP(ROUTE101), MAP_NUM(ROUTE101), HEAL_LOCATION_ROUTE101},
+	{MAP_GROUP(ROUTE102), MAP_NUM(ROUTE102), HEAL_LOCATION_ROUTE102},
+	{MAP_GROUP(ROUTE103), MAP_NUM(ROUTE103), HEAL_LOCATION_ROUTE103},
+	{MAP_GROUP(ROUTE104), MAP_NUM(ROUTE104), HEAL_LOCATION_ROUTE104},
+	{MAP_GROUP(ROUTE105), MAP_NUM(ROUTE105), HEAL_LOCATION_ROUTE105},
+	{MAP_GROUP(ROUTE106), MAP_NUM(ROUTE106), HEAL_LOCATION_ROUTE106},
+	{MAP_GROUP(ROUTE107), MAP_NUM(ROUTE107), HEAL_LOCATION_ROUTE107},
+	{MAP_GROUP(ROUTE108), MAP_NUM(ROUTE108), HEAL_LOCATION_ROUTE108},
+	{MAP_GROUP(ROUTE109), MAP_NUM(ROUTE109), HEAL_LOCATION_ROUTE109},
+	{MAP_GROUP(ROUTE110), MAP_NUM(ROUTE110), HEAL_LOCATION_ROUTE110},
+	{MAP_GROUP(ROUTE111), MAP_NUM(ROUTE111), HEAL_LOCATION_ROUTE111},
+	{MAP_GROUP(ROUTE112), MAP_NUM(ROUTE112), HEAL_LOCATION_ROUTE112},
+	{MAP_GROUP(ROUTE113), MAP_NUM(ROUTE113), HEAL_LOCATION_ROUTE113},
+	{MAP_GROUP(ROUTE114), MAP_NUM(ROUTE114), HEAL_LOCATION_ROUTE114},
+	{MAP_GROUP(ROUTE115), MAP_NUM(ROUTE115), HEAL_LOCATION_ROUTE115},
+	{MAP_GROUP(ROUTE116), MAP_NUM(ROUTE116), HEAL_LOCATION_ROUTE116},
+	{MAP_GROUP(ROUTE117), MAP_NUM(ROUTE117), HEAL_LOCATION_ROUTE117},
+	{MAP_GROUP(ROUTE118), MAP_NUM(ROUTE118), HEAL_LOCATION_ROUTE118},
+	{MAP_GROUP(ROUTE119), MAP_NUM(ROUTE119), HEAL_LOCATION_ROUTE119},
+	{MAP_GROUP(ROUTE120), MAP_NUM(ROUTE120), HEAL_LOCATION_ROUTE120},
+	{MAP_GROUP(ROUTE121), MAP_NUM(ROUTE121), HEAL_LOCATION_ROUTE121},
+	{MAP_GROUP(ROUTE122), MAP_NUM(ROUTE122), HEAL_LOCATION_ROUTE122},
+	{MAP_GROUP(ROUTE123), MAP_NUM(ROUTE123), HEAL_LOCATION_ROUTE123},
+	{MAP_GROUP(ROUTE124), MAP_NUM(ROUTE124), HEAL_LOCATION_ROUTE124},
+	{MAP_GROUP(ROUTE125), MAP_NUM(ROUTE125), HEAL_LOCATION_ROUTE125},
+	{MAP_GROUP(ROUTE126), MAP_NUM(ROUTE126), HEAL_LOCATION_ROUTE126},
+	{MAP_GROUP(ROUTE127), MAP_NUM(ROUTE127), HEAL_LOCATION_ROUTE127},
+	{MAP_GROUP(ROUTE128), MAP_NUM(ROUTE128), HEAL_LOCATION_ROUTE128},
+	{MAP_GROUP(ROUTE129), MAP_NUM(ROUTE129), HEAL_LOCATION_ROUTE129},
+	{MAP_GROUP(ROUTE130), MAP_NUM(ROUTE130), HEAL_LOCATION_ROUTE130},
+	{MAP_GROUP(ROUTE131), MAP_NUM(ROUTE131), HEAL_LOCATION_ROUTE131},
+	{MAP_GROUP(ROUTE132), MAP_NUM(ROUTE132), HEAL_LOCATION_ROUTE132},
+	{MAP_GROUP(ROUTE133), MAP_NUM(ROUTE133), HEAL_LOCATION_ROUTE133},
+	{MAP_GROUP(ROUTE134), MAP_NUM(ROUTE134), HEAL_LOCATION_ROUTE134},
+	{MAP_GROUP(MT_CHIMNEY), MAP_NUM(MT_CHIMNEY), HEAL_LOCATION_MT_CHIMNEY}
 };
 
 static const u8 *const sEverGrandeCityNames[] =
@@ -425,7 +416,7 @@ static const struct WindowTemplate sFlyMapWindowTemplates[] =
 static const struct SpritePalette sFlyTargetIconsSpritePalette =
 {
     .data = sFlyTargetIcons_Pal,
-    .tag = TAG_FLY_ICON
+    .tag = 2
 };
 
 static const u16 sRedOutlineFlyDestinations[][2] =
@@ -503,8 +494,8 @@ static const union AnimCmd *const sFlyDestIcon_Anims[] =
 
 static const struct SpriteTemplate sFlyDestIconSpriteTemplate =
 {
-    .tileTag = TAG_FLY_ICON,
-    .paletteTag = TAG_FLY_ICON,
+    .tileTag = 2,
+    .paletteTag = 2,
     .oam = &sFlyDestIcon_OamData,
     .anims = sFlyDestIcon_Anims,
     .images = NULL,
@@ -627,7 +618,7 @@ bool8 LoadRegionMapGfx(void)
     return TRUE;
 }
 
-void BlendRegionMap(u16 color, u32 coeff)
+void sub_8123030(u16 color, u32 coeff)
 {
     BlendPalettes(0x380, coeff, color);
     CpuCopy16(gPlttBufferFaded + 0x70, gPlttBufferUnfaded + 0x70, 0x60);
@@ -958,8 +949,8 @@ void PokedexAreaScreen_UpdateRegionMapVariablesAndVideoRegs(s16 x, s16 y)
     UpdateRegionMapVideoRegs();
     if (gRegionMap->playerIconSprite != NULL)
     {
-        gRegionMap->playerIconSprite->x2 = -x;
-        gRegionMap->playerIconSprite->y2 = -y;
+        gRegionMap->playerIconSprite->pos2.x = -x;
+        gRegionMap->playerIconSprite->pos2.y = -y;
     }
 }
 
@@ -974,159 +965,162 @@ static u16 GetMapSecIdAt(u16 x, u16 y)
     return sRegionMap_MapSectionLayout[x + y * MAP_WIDTH];
 }
 
-static void InitMapBasedOnPlayerLocation(void)
+void RegionMap_GetSectionCoordsFromCurrFieldPos(u16 *mapSectionId, u16 *cursorPosX, u16 *cursorPosY, bool8 *playerIsInCave)
 {
-    const struct MapHeader *mapHeader;
-    u16 mapWidth;
-    u16 mapHeight;
-    u16 x;
-    u16 y;
-    u16 dimensionScale;
-    u16 xOnMap;
-    struct WarpData *warp;
+	const struct MapHeader *mapHeader;
+	u16 mapWidth;
+	u16 mapHeight;
+	u16 x;
+	u16 y;
+	u16 dimensionScale;
+	u16 xOnMap;
+	struct WarpData *warp;
 
-    if (gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(SS_TIDAL_CORRIDOR)
-        && (gSaveBlock1Ptr->location.mapNum == MAP_NUM(SS_TIDAL_CORRIDOR)
-            || gSaveBlock1Ptr->location.mapNum == MAP_NUM(SS_TIDAL_LOWER_DECK)
-            || gSaveBlock1Ptr->location.mapNum == MAP_NUM(SS_TIDAL_ROOMS)))
+	if (gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(SS_TIDAL_CORRIDOR)
+		&& (gSaveBlock1Ptr->location.mapNum == MAP_NUM(SS_TIDAL_CORRIDOR)
+			|| gSaveBlock1Ptr->location.mapNum == MAP_NUM(SS_TIDAL_LOWER_DECK)
+			|| gSaveBlock1Ptr->location.mapNum == MAP_NUM(SS_TIDAL_ROOMS)))
+	{
+		RegionMap_InitializeStateBasedOnSSTidalLocation();
+		return;
+	}
+
+	switch (GetMapTypeByGroupAndId(gSaveBlock1Ptr->location.mapGroup, gSaveBlock1Ptr->location.mapNum))
+	{
+	default:
+	case MAP_TYPE_TOWN:
+	case MAP_TYPE_CITY:
+	case MAP_TYPE_ROUTE:
+	case MAP_TYPE_UNDERWATER:
+	case MAP_TYPE_OCEAN_ROUTE:
+		*mapSectionId = gMapHeader.regionMapSectionId;
+		*playerIsInCave = FALSE;
+		mapWidth = gMapHeader.mapLayout->width;
+		mapHeight = gMapHeader.mapLayout->height;
+		x = gSaveBlock1Ptr->pos.x;
+		y = gSaveBlock1Ptr->pos.y;
+		if (*mapSectionId == MAPSEC_UNDERWATER_SEAFLOOR_CAVERN || *mapSectionId == MAPSEC_UNDERWATER_MARINE_CAVE)
+			*playerIsInCave = TRUE;
+		break;
+	case MAP_TYPE_UNDERGROUND:
+	case MAP_TYPE_UNKNOWN:
+		if (gMapHeader.flags & MAP_ALLOW_ESCAPING)
+		{
+			mapHeader = Overworld_GetMapHeaderByGroupAndId(gSaveBlock1Ptr->escapeWarp.mapGroup, gSaveBlock1Ptr->escapeWarp.mapNum);
+			*mapSectionId = mapHeader->regionMapSectionId;
+			*playerIsInCave = TRUE;
+			mapWidth = mapHeader->mapLayout->width;
+			mapHeight = mapHeader->mapLayout->height;
+			x = gSaveBlock1Ptr->escapeWarp.x;
+			y = gSaveBlock1Ptr->escapeWarp.y;
+		}
+		else
+		{
+			*mapSectionId = gMapHeader.regionMapSectionId;
+			*playerIsInCave = TRUE;
+			mapWidth = 1;
+			mapHeight = 1;
+			x = 1;
+			y = 1;
+		}
+		break;
+	case MAP_TYPE_SECRET_BASE:
+		mapHeader = Overworld_GetMapHeaderByGroupAndId((u16)gSaveBlock1Ptr->dynamicWarp.mapGroup, (u16)gSaveBlock1Ptr->dynamicWarp.mapNum);
+		*mapSectionId = mapHeader->regionMapSectionId;
+		*playerIsInCave = TRUE;
+		mapWidth = mapHeader->mapLayout->width;
+		mapHeight = mapHeader->mapLayout->height;
+		x = gSaveBlock1Ptr->dynamicWarp.x;
+		y = gSaveBlock1Ptr->dynamicWarp.y;
+		break;
+	case MAP_TYPE_INDOOR:
+		*mapSectionId = gMapHeader.regionMapSectionId;
+		if (*mapSectionId != MAPSEC_DYNAMIC)
+		{
+			warp = &gSaveBlock1Ptr->escapeWarp;
+			mapHeader = Overworld_GetMapHeaderByGroupAndId(warp->mapGroup, warp->mapNum);
+		}
+		else
+		{
+			warp = &gSaveBlock1Ptr->dynamicWarp;
+			mapHeader = Overworld_GetMapHeaderByGroupAndId(warp->mapGroup, warp->mapNum);
+			*mapSectionId = mapHeader->regionMapSectionId;
+		}
+
+		if (IsPlayerInAquaHideout(*mapSectionId))
+			*playerIsInCave = TRUE;
+		else
+			*playerIsInCave = FALSE;
+
+		mapWidth = mapHeader->mapLayout->width;
+		mapHeight = mapHeader->mapLayout->height;
+		x = warp->x;
+		y = warp->y;
+		break;
+	}
+
+	xOnMap = x;
+
+	dimensionScale = mapWidth / gRegionMapEntries[*mapSectionId].width;
+	if (dimensionScale == 0)
     {
-        RegionMap_InitializeStateBasedOnSSTidalLocation();
-        return;
+		dimensionScale = 1;
+    }
+	x /= dimensionScale;
+	if (x >= gRegionMapEntries[*mapSectionId].width)
+    {
+		x = gRegionMapEntries[*mapSectionId].width - 1;
     }
 
-    switch (GetMapTypeByGroupAndId(gSaveBlock1Ptr->location.mapGroup, gSaveBlock1Ptr->location.mapNum))
+	dimensionScale = mapHeight / gRegionMapEntries[*mapSectionId].height;
+	if (dimensionScale == 0)
     {
-    default:
-    case MAP_TYPE_TOWN:
-    case MAP_TYPE_CITY:
-    case MAP_TYPE_ROUTE:
-    case MAP_TYPE_UNDERWATER:
-    case MAP_TYPE_OCEAN_ROUTE:
-        gRegionMap->mapSecId = gMapHeader.regionMapSectionId;
-        gRegionMap->playerIsInCave = FALSE;
-        mapWidth = gMapHeader.mapLayout->width;
-        mapHeight = gMapHeader.mapLayout->height;
-        x = gSaveBlock1Ptr->pos.x;
-        y = gSaveBlock1Ptr->pos.y;
-        if (gRegionMap->mapSecId == MAPSEC_UNDERWATER_SEAFLOOR_CAVERN || gRegionMap->mapSecId == MAPSEC_UNDERWATER_MARINE_CAVE)
-            gRegionMap->playerIsInCave = TRUE;
-        break;
-    case MAP_TYPE_UNDERGROUND:
-    case MAP_TYPE_UNKNOWN:
-        if (gMapHeader.allowEscaping)
-        {
-            mapHeader = Overworld_GetMapHeaderByGroupAndId(gSaveBlock1Ptr->escapeWarp.mapGroup, gSaveBlock1Ptr->escapeWarp.mapNum);
-            gRegionMap->mapSecId = mapHeader->regionMapSectionId;
-            gRegionMap->playerIsInCave = TRUE;
-            mapWidth = mapHeader->mapLayout->width;
-            mapHeight = mapHeader->mapLayout->height;
-            x = gSaveBlock1Ptr->escapeWarp.x;
-            y = gSaveBlock1Ptr->escapeWarp.y;
-        }
-        else
-        {
-            gRegionMap->mapSecId = gMapHeader.regionMapSectionId;
-            gRegionMap->playerIsInCave = TRUE;
-            mapWidth = 1;
-            mapHeight = 1;
-            x = 1;
-            y = 1;
-        }
-        break;
-    case MAP_TYPE_SECRET_BASE:
-        mapHeader = Overworld_GetMapHeaderByGroupAndId((u16)gSaveBlock1Ptr->dynamicWarp.mapGroup, (u16)gSaveBlock1Ptr->dynamicWarp.mapNum);
-        gRegionMap->mapSecId = mapHeader->regionMapSectionId;
-        gRegionMap->playerIsInCave = TRUE;
-        mapWidth = mapHeader->mapLayout->width;
-        mapHeight = mapHeader->mapLayout->height;
-        x = gSaveBlock1Ptr->dynamicWarp.x;
-        y = gSaveBlock1Ptr->dynamicWarp.y;
-        break;
-    case MAP_TYPE_INDOOR:
-        gRegionMap->mapSecId = gMapHeader.regionMapSectionId;
-        if (gRegionMap->mapSecId != MAPSEC_DYNAMIC)
-        {
-            warp = &gSaveBlock1Ptr->escapeWarp;
-            mapHeader = Overworld_GetMapHeaderByGroupAndId(warp->mapGroup, warp->mapNum);
-        }
-        else
-        {
-            warp = &gSaveBlock1Ptr->dynamicWarp;
-            mapHeader = Overworld_GetMapHeaderByGroupAndId(warp->mapGroup, warp->mapNum);
-            gRegionMap->mapSecId = mapHeader->regionMapSectionId;
-        }
-
-        if (IsPlayerInAquaHideout(gRegionMap->mapSecId))
-            gRegionMap->playerIsInCave = TRUE;
-        else
-            gRegionMap->playerIsInCave = FALSE;
-
-        mapWidth = mapHeader->mapLayout->width;
-        mapHeight = mapHeader->mapLayout->height;
-        x = warp->x;
-        y = warp->y;
-        break;
+		dimensionScale = 1;
+    }
+	y /= dimensionScale;
+	if (y >= gRegionMapEntries[*mapSectionId].height)
+    {
+		y = gRegionMapEntries[*mapSectionId].height - 1;
     }
 
-    xOnMap = x;
-
-    dimensionScale = mapWidth / gRegionMapEntries[gRegionMap->mapSecId].width;
-    if (dimensionScale == 0)
-    {
-        dimensionScale = 1;
-    }
-    x /= dimensionScale;
-    if (x >= gRegionMapEntries[gRegionMap->mapSecId].width)
-    {
-        x = gRegionMapEntries[gRegionMap->mapSecId].width - 1;
-    }
-
-    dimensionScale = mapHeight / gRegionMapEntries[gRegionMap->mapSecId].height;
-    if (dimensionScale == 0)
-    {
-        dimensionScale = 1;
-    }
-    y /= dimensionScale;
-    if (y >= gRegionMapEntries[gRegionMap->mapSecId].height)
-    {
-        y = gRegionMapEntries[gRegionMap->mapSecId].height - 1;
-    }
-
-    switch (gRegionMap->mapSecId)
-    {
-    case MAPSEC_ROUTE_114:
-        if (y != 0)
-            x = 0;
-        break;
-    case MAPSEC_ROUTE_126:
-    case MAPSEC_UNDERWATER_126:
-        x = 0;
-        if (gSaveBlock1Ptr->pos.x > 32)
-            x++;
-        if (gSaveBlock1Ptr->pos.x > 51)
-            x++;
-
-        y = 0;
-        if (gSaveBlock1Ptr->pos.y > 37)
-            y++;
-        if (gSaveBlock1Ptr->pos.y > 56)
-            y++;
-        break;
-    case MAPSEC_ROUTE_121:
-        x = 0;
-        if (xOnMap > 14)
-            x++;
-        if (xOnMap > 28)
-            x++;
-        if (xOnMap > 54)
-            x++;
-        break;
-    case MAPSEC_UNDERWATER_MARINE_CAVE:
+	switch (*mapSectionId)
+	{
+	case MAPSEC_ROUTE_114:
+		if (y != 0)
+			x = 0;
+		break;
+	case MAPSEC_ROUTE_126:
+	case MAPSEC_UNDERWATER_126:
+		x = 0;
+		if (gSaveBlock1Ptr->pos.x > 32)
+			x = 1;
+		if (gSaveBlock1Ptr->pos.x > 51)
+			x++;
+		y = 0;
+		if (gSaveBlock1Ptr->pos.y > 37)
+			y = 1;
+		if (gSaveBlock1Ptr->pos.y > 56)
+			y++;
+		break;
+	case MAPSEC_ROUTE_121:
+		x = 0;
+		if (xOnMap > 14)
+			x = 1;
+		if (xOnMap > 28)
+			x++;
+		if (xOnMap > 54)
+			x++;
+		break;
+	case MAPSEC_UNDERWATER_MARINE_CAVE:
         GetMarineCaveCoords(&gRegionMap->cursorPosX, &gRegionMap->cursorPosY);
-        return;
-    }
-    gRegionMap->cursorPosX = gRegionMapEntries[gRegionMap->mapSecId].x + x + MAPCURSOR_X_MIN;
-    gRegionMap->cursorPosY = gRegionMapEntries[gRegionMap->mapSecId].y + y + MAPCURSOR_Y_MIN;
+		return;
+	}
+	*cursorPosX = gRegionMapEntries[*mapSectionId].x + x + MAPCURSOR_X_MIN;
+	*cursorPosY = gRegionMapEntries[*mapSectionId].y + y + MAPCURSOR_Y_MIN;
+}
+
+static void InitMapBasedOnPlayerLocation(void) {
+	RegionMap_GetSectionCoordsFromCurrFieldPos(&gRegionMap->mapSecId, &gRegionMap->cursorPosX, &gRegionMap->cursorPosY, &gRegionMap->playerIsInCave);
 }
 
 static void RegionMap_InitializeStateBasedOnSSTidalLocation(void)
@@ -1181,50 +1175,120 @@ static void RegionMap_InitializeStateBasedOnSSTidalLocation(void)
     gRegionMap->cursorPosY = gRegionMapEntries[gRegionMap->mapSecId].y + y + MAPCURSOR_Y_MIN;
 }
 
-static u8 GetMapsecType(u16 mapSecId)
+u8 GetMapsecType(u16 mapSecId)
 {
     switch (mapSecId)
     {
-    case MAPSEC_NONE:
-        return MAPSECTYPE_NONE;
-    case MAPSEC_LITTLEROOT_TOWN:
-        return FlagGet(FLAG_VISITED_LITTLEROOT_TOWN) ? MAPSECTYPE_CITY_CANFLY : MAPSECTYPE_CITY_CANTFLY;
-    case MAPSEC_OLDALE_TOWN:
-        return FlagGet(FLAG_VISITED_OLDALE_TOWN) ? MAPSECTYPE_CITY_CANFLY : MAPSECTYPE_CITY_CANTFLY;
-    case MAPSEC_DEWFORD_TOWN:
-        return FlagGet(FLAG_VISITED_DEWFORD_TOWN) ? MAPSECTYPE_CITY_CANFLY : MAPSECTYPE_CITY_CANTFLY;
-    case MAPSEC_LAVARIDGE_TOWN:
-        return FlagGet(FLAG_VISITED_LAVARIDGE_TOWN) ? MAPSECTYPE_CITY_CANFLY : MAPSECTYPE_CITY_CANTFLY;
-    case MAPSEC_FALLARBOR_TOWN:
-        return FlagGet(FLAG_VISITED_FALLARBOR_TOWN) ? MAPSECTYPE_CITY_CANFLY : MAPSECTYPE_CITY_CANTFLY;
-    case MAPSEC_VERDANTURF_TOWN:
-        return FlagGet(FLAG_VISITED_VERDANTURF_TOWN) ? MAPSECTYPE_CITY_CANFLY : MAPSECTYPE_CITY_CANTFLY;
-    case MAPSEC_PACIFIDLOG_TOWN:
-        return FlagGet(FLAG_VISITED_PACIFIDLOG_TOWN) ? MAPSECTYPE_CITY_CANFLY : MAPSECTYPE_CITY_CANTFLY;
-    case MAPSEC_PETALBURG_CITY:
-        return FlagGet(FLAG_VISITED_PETALBURG_CITY) ? MAPSECTYPE_CITY_CANFLY : MAPSECTYPE_CITY_CANTFLY;
-    case MAPSEC_SLATEPORT_CITY:
-        return FlagGet(FLAG_VISITED_SLATEPORT_CITY) ? MAPSECTYPE_CITY_CANFLY : MAPSECTYPE_CITY_CANTFLY;
-    case MAPSEC_MAUVILLE_CITY:
-        return FlagGet(FLAG_VISITED_MAUVILLE_CITY) ? MAPSECTYPE_CITY_CANFLY : MAPSECTYPE_CITY_CANTFLY;
-    case MAPSEC_RUSTBORO_CITY:
-        return FlagGet(FLAG_VISITED_RUSTBORO_CITY) ? MAPSECTYPE_CITY_CANFLY : MAPSECTYPE_CITY_CANTFLY;
-    case MAPSEC_FORTREE_CITY:
-        return FlagGet(FLAG_VISITED_FORTREE_CITY) ? MAPSECTYPE_CITY_CANFLY : MAPSECTYPE_CITY_CANTFLY;
-    case MAPSEC_LILYCOVE_CITY:
-        return FlagGet(FLAG_VISITED_LILYCOVE_CITY) ? MAPSECTYPE_CITY_CANFLY : MAPSECTYPE_CITY_CANTFLY;
-    case MAPSEC_MOSSDEEP_CITY:
-        return FlagGet(FLAG_VISITED_MOSSDEEP_CITY) ? MAPSECTYPE_CITY_CANFLY : MAPSECTYPE_CITY_CANTFLY;
-    case MAPSEC_SOOTOPOLIS_CITY:
-        return FlagGet(FLAG_VISITED_SOOTOPOLIS_CITY) ? MAPSECTYPE_CITY_CANFLY : MAPSECTYPE_CITY_CANTFLY;
-    case MAPSEC_EVER_GRANDE_CITY:
-        return FlagGet(FLAG_VISITED_EVER_GRANDE_CITY) ? MAPSECTYPE_CITY_CANFLY : MAPSECTYPE_CITY_CANTFLY;
-    case MAPSEC_BATTLE_FRONTIER:
-        return FlagGet(FLAG_LANDMARK_BATTLE_FRONTIER) ? MAPSECTYPE_BATTLE_FRONTIER : MAPSECTYPE_NONE;
-    case MAPSEC_SOUTHERN_ISLAND:
-        return FlagGet(FLAG_LANDMARK_SOUTHERN_ISLAND) ? MAPSECTYPE_ROUTE : MAPSECTYPE_NONE;
-    default:
-        return MAPSECTYPE_ROUTE;
+        case MAPSEC_NONE:
+            return MAPSECTYPE_NONE;
+        case MAPSEC_LITTLEROOT_TOWN:
+            return FlagGet(FLAG_VISITED_LITTLEROOT_TOWN) ? MAPSECTYPE_CITY_CANFLY : MAPSECTYPE_CITY_CANTFLY;
+        case MAPSEC_OLDALE_TOWN:
+            return FlagGet(FLAG_VISITED_OLDALE_TOWN) ? MAPSECTYPE_CITY_CANFLY : MAPSECTYPE_CITY_CANTFLY;
+        case MAPSEC_DEWFORD_TOWN:
+            return FlagGet(FLAG_VISITED_DEWFORD_TOWN) ? MAPSECTYPE_CITY_CANFLY : MAPSECTYPE_CITY_CANTFLY;
+        case MAPSEC_LAVARIDGE_TOWN:
+            return FlagGet(FLAG_VISITED_LAVARIDGE_TOWN) ? MAPSECTYPE_CITY_CANFLY : MAPSECTYPE_CITY_CANTFLY;
+        case MAPSEC_FALLARBOR_TOWN:
+            return FlagGet(FLAG_VISITED_FALLARBOR_TOWN) ? MAPSECTYPE_CITY_CANFLY : MAPSECTYPE_CITY_CANTFLY;
+        case MAPSEC_VERDANTURF_TOWN:
+            return FlagGet(FLAG_VISITED_VERDANTURF_TOWN) ? MAPSECTYPE_CITY_CANFLY : MAPSECTYPE_CITY_CANTFLY;
+        case MAPSEC_PACIFIDLOG_TOWN:
+            return FlagGet(FLAG_VISITED_PACIFIDLOG_TOWN) ? MAPSECTYPE_CITY_CANFLY : MAPSECTYPE_CITY_CANTFLY;
+        case MAPSEC_PETALBURG_CITY:
+            return FlagGet(FLAG_VISITED_PETALBURG_CITY) ? MAPSECTYPE_CITY_CANFLY : MAPSECTYPE_CITY_CANTFLY;
+        case MAPSEC_SLATEPORT_CITY:
+            return FlagGet(FLAG_VISITED_SLATEPORT_CITY) ? MAPSECTYPE_CITY_CANFLY : MAPSECTYPE_CITY_CANTFLY;
+        case MAPSEC_MAUVILLE_CITY:
+            return FlagGet(FLAG_VISITED_MAUVILLE_CITY) ? MAPSECTYPE_CITY_CANFLY : MAPSECTYPE_CITY_CANTFLY;
+        case MAPSEC_RUSTBORO_CITY:
+            return FlagGet(FLAG_VISITED_RUSTBORO_CITY) ? MAPSECTYPE_CITY_CANFLY : MAPSECTYPE_CITY_CANTFLY;
+        case MAPSEC_FORTREE_CITY:
+            return FlagGet(FLAG_VISITED_FORTREE_CITY) ? MAPSECTYPE_CITY_CANFLY : MAPSECTYPE_CITY_CANTFLY;
+        case MAPSEC_LILYCOVE_CITY:
+            return FlagGet(FLAG_VISITED_LILYCOVE_CITY) ? MAPSECTYPE_CITY_CANFLY : MAPSECTYPE_CITY_CANTFLY;
+        case MAPSEC_MOSSDEEP_CITY:
+            return FlagGet(FLAG_VISITED_MOSSDEEP_CITY) ? MAPSECTYPE_CITY_CANFLY : MAPSECTYPE_CITY_CANTFLY;
+        case MAPSEC_SOOTOPOLIS_CITY:
+            return FlagGet(FLAG_VISITED_SOOTOPOLIS_CITY) ? MAPSECTYPE_CITY_CANFLY : MAPSECTYPE_CITY_CANTFLY;
+        case MAPSEC_EVER_GRANDE_CITY:
+            return FlagGet(FLAG_VISITED_EVER_GRANDE_CITY) ? MAPSECTYPE_CITY_CANFLY : MAPSECTYPE_CITY_CANTFLY;
+        case MAPSEC_BATTLE_FRONTIER:
+            return FlagGet(FLAG_LANDMARK_BATTLE_FRONTIER) ? MAPSECTYPE_BATTLE_FRONTIER : MAPSECTYPE_NONE;
+        case MAPSEC_SOUTHERN_ISLAND:
+            return FlagGet(FLAG_LANDMARK_SOUTHERN_ISLAND) ? MAPSECTYPE_CITY_CANFLY : MAPSECTYPE_NONE;
+		case MAPSEC_ROUTE_101:
+			return FlagGet(FLAG_VISITED_ROUTE101) ? MAPSECTYPE_CITY_CANFLY : MAPSECTYPE_CITY_CANTFLY;
+		case MAPSEC_ROUTE_102:
+			return FlagGet(FLAG_VISITED_ROUTE102) ? MAPSECTYPE_CITY_CANFLY : MAPSECTYPE_CITY_CANTFLY;
+		case MAPSEC_ROUTE_103:
+			return FlagGet(FLAG_VISITED_ROUTE103) ? MAPSECTYPE_CITY_CANFLY : MAPSECTYPE_CITY_CANTFLY;
+		case MAPSEC_ROUTE_104:
+			return FlagGet(FLAG_VISITED_ROUTE104) ? MAPSECTYPE_CITY_CANFLY : MAPSECTYPE_CITY_CANTFLY;
+		case MAPSEC_ROUTE_105:
+			return FlagGet(FLAG_VISITED_ROUTE105) ? MAPSECTYPE_CITY_CANFLY : MAPSECTYPE_CITY_CANTFLY;
+		case MAPSEC_ROUTE_106:
+			return FlagGet(FLAG_VISITED_ROUTE106) ? MAPSECTYPE_CITY_CANFLY : MAPSECTYPE_CITY_CANTFLY;
+		case MAPSEC_ROUTE_107:
+			return FlagGet(FLAG_VISITED_ROUTE107) ? MAPSECTYPE_CITY_CANFLY : MAPSECTYPE_CITY_CANTFLY;
+		case MAPSEC_ROUTE_108:
+			return FlagGet(FLAG_VISITED_ROUTE108) ? MAPSECTYPE_CITY_CANFLY : MAPSECTYPE_CITY_CANTFLY;
+		case MAPSEC_ROUTE_109:
+			return FlagGet(FLAG_VISITED_ROUTE109) ? MAPSECTYPE_CITY_CANFLY : MAPSECTYPE_CITY_CANTFLY;
+		case MAPSEC_ROUTE_110:
+			return FlagGet(FLAG_VISITED_ROUTE110) ? MAPSECTYPE_CITY_CANFLY : MAPSECTYPE_CITY_CANTFLY;
+		case MAPSEC_ROUTE_111:
+			return FlagGet(FLAG_VISITED_ROUTE111) ? MAPSECTYPE_CITY_CANFLY : MAPSECTYPE_CITY_CANTFLY;
+		case MAPSEC_ROUTE_112:
+			return FlagGet(FLAG_VISITED_ROUTE112) ? MAPSECTYPE_CITY_CANFLY : MAPSECTYPE_CITY_CANTFLY;
+		case MAPSEC_ROUTE_113:
+			return FlagGet(FLAG_VISITED_ROUTE113) ? MAPSECTYPE_CITY_CANFLY : MAPSECTYPE_CITY_CANTFLY;
+		case MAPSEC_ROUTE_114:
+			return FlagGet(FLAG_VISITED_ROUTE114) ? MAPSECTYPE_CITY_CANFLY : MAPSECTYPE_CITY_CANTFLY;
+		case MAPSEC_ROUTE_115:
+			return FlagGet(FLAG_VISITED_ROUTE115) ? MAPSECTYPE_CITY_CANFLY : MAPSECTYPE_CITY_CANTFLY;
+		case MAPSEC_ROUTE_116:
+			return FlagGet(FLAG_VISITED_ROUTE116) ? MAPSECTYPE_CITY_CANFLY : MAPSECTYPE_CITY_CANTFLY;
+		case MAPSEC_ROUTE_117:
+			return FlagGet(FLAG_VISITED_ROUTE117) ? MAPSECTYPE_CITY_CANFLY : MAPSECTYPE_CITY_CANTFLY;
+		case MAPSEC_ROUTE_118:
+			return FlagGet(FLAG_VISITED_ROUTE118) ? MAPSECTYPE_CITY_CANFLY : MAPSECTYPE_CITY_CANTFLY;
+		case MAPSEC_ROUTE_119:
+			return FlagGet(FLAG_VISITED_ROUTE119) ? MAPSECTYPE_CITY_CANFLY : MAPSECTYPE_CITY_CANTFLY;
+		case MAPSEC_ROUTE_120:
+			return FlagGet(FLAG_VISITED_ROUTE120) ? MAPSECTYPE_CITY_CANFLY : MAPSECTYPE_CITY_CANTFLY;
+		case MAPSEC_ROUTE_121:
+			return FlagGet(FLAG_VISITED_ROUTE121) ? MAPSECTYPE_CITY_CANFLY : MAPSECTYPE_CITY_CANTFLY;
+		case MAPSEC_ROUTE_122:
+			return FlagGet(FLAG_VISITED_ROUTE122) ? MAPSECTYPE_CITY_CANFLY : MAPSECTYPE_CITY_CANTFLY;
+		case MAPSEC_ROUTE_123:
+			return FlagGet(FLAG_VISITED_ROUTE123) ? MAPSECTYPE_CITY_CANFLY : MAPSECTYPE_CITY_CANTFLY;
+		case MAPSEC_ROUTE_124:
+			return FlagGet(FLAG_VISITED_ROUTE124) ? MAPSECTYPE_CITY_CANFLY : MAPSECTYPE_CITY_CANTFLY;
+		case MAPSEC_ROUTE_125:
+			return FlagGet(FLAG_VISITED_ROUTE125) ? MAPSECTYPE_CITY_CANFLY : MAPSECTYPE_CITY_CANTFLY;
+		case MAPSEC_ROUTE_126:
+			return FlagGet(FLAG_VISITED_ROUTE126) ? MAPSECTYPE_CITY_CANFLY : MAPSECTYPE_CITY_CANTFLY;
+		case MAPSEC_ROUTE_127:
+			return FlagGet(FLAG_VISITED_ROUTE127) ? MAPSECTYPE_CITY_CANFLY : MAPSECTYPE_CITY_CANTFLY;
+		case MAPSEC_ROUTE_128:
+			return FlagGet(FLAG_VISITED_ROUTE128) ? MAPSECTYPE_CITY_CANFLY : MAPSECTYPE_CITY_CANTFLY;
+		case MAPSEC_ROUTE_129:
+			return FlagGet(FLAG_VISITED_ROUTE129) ? MAPSECTYPE_CITY_CANFLY : MAPSECTYPE_CITY_CANTFLY;
+		case MAPSEC_ROUTE_130:
+			return FlagGet(FLAG_VISITED_ROUTE130) ? MAPSECTYPE_CITY_CANFLY : MAPSECTYPE_CITY_CANTFLY;
+		case MAPSEC_ROUTE_131:
+			return FlagGet(FLAG_VISITED_ROUTE131) ? MAPSECTYPE_CITY_CANFLY : MAPSECTYPE_CITY_CANTFLY;
+		case MAPSEC_ROUTE_132:
+			return FlagGet(FLAG_VISITED_ROUTE132) ? MAPSECTYPE_CITY_CANFLY : MAPSECTYPE_CITY_CANTFLY;
+		case MAPSEC_ROUTE_133:
+			return FlagGet(FLAG_VISITED_ROUTE133) ? MAPSECTYPE_CITY_CANFLY : MAPSECTYPE_CITY_CANTFLY;
+		case MAPSEC_ROUTE_134:
+			return FlagGet(FLAG_VISITED_ROUTE134) ? MAPSECTYPE_CITY_CANFLY : MAPSECTYPE_CITY_CANTFLY;
+		case MAPSEC_MT_CHIMNEY:
+			return FlagGet(FLAG_VISITED_MT_CHIMNEY) ? MAPSECTYPE_CITY_CANFLY : MAPSECTYPE_CITY_CANTFLY;
+		default:
+            return MAPSECTYPE_ROUTE;
     }
 }
 
@@ -1370,8 +1434,8 @@ static void SpriteCB_CursorMapFull(struct Sprite *sprite)
 {
     if (gRegionMap->cursorMovementFrameCounter != 0)
     {
-        sprite->x += 2 * gRegionMap->cursorDeltaX;
-        sprite->y += 2 * gRegionMap->cursorDeltaY;
+        sprite->pos1.x += 2 * gRegionMap->cursorDeltaX;
+        sprite->pos1.y += 2 * gRegionMap->cursorDeltaY;
         gRegionMap->cursorMovementFrameCounter--;
     }
 }
@@ -1417,15 +1481,15 @@ void CreateRegionMapCursor(u16 tileTag, u16 paletteTag)
         if (gRegionMap->zoomed == TRUE)
         {
             gRegionMap->cursorSprite->oam.size = SPRITE_SIZE(32x32);
-            gRegionMap->cursorSprite->x -= 8;
-            gRegionMap->cursorSprite->y -= 8;
+            gRegionMap->cursorSprite->pos1.x -= 8;
+            gRegionMap->cursorSprite->pos1.y -= 8;
             StartSpriteAnim(gRegionMap->cursorSprite, 1);
         }
         else
         {
             gRegionMap->cursorSprite->oam.size = SPRITE_SIZE(16x16);
-            gRegionMap->cursorSprite->x = 8 * gRegionMap->cursorPosX + 4;
-            gRegionMap->cursorSprite->y = 8 * gRegionMap->cursorPosY + 4;
+            gRegionMap->cursorSprite->pos1.x = 8 * gRegionMap->cursorPosX + 4;
+            gRegionMap->cursorSprite->pos1.y = 8 * gRegionMap->cursorPosY + 4;
         }
         gRegionMap->cursorSprite->data[1] = 2;
         gRegionMap->cursorSprite->data[2] = (IndexOfSpritePaletteTag(paletteTag) << 4) + 0x101;
@@ -1478,14 +1542,14 @@ void CreateRegionMapPlayerIcon(u16 tileTag, u16 paletteTag)
     gRegionMap->playerIconSprite = &gSprites[spriteId];
     if (!gRegionMap->zoomed)
     {
-        gRegionMap->playerIconSprite->x = gRegionMap->playerIconSpritePosX * 8 + 4;
-        gRegionMap->playerIconSprite->y = gRegionMap->playerIconSpritePosY * 8 + 4;
+        gRegionMap->playerIconSprite->pos1.x = gRegionMap->playerIconSpritePosX * 8 + 4;
+        gRegionMap->playerIconSprite->pos1.y = gRegionMap->playerIconSpritePosY * 8 + 4;
         gRegionMap->playerIconSprite->callback = SpriteCB_PlayerIconMapFull;
     }
     else
     {
-        gRegionMap->playerIconSprite->x = gRegionMap->playerIconSpritePosX * 16 - 0x30;
-        gRegionMap->playerIconSprite->y = gRegionMap->playerIconSpritePosY * 16 - 0x42;
+        gRegionMap->playerIconSprite->pos1.x = gRegionMap->playerIconSpritePosX * 16 - 0x30;
+        gRegionMap->playerIconSprite->pos1.y = gRegionMap->playerIconSpritePosY * 16 - 0x42;
         gRegionMap->playerIconSprite->callback = SpriteCB_PlayerIconMapZoomed;
     }
 }
@@ -1505,17 +1569,17 @@ static void UnhideRegionMapPlayerIcon(void)
     {
         if (gRegionMap->zoomed == TRUE)
         {
-            gRegionMap->playerIconSprite->x = gRegionMap->playerIconSpritePosX * 16 - 0x30;
-            gRegionMap->playerIconSprite->y = gRegionMap->playerIconSpritePosY * 16 - 0x42;
+            gRegionMap->playerIconSprite->pos1.x = gRegionMap->playerIconSpritePosX * 16 - 0x30;
+            gRegionMap->playerIconSprite->pos1.y = gRegionMap->playerIconSpritePosY * 16 - 0x42;
             gRegionMap->playerIconSprite->callback = SpriteCB_PlayerIconMapZoomed;
             gRegionMap->playerIconSprite->invisible = FALSE;
         }
         else
         {
-            gRegionMap->playerIconSprite->x = gRegionMap->playerIconSpritePosX * 8 + 4;
-            gRegionMap->playerIconSprite->y = gRegionMap->playerIconSpritePosY * 8 + 4;
-            gRegionMap->playerIconSprite->x2 = 0;
-            gRegionMap->playerIconSprite->y2 = 0;
+            gRegionMap->playerIconSprite->pos1.x = gRegionMap->playerIconSpritePosX * 8 + 4;
+            gRegionMap->playerIconSprite->pos1.y = gRegionMap->playerIconSpritePosY * 8 + 4;
+            gRegionMap->playerIconSprite->pos2.x = 0;
+            gRegionMap->playerIconSprite->pos2.y = 0;
             gRegionMap->playerIconSprite->callback = SpriteCB_PlayerIconMapFull;
             gRegionMap->playerIconSprite->invisible = FALSE;
         }
@@ -1524,10 +1588,10 @@ static void UnhideRegionMapPlayerIcon(void)
 
 static void SpriteCB_PlayerIconMapZoomed(struct Sprite *sprite)
 {
-    sprite->x2 = -2 * gRegionMap->scrollX;
-    sprite->y2 = -2 * gRegionMap->scrollY;
-    sprite->data[0] = sprite->y + sprite->y2 + sprite->centerToCornerVecY;
-    sprite->data[1] = sprite->x + sprite->x2 + sprite->centerToCornerVecX;
+    sprite->pos2.x = -2 * gRegionMap->scrollX;
+    sprite->pos2.y = -2 * gRegionMap->scrollY;
+    sprite->data[0] = sprite->pos1.y + sprite->pos2.y + sprite->centerToCornerVecY;
+    sprite->data[1] = sprite->pos1.x + sprite->pos2.x + sprite->centerToCornerVecX;
     if (sprite->data[0] < -8 || sprite->data[0] > 0xa8 || sprite->data[1] < -8 || sprite->data[1] > 0xf8)
     {
         sprite->data[2] = FALSE;
@@ -1683,7 +1747,7 @@ void CB2_OpenFlyMap(void)
         break;
     case 1:
         ResetBgsAndClearDma3BusyFlags(0);
-        InitBgsFromTemplates(1, sFlyMapBgTemplates, ARRAY_COUNT(sFlyMapBgTemplates));
+        InitBgsFromTemplates(1, sFlyMapBgTemplates, 3);
         gMain.state++;
         break;
     case 2:
@@ -1698,11 +1762,11 @@ void CB2_OpenFlyMap(void)
         break;
     case 4:
         InitRegionMap(&sFlyMap->regionMap, FALSE);
-        CreateRegionMapCursor(TAG_CURSOR, TAG_CURSOR);
-        CreateRegionMapPlayerIcon(TAG_PLAYER_ICON, TAG_PLAYER_ICON);
+        CreateRegionMapCursor(0, 0);
+        CreateRegionMapPlayerIcon(1, 1);
         sFlyMap->mapSecId = sFlyMap->regionMap.mapSecId;
         StringFill(sFlyMap->nameBuffer, CHAR_SPACE, MAP_NAME_LENGTH);
-        sDrawFlyDestTextWindow = TRUE;
+        gUnknown_03001180 = TRUE;
         DrawFlyDestTextWindow();
         gMain.state++;
         break;
@@ -1727,7 +1791,7 @@ void CB2_OpenFlyMap(void)
         gMain.state++;
         break;
     case 9:
-        BlendPalettes(PALETTES_ALL, 16, 0);
+        BlendPalettes(-1, 16, 0);
         SetVBlankCallback(VBlankCB_FlyMap);
         gMain.state++;
         break;
@@ -1788,32 +1852,30 @@ static void DrawFlyDestTextWindow(void)
                     name = sMultiNameFlyDestinations[i].name[sFlyMap->regionMap.posWithinMapSec];
                     AddTextPrinterParameterized(1, 1, name, GetStringRightAlignXOffset(1, name, 96), 17, 0, NULL);
                     ScheduleBgCopyTilemapToVram(0);
-                    sDrawFlyDestTextWindow = TRUE;
+                    gUnknown_03001180 = TRUE;
                 }
                 break;
             }
         }
         if (!namePrinted)
         {
-            if (sDrawFlyDestTextWindow == TRUE)
+            if (gUnknown_03001180 == TRUE)
             {
                 ClearStdWindowAndFrameToTransparent(1, FALSE);
                 DrawStdFrameWithCustomTileAndPalette(0, FALSE, 101, 13);
             }
             else
             {
-                // Window is already drawn, just empty it
                 FillWindowPixelBuffer(0, PIXEL_FILL(1));
             }
             AddTextPrinterParameterized(0, 1, sFlyMap->regionMap.mapSecName, 0, 1, 0, NULL);
             ScheduleBgCopyTilemapToVram(0);
-            sDrawFlyDestTextWindow = FALSE;
+            gUnknown_03001180 = FALSE;
         }
     }
     else
     {
-        // Selection is on MAPSECTYPE_NONE, draw empty fly destination text window
-        if (sDrawFlyDestTextWindow == TRUE)
+        if (gUnknown_03001180 == TRUE)
         {
             ClearStdWindowAndFrameToTransparent(1, FALSE);
             DrawStdFrameWithCustomTileAndPalette(0, FALSE, 101, 13);
@@ -1821,7 +1883,7 @@ static void DrawFlyDestTextWindow(void)
         FillWindowPixelBuffer(0, PIXEL_FILL(1));
         CopyWindowToVram(0, 2);
         ScheduleBgCopyTilemapToVram(0);
-        sDrawFlyDestTextWindow = FALSE;
+        gUnknown_03001180 = FALSE;
     }
 }
 
@@ -1833,7 +1895,7 @@ static void LoadFlyDestIcons(void)
     LZ77UnCompWram(sFlyTargetIcons_Gfx, sFlyMap->tileBuffer);
     sheet.data = sFlyMap->tileBuffer;
     sheet.size = sizeof(sFlyMap->tileBuffer);
-    sheet.tag = TAG_FLY_ICON;
+    sheet.tag = 2;
     LoadSpriteSheet(&sheet);
     LoadSpritePalette(&sFlyTargetIconsSpritePalette);
     CreateFlyDestIcons();
@@ -1944,7 +2006,7 @@ static void CB_FadeInFlyMap(void)
     switch (sFlyMap->state)
     {
     case 0:
-        BeginNormalPaletteFade(PALETTES_ALL, 0, 16, 0, RGB_BLACK);
+        BeginNormalPaletteFade(0xFFFFFFFF, 0, 16, 0, RGB_BLACK);
         sFlyMap->state++;
         break;
     case 1:
@@ -1991,7 +2053,7 @@ static void CB_ExitFlyMap(void)
     switch (sFlyMap->state)
     {
     case 0:
-        BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, RGB_BLACK);
+        BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB_BLACK);
         sFlyMap->state++;
         break;
     case 1:
@@ -2014,6 +2076,9 @@ static void CB_ExitFlyMap(void)
                 case MAPSEC_EVER_GRANDE_CITY:
                     SetWarpDestinationToHealLocation(FlagGet(FLAG_LANDMARK_POKEMON_LEAGUE) && sFlyMap->regionMap.posWithinMapSec == 0 ? HEAL_LOCATION_EVER_GRANDE_CITY_POKEMON_LEAGUE : HEAL_LOCATION_EVER_GRANDE_CITY);
                     break;
+                case MAPSEC_MT_CHIMNEY:
+                    SetWarpDestinationToHealLocation(HEAL_LOCATION_MT_CHIMNEY);
+                    break;
                 default:
                     if (sMapHealLocations[sFlyMap->regionMap.mapSecId][2] != 0)
                         SetWarpDestinationToHealLocation(sMapHealLocations[sFlyMap->regionMap.mapSecId][2]);
@@ -2025,7 +2090,10 @@ static void CB_ExitFlyMap(void)
             }
             else
             {
-                SetMainCallback2(CB2_ReturnToPartyMenuFromFlyMap);
+                if (VarGet(VAR_0x800A) == LAST_TALKED_TO_FLYING_TAXI)
+                    SetMainCallback2(CB2_ReturnToFieldContinueScriptPlayMapMusic);
+                else
+                    SetMainCallback2(CB2_ReturnToPartyMenuFromFlyMap);
             }
             if (sFlyMap != NULL)
             {

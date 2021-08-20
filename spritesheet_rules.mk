@@ -563,37 +563,37 @@ $(OBJEVENTGFXDIR)/berry_trees/wepear.4bpp: %.4bpp: %.png
 $(OBJEVENTGFXDIR)/berry_trees/wiki.4bpp: %.4bpp: %.png
 	$(GFX) $< $@ -mwidth 2 -mheight 4
 
-$(OBJEVENTGFXDIR)/berry_trees/occa.4bpp: %.4bpp: %.png
+$(EVENTOBJGFXDIR)/berry_trees/occa.4bpp: %.4bpp: %.png
 	$(GFX) $< $@ -mwidth 2 -mheight 4
 
-$(OBJEVENTGFXDIR)/berry_trees/yache.4bpp: %.4bpp: %.png
+$(EVENTOBJGFXDIR)/berry_trees/yache.4bpp: %.4bpp: %.png
 	$(GFX) $< $@ -mwidth 2 -mheight 4
 
-$(OBJEVENTGFXDIR)/berry_trees/chople.4bpp: %.4bpp: %.png
+$(EVENTOBJGFXDIR)/berry_trees/chople.4bpp: %.4bpp: %.png
 	$(GFX) $< $@ -mwidth 2 -mheight 4
 
-$(OBJEVENTGFXDIR)/berry_trees/kebia.4bpp: %.4bpp: %.png
+$(EVENTOBJGFXDIR)/berry_trees/kebia.4bpp: %.4bpp: %.png
 	$(GFX) $< $@ -mwidth 2 -mheight 4
 
-$(OBJEVENTGFXDIR)/berry_trees/shuca.4bpp: %.4bpp: %.png
+$(EVENTOBJGFXDIR)/berry_trees/shuca.4bpp: %.4bpp: %.png
 	$(GFX) $< $@ -mwidth 2 -mheight 4
 
-$(OBJEVENTGFXDIR)/berry_trees/payapa.4bpp: %.4bpp: %.png
+$(EVENTOBJGFXDIR)/berry_trees/payapa.4bpp: %.4bpp: %.png
 	$(GFX) $< $@ -mwidth 2 -mheight 4
 
-$(OBJEVENTGFXDIR)/berry_trees/tanga.4bpp: %.4bpp: %.png
+$(EVENTOBJGFXDIR)/berry_trees/tanga.4bpp: %.4bpp: %.png
 	$(GFX) $< $@ -mwidth 2 -mheight 4
 
-$(OBJEVENTGFXDIR)/berry_trees/kasib.4bpp: %.4bpp: %.png
+$(EVENTOBJGFXDIR)/berry_trees/kasib.4bpp: %.4bpp: %.png
 	$(GFX) $< $@ -mwidth 2 -mheight 4
 
-$(OBJEVENTGFXDIR)/berry_trees/haban.4bpp: %.4bpp: %.png
+$(EVENTOBJGFXDIR)/berry_trees/haban.4bpp: %.4bpp: %.png
 	$(GFX) $< $@ -mwidth 2 -mheight 4
 
-$(OBJEVENTGFXDIR)/berry_trees/colbur.4bpp: %.4bpp: %.png
+$(EVENTOBJGFXDIR)/berry_trees/colbur.4bpp: %.4bpp: %.png
 	$(GFX) $< $@ -mwidth 2 -mheight 4
 
-$(OBJEVENTGFXDIR)/berry_trees/roseli.4bpp: %.4bpp: %.png
+$(EVENTOBJGFXDIR)/berry_trees/roseli.4bpp: %.4bpp: %.png
 	$(GFX) $< $@ -mwidth 2 -mheight 4
 
 
@@ -706,3 +706,12 @@ $(FLDEFFGFXDIR)/secret_power_tree.4bpp: %.4bpp: %.png
 
 $(FLDEFFGFXDIR)/record_mix_lights.4bpp: %.4bpp: %.png
 	$(GFX) $< $@ -mwidth 4 -mheight 1
+	
+$(OBJEVENTGFXDIR)/pokemon/articuno.4bpp: %.4bpp: %.png
+	$(GFX) $< $@ -mwidth 4 -mheight 4
+	
+$(OBJEVENTGFXDIR)/pokemon/moltres.4bpp: %.4bpp: %.png
+	$(GFX) $< $@ -mwidth 4 -mheight 4
+
+$(OBJEVENTGFXDIR)/pokemon/zapdos.4bpp: %.4bpp: %.png
+	$(GFX) $< $@ -mwidth 4 -mheight 4

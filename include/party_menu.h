@@ -20,12 +20,20 @@ struct PartyMenu
     s16 learnMoveState;  // data2, used only as a learn move state
 };
 
+#define TMHM_COUNT NUM_TECHNICAL_MACHINES + NUM_HIDDEN_MACHINES
+extern const u16 sTMHMMoves[TMHM_COUNT];
+
 extern struct PartyMenu gPartyMenu;
 extern bool8 gPartyMenuUseExitCallback;
 extern u8 gSelectedMonPartyId;
 extern MainCallback gPostMenuFieldCallback;
 extern u8 gSelectedOrderFromParty[MAX_FRONTIER_PARTY_SIZE];
 extern u8 gBattlePartyCurrentOrder[PARTY_SIZE / 2];
+extern const struct SpriteSheet sSpriteSheet_HeldItem;
+extern const struct SpritePalette sSpritePalette_HeldItem;
+
+extern const struct SpriteSheet gSpriteSheet_HeldItem;
+extern const u16 gHeldItemPalette[];
 
 extern void (*gItemUseCB)(u8, TaskFunc);
 
@@ -50,6 +58,8 @@ void DrawHeldItemIconsForTrade(u8 *partyCounts, u8 *partySpriteIds, u8 whichPart
 void CB2_ShowPartyMenuForItemUse(void);
 void ItemUseCB_Medicine(u8 taskId, TaskFunc task);
 void ItemUseCB_AbilityCapsule(u8 taskId, TaskFunc task);
+void ItemUseCB_PowerCandy(u8 taskId, TaskFunc task);
+void ItemUseCB_AbilityPatch(u8 taskId, TaskFunc task);
 void ItemUseCB_ReduceEV(u8 taskId, TaskFunc task);
 void ItemUseCB_PPRecovery(u8 taskId, TaskFunc task);
 void ItemUseCB_PPUp(u8 taskId, TaskFunc task);
@@ -90,5 +100,9 @@ void MoveDeleterForgetMove(void);
 void BufferMoveDeleterNicknameAndMove(void);
 void GetNumMovesSelectedMonHas(void);
 void MoveDeleterChooseMoveToForget(void);
+
+bool8 CanLearnTutorMove(u16, u8);
+void ItemUseCB_Mints(u8 taskId, TaskFunc task);
+void ItemUseCB_Seal(u8 taskId, TaskFunc task);
 
 #endif // GUARD_PARTY_MENU_H

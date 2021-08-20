@@ -10,6 +10,8 @@ static EWRAM_DATA u8 sEscalatorAnim_TaskId = 0;
 
 static void SetEscalatorMetatile(u8 taskId, const s16 *metatileIds, u16 metatileMasks);
 static void Task_DrawEscalator(u8 taskId);
+static void Task_DrawTeleporterHousing(u8 taskId);
+static void Task_DrawTeleporterCable(u8 taskId);
 
 #define ESCALATOR_STAGES     3
 #define LAST_ESCALATOR_STAGE (ESCALATOR_STAGES - 1)

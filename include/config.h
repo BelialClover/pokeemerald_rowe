@@ -15,6 +15,9 @@
 // printing system. Use NoCashGBAPrint() and NoCashGBAPrintf() like you
 // would normally use AGBPrint() and AGBPrintf().
 
+// NOTE: Don't try to enable assert right now as many pointers
+// still exist in defines and WILL likely result in a broken ROM.
+
 #define ENGLISH
 
 #ifdef ENGLISH
@@ -23,12 +26,11 @@
 #define UNITS_METRIC
 #endif
 
-// Uncomment to fix some identified minor bugs
-//#define BUGFIX
+#define GBA_PRINTF
 
 // Various undefined behavior bugs may or may not prevent compilation with
 // newer compilers. So always fix them when using a modern compiler.
-#if MODERN || defined(BUGFIX)
+#if MODERN
 #ifndef UBFIX
 #define UBFIX
 #endif

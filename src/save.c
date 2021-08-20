@@ -23,6 +23,10 @@ static u8 HandleWriteSector(u16 a1, const struct SaveSectionLocation *location);
 
 // Divide save blocks into individual chunks to be written to flash sectors
 
+// Each 4 KiB flash sector contains 3968 bytes of actual data followed by a 128 byte footer
+#define SECTOR_DATA_SIZE 3968
+#define SECTOR_FOOTER_SIZE 128
+
 /*
  * Sector Layout:
  *
@@ -913,7 +917,7 @@ void Task_LinkSave(u8 taskId)
         if (IsLinkTaskFinished())
         {
             if (!tPartialSave)
-                SaveMapView();
+                save_serialize_map();
             tState = 3;
         }
         break;

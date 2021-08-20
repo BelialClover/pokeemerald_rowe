@@ -56,7 +56,7 @@
 #define VAR_CYCLING_ROAD_RECORD_COLLISIONS   0x4027
 #define VAR_CYCLING_ROAD_RECORD_TIME_L       0x4028
 #define VAR_CYCLING_ROAD_RECORD_TIME_H       0x4029
-#define VAR_FRIENDSHIP_STEP_COUNTER          0x402A
+#define VAR_HAPPINESS_STEP_COUNTER           0x402A
 #define VAR_POISON_STEP_COUNTER              0x402B
 #define VAR_RESET_RTC_ENABLE                 0x402C
 #define VAR_ENIGMA_BERRY_AVAILABLE           0x402D
@@ -94,7 +94,7 @@
 #define VAR_POKELOT_RND1                     0x404B
 #define VAR_POKELOT_RND2                     0x404C
 #define VAR_POKELOT_PRIZE_PLACE              0x404D
-#define VAR_UNUSED_0x404E                    0x404E // Unused Var
+#define VAR_LURE_STEP_COUNT                  0x404E
 #define VAR_LOTAD_SIZE_RECORD                0x404F
 #define VAR_LITTLEROOT_TOWN_STATE            0x4050
 #define VAR_OLDALE_TOWN_STATE                0x4051
@@ -263,15 +263,15 @@
 #define VAR_ROXANNE_CALL_STEP_COUNTER        0x40F4
 #define VAR_SCOTT_BF_CALL_STEP_COUNTER       0x40F5
 #define VAR_RIVAL_RAYQUAZA_CALL_STEP_COUNTER 0x40F6
-#define VAR_UNUSED_0x40F7                    0x40F7 // Unused Var
-#define VAR_UNUSED_0x40F8                    0x40F8 // Unused Var
+#define VAR_DEXNAV_SPECIES                   0x40F7 // Registered dexnav species
+#define VAR_DEXNAV_STEP_COUNTER              0x40F8 // steps for finding hidden pokemon
 #define VAR_UNUSED_0x40F9                    0x40F9 // Unused Var
 #define VAR_UNUSED_0x40FA                    0x40FA // Unused Var
 #define VAR_UNUSED_0x40FB                    0x40FB // Unused Var
 #define VAR_UNUSED_0x40FC                    0x40FC // Unused Var
 #define VAR_UNUSED_0x40FD                    0x40FD // Unused Var
 #define VAR_UNUSED_0x40FE                    0x40FE // Unused Var
-#define VAR_UNUSED_0x40FF                    0x40FF // Unused Var
+#define VAR_DIMENSION_LINK                   0x40FF
 
 #define VARS_END                             0x40FF
 #define VARS_COUNT                           (VARS_END - VARS_START + 1)

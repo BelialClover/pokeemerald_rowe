@@ -62,6 +62,7 @@ static void HandleLongGrassOnHyper(u8, s16, s16);
 static u8 sCutSquareSide;
 static u8 sTileCountFromPlayer_X;
 static u8 sTileCountFromPlayer_Y;
+static u32 sUnused;
 static bool8 sHyperCutTiles[CUT_HYPER_AREA];
 
 // EWRAM variables
@@ -226,15 +227,17 @@ bool8 SetUpFieldMove_Cut(void)
                 y = gPlayerFacingPosition.y + sHyperCutStruct[i].y;
                 tileCuttable = TRUE;
 
-                for (j = 0; j < 2; ++j)
+                j = 0;
+                do
                 {
-                    if (sHyperCutStruct[i].unk2[j] == 0) break; // one line required to match -g
+                    if (sHyperCutStruct[i].unk2[j] == 0)
+                        break;
                     if (cutTiles[(u8)(sHyperCutStruct[i].unk2[j] - 1)] == FALSE)
                     {
                         tileCuttable = FALSE;
                         break;
                     }
-                }
+                } while (++j <= 1);
 
                 if (tileCuttable == TRUE)
                 {
@@ -326,7 +329,7 @@ bool8 FldEff_CutGrass(void)
             y = yAdd + gPlayerFacingPosition.y;
 
             SetCutGrassMetatile(x, y);
-            AllowObjectAtPosTriggerGroundEffects(x, y);
+            sub_808E75C(x, y);
         }
     }
 
@@ -555,8 +558,8 @@ static void CutGrassSpriteCallback1(struct Sprite *sprite)
 
 static void CutGrassSpriteCallback2(struct Sprite *sprite)
 {
-    sprite->x2 = Sin(sprite->data[2], sprite->data[0]);
-    sprite->y2 = Cos(sprite->data[2], sprite->data[0]);
+    sprite->pos2.x = Sin(sprite->data[2], sprite->data[0]);
+    sprite->pos2.y = Cos(sprite->data[2], sprite->data[0]);
 
     sprite->data[2] = (sprite->data[2] + 8) & 0xFF;
     sprite->data[0] += 1 + (sprite->data[3] >> 2); // right shift by 2 is dividing by 4

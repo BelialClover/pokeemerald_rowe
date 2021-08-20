@@ -458,7 +458,7 @@ static const struct MenuAction MultichoiceList_Tent[] =
 
 static const struct MenuAction MultichoiceList_LinkServicesNoBerry[] =
 {
-    {gText_TradeCenter},
+    {gText_UDTradeCenter},
     {gText_Colosseum},
     {gText_RecordCorner},
     {gText_Exit},
@@ -499,7 +499,7 @@ static const struct MenuAction MultichoiceList_LinkServicesAll[] =
 
 static const struct MenuAction MultichoiceList_LinkServicesNoRecordBerry[] =
 {
-    {gText_TradeCenter},
+    {gText_UDTradeCenter},
     {gText_Colosseum},
     {gText_Exit},
 };
@@ -771,6 +771,26 @@ static const struct MenuAction MultichoiceList_TagMatchType[] =
     {gText_Exit},
 };
 
+static const struct MenuAction MultichoiceList_PokeCenterJack[] =
+{
+    {gText_JackRateNickname},
+    {gText_JackRememberMove},
+    {gText_JackForgetMove},
+    {gText_JackTeachMove},
+	{gText_JackWonderTrade},
+    {gText_Exit},
+};
+
+const struct MenuAction MultichoiceList_RotomAppliances[] = 
+{
+    {gText_MicrowaveOven},
+    {gText_WashingMachine},
+    {gText_Refrigerator},
+    {gText_ElectricFan},
+    {gText_Lawnmower},
+    {gText_Recall},
+};
+
 static const struct MenuAction MultichoiceList_Exit[] =
 {
     {gText_Exit},
@@ -825,7 +845,7 @@ static const struct MultichoiceListStruct sMultichoiceLists[] =
     [MULTI_MECHADOLL5_Q2]              = MULTICHOICE(MultichoiceList_Mechadoll5_Q2),
     [MULTI_MECHADOLL5_Q3]              = MULTICHOICE(MultichoiceList_Mechadoll5_Q3),
     [MULTI_UNUSED_40]                  = MULTICHOICE(MultichoiceList_Exit),
-    [MULTI_UNUSED_41]                  = MULTICHOICE(MultichoiceList_Exit),
+    [MULTI_POKECENTER_JACK]            = MULTICHOICE(MultichoiceList_PokeCenterJack),
     [MULTI_VENDING_MACHINE]            = MULTICHOICE(MultichoiceList_VendingMachine),
     [MULTI_MACH_BIKE_INFO]             = MULTICHOICE(MultichoiceList_MachBikeInfo),
     [MULTI_ACRO_BIKE_INFO]             = MULTICHOICE(MultichoiceList_AcroBikeInfo),
@@ -898,6 +918,7 @@ static const struct MultichoiceListStruct sMultichoiceLists[] =
     [MULTI_SLATEPORT_TENT_RULES]       = MULTICHOICE(MultichoiceList_SlateportTentRules),
     [MULTI_FALLARBOR_TENT_RULES]       = MULTICHOICE(MultichoiceList_FallarborTentRules),
     [MULTI_TAG_MATCH_TYPE]             = MULTICHOICE(MultichoiceList_TagMatchType),
+    [MULTI_ROTOM_APPLIANCES]           = MULTICHOICE(MultichoiceList_RotomAppliances),
 };
 
 const u8 *const gStdStrings[] =
@@ -932,6 +953,12 @@ const u8 *const gStdStrings[] =
     [STDSTRING_BATTLE_ARENA] = gText_BattleArena,
     [STDSTRING_BATTLE_PIKE] = gText_BattlePike,
     [STDSTRING_BATTLE_PYRAMID] = gText_BattlePyramid,
+
+    [STDSTRING_MEDICINE] = gText_Medicine,
+    [STDSTRING_BATTLEITEMS] = gText_BattleItems,
+    [STDSTRING_POWERUP] = gText_PowerUp,
+    [STDSTRING_TYPEITEMS] = gText_TypeItems,
+    [STDSTRING_MEGASTONES] = gText_MegaStones,
 };
 
 static const u8 sLinkServicesMultichoiceIds[] = 
@@ -965,7 +992,7 @@ static const u8 *const sLilycoveSSTidalDestinations[SSTIDAL_SELECTION_COUNT] =
 
 static const u8 *const sCableClubOptions_WithRecordMix[] =
 {
-    CableClub_Text_TradeUsingLinkCable,
+    CableClub_Text_UDTradeUsingLinkCable,
     CableClub_Text_BattleUsingLinkCable,
     CableClub_Text_RecordCornerUsingLinkCable,
     CableClub_Text_CancelSelectedItem,
@@ -994,7 +1021,7 @@ static const u8 *const sWirelessOptions_AllServices[] =
 };
 static const u8 *const sCableClubOptions_NoRecordMix[] =
 {
-    CableClub_Text_TradeUsingLinkCable,
+    CableClub_Text_UDTradeUsingLinkCable,
     CableClub_Text_BattleUsingLinkCable,
     CableClub_Text_CancelSelectedItem,
 };

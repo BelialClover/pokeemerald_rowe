@@ -49,7 +49,7 @@
 #define MULTI_MECHADOLL5_Q2                38
 #define MULTI_MECHADOLL5_Q3                39
 #define MULTI_UNUSED_40                    40
-#define MULTI_UNUSED_41                    41
+#define MULTI_POKECENTER_JACK              41
 #define MULTI_VENDING_MACHINE              42
 #define MULTI_MACH_BIKE_INFO               43
 #define MULTI_ACRO_BIKE_INFO               44
@@ -122,6 +122,7 @@
 #define MULTI_SLATEPORT_TENT_RULES         111
 #define MULTI_FALLARBOR_TENT_RULES         112
 #define MULTI_TAG_MATCH_TYPE               113
+#define MULTI_ROTOM_APPLIANCES             114
 
 // Lilycove SS Tidal Multichoice Selections
 #define SSTIDAL_SELECTION_SLATEPORT        0
@@ -164,5 +165,11 @@
 #define STDSTRING_BATTLE_ARENA     27
 #define STDSTRING_BATTLE_PIKE      28
 #define STDSTRING_BATTLE_PYRAMID   29
+
+#define STDSTRING_MEDICINE         30
+#define STDSTRING_BATTLEITEMS      31
+#define STDSTRING_POWERUP          32
+#define STDSTRING_TYPEITEMS        33
+#define STDSTRING_MEGASTONES       34
 
 #endif //GUARD_SCRIPT_MENU_CONSTANTS_H

@@ -18,17 +18,19 @@
 #include "constants/items.h"
 #include "constants/maps.h"
 
-#define TAG_SWAP_LINE 109
-
+// this file's functions
 static void Task_ContinueTaskAfterMessagePrints(u8 taskId);
 static void Task_CallYesOrNoCallback(u8 taskId);
 
-EWRAM_DATA static struct YesNoFuncTable sYesNo = {0};
-EWRAM_DATA static u8 sMessageWindowId = 0;
+// EWRAM vars
+EWRAM_DATA static struct YesNoFuncTable gUnknown_0203A138 = {0};
+EWRAM_DATA static u8 gUnknown_0203A140 = 0;
 
-static TaskFunc sMessageNextTask;
+// IWRAM bss vars
+static TaskFunc gUnknown_0300117C;
 
-static const struct OamData sOamData_SwapLine =
+// const rom data
+static const struct OamData sOamData_859F4E8 =
 {
     .y = 0,
     .affineMode = ST_OAM_AFFINE_OFF,
@@ -45,47 +47,47 @@ static const struct OamData sOamData_SwapLine =
     .affineParam = 0
 };
 
-static const union AnimCmd sAnim_SwapLine_RightArrow[] =
+static const union AnimCmd sSpriteAnim_859F4F0[] =
 {
     ANIMCMD_FRAME(0, 0),
     ANIMCMD_END
 };
 
-static const union AnimCmd sAnim_SwapLine_Line[] =
+static const union AnimCmd sSpriteAnim_859F4F8[] =
 {
     ANIMCMD_FRAME(4, 0),
     ANIMCMD_END
 };
 
-static const union AnimCmd sAnim_SwapLine_LeftArrow[] =
+static const union AnimCmd sSpriteAnim_859F500[] =
 {
-    ANIMCMD_FRAME(0, 0, .hFlip = TRUE),
+    ANIMCMD_FRAME(0, 0, 1, 0),
     ANIMCMD_END
 };
 
-static const union AnimCmd *const sAnims_SwapLine[] =
+static const union AnimCmd *const sSpriteAnimTable_859F508[] =
 {
-    sAnim_SwapLine_RightArrow,
-    sAnim_SwapLine_Line,
-    sAnim_SwapLine_LeftArrow
+    sSpriteAnim_859F4F0,
+    sSpriteAnim_859F4F8,
+    sSpriteAnim_859F500
 };
 
-static const struct CompressedSpriteSheet sSpriteSheet_SwapLine =
+static const struct CompressedSpriteSheet gUnknown_0859F514 =
 {
-    gBagSwapLineGfx, 0x100, TAG_SWAP_LINE
+    gBagSwapLineGfx, 0x100, 109
 };
 
-static const struct CompressedSpritePalette sSpritePalette_SwapLine =
+static const struct CompressedSpritePalette gUnknown_0859F51C =
 {
-    gBagSwapLinePal, TAG_SWAP_LINE
+    gBagSwapLinePal, 109
 };
 
-static const struct SpriteTemplate sSpriteTemplate_SwapLine =
+static const struct SpriteTemplate gUnknown_0859F524 =
 {
-    .tileTag = TAG_SWAP_LINE,
-    .paletteTag = TAG_SWAP_LINE,
-    .oam = &sOamData_SwapLine,
-    .anims = sAnims_SwapLine,
+    .tileTag = 109,
+    .paletteTag = 109,
+    .oam = &sOamData_859F4E8,
+    .anims = sSpriteAnimTable_859F508,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = SpriteCallbackDummy,
@@ -122,17 +124,17 @@ void SetVBlankHBlankCallbacksToNull(void)
     SetHBlankCallback(NULL);
 }
 
-void DisplayMessageAndContinueTask(u8 taskId, u8 windowId, u16 tileNum, u8 paletteNum, u8 fontId, u8 textSpeed, const u8 *string, void *taskFunc)
+void DisplayMessageAndContinueTask(u8 taskId, u8 windowId, u16 arg2, u8 arg3, u8 fontId, u8 textSpeed, const u8 *string, void *taskFunc)
 {
-    sMessageWindowId = windowId;
-    DrawDialogFrameWithCustomTileAndPalette(windowId, TRUE, tileNum, paletteNum);
+    gUnknown_0203A140 = windowId;
+    DrawDialogFrameWithCustomTileAndPalette(windowId, TRUE, arg2, arg3);
 
     if (string != gStringVar4)
         StringExpandPlaceholders(gStringVar4, string);
 
     gTextFlags.canABSpeedUpPrint = 1;
     AddTextPrinterParameterized2(windowId, fontId, gStringVar4, textSpeed, NULL, 2, 1, 3);
-    sMessageNextTask = taskFunc;
+    gUnknown_0300117C = taskFunc;
     gTasks[taskId].func = Task_ContinueTaskAfterMessagePrints;
 }
 
@@ -144,20 +146,20 @@ bool16 RunTextPrintersRetIsActive(u8 textPrinterId)
 
 static void Task_ContinueTaskAfterMessagePrints(u8 taskId)
 {
-    if (!RunTextPrintersRetIsActive(sMessageWindowId))
-        sMessageNextTask(taskId);
+    if (!RunTextPrintersRetIsActive(gUnknown_0203A140))
+        gUnknown_0300117C(taskId);
 }
 
 void DoYesNoFuncWithChoice(u8 taskId, const struct YesNoFuncTable *data)
 {
-    sYesNo = *data;
+    gUnknown_0203A138 = *data;
     gTasks[taskId].func = Task_CallYesOrNoCallback;
 }
 
 void CreateYesNoMenuWithCallbacks(u8 taskId, const struct WindowTemplate *template, u8 arg2, u8 arg3, u8 arg4, u16 tileStart, u8 palette, const struct YesNoFuncTable *yesNo)
 {
     CreateYesNoMenu(template, tileStart, palette, 0);
-    sYesNo = *yesNo;
+    gUnknown_0203A138 = *yesNo;
     gTasks[taskId].func = Task_CallYesOrNoCallback;
 }
 
@@ -167,12 +169,12 @@ static void Task_CallYesOrNoCallback(u8 taskId)
     {
     case 0:
         PlaySE(SE_SELECT);
-        sYesNo.yesFunc(taskId);
+        gUnknown_0203A138.yesFunc(taskId);
         break;
     case 1:
     case MENU_B_PRESSED:
         PlaySE(SE_SELECT);
-        sYesNo.noFunc(taskId);
+        gUnknown_0203A138.noFunc(taskId);
         break;
     }
 }
@@ -275,13 +277,11 @@ u8 GetLRKeysPressedAndHeld(void)
     return 0;
 }
 
-bool8 IsHoldingItemAllowed(u16 itemId)
+bool8 sub_8122148(u16 itemId)
 {
-    // Enigma Berry can't be held in link areas
     if (itemId != ITEM_ENIGMA_BERRY)
         return TRUE;
-    else if (gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(TRADE_CENTER) 
-          && gSaveBlock1Ptr->location.mapNum == MAP_NUM(TRADE_CENTER))
+    else if (gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(TRADE_CENTER) && gSaveBlock1Ptr->location.mapNum == MAP_NUM(TRADE_CENTER))
         return FALSE;
     else if (InUnionRoom() != TRUE)
         return TRUE;
@@ -289,7 +289,7 @@ bool8 IsHoldingItemAllowed(u16 itemId)
         return FALSE;
 }
 
-bool8 IsWritingMailAllowed(u16 itemId)
+bool8 itemid_80BF6D8_mail_related(u16 itemId)
 {
     if (IsUpdateLinkStateCBActive() != TRUE && InUnionRoom() != TRUE)
         return TRUE;
@@ -312,103 +312,97 @@ static bool8 sub_81221D0(void)
     if (!MenuHelpers_LinkSomething())
         return FALSE;
     else
-        return Overworld_LinkRecvQueueLengthMoreThan2();
+        return sub_8087598();
 }
 
 bool8 MenuHelpers_CallLinkSomething(void)
 {
     if (sub_81221D0() == TRUE)
         return TRUE;
-    else if (IsLinkRecvQueueLengthAtLeast3() != TRUE)
+    else if (sub_800B504() != TRUE)
         return FALSE;
     else
         return TRUE;
 }
 
-void SetItemListPerPageCount(struct ItemSlot *slots, u8 slotsCount, u8 *pageItems, u8 *totalItems, u8 maxPerPage)
+void sub_812220C(struct ItemSlot *slots, u8 count, u8 *arg2, u8 *usedSlotsCount, u8 maxUsedSlotsCount)
 {
     u16 i;
     struct ItemSlot *slots_ = slots;
 
-    // Count the number of non-empty item slots
-    *totalItems = 0;
-    for (i = 0; i < slotsCount; i++)
+    (*usedSlotsCount) = 0;
+    for (i = 0; i < count; i++)
     {
         if (slots_[i].itemId != ITEM_NONE)
-            (*totalItems)++;
+            (*usedSlotsCount)++;
     }
-    (*totalItems)++; // + 1 for 'Cancel'
 
-    // Set number of items per page
-    if (*totalItems > maxPerPage)
-        *pageItems = maxPerPage;
+    (*usedSlotsCount)++;
+    if ((*usedSlotsCount) > maxUsedSlotsCount)
+        *arg2 = maxUsedSlotsCount;
     else
-        *pageItems = *totalItems;
+        *arg2 = (*usedSlotsCount);
 }
 
-void SetCursorWithinListBounds(u16 *scrollOffset, u16 *cursorPos, u8 maxShownItems, u8 totalItems)
+void sub_812225C(u16 *scrollOffset, u16 *cursorPos, u8 maxShownItems, u8 numItems)
 {
-    if (*scrollOffset != 0 && *scrollOffset + maxShownItems > totalItems)
-        *scrollOffset = totalItems - maxShownItems;
+    if (*scrollOffset != 0 && *scrollOffset + maxShownItems > numItems)
+        *scrollOffset = numItems - maxShownItems;
 
-    if (*scrollOffset + *cursorPos >= totalItems)
+    if (*scrollOffset + *cursorPos >= numItems)
     {
-        if (totalItems == 0)
+        if (numItems == 0)
             *cursorPos = 0;
         else
-            *cursorPos = totalItems - 1;
+            *cursorPos = numItems - 1;
     }
 }
 
-void SetCursorScrollWithinListBounds(u16 *scrollOffset, u16 *cursorPos, u8 shownItems, u8 totalItems, u8 maxShownItems)
+void sub_8122298(u16 *arg0, u16 *arg1, u8 arg2, u8 arg3, u8 arg4)
 {
     u8 i;
 
-    if (maxShownItems % 2 != 0)
+    if (arg4 % 2 != 0)
     {
-        // Is cursor at least halfway down visible list
-        if (*cursorPos >= maxShownItems / 2)
+        if ((*arg1) >= arg4 / 2)
         {
-            for (i = 0; i < *cursorPos - (maxShownItems / 2); i++)
+            for (i = 0; i < (*arg1) - (arg4 / 2); i++)
             {
-                // Stop if reached end of list
-                if (*scrollOffset + shownItems == totalItems)
+                if ((*arg0) + arg2 == arg3)
                     break;
-                (*cursorPos)--;
-                (*scrollOffset)++;
+                (*arg1)--;
+                (*arg0)++;
             }
         }
     }
     else
     {
-        // Is cursor at least halfway down visible list
-        if (*cursorPos >= (maxShownItems / 2) + 1)
+        if ((*arg1) >= (arg4 / 2) + 1)
         {
-            for (i = 0; i <= *cursorPos - (maxShownItems / 2); i++)
+            for (i = 0; i <= (*arg1) - (arg4 / 2); i++)
             {
-                // Stop if reached end of list
-                if (*scrollOffset + shownItems == totalItems)
+                if ((*arg0) + arg2 == arg3)
                     break;
-                (*cursorPos)--;
-                (*scrollOffset)++;
+                (*arg1)--;
+                (*arg0)++;
             }
         }
     }
 }
 
-void LoadListMenuSwapLineGfx(void)
+void LoadListMenuArrowsGfx(void)
 {
-    LoadCompressedSpriteSheet(&sSpriteSheet_SwapLine);
-    LoadCompressedSpritePalette(&sSpritePalette_SwapLine);
+    LoadCompressedSpriteSheet(&gUnknown_0859F514);
+    LoadCompressedSpritePalette(&gUnknown_0859F51C);
 }
 
-void CreateSwapLineSprites(u8 *spriteIds, u8 count)
+void sub_8122344(u8 *spriteIds, u8 count)
 {
     u8 i;
 
     for (i = 0; i < count; i++)
     {
-        spriteIds[i] = CreateSprite(&sSpriteTemplate_SwapLine, i * 16, 0, 0);
+        spriteIds[i] = CreateSprite(&gUnknown_0859F524, i * 16, 0, 0);
         if (i != 0)
             StartSpriteAnim(&gSprites[spriteIds[i]], 1);
 
@@ -416,7 +410,7 @@ void CreateSwapLineSprites(u8 *spriteIds, u8 count)
     }
 }
 
-void DestroySwapLineSprites(u8 *spriteIds, u8 count)
+void sub_81223B0(u8 *spriteIds, u8 count)
 {
     u8 i;
 
@@ -429,15 +423,17 @@ void DestroySwapLineSprites(u8 *spriteIds, u8 count)
     }
 }
 
-void SetSwapLineSpritesInvisibility(u8 *spriteIds, u8 count, bool8 invisible)
+void sub_81223FC(u8 *spriteIds, u8 count, bool8 invisible)
 {
     u8 i;
 
     for (i = 0; i < count; i++)
+    {
         gSprites[spriteIds[i]].invisible = invisible;
+    }
 }
 
-void UpdateSwapLineSpritesPos(u8 *spriteIds, u8 count, s16 x, u16 y)
+void sub_8122448(u8 *spriteIds, u8 count, s16 x, u16 y)
 {
     u8 i;
     bool8 unknownBit = count & 0x80;
@@ -446,10 +442,10 @@ void UpdateSwapLineSpritesPos(u8 *spriteIds, u8 count, s16 x, u16 y)
     for (i = 0; i < count; i++)
     {
         if (i == count - 1 && unknownBit)
-            gSprites[spriteIds[i]].x2 = x - 8;
+            gSprites[spriteIds[i]].pos2.x = x - 8;
         else
-            gSprites[spriteIds[i]].x2 = x;
+            gSprites[spriteIds[i]].pos2.x = x;
 
-        gSprites[spriteIds[i]].y = 1 + y;
+        gSprites[spriteIds[i]].pos1.y = 1 + y;
     }
 }

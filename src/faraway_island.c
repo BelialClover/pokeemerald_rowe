@@ -38,7 +38,7 @@ static const s16 sFarawayIslandRockCoords[4][2] =
 static u8 GetMewObjectEventId(void)
 {
     u8 objectEventId;
-    TryGetObjectEventIdByLocalIdAndMap(LOCALID_FARAWAY_ISLAND_MEW, gSaveBlock1Ptr->location.mapNum, gSaveBlock1Ptr->location.mapGroup, &objectEventId);
+    TryGetObjectEventIdByLocalIdAndMap(1, gSaveBlock1Ptr->location.mapNum, gSaveBlock1Ptr->location.mapGroup, &objectEventId);
     return objectEventId;
 }
 
@@ -372,6 +372,7 @@ void SetMewAboveGrass(void)
 {
     s16 x;
     s16 y;
+    u8 spriteId;
     struct ObjectEvent *mew = &gObjectEvents[GetMewObjectEventId()];
 
     mew->invisible = FALSE;

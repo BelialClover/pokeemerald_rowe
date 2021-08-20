@@ -1,6 +1,5 @@
 #include "global.h"
 #include "main.h"
-#include "dma3.h"
 #include "pokeblock.h"
 #include "malloc.h"
 #include "decompress.h"
@@ -486,7 +485,7 @@ static void LoadUsePokeblockMenu(void)
     switch (sInfo->mainState)
     {
     case 0:
-        sMenu->curMonSpriteId = SPRITE_NONE;
+        sMenu->curMonSpriteId = 0xFF;
         InitConditionGraphData(&sMenu->graph);
         sInfo->mainState++;
         break;
@@ -569,7 +568,7 @@ static void ShowUsePokeblockMenu(void)
     switch (sInfo->mainState)
     {
     case 0:
-        BeginNormalPaletteFade(PALETTES_ALL, 0, 16, 0, RGB_BLACK);
+        BeginNormalPaletteFade(0xFFFFFFFF, 0, 16, 0, RGB_BLACK);
         SetVBlankCallback(VBlankCB_UsePokeblockMenu);
         ShowBg(0);
         ShowBg(1);
@@ -695,7 +694,7 @@ static void FeedPokeblockToMon(void)
         gPokeblockMonId = GetPartyIdFromSelectionId(sMenu->info.curSelection);
         sExitCallback = sInfo->exitCallback;
         sPokeblock = sInfo->pokeblock;
-        BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, RGB_BLACK);
+        BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB_BLACK);
         sInfo->mainState++;
         break;
     case 1:
@@ -708,7 +707,7 @@ static void FeedPokeblockToMon(void)
             FREE_AND_SET_NULL(sMenu);
             FreeAllWindowBuffers();
             gMain.savedCallback = CB2_ReturnAndChooseMonToGivePokeblock;
-            PreparePokeblockFeedScene();
+            CB2_PreparePokeblockFeedScene();
         }
         break;
     }
@@ -739,7 +738,7 @@ static void ShowUsePokeblockMenuForResults(void)
     case 2:
         break;
     case 3:
-        BlendPalettes(PALETTES_ALL, 16, RGB_BLACK);
+        BlendPalettes(0xFFFFFFFF, 16, RGB_BLACK);
         sInfo->mainState++;
         break;
     case 4:
@@ -751,7 +750,7 @@ static void ShowUsePokeblockMenuForResults(void)
         break;
     case 5:
         SetVBlankCallback(VBlankCB_UsePokeblockMenu);
-        BeginNormalPaletteFade(PALETTES_ALL, 0, 16, 0, RGB_BLACK);
+        BeginNormalPaletteFade(0xFFFFFFFF, 0, 16, 0, RGB_BLACK);
         sInfo->mainState++;
         break;
     case 6:
@@ -827,7 +826,7 @@ static void CloseUsePokeblockMenu(void)
     switch (sInfo->mainState)
     {
     case 0:
-        BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, RGB_BLACK);
+        BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB_BLACK);
         sInfo->mainState++;
         break;
     case 1:
@@ -853,7 +852,7 @@ static void CloseUsePokeblockMenu(void)
         for (i = 0; i < ARRAY_COUNT(sMenu->condition); i++)
             DestroySprite(sMenu->condition[i]);
 
-        if (sMenu->curMonSpriteId != SPRITE_NONE)
+        if (sMenu->curMonSpriteId != 0xFF)
             DestroySprite(&gSprites[sMenu->curMonSpriteId]);
 
         SetVBlankCallback(NULL);
@@ -1143,9 +1142,9 @@ static void LoadAndCreateUpDownSprites(void)
 static void SpriteCB_UpDown(struct Sprite *sprite)
 {
     if (sprite->data[0] < 6)
-        sprite->y2 -= 2;
+        sprite->pos2.y -= 2;
     else if (sprite->data[0] < 12)
-        sprite->y2 += 2;
+        sprite->pos2.y += 2;
 
     if (++sprite->data[0] > 60)
     {
@@ -1215,7 +1214,7 @@ static void UpdateMonPic(u8 loadId)
     struct SpriteSheet spriteSheet;
     struct SpritePalette spritePal;
 
-    if (sMenu->curMonSpriteId == SPRITE_NONE)
+    if (sMenu->curMonSpriteId == 0xFF)
     {
         LoadConditionMonPicTemplate(&spriteSheet, &spriteTemplate, &spritePal);
         spriteSheet.data = sMenu->partySheets[loadId];
@@ -1228,20 +1227,21 @@ static void UpdateMonPic(u8 loadId)
         {
             FreeSpriteTilesByTag(TAG_CONDITION_MON);
             FreeSpritePaletteByTag(TAG_CONDITION_MON);
-            sMenu->curMonSpriteId = SPRITE_NONE;
+            sMenu->curMonSpriteId = 0xFF;
         }
         else
         {
             sMenu->curMonSpriteId = spriteId;
             gSprites[sMenu->curMonSpriteId].callback = SpriteCB_MonPic;
-            gSprites[sMenu->curMonSpriteId].y2 -= 34;
+            gSprites[sMenu->curMonSpriteId].pos2.y -= 34;
             sMenu->curMonTileStart = (void*)(OBJ_VRAM0 + (sMenu->curMonSheet * 32));
             sMenu->curMonPalette = (sMenu->curMonPalette * 16) + 0x100;
         }
     }
     else
     {
-        Dma3CopyLarge16_(sMenu->partySheets[loadId], sMenu->curMonTileStart, MON_PIC_SIZE);
+        do {} while(0); // Only needed to match, feel free to remove.
+        DmaCopy16Defvars(3, sMenu->partySheets[loadId], sMenu->curMonTileStart, 0x800);
         LoadPalette(sMenu->partyPalettes[loadId], sMenu->curMonPalette, 32);
     }
 }
@@ -1391,7 +1391,8 @@ static void UpdateMonInfoText(u16 loadId, bool8 firstPrint)
     {
         AddTextPrinterParameterized(WIN_NAME, 1, sMenu->monNameStrings[loadId], 0, 1, 0, NULL);
         partyIndex = GetPartyIdFromSelectionId(sMenu->info.curSelection);
-        nature = GetNature(&gPlayerParty[partyIndex]);
+        //nature = GetNature(&gPlayerParty[partyIndex]);
+		nature = GetNature(&gPlayerParty[partyIndex], FALSE);
         str = StringCopy(sMenu->info.natureText, gText_NatureSlash);
         str = StringCopy(str, gNatureNamePointers[nature]);
         AddTextPrinterParameterized3(WIN_NATURE, 1, 2, 1, sNatureTextColors, 0, sMenu->info.natureText);
@@ -1574,7 +1575,7 @@ static bool8 LoadNewSelection_MonToMon(void)
 
 static void SpriteCB_MonPic(struct Sprite *sprite)
 {
-    sprite->x = sMenu->curMonXOffset + 38;
+    sprite->pos1.x = sMenu->curMonXOffset + 38;
 }
 
 static void SpriteCB_SelectionIconPokeball(struct Sprite *sprite)
@@ -1661,13 +1662,13 @@ static bool8 LoadConditionTitle(void)
 // Literally the word "Condition", the title block that appears over the mon icon
 static void SpriteCB_Condition(struct Sprite *sprite)
 {
-    s16 prevX = sprite->x;
+    s16 prevX = sprite->pos1.x;
 
-    sprite->x += sprite->data[0];
-    if ((prevX <= sprite->data[1] && sprite->x >= sprite->data[1])
-     || (prevX >= sprite->data[1] && sprite->x <= sprite->data[1]))
+    sprite->pos1.x += sprite->data[0];
+    if ((prevX <= sprite->data[1] && sprite->pos1.x >= sprite->data[1])
+     || (prevX >= sprite->data[1] && sprite->pos1.x <= sprite->data[1]))
     {
-        sprite->x = sprite->data[1];
+        sprite->pos1.x = sprite->data[1];
         sprite->callback = SpriteCallbackDummy;
     }
 }

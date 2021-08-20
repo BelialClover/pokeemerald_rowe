@@ -125,7 +125,7 @@ const struct CompressedSpriteSheet gSpriteSheet_EnemyShadow =
     .data = gEnemyMonShadow_Gfx, .size = 0x80, .tag = 55129
 };
 
-static const struct OamData sOamData_EnemyShadow =
+static const struct OamData gUnknown_0831C6A8 =
 {
     .y = 0, 
     .affineMode = ST_OAM_AFFINE_OFF,
@@ -146,7 +146,7 @@ const struct SpriteTemplate gSpriteTemplate_EnemyShadow =
 {
     .tileTag = 55129, 
     .paletteTag = 55039, 
-    .oam = &sOamData_EnemyShadow, 
+    .oam = &gUnknown_0831C6A8, 
     .anims = gDummySpriteAnimTable, 
     .images = NULL, 
     .affineAnims = gDummySpriteAffineAnimTable, 

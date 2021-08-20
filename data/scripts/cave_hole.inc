@@ -1,12 +1,12 @@
-CaveHole_CheckFallDownHole:
+CaveHole_CheckFallDownHole: @ 82A8327
 	map_script_2 VAR_ICE_STEP_COUNT, 0, EventScript_FallDownHole
 	.2byte 0
 
-CaveHole_FixCrackedGround:
+CaveHole_FixCrackedGround: @ 82A8331
 	copyvar VAR_ICE_STEP_COUNT, 1
 	end
 
-EventScript_FallDownHole::
+EventScript_FallDownHole:: @ 82A8337
 	lockall
 	delay 20
 	applymovement OBJ_EVENT_ID_PLAYER, Movement_SetInvisible
@@ -17,7 +17,7 @@ EventScript_FallDownHole::
 	waitstate
 	end
 
-EventScript_FallDownHoleMtPyre::
+EventScript_FallDownHoleMtPyre:: @ 82A8350
 	lockall
 	delay 20
 	applymovement OBJ_EVENT_ID_PLAYER, Movement_SetInvisible
@@ -28,6 +28,6 @@ EventScript_FallDownHoleMtPyre::
 	waitstate
 	end
 
-Movement_SetInvisible:
+Movement_SetInvisible: @ 82A8369
 	set_invisible
 	step_end

@@ -1,4 +1,4 @@
-TrainerHill_OnResume:
+TrainerHill_OnResume: @ 82C8336
 	setvar VAR_TEMP_2, 0
 	trainerhill_resumetimer
 	frontier_get FRONTIER_DATA_BATTLE_OUTCOME
@@ -10,29 +10,27 @@ TrainerHill_OnResume:
 	goto_if_eq TrainerHill_1F_EventScript_Lost
 	end
 
-TrainerHill_OnWarp:
+TrainerHill_OnWarp: @ 82C8372
 	map_script_2 VAR_TEMP_3, 0, TrainerHill_1F_EventScript_DummyOnWarp
 	.2byte 0
 
-TrainerHill_1F_EventScript_DummyOnWarp::
+TrainerHill_1F_EventScript_DummyOnWarp:: @ 82C837C
 	setvar VAR_TEMP_3, 1
-.ifdef BUGFIX
-	end  @ Missing end. By chance, the next byte (0x02 of VAR_TEMP_2) is also the id for the end cmd
-.endif
+@ forced stop
 
-TrainerHill_OnFrame:
+TrainerHill_OnFrame: @ 82C8381
 	map_script_2 VAR_TEMP_2, 0, TrainerHill_1F_EventScript_DummyWarpToEntranceCounter
 	map_script_2 VAR_TEMP_1, 1, TrainerHill_EventScript_WarpToEntranceCounter
 	.2byte 0
 
-EventScript_TrainerHillTimer::
+EventScript_TrainerHillTimer:: @ 82C8393
 	lockall
 	trainerhill_gettime
 	msgbox TrainerHill_Entrance_Text_ChallengeTime, MSGBOX_DEFAULT
 	releaseall
 	end
 
-TrainerHill_1F_EventScript_DummyWarpToEntranceCounter::
+TrainerHill_1F_EventScript_DummyWarpToEntranceCounter:: @ 82C83A6
 	setvar VAR_TEMP_2, 1
 	trainerhill_getusingereader
 	compare VAR_RESULT, TRUE  @ VAR_RESULT always FALSE here
@@ -40,30 +38,30 @@ TrainerHill_1F_EventScript_DummyWarpToEntranceCounter::
 	end
 
 @ Never reached
-TrainerHill_1F_EventScript_WarpSilentToEntranceCounter::
+TrainerHill_1F_EventScript_WarpSilentToEntranceCounter:: @ 82C83BF
 	warpsilent MAP_TRAINER_HILL_ENTRANCE, 255, 9, 6
 	waitstate
 	end
 
-TrainerHill_1F_EventScript_Lost::
+TrainerHill_1F_EventScript_Lost:: @ 82C83C9
 	trainerhill_settrainerflags
 	trainerhill_lost
 	setvar VAR_TEMP_1, 1
 	end
 
-TrainerHill_EventScript_WarpToEntranceCounter::
+TrainerHill_EventScript_WarpToEntranceCounter:: @ 82C83DF
 	setvar VAR_TEMP_1, 0
 	warp MAP_TRAINER_HILL_ENTRANCE, 255, 9, 6
 	waitstate
 	end
 
 @ Unused
-TrainerHill_1F_Movement_SetInvisible::
+TrainerHill_1F_Movement_SetInvisible:: @ 82C83EE
 	set_invisible
 	step_end
 
 @ TRAINER_PHILLIP is an actual Trainer on the SS Tidal, but is used as a placeholder here
-TrainerHill_EventScript_TrainerBattle::
+TrainerHill_EventScript_TrainerBattle:: @ 82C83F0
 	trainerbattle TRAINER_BATTLE_HILL, TRAINER_PHILLIP, 0, BattleFacility_TrainerBattle_PlaceholderText, BattleFacility_TrainerBattle_PlaceholderText
 	trainerhill_postbattletext
 	waitmessage

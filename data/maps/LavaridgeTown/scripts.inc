@@ -1,12 +1,12 @@
 .set LOCALID_RIVAL_ON_BIKE, 7
 .set LOCALID_RIVAL, 8
 
-LavaridgeTown_MapScripts::
+LavaridgeTown_MapScripts:: @ 81EA4D3
 	map_script MAP_SCRIPT_ON_TRANSITION, LavaridgeTown_OnTransition
 	map_script MAP_SCRIPT_ON_FRAME_TABLE, LavaridgeTown_OnFrame
 	.byte 0
 
-LavaridgeTown_OnTransition:
+LavaridgeTown_OnTransition: @ 81EA4DE
 	setflag FLAG_VISITED_LAVARIDGE_TOWN
 	call_if_set FLAG_WHITEOUT_TO_LAVARIDGE, LavaridgeTown_EventScript_ClearLavaridgeWhiteOut
 	call_if_set FLAG_DEFEATED_EVIL_TEAM_MT_CHIMNEY, LavaridgeTown_EventScript_ShowMtChimneyTrainers
@@ -18,60 +18,40 @@ LavaridgeTown_OnTransition:
 	call_if_eq LavaridgeTown_EventScript_HideMapNamePopup
 	end
 
-LavaridgeTown_EventScript_ClearLavaridgeWhiteOut::
+LavaridgeTown_EventScript_ClearLavaridgeWhiteOut:: @ 81EA514
 	clearflag FLAG_WHITEOUT_TO_LAVARIDGE
 	return
 
-LavaridgeTown_EventScript_CheckSetRivalPos::
-	getplayerxy VAR_0x8004, VAR_0x8005
-	compare VAR_0x8004, 9
-	goto_if_eq LavaridgeTown_EventScript_SetRivalPos
+LavaridgeTown_EventScript_CheckSetRivalPos:: @ 81EA518
+	//getplayerxy VAR_0x8004, VAR_0x8005
+	//compare VAR_0x8004, 9
+	//goto_if_eq LavaridgeTown_EventScript_SetRivalPos
 	return
 
-LavaridgeTown_EventScript_SetRivalPos::
+LavaridgeTown_EventScript_SetRivalPos:: @ 81EA529
 	setobjectxyperm LOCALID_RIVAL, 11, 9
 	setobjectxyperm LOCALID_RIVAL_ON_BIKE, 9, 8
 	setobjectmovementtype LOCALID_RIVAL_ON_BIKE, MOVEMENT_TYPE_FACE_UP
 	clearflag FLAG_HIDE_LAVARIDGE_TOWN_RIVAL
 	return
 
-LavaridgeTown_EventScript_ShowMtChimneyTrainers::
+LavaridgeTown_EventScript_ShowMtChimneyTrainers:: @ 81EA53F
 	clearflag FLAG_HIDE_MT_CHIMNEY_TRAINERS
 	return
 
-LavaridgeTown_EventScript_HideMapNamePopup::
+LavaridgeTown_EventScript_HideMapNamePopup:: @ 81EA543
 	setflag FLAG_HIDE_MAP_NAME_POPUP
 	return
 
-LavaridgeTown_OnFrame:
+LavaridgeTown_OnFrame: @ 81EA547
 	map_script_2 VAR_LAVARIDGE_TOWN_STATE, 1, LavaridgeTown_EventScript_RivalGiveGoGoggles
 	.2byte 0
 
-LavaridgeTown_EventScript_RivalGiveGoGoggles::
-	lockall
-	getplayerxy VAR_0x8008, VAR_0x8009
-	compare VAR_0x8008, 9
-	call_if_eq LavaridgeTown_EventScript_RivalNoticePlayer
-	compare VAR_0x8008, 9
-	call_if_ne LavaridgeTown_EventScript_RivalExitHerbShop
-	delay 20
-	checkplayergender
-	compare VAR_RESULT, MALE
-	call_if_eq LavaridgeTown_EventScript_PlayMayMusic
-	compare VAR_RESULT, FEMALE
-	call_if_eq LavaridgeTown_EventScript_PlayBrendanMusic
-	compare VAR_0x8008, 9
-	call_if_eq LavaridgeTown_EventScript_RivalApproachPlayer1
-	compare VAR_0x8008, 9
-	call_if_ne LavaridgeTown_EventScript_RivalApproachPlayer2
-	checkplayergender
-	compare VAR_RESULT, MALE
-	goto_if_eq LavaridgeTown_EventScript_MayGiveGoGoggles
-	compare VAR_RESULT, FEMALE
-	goto_if_eq LavaridgeTown_EventScript_BrendanGiveGoGoggles
+LavaridgeTown_EventScript_RivalGiveGoGoggles:: @ 81EA551
+	goto Route117_PokemonDayCare_DittoWoman
 	end
 
-LavaridgeTown_EventScript_MayGiveGoGoggles::
+LavaridgeTown_EventScript_MayGiveGoGoggles:: @ 81EA5B5
 	msgbox LavaridgeTown_Text_MayNiceBadgesTakeThis, MSGBOX_DEFAULT
 	giveitem ITEM_GO_GOGGLES
 	setflag FLAG_RECEIVED_GO_GOGGLES
@@ -79,7 +59,7 @@ LavaridgeTown_EventScript_MayGiveGoGoggles::
 	goto LavaridgeTown_EventScript_RivalExit
 	end
 
-LavaridgeTown_EventScript_BrendanGiveGoGoggles::
+LavaridgeTown_EventScript_BrendanGiveGoGoggles:: @ 81EA5DA
 	msgbox LavaridgeTown_Text_BrendanNiceBadgesTakeThis, MSGBOX_DEFAULT
 	giveitem ITEM_GO_GOGGLES
 	setflag FLAG_RECEIVED_GO_GOGGLES
@@ -87,7 +67,7 @@ LavaridgeTown_EventScript_BrendanGiveGoGoggles::
 	goto LavaridgeTown_EventScript_RivalExit
 	end
 
-LavaridgeTown_EventScript_RivalExit::
+LavaridgeTown_EventScript_RivalExit:: @ 81EA5FF
 	closemessage
 	removeobject LOCALID_RIVAL
 	addobject LOCALID_RIVAL_ON_BIKE
@@ -104,15 +84,15 @@ LavaridgeTown_EventScript_RivalExit::
 	releaseall
 	end
 
-LavaridgeTown_EventScript_PlayMayMusic::
-	playbgm MUS_ENCOUNTER_MAY, TRUE
+LavaridgeTown_EventScript_PlayMayMusic:: @ 81EA630
+	playbgm MUS_ENCOUNTER_MAY, 1
 	return
 
-LavaridgeTown_EventScript_PlayBrendanMusic::
-	playbgm MUS_ENCOUNTER_BRENDAN, TRUE
+LavaridgeTown_EventScript_PlayBrendanMusic:: @ 81EA635
+	playbgm MUS_ENCOUNTER_BRENDAN, 1
 	return
 
-LavaridgeTown_EventScript_RivalNoticePlayer::
+LavaridgeTown_EventScript_RivalNoticePlayer:: @ 81EA63A
 	applymovement LOCALID_RIVAL, Common_Movement_WalkInPlaceFastestUp
 	waitmovement 0
 	playse SE_PIN
@@ -122,7 +102,7 @@ LavaridgeTown_EventScript_RivalNoticePlayer::
 	waitmovement 0
 	return
 
-LavaridgeTown_EventScript_RivalExitHerbShop::
+LavaridgeTown_EventScript_RivalExitHerbShop:: @ 81EA65C
 	opendoor 12, 15
 	waitdooranim
 	addobject LOCALID_RIVAL
@@ -141,28 +121,28 @@ LavaridgeTown_EventScript_RivalExitHerbShop::
 	waitmovement 0
 	return
 
-LavaridgeTown_EventScript_RivalApproachPlayer1::
+LavaridgeTown_EventScript_RivalApproachPlayer1:: @ 81EA6A1
 	applymovement LOCALID_RIVAL, LavaridgeTown_Movement_RivalApproachPlayer1
 	waitmovement 0
 	return
 
-LavaridgeTown_EventScript_RivalApproachPlayer2::
+LavaridgeTown_EventScript_RivalApproachPlayer2:: @ 81EA6AC
 	applymovement LOCALID_RIVAL, LavaridgeTown_Movement_RivalApproachPlayer2
 	waitmovement 0
 	return
 
-LavaridgeTown_EventScript_RivalExit1::
+LavaridgeTown_EventScript_RivalExit1:: @ 81EA6B7
 	applymovement OBJ_EVENT_ID_PLAYER, LavaridgeTown_Movement_PlayerWatchRivalExit
 	applymovement LOCALID_RIVAL_ON_BIKE, LavaridgeTown_Movement_RivalExit1
 	waitmovement 0
 	return
 
-LavaridgeTown_EventScript_RivalExit2::
+LavaridgeTown_EventScript_RivalExit2:: @ 81EA6C9
 	applymovement LOCALID_RIVAL_ON_BIKE, LavaridgeTown_Movement_RivalExit2
 	waitmovement 0
 	return
 
-LavaridgeTown_Movement_RivalExit2:
+LavaridgeTown_Movement_RivalExit2: @ 81EA6D4
 	walk_fast_right
 	walk_fast_right
 	walk_fast_right
@@ -175,13 +155,13 @@ LavaridgeTown_Movement_RivalExit2:
 	walk_fast_up
 	step_end
 
-LavaridgeTown_Movement_PlayerWatchRivalExit:
+LavaridgeTown_Movement_PlayerWatchRivalExit: @ 81EA6DF
 	delay_16
 	delay_8
 	walk_in_place_fastest_right
 	step_end
 
-LavaridgeTown_Movement_RivalExit1:
+LavaridgeTown_Movement_RivalExit1: @ 81EA6E3
 	walk_fast_down
 	walk_fast_right
 	walk_fast_right
@@ -193,7 +173,7 @@ LavaridgeTown_Movement_RivalExit1:
 	walk_fast_right
 	step_end
 
-LavaridgeTown_Movement_RivalApproachPlayer2:
+LavaridgeTown_Movement_RivalApproachPlayer2: @ 81EA6ED
 	walk_left
 	walk_left
 	walk_left
@@ -202,51 +182,243 @@ LavaridgeTown_Movement_RivalApproachPlayer2:
 	walk_left
 	step_end
 
-LavaridgeTown_Movement_RivalApproachPlayer1:
+LavaridgeTown_Movement_RivalApproachPlayer1: @ 81EA6F4
 	walk_left
 	walk_left
 	walk_up
 	step_end
 
-LavaridgeTown_Movement_RivalExitHerbShop:
+LavaridgeTown_Movement_RivalExitHerbShop: @ 81EA6F8
 	walk_down
 	step_end
 
-LavaridgeTown_EventScript_HotSpringsTrigger::
+LavaridgeTown_EventScript_HotSpringsTrigger:: @ 81EA6FA
 	specialvar VAR_RESULT, GetPlayerFacingDirection
 	compare VAR_RESULT, DIR_SOUTH
 	goto_if_eq LavaridgeTown_EventScript_EnteredHotSprings
 	end
 
-LavaridgeTown_EventScript_EnteredHotSprings::
+LavaridgeTown_EventScript_EnteredHotSprings:: @ 81EA70B
 	incrementgamestat GAME_STAT_ENTERED_HOT_SPRINGS
 	end
 
-LavaridgeTown_EventScript_ExpertM::
-	msgbox LavaridgeTown_Text_HotSpringsNeverRunDry, MSGBOX_NPC
+LavaridgeTown_EventScript_ExpertM:: @ 81EA70E
+	lock
+	faceplayer
+	msgbox LavaridgeTown_Text_ThreeShards, MSGBOX_DEFAULT
+	checkitem ITEM_RED_SHARD, 2
+	compare VAR_RESULT, TRUE
+	goto_if_eq LavaridgeTown_EventScript_EventScript_AsktoTrade
+	release
+	end
+	
+LavaridgeTown_EventScript_EventScript_AsktoTrade::
+	playse SE_PIN
+	applymovement VAR_LAST_TALKED, Common_Movement_ExclamationMark
+	waitmovement 0
+	applymovement VAR_LAST_TALKED, Common_Movement_Delay48
+	waitmovement 0
+	msgbox LavaridgeTown_Text_Question, MSGBOX_YESNO
+	compare VAR_RESULT, NO
+	goto_if_eq LavaridgeTown_EventScript_FireStarter_Decline
+	getpartysize
+	compare VAR_RESULT, PARTY_SIZE
+	goto_if_eq RustboroCity_DevonCorp_2F_EventScript_No_Space
+	removeitem ITEM_RED_SHARD, 2
+	//removeitem ITEM_POTION, 1
+	setflag FLAG_UNUSED_0x937
+	random 8
+	switch VAR_RESULT
+	case 0, LavaridgeTown_EventScript_Give_Charmander_Mega_Y
+	case 1, LavaridgeTown_EventScript_Give_Cyndaquil
+	case 2, LavaridgeTown_EventScript_Give_Torchic_Mega
+	case 3, LavaridgeTown_EventScript_Give_Chimchar
+	case 4, LavaridgeTown_EventScript_Give_Tepig
+	case 5, LavaridgeTown_EventScript_Give_Fennekin
+	case 6, LavaridgeTown_EventScript_Give_Litten
+	case 7, LavaridgeTown_EventScript_Give_Scorbunny
+	end
+	
+LavaridgeTown_EventScript_FireStarter_Come_Again::
+	msgbox LavaridgeTown_Text_ComeAgain_Starter, MSGBOX_DEFAULT
+	release
+	end
+	
+LavaridgeTown_EventScript_FireStarter_Decline::
+	msgbox LavaridgeTown_Text_Starter_Declined, MSGBOX_DEFAULT
+	release
+	end
+	
+//Starters
+	
+LavaridgeTown_Text_ThreeShards:
+	.string "If you have 2 Red Shards I can\n"
+	.string "give you a good Pokémon.$"
+	
+LavaridgeTown_Text_Question:
+	.string "Are those Red Shards?\p"
+	.string "Do you want to trade them\n"
+	.string "for one of my Pokémon?$"
+	
+LavaridgeTown_Text_Starter_Declined:
+	.string "Oh well, come again if you change\n"
+	.string "your mind.$"
+	
+LavaridgeTown_Text_ComeAgain_Starter:
+	.string "Come again if you want another\n"
+	.string "one.$"
+	
+LavaridgeTown_Text_ReceivedMonFromOldMan:
+	.string "{PLAYER} received {STR_VAR_2} from\n"
+	.string "the Old Man.$"
+	
+//Charmander
+LavaridgeTown_EventScript_Give_Charmander::
+	bufferspeciesname 1, SPECIES_CHARMANDER
+	playfanfare MUS_OBTAIN_ITEM
+	message LavaridgeTown_Text_ReceivedMonFromOldMan
+	givemon SPECIES_CHARMANDER, 10, ITEM_NONE
+	waitfanfare
+	msgbox LavaridgeTown_Text_ComeAgain_Starter, MSGBOX_DEFAULT
+	release
+	end
+	
+LavaridgeTown_EventScript_Give_Charmander_Mega_Y::
+	goto_if_unset FLAG_RECEIVED_TM04 LavaridgeTown_EventScript_Give_Charmander
+	goto_if_set FLAG_UNUSED_0x27A LavaridgeTown_EventScript_Give_Charmander_Mega_X
+	bufferspeciesname 1, SPECIES_CHARMANDER
+	playfanfare MUS_OBTAIN_ITEM
+	message LavaridgeTown_Text_ReceivedMonFromOldMan
+	givemon SPECIES_CHARMANDER, 30, ITEM_CHARIZARDITE_Y
+	setflag FLAG_UNUSED_0x27A
+	waitfanfare
+	msgbox LavaridgeTown_Text_ComeAgain_Starter, MSGBOX_DEFAULT
+	release
+	end
+	
+LavaridgeTown_EventScript_Give_Charmander_Mega_X::
+	goto_if_set FLAG_UNUSED_0x27B LavaridgeTown_EventScript_Give_Charmander
+	bufferspeciesname 1, SPECIES_CHARMANDER
+	playfanfare MUS_OBTAIN_ITEM
+	message LavaridgeTown_Text_ReceivedMonFromOldMan
+	givemon SPECIES_CHARMANDER, 30, ITEM_CHARIZARDITE_X
+	setflag FLAG_UNUSED_0x27B
+	waitfanfare
+	msgbox LavaridgeTown_Text_ComeAgain_Starter, MSGBOX_DEFAULT
+	release
+	end
+	
+//Cyndaquil
+LavaridgeTown_EventScript_Give_Cyndaquil::
+	bufferspeciesname 1, SPECIES_CYNDAQUIL
+	playfanfare MUS_OBTAIN_ITEM
+	message LavaridgeTown_Text_ReceivedMonFromOldMan
+	givemon SPECIES_CYNDAQUIL, 10, ITEM_NONE
+	waitfanfare
+	msgbox LavaridgeTown_Text_ComeAgain_Starter, MSGBOX_DEFAULT
+	release
+	end
+	
+//Torchic
+LavaridgeTown_EventScript_Give_Torchic::
+	bufferspeciesname 1, SPECIES_TORCHIC
+	playfanfare MUS_OBTAIN_ITEM
+	message LavaridgeTown_Text_ReceivedMonFromOldMan
+	givemon SPECIES_TORCHIC, 10, ITEM_NONE
+	waitfanfare
+	msgbox LavaridgeTown_Text_ComeAgain_Starter, MSGBOX_DEFAULT
+	release
+	end
+	
+LavaridgeTown_EventScript_Give_Torchic_Mega::
+	goto_if_unset FLAG_RECEIVED_TM04 LavaridgeTown_EventScript_Give_Torchic
+	goto_if_set FLAG_UNUSED_0x26B LavaridgeTown_EventScript_Give_Torchic
+	bufferspeciesname 1, SPECIES_TORCHIC
+	playfanfare MUS_OBTAIN_ITEM
+	message LavaridgeTown_Text_ReceivedMonFromOldMan
+	givemon SPECIES_TORCHIC, 30, ITEM_BLAZIKENITE
+	waitfanfare
+	setflag FLAG_UNUSED_0x26B
+	msgbox LavaridgeTown_Text_ComeAgain_Starter, MSGBOX_DEFAULT
+	release
+	end
+	
+//Chimchar
+LavaridgeTown_EventScript_Give_Chimchar::
+	bufferspeciesname 1, SPECIES_CHIMCHAR
+	playfanfare MUS_OBTAIN_ITEM
+	message LavaridgeTown_Text_ReceivedMonFromOldMan
+	givemon SPECIES_CHIMCHAR, 10, ITEM_NONE
+	waitfanfare
+	msgbox LavaridgeTown_Text_ComeAgain_Starter, MSGBOX_DEFAULT
+	release
+	end
+	
+//Tepig
+LavaridgeTown_EventScript_Give_Tepig::
+	bufferspeciesname 1, SPECIES_TEPIG
+	playfanfare MUS_OBTAIN_ITEM
+	message LavaridgeTown_Text_ReceivedMonFromOldMan
+	givemon SPECIES_TEPIG, 10, ITEM_NONE
+	waitfanfare
+	msgbox LavaridgeTown_Text_ComeAgain_Starter, MSGBOX_DEFAULT
+	release
+	end
+	
+//Fennekin
+LavaridgeTown_EventScript_Give_Fennekin::
+	bufferspeciesname 1, SPECIES_FENNEKIN
+	playfanfare MUS_OBTAIN_ITEM
+	message LavaridgeTown_Text_ReceivedMonFromOldMan
+	givemon SPECIES_FENNEKIN, 10, ITEM_NONE
+	waitfanfare
+	msgbox LavaridgeTown_Text_ComeAgain_Starter, MSGBOX_DEFAULT
+	release
+	end
+	
+//Litten
+LavaridgeTown_EventScript_Give_Litten::
+	bufferspeciesname 1, SPECIES_LITTEN
+	playfanfare MUS_OBTAIN_ITEM
+	message LavaridgeTown_Text_ReceivedMonFromOldMan
+	givemon SPECIES_LITTEN, 10, ITEM_NONE
+	waitfanfare
+	msgbox LavaridgeTown_Text_ComeAgain_Starter, MSGBOX_DEFAULT
+	release
+	end
+	
+//Scorbunny
+LavaridgeTown_EventScript_Give_Scorbunny::
+	bufferspeciesname 1, SPECIES_SCORBUNNY
+	playfanfare MUS_OBTAIN_ITEM
+	message LavaridgeTown_Text_ReceivedMonFromOldMan
+	givemon SPECIES_SCORBUNNY, 10, ITEM_NONE
+	waitfanfare
+	msgbox LavaridgeTown_Text_ComeAgain_Starter, MSGBOX_DEFAULT
+	release
 	end
 
-LavaridgeTown_EventScript_OldMan::
+LavaridgeTown_EventScript_OldMan:: @ 81EA717
 	msgbox LavaridgeTown_Text_PokemonNippedBackside, MSGBOX_SIGN
 	end
 
-LavaridgeTown_EventScript_Twin::
+LavaridgeTown_EventScript_Twin:: @ 81EA720
 	msgbox LavaridgeTown_Text_BatheInHotSpringsEveryDay, MSGBOX_NPC
 	end
 
-LavaridgeTown_EventScript_HotSpringsOldWoman1::
+LavaridgeTown_EventScript_HotSpringsOldWoman1:: @ 81EA729
 	msgbox LavaridgeTown_Text_IfPokemonInHotSprings, MSGBOX_NPC
 	end
 
-LavaridgeTown_EventScript_HotSpringsOldWoman2::
+LavaridgeTown_EventScript_HotSpringsOldWoman2:: @ 81EA732
 	msgbox LavaridgeTown_Text_HotSpringsClaims, MSGBOX_NPC
 	end
 
-LavaridgeTown_EventScript_ExpertF::
+LavaridgeTown_EventScript_ExpertF:: @ 81EA73B
 	msgbox LavaridgeTown_Text_OhYouLikeHotSprings, MSGBOX_NPC
 	end
 
-LavaridgeTown_EventScript_EggWoman::
+LavaridgeTown_EventScript_EggWoman:: @ 81EA744
 	lock
 	faceplayer
 	goto_if_set FLAG_RECEIVED_LAVARIDGE_EGG, LavaridgeTown_EventScript_ReceivedEgg
@@ -261,116 +433,116 @@ LavaridgeTown_EventScript_EggWoman::
 	playfanfare MUS_OBTAIN_ITEM
 	message LavaridgeTown_Text_ReceivedTheEgg
 	waitfanfare
-	giveegg SPECIES_WYNAUT
+	givemon SPECIES_TOGEPI, 1, ITEM_NONE
 	release
 	end
 
-LavaridgeTown_EventScript_ReceivedEgg::
+LavaridgeTown_EventScript_ReceivedEgg:: @ 81EA787
 	msgbox LavaridgeTown_Text_EverySoOftenEggFoundAtDayCare, MSGBOX_DEFAULT
 	release
 	end
 
-LavaridgeTown_EventScript_NoRoomForEgg::
+LavaridgeTown_EventScript_NoRoomForEgg:: @ 81EA791
 	msgbox LavaridgeTown_Text_NoRoomForThisEgg, MSGBOX_DEFAULT
 	release
 	end
 
-LavaridgeTown_EventScript_DeclineEgg::
+LavaridgeTown_EventScript_DeclineEgg:: @ 81EA79B
 	msgbox LavaridgeTown_Text_AsYouWishThen, MSGBOX_DEFAULT
 	release
 	end
 
-LavaridgeTown_EventScript_TownSign::
+LavaridgeTown_EventScript_TownSign:: @ 81EA7A5
 	msgbox LavaridgeTown_Text_TownSign, MSGBOX_SIGN
 	end
 
-LavaridgeTown_EventScript_GymSign::
+LavaridgeTown_EventScript_GymSign:: @ 81EA7AE
 	msgbox LavaridgeTown_Text_GymSign, MSGBOX_SIGN
 	end
 
-LavaridgeTown_EventScript_HerbShopSign::
+LavaridgeTown_EventScript_HerbShopSign:: @ 81EA7B7
 	msgbox LavaridgeTown_Text_HerbShopSign, MSGBOX_SIGN
 	end
 
-LavaridgeTown_Text_MayNiceBadgesTakeThis:
-	.string "MAY: {PLAYER}{KUN}! Long time no see!\p"
+LavaridgeTown_Text_MayNiceBadgesTakeThis: @ 81EA7C0
+	.string "May: {PLAYER}{KUN}! Long time no see!\p"
 	.string "Oh? While I visited the hot springs,\n"
-	.string "you got the LAVARIDGE GYM BADGE.\p"
+	.string "you got the Lavaridge Gym Badge.\p"
 	.string "You must have collected\n"
-	.string "good POKéMON…\l"
+	.string "good Pokémon…\l"
 	.string "No, I believe you raised some.\p"
 	.string "I guess it would be okay for you to\n"
 	.string "have this.$"
 
-LavaridgeTown_Text_MayExplainGoGogglesChallengeDad:
-	.string "MAY: With those GO-GOGGLES, you'll\n"
+LavaridgeTown_Text_MayExplainGoGogglesChallengeDad: @ 81EA897
+	.string "May: With those Go-Goggles, you'll\n"
 	.string "have no trouble getting through the\l"
-	.string "desert near ROUTE 111.\p"
+	.string "desert near Route 111.\p"
 	.string "But, wow, {PLAYER}{KUN}…\n"
-	.string "Challenging GYMS…\p"
+	.string "Challenging Gyms…\p"
 	.string "You're trying hard because you don't\n"
 	.string "want to lose to me, I bet!\p"
 	.string "{PLAYER}{KUN}, I think I should challenge\n"
-	.string "your dad in PETALBURG GYM.\p"
+	.string "your dad in Petalburg Gym.\p"
 	.string "See you again!$"
 
-LavaridgeTown_Text_BrendanNiceBadgesTakeThis:
-	.string "BRENDAN: {PLAYER}, hey, it's been a while.\n"
+LavaridgeTown_Text_BrendanNiceBadgesTakeThis: @ 81EA9A2
+	.string "Brendan: {PLAYER}, hey, it's been a while.\n"
 	.string "How's it going?\p"
 	.string "Hmm…\n"
-	.string "That's a decent collection of BADGES.\p"
+	.string "That's a decent collection of Badges.\p"
 	.string "All right, then.\n"
 	.string "You may as well have this.$"
 
-LavaridgeTown_Text_BrendanExplainGoGogglesChallengeDad:
-	.string "BRENDAN: Keep those with you if you're\n"
+LavaridgeTown_Text_BrendanExplainGoGogglesChallengeDad: @ 81EAA2E
+	.string "Brendan: Keep those with you if you're\n"
 	.string "planning on going into that desert near\l"
-	.string "ROUTE 111.\p"
-	.string "There should be some POKéMON that\n"
+	.string "Route 111.\p"
+	.string "There should be some Pokémon that\n"
 	.string "are exclusively desert-dwellers.\l"
 	.string "You might look around for those.\p"
 	.string "As for me…\n"
-	.string "I'm considering challenging NORMAN,\l"
-	.string "the GYM LEADER of PETALBURG.\p"
+	.string "I'm considering challenging Norman,\l"
+	.string "the Gym Leader of Petalburg.\p"
 	.string "Unlike you, {PLAYER}, your dad looks like\n"
 	.string "he really is tough.\p"
 	.string "See you around!$"
 
-LavaridgeTown_Text_HaveEggWillYouTakeIt:
-	.string "I have here an EGG.\p"
+LavaridgeTown_Text_HaveEggWillYouTakeIt: @ 81EAB80
+	.string "I have here an Egg.\p"
 	.string "I'd hoped to hatch it by covering it in\n"
 	.string "hot sand by the hot springs.\l"
 	.string "But that doesn't seem to be enough…\p"
 	.string "I've heard it would be best if it were\n"
-	.string "kept together with POKéMON and\l"
+	.string "kept together with Pokémon and\l"
 	.string "carried about.\p"
-	.string "You are a TRAINER, yes?\n"
-	.string "And your POKéMON radiate vitality.\p"
+	.string "You are a Trainer, yes?\n"
+	.string "And your Pokémon radiate vitality.\p"
 	.string "So, what say you?\n"
-	.string "Will you take this EGG to hatch?$"
+	.string "Will you take this Egg to hatch?$"
 
-LavaridgeTown_Text_HopeYoullWalkPlentyWithEgg:
+LavaridgeTown_Text_HopeYoullWalkPlentyWithEgg: @ 81EACC0
 	.string "Good! I hope you'll walk plenty with\n"
-	.string "this here EGG!$"
+	.string "this here Egg!$"
 
-LavaridgeTown_Text_ReceivedTheEgg:
-	.string "{PLAYER} received the EGG.$"
+LavaridgeTown_Text_ReceivedTheEgg: @ 81EACF4
+	.string "{PLAYER} received the Egg.$"
 
-LavaridgeTown_Text_NoRoomForThisEgg:
-	.string "Oh? You've too many POKéMON.\n"
-	.string "There's no room for this EGG…$"
+LavaridgeTown_Text_NoRoomForThisEgg: @ 81EAD09
+	.string "Oh? You've too many Pokémon.\n"
+	.string "There's no room for this Egg…$"
 
-LavaridgeTown_Text_AsYouWishThen:
+LavaridgeTown_Text_AsYouWishThen: @ 81EAD44
 	.string "As you wish, then…\p"
 	.string "If you have a change of heart about\n"
-	.string "hatching this EGG, I will be here.$"
+	.string "hatching this Egg, I will be here.$"
 
-LavaridgeTown_Text_EverySoOftenEggFoundAtDayCare:
-	.string "Every so often, an EGG will be found at\n"
-	.string "the POKéMON DAY CARE.\p"
+LavaridgeTown_Text_EverySoOftenEggFoundAtDayCare: @ 81EAD9E
+	.string "Every so often, an Egg will be found at\n"
+	.string "the Pokémon Day Care.\p"
 	.string "Or at least that's how the rumor goes.$"
 
-LavaridgeTown_Text_HotSpringsNeverRunDry:
+LavaridgeTown_Text_HotSpringsNeverRunDry: @ 81EAE03
 	.string "We draw as much hot water as we need,\n"
 	.string "and yet the hot springs never run dry.\p"
 	.string "Isn't it magical?\p"
@@ -379,47 +551,47 @@ LavaridgeTown_Text_HotSpringsNeverRunDry:
 	.string "ground are heated by magma to well up\l"
 	.string "as hot springs.$"
 
-LavaridgeTown_Text_PokemonNippedBackside:
+LavaridgeTown_Text_PokemonNippedBackside: @ 81EAEE1
 	.string "Being buried in this hot sand is…\n"
 	.string "Sigh…\p"
 	.string "So warm and heavenly…\p"
 	.string "Eh? Gyaah! Ouch!\p"
-	.string "A POKéMON nipped my backside!$"
+	.string "A Pokémon nipped my backside!$"
 
-LavaridgeTown_Text_OhYouLikeHotSprings:
+LavaridgeTown_Text_OhYouLikeHotSprings: @ 81EAF4E
 	.string "Oh, you like hot springs, do you?\p"
 	.string "That's surprising for one as young\n"
 	.string "as you.$"
 
-LavaridgeTown_Text_BatheInHotSpringsEveryDay:
+LavaridgeTown_Text_BatheInHotSpringsEveryDay: @ 81EAF9B
 	.string "I bathe in the hot springs every day.\p"
 	.string "I want to become a beautiful and strong\n"
-	.string "GYM LEADER like FLANNERY.$"
+	.string "Gym Leader like Flannery.$"
 
-LavaridgeTown_Text_IfPokemonInHotSprings:
-	.string "If people put POKéMON in hot springs,\n"
+LavaridgeTown_Text_IfPokemonInHotSprings: @ 81EB003
+	.string "If people put Pokémon in hot springs,\n"
 	.string "it might be seriously strange.\p"
 	.string "Why, it might be an electric bath, or\n"
 	.string "a bubble bath, or even a lava bath…$"
 
-LavaridgeTown_Text_HotSpringsClaims:
+LavaridgeTown_Text_HotSpringsClaims: @ 81EB092
 	.string "They're claiming that these hot springs\n"
 	.string "are good for calming nervous tension,\l"
 	.string "relieving aching muscles, solving\l"
 	.string "romantic problems, and attracting\l"
 	.string "money…$"
 
-LavaridgeTown_Text_TownSign:
-	.string "LAVARIDGE TOWN\p"
-	.string "“POKéMON CENTER HOT SPRINGS\n"
+LavaridgeTown_Text_TownSign: @ 81EB12B
+	.string "Lavaridge Town\p"
+	.string "“Pokémon Center Hot Springs\n"
 	.string "An excellent place for relaxing!”$"
 
-LavaridgeTown_Text_GymSign:
-	.string "LAVARIDGE TOWN POKéMON GYM\n"
-	.string "LEADER: FLANNERY\l"
+LavaridgeTown_Text_GymSign: @ 81EB178
+	.string "Lavaridge Town Pokémon Gym\n"
+	.string "Leader: Flannery\l"
 	.string "“One with a fiery passion that burns!”$"
 
-LavaridgeTown_Text_HerbShopSign:
-	.string "POKéMON HERB SHOP\n"
+LavaridgeTown_Text_HerbShopSign: @ 81EB1CB
+	.string "Pokémon Herb Shop\n"
 	.string "“Bitter taste--better cure!”$"
 

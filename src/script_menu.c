@@ -13,11 +13,11 @@
 #include "strings.h"
 #include "task.h"
 #include "text.h"
+#include "list_menu.h"
 #include "constants/field_specials.h"
 #include "constants/items.h"
 #include "constants/script_menu.h"
 #include "constants/songs.h"
-
 #include "data/script_menu.h"
 
 static EWRAM_DATA u8 sProcessInputDelay = 0;
@@ -90,12 +90,10 @@ static u16 GetLengthWithExpandedPlayerName(const u8 *str)
     return length;
 }
 
-static void DrawMultichoiceMenu(u8 left, u8 top, u8 multichoiceId, bool8 ignoreBPress, u8 cursorPos)
+static void DrawMultichoiceMenuCustom(u8 left, u8 top, u8 multichoiceId, u8 ignoreBPress, u8 cursorPos, const struct MenuAction *actions, int count)
 {
     int i;
     u8 windowId;
-    u8 count = sMultichoiceLists[multichoiceId].count;
-    const struct MenuAction *actions = sMultichoiceLists[multichoiceId].list;
     int width = 0;
     u8 newWidth;
 
@@ -112,6 +110,67 @@ static void DrawMultichoiceMenu(u8 left, u8 top, u8 multichoiceId, bool8 ignoreB
     InitMenuInUpperLeftCornerPlaySoundWhenAPressed(windowId, count, cursorPos);
     ScheduleBgCopyTilemapToVram(0);
     InitMultichoiceCheckWrap(ignoreBPress, count, windowId, multichoiceId);
+}
+
+static void DrawMultichoiceMenu(u8 left, u8 top, u8 multichoiceId, u8 ignoreBPress, u8 cursorPos)
+{
+    DrawMultichoiceMenuCustom(left, top, multichoiceId, ignoreBPress, cursorPos, sMultichoiceLists[multichoiceId].list, sMultichoiceLists[multichoiceId].count);
+}
+
+void TryDrawRepelMenu(void)
+{
+    static const u16 repelItems[] = {ITEM_REPEL, ITEM_SUPER_REPEL, ITEM_MAX_REPEL};
+    struct MenuAction menuItems[4] = {NULL};
+    int i, count = 0;
+
+    for (i = 0; i < ARRAY_COUNT(repelItems); i++)
+    {
+        if (CheckBagHasItem(repelItems[i], 1))
+        {
+            VarSet(VAR_0x8004 + count, repelItems[i]);
+            menuItems[count].text = ItemId_GetName(repelItems[i]);
+            count++;
+        }
+    }
+
+    if (count > 1)
+        DrawMultichoiceMenuCustom(0, 0, 0, FALSE, 0, menuItems, count);
+
+    gSpecialVar_Result = (count > 1);
+}
+
+void HandleRepelMenuChoice(void)
+{
+    gSpecialVar_0x8004 = VarGet(VAR_0x8004 + gSpecialVar_Result); // Get item Id;
+    VarSet(VAR_REPEL_STEP_COUNT, ItemId_GetHoldEffectParam(gSpecialVar_0x8004));
+}
+
+void TryDrawLureMenu(void)
+{
+    static const u16 lureItems[] = {ITEM_LURE, ITEM_SUPER_LURE, ITEM_MAX_LURE};
+    struct MenuAction menuItems[4] = {NULL};
+    int i, count = 0;
+
+    for (i = 0; i < ARRAY_COUNT(lureItems); i++)
+    {
+        if (CheckBagHasItem(lureItems[i], 1))
+        {
+            VarSet(VAR_0x8004 + count, lureItems[i]);
+            menuItems[count].text = ItemId_GetName(lureItems[i]);
+            count++;
+        }
+    }
+
+    if (count > 1)
+        DrawMultichoiceMenuCustom(0, 0, 0, FALSE, 0, menuItems, count);
+
+    gSpecialVar_Result = (count > 1);
+}
+
+void HandleLureMenuChoice(void)
+{
+    gSpecialVar_0x8004 = VarGet(VAR_0x8004 + gSpecialVar_Result); // Get item Id;
+    VarSet(VAR_LURE_STEP_COUNT, ItemId_GetHoldEffectParam(gSpecialVar_0x8004));
 }
 
 #define tLeft           data[0]
@@ -279,7 +338,7 @@ bool8 ScriptMenu_MultichoiceGrid(u8 left, u8 top, u8 multichoiceId, bool8 ignore
         gTasks[taskId].tWindowId = CreateWindowFromRect(left, top, columnCount * newWidth, rowCount * 2);
         SetStandardWindowBorderStyle(gTasks[taskId].tWindowId, 0);
         PrintMenuGridTable(gTasks[taskId].tWindowId, newWidth * 8, columnCount, rowCount, sMultichoiceLists[multichoiceId].list);
-        InitMenuActionGrid(gTasks[taskId].tWindowId, newWidth * 8, columnCount, rowCount, 0);
+        sub_8199944(gTasks[taskId].tWindowId, newWidth * 8, columnCount, rowCount, 0);
         CopyWindowToVram(gTasks[taskId].tWindowId, 3);
         return TRUE;
     }
@@ -428,7 +487,7 @@ static void CreateLilycoveSSTidalMultichoice(void)
         }
     }
 
-    if (CheckBagHasItem(ITEM_EON_TICKET, 1) == TRUE && FlagGet(FLAG_ENABLE_SHIP_SOUTHERN_ISLAND) == TRUE)
+    if (FlagGet(FLAG_SYS_FRONTIER_PASS) == TRUE)
     {
         if (gSpecialVar_0x8004 == 0)
         {
@@ -444,7 +503,7 @@ static void CreateLilycoveSSTidalMultichoice(void)
         }
     }
 
-    if (CheckBagHasItem(ITEM_MYSTIC_TICKET, 1) == TRUE && FlagGet(FLAG_ENABLE_SHIP_NAVEL_ROCK) == TRUE)
+    if (FlagGet(FLAG_SYS_FRONTIER_PASS) == TRUE && FLAG_DEFEATED_RAYQUAZA)
     {
         if (gSpecialVar_0x8004 == 0)
         {
@@ -460,7 +519,7 @@ static void CreateLilycoveSSTidalMultichoice(void)
         }
     }
 
-    if (CheckBagHasItem(ITEM_AURORA_TICKET, 1) == TRUE && FlagGet(FLAG_ENABLE_SHIP_BIRTH_ISLAND) == TRUE)
+    if (FlagGet(FLAG_SYS_FRONTIER_PASS) == TRUE && FLAG_DEFEATED_RAYQUAZA)
     {
         if (gSpecialVar_0x8004 == 0)
         {
@@ -476,7 +535,7 @@ static void CreateLilycoveSSTidalMultichoice(void)
         }
     }
 
-    if (CheckBagHasItem(ITEM_OLD_SEA_MAP, 1) == TRUE && FlagGet(FLAG_ENABLE_SHIP_FARAWAY_ISLAND) == TRUE)
+    if (FlagGet(FLAG_SYS_FRONTIER_PASS) == TRUE && FLAG_DEFEATED_RAYQUAZA)
     {
         if (gSpecialVar_0x8004 == 0)
         {
@@ -580,7 +639,7 @@ bool8 ScriptMenu_ShowPokemonPic(u16 species, u8 x, u8 y)
     u8 taskId;
     u8 spriteId;
 
-    if (FindTaskIdByFunc(Task_PokemonPicWindow) != TASK_NONE)
+    if (FindTaskIdByFunc(Task_PokemonPicWindow) != 0xFF)
     {
         return FALSE;
     }
@@ -604,7 +663,7 @@ bool8 (*ScriptMenu_GetPicboxWaitFunc(void))(void)
 {
     u8 taskId = FindTaskIdByFunc(Task_PokemonPicWindow);
 
-    if (taskId == TASK_NONE)
+    if (taskId == 0xFF)
         return NULL;
     gTasks[taskId].tState++;
     return IsPicboxClosed;
@@ -612,7 +671,7 @@ bool8 (*ScriptMenu_GetPicboxWaitFunc(void))(void)
 
 static bool8 IsPicboxClosed(void)
 {
-    if (FindTaskIdByFunc(Task_PokemonPicWindow) == TASK_NONE)
+    if (FindTaskIdByFunc(Task_PokemonPicWindow) == 0xFF)
         return TRUE;
     else
         return FALSE;
@@ -696,7 +755,7 @@ static void CreateStartMenuForPokenavTutorial(void)
     AddTextPrinterParameterized(windowId, 1, gText_MenuOptionSave, 8, 89, TEXT_SPEED_FF, NULL);
     AddTextPrinterParameterized(windowId, 1, gText_MenuOptionOption, 8, 105, TEXT_SPEED_FF, NULL);
     AddTextPrinterParameterized(windowId, 1, gText_MenuOptionExit, 8, 121, TEXT_SPEED_FF, NULL);
-    sub_81983AC(windowId, 1, 0, 9, 16, ARRAY_COUNT(MultichoiceList_ForcedStartMenu), 0);
+    Menu_InitCursor(windowId, 1, 0, 9, 16, ARRAY_COUNT(MultichoiceList_ForcedStartMenu), 0);
     InitMultichoiceNoWrap(FALSE, ARRAY_COUNT(MultichoiceList_ForcedStartMenu), windowId, MULTI_FORCED_START_MENU);
     CopyWindowToVram(windowId, 3);
 }
@@ -762,4 +821,261 @@ int ScriptMenu_AdjustLeftCoordFromWidth(int left, int width)
     }
 
     return adjustedLeft;
+}
+
+//
+// Text displayed as options.
+static const u8 sText_Surprise[] = _("Surprise Me");
+
+static const u8 gText_City_01[] = _("Littleroot Town");
+static const u8 gText_City_02[] = _("Oldale Town");
+static const u8 gText_City_03[] = _("Petalburg City");
+static const u8 gText_City_04[] = _("Rustboro City");
+static const u8 gText_City_05[] = _("Dewford Town");
+static const u8 gText_City_06[] = _("Slateport City");
+static const u8 gText_City_07[] = _("Mauville City");
+static const u8 gText_City_08[] = _("Verdanturf Town");
+static const u8 gText_City_09[] = _("Fallarbor Town");
+static const u8 gText_City_10[] = _("Lavaridge Town");
+static const u8 gText_City_11[] = _("Fortree City");
+static const u8 gText_City_12[] = _("Lilycove City");
+static const u8 gText_City_13[] = _("Mossdeep City");
+static const u8 gText_City_14[] = _("Sootopolis City");
+static const u8 gText_City_15[] = _("Pacifidlog Town");
+static const u8 gText_City_16[] = _("Ever Grande City");
+static const u8 gText_City_17[] = _("Battle Frontier");
+
+static const u8 sText_Starter_1[] = _("Meowth");
+static const u8 sText_Starter_2[] = _("Slugma");
+static const u8 sText_Starter_3[] = _("Barboach");
+static const u8 sText_Starter_4[] = _("Kricketot");
+static const u8 sText_Starter_5[] = _("Cubchoo");
+static const u8 sText_Starter_6[] = _("Skiddo");
+static const u8 sText_Starter_7[] = _("Sandygast");
+static const u8 sText_Starter_8[] = _("Cufant");
+static const u8 sText_Starter_9[] = _("Smeargle");
+
+static const u8 sText_Grass_Starter_1[] = _("Bulbasaur");
+static const u8 sText_Grass_Starter_2[] = _("Chikorita");
+static const u8 sText_Grass_Starter_3[] = _("Treecko");
+static const u8 sText_Grass_Starter_4[] = _("Turtwig");
+static const u8 sText_Grass_Starter_5[] = _("Snivy");
+static const u8 sText_Grass_Starter_6[] = _("Chespin");
+static const u8 sText_Grass_Starter_7[] = _("Rowlet");
+static const u8 sText_Grass_Starter_8[] = _("Grookey");
+
+static const u8 sText_Fire_Starter_1[] = _("Charmander");
+static const u8 sText_Fire_Starter_2[] = _("Cyndaquil");
+static const u8 sText_Fire_Starter_3[] = _("Torchic");
+static const u8 sText_Fire_Starter_4[] = _("Chimchar");
+static const u8 sText_Fire_Starter_5[] = _("Tepig");
+static const u8 sText_Fire_Starter_6[] = _("Fennekin");
+static const u8 sText_Fire_Starter_7[] = _("Litten");
+static const u8 sText_Fire_Starter_8[] = _("Scorbunny");
+
+static const u8 sText_Water_Starter_1[] = _("Squirtle");
+static const u8 sText_Water_Starter_2[] = _("Totodile");
+static const u8 sText_Water_Starter_3[] = _("Mudkip");
+static const u8 sText_Water_Starter_4[] = _("Piplup");
+static const u8 sText_Water_Starter_5[] = _("Oshawott");
+static const u8 sText_Water_Starter_6[] = _("Froakie");
+static const u8 sText_Water_Starter_7[] = _("Popplio");
+static const u8 sText_Water_Starter_8[] = _("Sobble");
+
+static const u8 sText_Fossil_1[] = _("Dome Fossil");
+static const u8 sText_Fossil_2[] = _("Helix Fossil");
+static const u8 sText_Fossil_3[] = _("Old Amber");
+static const u8 sText_Fossil_4[] = _("Root Fossil");
+static const u8 sText_Fossil_5[] = _("Claw Fossil");
+static const u8 sText_Fossil_6[] = _("Skull Fossil");
+static const u8 sText_Fossil_7[] = _("Armor Fossil");
+static const u8 sText_Fossil_8[] = _("Cover Fossil");
+static const u8 sText_Fossil_9[] = _("Plume Fossil");
+static const u8 sText_Fossil_10[] = _("Jaw Fossil");
+static const u8 sText_Fossil_11[] = _("Sail Fossil");
+
+// Sets of multichoices.
+static const struct ListMenuItem sSet1[] =
+{
+    {gText_City_01, 0},
+    {gText_City_02, 1},
+    {gText_City_03, 2},
+    {gText_City_04, 3},
+    {gText_City_05, 4},
+    {gText_City_06, 5},
+    {gText_City_07, 6},
+    {gText_City_08, 7},
+    {gText_City_09, 8},
+	{gText_City_10, 9},
+    {gText_City_11, 10},
+    {gText_City_12, 11},
+    {gText_City_13, 12},
+    {gText_City_14, 13},
+    {gText_City_15, 14},
+    {sText_Surprise, 15},
+};
+
+static const struct ListMenuItem sSet2[] =
+{
+    {sText_Starter_1, 0},
+    {sText_Starter_2, 1},
+    {sText_Starter_3, 2},
+    {sText_Starter_4, 3},
+    {sText_Starter_5, 4},
+    {sText_Starter_6, 5},
+    {sText_Starter_7, 6},
+    {sText_Starter_8, 7},
+    {sText_Starter_9, 8},
+	{sText_Surprise, 9},
+};
+
+static const struct ListMenuItem sSet3[] =
+{
+    {sText_Water_Starter_1, 0},
+    {sText_Water_Starter_2, 1},
+    {sText_Water_Starter_3, 2},
+    {sText_Water_Starter_4, 3},
+    {sText_Water_Starter_5, 4},
+    {sText_Water_Starter_6, 5},
+    {sText_Water_Starter_7, 6},
+    {sText_Water_Starter_8, 7},
+};
+
+static const struct ListMenuItem sSet4[] =
+{
+    {sText_Grass_Starter_1, 0},
+    {sText_Grass_Starter_2, 1},
+    {sText_Grass_Starter_3, 2},
+    {sText_Grass_Starter_4, 3},
+    {sText_Grass_Starter_5, 4},
+    {sText_Grass_Starter_6, 5},
+    {sText_Grass_Starter_7, 6},
+    {sText_Grass_Starter_8, 7},
+};
+
+static const struct ListMenuItem sSet5[] =
+{
+    {sText_Fire_Starter_1, 0},
+    {sText_Fire_Starter_2, 1},
+    {sText_Fire_Starter_3, 2},
+    {sText_Fire_Starter_4, 3},
+    {sText_Fire_Starter_5, 4},
+    {sText_Fire_Starter_6, 5},
+    {sText_Fire_Starter_7, 6},
+    {sText_Fire_Starter_8, 7},
+};
+
+static const struct ListMenuItem sSet6[] =
+{
+    {sText_Fossil_1, 0},
+    {sText_Fossil_2, 1},
+    {sText_Fossil_3, 2},
+    {sText_Fossil_4, 3},
+    {sText_Fossil_5, 4},
+    {sText_Fossil_6, 5},
+    {sText_Fossil_7, 6},
+    {sText_Fossil_8, 7},
+    {sText_Fossil_9, 8},
+    {sText_Fossil_10, 9},
+    {sText_Fossil_11, 10},
+};
+
+// Table of your multichoice sets.
+struct
+{
+    const struct ListMenuItem *set;
+    int count;
+} static const sScrollingSets[] =
+{
+    {sSet1, ARRAY_COUNT(sSet1)},
+    {sSet2, ARRAY_COUNT(sSet2)},
+    {sSet3, ARRAY_COUNT(sSet3)},
+	{sSet4, ARRAY_COUNT(sSet4)},
+	{sSet5, ARRAY_COUNT(sSet5)},
+	{sSet6, ARRAY_COUNT(sSet6)},
+};
+
+static void Task_ScrollingMultichoiceInput(u8 taskId);
+
+static const struct ListMenuTemplate sMultichoiceListTemplate =
+{
+    .header_X = 0,
+    .item_X = 8,
+    .cursor_X = 0,
+    .upText_Y = 1,
+    .cursorPal = 2,
+    .fillValue = 1,
+    .cursorShadowPal = 3,
+    .lettersSpacing = 1,
+    .itemVerticalPadding = 0,
+    .scrollMultiple = LIST_NO_MULTIPLE_SCROLL,
+    .fontId = 1,
+    .cursorKind = 0
+};
+
+// 0x8004 = set id
+// 0x8005 = window X
+// 0x8006 = window y
+// 0x8007 = showed at once
+// 0x8008 = Allow B press
+void ScriptMenu_ScrollingMultichoice(void)
+{
+    int i, windowId, taskId, width = 0;
+    int setId = gSpecialVar_0x8004;
+    int left = gSpecialVar_0x8005;
+    int top = gSpecialVar_0x8006;
+    int maxShowed = gSpecialVar_0x8007;
+
+    for (i = 0; i < sScrollingSets[setId].count; i++)
+        width = DisplayTextAndGetWidth(sScrollingSets[setId].set[i].name, width);
+
+    width = ConvertPixelWidthToTileWidth(width);
+    left = ScriptMenu_AdjustLeftCoordFromWidth(left, width);
+    windowId = CreateWindowFromRect(left, top, width, maxShowed * 2);
+    SetStandardWindowBorderStyle(windowId, 0);
+    CopyWindowToVram(windowId, 3);
+
+    gMultiuseListMenuTemplate = sMultichoiceListTemplate;
+    gMultiuseListMenuTemplate.windowId = windowId;
+    gMultiuseListMenuTemplate.items = sScrollingSets[setId].set;
+    gMultiuseListMenuTemplate.totalItems = sScrollingSets[setId].count;
+    gMultiuseListMenuTemplate.maxShowed = maxShowed;
+
+    taskId = CreateTask(Task_ScrollingMultichoiceInput, 0);
+    gTasks[taskId].data[0] = ListMenuInit(&gMultiuseListMenuTemplate, 0, 0);
+    gTasks[taskId].data[1] = gSpecialVar_0x8008;
+    gTasks[taskId].data[2] = windowId;
+}
+
+static void Task_ScrollingMultichoiceInput(u8 taskId)
+{
+    bool32 done = FALSE;
+    s32 input = ListMenu_ProcessInput(gTasks[taskId].data[0]);
+
+    switch (input)
+    {
+    case LIST_HEADER:
+    case LIST_NOTHING_CHOSEN:
+        break;
+    case LIST_CANCEL:
+        if (gTasks[taskId].data[1])
+        {
+            gSpecialVar_Result = 0x7F;
+            done = TRUE;
+        }
+        break;
+    default:
+        gSpecialVar_Result = input;
+        done = TRUE;
+        break;
+    }
+
+    if (done)
+    {
+        DestroyListMenuTask(gTasks[taskId].data[0], NULL, NULL);
+        ClearStdWindowAndFrame(gTasks[taskId].data[2], TRUE);
+        RemoveWindow(gTasks[taskId].data[2]);
+        EnableBothScriptContexts();
+        DestroyTask(taskId);
+    }
 }

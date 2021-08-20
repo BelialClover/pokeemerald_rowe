@@ -1,4 +1,4 @@
-MysteryEventScript_StampCard::
+MysteryEventScript_StampCard:: @ 8674CB0
 	setvaddress MysteryEventScript_StampCard
 	setorcopyvar VAR_RESULT, GET_MAX_STAMPS
 	specialvar VAR_0x8008, GetMysteryEventCardVal
@@ -15,7 +15,7 @@ MysteryEventScript_StampCard::
 	end
 
 sText_MysteryGiftStampCard:
-	.string "Thank you for using the STAMP CARD\n"
+	.string "Thank you for using the Stamp Card\n"
 	.string "System.\p"
 	.string "You have {STR_VAR_1} more to collect to\n"
-	.string "fill your STAMP CARD.$"
+	.string "fill your Stamp Card.$"

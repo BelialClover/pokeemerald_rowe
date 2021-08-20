@@ -26,6 +26,11 @@ struct LoadedSaveData
  /*0x0130*/ struct ItemSlot TMsHMs[BAG_TMHM_COUNT];
  /*0x0230*/ struct ItemSlot berries[BAG_BERRIES_COUNT];
  /*0x02E8*/ struct MailStruct mail[MAIL_COUNT];
+ /*0x0230*/ struct ItemSlot medicine[BAG_MEDICINE_COUNT];
+ /*0x0230*/ struct ItemSlot battleItems[BAG_BATTLEITEMS_COUNT];
+ /*0x0230*/ struct ItemSlot powerUp[BAG_POWERUP_COUNT];
+ /*0x0230*/ struct ItemSlot typeItems[BAG_TYPEITEMS_COUNT];
+ /*0x0230*/ struct ItemSlot megaStones[BAG_MEGASTONES_COUNT];
 };
 
 // EWRAM DATA
@@ -130,7 +135,7 @@ void MoveSaveBlocks_ResetHeap(void)
     gMain.vblankCallback = vblankCB;
 
     // create a new encryption key
-    encryptionKey = (Random() << 16) + (Random());
+    encryptionKey = (Random() << 0x10) + (Random());
     ApplyNewEncryptionKeyToAllEncryptedData(encryptionKey);
     gSaveBlock2Ptr->encryptionKey = encryptionKey;
 }
@@ -207,6 +212,7 @@ void LoadSerializedGame(void)
 {
     LoadPlayerParty();
     LoadObjectEvents();
+    DeserializeTmHmItemSlots();
 }
 
 void LoadPlayerBag(void)
@@ -227,7 +233,7 @@ void LoadPlayerBag(void)
 
     // load player TMs and HMs.
     for (i = 0; i < BAG_TMHM_COUNT; i++)
-        gLoadedSaveData.TMsHMs[i] = gSaveBlock1Ptr->bagPocket_TMHM[i];
+        gLoadedSaveData.TMsHMs[i] = gTmHmItemSlots[i];
 
     // load player berries.
     for (i = 0; i < BAG_BERRIES_COUNT; i++)
@@ -236,6 +242,26 @@ void LoadPlayerBag(void)
     // load mail.
     for (i = 0; i < MAIL_COUNT; i++)
         gLoadedSaveData.mail[i] = gSaveBlock1Ptr->mail[i];
+
+    // load player medicine.
+    for (i = 0; i < BAG_MEDICINE_COUNT; i++)
+        gLoadedSaveData.medicine[i] = gSaveBlock1Ptr->bagPocket_Medicine[i];
+
+    // load player battle items.
+    for (i = 0; i < BAG_BATTLEITEMS_COUNT; i++)
+        gLoadedSaveData.battleItems[i] = gSaveBlock1Ptr->bagPocket_BattleItems[i];
+
+    // load player power up.
+    for (i = 0; i < BAG_POWERUP_COUNT; i++)
+        gLoadedSaveData.powerUp[i] = gSaveBlock1Ptr->bagPocket_PowerUp[i];
+
+    // load player type items.
+    for (i = 0; i < BAG_TYPEITEMS_COUNT; i++)
+        gLoadedSaveData.typeItems[i] = gSaveBlock1Ptr->bagPocket_TypeItems[i];
+
+    // load player power up.
+    for (i = 0; i < BAG_MEGASTONES_COUNT; i++)
+        gLoadedSaveData.megaStones[i] = gSaveBlock1Ptr->bagPocket_MegaStones[i];
 
     gLastEncryptionKey = gSaveBlock2Ptr->encryptionKey;
 }
@@ -259,7 +285,7 @@ void SavePlayerBag(void)
 
     // save player TMs and HMs.
     for (i = 0; i < BAG_TMHM_COUNT; i++)
-        gSaveBlock1Ptr->bagPocket_TMHM[i] = gLoadedSaveData.TMsHMs[i];
+        gTmHmItemSlots[i] = gLoadedSaveData.TMsHMs[i];
 
     // save player berries.
     for (i = 0; i < BAG_BERRIES_COUNT; i++)
@@ -268,6 +294,26 @@ void SavePlayerBag(void)
     // save mail.
     for (i = 0; i < MAIL_COUNT; i++)
         gSaveBlock1Ptr->mail[i] = gLoadedSaveData.mail[i];
+
+    // save player medicine.
+    for (i = 0; i < BAG_MEDICINE_COUNT; i++)
+        gSaveBlock1Ptr->bagPocket_Medicine[i] = gLoadedSaveData.medicine[i];
+
+    // save player battle items.
+    for (i = 0; i < BAG_BATTLEITEMS_COUNT; i++)
+        gSaveBlock1Ptr->bagPocket_BattleItems[i] = gLoadedSaveData.battleItems[i];
+
+    // save player power up.
+    for (i = 0; i < BAG_POWERUP_COUNT; i++)
+        gSaveBlock1Ptr->bagPocket_PowerUp[i] = gLoadedSaveData.powerUp[i];
+
+    // save player type items.
+    for (i = 0; i < BAG_TYPEITEMS_COUNT; i++)
+        gSaveBlock1Ptr->bagPocket_TypeItems[i] = gLoadedSaveData.typeItems[i];
+
+    // save player mega stones
+    for (i = 0; i < BAG_MEGASTONES_COUNT; i++)
+        gSaveBlock1Ptr->bagPocket_MegaStones[i] = gLoadedSaveData.megaStones[i];
 
     encryptionKeyBackup = gSaveBlock2Ptr->encryptionKey;
     gSaveBlock2Ptr->encryptionKey = gLastEncryptionKey;

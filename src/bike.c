@@ -614,24 +614,27 @@ static void AcroBikeTransition_WheelieHoppingMoving(u8 direction)
         return;
     }
     collision = GetBikeCollision(direction);
-    if (collision && collision != COLLISION_WHEELIE_HOP)
+    // TODO: Try to get rid of this goto
+    if (collision == 0 || collision == COLLISION_WHEELIE_HOP)
     {
-        if (collision == COLLISION_LEDGE_JUMP)
-        {
-            PlayerLedgeHoppingWheelie(direction);
-            return;
-        }
-        if (collision >= COLLISION_STOP_SURFING && collision <= COLLISION_ROTATING_GATE)
-        {
-            return;
-        }
+        goto derp;
+    }
+    else if (collision == COLLISION_LEDGE_JUMP)
+    {
+        PlayerLedgeHoppingWheelie(direction);
+    }
+    else if (collision < COLLISION_STOP_SURFING || collision > COLLISION_ROTATING_GATE)
+    {
         if (collision < COLLISION_VERTICAL_RAIL)
         {
             AcroBikeTransition_WheelieHoppingStanding(direction);
-            return;
+        }
+        else
+        {
+        derp:
+            PlayerMovingHoppingWheelie(direction);
         }
     }
-    PlayerMovingHoppingWheelie(direction);
 }
 
 static void AcroBikeTransition_SideJump(u8 direction)
@@ -960,10 +963,9 @@ bool8 IsBikingDisallowedByPlayer(void)
     return TRUE;
 }
 
-bool8 IsPlayerNotUsingAcroBikeOnBumpySlope(void)
+bool8 player_should_look_direction_be_enforced_upon_movement(void)
 {
-    if (TestPlayerAvatarFlags(PLAYER_AVATAR_FLAG_ACRO_BIKE) 
-        && MetatileBehavior_IsBumpySlope(gObjectEvents[gPlayerAvatar.objectEventId].currentMetatileBehavior))
+    if (TestPlayerAvatarFlags(PLAYER_AVATAR_FLAG_ACRO_BIKE) != FALSE && MetatileBehavior_IsBumpySlope(gObjectEvents[gPlayerAvatar.objectEventId].currentMetatileBehavior) != FALSE)
         return FALSE;
     else
         return TRUE;
@@ -1053,7 +1055,7 @@ void Bike_HandleBumpySlopeJump(void)
 
 bool32 IsRunningDisallowed(u8 metatile)
 {
-    if (!gMapHeader.allowRunning || IsRunningDisallowedByMetatile(metatile) == TRUE)
+    if (IsRunningDisallowedByMetatile(metatile) == TRUE)
         return TRUE;
     else
         return FALSE;

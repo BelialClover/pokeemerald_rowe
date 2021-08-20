@@ -904,8 +904,10 @@ static void InitUnionRoomChat(struct UnionRoomChat *chat)
     chat->exitType = 0;
     chat->changedRegisteredTexts = FALSE;
     PrepareSendBuffer_Null(chat->sendMessageBuffer);
+    /*
     for (i = 0; i < UNION_ROOM_KB_ROW_COUNT; i++)
         StringCopy(chat->registeredTexts[i], gSaveBlock1Ptr->registeredTexts[i]);
+    */
 }
 
 static void FreeUnionRoomChat(void)
@@ -930,8 +932,8 @@ static void CB2_LoadInterface(void)
         RunDisplaySubtasks();
         if (!IsDisplaySubtask0Active())
         {
-            BlendPalettes(PALETTES_ALL, 16, RGB_BLACK);
-            BeginNormalPaletteFade(PALETTES_ALL, -1, 16, 0, RGB_BLACK);
+            BlendPalettes(0xFFFFFFFF, 16, RGB_BLACK);
+            BeginNormalPaletteFade(0xFFFFFFFF, -1, 16, 0, RGB_BLACK);
             SetVBlankCallback(VBlankCB_UnionRoomChatMain);
             gMain.state++;
         }
@@ -1567,7 +1569,7 @@ static void Chat_SaveAndExit(void)
             sChat->funcState = 12;
         break;
     case 12:
-        BeginNormalPaletteFade(PALETTES_ALL, -1, 0, 16, RGB_BLACK);
+        BeginNormalPaletteFade(0xFFFFFFFF, -1, 0, 16, RGB_BLACK);
         sChat->funcState = 13;
         break;
     case 13:
@@ -1737,9 +1739,11 @@ static void ResetMessageEntryBuffer(void)
 
 static void SaveRegisteredTexts(void)
 {
+    /*
     int i;
     for (i = 0; i < UNION_ROOM_KB_ROW_COUNT; i++)
         StringCopy(gSaveBlock1Ptr->registeredTexts[i], sChat->registeredTexts[i]);
+    */
 }
 
 static u8 *GetRegisteredTextByRow(int row)
@@ -1983,6 +1987,7 @@ static u8 *GetChatHostName(void)
 
 void InitUnionRoomChatRegisteredTexts(void)
 {
+    /*
     StringCopy(gSaveBlock1Ptr->registeredTexts[0], gText_Hello);
     StringCopy(gSaveBlock1Ptr->registeredTexts[1], gText_Pokemon2);
     StringCopy(gSaveBlock1Ptr->registeredTexts[2], gText_Trade);
@@ -1993,6 +1998,7 @@ void InitUnionRoomChatRegisteredTexts(void)
     StringCopy(gSaveBlock1Ptr->registeredTexts[7], gText_YaySmileEmoji);
     StringCopy(gSaveBlock1Ptr->registeredTexts[8], gText_ThankYou);
     StringCopy(gSaveBlock1Ptr->registeredTexts[9], gText_ByeBye);
+    */
 }
 
 #define tState               data[0]
@@ -2157,8 +2163,8 @@ static void FreeDisplay(void)
 
 static void InitDisplay(struct UnionRoomChatDisplay *display)
 {
-    display->yesNoMenuWindowId = WINDOW_NONE;
-    display->messageWindowId = WINDOW_NONE;
+    display->yesNoMenuWindowId = 0xFF;
+    display->messageWindowId = 0xFF;
     display->currLine = 0;
 }
 
@@ -2724,7 +2730,7 @@ static void AddYesNoMenuAt(u8 left, u8 top, u8 initialCursorPos)
     template.paletteNum = 14;
     template.baseBlock = 0x52;
     sDisplay->yesNoMenuWindowId = AddWindow(&template);
-    if (sDisplay->yesNoMenuWindowId != WINDOW_NONE)
+    if (sDisplay->yesNoMenuWindowId != 0xFF)
     {
         FillWindowPixelBuffer(sDisplay->yesNoMenuWindowId, PIXEL_FILL(1));
         PutWindowTilemap(sDisplay->yesNoMenuWindowId);
@@ -2737,7 +2743,7 @@ static void AddYesNoMenuAt(u8 left, u8 top, u8 initialCursorPos)
 
 static void HideYesNoMenuWindow(void)
 {
-    if (sDisplay->yesNoMenuWindowId != WINDOW_NONE)
+    if (sDisplay->yesNoMenuWindowId != 0xFF)
     {
         ClearStdWindowAndFrameToTransparent(sDisplay->yesNoMenuWindowId, FALSE);
         ClearWindowTilemap(sDisplay->yesNoMenuWindowId);
@@ -2746,10 +2752,10 @@ static void HideYesNoMenuWindow(void)
 
 static void DestroyYesNoMenuWindow(void)
 {
-    if (sDisplay->yesNoMenuWindowId != WINDOW_NONE)
+    if (sDisplay->yesNoMenuWindowId != 0xFF)
     {
         RemoveWindow(sDisplay->yesNoMenuWindowId);
-        sDisplay->yesNoMenuWindowId = WINDOW_NONE;
+        sDisplay->yesNoMenuWindowId = 0xFF;
     }
 }
 
@@ -2778,7 +2784,7 @@ static void AddStdMessageWindow(int msgId, u16 bg0vofs)
 
     sDisplay->messageWindowId = AddWindow(&template);
     windowId = sDisplay->messageWindowId;
-    if (sDisplay->messageWindowId == WINDOW_NONE)
+    if (sDisplay->messageWindowId == 0xFF)
         return;
 
     if (sDisplayStdMessages[msgId].hasPlaceholders)
@@ -2828,7 +2834,7 @@ static void AddStdMessageWindow(int msgId, u16 bg0vofs)
 
 static void HideStdMessageWindow(void)
 {
-    if (sDisplay->messageWindowId != WINDOW_NONE)
+    if (sDisplay->messageWindowId != 0xFF)
     {
         ClearStdWindowAndFrameToTransparent(sDisplay->messageWindowId, FALSE);
         ClearWindowTilemap(sDisplay->messageWindowId);
@@ -2839,10 +2845,10 @@ static void HideStdMessageWindow(void)
 
 static void DestroyStdMessageWindow(void)
 {
-    if (sDisplay->messageWindowId != WINDOW_NONE)
+    if (sDisplay->messageWindowId != 0xFF)
     {
         RemoveWindow(sDisplay->messageWindowId);
-        sDisplay->messageWindowId = WINDOW_NONE;
+        sDisplay->messageWindowId = 0xFF;
     }
 }
 
@@ -2972,7 +2978,7 @@ static void ShowKeyboardSwapMenu(void)
     FillWindowPixelBuffer(3, PIXEL_FILL(1));
     DrawTextBorderOuter(3, 1, 13);
     PrintTextArray(3, 2, 8, 1, 14, 5, sKeyboardPageTitleTexts);
-    sub_81983AC(3, 2, 0, 1, 14, 5, GetCurrentKeyboardPage());
+    Menu_InitCursor(3, 2, 0, 1, 14, 5, GetCurrentKeyboardPage());
     PutWindowTilemap(3);
 }
 
@@ -2984,7 +2990,7 @@ static void HideKeyboardSwapMenu(void)
 
 static void PrintChatMessage(u16 row, u8 *str, u8 colorIdx)
 {
-    // colorIdx: 0 = gray, 1 = red, 2 = green, 3 = blue
+    // colorIdx: 0 = grey, 1 = red, 2 = green, 3 = blue
     u8 color[3];
     color[0] = TEXT_COLOR_WHITE;
     color[1] = colorIdx * 2 + 2;
@@ -3011,8 +3017,8 @@ static void ResetGpuBgState(void)
     SetGpuReg(REG_OFFSET_BLDCNT, 0);
     ClearGpuRegBits(REG_OFFSET_DISPCNT, DISPCNT_WIN0_ON | DISPCNT_WIN1_ON | DISPCNT_OBJWIN_ON);
     SetGpuRegBits(REG_OFFSET_DISPCNT, DISPCNT_WIN0_ON);
-    SetGpuReg(REG_OFFSET_WIN0H, WIN_RANGE(64, DISPLAY_WIDTH));
-    SetGpuReg(REG_OFFSET_WIN0V, WIN_RANGE(0, DISPLAY_HEIGHT - 16));
+    SetGpuReg(REG_OFFSET_WIN0H, WIN_RANGE(64, 240));
+    SetGpuReg(REG_OFFSET_WIN0V, WIN_RANGE(0, 144));
     SetGpuReg(REG_OFFSET_WININ, WININ_WIN0_BG0 | WININ_WIN0_BG2 | WININ_WIN0_BG3
                               | WININ_WIN0_OBJ | WININ_WIN0_CLR);
     SetGpuReg(REG_OFFSET_WINOUT, WINOUT_WIN01_BG_ALL | WINOUT_WIN01_OBJ | WINOUT_WIN01_CLR);
@@ -3167,14 +3173,14 @@ static void MoveKeyboardCursor(void)
     if (page != UNION_ROOM_KB_PAGE_REGISTER)
     {
         StartSpriteAnim(sSprites->keyboardCursor, 0);
-        sSprites->keyboardCursor->x = x * 8 + 10;
-        sSprites->keyboardCursor->y = y * 12 + 24;
+        sSprites->keyboardCursor->pos1.x = x * 8 + 10;
+        sSprites->keyboardCursor->pos1.y = y * 12 + 24;
     }
     else
     {
         StartSpriteAnim(sSprites->keyboardCursor, 2);
-        sSprites->keyboardCursor->x = 24;
-        sSprites->keyboardCursor->y = y * 12 + 24;
+        sSprites->keyboardCursor->pos1.x = 24;
+        sSprites->keyboardCursor->pos1.y = y * 12 + 24;
     }
 }
 
@@ -3231,7 +3237,7 @@ static void SpriteCB_TextEntryCursor(struct Sprite *sprite)
     else
     {
         sprite->invisible = FALSE;
-        sprite->x = pos * 8 + 76;
+        sprite->pos1.x = pos * 8 + 76;
     }
 }
 
@@ -3240,8 +3246,8 @@ static void SpriteCB_TextEntryArrow(struct Sprite *sprite)
     if (++sprite->data[0] > 4)
     {
         sprite->data[0] = 0;
-        if (++sprite->x2 > 4)
-            sprite->x2 = 0;
+        if (++sprite->pos2.x > 4)
+            sprite->pos2.x = 0;
     }
 }
 

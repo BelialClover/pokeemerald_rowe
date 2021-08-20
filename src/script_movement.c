@@ -52,7 +52,7 @@ void ScriptMovement_UnfreezeObjectEvents(void)
     u8 taskId;
 
     taskId = GetMoveObjectsTaskId();
-    if (taskId != TASK_NONE)
+    if (taskId != 0xFF)
     {
         ScriptMovement_UnfreezeActiveObjects(taskId);
         DestroyTask(taskId);

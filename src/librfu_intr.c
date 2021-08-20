@@ -148,7 +148,11 @@ static void sio32intr_clock_slave(void)
 {
     u32 regSIODATA32;
     u32 r0;
-    u32 reqLen;
+    #ifndef NONMATCHING
+        register u32 reqLen asm("r2");
+    #else
+        u32 reqLen;
+    #endif
 
     gSTWIStatus->timerActive = 0;
     STWI_set_timer_in_RAM(100);
@@ -161,14 +165,10 @@ static void sio32intr_clock_slave(void)
         ((u32*)gSTWIStatus->rxPacket)[0] = regSIODATA32;
         gSTWIStatus->reqNext = 1;
         r0 = 0x99660000;
-        // variable reuse required
-        reqLen = (regSIODATA32 >> 16);
-        if (reqLen == (r0 >> 16))
+        if ((regSIODATA32 >> 16) == (r0 >> 16))
         {
-            // only reqLen = regSIODATA32 >> 8 is needed to match, but it looks a bit
-            // more consistent when both lines update the variables. Might have been a macro?
-            gSTWIStatus->reqLength = reqLen = (regSIODATA32 >> 8);
-            gSTWIStatus->reqActiveCommand = reqLen = (regSIODATA32 >> 0);
+            gSTWIStatus->reqLength = reqLen = regSIODATA32 >> 8;
+            gSTWIStatus->reqActiveCommand = regSIODATA32;
             if (gSTWIStatus->reqLength == 0)
             {
                 if (

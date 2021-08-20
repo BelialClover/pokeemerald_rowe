@@ -124,8 +124,8 @@ static const struct WindowTemplate sSearchResultListMenuWindowTemplate =
     .baseBlock = 20
 };
 
-static const u8 sText_MaleSymbol[] = _("{COLOR_HIGHLIGHT_SHADOW}{LIGHT_RED}{WHITE}{GREEN}♂{COLOR_HIGHLIGHT_SHADOW}{DARK_GRAY}{WHITE}{LIGHT_GRAY}");
-static const u8 sText_FemaleSymbol[] = _("{COLOR_HIGHLIGHT_SHADOW}{LIGHT_GREEN}{WHITE}{BLUE}♀{COLOR_HIGHLIGHT_SHADOW}{DARK_GRAY}{WHITE}{LIGHT_GRAY}");
+static const u8 sText_MaleSymbol[] = _("{COLOR_HIGHLIGHT_SHADOW}{LIGHT_RED}{WHITE}{GREEN}♂{COLOR_HIGHLIGHT_SHADOW}{DARK_GREY}{WHITE}{LIGHT_GREY}");
+static const u8 sText_FemaleSymbol[] = _("{COLOR_HIGHLIGHT_SHADOW}{LIGHT_GREEN}{WHITE}{BLUE}♀{COLOR_HIGHLIGHT_SHADOW}{DARK_GREY}{WHITE}{LIGHT_GREY}");
 static const u8 sText_NoGenderSymbol[] = _("{UNK_SPACER}");
 
 bool32 PokenavCallback_Init_ConditionSearch(void)
@@ -419,7 +419,7 @@ static u32 LoopedTask_OpenConditionSearchResults(s32 state)
     switch (state)
     {
     case 0:
-        InitBgTemplates(sConditionSearchResultBgTemplates, ARRAY_COUNT(sConditionSearchResultBgTemplates));
+        InitBgTemplates(sConditionSearchResultBgTemplates, NELEMS(sConditionSearchResultBgTemplates));
         DecompressAndCopyTileDataToVram(1, sConditionSearchResultTiles, 0, 0, 0);
         SetBgTilemapBuffer(1, searchList->buff);
         CopyToBgTilemapBuffer(1, sConditionSearchResultTilemap, 0, 0);
@@ -723,5 +723,9 @@ static void PrintSearchMonListItem(struct PokenavMonList * item, u8 * dest)
     *s++ = CHAR_EXTRA_SYMBOL;
     *s++ = CHAR_LV_2;
     ConvertIntToDecimalStringN(s, level, STR_CONV_MODE_LEFT_ALIGN, 3);
+#if GAME_LANGUAGE == LANGUAGE_SPANISH
+    sub_81DB494(dest, 1, gStringVar1, 45);
+#else
     sub_81DB494(dest, 1, gStringVar1, 40);
+#endif
 }

@@ -8,6 +8,7 @@
 #include "rtc.h"
 #include "script.h"
 #include "task.h"
+#include "constants/species.h"
 
 static u32 GetMirageRnd(void)
 {
@@ -41,14 +42,19 @@ void UpdateMirageRnd(u16 days)
 
 bool8 IsMirageIslandPresent(void)
 {
-    u16 rnd = GetMirageRnd() >> 16;
-    int i;
+	if (FlagGet(FLAG_SYS_GAME_CLEAR))
+		return TRUE;
+	else
+		return FALSE;
+	
+    //u16 rnd = GetMirageRnd() >> 16;
+    //int i;
 
-    for (i = 0; i < PARTY_SIZE; i++)
-        if (GetMonData(&gPlayerParty[i], MON_DATA_SPECIES) && (GetMonData(&gPlayerParty[i], MON_DATA_PERSONALITY) & 0xFFFF) == rnd)
-            return TRUE;
+    /*/for (i = 0; i < PARTY_SIZE; i++)
+        if (GetMonData(&gPlayerParty[i], MON_DATA_SPECIES) == SPECIES_WYNAUT)
+            return TRUE;/*/
 
-    return FALSE;
+    //return FALSE;
 }
 
 void UpdateShoalTideFlag(void)

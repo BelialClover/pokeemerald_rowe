@@ -7008,7 +7008,7 @@ const u16 gBattleFrontierTrainerMons_Gillian2[] =
     FRONTIER_MONS_COOLTRAINER_2D(LATIAS)
 };
 
-const u16 gBattleFrontierTrainerMons_Tyler[] = 
+const u16 gBattleFrontierTrainerMons_Marley[] = 
 {
     FRONTIER_MONS_GENERAL_A
 };

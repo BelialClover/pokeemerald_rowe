@@ -1,7 +1,7 @@
-LilycoveCity_DepartmentStore_3F_MapScripts::
+LilycoveCity_DepartmentStore_3F_MapScripts:: @ 821FC64
 	.byte 0
 
-LilycoveCity_DepartmentStore_3F_EventScript_ClerkLeft::
+LilycoveCity_DepartmentStore_3F_EventScript_ClerkLeft:: @ 821FC65
 	lock
 	faceplayer
 	message gText_HowMayIServeYou
@@ -11,66 +11,101 @@ LilycoveCity_DepartmentStore_3F_EventScript_ClerkLeft::
 	release
 	end
 
-	.align 2
-LilycoveCity_DepartmentStore_3F_Pokemart_Vitamins:
+LilycoveCity_DepartmentStore_3F_Pokemart_Vitamins: @ 821FC7C
 	.2byte ITEM_PROTEIN
 	.2byte ITEM_CALCIUM
 	.2byte ITEM_IRON
 	.2byte ITEM_ZINC
 	.2byte ITEM_CARBOS
 	.2byte ITEM_HP_UP
+	.2byte ITEM_POWER_WEIGHT
+	.2byte ITEM_POWER_BRACER
+	.2byte ITEM_POWER_BELT
+	.2byte ITEM_POWER_LENS
+	.2byte ITEM_POWER_BAND
+	.2byte ITEM_POWER_ANKLET
+	.2byte ITEM_MACHO_BRACE
 	.2byte ITEM_NONE
 	release
 	end
 
-LilycoveCity_DepartmentStore_3F_EventScript_ClerkRight::
+LilycoveCity_DepartmentStore_3F_EventScript_ClerkRight:: @ 821FC8C
 	lock
 	faceplayer
 	message gText_HowMayIServeYou
 	waitmessage
+	goto_if_set FLAG_RECEIVED_TM40, LilycoveCity_DepartmentStore_3F_EventScript_EvolutionClerk
+	pokemart 0
+	msgbox gText_PleaseComeAgain, MSGBOX_DEFAULT
+	release
+	end
+	
+LilycoveCity_DepartmentStore_3F_EventScript_EvolutionClerk::
 	pokemart LilycoveCity_DepartmentStore_3F_Pokemart_StatBoosters
 	msgbox gText_PleaseComeAgain, MSGBOX_DEFAULT
 	release
 	end
 
 	.align 2
-LilycoveCity_DepartmentStore_3F_Pokemart_StatBoosters:
-	.2byte ITEM_X_SPEED
-	.2byte ITEM_X_SP_ATK
-	.2byte ITEM_X_ATTACK
-	.2byte ITEM_X_DEFENSE
-	.2byte ITEM_DIRE_HIT
-	.2byte ITEM_GUARD_SPEC
-	.2byte ITEM_X_ACCURACY
+LilycoveCity_DepartmentStore_3F_Pokemart_StatBoosters: @ 821FCA4
+	.2byte ITEM_FIRE_STONE
+	.2byte ITEM_WATER_STONE
+	.2byte ITEM_THUNDER_STONE
+	.2byte ITEM_LEAF_STONE
+	.2byte ITEM_SUN_STONE
+	.2byte ITEM_MOON_STONE
+	.2byte ITEM_DAWN_STONE
+	.2byte ITEM_DUSK_STONE
+	.2byte ITEM_SHINY_STONE
+	.2byte ITEM_ICE_STONE
+	.2byte ITEM_DRAGON_SCALE
+	.2byte ITEM_KINGS_ROCK
+	.2byte ITEM_METAL_COAT
+	.2byte ITEM_UP_GRADE
+	.2byte ITEM_DEEP_SEA_SCALE
+	.2byte ITEM_DEEP_SEA_TOOTH
+	.2byte ITEM_DUBIOUS_DISC
+	.2byte ITEM_ELECTIRIZER
+	.2byte ITEM_MAGMARIZER
+	.2byte ITEM_OVAL_STONE
+	.2byte ITEM_PROTECTOR
+	.2byte ITEM_RAZOR_CLAW
+	.2byte ITEM_RAZOR_FANG
+	.2byte ITEM_REAPER_CLOTH
+	.2byte ITEM_PRISM_SCALE
+	.2byte ITEM_SACHET
+	.2byte ITEM_WHIPPED_DREAM
+	.2byte ITEM_ABILITY_CAPSULE
+	.2byte ITEM_STRANGE_SOUVENIR
 	.2byte ITEM_NONE
 	release
 	end
 
-LilycoveCity_DepartmentStore_3F_EventScript_TriathleteM::
+LilycoveCity_DepartmentStore_3F_EventScript_TriathleteM:: @ 821FCB6
 	msgbox LilycoveCity_DepartmentStore_3F_Text_ItemsBestForTougheningPokemon, MSGBOX_NPC
 	end
 
-LilycoveCity_DepartmentStore_3F_EventScript_PokefanM::
+LilycoveCity_DepartmentStore_3F_EventScript_PokefanM:: @ 821FCBF
 	msgbox LilycoveCity_DepartmentStore_3F_Text_WantMoreEndurance, MSGBOX_NPC
 	end
 
-LilycoveCity_DepartmentStore_3F_EventScript_Woman::
+LilycoveCity_DepartmentStore_3F_EventScript_Woman:: @ 821FCC8
 	msgbox LilycoveCity_DepartmentStore_3F_Text_GaveCarbosToSpeedUpMon, MSGBOX_NPC
 	end
 
-LilycoveCity_DepartmentStore_3F_Text_ItemsBestForTougheningPokemon:
-	.string "For quickly toughening up POKéMON,\n"
+LilycoveCity_DepartmentStore_3F_Text_ItemsBestForTougheningPokemon: @ 821FCD1
+	.string "For quickly toughening up Pokémon,\n"
 	.string "items are the best.\p"
-	.string "PROTEIN boosts ATTACK,\n"
-	.string "and CALCIUM raises SP. ATK.$"
+	.string "Protein boosts Attack,\n"
+	.string "and Calcium raises Sp. Atk.$"
 
-LilycoveCity_DepartmentStore_3F_Text_WantMoreEndurance:
-	.string "I want my POKéMON to have more\n"
+LilycoveCity_DepartmentStore_3F_Text_WantMoreEndurance: @ 821FD3B
+	.string "I want my Pokémon to have more\n"
 	.string "endurance.\p"
 	.string "I'm trying to decide whether to raise\n"
-	.string "DEFENSE with IRON, or SP. DEF with ZINC.$"
+	.string "Defense with Iron, or Sp. Def with Zinc.$"
 
-LilycoveCity_DepartmentStore_3F_Text_GaveCarbosToSpeedUpMon:
-	.string "I gave a CARBOS to my POKéMON,\n"
-	.string "and its SPEED went up.$"
+LilycoveCity_DepartmentStore_3F_Text_GaveCarbosToSpeedUpMon: @ 821FDB4
+	.string "I gave a Carbos to my Pokémon,\n"
+	.string "and its Speed went up.$"
 

@@ -3,17 +3,17 @@
 .set LOCALID_AXLE, 4
 .set LOCALID_DANIELLE, 5
 
-LavaridgeTown_Gym_1F_MapScripts::
+LavaridgeTown_Gym_1F_MapScripts:: @ 81FE6F4
 	map_script MAP_SCRIPT_ON_TRANSITION, LavaridgeTown_Gym_1F_OnTransition
 	.byte 0
 
-LavaridgeTown_Gym_1F_OnTransition:
+LavaridgeTown_Gym_1F_OnTransition: @ 81FE6FA
 	call LavaridgeTown_Gym_1F_EventScript_SetTrainerTempVars
-	call LavaridgeTown_Gym_1F_EventScript_CheckBuryTrainers
+	call LavaridgeTown_Gym_1F_EventScript_CheckHideTrainers
 	end
 
 @ Unclear where/if these temp vars are getting checked
-LavaridgeTown_Gym_1F_EventScript_SetTrainerTempVars::
+LavaridgeTown_Gym_1F_EventScript_SetTrainerTempVars:: @ 81FE705
 	setvar VAR_TEMP_B, 0
 	setvar VAR_TEMP_C, 0
 	setvar VAR_TEMP_D, 0
@@ -21,44 +21,43 @@ LavaridgeTown_Gym_1F_EventScript_SetTrainerTempVars::
 	setvar VAR_TEMP_F, 0
 	goto_if_defeated TRAINER_COLE LavaridgeTown_Gym_1F_EventScript_SetGeraldTempVar
 	setvar VAR_TEMP_B, 1
-LavaridgeTown_Gym_1F_EventScript_SetGeraldTempVar::
+LavaridgeTown_Gym_1F_EventScript_SetGeraldTempVar:: @ 81FE72C
 	goto_if_defeated TRAINER_GERALD, LavaridgeTown_Gym_1F_EventScript_SetAxleTempVar
 	setvar VAR_TEMP_C, 1
-LavaridgeTown_Gym_1F_EventScript_SetAxleTempVar::
+LavaridgeTown_Gym_1F_EventScript_SetAxleTempVar:: @ 81FE73A
 	goto_if_defeated TRAINER_AXLE, LavaridgeTown_Gym_1F_EventScript_SetDanielleTempVar
 	setvar VAR_TEMP_D, 1
-LavaridgeTown_Gym_1F_EventScript_SetDanielleTempVar::
+LavaridgeTown_Gym_1F_EventScript_SetDanielleTempVar:: @ 81FE748
 	goto_if_defeated TRAINER_DANIELLE, LavaridgeTown_Gym_1F_EventScript_EndSetTrainerTempVars
 	setvar VAR_TEMP_E, 1
-LavaridgeTown_Gym_1F_EventScript_EndSetTrainerTempVars::
+LavaridgeTown_Gym_1F_EventScript_EndSetTrainerTempVars:: @ 81FE756
 	return
 
-LavaridgeTown_Gym_1F_EventScript_CheckBuryTrainers::
-	goto_if_defeated TRAINER_COLE, LavaridgeTown_Gym_1F_EventScript_CheckBuryGerald
-	setobjectmovementtype LOCALID_COLE, MOVEMENT_TYPE_BURIED
-LavaridgeTown_Gym_1F_EventScript_CheckBuryGerald::
-	goto_if_defeated TRAINER_GERALD, LavaridgeTown_Gym_1F_EventScript_CheckBuryAxle
-	setobjectmovementtype LOCALID_GERALD, MOVEMENT_TYPE_BURIED
-LavaridgeTown_Gym_1F_EventScript_CheckBuryAxle::
-	goto_if_defeated TRAINER_AXLE, LavaridgeTown_Gym_1F_EventScript_CheckBuryDanielle
-	setobjectmovementtype LOCALID_AXLE, MOVEMENT_TYPE_BURIED
-LavaridgeTown_Gym_1F_EventScript_CheckBuryDanielle::
-	goto_if_defeated TRAINER_DANIELLE, LavaridgeTown_Gym_1F_EventScript_EndCheckBuryTrainers
-	setobjectmovementtype LOCALID_DANIELLE, MOVEMENT_TYPE_BURIED
-LavaridgeTown_Gym_1F_EventScript_EndCheckBuryTrainers::
+LavaridgeTown_Gym_1F_EventScript_CheckHideTrainers:: @ 81FE757
+	goto_if_defeated TRAINER_COLE, LavaridgeTown_Gym_1F_EventScript_CheckHideGerald
+	setobjectmovementtype LOCALID_COLE, MOVEMENT_TYPE_HIDDEN
+LavaridgeTown_Gym_1F_EventScript_CheckHideGerald:: @ 81FE764
+	goto_if_defeated TRAINER_GERALD, LavaridgeTown_Gym_1F_EventScript_CheckHideAxle
+	setobjectmovementtype LOCALID_GERALD, MOVEMENT_TYPE_HIDDEN
+LavaridgeTown_Gym_1F_EventScript_CheckHideAxle:: @ 81FE771
+	goto_if_defeated TRAINER_AXLE, LavaridgeTown_Gym_1F_EventScript_CheckHideDanielle
+	setobjectmovementtype LOCALID_AXLE, MOVEMENT_TYPE_HIDDEN
+LavaridgeTown_Gym_1F_EventScript_CheckHideDanielle:: @ 81FE77E
+	goto_if_defeated TRAINER_DANIELLE, LavaridgeTown_Gym_1F_EventScript_EndCheckHideTrainers
+	setobjectmovementtype LOCALID_DANIELLE, MOVEMENT_TYPE_HIDDEN
+LavaridgeTown_Gym_1F_EventScript_EndCheckHideTrainers:: @ 81FE78B
 	return
 
-LavaridgeTown_Gym_1F_EventScript_Flannery::
+LavaridgeTown_Gym_1F_EventScript_Flannery:: @ 81FE78C
+	lock
+	faceplayer
+	call_if_set FLAG_BADGE04_GET, LavaridgeTown_Gym_EventScript_Flannery_PostBattle
 	trainerbattle_single TRAINER_FLANNERY_1, LavaridgeTown_Gym_1F_Text_FlanneryIntro, LavaridgeTown_Gym_1F_Text_FlanneryDefeat, LavaridgeTown_Gym_1F_EventScript_FlanneryDefeated, NO_MUSIC
-	specialvar VAR_RESULT, ShouldTryRematchBattle
-	compare VAR_RESULT, TRUE
-	goto_if_eq LavaridgeTown_Gym_1F_EventScript_FlanneryRematch
-	goto_if_unset FLAG_RECEIVED_TM50, LavaridgeTown_Gym_1F_EventScript_GiveOverheat2
 	msgbox LavaridgeTown_Gym_1F_Text_FlanneryPostBattle, MSGBOX_DEFAULT
 	release
 	end
 
-LavaridgeTown_Gym_1F_EventScript_FlanneryDefeated::
+LavaridgeTown_Gym_1F_EventScript_FlanneryDefeated:: @ 81FE7C1
 	message LavaridgeTown_Gym_1F_Text_ReceivedHeatBadge
 	waitmessage
 	call Common_EventScript_PlayGymBadgeFanfare
@@ -66,14 +65,9 @@ LavaridgeTown_Gym_1F_EventScript_FlanneryDefeated::
 	setflag FLAG_WHITEOUT_TO_LAVARIDGE
 	setflag FLAG_DEFEATED_LAVARIDGE_GYM
 	setflag FLAG_BADGE04_GET
-	addvar VAR_PETALBURG_GYM_STATE, 1
-	compare VAR_PETALBURG_GYM_STATE, 6
-	call_if_eq Common_EventScript_ReadyPetalburgGymForBattle
 	setvar VAR_0x8008, 4
 	call Common_EventScript_SetGymTrainers
-	setflag FLAG_HIDE_VERDANTURF_TOWN_WANDAS_HOUSE_WALLY
-	setvar VAR_LAVARIDGE_TOWN_STATE, 1
-	call LavaridgeTown_Gym_1F_EventScript_GiveOverheat
+	call LavaridgeTown_Gym_EventScript_GiveHM
 	closemessage
 	delay 30
 	playfanfare MUS_REGISTER_MATCH_CALL
@@ -82,37 +76,246 @@ LavaridgeTown_Gym_1F_EventScript_FlanneryDefeated::
 	closemessage
 	delay 30
 	setflag FLAG_ENABLE_FLANNERY_MATCH_CALL
+	call Gym_EventScript_Reset_Rematches
+	setflag FLAG_UNUSED_0x925
 	release
 	end
+	
+LavaridgeTown_Gym_EventScript_Flannery_PostBattle::
+	goto_if_unset FLAG_UNUSED_0x925, LavaridgeTown_Gym_1F_EventScript_FlanneryRematch
+	msgbox LavaridgeTown_Gym_1F_Text_FlanneryPostBattle, MSGBOX_DEFAULT
+	release
+	end
+	
+LavaridgeTown_Gym_1F_EventScript_FlanneryRematch:: @ 81FC89C
+	msgbox LavaridgeTown_Gym_1F_Text_FlanneryPreRematch, MSGBOX_DEFAULT
+	goto LavaridgeTown_Gym_1F_EventScript_Start_Rematch_1
+	end
+	
+//rematches
+LavaridgeTown_Gym_1F_EventScript_FlanneryRematchEnd::
+	msgbox LavaridgeTown_Gym_1F_Text_FlanneryPostRematch, MSGBOX_AUTOCLOSE
+	call Gym_EventScript_Reset_Random_Rematch
+	setflag FLAG_UNUSED_0x925
+	end
+	
+LavaridgeTown_Gym_1F_EventScript_Start_Rematch_1::
+	checkitem ITEM_TM61_WILL_O_WISP, 1
+	compare VAR_RESULT, TRUE
+	goto_if_eq LavaridgeTown_Gym_1F_EventScript_Start_Rematch_2
+	trainerbattle_no_intro TRAINER_FLANNERY_1, LavaridgeTown_Gym_1F_Text_FlanneryRematchDefeat
+	msgbox LavaridgeTown_Gym_1F_Text_GetTM, MSGBOX_DEFAULT
+	giveitem ITEM_TM61_WILL_O_WISP
+	goto LavaridgeTown_Gym_1F_EventScript_FlanneryRematchEnd
+	end
+	
+LavaridgeTown_Gym_1F_EventScript_Start_Rematch_2::
+	goto_if_unset FLAG_RECEIVED_TM08 LavaridgeTown_Gym_1F_EventScript_Start_Rematch_Party_1
+	checkitem ITEM_TM120_MYSTICAL_FIRE, 1
+	compare VAR_RESULT, TRUE
+	goto_if_eq LavaridgeTown_Gym_1F_EventScript_Start_Rematch_3
+	trainerbattle_no_intro TRAINER_FLANNERY_2, LavaridgeTown_Gym_1F_Text_FlanneryRematchDefeat
+	msgbox LavaridgeTown_Gym_1F_Text_GetTM, MSGBOX_DEFAULT
+	giveitem ITEM_TM120_MYSTICAL_FIRE
+	goto LavaridgeTown_Gym_1F_EventScript_FlanneryRematchEnd
+	end
+	
+LavaridgeTown_Gym_1F_EventScript_Start_Rematch_3::
+	goto_if_unset FLAG_RECEIVED_TM42 LavaridgeTown_Gym_1F_EventScript_Start_Rematch_Party_2
+	checkitem ITEM_TM111_HEAT_CRASH, 1
+	compare VAR_RESULT, TRUE
+	goto_if_eq LavaridgeTown_Gym_1F_EventScript_Start_Rematch_4
+	trainerbattle_no_intro TRAINER_FLANNERY_3, LavaridgeTown_Gym_1F_Text_FlanneryRematchDefeat
+	msgbox LavaridgeTown_Gym_1F_Text_GetTM, MSGBOX_DEFAULT
+	giveitem ITEM_TM111_HEAT_CRASH
+	goto LavaridgeTown_Gym_1F_EventScript_FlanneryRematchEnd
+	end
+	
+LavaridgeTown_Gym_1F_EventScript_Start_Rematch_4::
+	goto_if_unset FLAG_RECEIVED_TM40 LavaridgeTown_Gym_1F_EventScript_Start_Rematch_Party_3
+	checkitem ITEM_TM117_BLAZE_KICK, 1
+	compare VAR_RESULT, TRUE
+	goto_if_eq LavaridgeTown_Gym_1F_EventScript_Start_Rematch_5
+	trainerbattle_no_intro TRAINER_FLANNERY_4, LavaridgeTown_Gym_1F_Text_FlanneryRematchDefeat
+	msgbox LavaridgeTown_Gym_1F_Text_GetTM, MSGBOX_DEFAULT
+	giveitem ITEM_TM117_BLAZE_KICK
+	goto LavaridgeTown_Gym_1F_EventScript_FlanneryRematchEnd
+	end
+	
+LavaridgeTown_Gym_1F_EventScript_Start_Rematch_5::
+	goto_if_unset FLAG_RECEIVED_TM04 LavaridgeTown_Gym_1F_EventScript_Start_Rematch_Party_4
+	goto_if_set FLAG_UNUSED_0x286 LavaridgeTown_Gym_1F_EventScript_Start_Rematch_6
+	trainerbattle_no_intro TRAINER_FLANNERY_4, LavaridgeTown_Gym_1F_Text_FlanneryRematchDefeat
+	msgbox LavaridgeTown_Gym_1F_Text_GetMegaStone, MSGBOX_DEFAULT
+	giveitem ITEM_HOUNDOOMINITE
+	setflag FLAG_UNUSED_0x286
+	goto LavaridgeTown_Gym_1F_EventScript_FlanneryRematchEnd
+	end
+	
+LavaridgeTown_Gym_1F_EventScript_Start_Rematch_6::
+	goto_if_unset FLAG_RECEIVED_TM03 LavaridgeTown_Gym_1F_EventScript_Start_Rematch_Party_4
+	checkitem ITEM_TM50_OVERHEAT, 1
+	compare VAR_RESULT, TRUE
+	goto_if_eq LavaridgeTown_Gym_1F_EventScript_Start_Rematch_Final
+	trainerbattle_no_intro TRAINER_FLANNERY_5, LavaridgeTown_Gym_1F_Text_FlanneryRematchDefeat
+	msgbox LavaridgeTown_Gym_1F_Text_GetTM, MSGBOX_DEFAULT
+	giveitem ITEM_TM50_OVERHEAT
+	goto LavaridgeTown_Gym_1F_EventScript_FlanneryRematchEnd
+	end
+	
+LavaridgeTown_Gym_1F_EventScript_Start_Rematch_Final::
+	random 5
+	switch VAR_RESULT
+	case 0, LavaridgeTown_Gym_1F_EventScript_Start_Rematch_Party_1
+	case 1, LavaridgeTown_Gym_1F_EventScript_Start_Rematch_Party_2
+	case 2, LavaridgeTown_Gym_1F_EventScript_Start_Rematch_Party_3
+	case 3, LavaridgeTown_Gym_1F_EventScript_Start_Rematch_Party_4
+	case 4, LavaridgeTown_Gym_1F_EventScript_Start_Rematch_Party_5
+	end
+	
+LavaridgeTown_Gym_1F_EventScript_Start_Rematch_Party_1::
+	trainerbattle_no_intro TRAINER_FLANNERY_1, LavaridgeTown_Gym_1F_Text_FlanneryRematchDefeat
+	goto_if_unset FLAG_RECEIVED_TM04, LavaridgeTown_Gym_1F_EventScript_FlanneryRematchEnd
+	msgbox LavaridgeTown_Gym_1F_Text_GetReward, MSGBOX_DEFAULT
+	giveitem ITEM_TIMID_MINT, 3
+	goto LavaridgeTown_Gym_1F_EventScript_FlanneryRematchEnd
+	end
+	
+LavaridgeTown_Gym_1F_EventScript_Start_Rematch_Party_2::
+	trainerbattle_no_intro TRAINER_FLANNERY_2, LavaridgeTown_Gym_1F_Text_FlanneryRematchDefeat
+	goto_if_unset FLAG_RECEIVED_TM04, LavaridgeTown_Gym_1F_EventScript_FlanneryRematchEnd
+	msgbox LavaridgeTown_Gym_1F_Text_GetReward, MSGBOX_DEFAULT
+	giveitem ITEM_MODEST_MINT, 3
+	goto LavaridgeTown_Gym_1F_EventScript_FlanneryRematchEnd
+	end
+	
+LavaridgeTown_Gym_1F_EventScript_Start_Rematch_Party_3::
+	trainerbattle_no_intro TRAINER_FLANNERY_3, LavaridgeTown_Gym_1F_Text_FlanneryRematchDefeat
+	goto_if_unset FLAG_RECEIVED_TM04, LavaridgeTown_Gym_1F_EventScript_FlanneryRematchEnd
+	msgbox LavaridgeTown_Gym_1F_Text_GetReward, MSGBOX_DEFAULT
+	giveitem ITEM_MILD_MINT, 3
+	goto LavaridgeTown_Gym_1F_EventScript_FlanneryRematchEnd
+	end
+	
+LavaridgeTown_Gym_1F_EventScript_Start_Rematch_Party_4::
+	trainerbattle_no_intro TRAINER_FLANNERY_4, LavaridgeTown_Gym_1F_Text_FlanneryRematchDefeat
+	goto_if_unset FLAG_RECEIVED_TM04, LavaridgeTown_Gym_1F_EventScript_FlanneryRematchEnd
+	msgbox LavaridgeTown_Gym_1F_Text_GetReward, MSGBOX_DEFAULT
+	giveitem ITEM_RASH_MINT, 3
+	goto LavaridgeTown_Gym_1F_EventScript_FlanneryRematchEnd
+	end
+	
+LavaridgeTown_Gym_1F_EventScript_Start_Rematch_Party_5::
+	trainerbattle_no_intro TRAINER_FLANNERY_5, LavaridgeTown_Gym_1F_Text_FlanneryRematchDefeat
+	goto_if_unset FLAG_RECEIVED_TM04, LavaridgeTown_Gym_1F_EventScript_FlanneryRematchEnd
+	msgbox LavaridgeTown_Gym_1F_Text_GetReward, MSGBOX_DEFAULT
+	giveitem ITEM_QUIET_MINT, 3
+	goto LavaridgeTown_Gym_1F_EventScript_FlanneryRematchEnd
+	end
+	
+LavaridgeTown_Gym_1F_Text_GetTM:
+	.string "Flannery: Please take this\n"
+	.string "Technical Machine.$"
 
-LavaridgeTown_Gym_1F_EventScript_GiveOverheat2::
+LavaridgeTown_Gym_1F_Text_GetMegaStone:
+	.string "Flannery: Please take this\n"
+	.string "Mega Stone, with you.\p"
+	.string "Make an Aggron hold it to\n"
+	.string "unleash its Hidden Potential.$"
+	
+LavaridgeTown_Gym_1F_Text_GetReward:
+	.string "Flannery: Please take this\n"
+	.string "Item as a Reward.$"
+
+//rematches end
+
+LavaridgeTown_Gym_EventScript_GiveHM::
+	goto_if_unset FLAG_RECEIVED_TM39, LavaridgeTown_Gym_EventScript_GiveHM01
+	goto_if_unset FLAG_RECEIVED_TM08, LavaridgeTown_Gym_EventScript_GiveHM02
+	goto_if_unset FLAG_RECEIVED_TM34, LavaridgeTown_Gym_EventScript_GiveHM03
+	goto_if_unset FLAG_RECEIVED_TM50, LavaridgeTown_Gym_EventScript_GiveHM04
+	goto_if_unset FLAG_RECEIVED_TM42, LavaridgeTown_Gym_EventScript_GiveHM05
+	goto_if_unset FLAG_RECEIVED_TM40, LavaridgeTown_Gym_EventScript_GiveHM06
+	goto_if_unset FLAG_RECEIVED_TM04, LavaridgeTown_Gym_EventScript_GiveHM07
+	goto LavaridgeTown_Gym_EventScript_GiveHM08
+	end
+	
+LavaridgeTown_Gym_EventScript_GiveHM01::
+	giveitem ITEM_WAILMER_PAIL
+	msgbox Gym_Text_ExplainWailmerPail, MSGBOX_DEFAULT
+	setflag FLAG_RECEIVED_TM39
+	goto LavaridgeTown_Gym_1F_EventScript_GiveOverheat
+	end
+	
+LavaridgeTown_Gym_EventScript_GiveHM02::
+	giveitem ITEM_OLD_ROD
+	msgbox Gym_Text_ExplainOldRod, MSGBOX_DEFAULT
+	setflag FLAG_RECEIVED_TM08
+	goto LavaridgeTown_Gym_1F_EventScript_GiveOverheat
+	end
+	
+LavaridgeTown_Gym_EventScript_GiveHM03::
+	giveitem ITEM_MACH_BIKE
+	msgbox Gym_Text_ExplainMachBike, MSGBOX_DEFAULT
+	setflag FLAG_RECEIVED_TM34
+	goto LavaridgeTown_Gym_1F_EventScript_GiveOverheat
+	end
+	
+LavaridgeTown_Gym_EventScript_GiveHM04::
+	giveitem ITEM_ACRO_BIKE
+	msgbox Gym_Text_ExplainAcroBike, MSGBOX_DEFAULT
+	setflag FLAG_RECEIVED_TM50
+	goto LavaridgeTown_Gym_1F_EventScript_GiveOverheat
+	end
+	
+LavaridgeTown_Gym_EventScript_GiveHM05::
+	giveitem ITEM_GOOD_ROD
+	msgbox Gym_Text_ExplainGoodRod, MSGBOX_DEFAULT
+	setflag FLAG_RECEIVED_TM42
+	goto LavaridgeTown_Gym_1F_EventScript_GiveOverheat
+	end
+	
+LavaridgeTown_Gym_EventScript_GiveHM06::
+	giveitem ITEM_EXP_SHARE
+	msgbox Gym_Text_ExplainExpShare, MSGBOX_DEFAULT
+	setflag FLAG_RECEIVED_TM40
+	goto LavaridgeTown_Gym_1F_EventScript_GiveOverheat
+	end
+	
+LavaridgeTown_Gym_EventScript_GiveHM07::
+	giveitem ITEM_SUPER_ROD
+	msgbox Gym_Text_ExplainSuperRod, MSGBOX_DEFAULT
+	setflag FLAG_RECEIVED_TM04
+	goto LavaridgeTown_Gym_1F_EventScript_GiveOverheat
+	end
+	
+LavaridgeTown_Gym_EventScript_GiveHM08::
+	giveitem ITEM_SHINY_CHARM
+	msgbox Gym_Text_ExplainOldSeaMap, MSGBOX_DEFAULT
+	setflag FLAG_RECEIVED_TM03
+	goto LavaridgeTown_Gym_1F_EventScript_GiveOverheat
+	end
+
+LavaridgeTown_Gym_1F_EventScript_GiveOverheat2:: @ 81FE81D
 	giveitem ITEM_TM50
 	compare VAR_RESULT, FALSE
 	goto_if_eq Common_EventScript_ShowBagIsFull
 	msgbox LavaridgeTown_Gym_1F_Text_ExplainOverheat, MSGBOX_DEFAULT
-	setflag FLAG_RECEIVED_TM50
 	release
 	end
 
-LavaridgeTown_Gym_1F_EventScript_GiveOverheat::
+LavaridgeTown_Gym_1F_EventScript_GiveOverheat:: @ 81FE841
+	msgbox Gym_Text_Takethis2, MSGBOX_DEFAULT
 	giveitem ITEM_TM50
-	compare VAR_RESULT, FALSE
-	goto_if_eq Common_EventScript_BagIsFull
 	msgbox LavaridgeTown_Gym_1F_Text_ExplainOverheat, MSGBOX_DEFAULT
-	setflag FLAG_RECEIVED_TM50
 	return
 
-LavaridgeTown_Gym_1F_EventScript_FlanneryRematch::
-	trainerbattle_rematch_double TRAINER_FLANNERY_1, LavaridgeTown_Gym_1F_Text_FlanneryPreRematch, LavaridgeTown_Gym_1F_Text_FlanneryRematchDefeat, LavaridgeTown_Gym_1F_Text_FlanneryRematchNeedTwoMons
-	msgbox LavaridgeTown_Gym_1F_Text_FlanneryPostRematch, MSGBOX_AUTOCLOSE
-	end
-
-LavaridgeTown_Gym_1F_EventScript_Cole::
+LavaridgeTown_Gym_1F_EventScript_Cole:: @ 81FE87F
 	trainerbattle TRAINER_BATTLE_CONTINUE_SCRIPT, TRAINER_COLE, LOCALID_COLE, LavaridgeTown_Gym_1F_Text_ColeIntro, LavaridgeTown_Gym_1F_Text_ColeDefeat, LavaridgeTown_Gym_EventScript_CheckTrainerScript
 	msgbox LavaridgeTown_Gym_1F_Text_ColePostBattle MSGBOX_AUTOCLOSE
 	end
 
-LavaridgeTown_Gym_EventScript_CheckTrainerScript::
+LavaridgeTown_Gym_EventScript_CheckTrainerScript:: @ 81FE89A
 	call LavaridgeTown_Gym_1F_EventScript_SetTrainerTempVars
 	release
 	special ShouldTryGetTrainerScript
@@ -120,42 +323,42 @@ LavaridgeTown_Gym_EventScript_CheckTrainerScript::
 	goto_if_eq EventScript_GotoTrainerScript
 	end
 
-LavaridgeTown_Gym_1F_EventScript_Axle::
+LavaridgeTown_Gym_1F_EventScript_Axle:: @ 81FE8AF
 	trainerbattle TRAINER_BATTLE_CONTINUE_SCRIPT, TRAINER_AXLE, LOCALID_AXLE, LavaridgeTown_Gym_1F_Text_AxleIntro, LavaridgeTown_Gym_1F_Text_AxleDefeat, LavaridgeTown_Gym_EventScript_CheckTrainerScript
 	msgbox LavaridgeTown_Gym_1F_Text_AxlePostBattle, MSGBOX_AUTOCLOSE
 	end
 
-LavaridgeTown_Gym_B1F_EventScript_Keegan::
+LavaridgeTown_Gym_B1F_EventScript_Keegan:: @ 81FE8CA
 	trainerbattle TRAINER_BATTLE_CONTINUE_SCRIPT, TRAINER_KEEGAN, LOCALID_KEEGAN, LavaridgeTown_Gym_B1F_Text_KeeganIntro, LavaridgeTown_Gym_B1F_Text_KeeganDefeat, LavaridgeTown_Gym_EventScript_CheckTrainerScript
 	msgbox LavaridgeTown_Gym_B1F_Text_KeeganPostBattle, MSGBOX_AUTOCLOSE
 	end
 
-LavaridgeTown_Gym_1F_EventScript_Danielle::
+LavaridgeTown_Gym_1F_EventScript_Danielle:: @ 81FE8E5
 	trainerbattle TRAINER_BATTLE_CONTINUE_SCRIPT, TRAINER_DANIELLE, LOCALID_DANIELLE, LavaridgeTown_Gym_1F_Text_DanielleIntro, LavaridgeTown_Gym_1F_Text_DanielleDefeat, LavaridgeTown_Gym_EventScript_CheckTrainerScript
 	msgbox LavaridgeTown_Gym_1F_Text_DaniellePostBattle, MSGBOX_AUTOCLOSE
 	end
 
-LavaridgeTown_Gym_1F_EventScript_Gerald::
+LavaridgeTown_Gym_1F_EventScript_Gerald:: @ 81FE900
 	trainerbattle TRAINER_BATTLE_CONTINUE_SCRIPT, TRAINER_GERALD, LOCALID_GERALD, LavaridgeTown_Gym_1F_Text_GeraldIntro, LavaridgeTown_Gym_1F_Text_GeraldDefeat, LavaridgeTown_Gym_EventScript_CheckTrainerScript
 	msgbox LavaridgeTown_Gym_1F_Text_GeraldPostBattle, MSGBOX_AUTOCLOSE
 	end
 
-LavaridgeTown_Gym_B1F_EventScript_Jace::
+LavaridgeTown_Gym_B1F_EventScript_Jace:: @ 81FE91B
 	trainerbattle TRAINER_BATTLE_CONTINUE_SCRIPT, TRAINER_JACE, LOCALID_JACE, LavaridgeTown_Gym_B1F_Text_JaceIntro, LavaridgeTown_Gym_B1F_Text_JaceDefeat, LavaridgeTown_Gym_EventScript_CheckTrainerScript
 	msgbox LavaridgeTown_Gym_B1F_Text_JacePostBattle, MSGBOX_AUTOCLOSE
 	end
 
-LavaridgeTown_Gym_B1F_EventScript_Jeff::
+LavaridgeTown_Gym_B1F_EventScript_Jeff:: @ 81FE936
 	trainerbattle TRAINER_BATTLE_CONTINUE_SCRIPT, TRAINER_JEFF, LOCALID_JEFF, LavaridgeTown_Gym_B1F_Text_JeffIntro, LavaridgeTown_Gym_B1F_Text_JeffDefeat, LavaridgeTown_Gym_EventScript_CheckTrainerScript
 	msgbox LavaridgeTown_Gym_B1F_Text_JeffPostBattle, MSGBOX_AUTOCLOSE
 	end
 
-LavaridgeTown_Gym_B1F_EventScript_Eli::
+LavaridgeTown_Gym_B1F_EventScript_Eli:: @ 81FE951
 	trainerbattle TRAINER_BATTLE_CONTINUE_SCRIPT, TRAINER_ELI, LOCALID_ELI, LavaridgeTown_Gym_B1F_Text_EliIntro, LavaridgeTown_Gym_B1F_Text_EliDefeat, LavaridgeTown_Gym_EventScript_CheckTrainerScript
 	msgbox LavaridgeTown_Gym_B1F_Text_EliPostBattle, MSGBOX_AUTOCLOSE
 	end
 
-LavaridgeTown_Gym_1F_EventScript_GymGuide::
+LavaridgeTown_Gym_1F_EventScript_GymGuide:: @ 81FE96C
 	lock
 	faceplayer
 	goto_if_set FLAG_DEFEATED_LAVARIDGE_GYM, LavaridgeTown_Gym_1F_EventScript_GymGuidePostVictory
@@ -163,34 +366,34 @@ LavaridgeTown_Gym_1F_EventScript_GymGuide::
 	release
 	end
 
-LavaridgeTown_Gym_1F_EventScript_GymGuidePostVictory::
+LavaridgeTown_Gym_1F_EventScript_GymGuidePostVictory:: @ 81FE981
 	msgbox LavaridgeTown_Gym_1F_Text_GymGuidePostVictory, MSGBOX_DEFAULT
 	release
 	end
 
-LavaridgeTown_Gym_1F_EventScript_LeftGymStatue::
+LavaridgeTown_Gym_1F_EventScript_LeftGymStatue:: @ 81FE98B
 	lockall
 	goto_if_set FLAG_BADGE04_GET, LavaridgeTown_Gym_1F_EventScript_GymStatueCertified
 	goto LavaridgeTown_Gym_1F_EventScript_GymStatue
 	end
 
-LavaridgeTown_Gym_1F_EventScript_RightGymStatue::
+LavaridgeTown_Gym_1F_EventScript_RightGymStatue:: @ 81FE99B
 	lockall
 	goto_if_set FLAG_BADGE04_GET, LavaridgeTown_Gym_1F_EventScript_GymStatueCertified
 	goto LavaridgeTown_Gym_1F_EventScript_GymStatue
 	end
 
-LavaridgeTown_Gym_1F_EventScript_GymStatueCertified::
+LavaridgeTown_Gym_1F_EventScript_GymStatueCertified:: @ 81FE9AB
 	msgbox LavaridgeTown_Gym_1F_Text_GymStatueCertified, MSGBOX_DEFAULT
 	releaseall
 	end
 
-LavaridgeTown_Gym_1F_EventScript_GymStatue::
+LavaridgeTown_Gym_1F_EventScript_GymStatue:: @ 81FE9B5
 	msgbox LavaridgeTown_Gym_1F_Text_GymStatue, MSGBOX_DEFAULT
 	releaseall
 	end
 
-LavaridgeTown_Gym_1F_Text_GymGuideAdvice:
+LavaridgeTown_Gym_1F_Text_GymGuideAdvice: @ 81FE9BF
 	.string "Hey, how's it going, CHAMPION-\n"
 	.string "bound {PLAYER}?\p"
 	.string "LAVARIDGE's GYM LEADER FLANNERY\n"
@@ -201,35 +404,35 @@ LavaridgeTown_Gym_1F_Text_GymGuideAdvice:
 	.string "Hose her down with water and then\l"
 	.string "go for it!$"
 
-LavaridgeTown_Gym_1F_Text_GymGuidePostVictory:
+LavaridgeTown_Gym_1F_Text_GymGuidePostVictory: @ 81FEAB8
 	.string "Yow! That was a scorching-hot battle!$"
 
-LavaridgeTown_Gym_1F_Text_ColeIntro:
+LavaridgeTown_Gym_1F_Text_ColeIntro: @ 81FEADE
 	.string "Owowowowow!\n"
 	.string "Yikes, it's hot!$"
 
-LavaridgeTown_Gym_1F_Text_ColeDefeat:
+LavaridgeTown_Gym_1F_Text_ColeDefeat: @ 81FEAFB
 	.string "I'm blinded by sweat in my eyes…$"
 
-LavaridgeTown_Gym_1F_Text_ColePostBattle:
+LavaridgeTown_Gym_1F_Text_ColePostBattle: @ 81FEB1C
 	.string "Being buried in hot sand promotes\n"
 	.string "circulation.\p"
 	.string "It's effective for healing pain in\n"
 	.string "your joints.$"
 
-LavaridgeTown_Gym_1F_Text_AxleIntro:
+LavaridgeTown_Gym_1F_Text_AxleIntro: @ 81FEB7B
 	.string "I'm trying to relieve my stress.\n"
 	.string "Don't come along and stress me out!$"
 
-LavaridgeTown_Gym_1F_Text_AxleDefeat:
+LavaridgeTown_Gym_1F_Text_AxleDefeat: @ 81FEBC0
 	.string "I hope FLANNERY flames you good!$"
 
-LavaridgeTown_Gym_1F_Text_AxlePostBattle:
+LavaridgeTown_Gym_1F_Text_AxlePostBattle: @ 81FEBE1
 	.string "Haaah… Whew…\p"
 	.string "If you spend too much time buried in\n"
 	.string "hot sand, it tuckers you out…$"
 
-LavaridgeTown_Gym_B1F_Text_KeeganIntro:
+LavaridgeTown_Gym_B1F_Text_KeeganIntro: @ 81FEC31
 	.string "You must be getting tired by now.\n"
 	.string "You'd like to rest in the hot sand,\l"
 	.string "wouldn't you?\p"
@@ -237,78 +440,78 @@ LavaridgeTown_Gym_B1F_Text_KeeganIntro:
 	.string "your willpower is an important ability\l"
 	.string "for all TRAINERS.$"
 
-LavaridgeTown_Gym_B1F_Text_KeeganDefeat:
+LavaridgeTown_Gym_B1F_Text_KeeganDefeat: @ 81FECE3
 	.string "Play with fire, and be burned…$"
 
-LavaridgeTown_Gym_B1F_Text_KeeganPostBattle:
+LavaridgeTown_Gym_B1F_Text_KeeganPostBattle: @ 81FED02
 	.string "Your skill is real…\n"
 	.string "But our LEADER FLANNERY is strong.\p"
 	.string "If you don't watch yourself, you'll be\n"
 	.string "burned seriously.$"
 
-LavaridgeTown_Gym_1F_Text_GeraldIntro:
+LavaridgeTown_Gym_1F_Text_GeraldIntro: @ 81FED72
 	.string "Can your POKéMON withstand\n"
 	.string "392-degree heat?$"
 
-LavaridgeTown_Gym_1F_Text_GeraldDefeat:
+LavaridgeTown_Gym_1F_Text_GeraldDefeat: @ 81FED9E
 	.string "It didn't burn hotly enough…$"
 
-LavaridgeTown_Gym_1F_Text_GeraldPostBattle:
+LavaridgeTown_Gym_1F_Text_GeraldPostBattle: @ 81FEDBB
 	.string "The temperature of magma is\n"
 	.string "392 degrees.\p"
 	.string "Your POKéMON beat me, so they should\n"
 	.string "easily survive in magma.$"
 
-LavaridgeTown_Gym_1F_Text_DanielleIntro:
+LavaridgeTown_Gym_1F_Text_DanielleIntro: @ 81FEE22
 	.string "Um…\n"
 	.string "Okay, I'll battle with you.$"
 
-LavaridgeTown_Gym_1F_Text_DanielleDefeat:
+LavaridgeTown_Gym_1F_Text_DanielleDefeat: @ 81FEE42
 	.string "Oh, but you're too strong.$"
 
-LavaridgeTown_Gym_1F_Text_DaniellePostBattle:
+LavaridgeTown_Gym_1F_Text_DaniellePostBattle: @ 81FEE5D
 	.string "I'm going to be a pretty and strong\n"
 	.string "TRAINER just like FLANNERY.$"
 
-LavaridgeTown_Gym_B1F_Text_JaceIntro:
+LavaridgeTown_Gym_B1F_Text_JaceIntro: @ 81FEE9D
 	.string "Come on, get with it!\n"
 	.string "Let's go before my feelings cool!$"
 
-LavaridgeTown_Gym_B1F_Text_JaceDefeat:
+LavaridgeTown_Gym_B1F_Text_JaceDefeat: @ 81FEED5
 	.string "It's so hot, and yet my heart is\n"
 	.string "clutched by ice…$"
 
-LavaridgeTown_Gym_B1F_Text_JacePostBattle:
+LavaridgeTown_Gym_B1F_Text_JacePostBattle: @ 81FEF07
 	.string "The way the battling spirit burns\n"
 	.string "within you, you may stand a chance\l"
 	.string "against our LEADER.$"
 
-LavaridgeTown_Gym_B1F_Text_JeffIntro:
+LavaridgeTown_Gym_B1F_Text_JeffIntro: @ 81FEF60
 	.string "See how the flames blaze wildly?\n"
 	.string "They flare in anticipation of my win!$"
 
-LavaridgeTown_Gym_B1F_Text_JeffDefeat:
+LavaridgeTown_Gym_B1F_Text_JeffDefeat: @ 81FEFA7
 	.string "Something didn't go right.$"
 
-LavaridgeTown_Gym_B1F_Text_JeffPostBattle:
+LavaridgeTown_Gym_B1F_Text_JeffPostBattle: @ 81FEFC2
 	.string "Well, so what? I say so what?\n"
 	.string "I can walk on hot coals barefoot!\p"
 	.string "…Don't even think about trying it!$"
 
-LavaridgeTown_Gym_B1F_Text_EliIntro:
+LavaridgeTown_Gym_B1F_Text_EliIntro: @ 81FF025
 	.string "As much as I love mountains,\n"
 	.string "I especially love volcanoes.$"
 
-LavaridgeTown_Gym_B1F_Text_EliDefeat:
+LavaridgeTown_Gym_B1F_Text_EliDefeat: @ 81FF05F
 	.string "Well, it seems to me I lost without\n"
 	.string "ever being in control.$"
 
-LavaridgeTown_Gym_B1F_Text_EliPostBattle:
+LavaridgeTown_Gym_B1F_Text_EliPostBattle: @ 81FF09A
 	.string "I stay here because I became a fan\n"
 	.string "of FLANNERY's power.\p"
 	.string "Hehehehe.$"
 
-LavaridgeTown_Gym_1F_Text_FlanneryIntro:
+LavaridgeTown_Gym_1F_Text_FlanneryIntro: @ 81FF0DC
 	.string "Welcome… No, wait.\p"
 	.string "Puny TRAINER, how good to see you've\n"
 	.string "made it here!\p"
@@ -323,7 +526,7 @@ LavaridgeTown_Gym_1F_Text_FlanneryIntro:
 	.string "father, I shall, uh…demonstrate the\l"
 	.string "hot moves we have honed on this land!$"
 
-LavaridgeTown_Gym_1F_Text_FlanneryDefeat:
+LavaridgeTown_Gym_1F_Text_FlanneryDefeat: @ 81FF233
 	.string "Oh…\n"
 	.string "I guess I was trying too hard…\p"
 	.string "I… I've only recently become\n"
@@ -335,11 +538,11 @@ LavaridgeTown_Gym_1F_Text_FlanneryDefeat:
 	.string "Thanks for teaching me that.\n"
 	.string "For that, you deserve this.$"
 
-LavaridgeTown_Gym_1F_Text_ReceivedHeatBadge:
+LavaridgeTown_Gym_1F_Text_ReceivedHeatBadge: @ 81FF32F
 	.string "{PLAYER} received the HEAT BADGE\n"
 	.string "from FLANNERY.$"
 
-LavaridgeTown_Gym_1F_Text_ExplainHeatBadgeTakeThis:
+LavaridgeTown_Gym_1F_Text_ExplainHeatBadgeTakeThis: @ 81FF359
 	.string "If you have a HEAT BADGE, all POKéMON\n"
 	.string "up to Level 50, even those you get in\l"
 	.string "trades from other people, will obey\l"
@@ -349,7 +552,7 @@ LavaridgeTown_Gym_1F_Text_ExplainHeatBadgeTakeThis:
 	.string "This is a token of my appreciation.\n"
 	.string "Don't be shy about taking it!$"
 
-LavaridgeTown_Gym_1F_Text_ExplainOverheat:
+LavaridgeTown_Gym_1F_Text_ExplainOverheat: @ 81FF45C
 	.string "That TM50 contains OVERHEAT.\p"
 	.string "That move inflicts serious damage on\n"
 	.string "the opponent.\p"
@@ -357,24 +560,24 @@ LavaridgeTown_Gym_1F_Text_ExplainOverheat:
 	.string "of the POKéMON using it. It might not\l"
 	.string "be suitable for longer battles.$"
 
-LavaridgeTown_Gym_1F_Text_RegisteredFlannery:
+LavaridgeTown_Gym_1F_Text_RegisteredFlannery: @ 81FF517
 	.string "Registered GYM LEADER FLANNERY\n"
 	.string "in the POKéNAV.$"
 
-LavaridgeTown_Gym_1F_Text_FlanneryPostBattle:
+LavaridgeTown_Gym_1F_Text_FlanneryPostBattle: @ 81FF546
 	.string "Your power reminds me of someone…\p"
 	.string "Oh! I know! You battle like NORMAN,\n"
 	.string "the GYM LEADER of PETALBURG.$"
 
-LavaridgeTown_Gym_1F_Text_GymStatue:
+LavaridgeTown_Gym_1F_Text_GymStatue: @ 81FF5A9
 	.string "LAVARIDGE TOWN POKéMON GYM$"
 
-LavaridgeTown_Gym_1F_Text_GymStatueCertified:
+LavaridgeTown_Gym_1F_Text_GymStatueCertified: @ 81FF5C4
 	.string "LAVARIDGE TOWN POKéMON GYM\p"
 	.string "FLANNERY'S CERTIFIED TRAINERS:\n"
 	.string "{PLAYER}$"
 
-LavaridgeTown_Gym_1F_Text_FlanneryPreRematch:
+LavaridgeTown_Gym_1F_Text_FlanneryPreRematch: @ 81FF601
 	.string "FLANNERY: Losing a battle isn't going\n"
 	.string "to deflate me.\p"
 	.string "I love POKéMON.\n"
@@ -383,11 +586,11 @@ LavaridgeTown_Gym_1F_Text_FlanneryPreRematch:
 	.string "Let's exchange superhot moves\n"
 	.string "in another battle!$"
 
-LavaridgeTown_Gym_1F_Text_FlanneryRematchDefeat:
+LavaridgeTown_Gym_1F_Text_FlanneryRematchDefeat: @ 81FF69F
 	.string "Whew!\n"
 	.string "On the verge of eruption!$"
 
-LavaridgeTown_Gym_1F_Text_FlanneryPostRematch:
+LavaridgeTown_Gym_1F_Text_FlanneryPostRematch: @ 81FF6BF
 	.string "FLANNERY: I lost the match,\n"
 	.string "but I'm completely satisfied.\p"
 	.string "It's not often I get to enjoy a battle\n"
@@ -395,7 +598,7 @@ LavaridgeTown_Gym_1F_Text_FlanneryPostRematch:
 	.string "Let's have another one like this\n"
 	.string "again sometime!$"
 
-LavaridgeTown_Gym_1F_Text_FlanneryRematchNeedTwoMons:
+LavaridgeTown_Gym_1F_Text_FlanneryRematchNeedTwoMons: @ 81FF75E
 	.string "FLANNERY: Losing a battle isn't going\n"
 	.string "to deflate me.\p"
 	.string "I love POKéMON.\n"

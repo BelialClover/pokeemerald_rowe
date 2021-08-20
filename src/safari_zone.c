@@ -55,6 +55,7 @@ void ResetSafariZoneFlag(void)
 void EnterSafariMode(void)
 {
     IncrementGameStat(GAME_STAT_ENTERED_SAFARI_ZONE);
+    FlagClear(FLAG_HIDE_SAFARI_ZONE_WORKER_WITHOUT_PASS);
     SetSafariZoneFlag();
     ClearAllPokeblockFeeders();
     gNumSafariBalls = 30;
@@ -65,7 +66,7 @@ void EnterSafariMode(void)
 
 void ExitSafariMode(void)
 {
-    TryPutSafariFanClubOnAir(sSafariZoneCaughtMons, sSafariZonePkblkUses);
+    sub_80EE44C(sSafariZoneCaughtMons, sSafariZonePkblkUses);
     ResetSafariZoneFlag();
     ClearAllPokeblockFeeders();
     gNumSafariBalls = 0;
@@ -107,7 +108,7 @@ void CB2_EndSafariBattle(void)
     {
         ScriptContext2_RunNewScript(SafariZone_EventScript_OutOfBallsMidBattle);
         WarpIntoMap();
-        gFieldCallback = FieldCB_ReturnToFieldNoScriptCheckMusic;
+        gFieldCallback = sub_80AF6F0;
         SetMainCallback2(CB2_LoadMap);
     }
     else if (gBattleOutcome == B_OUTCOME_CAUGHT)

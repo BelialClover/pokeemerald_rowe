@@ -1,18 +1,18 @@
-MauvilleCity_Mart_MapScripts::
+MauvilleCity_Mart_MapScripts:: @ 82110E5
 	.byte 0
 
-MauvilleCity_Mart_EventScript_Clerk::
+MauvilleCity_Mart_EventScript_Clerk:: @ 82110E6
 	lock
 	faceplayer
 	message gText_HowMayIServeYou
 	waitmessage
-	pokemart MauvilleCity_Mart_Pokemart
+	pokemart 0
 	msgbox gText_PleaseComeAgain, MSGBOX_DEFAULT
 	release
 	end
 
 	.align 2
-MauvilleCity_Mart_Pokemart:
+MauvilleCity_Mart_Pokemart: @ 8211100
 	.2byte ITEM_POKE_BALL
 	.2byte ITEM_GREAT_BALL
 	.2byte ITEM_SUPER_POTION
@@ -29,25 +29,25 @@ MauvilleCity_Mart_Pokemart:
 	release
 	end
 
-MauvilleCity_Mart_EventScript_ExpertM::
+MauvilleCity_Mart_EventScript_ExpertM:: @ 821111C
 	msgbox MauvilleCity_Mart_Text_ItemsToTemporarilyElevateStats, MSGBOX_NPC
 	end
 
-MauvilleCity_Mart_EventScript_Man::
+MauvilleCity_Mart_EventScript_Man:: @ 8211125
 	msgbox MauvilleCity_Mart_Text_DecisionsDetermineBattle, MSGBOX_NPC
 	end
 
-MauvilleCity_Mart_Text_ItemsToTemporarilyElevateStats:
+MauvilleCity_Mart_Text_ItemsToTemporarilyElevateStats: @ 821112E
 	.string "There are items that temporarily\n"
-	.string "elevate the stats of POKéMON.\p"
+	.string "elevate the stats of Pokémon.\p"
 	.string "The ones I know you use in battle\n"
-	.string "are X ATTACK and X DEFEND…\p"
+	.string "are X Attack and X Defend…\p"
 	.string "I do believe that there are others\n"
 	.string "like them.$"
 
-MauvilleCity_Mart_Text_DecisionsDetermineBattle:
+MauvilleCity_Mart_Text_DecisionsDetermineBattle: @ 82111D8
 	.string "Use a certain move, or use an item\n"
 	.string "instead…\p"
-	.string "The TRAINER's decisions determine how\n"
+	.string "The Trainer's decisions determine how\n"
 	.string "battles turn out, I think.$"
 

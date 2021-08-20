@@ -1,9 +1,9 @@
-MysteryEventScript_SurfPichu::
+MysteryEventScript_SurfPichu:: @ 8674D3D
 	setvaddress MysteryEventScript_SurfPichu
 	vgoto_if_unset FLAG_MYSTERY_EVENT_DONE, SurfPichu_GiveIfPossible
 	returnram
 
-SurfPichu_GiveIfPossible:
+SurfPichu_GiveIfPossible: @ 8674D4C
 	specialvar VAR_EVENT_PICHU_SLOT, CalculatePlayerPartyCount
 	compare VAR_EVENT_PICHU_SLOT, PARTY_SIZE
 	vgoto_if_eq SurfPichu_FullParty
@@ -19,7 +19,7 @@ SurfPichu_GiveIfPossible:
 	release
 	end
 
-SurfPichu_FullParty:
+SurfPichu_FullParty: @ 8674D73
 	lock
 	faceplayer
 	vmessage sText_FullParty
@@ -28,9 +28,9 @@ SurfPichu_FullParty:
 	release
 	end
 
-SurfPichu_GiveEgg:
+SurfPichu_GiveEgg: @ 8674D7E
 	giveegg SPECIES_PICHU
-	setmoneventlegal VAR_EVENT_PICHU_SLOT
+	setmonobedient VAR_EVENT_PICHU_SLOT
 	setmonmetlocation VAR_EVENT_PICHU_SLOT, METLOC_FATEFUL_ENCOUNTER
 	compare VAR_EVENT_PICHU_SLOT, 1
 	vgoto_if_eq SurfPichu_Slot1
@@ -44,35 +44,35 @@ SurfPichu_GiveEgg:
 	vgoto_if_eq SurfPichu_Slot5
 	return
 
-SurfPichu_Slot1:
+SurfPichu_Slot1: @ 8674DC0
 	setmonmove 1, 2, MOVE_SURF
 	return
 
-SurfPichu_Slot2::
+SurfPichu_Slot2:: @ 8674DC6
 	setmonmove 2, 2, MOVE_SURF
 	return
 
-SurfPichu_Slot3:
+SurfPichu_Slot3: @ 8674DCC
 	setmonmove 3, 2, MOVE_SURF
 	return
 
-SurfPichu_Slot4:
+SurfPichu_Slot4: @ 8674DD2
 	setmonmove 4, 2, MOVE_SURF
 	return
 
-SurfPichu_Slot5:
+SurfPichu_Slot5: @ 8674DD8
 	setmonmove 5, 2, MOVE_SURF
 	return
 
 sText_MysteryGiftEgg:
-	.string "Thank you for using the MYSTERY\n"
-	.string "GIFT System.\p"
-	.string "From the POKéMON CENTER we\n"
-	.string "have a gift--a POKéMON EGG!\p"
+	.string "Thank you for using the Mystery\n"
+	.string "Gift System.\p"
+	.string "From the Pokémon Center we\n"
+	.string "have a gift--a Pokémon egg!\p"
 	.string "Please raise it with love and\n"
 	.string "kindness.$"
 
 sText_FullParty:
 	.string "Oh, your party appears to be full.\p"
 	.string "Please come see me after storing\n"
-	.string "a POKéMON on a PC.$"
+	.string "a Pokémon on a PC.$"

@@ -1,7 +1,6 @@
 #ifndef GUARD_GLOBAL_FIELDMAP_H
 #define GUARD_GLOBAL_FIELDMAP_H
 
-#define METATILE_BEHAVIOR_MASK 0x00FF
 #define METATILE_COLLISION_MASK 0x0C00
 #define METATILE_ID_MASK 0x03FF
 #define METATILE_ID_UNDEFINED 0x03FF
@@ -13,9 +12,7 @@
 
 enum
 {
-    CONNECTION_INVALID = -1,
-    CONNECTION_NONE,
-    CONNECTION_SOUTH,
+    CONNECTION_SOUTH = 1,
     CONNECTION_NORTH,
     CONNECTION_WEST,
     CONNECTION_EAST,
@@ -34,6 +31,7 @@ struct Tileset
     /*0x0c*/ u16 *metatiles;
     /*0x10*/ u16 *metatileAttributes;
     /*0x14*/ TilesetCB callback;
+    /*0x18*/ struct PaletteOverride *paletteOverrides;
 };
 
 struct MapLayout
@@ -142,14 +140,18 @@ struct MapHeader
     /* 0x16 */ u8 weather;
     /* 0x17 */ u8 mapType;
     /* 0x18 */ u8 filler_18[2];
-               // fields correspond to the arguments in the map_header_flags macro
-    /* 0x1A */ bool8 allowCycling:1;
-               bool8 allowEscaping:1; // Escape Rope and Dig
-               bool8 allowRunning:1;
-               bool8 showMapName:5; // the last 4 bits are unused 
-                                    // but the 5 bit sized bitfield is required to match
+    /* 0x1A */ u8 flags;
     /* 0x1B */ u8 battleType;
 };
+
+// Flags for gMapHeader.flags, as defined in the map_header_flags macro
+#define MAP_ALLOW_CYCLING      (1 << 0)
+#define MAP_ALLOW_ESCAPING     (1 << 1) // Escape Rope and Dig
+#define MAP_ALLOW_RUNNING      (1 << 2)
+#define MAP_SHOW_MAP_NAME      (1 << 3)
+#define UNUSED_MAP_FLAGS       (1 << 4 | 1 << 5 | 1 << 6 | 1 << 7)
+
+#define SHOW_MAP_NAME_ENABLED  ((gMapHeader.flags & (MAP_SHOW_MAP_NAME | UNUSED_MAP_FLAGS)) == MAP_SHOW_MAP_NAME)
 
 
 struct ObjectEvent
@@ -194,10 +196,15 @@ struct ObjectEvent
     /*0x0C*/ struct Coords16 initialCoords;
     /*0x10*/ struct Coords16 currentCoords;
     /*0x14*/ struct Coords16 previousCoords;
-    /*0x18*/ u16 facingDirection:4; // current direction?
-             u16 movementDirection:4;
-             u16 rangeX:4;
-             u16 rangeY:4;
+    /*0x18*/ u8 facingDirection:4;  // current direction?
+    /*0x18*/ u8 movementDirection:4;
+    /*0x19*/ union __attribute__((packed)) {
+        u8 as_byte;
+        struct __attribute__((packed)) {
+            u8 x:4;
+            u8 y:4;
+        } ALIGNED(1) as_nybbles;
+    } ALIGNED(1) range;
     /*0x1A*/ u8 fieldEffectSpriteId;
     /*0x1B*/ u8 warpArrowSpriteId;
     /*0x1C*/ u8 movementActionId;
@@ -213,8 +220,8 @@ struct ObjectEvent
 struct ObjectEventGraphicsInfo
 {
     /*0x00*/ u16 tileTag;
-    /*0x02*/ u16 paletteTag;
-    /*0x04*/ u16 reflectionPaletteTag;
+    /*0x02*/ u16 paletteTag1;
+    /*0x04*/ u16 paletteTag2;
     /*0x06*/ u16 size;
     /*0x08*/ s16 width;
     /*0x0A*/ s16 height;
@@ -250,6 +257,8 @@ enum {
 #define PLAYER_AVATAR_FLAG_FORCED_MOVE (1 << 6)
 #define PLAYER_AVATAR_FLAG_DASH        (1 << 7)
 
+#define PLAYER_AVATAR_FLAG_BIKE        (PLAYER_AVATAR_FLAG_MACH_BIKE | PLAYER_AVATAR_FLAG_ACRO_BIKE)
+
 enum
 {
     ACRO_BIKE_NORMAL,
@@ -268,6 +277,7 @@ enum
     COLLISION_IMPASSABLE,
     COLLISION_ELEVATION_MISMATCH,
     COLLISION_OBJECT_EVENT,
+	COLLISION_START_SURFING, // Surfboard
     COLLISION_STOP_SURFING,
     COLLISION_LEDGE_JUMP,
     COLLISION_PUSHED_BOULDER,
@@ -302,7 +312,8 @@ struct PlayerAvatar
     /*0x02*/ u8 runningState; // this is a static running state. 00 is not moving, 01 is turn direction, 02 is moving.
     /*0x03*/ u8 tileTransitionState; // this is a transition running state: 00 is not moving, 01 is transition between tiles, 02 means you are on the frame in which you have centered on a tile but are about to keep moving, even if changing directions. 2 is also used for a ledge hop, since you are transitioning.
     /*0x04*/ u8 spriteId;
-    /*0x05*/ u8 objectEventId;
+    /*0x05*/ u8 objectEventId:7;
+             u8 creeping:1;
     /*0x06*/ bool8 preventStep;
     /*0x07*/ u8 gender;
     /*0x08*/ u8 acroBikeState; // 00 is normal, 01 is turning, 02 is standing wheelie, 03 is hopping wheelie

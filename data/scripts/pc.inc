@@ -1,4 +1,4 @@
-EventScript_PC::
+EventScript_PC:: @ 8271D92
 	lockall
 	setvar VAR_0x8004, 0
 	special DoPCTurnOnEffect
@@ -7,7 +7,7 @@ EventScript_PC::
 	goto EventScript_PCMainMenu
 	end
 
-EventScript_PCMainMenu::
+EventScript_PCMainMenu:: @ 8271DAC
 	message gText_WhichPCShouldBeAccessed
 	waitmessage
 	special ScriptMenu_CreatePCMultichoice
@@ -15,7 +15,7 @@ EventScript_PCMainMenu::
 	goto EventScript_AccessPC
 	end
 
-EventScript_AccessPC::
+EventScript_AccessPC:: @ 8271DBC
 	switch VAR_RESULT
 	case 0, EventScript_AccessPokemonStorage
 	case 1, EventScript_AccessPlayersPC
@@ -24,7 +24,7 @@ EventScript_AccessPC::
 	case MULTI_B_PRESSED, EventScript_TurnOffPC
 	end
 
-EventScript_AccessPlayersPC::
+EventScript_AccessPlayersPC:: @ 8271DF9
 	playse SE_PC_LOGIN
 	msgbox gText_AccessedPlayersPC, MSGBOX_DEFAULT
 	special PlayerPC
@@ -32,7 +32,7 @@ EventScript_AccessPlayersPC::
 	goto EventScript_PCMainMenu
 	end
 
-EventScript_AccessPokemonStorage::
+EventScript_AccessPokemonStorage:: @ 8271E0E
 	playse SE_PC_LOGIN
 	call_if_unset FLAG_SYS_PC_LANETTE, EventScript_AccessSomeonesPC
 	call_if_set FLAG_SYS_PC_LANETTE, EventScript_AccessLanettesPC
@@ -42,22 +42,22 @@ EventScript_AccessPokemonStorage::
 	goto EventScript_PCMainMenu
 	end
 
-EventScript_AccessSomeonesPC::
+EventScript_AccessSomeonesPC:: @ 8271E35
 	msgbox gText_AccessedSomeonesPC, MSGBOX_DEFAULT
 	return
 
-EventScript_AccessLanettesPC::
+EventScript_AccessLanettesPC:: @ 8271E3E
 	msgbox gText_AccessedLanettesPC, MSGBOX_DEFAULT
 	return
 
-EventScript_TurnOffPC::
+EventScript_TurnOffPC:: @ 8271E47
 	setvar VAR_0x8004, 0
 	playse SE_PC_OFF
 	special DoPCTurnOffEffect
 	releaseall
 	end
 
-EventScript_AccessHallOfFame::
+EventScript_AccessHallOfFame:: @ 8271E54
 	goto_if_unset FLAG_SYS_GAME_CLEAR, EventScript_TurnOffPC
 	playse SE_PC_LOGIN
 	special AccessHallOfFamePC

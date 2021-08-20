@@ -1,6 +1,9 @@
 #ifndef GUARD_BARD_MUSIC_H
 #define GUARD_BARD_MUSIC_H
 
+// Exported type declarations
+
+
 struct BardSound
 {
     /*0x00*/ u8 var00;
@@ -31,8 +34,12 @@ struct BardSong
     /*0x30*/ const struct BardSound *sound;
 };
 
-extern const u16 gNumBardWords_Species;
-extern const u16 gNumBardWords_Moves;
+// Exported RAM declarations
+
+// Exported ROM declarations
+
+extern const u16 gNumSpeciesNames;
+extern const u16 gUnknown_085FA1D4;
 const struct BardSound *GetWordSounds(u16 word);
 void GetWordPhonemes(struct BardSong *song, u16 word);
 

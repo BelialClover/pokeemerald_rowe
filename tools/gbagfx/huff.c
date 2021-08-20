@@ -255,7 +255,7 @@ unsigned char * HuffCompress(unsigned char * src, int srcSize, int * compressedS
         }
     }
 
-#ifdef DEBUG
+#ifdef DEBUG_MENU
     for (int i = 0; i < nitems; i++) {
         fprintf(stderr, "%d: %d\n", i, freqs[i].header.value);
     }

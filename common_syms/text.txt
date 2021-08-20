@@ -1,4 +1,4 @@
 gFonts
-gDisableTextPrinters
-gCurGlyph
+gUnknown_03002F84
+gUnknown_03002F90
 gTextFlags

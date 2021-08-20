@@ -16,7 +16,6 @@
 #include "field_screen_effect.h"
 #include "field_specials.h"
 #include "field_weather.h"
-#include "graphics.h"
 #include "international_string_util.h"
 #include "item_icon.h"
 #include "link.h"
@@ -45,6 +44,7 @@
 #include "tv.h"
 #include "wallclock.h"
 #include "window.h"
+#include "day_night.h"
 #include "constants/battle_frontier.h"
 #include "constants/battle_tower.h"
 #include "constants/decorations.h"
@@ -57,6 +57,7 @@
 #include "constants/map_types.h"
 #include "constants/maps.h"
 #include "constants/mevent.h"
+#include "constants/tv.h"
 #include "constants/script_menu.h"
 #include "constants/slot_machine.h"
 #include "constants/songs.h"
@@ -66,6 +67,7 @@
 #include "constants/weather.h"
 #include "constants/metatile_labels.h"
 #include "palette.h"
+#include "ud_trade.h"
 
 EWRAM_DATA bool8 gBikeCyclingChallenge = FALSE;
 EWRAM_DATA u8 gBikeCollisions = 0;
@@ -85,6 +87,11 @@ static EWRAM_DATA u8 sPCBoxToSendMon = 0;
 static EWRAM_DATA u32 sBattleTowerMultiBattleTypeFlags = 0;
 
 struct ListMenuTemplate gScrollableMultichoice_ListMenuTemplate;
+
+extern const u16 gObjectEventPalette8[];
+extern const u16 gObjectEventPalette17[];
+extern const u16 gObjectEventPalette33[];
+extern const u16 gObjectEventPalette34[];
 
 void TryLoseFansFromPlayTime(void);
 void SetPlayerGotFirstFans(void);
@@ -616,18 +623,18 @@ static void LoadLinkPartnerObjectEventSpritePalette(u8 graphicsId, u8 localEvent
 
             switch (graphicsId)
             {
-            case OBJ_EVENT_GFX_LINK_RS_BRENDAN:
-                LoadPalette(gObjectEventPal_RubySapphireBrendan, 0x100 + (adjustedPaletteNum << 4), 0x20);
-                break;
-            case OBJ_EVENT_GFX_LINK_RS_MAY:
-                LoadPalette(gObjectEventPal_RubySapphireMay, 0x100 + (adjustedPaletteNum << 4), 0x20);
-                break;
-            case OBJ_EVENT_GFX_RIVAL_BRENDAN_NORMAL:
-                LoadPalette(gObjectEventPal_Brendan, 0x100 + (adjustedPaletteNum << 4), 0x20);
-                break;
-            case OBJ_EVENT_GFX_RIVAL_MAY_NORMAL:
-                LoadPalette(gObjectEventPal_May, 0x100 + (adjustedPaletteNum << 4), 0x20);
-                break;
+                case OBJ_EVENT_GFX_LINK_RS_BRENDAN:
+                    LoadPalette(gObjectEventPalette33, 0x100 + (adjustedPaletteNum << 4), 0x20);
+                    break;
+                case OBJ_EVENT_GFX_LINK_RS_MAY:
+                    LoadPalette(gObjectEventPalette34, 0x100 + (adjustedPaletteNum << 4), 0x20);
+                    break;
+                case OBJ_EVENT_GFX_RIVAL_BRENDAN_NORMAL:
+                    LoadPalette(gObjectEventPalette8, 0x100 + (adjustedPaletteNum << 4), 0x20);
+                    break;
+                case OBJ_EVENT_GFX_RIVAL_MAY_NORMAL:
+                    LoadPalette(gObjectEventPalette17, 0x100 + (adjustedPaletteNum << 4), 0x20);
+                    break;
             }
         }
     }
@@ -1025,6 +1032,16 @@ void FieldShowRegionMap(void)
     SetMainCallback2(CB2_FieldShowRegionMap);
 }
 
+static void CB2_FieldLoadFlyMap(void)
+{
+    FieldInitRegionMap(CB2_ReturnToFieldContinueScriptPlayMapMusic);
+}
+
+void FieldLoadFlyMap(void)
+{
+    SetMainCallback2(CB2_OpenFlyMap);
+}
+
 void DoPCTurnOnEffect(void)
 {
     if (FuncIsActiveTask(Task_PCTurnOnEffect) != TRUE)
@@ -1300,18 +1317,19 @@ void SpawnCameraObject(void)
 {
     u8 obj = SpawnSpecialObjectEventParameterized(OBJ_EVENT_GFX_BOY_1, MOVEMENT_TYPE_FACE_DOWN, OBJ_EVENT_ID_CAMERA, gSaveBlock1Ptr->pos.x + 7, gSaveBlock1Ptr->pos.y + 7, 3);
     gObjectEvents[obj].invisible = TRUE;
-    CameraObjectSetFollowedSpriteId(gObjectEvents[obj].spriteId);
+    CameraObjectSetFollowedObjectId(gObjectEvents[obj].spriteId);
 }
 
 void RemoveCameraObject(void)
 {
-    CameraObjectSetFollowedSpriteId(GetPlayerAvatarSpriteId());
+    CameraObjectSetFollowedObjectId(GetPlayerAvatarObjectId());
     RemoveObjectEventByLocalIdAndMap(OBJ_EVENT_ID_CAMERA, gSaveBlock1Ptr->location.mapNum, gSaveBlock1Ptr->location.mapGroup);
 }
 
 u8 GetPokeblockNameByMonNature(void)
 {
-    return CopyMonFavoritePokeblockName(GetNature(&gPlayerParty[GetLeadMonIndex()]), gStringVar1);
+    //return CopyMonFavoritePokeblockName(GetNature(&gPlayerParty[GetLeadMonIndex()]), gStringVar1);
+	return CopyMonFavoritePokeblockName(GetNature(&gPlayerParty[GetLeadMonIndex()], FALSE), gStringVar1);
 }
 
 void GetSecretBaseNearbyMapName(void)
@@ -1335,7 +1353,7 @@ u16 GetSlotMachineId(void)
     static const u8 sSlotMachineIds[] = {0, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 5};
     static const u8 sSlotMachineServiceDayIds[] = {3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5};
 
-    u32 rnd = gSaveBlock1Ptr->dewfordTrends[0].trendiness + gSaveBlock1Ptr->dewfordTrends[0].rand + sSlotMachineRandomSeeds[gSpecialVar_0x8004];
+    u32 rnd = gSaveBlock1Ptr->easyChatPairs[0].unk0_0 + gSaveBlock1Ptr->easyChatPairs[0].unk2 + sSlotMachineRandomSeeds[gSpecialVar_0x8004];
     if (GetPriceReduction(POKENEWS_GAME_CORNER))
     {
         return sSlotMachineServiceDayIds[rnd % SLOT_MACHINE_COUNT];
@@ -1407,13 +1425,13 @@ void GiveLeadMonEffortRibbon(void)
     SetMonData(leadMon, MON_DATA_EFFORT_RIBBON, &ribbonSet);
     if (GetRibbonCount(leadMon) > NUM_CUTIES_RIBBONS)
     {
-        TryPutSpotTheCutiesOnAir(leadMon, MON_DATA_EFFORT_RIBBON);
+        TryPutSpotTheCutiesOnAir(leadMon, 0x47);
     }
 }
 
 bool8 Special_AreLeadMonEVsMaxedOut(void)
 {
-    if (GetMonEVCount(&gPlayerParty[GetLeadMonIndex()]) >= MAX_TOTAL_EVS)
+    if (GetMonEVCount(&gPlayerParty[GetLeadMonIndex()]) >= 510)
     {
         return TRUE;
     }
@@ -1448,7 +1466,7 @@ void SetShoalItemFlag(u16 unused)
 void PutZigzagoonInPlayerParty(void)
 {
     u16 monData;
-    CreateMon(&gPlayerParty[0], SPECIES_ZIGZAGOON, 7, USE_RANDOM_IVS, FALSE, 0, OT_ID_PLAYER_ID, 0);
+    CreateMon(&gPlayerParty[0], SPECIES_ZIGZAGOON, 7, 32, FALSE, 0, OT_ID_PLAYER_ID, 0, 0);
     monData = TRUE;
     SetMonData(&gPlayerParty[0], MON_DATA_ABILITY_NUM, &monData);
     monData = MOVE_TACKLE;
@@ -1621,7 +1639,7 @@ void BufferLottoTicketNumber(void)
 {
     if (gSpecialVar_Result >= 10000)
     {
-        ConvertIntToDecimalString(0, gSpecialVar_Result);
+        TV_PrintIntToStringVar(0, gSpecialVar_Result);
     }
     else if (gSpecialVar_Result >= 1000)
     {
@@ -2666,7 +2684,7 @@ static void ScrollableMultichoice_MoveCursor(s32 itemIndex, bool8 onInit, struct
     u8 taskId;
     PlaySE(SE_SELECT);
     taskId = FindTaskIdByFunc(ScrollableMultichoice_ProcessInput);
-    if (taskId != TASK_NONE)
+    if (taskId != 0xFF)
     {
         u16 selection;
         struct Task *task = &gTasks[taskId];
@@ -2752,7 +2770,7 @@ static void sub_813A600(u8 taskId)
 void sub_813A630(void)
 {
     u8 taskId = FindTaskIdByFunc(sub_813A600);
-    if (taskId == TASK_NONE)
+    if (taskId == 0xFF)
     {
         EnableBothScriptContexts();
     }
@@ -2883,7 +2901,8 @@ void ShowNatureGirlMessage(void)
         gSpecialVar_0x8004 = 0;
     }
 
-    nature = GetNature(&gPlayerParty[gSpecialVar_0x8004]);
+    //nature = GetNature(&gPlayerParty[gSpecialVar_0x8004]);
+	nature = GetNature(&gPlayerParty[gSpecialVar_0x8004], FALSE);
     ShowFieldMessage(sNatureGirlMessages[nature]);
 }
 
@@ -3033,6 +3052,21 @@ void GiveFrontierBattlePoints(void)
     }
 }
 
+void GiveFrontierBattlePointsMidChallenge(void)
+{
+    s32 points;
+
+    if (gSaveBlock2Ptr->frontier.battlePoints + gSpecialVar_0x8004 > MAX_BATTLE_FRONTIER_POINTS)
+        gSaveBlock2Ptr->frontier.battlePoints = MAX_BATTLE_FRONTIER_POINTS;
+    else
+        gSaveBlock2Ptr->frontier.battlePoints = gSaveBlock2Ptr->frontier.battlePoints + gSpecialVar_0x8004;
+
+    points = gSaveBlock2Ptr->frontier.cardBattlePoints + gSpecialVar_0x8004;
+    if (points > 0xFFFF)
+        points = 0xFFFF;
+    gSaveBlock2Ptr->frontier.cardBattlePoints = points;
+}
+
 u16 GetFrontierBattlePoints(void)
 {
     return gSaveBlock2Ptr->frontier.battlePoints;
@@ -3117,8 +3151,8 @@ static void ShowFrontierExchangeCornerItemIcon(u16 item)
     if (sScrollableMultichoice_ItemSpriteId != MAX_SPRITES)
     {
         gSprites[sScrollableMultichoice_ItemSpriteId].oam.priority = 0;
-        gSprites[sScrollableMultichoice_ItemSpriteId].x = 36;
-        gSprites[sScrollableMultichoice_ItemSpriteId].y = 92;
+        gSprites[sScrollableMultichoice_ItemSpriteId].pos1.x = 36;
+        gSprites[sScrollableMultichoice_ItemSpriteId].pos1.y = 92;
     }
 }
 
@@ -3261,7 +3295,7 @@ void sub_813ADD4(void)
     u16 scrollOffset, selectedRow;
     u8 i;
     u8 taskId = FindTaskIdByFunc(sub_813A600);
-    if (taskId != TASK_NONE)
+    if (taskId != 0xFF)
     {
         struct Task *task = &gTasks[taskId];
         ListMenuGetScrollAndRow(task->tListTaskId, &scrollOffset, &selectedRow);
@@ -3320,7 +3354,7 @@ void GetBattleFrontierTutorMoveIndex(void)
 void sub_813AF48(void)
 {
     u8 taskId = FindTaskIdByFunc(sub_813A600);
-    if (taskId != TASK_NONE)
+    if (taskId != 0xFF)
     {
         struct Task *task = &gTasks[taskId];
         DestroyListMenuTask(task->tListTaskId, NULL, NULL);
@@ -3429,7 +3463,7 @@ static void ChangeDeoxysRockLevel(u8 rockLevel)
 {
     u8 objectEventId;
     LoadPalette(&sDeoxysRockPalettes[rockLevel], 0x1A0, 8);
-    TryGetObjectEventIdByLocalIdAndMap(LOCALID_BIRTH_ISLAND_EXTERIOR_ROCK, gSaveBlock1Ptr->location.mapNum, gSaveBlock1Ptr->location.mapGroup, &objectEventId);
+    TryGetObjectEventIdByLocalIdAndMap(1, gSaveBlock1Ptr->location.mapNum, gSaveBlock1Ptr->location.mapGroup, &objectEventId);
 
     if (rockLevel == 0)
         PlaySE(SE_M_CONFUSE_RAY);
@@ -3437,9 +3471,9 @@ static void ChangeDeoxysRockLevel(u8 rockLevel)
         PlaySE(SE_RG_DEOXYS_MOVE);
 
     CreateTask(WaitForDeoxysRockMovement, 8);
-    gFieldEffectArguments[0] = LOCALID_BIRTH_ISLAND_EXTERIOR_ROCK;
-    gFieldEffectArguments[1] = MAP_NUM(BIRTH_ISLAND_EXTERIOR);
-    gFieldEffectArguments[2] = MAP_GROUP(BIRTH_ISLAND_EXTERIOR);
+    gFieldEffectArguments[0] = 1;
+    gFieldEffectArguments[1] = 58;
+    gFieldEffectArguments[2] = 26;
     gFieldEffectArguments[3] = sDeoxysRockCoords[rockLevel][0];
     gFieldEffectArguments[4] = sDeoxysRockCoords[rockLevel][1];
 
@@ -3686,18 +3720,18 @@ u32 GetMartEmployeeObjectEventId(void)
 {
     static const u8 sPokeMarts[][3] =
     {
-        { MAP_GROUP(OLDALE_TOWN_MART),     MAP_NUM(OLDALE_TOWN_MART),     LOCALID_OLDALE_MART_CLERK },
-        { MAP_GROUP(LAVARIDGE_TOWN_MART),  MAP_NUM(LAVARIDGE_TOWN_MART),  LOCALID_LAVARIDGE_MART_CLERK },
-        { MAP_GROUP(FALLARBOR_TOWN_MART),  MAP_NUM(FALLARBOR_TOWN_MART),  LOCALID_FALLARBOR_MART_CLERK },
-        { MAP_GROUP(VERDANTURF_TOWN_MART), MAP_NUM(VERDANTURF_TOWN_MART), LOCALID_VERDANTURF_MART_CLERK },
-        { MAP_GROUP(PETALBURG_CITY_MART),  MAP_NUM(PETALBURG_CITY_MART),  LOCALID_PETALBURG_MART_CLERK },
-        { MAP_GROUP(SLATEPORT_CITY_MART),  MAP_NUM(SLATEPORT_CITY_MART),  LOCALID_SLATEPORT_MART_CLERK },
-        { MAP_GROUP(MAUVILLE_CITY_MART),   MAP_NUM(MAUVILLE_CITY_MART),   LOCALID_MAUVILLE_MART_CLERK },
-        { MAP_GROUP(RUSTBORO_CITY_MART),   MAP_NUM(RUSTBORO_CITY_MART),   LOCALID_RUSTBORO_MART_CLERK },
-        { MAP_GROUP(FORTREE_CITY_MART),    MAP_NUM(FORTREE_CITY_MART),    LOCALID_FORTREE_MART_CLERK },
-        { MAP_GROUP(MOSSDEEP_CITY_MART),   MAP_NUM(MOSSDEEP_CITY_MART),   LOCALID_MOSSDEEP_MART_CLERK },
-        { MAP_GROUP(SOOTOPOLIS_CITY_MART), MAP_NUM(SOOTOPOLIS_CITY_MART), LOCALID_SOOTOPOLIS_MART_CLERK },
-        { MAP_GROUP(BATTLE_FRONTIER_MART), MAP_NUM(BATTLE_FRONTIER_MART), LOCALID_BATTLE_FRONTIER_MART_CLERK }
+        { MAP_GROUP(OLDALE_TOWN_MART),     MAP_NUM(OLDALE_TOWN_MART),     1 },
+        { MAP_GROUP(LAVARIDGE_TOWN_MART),  MAP_NUM(LAVARIDGE_TOWN_MART),  1 }, 
+        { MAP_GROUP(FALLARBOR_TOWN_MART),  MAP_NUM(FALLARBOR_TOWN_MART),  1 },
+        { MAP_GROUP(VERDANTURF_TOWN_MART), MAP_NUM(VERDANTURF_TOWN_MART), 1 },
+        { MAP_GROUP(PETALBURG_CITY_MART),  MAP_NUM(PETALBURG_CITY_MART),  1 },
+        { MAP_GROUP(SLATEPORT_CITY_MART),  MAP_NUM(SLATEPORT_CITY_MART),  1 },
+        { MAP_GROUP(MAUVILLE_CITY_MART),   MAP_NUM(MAUVILLE_CITY_MART),   1 },
+        { MAP_GROUP(RUSTBORO_CITY_MART),   MAP_NUM(RUSTBORO_CITY_MART),   1 },
+        { MAP_GROUP(FORTREE_CITY_MART),    MAP_NUM(FORTREE_CITY_MART),    1 },
+        { MAP_GROUP(MOSSDEEP_CITY_MART),   MAP_NUM(MOSSDEEP_CITY_MART),   1 },
+        { MAP_GROUP(SOOTOPOLIS_CITY_MART), MAP_NUM(SOOTOPOLIS_CITY_MART), 1 },
+        { MAP_GROUP(BATTLE_FRONTIER_MART), MAP_NUM(BATTLE_FRONTIER_MART), 1 }
     };
 
     u8 i;
@@ -3734,17 +3768,14 @@ bool32 ShouldDistributeEonTicket(void)
     return TRUE;
 }
 
-#define tState data[0]
-
-void BattleTowerReconnectLink(void)
+void sub_813B534(void)
 {
-    // Save battle type, restored at end
-    // of Task_LinkRetireStatusWithBattleTowerPartner
     sBattleTowerMultiBattleTypeFlags = gBattleTypeFlags;
     gBattleTypeFlags = 0;
-
     if (!gReceivedRemoteLinkPlayers)
-        CreateTask(Task_ReconnectWithLinkPlayers, 5);
+    {
+        CreateTask(sub_80B3AF8, 5);
+    }
 }
 
 void LinkRetireStatusWithBattleTowerPartner(void)
@@ -3752,144 +3783,136 @@ void LinkRetireStatusWithBattleTowerPartner(void)
     CreateTask(Task_LinkRetireStatusWithBattleTowerPartner, 5);
 }
 
-// Communicate with a Battle Tower link partner to tell them
-// whether or not the player chose to continue or retire,
-// and determine what the partner chose to do
-// gSpecialVar_0x8004: Player's choice
-// gSpecialVar_0x8005: Partner's choice (read from gBlockRecvBuffer[1][0])
 static void Task_LinkRetireStatusWithBattleTowerPartner(u8 taskId)
 {
-    switch (gTasks[taskId].tState)
+    switch (gTasks[taskId].data[0])
     {
-    case 0:
-        if (!FuncIsActiveTask(Task_ReconnectWithLinkPlayers))
-        {
-            gTasks[taskId].tState++;
-        }
-        break;
-    case 1:
-        if (IsLinkTaskFinished() == TRUE)
-        {
-            if (GetMultiplayerId() == 0)
+        case 0:
+            if (!FuncIsActiveTask(sub_80B3AF8))
             {
-                // Player is link leader, skip sending data
-                gTasks[taskId].tState++;
+                gTasks[taskId].data[0]++;
             }
-            else
+            break;
+        case 1:
+            if (IsLinkTaskFinished() == TRUE)
             {
-                // Send value of gSpecialVar_0x8004 to leader
-                // Will either be BATTLE_TOWER_LINK_CONTINUE or BATTLE_TOWER_LINK_RETIRE
-                SendBlock(bitmask_all_link_players_but_self(), &gSpecialVar_0x8004, sizeof(gSpecialVar_0x8004));
-                gTasks[taskId].tState++;
-            }
-        }
-        break;
-    case 2:
-        if (GetBlockReceivedStatus() & 2)
-        {
-            if (GetMultiplayerId() == 0)
-            {
-                // Player is leader, read partner's choice
-                // and determine if play should continue
-                gSpecialVar_0x8005 = gBlockRecvBuffer[1][0];
-                ResetBlockReceivedFlag(1);
-
-                if (gSpecialVar_0x8004 == BATTLE_TOWER_LINK_RETIRE 
-                 && gSpecialVar_0x8005 == BATTLE_TOWER_LINK_RETIRE)
+                if (GetMultiplayerId() == 0)
                 {
-                    gSpecialVar_Result = BATTLE_TOWER_LINKSTAT_BOTH_RETIRE;
-                }
-                else if (gSpecialVar_0x8004 == BATTLE_TOWER_LINK_CONTINUE 
-                      && gSpecialVar_0x8005 == BATTLE_TOWER_LINK_RETIRE)
-                {
-                    gSpecialVar_Result = BATTLE_TOWER_LINKSTAT_MEMBER_RETIRE;
-                }
-                else if (gSpecialVar_0x8004 == BATTLE_TOWER_LINK_RETIRE 
-                      && gSpecialVar_0x8005 == BATTLE_TOWER_LINK_CONTINUE)
-                {
-                    gSpecialVar_Result = BATTLE_TOWER_LINKSTAT_LEADER_RETIRE;
+                    gTasks[taskId].data[0]++;
                 }
                 else
                 {
-                    gSpecialVar_Result = BATTLE_TOWER_LINKSTAT_CONTINUE;
+                    SendBlock(bitmask_all_link_players_but_self(), &gSpecialVar_0x8004, 2);
+                    gTasks[taskId].data[0]++;
                 }
             }
-            gTasks[taskId].tState++;
-        }
-        break;
-    case 3:
-        if (IsLinkTaskFinished() == TRUE)
-        {
-            if (GetMultiplayerId() != 0)
+            break;
+        case 2:
+            if ((GetBlockReceivedStatus() & 2) != 0)
             {
-                // Player is not link leader, wait for leader's response
-                gTasks[taskId].tState++;
+                if (GetMultiplayerId() == 0)
+                {
+                    gSpecialVar_0x8005 = gBlockRecvBuffer[1][0];
+                    ResetBlockReceivedFlag(1);
+                    if (gSpecialVar_0x8004 == BATTLE_TOWER_LINK_RETIRE 
+                     && gSpecialVar_0x8005 == BATTLE_TOWER_LINK_RETIRE)
+                    {
+                        gSpecialVar_Result = BATTLE_TOWER_LINKSTAT_BOTH_RETIRE;
+                    }
+                    else if (gSpecialVar_0x8004 == BATTLE_TOWER_LINK_CONTINUE 
+                          && gSpecialVar_0x8005 == BATTLE_TOWER_LINK_RETIRE)
+                    {
+                        gSpecialVar_Result = BATTLE_TOWER_LINKSTAT_PARTNER_RETIRE;
+                    }
+                    else if (gSpecialVar_0x8004 == BATTLE_TOWER_LINK_RETIRE 
+                          && gSpecialVar_0x8005 == BATTLE_TOWER_LINK_CONTINUE)
+                    {
+                        gSpecialVar_Result = BATTLE_TOWER_LINKSTAT_PLAYER_RETIRE;
+                    }
+                    else
+                    {
+                        gSpecialVar_Result = BATTLE_TOWER_LINKSTAT_CONTINUE;
+                    }
+                }
+                gTasks[taskId].data[0]++;
+            }
+            break;
+        case 3:
+            if (IsLinkTaskFinished() == TRUE)
+            {
+                if (GetMultiplayerId() != 0)
+                {
+                    gTasks[taskId].data[0]++;
+                }
+                else
+                {
+                    SendBlock(bitmask_all_link_players_but_self(), &gSpecialVar_Result, 2);
+                    gTasks[taskId].data[0]++;
+                }
+            }
+            break;
+        case 4:
+            if ((GetBlockReceivedStatus() & 1) != 0)
+            {
+                if (GetMultiplayerId() != 0)
+                {
+                    gSpecialVar_Result = gBlockRecvBuffer[0][0];
+                    ResetBlockReceivedFlag(0);
+                    gTasks[taskId].data[0]++;
+                }
+                else
+                {
+                    gTasks[taskId].data[0]++;
+                }
+            }
+            break;
+        case 5:
+            if (GetMultiplayerId() == 0)
+            {
+                if (gSpecialVar_Result == BATTLE_TOWER_LINKSTAT_PARTNER_RETIRE)
+                {
+                    ShowFieldAutoScrollMessage(gText_YourPartnerHasRetired);
+                }
             }
             else
             {
-                // Send whether or not play should continue
-                SendBlock(bitmask_all_link_players_but_self(), &gSpecialVar_Result, sizeof(gSpecialVar_Result));
-                gTasks[taskId].tState++;
+                if (gSpecialVar_Result == BATTLE_TOWER_LINKSTAT_PLAYER_RETIRE)
+                {
+                    ShowFieldAutoScrollMessage(gText_YourPartnerHasRetired);
+                }
             }
-        }
-        break;
-    case 4:
-        if (GetBlockReceivedStatus() & 1)
-        {
-            if (GetMultiplayerId() != 0)
+            gTasks[taskId].data[0]++;
+            break;
+        case 6:
+            if (!IsTextPrinterActive(0))
             {
-                // Player is not link leader, read leader's response
-                gSpecialVar_Result = gBlockRecvBuffer[0][0];
-                ResetBlockReceivedFlag(0);
-                gTasks[taskId].tState++;
+                gTasks[taskId].data[0]++;
             }
-            else
+            break;
+        case 7:
+            if (IsLinkTaskFinished() == 1)
             {
-                gTasks[taskId].tState++;
+                SetLinkStandbyCallback();
+                gTasks[taskId].data[0]++;
             }
-        }
-        break;
-    case 5:
-        // Print message if partner chose to retire (and player didn't)
-        if (GetMultiplayerId() == 0)
-        {
-            if (gSpecialVar_Result == BATTLE_TOWER_LINKSTAT_MEMBER_RETIRE)
-                ShowFieldAutoScrollMessage(gText_YourPartnerHasRetired);
-        }
-        else
-        {
-            if (gSpecialVar_Result == BATTLE_TOWER_LINKSTAT_LEADER_RETIRE)
-                ShowFieldAutoScrollMessage(gText_YourPartnerHasRetired);
-        }
-        gTasks[taskId].tState++;
-        break;
-    case 6:
-        if (!IsTextPrinterActive(0))
-            gTasks[taskId].tState++;
-        break;
-    case 7:
-        if (IsLinkTaskFinished() == TRUE)
-        {
-            SetLinkStandbyCallback();
-            gTasks[taskId].tState++;
-        }
-        break;
-    case 8:
-        if (IsLinkTaskFinished() == TRUE)
-            gTasks[taskId].tState++;
-        break;
-    case 9:
-        if (gWirelessCommType == 0)
-            SetCloseLinkCallback();
-
-        gBattleTypeFlags = sBattleTowerMultiBattleTypeFlags;
-        EnableBothScriptContexts();
-        DestroyTask(taskId);
-        break;
+            break;
+        case 8:
+            if (IsLinkTaskFinished() == 1)
+            {
+                gTasks[taskId].data[0]++;
+            }
+            break;
+        case 9:
+            if (gWirelessCommType == 0)
+            {
+                SetCloseLinkCallback();
+            }
+            gBattleTypeFlags = sBattleTowerMultiBattleTypeFlags;
+            EnableBothScriptContexts();
+            DestroyTask(taskId);
+            break;
     }
 }
-
-#undef tState
 
 void Script_DoRayquazaScene(void)
 {
@@ -4374,4 +4397,148 @@ void SetPlayerGotFirstFans(void)
 u8 Script_TryGainNewFanFromCounter(void)
 {
     return TryGainNewFanFromCounter(gSpecialVar_0x8004);
+}
+
+// Checks how many Rotom player has with them
+// Stores the party position of the last Rotom found in gSpecialVar_0x8004
+// (Useful if there's only one Rotom in the party)
+u8 CountRotomInParty (void)
+{
+    u8 partyCount, rotomCount = 0;
+    u16 i;
+    u32 species;
+
+    partyCount = CalculatePlayerPartyCount();
+    
+    for (i = 0; i < partyCount; i++)
+    {
+        species = GetMonData(&gPlayerParty[i], MON_DATA_SPECIES, NULL);
+        if (species == SPECIES_ROTOM)
+        {
+            gSpecialVar_0x8004 = i;
+            rotomCount++;
+        }
+    }
+    return rotomCount;
+}
+
+// Rotom form change specials
+// Vars used:
+// gSpecialVar_0x8004: set to the party slot of the chosen Rotom, or the first Rotom found if there's only one
+// gSpecialVar_0x8005: set to the form to change Rotom to (e.g. SPECIES_ROTOM_WASH)
+// gSpecialVar_0x8006: special move learned by Rotom after form change (set by ChangeRotomForm)
+// gSpecialVar_0x8007: Rotom's initial form
+// gSpecialVar_0x8008: Rotom's initial special move (set by RotomForgetSpecialMove)
+
+// Takes a Rotom form as input and returns its special move
+u16 RotomFormToMove (u16 species)
+{
+    u16 move;
+
+    switch (species)
+    {
+        case SPECIES_ROTOM_HEAT:
+            move = MOVE_OVERHEAT;
+            break;
+        case SPECIES_ROTOM_WASH:
+            move = MOVE_HYDRO_PUMP;
+            break;
+        case SPECIES_ROTOM_FROST:
+            move = MOVE_FREEZE_DRY;
+            break;
+        case SPECIES_ROTOM_FAN:
+            move = MOVE_HURRICANE;
+            break;
+        case SPECIES_ROTOM_MOW:
+            move = MOVE_LEAF_STORM;
+            break;
+        case SPECIES_ROTOM:
+            move = MOVE_THUNDER_SHOCK;
+            break;
+    }
+    return move;
+}
+
+// Stores the special move of the Rotom form in gSpecialVar_0x8005 in gSpecialVar_0x8006
+void GetRotomNewSpecialMove (void)
+{
+    gSpecialVar_0x8006 = RotomFormToMove(gSpecialVar_0x8005);
+}
+
+// Gets Rotom's current form and the matching move, stores them in gSpecialVar_0x8007 and gSpecialVar_0x8008
+void GetRotomState (void)
+{
+    gSpecialVar_0x8007 = GetFormSpeciesId(SPECIES_ROTOM, GetMonData(&gPlayerParty[gSpecialVar_0x8004], MON_DATA_FORM_ID, NULL));
+    gSpecialVar_0x8008 = RotomFormToMove(gSpecialVar_0x8007);
+}
+
+// If Rotom is an appliance form, delete its special move
+// Rotom's initial form must be loaded into gSpecialVar_0x8007 before use.
+// Returns TRUE if the moove was forgotten, false if not
+void RotomForgetSpecialMove (void)
+{
+    u8 i, forgotSpecialMove = 0;
+    u16 currentMove;
+    u16 moveNone = MOVE_NONE;
+
+    currentMove = RotomFormToMove(gSpecialVar_0x8007);
+
+    for (i = 0; i < MAX_MON_MOVES; i++)
+    {
+        if (GetMonData(&gPlayerParty[gSpecialVar_0x8004], MON_DATA_MOVE1 + i, NULL) == currentMove)
+        {
+            RemoveMonPPBonus (&gPlayerParty[gSpecialVar_0x8004], i);
+            SetMonData(&gPlayerParty[gSpecialVar_0x8004], MON_DATA_MOVE1 + i, &moveNone);
+            forgotSpecialMove = TRUE;
+            break;
+        }
+    }
+}
+
+// Changes Rotom's form
+void ChangeRotomForm (void)
+{
+    u16 currentForm, newForm;
+    
+    currentForm = GetMonData(&gPlayerParty[gSpecialVar_0x8004], MON_DATA_FORM_ID, NULL);
+    newForm = GetFormIdFromFormSpeciesId(gSpecialVar_0x8005);
+    
+    SetMonData(&gPlayerParty[gSpecialVar_0x8004], MON_DATA_FORM_ID, &newForm);
+    CalculateMonStats(&gPlayerParty[gSpecialVar_0x8004]);
+}
+
+// Teaches Rotom's forms their special moves
+// Rotom MUST have an empty moveslot first
+// Move to teach must be stored in gSpecialVar_0x8006
+void TeachRotomMove (void)
+{
+    GiveMoveToMon(&gPlayerParty[gSpecialVar_0x8004], gSpecialVar_0x8006);
+}
+
+// Checks if the species stored in gSpecialVar_0x8004 is a Rotom form
+bool8 IsSelectedMonRotom (void)
+{
+    u32 species;
+
+    species = GetMonData(&gPlayerParty[gSpecialVar_0x8004], MON_DATA_SPECIES2, NULL);
+    if (species == SPECIES_ROTOM)
+    {
+        return TRUE;
+    }
+    return FALSE;
+}
+
+// Checks if Rotom knows its special move
+bool8 DoesRotomKnowSpecialMove(void)
+{
+    u16 initialMove, initialSpecies;
+
+    initialSpecies = gSpecialVar_0x8007;
+    initialMove = RotomFormToMove(initialSpecies);
+    return MonKnowsMove(&gPlayerParty[gSpecialVar_0x8004], initialMove);
+}
+
+u8 OpenUDTradeMenu (void)
+{
+    UDTrade_ShowMainMenu();
 }

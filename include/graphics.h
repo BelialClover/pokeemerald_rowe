@@ -188,7 +188,7 @@ extern const u32 gMonFrontPic_Goldeen[];
 extern const u32 gMonFrontPic_Seaking[];
 extern const u32 gMonFrontPic_Staryu[];
 extern const u32 gMonFrontPic_Starmie[];
-extern const u32 gMonFrontPic_MrMime[];
+extern const u32 gMonFrontPic_Mrmime[];
 extern const u32 gMonFrontPic_Scyther[];
 extern const u32 gMonFrontPic_Jynx[];
 extern const u32 gMonFrontPic_Electabuzz[];
@@ -506,7 +506,7 @@ extern const u32 gMonFrontPic_Skuntank[];
 extern const u32 gMonFrontPic_Bronzor[];
 extern const u32 gMonFrontPic_Bronzong[];
 extern const u32 gMonFrontPic_Bonsly[];
-extern const u32 gMonFrontPic_MimeJr[];
+extern const u32 gMonFrontPic_Mimejr[];
 extern const u32 gMonFrontPic_Happiny[];
 extern const u32 gMonFrontPic_Chatot[];
 extern const u32 gMonFrontPic_Spiritomb[];
@@ -839,7 +839,7 @@ extern const u32 gMonFrontPic_Golisopod[];
 extern const u32 gMonFrontPic_Sandygast[];
 extern const u32 gMonFrontPic_Palossand[];
 extern const u32 gMonFrontPic_Pyukumuku[];
-extern const u32 gMonFrontPic_TypeNull[];
+extern const u32 gMonFrontPic_Type_null[];
 extern const u32 gMonFrontPic_Silvally[];
 extern const u32 gMonFrontPic_Minior[];
 extern const u32 gMonFrontPic_Komala[];
@@ -849,13 +849,13 @@ extern const u32 gMonFrontPic_Mimikyu[];
 extern const u32 gMonFrontPic_Bruxish[];
 extern const u32 gMonFrontPic_Drampa[];
 extern const u32 gMonFrontPic_Dhelmise[];
-extern const u32 gMonFrontPic_Jangmoo[];
-extern const u32 gMonFrontPic_Hakamoo[];
-extern const u32 gMonFrontPic_Kommoo[];
-extern const u32 gMonFrontPic_TapuKoko[];
-extern const u32 gMonFrontPic_TapuLele[];
-extern const u32 gMonFrontPic_TapuBulu[];
-extern const u32 gMonFrontPic_TapuFini[];
+extern const u32 gMonFrontPic_Jangmo_o[];
+extern const u32 gMonFrontPic_Hakamo_o[];
+extern const u32 gMonFrontPic_Kommo_o[];
+extern const u32 gMonFrontPic_Tapu_koko[];
+extern const u32 gMonFrontPic_Tapu_lele[];
+extern const u32 gMonFrontPic_Tapu_bulu[];
+extern const u32 gMonFrontPic_Tapu_fini[];
 extern const u32 gMonFrontPic_Cosmog[];
 extern const u32 gMonFrontPic_Cosmoem[];
 extern const u32 gMonFrontPic_Solgaleo[];
@@ -961,7 +961,7 @@ extern const u32 gMonFrontPic_Eternatus[];
 extern const u32 gMonFrontPic_Kubfu[];
 extern const u32 gMonFrontPic_Urshifu[];
 extern const u32 gMonFrontPic_Zarude[];
-extern const u32 gMonFrontPic_Regieleki[];
+//extern const u32 gMonFrontPic_Regieleki[];
 extern const u32 gMonFrontPic_Regidrago[];
 extern const u32 gMonFrontPic_Glastrier[];
 extern const u32 gMonFrontPic_Spectrier[];
@@ -1198,7 +1198,7 @@ extern const u32 gMonFrontPic_IndeedeeFemale[];
 extern const u32 gMonFrontPic_MorpekoHangry[];
 extern const u32 gMonFrontPic_ZacianCrownedSword[];
 extern const u32 gMonFrontPic_ZamazentaCrownedShield[];
-extern const u32 gMonFrontPic_EternatusEternamax[];
+//extern const u32 gMonFrontPic_EternatusEternamax[];
 extern const u32 gMonFrontPic_UrshifuRapidStrikeStyle[];
 extern const u32 gMonFrontPic_ZarudeDada[];
 extern const u32 gMonFrontPic_CalyrexIceRider[];
@@ -1328,7 +1328,7 @@ extern const u32 gMonBackPic_Goldeen[];
 extern const u32 gMonBackPic_Seaking[];
 extern const u32 gMonBackPic_Staryu[];
 extern const u32 gMonBackPic_Starmie[];
-extern const u32 gMonBackPic_MrMime[];
+extern const u32 gMonBackPic_Mrmime[];
 extern const u32 gMonBackPic_Scyther[];
 extern const u32 gMonBackPic_Jynx[];
 extern const u32 gMonBackPic_Electabuzz[];
@@ -1646,7 +1646,7 @@ extern const u32 gMonBackPic_Skuntank[];
 extern const u32 gMonBackPic_Bronzor[];
 extern const u32 gMonBackPic_Bronzong[];
 extern const u32 gMonBackPic_Bonsly[];
-extern const u32 gMonBackPic_MimeJr[];
+extern const u32 gMonBackPic_Mimejr[];
 extern const u32 gMonBackPic_Happiny[];
 extern const u32 gMonBackPic_Chatot[];
 extern const u32 gMonBackPic_Spiritomb[];
@@ -1979,7 +1979,7 @@ extern const u32 gMonBackPic_Golisopod[];
 extern const u32 gMonBackPic_Sandygast[];
 extern const u32 gMonBackPic_Palossand[];
 extern const u32 gMonBackPic_Pyukumuku[];
-extern const u32 gMonBackPic_TypeNull[];
+extern const u32 gMonBackPic_Type_null[];
 extern const u32 gMonBackPic_Silvally[];
 extern const u32 gMonBackPic_Minior[];
 extern const u32 gMonBackPic_Komala[];
@@ -1989,13 +1989,13 @@ extern const u32 gMonBackPic_Mimikyu[];
 extern const u32 gMonBackPic_Bruxish[];
 extern const u32 gMonBackPic_Drampa[];
 extern const u32 gMonBackPic_Dhelmise[];
-extern const u32 gMonBackPic_Jangmoo[];
-extern const u32 gMonBackPic_Hakamoo[];
-extern const u32 gMonBackPic_Kommoo[];
-extern const u32 gMonBackPic_TapuKoko[];
-extern const u32 gMonBackPic_TapuLele[];
-extern const u32 gMonBackPic_TapuBulu[];
-extern const u32 gMonBackPic_TapuFini[];
+extern const u32 gMonBackPic_Jangmo_o[];
+extern const u32 gMonBackPic_Hakamo_o[];
+extern const u32 gMonBackPic_Kommo_o[];
+extern const u32 gMonBackPic_Tapu_koko[];
+extern const u32 gMonBackPic_Tapu_lele[];
+extern const u32 gMonBackPic_Tapu_bulu[];
+extern const u32 gMonBackPic_Tapu_fini[];
 extern const u32 gMonBackPic_Cosmog[];
 extern const u32 gMonBackPic_Cosmoem[];
 extern const u32 gMonBackPic_Solgaleo[];
@@ -2101,7 +2101,7 @@ extern const u32 gMonBackPic_Eternatus[];
 extern const u32 gMonBackPic_Kubfu[];
 extern const u32 gMonBackPic_Urshifu[];
 extern const u32 gMonBackPic_Zarude[];
-extern const u32 gMonBackPic_Regieleki[];
+//extern const u32 gMonBackPic_Regieleki[];
 extern const u32 gMonBackPic_Regidrago[];
 extern const u32 gMonBackPic_Glastrier[];
 extern const u32 gMonBackPic_Spectrier[];
@@ -2338,7 +2338,7 @@ extern const u32 gMonBackPic_IndeedeeFemale[];
 extern const u32 gMonBackPic_MorpekoHangry[];
 extern const u32 gMonBackPic_ZacianCrownedSword[];
 extern const u32 gMonBackPic_ZamazentaCrownedShield[];
-extern const u32 gMonBackPic_EternatusEternamax[];
+//extern const u32 gMonBackPic_EternatusEternamax[];
 extern const u32 gMonBackPic_UrshifuRapidStrikeStyle[];
 extern const u32 gMonBackPic_ZarudeDada[];
 extern const u32 gMonBackPic_CalyrexIceRider[];
@@ -2467,7 +2467,7 @@ extern const u32 gMonPalette_Goldeen[];
 extern const u32 gMonPalette_Seaking[];
 extern const u32 gMonPalette_Staryu[];
 extern const u32 gMonPalette_Starmie[];
-extern const u32 gMonPalette_MrMime[];
+extern const u32 gMonPalette_Mrmime[];
 extern const u32 gMonPalette_Scyther[];
 extern const u32 gMonPalette_Jynx[];
 extern const u32 gMonPalette_Electabuzz[];
@@ -2784,7 +2784,7 @@ extern const u32 gMonPalette_Skuntank[];
 extern const u32 gMonPalette_Bronzor[];
 extern const u32 gMonPalette_Bronzong[];
 extern const u32 gMonPalette_Bonsly[];
-extern const u32 gMonPalette_MimeJr[];
+extern const u32 gMonPalette_Mimejr[];
 extern const u32 gMonPalette_Happiny[];
 extern const u32 gMonPalette_Chatot[];
 extern const u32 gMonPalette_Spiritomb[];
@@ -3117,7 +3117,7 @@ extern const u32 gMonPalette_Golisopod[];
 extern const u32 gMonPalette_Sandygast[];
 extern const u32 gMonPalette_Palossand[];
 extern const u32 gMonPalette_Pyukumuku[];
-extern const u32 gMonPalette_TypeNull[];
+extern const u32 gMonPalette_Type_null[];
 extern const u32 gMonPalette_Silvally[];
 extern const u32 gMonPalette_Minior[];
 extern const u32 gMonPalette_Komala[];
@@ -3127,13 +3127,13 @@ extern const u32 gMonPalette_Mimikyu[];
 extern const u32 gMonPalette_Bruxish[];
 extern const u32 gMonPalette_Drampa[];
 extern const u32 gMonPalette_Dhelmise[];
-extern const u32 gMonPalette_Jangmoo[];
-extern const u32 gMonPalette_Hakamoo[];
-extern const u32 gMonPalette_Kommoo[];
-extern const u32 gMonPalette_TapuKoko[];
-extern const u32 gMonPalette_TapuLele[];
-extern const u32 gMonPalette_TapuBulu[];
-extern const u32 gMonPalette_TapuFini[];
+extern const u32 gMonPalette_Jangmo_o[];
+extern const u32 gMonPalette_Hakamo_o[];
+extern const u32 gMonPalette_Kommo_o[];
+extern const u32 gMonPalette_Tapu_koko[];
+extern const u32 gMonPalette_Tapu_lele[];
+extern const u32 gMonPalette_Tapu_bulu[];
+extern const u32 gMonPalette_Tapu_fini[];
 extern const u32 gMonPalette_Cosmog[];
 extern const u32 gMonPalette_Cosmoem[];
 extern const u32 gMonPalette_Solgaleo[];
@@ -3239,7 +3239,7 @@ extern const u32 gMonPalette_Eternatus[];
 extern const u32 gMonPalette_Kubfu[];
 extern const u32 gMonPalette_Urshifu[];
 extern const u32 gMonPalette_Zarude[];
-extern const u32 gMonPalette_Regieleki[];
+//extern const u32 gMonPalette_Regieleki[];
 extern const u32 gMonPalette_Regidrago[];
 extern const u32 gMonPalette_Glastrier[];
 extern const u32 gMonPalette_Spectrier[];
@@ -3502,7 +3502,7 @@ extern const u32 gMonPalette_IndeedeeFemale[];
 extern const u32 gMonPalette_MorpekoHangry[];
 extern const u32 gMonPalette_ZacianCrownedSword[];
 extern const u32 gMonPalette_ZamazentaCrownedShield[];
-extern const u32 gMonPalette_EternatusEternamax[];
+//extern const u32 gMonPalette_EternatusEternamax[];
 extern const u32 gMonPalette_UrshifuRapidStrikeStyle[];
 extern const u32 gMonPalette_ZarudeDada[];
 extern const u32 gMonPalette_CalyrexIceRider[];
@@ -3632,7 +3632,7 @@ extern const u32 gMonShinyPalette_Goldeen[];
 extern const u32 gMonShinyPalette_Seaking[];
 extern const u32 gMonShinyPalette_Staryu[];
 extern const u32 gMonShinyPalette_Starmie[];
-extern const u32 gMonShinyPalette_MrMime[];
+extern const u32 gMonShinyPalette_Mrmime[];
 extern const u32 gMonShinyPalette_Scyther[];
 extern const u32 gMonShinyPalette_Jynx[];
 extern const u32 gMonShinyPalette_Electabuzz[];
@@ -3949,7 +3949,7 @@ extern const u32 gMonShinyPalette_Skuntank[];
 extern const u32 gMonShinyPalette_Bronzor[];
 extern const u32 gMonShinyPalette_Bronzong[];
 extern const u32 gMonShinyPalette_Bonsly[];
-extern const u32 gMonShinyPalette_MimeJr[];
+extern const u32 gMonShinyPalette_Mimejr[];
 extern const u32 gMonShinyPalette_Happiny[];
 extern const u32 gMonShinyPalette_Chatot[];
 extern const u32 gMonShinyPalette_Spiritomb[];
@@ -4282,7 +4282,7 @@ extern const u32 gMonShinyPalette_Golisopod[];
 extern const u32 gMonShinyPalette_Sandygast[];
 extern const u32 gMonShinyPalette_Palossand[];
 extern const u32 gMonShinyPalette_Pyukumuku[];
-extern const u32 gMonShinyPalette_TypeNull[];
+extern const u32 gMonShinyPalette_Type_null[];
 extern const u32 gMonShinyPalette_Silvally[];
 extern const u32 gMonShinyPalette_Minior[];
 extern const u32 gMonShinyPalette_Komala[];
@@ -4292,13 +4292,13 @@ extern const u32 gMonShinyPalette_Mimikyu[];
 extern const u32 gMonShinyPalette_Bruxish[];
 extern const u32 gMonShinyPalette_Drampa[];
 extern const u32 gMonShinyPalette_Dhelmise[];
-extern const u32 gMonShinyPalette_Jangmoo[];
-extern const u32 gMonShinyPalette_Hakamoo[];
-extern const u32 gMonShinyPalette_Kommoo[];
-extern const u32 gMonShinyPalette_TapuKoko[];
-extern const u32 gMonShinyPalette_TapuLele[];
-extern const u32 gMonShinyPalette_TapuBulu[];
-extern const u32 gMonShinyPalette_TapuFini[];
+extern const u32 gMonShinyPalette_Jangmo_o[];
+extern const u32 gMonShinyPalette_Hakamo_o[];
+extern const u32 gMonShinyPalette_Kommo_o[];
+extern const u32 gMonShinyPalette_Tapu_koko[];
+extern const u32 gMonShinyPalette_Tapu_lele[];
+extern const u32 gMonShinyPalette_Tapu_bulu[];
+extern const u32 gMonShinyPalette_Tapu_fini[];
 extern const u32 gMonShinyPalette_Cosmog[];
 extern const u32 gMonShinyPalette_Cosmoem[];
 extern const u32 gMonShinyPalette_Solgaleo[];
@@ -4404,7 +4404,7 @@ extern const u32 gMonShinyPalette_Eternatus[];
 extern const u32 gMonShinyPalette_Kubfu[];
 extern const u32 gMonShinyPalette_Urshifu[];
 extern const u32 gMonShinyPalette_Zarude[];
-extern const u32 gMonShinyPalette_Regieleki[];
+//extern const u32 gMonShinyPalette_Regieleki[];
 extern const u32 gMonShinyPalette_Regidrago[];
 extern const u32 gMonShinyPalette_Glastrier[];
 extern const u32 gMonShinyPalette_Spectrier[];
@@ -4661,7 +4661,7 @@ extern const u32 gMonShinyPalette_IndeedeeFemale[];
 extern const u32 gMonShinyPalette_MorpekoHangry[];
 extern const u32 gMonShinyPalette_ZacianCrownedSword[];
 extern const u32 gMonShinyPalette_ZamazentaCrownedShield[];
-extern const u32 gMonShinyPalette_EternatusEternamax[];
+//extern const u32 gMonShinyPalette_EternatusEternamax[];
 extern const u32 gMonShinyPalette_UrshifuRapidStrikeStyle[];
 extern const u32 gMonShinyPalette_ZarudeDada[];
 extern const u32 gMonShinyPalette_CalyrexIceRider[];
@@ -4789,7 +4789,7 @@ extern const u8 gMonIcon_Goldeen[];
 extern const u8 gMonIcon_Seaking[];
 extern const u8 gMonIcon_Staryu[];
 extern const u8 gMonIcon_Starmie[];
-extern const u8 gMonIcon_MrMime[];
+extern const u8 gMonIcon_Mrmime[];
 extern const u8 gMonIcon_Scyther[];
 extern const u8 gMonIcon_Jynx[];
 extern const u8 gMonIcon_Electabuzz[];
@@ -5106,7 +5106,7 @@ extern const u8 gMonIcon_Skuntank[];
 extern const u8 gMonIcon_Bronzor[];
 extern const u8 gMonIcon_Bronzong[];
 extern const u8 gMonIcon_Bonsly[];
-extern const u8 gMonIcon_MimeJr[];
+extern const u8 gMonIcon_Mimejr[];
 extern const u8 gMonIcon_Happiny[];
 extern const u8 gMonIcon_Chatot[];
 extern const u8 gMonIcon_Spiritomb[];
@@ -5439,7 +5439,7 @@ extern const u8 gMonIcon_Golisopod[];
 extern const u8 gMonIcon_Sandygast[];
 extern const u8 gMonIcon_Palossand[];
 extern const u8 gMonIcon_Pyukumuku[];
-extern const u8 gMonIcon_TypeNull[];
+extern const u8 gMonIcon_Type_null[];
 extern const u8 gMonIcon_Silvally[];
 extern const u8 gMonIcon_Minior[];
 extern const u8 gMonIcon_Komala[];
@@ -5449,13 +5449,13 @@ extern const u8 gMonIcon_Mimikyu[];
 extern const u8 gMonIcon_Bruxish[];
 extern const u8 gMonIcon_Drampa[];
 extern const u8 gMonIcon_Dhelmise[];
-extern const u8 gMonIcon_Jangmoo[];
-extern const u8 gMonIcon_Hakamoo[];
-extern const u8 gMonIcon_Kommoo[];
-extern const u8 gMonIcon_TapuKoko[];
-extern const u8 gMonIcon_TapuLele[];
-extern const u8 gMonIcon_TapuBulu[];
-extern const u8 gMonIcon_TapuFini[];
+extern const u8 gMonIcon_Jangmo_o[];
+extern const u8 gMonIcon_Hakamo_o[];
+extern const u8 gMonIcon_Kommo_o[];
+extern const u8 gMonIcon_Tapu_koko[];
+extern const u8 gMonIcon_Tapu_lele[];
+extern const u8 gMonIcon_Tapu_bulu[];
+extern const u8 gMonIcon_Tapu_fini[];
 extern const u8 gMonIcon_Cosmog[];
 extern const u8 gMonIcon_Cosmoem[];
 extern const u8 gMonIcon_Solgaleo[];
@@ -5477,95 +5477,97 @@ extern const u8 gMonIcon_Blacephalon[];
 extern const u8 gMonIcon_Zeraora[];
 extern const u8 gMonIcon_Meltan[];
 extern const u8 gMonIcon_Melmetal[];
-extern const u8 gMonIcon_Grookey[];
-extern const u8 gMonIcon_Thwackey[];
-extern const u8 gMonIcon_Rillaboom[];
-extern const u8 gMonIcon_Scorbunny[];
-extern const u8 gMonIcon_Raboot[];
-extern const u8 gMonIcon_Cinderace[];
-extern const u8 gMonIcon_Sobble[];
-extern const u8 gMonIcon_Drizzile[];
-extern const u8 gMonIcon_Inteleon[];
-//extern const u8 gMonIcon_Skwovet[];
-//extern const u8 gMonIcon_Greedent[];
-extern const u8 gMonIcon_Rookidee[];
-extern const u8 gMonIcon_Corvisquire[];
-extern const u8 gMonIcon_Corviknight[];
-extern const u8 gMonIcon_Blipbug[];
-extern const u8 gMonIcon_Dottler[];
-extern const u8 gMonIcon_Orbeetle[];
-extern const u8 gMonIcon_Nickit[];
-extern const u8 gMonIcon_Thievul[];
-extern const u8 gMonIcon_Gossifleur[];
-extern const u8 gMonIcon_Eldegoss[];
-extern const u8 gMonIcon_Wooloo[];
-extern const u8 gMonIcon_Dubwool[];
-extern const u8 gMonIcon_Chewtle[];
-extern const u8 gMonIcon_Drednaw[];
-extern const u8 gMonIcon_Yamper[];
-extern const u8 gMonIcon_Boltund[];
-extern const u8 gMonIcon_Rolycoly[];
-extern const u8 gMonIcon_Carkol[];
-extern const u8 gMonIcon_Coalossal[];
-extern const u8 gMonIcon_Applin[];
-extern const u8 gMonIcon_Flapple[];
-extern const u8 gMonIcon_Appletun[];
-extern const u8 gMonIcon_Silicobra[];
-extern const u8 gMonIcon_Sandaconda[];
-extern const u8 gMonIcon_Cramorant[];
-//extern const u8 gMonIcon_Arrokuda[];
-//extern const u8 gMonIcon_Barraskewda[];
-//extern const u8 gMonIcon_Toxel[];
-extern const u8 gMonIcon_Toxtricity[];
-extern const u8 gMonIcon_Sizzlipede[];
-extern const u8 gMonIcon_Centiskorch[];
-extern const u8 gMonIcon_Clobbopus[];
-extern const u8 gMonIcon_Grapploct[];
-extern const u8 gMonIcon_Sinistea[];
-extern const u8 gMonIcon_Polteageist[];
-extern const u8 gMonIcon_Hatenna[];
-extern const u8 gMonIcon_Hattrem[];
-extern const u8 gMonIcon_Hatterene[];
-extern const u8 gMonIcon_Impidimp[];
-extern const u8 gMonIcon_Morgrem[];
-extern const u8 gMonIcon_Grimmsnarl[];
-extern const u8 gMonIcon_Obstagoon[];
-extern const u8 gMonIcon_Perrserker[];
-extern const u8 gMonIcon_Cursola[];
-extern const u8 gMonIcon_Sirfetchd[];
-extern const u8 gMonIcon_MrRime[];
-extern const u8 gMonIcon_Runerigus[];
-extern const u8 gMonIcon_Milcery[];
-//extern const u8 gMonIcon_Alcremie[];
-extern const u8 gMonIcon_Falinks[];
-//extern const u8 gMonIcon_Pincurchin[];
-extern const u8 gMonIcon_Snom[];
-extern const u8 gMonIcon_Frosmoth[];
-extern const u8 gMonIcon_Stonjourner[];
-extern const u8 gMonIcon_Eiscue[];
-extern const u8 gMonIcon_Indeedee[];
-extern const u8 gMonIcon_Morpeko[];
-extern const u8 gMonIcon_Cufant[];
-extern const u8 gMonIcon_Copperajah[];
-//extern const u8 gMonIcon_Dracozolt[];
-//extern const u8 gMonIcon_Arctozolt[];
-//extern const u8 gMonIcon_Dracovish[];
-//extern const u8 gMonIcon_Arctovish[];
-extern const u8 gMonIcon_Duraludon[];
-extern const u8 gMonIcon_Dreepy[];
-extern const u8 gMonIcon_Drakloak[];
-extern const u8 gMonIcon_Dragapult[];
-extern const u8 gMonIcon_Zacian[];
-extern const u8 gMonIcon_Zamazenta[];
-extern const u8 gMonIcon_Eternatus[];
-//extern const u8 gMonIcon_Kubfu[];
-//extern const u8 gMonIcon_Urshifu[];
-//extern const u8 gMonIcon_Zarude[];
-//extern const u8 gMonIcon_Regieleki[];
-//extern const u8 gMonIcon_Regidrago[];
-//extern const u8 gMonIcon_Glastrier[];
-//extern const u8 gMonIcon_Spectrier[];
-//extern const u8 gMonIcon_Calyrex[];
+//Galar
+extern const u8 gMonIcon_Grookey[]; //grookey
+extern const u8 gMonIcon_Thwackey[]; //thwackey
+extern const u8 gMonIcon_Rillaboom[]; //rillaboom
+extern const u8 gMonIcon_Scorbunny[]; //scorbunny
+extern const u8 gMonIcon_Raboot[]; //raboot
+extern const u8 gMonIcon_Cinderace[]; //cinderace
+extern const u8 gMonIcon_Sobble[]; //sobble
+extern const u8 gMonIcon_Drizzile[]; //drizzile
+extern const u8 gMonIcon_Inteleon[]; //inteleon
+extern const u8 gMonIcon_Skwovet[]; //skwovet
+extern const u8 gMonIcon_Greedent[]; //greedent
+extern const u8 gMonIcon_Rookidee[]; //rookidee
+extern const u8 gMonIcon_Corvisquire[]; //corvisquire
+extern const u8 gMonIcon_Corviknight[]; //corviknight
+extern const u8 gMonIcon_Blipbug[]; //blipbug
+extern const u8 gMonIcon_Dottler[]; //dottler
+extern const u8 gMonIcon_Orbeetle[]; //orbeetle
+extern const u8 gMonIcon_Nickit[]; //nickit
+extern const u8 gMonIcon_Thievul[]; //thievul
+extern const u8 gMonIcon_Gossifleur[]; //gossifleur
+extern const u8 gMonIcon_Eldegoss[]; //eldegoss
+extern const u8 gMonIcon_Wooloo[]; //wooloo
+extern const u8 gMonIcon_Dubwool[]; //dubwool
+extern const u8 gMonIcon_Chewtle[]; //chewtle
+extern const u8 gMonIcon_Drednaw[]; //drednaw
+extern const u8 gMonIcon_Yamper[]; //yamper
+extern const u8 gMonIcon_Boltund[]; //boltund
+extern const u8 gMonIcon_Rolycoly[]; //rolycoly
+extern const u8 gMonIcon_Carkol[]; //carkol
+extern const u8 gMonIcon_Coalossal[]; //coalossal
+extern const u8 gMonIcon_Applin[]; //applin
+extern const u8 gMonIcon_Flapple[]; //flapple
+extern const u8 gMonIcon_Appletun[]; //appletun
+extern const u8 gMonIcon_Silicobra[]; //silicobra
+extern const u8 gMonIcon_Sandaconda[]; //sandaconda
+extern const u8 gMonIcon_Cramorant[]; //cramorant
+extern const u8 gMonIcon_Arrokuda[]; //arrokuda
+extern const u8 gMonIcon_Barraskewda[]; //barraskewda
+extern const u8 gMonIcon_Toxel[]; //toxel
+extern const u8 gMonIcon_Toxtricity[]; //toxtricity
+extern const u8 gMonIcon_Sizzlipede[]; //sizzlipede
+extern const u8 gMonIcon_Centiskorch[]; //centiskorch
+extern const u8 gMonIcon_Clobbopus[]; //clobbopus
+extern const u8 gMonIcon_Grapploct[]; //grapploct
+extern const u8 gMonIcon_Sinistea[]; //sinistea
+extern const u8 gMonIcon_Polteageist[]; //polteageist
+extern const u8 gMonIcon_Hatenna[]; //hatenna
+extern const u8 gMonIcon_Hattrem[]; //hattrem
+extern const u8 gMonIcon_Hatterene[]; //hatterene
+extern const u8 gMonIcon_Impidimp[]; //impidimp
+extern const u8 gMonIcon_Morgrem[]; //morgrem
+extern const u8 gMonIcon_Grimmsnarl[]; //grimmsnarl
+extern const u8 gMonIcon_Obstagoon[]; //obstagoon
+extern const u8 gMonIcon_Perrserker[]; //perrserker
+extern const u8 gMonIcon_Cursola[]; //cursola
+extern const u8 gMonIcon_Sirfetchd[]; //sirfetchd
+extern const u8 gMonIcon_MrRime[]; //mr_rime
+extern const u8 gMonIcon_Runerigus[]; //runerigus
+extern const u8 gMonIcon_Milcery[]; //milcery
+extern const u8 gMonIcon_Alcremie[]; //alcremie
+extern const u8 gMonIcon_Falinks[]; //falinks
+extern const u8 gMonIcon_Pincurchin[]; //pincurchin
+extern const u8 gMonIcon_Snom[]; //snom
+extern const u8 gMonIcon_Frosmoth[]; //frosmoth
+extern const u8 gMonIcon_Stonjourner[]; //stonjourner
+extern const u8 gMonIcon_Eiscue[]; //eiscue
+extern const u8 gMonIcon_Indeedee[]; //indeedee
+extern const u8 gMonIcon_Morpeko[]; //morpeko
+extern const u8 gMonIcon_Cufant[]; //cufant
+extern const u8 gMonIcon_Copperajah[]; //copperajah
+extern const u8 gMonIcon_Dracozolt[]; //dracozolt
+extern const u8 gMonIcon_Arctozolt[]; //arctozolt
+extern const u8 gMonIcon_Dracovish[]; //dracovish
+extern const u8 gMonIcon_Arctovish[]; //arctovish
+extern const u8 gMonIcon_Duraludon[]; //duraludon
+extern const u8 gMonIcon_Dreepy[]; //dreepy
+extern const u8 gMonIcon_Drakloak[]; //drakloak
+extern const u8 gMonIcon_Dragapult[]; //dragapult
+extern const u8 gMonIcon_Zacian[]; //zacian
+extern const u8 gMonIcon_Zamazenta[]; //zamazenta
+extern const u8 gMonIcon_Eternatus[]; //eternatus
+extern const u8 gMonIcon_Kubfu[]; //kubfu
+extern const u8 gMonIcon_Urshifu[]; //urshifu
+extern const u8 gMonIcon_Zarude[]; //zarude
+extern const u8 gMonIcon_Regieleki[]; //regieleki
+extern const u8 gMonIcon_Regidrago[]; //regidrago
+extern const u8 gMonIcon_Glastrier[]; //glastrier
+extern const u8 gMonIcon_Spectrier[]; //spectrier
+extern const u8 gMonIcon_Calyrex[]; //calyrex
+
 extern const u8 gMonIcon_VenusaurMega[];
 extern const u8 gMonIcon_CharizardMegaX[];
 extern const u8 gMonIcon_CharizardMegaY[];
@@ -5637,15 +5639,15 @@ extern const u8 gMonIcon_MarowakAlolan[];
 extern const u8 gMonIcon_MeowthGalarian[];
 extern const u8 gMonIcon_PonytaGalarian[];
 extern const u8 gMonIcon_RapidashGalarian[];
-//extern const u8 gMonIcon_SlowpokeGalarian[];
-//extern const u8 gMonIcon_SlowbroGalarian[];
+extern const u8 gMonIcon_SlowpokeGalarian[];
+extern const u8 gMonIcon_SlowbroGalarian[];
 extern const u8 gMonIcon_FarfetchdGalarian[];
 extern const u8 gMonIcon_WeezingGalarian[];
-extern const u8 gMonIcon_MrMimeGalarian[];
-//extern const u8 gMonIcon_ArticunoGalarian[];
-//extern const u8 gMonIcon_ZapdosGalarian[];
-//extern const u8 gMonIcon_MoltresGalarian[];
-//extern const u8 gMonIcon_SlowkingGalarian[];
+extern const u8 gMonIcon_MrmimeGalarian[];
+extern const u8 gMonIcon_ArticunoGalarian[];
+extern const u8 gMonIcon_ZapdosGalarian[];
+extern const u8 gMonIcon_MoltresGalarian[];
+extern const u8 gMonIcon_SlowkingGalarian[];
 extern const u8 gMonIcon_CorsolaGalarian[];
 extern const u8 gMonIcon_ZigzagoonGalarian[];
 extern const u8 gMonIcon_LinooneGalarian[];
@@ -5716,7 +5718,6 @@ extern const u8 gMonIcon_GiratinaOrigin[];
 extern const u8 gMonIcon_ShayminSky[];
 extern const u8 gMonIcon_BasculinBlueStriped[];
 extern const u8 gMonIcon_DarmanitanZenMode[];
-//extern const u8 gMonIcon_DarmanitanZenModeGalarian[];
 extern const u8 gMonIcon_DeerlingSummer[];
 extern const u8 gMonIcon_DeerlingAutumn[];
 extern const u8 gMonIcon_DeerlingWinter[];
@@ -5796,27 +5797,6 @@ extern const u8 gMonIcon_NecrozmaDuskMane[];
 extern const u8 gMonIcon_NecrozmaDawnWings[];
 extern const u8 gMonIcon_NecrozmaUltra[];
 extern const u8 gMonIcon_MagearnaOriginalColor[];
-extern const u8 gMonIcon_CramorantGulping[];
-extern const u8 gMonIcon_CramorantGorging[];
-extern const u8 gMonIcon_ToxtricityLowKey[];
-//extern const u8 gMonIcon_AlcremieRubyCream[];
-//extern const u8 gMonIcon_AlcremieMatchaCream[];
-//extern const u8 gMonIcon_AlcremieMintCream[];
-//extern const u8 gMonIcon_AlcremieLemonCream[];
-//extern const u8 gMonIcon_AlcremieSaltedCream[];
-//extern const u8 gMonIcon_AlcremieRubySwirl[];
-//extern const u8 gMonIcon_AlcremieCaramelSwirl[];
-//extern const u8 gMonIcon_AlcremieRainbowSwirl[];
-extern const u8 gMonIcon_EiscueNoiceFace[];
-extern const u8 gMonIcon_IndeedeeFemale[];
-extern const u8 gMonIcon_MorpekoHangry[];
-extern const u8 gMonIcon_ZacianCrownedSword[];
-extern const u8 gMonIcon_ZamazentaCrownedShield[];
-//extern const u8 gMonIcon_EternatusEternamax[];
-//extern const u8 gMonIcon_UrshifuRapidStrikeStyle[];
-//extern const u8 gMonIcon_ZarudeDada[];
-//extern const u8 gMonIcon_CalyrexIceRider[];
-//extern const u8 gMonIcon_CalyrexShadowRider[];
 extern const u8 gMonIcon_Egg[];
 
 extern const u8 gMonFootprint_QuestionMark[];
@@ -5941,7 +5921,7 @@ extern const u8 gMonFootprint_Goldeen[];
 extern const u8 gMonFootprint_Seaking[];
 extern const u8 gMonFootprint_Staryu[];
 extern const u8 gMonFootprint_Starmie[];
-extern const u8 gMonFootprint_MrMime[];
+extern const u8 gMonFootprint_Mrmime[];
 extern const u8 gMonFootprint_Scyther[];
 extern const u8 gMonFootprint_Jynx[];
 extern const u8 gMonFootprint_Electabuzz[];
@@ -6823,6 +6803,8 @@ extern const u32 gBattleTerrainTilemap_TallGrass[];
 extern const u32 gBattleTerrainAnimTiles_TallGrass[];
 extern const u32 gBattleTerrainAnimTilemap_TallGrass[];
 extern const u32 gBattleTerrainPalette_TallGrass[];
+extern const u32 gBattleTerrainPalette_TallGrass_Dusk[];
+extern const u32 gBattleTerrainPalette_TallGrass_Night[];
 extern const u32 gBattleTerrainTiles_LongGrass[];
 extern const u32 gBattleTerrainTilemap_LongGrass[];
 extern const u32 gBattleTerrainAnimTiles_LongGrass[];
@@ -6884,26 +6866,43 @@ extern const u32 gBattleTerrainPalette_StadiumGlacia[];
 extern const u32 gBattleTerrainPalette_StadiumDrake[];
 extern const u32 gBattleTerrainPalette_StadiumWallace[];
 
-// pokedex
-extern const u32 gPokedexInterface_Gfx[];
-extern const u16 gPokedexBgHoenn_Pal[];
-extern const u32 gPokedexMenu_Gfx[];
-extern const u8 gPokedexList_Tilemap[];
-extern const u8 gPokedexListUnderlay_Tilemap[];
-extern const u8 gPokedexStartMenuMain_Tilemap[];
-extern const u8 gPokedexStartMenuSearchResults_Tilemap[];
+//pokedex
+extern const u16 gPokedexDefault_Pal[];
+extern const u16 gPokedexNational_Pal[];
+extern const u16 gPokedexMenuSearch_Pal[];
 extern const u16 gPokedexSearchResults_Pal[];
-extern const u16 gPokedexBgNational_Pal[];
-extern const u8 gPokedexInfoScreen_Tilemap[];
-extern const u8 gPokedexCryScreen_Tilemap[];
-extern const u8 gPokedexSizeScreen_Tilemap[];
-extern const u8 gPokedexScreenSelectBarMain_Tilemap[];
-extern const u8 gPokedexScreenSelectBarSubmenu_Tilemap[];
-extern const u16 gPokedexCaughtScreen_Pal[];
-extern const u32 gPokedexSearchMenu_Gfx[];
-extern const u32 gPokedexSearchMenuHoenn_Tilemap[];
-extern const u32 gPokedexSearchMenuNational_Tilemap[];
-extern const u16 gPokedexSearchMenu_Pal[];
+extern const u16 gPokedexDefault_dark_Pal[];
+extern const u16 gPokedexNational_dark_Pal[];
+extern const u16 gPokedexMenuSearch_dark_Pal[];
+extern const u16 gPokedexSearchResults_dark_Pal[];
+
+extern const u32 gPokedexMenuList_Gfx[];
+extern const u32 gPokedexMenuList_DECA_Gfx[];
+extern const u32 gPokedexInterface_Gfx[];
+extern const u32 gPokedexInterface_DECA_Gfx[];
+extern const u32 gPokedexMenu_1_Gfx[];
+extern const u32 gPokedexMenu_2_Gfx[];
+extern const u32 gPokedexMenu_3_Gfx[];
+extern const u32 gPokedexMenuSearch_Gfx[];
+extern const u32 gPokedexMenuSearch_DECA_Gfx[];
+extern const u32 gPokedexStartMenuMain_Tilemap[];
+extern const u32 gPokedexStartMenuSearchResults_Tilemap[];
+extern const u32 gUnused_PokedexNoBall[];
+extern const u32 gPokedexScreenSelectBarSubmenu_Tilemap[];
+extern const u32 gPokedexScreenSelectBarSubmenu_Tilemap_Clear[];
+
+extern const u32 gPokedexScreenList_Tilemap[];
+extern const u32 gPokedexScreenListUnderlay_Tilemap[];
+extern const u32 gPokedexScreenInfo_Tilemap[];
+extern const u32 gPokedexScreenStats_Tilemap[];
+extern const u32 gPokedexScreenEvolution_Tilemap[];
+extern const u32 gPokedexScreenEvolution_Tilemap_PE[];
+extern const u32 gPokedexScreenForms_Tilemap[];
+extern const u32 gPokedexScreenCry_Tilemap[];
+extern const u32 gPokedexScreenSize_Tilemap[];
+extern const u32 gPokedexScreenSearchHoenn_Tilemap[];
+extern const u32 gPokedexScreenSearchNational_Tilemap[];
+
 
 // berry tag screen
 extern const u32 gBerryCheck_Gfx[];
@@ -7407,6 +7406,14 @@ extern const u32 gItemIconPalette_HoennFossil[];
 extern const u32 gItemIcon_ClawFossil[];
 extern const u32 gItemIcon_DevonScope[];
 extern const u32 gItemIconPalette_DevonScope[];
+extern const u32 gItemIcon_EonFlute[];
+extern const u32 gItemIconPalette_EonFlute[];
+extern const u32 gItemIcon_Lure[];
+extern const u32 gItemIconPalette_Lure[];
+extern const u32 gItemIcon_SuperLure[];
+extern const u32 gItemIconPalette_SuperLure[];
+extern const u32 gItemIcon_MaxLure[];
+extern const u32 gItemIconPalette_MaxLure[];
 // TMs/HMs
 extern const u32 gItemIcon_TM[];
 extern const u32 gItemIconPalette_FightingTMHM[];
@@ -7768,20 +7775,20 @@ extern const u32 gItemIcon_CoverFossil[];
 extern const u32 gItemIconPalette_CoverFossil[];
 extern const u32 gItemIcon_PlumeFossil[];
 extern const u32 gItemIconPalette_PlumeFossil[];
-extern const u32 gItemIcon_HealthFeather[];
-extern const u32 gItemIconPalette_HealthFeather[];
-extern const u32 gItemIcon_MuscleFeather[];
-extern const u32 gItemIconPalette_MuscleFeather[];
-extern const u32 gItemIcon_ResistFeather[];
-extern const u32 gItemIconPalette_ResistFeather[];
-extern const u32 gItemIcon_GeniusFeather[];
-extern const u32 gItemIconPalette_GeniusFeather[];
-extern const u32 gItemIcon_CleverFeather[];
-extern const u32 gItemIconPalette_CleverFeather[];
-extern const u32 gItemIcon_SwiftFeather[];
-extern const u32 gItemIconPalette_SwiftFeather[];
-extern const u32 gItemIcon_PrettyFeather[];
-extern const u32 gItemIconPalette_PrettyFeather[];
+extern const u32 gItemIcon_HealthWing[];
+extern const u32 gItemIconPalette_HealthWing[];
+extern const u32 gItemIcon_MuscleWing[];
+extern const u32 gItemIconPalette_MuscleWing[];
+extern const u32 gItemIcon_ResistWing[];
+extern const u32 gItemIconPalette_ResistWing[];
+extern const u32 gItemIcon_GeniusWing[];
+extern const u32 gItemIconPalette_GeniusWing[];
+extern const u32 gItemIcon_CleverWing[];
+extern const u32 gItemIconPalette_CleverWing[];
+extern const u32 gItemIcon_SwiftWing[];
+extern const u32 gItemIconPalette_SwiftWing[];
+extern const u32 gItemIcon_PrettyWing[];
+extern const u32 gItemIconPalette_PrettyWing[];
 extern const u32 gItemIcon_ShinyCharm[];
 extern const u32 gItemIconPalette_ShinyCharm[];
 extern const u32 gItemIcon_OvalCharm[];
@@ -7974,82 +7981,17 @@ extern const u32 gItemIcon_WaterMemory[];
 extern const u32 gItemIconPalette_WaterMemory[];
 extern const u32 gItemIconPalette_BugTMHM[];
 extern const u32 gItemIconPalette_FairyTMHM[];
-//Z Crystals
-extern const u32 gItemIcon_ZRing[];
-extern const u32 gItemIconPalette_ZRing[];
-extern const u32 gItemIcon_NormaliumZ[];
-extern const u32 gItemIconPalette_NormaliumZ[];
-extern const u32 gItemIcon_FightiniumZ[];
-extern const u32 gItemIconPalette_FightiniumZ[];
-extern const u32 gItemIcon_FlyiniumZ[];
-extern const u32 gItemIconPalette_FlyiniumZ[];
-extern const u32 gItemIcon_PoisoniumZ[];
-extern const u32 gItemIconPalette_PoisoniumZ[];
-extern const u32 gItemIcon_GroundiumZ[];
-extern const u32 gItemIconPalette_GroundiumZ[];
-extern const u32 gItemIcon_RockiumZ[];
-extern const u32 gItemIconPalette_RockiumZ[];
-extern const u32 gItemIcon_BuginiumZ[];
-extern const u32 gItemIconPalette_BuginiumZ[];
-extern const u32 gItemIcon_GhostiumZ[];
-extern const u32 gItemIconPalette_GhostiumZ[];
-extern const u32 gItemIcon_SteeliumZ[];
-extern const u32 gItemIconPalette_SteeliumZ[];
-extern const u32 gItemIcon_FiriumZ[];
-extern const u32 gItemIconPalette_FiriumZ[];
-extern const u32 gItemIcon_WateriumZ[];
-extern const u32 gItemIconPalette_WateriumZ[];
-extern const u32 gItemIcon_GrassiumZ[];
-extern const u32 gItemIconPalette_GrassiumZ[];
-extern const u32 gItemIcon_ElectriumZ[];
-extern const u32 gItemIconPalette_ElectriumZ[];
-extern const u32 gItemIcon_PsychiumZ[];
-extern const u32 gItemIconPalette_PsychiumZ[];
-extern const u32 gItemIcon_IciumZ[];
-extern const u32 gItemIconPalette_IciumZ[];
-extern const u32 gItemIcon_DragoniumZ[];
-extern const u32 gItemIconPalette_DragoniumZ[];
-extern const u32 gItemIcon_DarkiniumZ[];
-extern const u32 gItemIconPalette_DarkiniumZ[];
-extern const u32 gItemIcon_FairiumZ[];
-extern const u32 gItemIconPalette_FairiumZ[];
-extern const u32 gItemIcon_AloraichiumZ[];
-extern const u32 gItemIconPalette_AloraichiumZ[];
-extern const u32 gItemIcon_DecidiumZ[];
-extern const u32 gItemIconPalette_DecidiumZ[];
-extern const u32 gItemIcon_EeviumZ[];
-extern const u32 gItemIconPalette_EeviumZ[];
-extern const u32 gItemIcon_InciniumZ[];
-extern const u32 gItemIconPalette_InciniumZ[];
-extern const u32 gItemIcon_KommoniumZ[];
-extern const u32 gItemIconPalette_KommoniumZ[];
-extern const u32 gItemIcon_LunaliumZ[];
-extern const u32 gItemIconPalette_LunaliumZ[];
-extern const u32 gItemIcon_LycaniumZ[];
-extern const u32 gItemIconPalette_LycaniumZ[];
-extern const u32 gItemIcon_MarshadiumZ[];
-extern const u32 gItemIconPalette_MarshadiumZ[];
-extern const u32 gItemIcon_MewniumZ[];
-extern const u32 gItemIconPalette_MewniumZ[];
-extern const u32 gItemIcon_MimikiumZ[];
-extern const u32 gItemIconPalette_MimikiumZ[];
-extern const u32 gItemIcon_PikaniumZ[];
-extern const u32 gItemIconPalette_PikaniumZ[];
-extern const u32 gItemIcon_PikashuniumZ[];
-extern const u32 gItemIconPalette_PikashuniumZ[];
-extern const u32 gItemIcon_PrimariumZ[];
-extern const u32 gItemIconPalette_PrimariumZ[];
-extern const u32 gItemIcon_SnorliumZ[];
-extern const u32 gItemIconPalette_SnorliumZ[];
-extern const u32 gItemIcon_SolganiumZ[];
-extern const u32 gItemIconPalette_SolganiumZ[];
-extern const u32 gItemIcon_TapuniumZ[];
-extern const u32 gItemIconPalette_TapuniumZ[];
-extern const u32 gItemIcon_UltranecroziumZ[];
-extern const u32 gItemIconPalette_UltranecroziumZ[];
 
 extern const u32 gItemIcon_ReturnToFieldArrow[];
 extern const u32 gItemIconPalette_ReturnToFieldArrow[];
+
+//Mod items
+extern const u32 gItemIcon_LinkCable[];
+extern const u32 gItemIconPalette_LinkCable[];
+extern const u32 gItemIcon_StrangeSouvenir[];
+extern const u32 gItemIconPalette_StrangeSouvenir[];
+extern const u32 gItemIcon_SafariPass[];
+extern const u32 gItemIconPalette_SafariPass[];
 
 //menu graphics
 extern const u16 gFireRedMenuElements1_Pal[16];
@@ -8071,43 +8013,46 @@ extern const u32 gBagPalette[];
 extern const u32 gBerryCheckCircle_Gfx[];
 
 //intro graphics
-extern const u32 gIntroSparkle_Gfx[];
-extern const u32 gIntroFlygonSilhouette_Gfx[];
-extern const u32 gIntroLightning_Gfx[];
-extern const u16 gIntroLightning_Pal[];
+extern const u32 gIntro1SparkleGfx[];
+extern const u32 gIntro1FlygonGfx[];
+extern const u16 gIntro3LightningPal[];
 extern const u32 gIntroCopyright_Gfx[];
 extern const u32 gIntroCopyright_Tilemap[];
 extern const u16 gIntroCopyright_Pal[16];
-extern const u32 gIntroVolbeat_Gfx[];
-extern const u16 gIntroVolbeat_Pal[];
-extern const u32 gIntroTorchic_Gfx[];
-extern const u16 gIntroTorchic_Pal[];
-extern const u32 gIntroManectric_Gfx[];
-extern const u16 gIntroManectric_Pal[];
-extern const u32 gIntroBubbles_Gfx[];
-extern const u16 gIntroBubbles_Pal[];
-extern const u32 gIntroGroudon_Gfx[];
-extern const u32 gIntroGroudon_Tilemap[];
-extern const u32 gIntroLegendBg_Gfx[];
-extern const u32 gIntroGroudonBg_Tilemap[];
-extern const u8 gIntro3Bg_Pal[0x200];
-extern const u32 gIntroKyogre_Gfx[];
-extern const u32 gIntroKyogre_Tilemap[];
-extern const u32 gIntroKyogreBg_Tilemap[];
-extern const u32 gIntroClouds_Gfx[];
-extern const u32 gIntroCloudsLeft_Tilemap[];
-extern const u32 gIntroCloudsRight_Tilemap[];
-extern const u32 gIntroCloudsSun_Tilemap[];
-extern const u32 gIntroRayquaza_Tilemap[];
-extern const u32 gIntroRayquaza_Gfx[];
-extern const u32 gIntroRayquazaClouds_Gfx[];
-extern const u32 gIntroRayquazaClouds_Tilemap[];
-extern const u16 gIntroGameFreakTextFade_Pal[];
-extern const u32 gIntroBrendan_Gfx[];
-extern const u32 gIntroMay_Gfx[];
-extern const u16 gIntroPlayer_Pal[];
-extern const u16 gIntroFlygon_Pal[];
-extern const u32 gIntroFlygon_Gfx[];
+extern const u32 gIntro2VolbeatGfx[];
+extern const u32 gIntro2TorchicGfx[];
+extern const u32 gIntro2ManectricGfx[];
+extern const u16 gIntro2VolbeatPal[];
+extern const u16 gIntro2TorchicPal[];
+extern const u16 gIntro2ManectricPal[];
+extern const u32 gIntro2BubblesGfx[];
+extern const u16 gIntro2BubblesPal[];
+extern const u32 gIntro3LightningGfx[];
+extern const u32 gIntro3GroudonGfx[];
+extern const u32 gIntro3GroudonTilemap[];
+extern const u32 gIntro3LegendBgGfx[];
+extern const u32 gIntro3GroudonBgTilemap[];
+extern const u32 gIntro3GroudonBgTilemap[];
+extern const u8 gIntro3BgPal[0x200];
+extern const u32 gIntro3KyogreGfx[];
+extern const u32 gIntro3KyogreTilemap[];
+extern const u32 gIntro3KyogreBgTilemap[];
+extern const u32 gIntro3CloudsGfx[];
+extern const u32 gIntro3Clouds1Tilemap[];
+extern const u32 gIntro3Clouds2Tilemap[];
+extern const u32 gIntro3Clouds3Tilemap[];
+extern const u32 gIntro3Clouds4Tilemap[];
+extern const u32 gIntro3RayquazaTilemap[];
+extern const u32 gIntro3RayquazaGfx[];
+extern const u32 gIntro3Clouds2Gfx[];
+extern const u16 gIntro1GameFreakTextFadePal[];
+
+//intro/credits graphics
+extern const u32 gIntro2BrendanNoTurnGfx[];
+extern const u32 gIntro2MayNoTurnGfx[];
+extern const u16 gIntro2BrendanNoTurnPal[];
+extern const u16 gIntro2FlygonPal[];
+extern const u32 gIntro2FlygonGfx[];
 
 // party menu graphics
 extern const u32 gPartyMenuBg_Gfx[];
@@ -8245,6 +8190,8 @@ extern const u32 gPokenavCondition_Tilemap[];
 extern const u16 gPokenavOptions_Tilemap[];
 extern const u32 gPokenavOptions_Gfx[];
 extern const u16 gPokenavOptions_Pal[];
+extern const u8 gPokenavConditionMarker_Gfx[];
+extern const u16 gPokenavConditionMarker_Pal[];
 extern const u16 gPokenavLeftHeader_Pal[];
 extern const u16 gPokenavHeader_Pal[];
 extern const u32 gPokenavHeader_Gfx[];
@@ -8261,9 +8208,9 @@ extern const u32 gPokenavLeftHeaderBeauty_Gfx[];
 extern const u32 gPokenavLeftHeaderCute_Gfx[];
 extern const u32 gPokenavLeftHeaderSmart_Gfx[];
 extern const u32 gPokenavLeftHeaderTough_Gfx[];
-extern const u16 gPokenavRibbonsSummaryBg_Pal[];
-extern const u32 gPokenavRibbonsSummaryBg_Gfx[];
-extern const u32 gPokenavRibbonsSummaryBg_Tilemap[];
+extern const u16 gUnknown_08DDE010[];
+extern const u32 gUnknown_08DDE030[];
+extern const u32 gUnknown_08DDE12C[];
 
 extern const u32 gPageInfoTilemap[];
 extern const u32 gUnknown_08D98CC8[];
@@ -8309,14 +8256,14 @@ extern const u8 gNamingScreenCursor_Gfx[];
 extern const u8 gNamingScreenInputArrow_Gfx[];
 extern const u8 gNamingScreenUnderscore_Gfx[];
 
-extern const u32 gPokeblockFeedBg_Tilemap[];
+extern const u32 gUnknown_08D9BA44[];
 
 extern const u32 gConfetti_Gfx[];
 extern const u32 gConfetti_Pal[];
 
 extern const u32 gUnknown_08C093F0[];
-extern const u32 gSubstituteDollBackGfx[];
-extern const u32 gSubstituteDollFrontGfx[];
+extern const u32 gSubstituteDollTilemap[];
+extern const u32 gSubstituteDollGfx[];
 extern const u32 gSubstituteDollPal[];
 extern const u32 gHealthboxSinglesPlayerGfx[];
 extern const u32 gHealthboxSinglesOpponentGfx[];
@@ -8429,8 +8376,8 @@ extern const u32 gBattleAnimSpriteGfx_HumanoidFoot[];
 extern const u32 gBattleAnimSpriteGfx_MonsterFoot[];
 extern const u32 gBattleAnimSpriteGfx_HumanoidHand[];
 extern const u32 gBattleAnimSpriteGfx_NoiseLine[];
-extern const u32 UnusedLevelupAnimationGfx[];
-extern const u32 UnusedLevelupAnimationTilemap[];
+extern const u32 gUnknown_08C2EA50[];
+extern const u32 gUnknown_08C2EA9C[];
 extern const u32 gBattleAnimSpriteGfx_YellowUnk[];
 extern const u32 gBattleAnimSpriteGfx_RedFist[];
 extern const u32 gBattleAnimSpriteGfx_SlamHit[];
@@ -9321,8 +9268,8 @@ extern const u32 gMetalShineGfx[];
 extern const u32 gMetalShinePalette[];
 extern const u32 gMetalShineTilemap[];
 
-extern const u32 gBattleAnimMaskImage_Curse[];
-extern const u32 gBattleAnimMaskTilemap_Curse[];
+extern const u32 gUnknown_08C20668[];
+extern const u32 gUnknown_08C20684[];
 extern const u32 gBattleStatMask_Gfx[];
 extern const u32 gBattleStatMask1_Tilemap[];
 extern const u32 gBattleStatMask2_Tilemap[];
@@ -9437,12 +9384,12 @@ extern const u32 gPokedexAreaScreenAreaUnknown_Gfx[];
 extern const u16 gPokedexAreaScreenAreaUnknown_Pal[];
 
 // Pokemon Storage System
-extern const u32 gStorageSystemMenu_Gfx[];
-extern const u16 gStorageSystemPartyMenu_Pal[];
-extern const u32 gStorageSystemPartyMenu_Tilemap[];
+extern const u32 gPSSMenu_Gfx[];
+extern const u16 gPSSMenu_Pal[];
 extern const u32 gWallpaperIcon_Plusle[];
 extern const u32 gWallpaperIcon_Cross[];
 extern const u32 gWallpaperIcon_Bolt[];
+extern const u32 gUnknown_08DD36C8[];
 extern const u32 gWallpaperTiles_Ribbon[];
 extern const u32 gWallpaperTilemap_Ribbon[];
 extern const u16 gWallpaperPalettes_Ribbon[][16];
@@ -9465,8 +9412,8 @@ extern const u16 gUnknown_08DDCF04[];
 extern const u16 gTradeGba2_Pal[];
 extern const u8 gTradeGba_Gfx[];
 extern const u16 gTradeMenuMonBox_Tilemap[];
-extern const u8 gTradeCursor_Gfx[];
-extern const u16 gTradeCursor_Pal[];
+extern const u8 gTradeButtons_Gfx[];
+extern const u16 gUnknown_08DDB444[];
 
 // Party menu
 extern const u32 gPartyMenuPokeball_Gfx[];
@@ -9486,21 +9433,21 @@ extern const u32 gRouletteMultiplier_Gfx[];
 
 // Contest util
 extern const u32 gContestResults_Gfx[];
-extern const u32 gContestResults_WinnerBanner_Tilemap[];
-extern const u32 gContestResults_Interface_Tilemap[];
-extern const u32 gContestResults_Bg_Tilemap[];
+extern const u32 gUnknown_08C19EEC[];
+extern const u32 gUnknown_08C1A000[];
+extern const u32 gUnknown_08C1A12C[];
 extern const u32 gContestResults_Pal[];
-extern const u16 gContestResultsTitle_Link_Tilemap[];
-extern const u16 gContestResultsTitle_Normal_Tilemap[];
-extern const u16 gContestResultsTitle_Super_Tilemap[];
-extern const u16 gContestResultsTitle_Hyper_Tilemap[];
-extern const u16 gContestResultsTitle_Master_Tilemap[];
-extern const u16 gContestResultsTitle_Cool_Tilemap[];
-extern const u16 gContestResultsTitle_Beauty_Tilemap[];
-extern const u16 gContestResultsTitle_Cute_Tilemap[];
-extern const u16 gContestResultsTitle_Smart_Tilemap[];
-extern const u16 gContestResultsTitle_Tough_Tilemap[];
-extern const u16 gContestResultsTitle_Tilemap[];
+extern const u16 gLinkContestResults_Tilemap[];
+extern const u16 gNormalContestResults_Tilemap[];
+extern const u16 gSuperContestResults_Tilemap[];
+extern const u16 gHyperContestResults_Tilemap[];
+extern const u16 gMasterContestResults_Tilemap[];
+extern const u16 gCoolContestResults_Tilemap[];
+extern const u16 gBeautyContestResults_Tilemap[];
+extern const u16 gCuteContestResults_Tilemap[];
+extern const u16 gSmartContestResults_Tilemap[];
+extern const u16 gToughContestResults_Tilemap[];
+extern const u16 gContestResults_Tilemap[];
 
 // Trainer Card.
 extern const u16 gHoennTrainerCard0Star_Pal[];
@@ -9517,13 +9464,13 @@ extern const u32 gKantoTrainerCardFrontLink_Tilemap[];
 extern const u32 gHoennTrainerCardBg_Tilemap[];
 
 // Frontier Pass
-extern const u32 gFrontierPassBg_Gfx[];
-extern const u32 gFrontierPassBg_Tilemap[];
-extern const u16 gFrontierPassBg_Pal[][16];
-extern const u32 gFrontierPassMapAndCard_Gfx[];
-extern const u32 gFrontierPassCancelButton_Tilemap[];
-extern const u32 gFrontierPassCancelButtonHighlighted_Tilemap[];
+extern const u32 gUnknown_08DE08C8[];
+extern const u32 gUnknown_08DE2084[];
+extern const u32 gUnknown_08DE3350[];
+extern const u32 gUnknown_08DE3374[];
+extern const u32 gUnknown_08DE3060[];
 extern const u32 gFrontierPassMedals_Gfx[];
+extern const u16 gUnknown_08DE07C8[][16];
 extern const u16 gFrontierPassCursor_Pal[];
 extern const u16 gFrontierPassMedalsGold_Pal[];
 extern const u16 gFrontierPassMedalsSilver_Pal[];
@@ -9534,10 +9481,10 @@ extern const u32 gEasyChatWindow_Gfx[];
 extern const u32 gEasyChatWindow_Tilemap[];
 extern const u32 gEasyChatMode_Gfx[];
 extern const u16 gEasyChatMode_Pal[];
-extern const u32 gEasyChatRectangleCursor_Gfx[];
-extern const u16 gEasyChatRectangleCursor_Pal[];
-extern const u32 gEasyChatButtonWindow_Gfx[];
-extern const u16 gEasyChatButtonWindow_Pal[];
+extern const u32 gEasyChatCursor_Gfx[];
+extern const u16 gEasyChatCursor_Pal[];
+extern const u32 gEasyChatRightWindow_Gfx[];
+extern const u16 gEasyChatRightWindow_Pal[];
 
 // Use Pokeblock
 extern const u32 gUsePokeblockCondition_Gfx[];
@@ -9560,9 +9507,9 @@ extern const u16 gUsePokeblockUpDown_Pal[];
 extern const u16 gUsePokeblockCondition_Pal[];
 
 // Berry Crush
-extern const u32 gBerryCrush_Crusher_Gfx[];
-extern const u16 gBerryCrush_Crusher_Pal[];
-extern const u32 gBerryCrush_Crusher_Tilemap[];
+extern const u32 gUnknown_08DE34B8[];
+extern const u16 gUnknown_08DE3398[];
+extern const u32 gUnknown_08DE3FD4[];
 
 // Pokenav
 extern const u32 gPokenavMessageBox_Gfx[];
@@ -9571,56 +9518,13 @@ extern const u16 gPokenavMessageBox_Pal[];
 extern const u32 gPokenavOptions_Gfx[];
 extern const u16 gPokenavOptions_Pal[];
 
-// Battle Factory Screen
-extern const u8 gFrontierFactorySelectMenu_Gfx[];
-extern const u8 gFrontierFactorySelectMenu_Tilemap[];
-extern const u16 gFrontierFactorySelectMenu_Pal[];
-
-// Object event pals
-extern const u16 gObjectEventPal_Brendan[];
-extern const u16 gObjectEventPal_May[];
-extern const u16 gObjectEventPal_RubySapphireBrendan[];
-extern const u16 gObjectEventPal_RubySapphireMay[];
-
-// Mail
-extern const u16 gMailPalette_Orange[];
-extern const u16 gMailPalette_Harbor[];
-extern const u16 gMailPalette_Glitter[];
-extern const u16 gMailPalette_Mech[];
-extern const u16 gMailPalette_Wood[];
-extern const u16 gMailPalette_Wave[];
-extern const u16 gMailPalette_Bead[];
-extern const u16 gMailPalette_Shadow[];
-extern const u16 gMailPalette_Tropic[];
-extern const u16 gMailPalette_Dream[];
-extern const u16 gMailPalette_Fab[];
-extern const u16 gMailPalette_Retro[];
-extern const u8 gMailTiles_Orange[];
-extern const u8 gMailTilemap_Orange[];
-extern const u8 gMailTiles_Harbor[];
-extern const u8 gMailTilemap_Harbor[];
-extern const u8 gMailTiles_Glitter[];
-extern const u8 gMailTilemap_Glitter[];
-extern const u8 gMailTiles_Mech[];
-extern const u8 gMailTilemap_Mech[];
-extern const u8 gMailTiles_Wood[];
-extern const u8 gMailTilemap_Wood[];
-extern const u8 gMailTiles_Wave[];
-extern const u8 gMailTilemap_Wave[];
-extern const u8 gMailTiles_Bead[];
-extern const u8 gMailTilemap_Bead[];
-extern const u8 gMailTiles_Shadow[];
-extern const u8 gMailTilemap_Shadow[];
-extern const u8 gMailTiles_Tropic[];
-extern const u8 gMailTilemap_Tropic[];
-extern const u8 gMailTiles_Dream[];
-extern const u8 gMailTilemap_Dream[];
-extern const u8 gMailTiles_Fab[];
-extern const u8 gMailTilemap_Fab[];
-extern const u8 gMailTiles_Retro[];
-extern const u8 gMailTilemap_Retro[];
-
-extern const u8 gMonMarkingsMenu_Gfx[];
-extern const u16 gMonMarkingsMenu_Pal[];
+// Mints
+extern const u32 gItemIcon_Mint[];
+extern const u32 gItemIconPalette_RedMint[];
+extern const u32 gItemIconPalette_BlueMint[];
+extern const u32 gItemIconPalette_PinkMint[];
+extern const u32 gItemIconPalette_GreenMint[];
+extern const u32 gItemIconPalette_LightBlueMint[];
+extern const u32 gItemIconPalette_YellowMint[];
 
 #endif //GUARD_GRAPHICS_H

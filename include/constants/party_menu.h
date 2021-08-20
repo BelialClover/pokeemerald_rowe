@@ -22,25 +22,24 @@
 #define TUTOR_MOVE_SOFT_BOILED     9
 #define TUTOR_MOVE_DREAM_EATER     10
 #define TUTOR_MOVE_THUNDER_WAVE    11
-#define TUTOR_MOVE_EXPLOSION       12
-#define TUTOR_MOVE_ROCK_SLIDE      13
-#define TUTOR_MOVE_SUBSTITUTE      14
-#define TUTOR_MOVE_DYNAMIC_PUNCH   15
-#define TUTOR_MOVE_ROLLOUT         16
-#define TUTOR_MOVE_PSYCH_UP        17
-#define TUTOR_MOVE_SNORE           18
-#define TUTOR_MOVE_ICY_WIND        19
-#define TUTOR_MOVE_ENDURE          20
-#define TUTOR_MOVE_MUD_SLAP        21
-#define TUTOR_MOVE_ICE_PUNCH       22
-#define TUTOR_MOVE_SWAGGER         23
-#define TUTOR_MOVE_SLEEP_TALK      24
-#define TUTOR_MOVE_SWIFT           25
-#define TUTOR_MOVE_DEFENSE_CURL    26
-#define TUTOR_MOVE_THUNDER_PUNCH   27
-#define TUTOR_MOVE_FIRE_PUNCH      28
-#define TUTOR_MOVE_FURY_CUTTER     29
-#define TUTOR_MOVE_COUNT           30
+#define TUTOR_MOVE_ROCK_SLIDE      12
+#define TUTOR_MOVE_SUBSTITUTE      13
+#define TUTOR_MOVE_DYNAMIC_PUNCH   14
+#define TUTOR_MOVE_ROLLOUT         15
+#define TUTOR_MOVE_PSYCH_UP        16
+#define TUTOR_MOVE_SNORE           17
+#define TUTOR_MOVE_ICY_WIND        18
+#define TUTOR_MOVE_ENDURE          19
+#define TUTOR_MOVE_MUD_SLAP        20
+#define TUTOR_MOVE_ICE_PUNCH       21
+#define TUTOR_MOVE_SWAGGER         22
+#define TUTOR_MOVE_SLEEP_TALK      23
+#define TUTOR_MOVE_SWIFT           24
+#define TUTOR_MOVE_DEFENSE_CURL    25
+#define TUTOR_MOVE_THUNDER_PUNCH   26
+#define TUTOR_MOVE_FIRE_PUNCH      27
+#define TUTOR_MOVE_FURY_CUTTER     28
+#define TUTOR_MOVE_COUNT           29
 
 #define PARTY_LAYOUT_SINGLE          0
 #define PARTY_LAYOUT_DOUBLE          1
@@ -107,6 +106,7 @@
 #define PARTY_MSG_DO_WHAT_WITH_ITEM         24
 #define PARTY_MSG_DO_WHAT_WITH_MAIL         25
 #define PARTY_MSG_ALREADY_HOLDING_ONE       26
+#define PARTY_MSG_MOVE_ITEM_WHERE           27
 #define PARTY_MSG_NONE                      127
 
 // IDs for DisplayPartyPokemonDescriptionText, to display a message in the party pokemon's box

@@ -1100,9 +1100,16 @@ const u8 *MatchCall_GetOverrideFlavorText(u32 idx, u32 offset)
     {
         if (sCheckPageOverrides[i].idx == idx)
         {
-            for (; i + 1 < ARRAY_COUNT(sCheckPageOverrides) &&
-                sCheckPageOverrides[i + 1].idx == idx &&
-                FlagGet(sCheckPageOverrides[i + 1].flag); i++);
+            while (1)
+            {
+                if (i + 1 >= ARRAY_COUNT(sCheckPageOverrides))
+                    break;
+                if (sCheckPageOverrides[i + 1].idx != idx)
+                    break;
+                if (!FlagGet(sCheckPageOverrides[i + 1].flag))
+                    break;
+                i++;
+            }
             return sCheckPageOverrides[i].flavorTexts[offset];
         }
     }

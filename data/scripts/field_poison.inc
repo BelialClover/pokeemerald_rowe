@@ -1,4 +1,4 @@
-EventScript_FieldPoison::
+EventScript_FieldPoison:: @ 82736BC
 	lockall
 	special TryFieldPoisonWhiteOut
 	waitstate
@@ -9,7 +9,7 @@ EventScript_FieldPoison::
 	releaseall
 	end
 
-EventScript_FieldWhiteOut::
+EventScript_FieldWhiteOut:: @ 82736D9
 	message gText_PlayerWhitedOut
 	waitmessage
 	waitbuttonpress
@@ -21,11 +21,11 @@ EventScript_FieldWhiteOut::
 	waitstate
 	end
 
-EventScript_SetRespawnLavaridgePkmnCenter::
+EventScript_SetRespawnLavaridgePkmnCenter:: @ 82736F4
 	setrespawn HEAL_LOCATION_LAVARIDGE_TOWN
 	return
 
-EventScript_FrontierFieldWhiteOut::
+EventScript_FrontierFieldWhiteOut:: @ 82736F8
 	message gText_PlayerWhitedOut
 	waitmessage
 	waitbuttonpress

@@ -136,20 +136,32 @@ void TaskDummy(u8 taskId)
 {
 }
 
+#define TASK_DATA_OP(taskId, offset, op)                    \
+{                                                           \
+    u32 tasksAddr = (u32)gTasks;                            \
+    u32 addr = taskId * sizeof(struct Task) + offset;       \
+    u32 dataAddr = tasksAddr + offsetof(struct Task, data); \
+    addr += dataAddr;                                       \
+    op;                                                     \
+}
+
 void SetTaskFuncWithFollowupFunc(u8 taskId, TaskFunc func, TaskFunc followupFunc)
 {
-    u8 followupFuncIndex = NUM_TASK_DATA - 2; // Should be const.
-
-    gTasks[taskId].data[followupFuncIndex] = (s16)((u32)followupFunc);
-    gTasks[taskId].data[followupFuncIndex + 1] = (s16)((u32)followupFunc >> 16); // Store followupFunc as two half-words in the data array.
+    TASK_DATA_OP(taskId, 28, *((u16 *)addr) = (u32)followupFunc)
+    TASK_DATA_OP(taskId, 30, *((u16 *)addr) = (u32)followupFunc >> 16)
     gTasks[taskId].func = func;
 }
 
 void SwitchTaskToFollowupFunc(u8 taskId)
 {
-    u8 followupFuncIndex = NUM_TASK_DATA - 2; // Should be const.
+    s32 func;
 
-    gTasks[taskId].func = (TaskFunc)((u16)(gTasks[taskId].data[followupFuncIndex]) | (gTasks[taskId].data[followupFuncIndex + 1] << 16));
+    gTasks[taskId].func = NULL;
+
+    TASK_DATA_OP(taskId, 28, func = *((u16 *)addr))
+    TASK_DATA_OP(taskId, 30, func |= *((s16 *)addr) << 16)
+
+    gTasks[taskId].func = (TaskFunc)func;
 }
 
 bool8 FuncIsActiveTask(TaskFunc func)
@@ -171,7 +183,7 @@ u8 FindTaskIdByFunc(TaskFunc func)
         if (gTasks[i].isActive == TRUE && gTasks[i].func == func)
             return (u8)i;
 
-    return TASK_NONE; // No task was found.
+    return 0xFF;
 }
 
 u8 GetTaskCount(void)

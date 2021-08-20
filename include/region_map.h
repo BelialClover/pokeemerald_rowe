@@ -99,7 +99,7 @@ u8 DoRegionMapInputCallback(void);
 bool8 UpdateRegionMapZoom(void);
 void FreeRegionMapIconResources(void);
 u16 GetRegionMapSecIdAt(u16 x, u16 y);
-void CreateRegionMapPlayerIcon(u16 x, u16 y);
+void CreateRegionMapPlayerIcon(u16 tileTag, u16 paletteTag);
 void CreateRegionMapCursor(u16 tileTag, u16 paletteTag);
 bool32 IsEventIslandMapSecId(u8 mapSecId);
 u8 *GetMapName(u8 *, u16, u16);
@@ -111,8 +111,10 @@ void PokedexAreaScreen_UpdateRegionMapVariablesAndVideoRegs(s16 x, s16 y);
 void CB2_OpenFlyMap(void);
 bool8 IsRegionMapZoomed(void);
 void TrySetPlayerIconBlink(void);
-void BlendRegionMap(u16 color, u32 coeff);
+void sub_8123030(u16 color, u32 coeff);
 void SetRegionMapDataForZoom(void);
+void RegionMap_GetSectionCoordsFromCurrFieldPos(u16 *mapSectionId, u16 *cursorPosX, u16 *cursorPosY, bool8 *playerIsInCave);
+u8 GetMapsecType(u16 mapSecId);
 
 extern const struct RegionMapLocation gRegionMapEntries[];
 

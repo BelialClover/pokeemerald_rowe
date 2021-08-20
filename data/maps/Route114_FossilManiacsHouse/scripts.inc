@@ -1,12 +1,12 @@
-Route114_FossilManiacsHouse_MapScripts::
+Route114_FossilManiacsHouse_MapScripts:: @ 822AD30
 	map_script MAP_SCRIPT_ON_TRANSITION, Route114_FossilManiacsHouse_OnTransition
 	.byte 0
 
-Route114_FossilManiacsHouse_OnTransition:
+Route114_FossilManiacsHouse_OnTransition: @ 822AD36
 	setflag FLAG_LANDMARK_FOSSIL_MANIACS_HOUSE
 	end
 
-Route114_FossilManiacsHouse_EventScript_FossilManiacsBrother::
+Route114_FossilManiacsHouse_EventScript_FossilManiacsBrother:: @ 822AD3A
 	lock
 	faceplayer
 	goto_if_set FLAG_RECEIVED_TM28, Route114_FossilManiacsHouse_EventScript_ReceivedDig
@@ -18,38 +18,38 @@ Route114_FossilManiacsHouse_EventScript_FossilManiacsBrother::
 	release
 	end
 
-Route114_FossilManiacsHouse_EventScript_ReceivedDig::
+Route114_FossilManiacsHouse_EventScript_ReceivedDig:: @ 822AD69
 	msgbox Route114_FossilManiacsHouse_Text_DigReturnsYouToEntrance, MSGBOX_DEFAULT
 	release
 	end
 
-Route114_FossilManiacsHouse_EventScript_RockDisplay::
+Route114_FossilManiacsHouse_EventScript_RockDisplay:: @ 822AD73
 	msgbox Route114_FossilManiacsHouse_Text_RocksFillDisplayCase, MSGBOX_SIGN
 	end
 
-Route114_FossilManiacsHouse_EventScript_Bookshelf::
+Route114_FossilManiacsHouse_EventScript_Bookshelf:: @ 822AD7C
 	msgbox Route114_FossilManiacsHouse_Text_CrammedWithBooks, MSGBOX_SIGN
 	end
 
-Route114_FossilManiacsHouse_Text_HaveThisToDigLikeMyBrother:
-	.string "My big brother's the FOSSIL MANIAC…\n"
-	.string "He's a nice guy who loves FOSSILS…\p"
+Route114_FossilManiacsHouse_Text_HaveThisToDigLikeMyBrother: @ 822AD85
+	.string "My big brother's the Fossil Maniac…\n"
+	.string "He's a nice guy who loves Fossils…\p"
 	.string "He loves digging holes, too…\n"
 	.string "He dug this hole by himself…\p"
-	.string "You can have this, so you can DIG\n"
+	.string "You can have this, so you can Dig\n"
 	.string "holes just like my big brother…$"
 
-Route114_FossilManiacsHouse_Text_DigReturnsYouToEntrance:
-	.string "If you make a POKéMON DIG inside a\n"
+Route114_FossilManiacsHouse_Text_DigReturnsYouToEntrance: @ 822AE48
+	.string "If you make a Pokémon Dig inside a\n"
 	.string "cave, you're returned to the entrance…$"
 
-Route114_FossilManiacsHouse_Text_RocksFillDisplayCase:
+Route114_FossilManiacsHouse_Text_RocksFillDisplayCase: @ 822AE92
 	.string "Rocks in peculiar shapes fill\n"
 	.string "the display case…$"
 
-Route114_FossilManiacsHouse_Text_CrammedWithBooks:
-	.string "THE COMPOSITION OF STRATA…\n"
-	.string "HOW RAIN SHAPES THE LAND…\l"
-	.string "STONES, SOIL, AND ROCK…\p"
+Route114_FossilManiacsHouse_Text_CrammedWithBooks: @ 822AEC2
+	.string "The Composition of Strata…\n"
+	.string "How Rain Shapes the Land…\l"
+	.string "Stones, Soil, and Rock…\p"
 	.string "It's crammed with books.$"
 

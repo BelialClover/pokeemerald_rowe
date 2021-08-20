@@ -66,12 +66,13 @@ static EWRAM_DATA struct HofGfx *sHofGfxPtr = NULL;
 
 extern struct MusicPlayerInfo gMPlayInfo_BGM;
 
+// this file's functions
 static void ClearVramOamPltt_LoadHofPal(void);
 static void LoadHofGfx(void);
 static void InitHofBgs(void);
 static bool8 CreateHofConfettiSprite(void);
-static void StartCredits(void);
-static bool8 LoadHofBgs(void);
+static void SetCallback2AfterHallOfFameDisplay(void);
+static bool8 sub_8175024(void);
 static void Task_Hof_InitMonData(u8 taskId);
 static void Task_Hof_InitTeamSaveData(u8 taskId);
 static void Task_Hof_SetMonDisplayTask(u8 taskId);
@@ -103,6 +104,7 @@ static void HallOfFame_PrintPlayerInfo(u8 unused1, u8 unused2);
 static void Task_DoDomeConfetti(u8 taskId);
 static void SpriteCB_HofConfetti(struct Sprite* sprite);
 
+// const rom data
 static const struct BgTemplate sHof_BgTemplates[] =
 {
     {
@@ -134,19 +136,12 @@ static const struct BgTemplate sHof_BgTemplates[] =
     },
 };
 
-static const struct WindowTemplate sHof_WindowTemplate = {
-    .bg = 0,
-    .tilemapLeft = 2,
-    .tilemapTop = 2,
-    .width = 14,
-    .height = 6,
-    .paletteNum = 14,
-    .baseBlock = 1
-};
+static const struct WindowTemplate sHof_WindowTemplate = {0, 2, 2, 0xE, 6, 0xE, 1};
 
-static const u8 sMonInfoTextColors[4] = {TEXT_COLOR_TRANSPARENT, TEXT_COLOR_WHITE, TEXT_COLOR_DARK_GRAY};
-static const u8 sPlayerInfoTextColors[4] = {TEXT_COLOR_TRANSPARENT, TEXT_COLOR_DARK_GRAY, TEXT_COLOR_LIGHT_GRAY};
-static const u8 sUnusedTextColors[4] = {TEXT_COLOR_RED, TEXT_COLOR_LIGHT_RED, TEXT_COLOR_TRANSPARENT};
+static const u8 sMonInfoTextColors[4] = {TEXT_COLOR_TRANSPARENT, TEXT_COLOR_WHITE, TEXT_COLOR_DARK_GREY};
+static const u8 sPlayerInfoTextColors[4] = {TEXT_COLOR_TRANSPARENT, TEXT_COLOR_DARK_GREY, TEXT_COLOR_LIGHT_GREY};
+
+static const u8 sUnused_085E538C[] = {4, 5, 0, 0};
 
 static const struct CompressedSpriteSheet sSpriteSheet_Confetti[] =
 {
@@ -388,10 +383,10 @@ static bool8 InitHallOfFameScreen(void)
         gMain.state++;
         break;
     case 3:
-        if (!LoadHofBgs())
+        if (!sub_8175024())
         {
             SetVBlankCallback(VBlankCB_HallOfFame);
-            BeginNormalPaletteFade(PALETTES_ALL, 0, 0x10, 0, RGB_BLACK);
+            BeginNormalPaletteFade(0xFFFFFFFF, 0, 0x10, 0, RGB_BLACK);
             gMain.state++;
         }
         break;
@@ -469,11 +464,11 @@ static void Task_Hof_InitMonData(u8 taskId)
 
     sHofFadePalettes = 0;
     gTasks[taskId].tDisplayedMonId = 0;
-    gTasks[taskId].tPlayerSpriteID = SPRITE_NONE;
+    gTasks[taskId].tPlayerSpriteID = 0xFF;
 
     for (i = 0; i < PARTY_SIZE; i++)
     {
-        gTasks[taskId].tMonSpriteId(i) = SPRITE_NONE;
+        gTasks[taskId].tMonSpriteId(i) = 0xFF;
     }
 
     if (gTasks[taskId].tDontSaveData)
@@ -588,7 +583,7 @@ static void Task_Hof_DisplayMon(u8 taskId)
     if (currMon->species == SPECIES_EGG)
         destY += 10;
 
-    spriteId = CreatePicSprite2(currMon->species, currMon->tid, currMon->personality, 1, startX, startY, currMonId, 0xFFFF);
+    spriteId = CreatePicSprite2(currMon->species, currMon->tid, currMon->personality, 1, startX, startY, currMonId, 0xFFFF, 0); // handle forms, Hall of Fame struct needs to be modified
     gSprites[spriteId].tDestinationX = destX;
     gSprites[spriteId].tDestinationY = destY;
     gSprites[spriteId].data[0] = 0;
@@ -644,10 +639,10 @@ static void Task_Hof_PaletteFadeAndPrintWelcomeText(u8 taskId)
 {
     u16 i;
 
-    BeginNormalPaletteFade(PALETTES_OBJECTS, 0, 0, 0, RGB_BLACK);
+    BeginNormalPaletteFade(0xFFFF0000, 0, 0, 0, RGB_BLACK);
     for (i = 0; i < PARTY_SIZE; i++)
     {
-        if (gTasks[taskId].tMonSpriteId(i) != SPRITE_NONE)
+        if (gTasks[taskId].tMonSpriteId(i) != 0xFF)
             gSprites[gTasks[taskId].tMonSpriteId(i)].oam.priority = 0;
     }
 
@@ -673,7 +668,7 @@ static void Task_Hof_DoConfetti(u8 taskId)
         u16 i;
         for (i = 0; i < PARTY_SIZE; i++)
         {
-            if (gTasks[taskId].tMonSpriteId(i) != SPRITE_NONE)
+            if (gTasks[taskId].tMonSpriteId(i) != 0xFF)
                 gSprites[gTasks[taskId].tMonSpriteId(i)].oam.priority = 1;
         }
         BeginNormalPaletteFade(sHofFadePalettes, 0, 12, 12, RGB(16, 29, 24));
@@ -717,9 +712,9 @@ static void Task_Hof_WaitAndPrintPlayerInfo(u8 taskId)
     {
         gTasks[taskId].tFrameCount--;
     }
-    else if (gSprites[gTasks[taskId].tPlayerSpriteID].x != 192)
+    else if (gSprites[gTasks[taskId].tPlayerSpriteID].pos1.x != 192)
     {
-        gSprites[gTasks[taskId].tPlayerSpriteID].x++;
+        gSprites[gTasks[taskId].tPlayerSpriteID].pos1.x++;
     }
     else
     {
@@ -744,7 +739,7 @@ static void Task_Hof_ExitOnKeyPressed(u8 taskId)
 static void Task_Hof_HandlePaletteOnExit(u8 taskId)
 {
     CpuCopy16(gPlttBufferFaded, gPlttBufferUnfaded, 0x400);
-    BeginNormalPaletteFade(PALETTES_ALL, 8, 0, 0x10, RGB_BLACK);
+    BeginNormalPaletteFade(0xFFFFFFFF, 8, 0, 0x10, RGB_BLACK);
     gTasks[taskId].func = Task_Hof_HandleExit;
 }
 
@@ -757,7 +752,7 @@ static void Task_Hof_HandleExit(u8 taskId)
         for (i = 0; i < PARTY_SIZE; i++)
         {
             u8 spriteId = gTasks[taskId].tMonSpriteId(i);
-            if (spriteId != SPRITE_NONE)
+            if (spriteId != 0xFF)
             {
                 FreeOamMatrix(gSprites[spriteId].oam.matrixNum);
                 FreeAndDestroyMonPicSprite(spriteId);
@@ -779,11 +774,11 @@ static void Task_Hof_HandleExit(u8 taskId)
         if (sHofMonPtr != NULL)
             FREE_AND_SET_NULL(sHofMonPtr);
 
-        StartCredits();
+        SetCallback2AfterHallOfFameDisplay();
     }
 }
 
-static void StartCredits(void)
+static void SetCallback2AfterHallOfFameDisplay(void)
 {
     SetMainCallback2(CB2_StartCreditsSequence);
 }
@@ -824,7 +819,7 @@ void CB2_DoHallOfFamePC(void)
         gMain.state++;
         break;
     case 3:
-        if (!LoadHofBgs())
+        if (!sub_8175024())
         {
             struct HallofFameTeam *fameTeam = (struct HallofFameTeam*)(gDecompressionBuffer);
             fameTeam->mon[0] = sDummyFameMon;
@@ -852,7 +847,7 @@ void CB2_DoHallOfFamePC(void)
 
             for (i = 0; i < PARTY_SIZE; i++)
             {
-                gTasks[taskId].tMonSpriteId(i) = SPRITE_NONE;
+                gTasks[taskId].tMonSpriteId(i) = 0xFF;
             }
 
             sHofMonPtr = AllocZeroed(0x2000);
@@ -936,17 +931,17 @@ static void Task_HofPC_DrawSpritesPrintText(u8 taskId)
             if (currMon->species == SPECIES_EGG)
                 posY += 10;
 
-            spriteId = CreateMonPicSprite(currMon->species, currMon->tid, currMon->personality, 1, posX, posY, i, 0xFFFF);
+            spriteId = CreateMonPicSprite_HandleDeoxys(currMon->species, currMon->tid, currMon->personality, 1, posX, posY, i, 0xFFFF);
             gSprites[spriteId].oam.priority = 1;
             gTasks[taskId].tMonSpriteId(i) = spriteId;
         }
         else
         {
-            gTasks[taskId].tMonSpriteId(i) = SPRITE_NONE;
+            gTasks[taskId].tMonSpriteId(i) = 0xFF;
         }
     }
 
-    BlendPalettes(PALETTES_OBJECTS, 0xC, RGB(16, 29, 24));
+    BlendPalettes(0xFFFF0000, 0xC, RGB(16, 29, 24));
 
     ConvertIntToDecimalStringN(gStringVar1, gTasks[taskId].tCurrPageNo, STR_CONV_MODE_RIGHT_ALIGN, 3);
     StringExpandPlaceholders(gStringVar4, gText_HOFNumber);
@@ -972,7 +967,7 @@ static void Task_HofPC_PrintMonInfo(u8 taskId)
     for (i = 0; i < PARTY_SIZE; i++)
     {
         u16 spriteId = gTasks[taskId].tMonSpriteId(i);
-        if (spriteId != SPRITE_NONE)
+        if (spriteId != 0xFF)
             gSprites[spriteId].oam.priority = 1;
     }
 
@@ -1004,10 +999,10 @@ static void Task_HofPC_HandleInput(u8 taskId)
             for (i = 0; i < PARTY_SIZE; i++)
             {
                 u8 spriteId = gTasks[taskId].tMonSpriteId(i);
-                if (spriteId != SPRITE_NONE)
+                if (spriteId != 0xFF)
                 {
                     FreeAndDestroyMonPicSprite(spriteId);
-                    gTasks[taskId].tMonSpriteId(i) = SPRITE_NONE;
+                    gTasks[taskId].tMonSpriteId(i) = 0xFF;
                 }
             }
             if (gTasks[taskId].tCurrPageNo != 0)
@@ -1065,10 +1060,10 @@ static void Task_HofPC_HandleExit(u8 taskId)
         for (i = 0; i < PARTY_SIZE; i++)
         {
             u16 spriteId = gTasks[taskId].tMonSpriteId(i);
-            if (spriteId != SPRITE_NONE)
+            if (spriteId != 0xFF)
             {
                 FreeAndDestroyMonPicSprite(spriteId);
-                gTasks[taskId].tMonSpriteId(i) = SPRITE_NONE;
+                gTasks[taskId].tMonSpriteId(i) = 0xFF;
             }
         }
 
@@ -1306,7 +1301,7 @@ static void InitHofBgs(void)
     ChangeBgY(3, 0, 0);
 }
 
-static bool8 LoadHofBgs(void)
+static bool8 sub_8175024(void)
 {
     switch (sHofGfxPtr->state)
     {
@@ -1345,18 +1340,18 @@ static bool8 LoadHofBgs(void)
 
 static void SpriteCB_GetOnScreenAndAnimate(struct Sprite *sprite)
 {
-    if (sprite->x != sprite->tDestinationX
-        || sprite->y != sprite->tDestinationY)
+    if (sprite->pos1.x != sprite->tDestinationX
+        || sprite->pos1.y != sprite->tDestinationY)
     {
-        if (sprite->x < sprite->tDestinationX)
-            sprite->x += 15;
-        if (sprite->x > sprite->tDestinationX)
-            sprite->x -= 15;
+        if (sprite->pos1.x < sprite->tDestinationX)
+            sprite->pos1.x += 15;
+        if (sprite->pos1.x > sprite->tDestinationX)
+            sprite->pos1.x -= 15;
 
-        if (sprite->y < sprite->tDestinationY)
-            sprite->y += 10;
-        if (sprite->y > sprite->tDestinationY)
-            sprite->y -= 10;
+        if (sprite->pos1.y < sprite->tDestinationY)
+            sprite->pos1.y += 10;
+        if (sprite->pos1.y > sprite->tDestinationY)
+            sprite->pos1.y -= 10;
     }
     else
     {
@@ -1378,7 +1373,7 @@ static void SpriteCB_GetOnScreenAndAnimate(struct Sprite *sprite)
 
 static void SpriteCB_HofConfetti(struct Sprite* sprite)
 {
-    if (sprite->y2 > 120)
+    if (sprite->pos2.y > 120)
     {
         DestroySprite(sprite);
     }
@@ -1387,12 +1382,12 @@ static void SpriteCB_HofConfetti(struct Sprite* sprite)
         u16 rand;
         u8 sineIdx;
 
-        sprite->y2++;
-        sprite->y2 += sprite->sExtraY;
+        sprite->pos2.y++;
+        sprite->pos2.y += sprite->sExtraY;
 
         sineIdx = sprite->sSineIdx;
         rand = (Random() % 4) + 8;
-        sprite->x2 = rand * gSineTable[sineIdx] / 256;
+        sprite->pos2.x = rand * gSineTable[sineIdx] / 256;
 
         sprite->sSineIdx += 4;
     }
@@ -1403,7 +1398,7 @@ static bool8 CreateHofConfettiSprite(void)
     u8 spriteID;
     struct Sprite* sprite;
 
-    s16 posX = Random() % DISPLAY_WIDTH;
+    s16 posX = Random() % 240;
     s16 posY = -(Random() % 8);
 
     spriteID = CreateSprite(&sSpriteTemplate_HofConfetti, posX, posY, 0);
@@ -1438,7 +1433,7 @@ void DoDomeConfetti(void)
 
     gSpecialVar_0x8004 = 180;
     taskId = CreateTask(Task_DoDomeConfetti, 0);
-    if (taskId != TASK_NONE)
+    if (taskId != 0xFF)
     {
         gTasks[taskId].tTimer = gSpecialVar_0x8004;
         gSpecialVar_0x8005 = taskId;
@@ -1449,7 +1444,7 @@ static void StopDomeConfetti(void)
 {
     u8 taskId;
 
-    if ((taskId = FindTaskIdByFunc(Task_DoDomeConfetti)) != TASK_NONE)
+    if ((taskId = FindTaskIdByFunc(Task_DoDomeConfetti)) != 0xFF)
         DestroyTask(taskId);
 
     ConfettiUtil_Free();
@@ -1510,7 +1505,7 @@ static void Task_DoDomeConfetti(u8 taskId)
             id = ConfettiUtil_AddNew(&sOamData_Confetti,
                               TAG_CONFETTI,
                               TAG_CONFETTI,
-                              Random() % DISPLAY_WIDTH,
+                              Random() % 240,
                               -(Random() % 8),
                               Random() % ARRAY_COUNT(sAnims_Confetti),
                               id);

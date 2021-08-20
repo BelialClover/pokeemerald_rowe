@@ -120,6 +120,7 @@ static void Task_RunPerStepCallback(u8 taskId)
 #define tState           data[0]
 #define tAmbientCryState data[1]
 #define tAmbientCryDelay data[2]
+#define tForceTimeUpdate data[3]
 
 static void RunTimeBasedEvents(s16 *data)
 {
@@ -150,11 +151,26 @@ static void Task_RunTimeBasedEvents(u8 taskId)
         RunTimeBasedEvents(data);
         UpdateAmbientCry(&tAmbientCryState, &tAmbientCryDelay);
     }
+
+    if (tForceTimeUpdate)
+    {
+        tForceTimeUpdate = 0;
+        DoTimeBasedEvents();
+    }
+}
+
+void ForceTimeBasedEvents(void)
+{
+    u8 taskId = FindTaskIdByFunc(Task_RunTimeBasedEvents);
+
+    if (taskId != 0xFF)
+        gTasks[taskId].tForceTimeUpdate = 1;
 }
 
 #undef tState
 #undef tAmbientCryState
 #undef tAmbientCryDelay
+#undef tForceTimeUpdate
 
 void SetUpFieldTasks(void)
 {
@@ -174,7 +190,7 @@ void SetUpFieldTasks(void)
 void ActivatePerStepCallback(u8 callbackId)
 {
     u8 taskId = FindTaskIdByFunc(Task_RunPerStepCallback);
-    if (taskId != TASK_NONE)
+    if (taskId != 0xff)
     {
         s32 i;
         s16 *data = gTasks[taskId].data;
@@ -199,12 +215,12 @@ void ResetFieldTasksArgs(void)
     s16 *data;
 
     taskId = FindTaskIdByFunc(Task_RunPerStepCallback);
-    if (taskId != TASK_NONE)
+    if (taskId != 0xff)
     {
         data = gTasks[taskId].data;
     }
     taskId = FindTaskIdByFunc(Task_RunTimeBasedEvents);
-    if (taskId != TASK_NONE)
+    if (taskId != 0xff)
     {
         data = gTasks[taskId].data;
         data[1] = 0;
@@ -635,12 +651,9 @@ static void AshGrassPerStepCallback(u8 taskId)
     }
 }
 
-// This function uses the constants for gTileset_Cave's metatile labels, but other tilesets with
-// the CrackedFloorPerStepCallback callback use the same metatile numbers for the cracked floor
-// and hole metatiles, such as gTileset_MirageTower.
 static void SetCrackedFloorHoleMetatile(s16 x, s16 y)
 {
-    MapGridSetMetatileIdAt(x, y, MapGridGetMetatileIdAt(x, y) == METATILE_Cave_CrackedFloor ? METATILE_Cave_CrackedFloor_Hole : METATILE_Pacifidlog_SkyPillar_CrackedFloor_Hole);
+    MapGridSetMetatileIdAt(x, y, MapGridGetMetatileIdAt(x, y) == 0x22f ? 0x206 : 0x237);// unsure what these are referring to
     CurrentMapDrawMetatileAt(x, y);
 }
 

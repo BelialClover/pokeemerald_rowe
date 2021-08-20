@@ -394,10 +394,10 @@ bool32 HandleMysteryGiftOrEReaderSetup(s32 mg_or_ereader)
         ChangeBgX(3, 0, 0);
         ChangeBgY(3, 0, 0);
 
-        SetBgTilemapBuffer(3, Alloc(BG_SCREEN_SIZE));
-        SetBgTilemapBuffer(2, Alloc(BG_SCREEN_SIZE));
-        SetBgTilemapBuffer(1, Alloc(BG_SCREEN_SIZE));
-        SetBgTilemapBuffer(0, Alloc(BG_SCREEN_SIZE));
+        SetBgTilemapBuffer(3, Alloc(0x800));
+        SetBgTilemapBuffer(2, Alloc(0x800));
+        SetBgTilemapBuffer(1, Alloc(0x800));
+        SetBgTilemapBuffer(0, Alloc(0x800));
 
         bgid_upload_textbox_1(3);
         InitWindows(sMainWindows);
@@ -558,12 +558,14 @@ bool32 MG_PrintTextOnWindow1AndWaitButton(u8 *textState, const u8 *str)
     {
     case 0:
         AddTextPrinterToWindow1(str);
-        (*textState)++;
-        break;
+        goto inc;
     case 1:
         DrawDownArrow(1, 0xD0, 0x14, 1, FALSE, &sDownArrowCounterAndYCoordIdx[0], &sDownArrowCounterAndYCoordIdx[1]);
         if (({JOY_NEW(A_BUTTON | B_BUTTON);}))
+        {
+        inc:
             (*textState)++;
+        }
         break;
     case 2:
         DrawDownArrow(1, 0xD0, 0x14, 1, TRUE, &sDownArrowCounterAndYCoordIdx[0], &sDownArrowCounterAndYCoordIdx[1]);
@@ -572,7 +574,7 @@ bool32 MG_PrintTextOnWindow1AndWaitButton(u8 *textState, const u8 *str)
         return TRUE;
     case 0xFF:
         *textState = 2;
-        return FALSE;
+        break;
     }
     return FALSE;
 }
@@ -807,6 +809,8 @@ static bool32 ValidateCardOrNews(bool32 cardOrNews)
 
 static bool32 HandleLoadWonderCardOrNews(u8 * state, bool32 cardOrNews)
 {
+    s32 v0;
+
     switch (*state)
     {
     case 0:
@@ -823,18 +827,20 @@ static bool32 HandleLoadWonderCardOrNews(u8 * state, bool32 cardOrNews)
     case 1:
         if (cardOrNews == 0)
         {
-            if (!FadeToWonderCardMenu())
+            v0 = FadeToWonderCardMenu();
+        check:
+            if (v0 != 0)
             {
-                return FALSE;
+                goto done;
             }
+            break;
         }
         else
         {
-            if (!FadeToWonderNewsMenu())
-            {
-                return FALSE;
-            }
+            v0 = FadeToWonderNewsMenu();
+            goto check;
         }
+    done:
         *state = 0;
         return TRUE;
     }

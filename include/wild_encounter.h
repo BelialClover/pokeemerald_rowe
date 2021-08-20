@@ -5,6 +5,7 @@
 #define WATER_WILD_COUNT    5
 #define ROCK_WILD_COUNT     5
 #define FISH_WILD_COUNT     10
+#define HIDDEN_WILD_COUNT   3
 
 struct WildPokemon
 {
@@ -24,9 +25,12 @@ struct WildPokemonHeader
     u8 mapGroup;
     u8 mapNum;
     const struct WildPokemonInfo *landMonsInfo;
+    const struct WildPokemonInfo *landMonsNightInfo;
     const struct WildPokemonInfo *waterMonsInfo;
     const struct WildPokemonInfo *rockSmashMonsInfo;
     const struct WildPokemonInfo *fishingMonsInfo;
+    const struct WildPokemonInfo *hiddenMonsInfo;
+	const struct WildPokemonInfo *headbuttMonsInfo;
 };
 
 extern bool8 gIsFishingEncounter;
@@ -44,5 +48,13 @@ u16 GetLocalWildMon(bool8 *isWaterMon);
 u16 GetLocalWaterMon(void);
 bool8 UpdateRepelCounter(void);
 bool8 TryDoDoubleWildBattle(void);
+bool8 UpdateLureCounter(void);
+void CreateWildMon(u16 species, u8 level);
+u16 GetCurrentMapWildMonHeaderId(void);
+u8 ChooseWildMonIndex_Land(void);
+u8 ChooseWildMonIndex_WaterRock(void);
+u8 ChooseHiddenMonIndex(void);
+u8 ChooseHeadbuttMonIndex(void);
+u16 GetFirstStage(u16 species);
 
 #endif // GUARD_WILD_ENCOUNTER_H

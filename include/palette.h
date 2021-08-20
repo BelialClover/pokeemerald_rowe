@@ -14,10 +14,6 @@
 #define PALETTE_FADE_STATUS_DONE 0
 #define PALETTE_FADE_STATUS_LOADING 0xFF
 
-#define PALETTES_BG      0x0000FFFF
-#define PALETTES_OBJECTS 0xFFFF0000
-#define PALETTES_ALL     (PALETTES_BG | PALETTES_OBJECTS)
-
 enum
 {
     FAST_FADE_IN_FROM_WHITE,
@@ -79,5 +75,6 @@ void TintPalette_GrayScale(u16 *palette, u16 count);
 void TintPalette_GrayScale2(u16 *palette, u16 count);
 void TintPalette_SepiaTone(u16 *palette, u16 count);
 void TintPalette_CustomTone(u16 *palette, u16 count, u16 rTone, u16 gTone, u16 bTone);
+void TintPalette_CustomToneWithCopy(const u16 *src, u16 *dest, u16 count, u16 rTone, u16 gTone, u16 bTone, bool8 excludeZeroes);
 
 #endif // GUARD_PALETTE_H

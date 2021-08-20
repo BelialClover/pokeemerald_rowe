@@ -1,27 +1,27 @@
 .set LOCALID_BIRCH, 2
 .set LOCALID_ZIGZAGOON, 4
 
-Route101_MapScripts::
+Route101_MapScripts:: @ 81EBCBA
 	map_script MAP_SCRIPT_ON_TRANSITION, Route101_OnTransition
 	map_script MAP_SCRIPT_ON_FRAME_TABLE, Route101_OnFrame
 	.byte 0
 
-Route101_OnTransition:
+Route101_OnTransition: @ 81EBCC5
 	call ProfBirch_EventScript_UpdateLocation
 	end
 
-Route101_OnFrame:
+Route101_OnFrame: @ 81EBCCB
 	map_script_2 VAR_ROUTE101_STATE, 0, Route101_EventScript_HideMapNamePopup
 	.2byte 0
 
-Route101_EventScript_HideMapNamePopup::
+Route101_EventScript_HideMapNamePopup:: @ 81EBCD5
 	setflag FLAG_HIDE_MAP_NAME_POPUP
 	setvar VAR_ROUTE101_STATE, 1
 	end
 
-Route101_EventScript_StartBirchRescue::
+Route101_EventScript_StartBirchRescue:: @ 81EBCDE
 	lockall
-	playbgm MUS_HELP, TRUE
+	playbgm MUS_HELP, 1
 	msgbox Route101_Text_HelpMe, MSGBOX_DEFAULT
 	closemessage
 	setobjectxy LOCALID_BIRCH, 0, 15
@@ -44,7 +44,7 @@ Route101_EventScript_StartBirchRescue::
 	releaseall
 	end
 
-Route101_EventScript_PreventExitSouth::
+Route101_EventScript_PreventExitSouth:: @ 81EBD4E
 	lockall
 	msgbox Route101_Text_DontLeaveMe, MSGBOX_DEFAULT
 	closemessage
@@ -53,7 +53,7 @@ Route101_EventScript_PreventExitSouth::
 	releaseall
 	end
 
-Route101_EventScript_PreventExitWest::
+Route101_EventScript_PreventExitWest:: @ 81EBD64
 	lockall
 	msgbox Route101_Text_DontLeaveMe, MSGBOX_DEFAULT
 	closemessage
@@ -62,7 +62,7 @@ Route101_EventScript_PreventExitWest::
 	releaseall
 	end
 
-Route101_EventScript_PreventExitNorth::
+Route101_EventScript_PreventExitNorth:: @ 81EBD7A
 	lockall
 	msgbox Route101_Text_DontLeaveMe, MSGBOX_DEFAULT
 	closemessage
@@ -71,19 +71,19 @@ Route101_EventScript_PreventExitNorth::
 	releaseall
 	end
 
-Route101_Movement_PreventExitSouth:
+Route101_Movement_PreventExitSouth: @ 81EBD90
 	walk_up
 	step_end
 
-Route101_Movement_PreventExitWest:
+Route101_Movement_PreventExitWest: @ 81EBD92
 	walk_right
 	step_end
 
-Route101_Movement_PreventExitNorth:
+Route101_Movement_PreventExitNorth: @ 81EBD94
 	walk_down
 	step_end
 
-Route101_Movement_ZigzagoonChaseInCircles:
+Route101_Movement_ZigzagoonChaseInCircles: @ 81EBD96
 	walk_fast_up
 	walk_fast_up
 	walk_fast_up
@@ -116,7 +116,7 @@ Route101_Movement_ZigzagoonChaseInCircles:
 	walk_fast_left
 	step_end
 
-Route101_Movement_ZigzagoonChase1:
+Route101_Movement_ZigzagoonChase1: @ 81EBDB5
 	walk_fast_up
 	walk_fast_right
 	walk_fast_right
@@ -128,14 +128,14 @@ Route101_Movement_ZigzagoonChase1:
 @ Leftover data? This command is unused.
 	step_end
 
-Route101_Movement_ZigzagoonFaceBirch:
+Route101_Movement_ZigzagoonFaceBirch: @ 81EBDBD
 	walk_in_place_fast_left
 	walk_in_place_fast_left
 	walk_in_place_fast_left
 	walk_in_place_fast_left
 	step_end
 
-Route101_Movement_EnterScene:
+Route101_Movement_EnterScene: @ 81EBDC2
 	walk_fast_up
 	walk_fast_up
 	walk_fast_up
@@ -143,7 +143,7 @@ Route101_Movement_EnterScene:
 	walk_in_place_fastest_left
 	step_end
 
-Route101_Movement_BirchRunInCircles:
+Route101_Movement_BirchRunInCircles: @ 81EBDC8
 	walk_fast_up
 	walk_fast_up
 	walk_fast_right
@@ -176,7 +176,7 @@ Route101_Movement_BirchRunInCircles:
 	walk_fast_left
 	step_end
 
-Route101_Movement_BirchRunAway1:
+Route101_Movement_BirchRunAway1: @ 81EBDE7
 	walk_fast_right
 	walk_fast_right
 	walk_fast_right
@@ -188,37 +188,38 @@ Route101_Movement_BirchRunAway1:
 @ Leftover data? This command is unused.
 	step_end
 
-Route101_Movement_BirchFaceZigzagoon:
+Route101_Movement_BirchFaceZigzagoon: @ 81EBDEF
 	walk_in_place_fast_right
 	walk_in_place_fast_right
 	walk_in_place_fast_right
 	walk_in_place_fast_right
 	step_end
 
-Route101_Movement_Unused1:
+Route101_Movement_Unused1: @ 81EBDF4
 	walk_up
 	walk_up
 	step_end
 
-Route101_Movement_Unused2:
+Route101_Movement_Unused2: @ 81EBDF7
 	walk_up
 	walk_left
 	walk_up
 	step_end
 
-Route101_EventScript_Youngster::
+Route101_EventScript_Youngster:: @ 81EBDFB
 	msgbox Route101_Text_TakeTiredPokemonToPokeCenter, MSGBOX_NPC
 	end
 
-Route101_EventScript_Boy::
+Route101_EventScript_Boy:: @ 81EBE04
 	msgbox Route101_Text_WildPokemonInTallGrass, MSGBOX_NPC
 	end
 
-Route101_EventScript_RouteSign::
+Route101_EventScript_RouteSign:: @ 81EBE0D
 	msgbox Route101_Text_RouteSign, MSGBOX_SIGN
+	//call FillPokedex
 	end
 
-Route101_EventScript_BirchsBag::
+Route101_EventScript_BirchsBag:: @ 81EBE16
 	lock
 	faceplayer
 	setflag FLAG_SYS_POKEMON_GET
@@ -250,55 +251,101 @@ Route101_EventScript_BirchsBag::
 	release
 	end
 
-Route101_EventScript_HideMayInBedroom::
+Route101_EventScript_HideMayInBedroom:: @ 81EBE85
 	setflag FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_RIVAL_BEDROOM
 	return
 
-Route101_EventScript_HideBrendanInBedroom::
+Route101_EventScript_HideBrendanInBedroom:: @ 81EBE89
 	setflag FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_RIVAL_BEDROOM
 	return
 
-Route101_Movement_BirchApproachPlayer:
+Route101_Movement_BirchApproachPlayer: @ 81EBE8D
 	walk_right
 	step_end
 
-Route101_Text_HelpMe:
+#if GAME_LANGUAGE == LANGUAGE_SPANISH
+Route101_Text_HelpMe: @ 81EBE8F
+	.string "¡Socorro! ¡Ayuda!$"
+
+Route101_Text_PleaseHelp: @ 81EBE9A
+	.string "¡Oye! ¡Sí, tú!\n"
+	.string "¡Ayúdame, por favor!\p"
+	.string "¡En mi mochila hay Poké Balls!\n"
+	.string "¡Usa una!$"
+
+Route101_Text_DontLeaveMe: @ 81EBEDF
+	.string "Pe-pero... ¡¿adónde vas?!\n"
+	.string "¡¡¡No me dejes así!!!$"
+
+Route101_Text_YouSavedMe: @ 81EBF12
+	.string "Prof. Abedul: Uf…\p"
+	.string "Estaba en la zona de hierba alta\n"
+	.string "estudiando Pokémon salvajes.\l"
+	.string "cuando me atacó uno...\p"
+	.string "me has salvado.\n"
+	.string "Muchas gracias!\p"
+	.string "¡Anda!\p"
+	.string "¡Si eres {PLAYER}{KUN}!\p"
+	.string "Éste no es luga para charlas, \n"
+	.string "así que vente conmigo a mi laboratorio\n"
+	.string "Pokémon, ¿vale?$"
+
+Route101_Text_TakeTiredPokemonToPokeCenter: @ 81EBFDD
+	.string "Si tus Pokémon están cansados,\n"
+	.string "llévalos a un Centro Pokémon.\p"
+	.string "Hay un Centro Pokémon en Pueblo\n"
+	.string "Escaso, muy cerca de aquí.$"
+
+Route101_Text_WildPokemonInTallGrass: @ 81EC04A
+	.string "Los Pokémon salvajes te atacarán\n"
+	.string "en las zonas de hierba alta.\p"
+	.string "Si quieres atrapar Pokémon, ve donde\n"
+	.string "haya hierba alta y busca.$"
+
+Route101_Text_RouteSign: @ 81EC0C8
+	.string "Ruta 101\n"
+	.string "{UP_ARROW} Pueblo Escaso$"
+
+#else
+
+Route101_Text_HelpMe: @ 81EBE8F
 	.string "H-help me!$"
 
-Route101_Text_PleaseHelp:
+Route101_Text_PleaseHelp: @ 81EBE9A
 	.string "Hello! You over there!\n"
 	.string "Please! Help!\p"
-	.string "In my BAG!\n"
-	.string "There's a POKé BALL!$"
+	.string "In my Bag!\n"
+	.string "There's a Poké Ball!$"
 
-Route101_Text_DontLeaveMe:
+Route101_Text_DontLeaveMe: @ 81EBEDF
 	.string "Wh-Where are you going?!\n"
 	.string "Don't leave me like this!$"
 
-Route101_Text_YouSavedMe:
-	.string "PROF. BIRCH: Whew…\p"
+Route101_Text_YouSavedMe: @ 81EBF12
+	.string "Prof. Birch: Whew…\p"
 	.string "I was in the tall grass studying wild\n"
-	.string "POKéMON when I was jumped.\p"
+	.string "Pokémon when I was jumped.\p"
 	.string "You saved me.\n"
 	.string "Thanks a lot!\p"
 	.string "Oh?\p"
 	.string "Hi, you're {PLAYER}{KUN}!\p"
 	.string "This is not the place to chat, so come\n"
-	.string "by my POKéMON LAB later, okay?$"
+	.string "by my Pokémon Lab later, okay?$"
 
-Route101_Text_TakeTiredPokemonToPokeCenter:
-	.string "If POKéMON get tired, take them to\n"
-	.string "a POKéMON CENTER.\p"
-	.string "There's a POKéMON CENTER in OLDALE\n"
-	.string "TOWN right close by.$"
+Route101_Text_TakeTiredPokemonToPokeCenter: @ 81EBFDD
+	.string "If Pokémon get tired, take them to\n"
+	.string "a Pokémon Center.\p"
+	.string "There's a Pokémon Center in Oldale\n"
+	.string "Town right close by.$"
 
-Route101_Text_WildPokemonInTallGrass:
-	.string "Wild POKéMON will jump out at you in\n"
+Route101_Text_WildPokemonInTallGrass: @ 81EC04A
+	.string "Wild Pokémon will jump out at you in\n"
 	.string "tall grass.\p"
-	.string "If you want to catch POKéMON, you have\n"
+	.string "If you want to catch Pokémon, you have\n"
 	.string "to go into the tall grass and search.$"
 
-Route101_Text_RouteSign:
-	.string "ROUTE 101\n"
-	.string "{UP_ARROW} OLDALE TOWN$"
+Route101_Text_RouteSign: @ 81EC0C8
+	.string "Route 101\n"
+	.string "{UP_ARROW} Oldale Town$"
 
+#endif

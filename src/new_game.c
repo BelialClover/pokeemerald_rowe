@@ -45,22 +45,28 @@
 #include "berry_powder.h"
 #include "mevent.h"
 #include "union_room_chat.h"
+#include "constants/map_groups.h"
+#include "constants/items.h"
 
 extern const u8 EventScript_ResetAllMapFlags[];
 
+// this file's functions
 static void ClearFrontierRecord(void);
 static void WarpToTruck(void);
-static void ResetMiniGamesRecords(void);
+static void ResetMiniGamesResults(void);
 
+// EWRAM vars
 EWRAM_DATA bool8 gDifferentSaveFile = FALSE;
 EWRAM_DATA bool8 gEnableContestDebugging = FALSE;
 
+// const rom data
 static const struct ContestWinner sContestWinnerPicDummy =
 {
     .monName = _(""),
     .trainerName = _("")
 };
 
+// code
 void SetTrainerId(u32 trainerId, u8 *dst)
 {
     dst[0] = trainerId;
@@ -83,16 +89,16 @@ void CopyTrainerId(u8 *dst, u8 *src)
 
 static void InitPlayerTrainerId(void)
 {
-    u32 trainerId = (Random() << 16) | GetGeneratedTrainerIdLower();
+    u32 trainerId = (Random() << 0x10) | GetGeneratedTrainerIdLower();
     SetTrainerId(trainerId, gSaveBlock2Ptr->playerTrainerId);
 }
 
 // L=A isnt set here for some reason.
 static void SetDefaultOptions(void)
 {
-    gSaveBlock2Ptr->optionsTextSpeed = OPTIONS_TEXT_SPEED_MID;
+    gSaveBlock2Ptr->optionsTextSpeed = OPTIONS_TEXT_SPEED_FAST;
     gSaveBlock2Ptr->optionsWindowFrameType = 0;
-    gSaveBlock2Ptr->optionsSound = OPTIONS_SOUND_MONO;
+    gSaveBlock2Ptr->optionsSound = OPTIONS_SOUND_STEREO;
     gSaveBlock2Ptr->optionsBattleStyle = OPTIONS_BATTLE_STYLE_SHIFT;
     gSaveBlock2Ptr->optionsBattleSceneOff = FALSE;
     gSaveBlock2Ptr->regionMapZoom = FALSE;
@@ -110,9 +116,7 @@ void ClearAllContestWinnerPics(void)
     s32 i;
 
     ClearContestWinnerPicsInContestHall();
-
-    // Clear Museum paintings
-    for (i = MUSEUM_CONTEST_WINNERS_START; i < NUM_CONTEST_WINNERS; i++)
+    for (i = 8; i < 13; i++)
         gSaveBlock1Ptr->contestWinners[i] = sContestWinnerPicDummy;
 }
 
@@ -126,7 +130,7 @@ static void ClearFrontierRecord(void)
 
 static void WarpToTruck(void)
 {
-    SetWarpDestination(MAP_GROUP(INSIDE_OF_TRUCK), MAP_NUM(INSIDE_OF_TRUCK), -1, -1, -1);
+    SetWarpDestination(MAP_GROUP(INSIDE_OF_TRUCK), MAP_NUM(INSIDE_OF_TRUCK), 5, 5, -1);
     WarpIntoMap();
 }
 
@@ -138,7 +142,7 @@ void Sav2_ClearSetDefault(void)
 
 void ResetMenuAndMonGlobals(void)
 {
-    gDifferentSaveFile = FALSE;
+    gDifferentSaveFile = 0;
     ResetPokedexScrollPositions();
     ZeroPlayerPartyMons();
     ZeroEnemyPartyMons();
@@ -151,7 +155,7 @@ void NewGameInitData(void)
     if (gSaveFileStatus == SAVE_STATUS_EMPTY || gSaveFileStatus == SAVE_STATUS_CORRUPT)
         RtcReset();
 
-    gDifferentSaveFile = TRUE;
+    gDifferentSaveFile = 1;
     gSaveBlock2Ptr->encryptionKey = 0;
     ZeroPlayerPartyMons();
     ZeroEnemyPartyMons();
@@ -182,7 +186,7 @@ void NewGameInitData(void)
     ResetPokemonStorageSystem();
     ClearRoamerData();
     ClearRoamerLocationData();
-    gSaveBlock1Ptr->registeredItem = 0;
+    //gSaveBlock1Ptr->registeredItem = 0;
     ClearBag();
     NewGameInitPCItems();
     ClearPokeblocks();
@@ -194,7 +198,7 @@ void NewGameInitData(void)
     ResetLotteryCorner();
     WarpToTruck();
     ScriptContext2_RunNewScript(EventScript_ResetAllMapFlags);
-    ResetMiniGamesRecords();
+    ResetMiniGamesResults();
     InitUnionRoomChatRegisteredTexts();
     InitLilycoveLady();
     ResetAllApprenticeData();
@@ -204,12 +208,22 @@ void NewGameInitData(void)
     WipeTrainerNameRecords();
     ResetTrainerHillResults();
     ResetContestLinkResults();
+    
+    memset(&gSaveBlock2Ptr->itemFlags, 0, sizeof(gSaveBlock2Ptr->itemFlags));
+    
+    gSaveBlock1Ptr->registeredItemSelect = 0;
+    gSaveBlock1Ptr->registeredItemL = 0;
+    gSaveBlock1Ptr->registeredItemR = 0;
+
+    memset(gSaveBlock1Ptr->dexNavSearchLevels, 0, sizeof(gSaveBlock1Ptr->dexNavSearchLevels));
+    gSaveBlock1Ptr->dexNavChain = 0;
+	gSaveBlock2Ptr->lastUsedBall = ITEM_POKE_BALL;
 }
 
-static void ResetMiniGamesRecords(void)
+static void ResetMiniGamesResults(void)
 {
     CpuFill16(0, &gSaveBlock2Ptr->berryCrush, sizeof(struct BerryCrush));
     SetBerryPowder(&gSaveBlock2Ptr->berryCrush.berryPowderAmount, 0);
-    ResetPokemonJumpRecords();
+    ResetPokeJumpResults();
     CpuFill16(0, &gSaveBlock2Ptr->berryPick, sizeof(struct BerryPickingResults));
 }

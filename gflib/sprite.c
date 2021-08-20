@@ -1,7 +1,8 @@
 #include "global.h"
-#include "sprite.h"
+#include "day_night.h"
 #include "main.h"
 #include "palette.h"
+#include "sprite.h"
 
 #define MAX_SPRITE_COPY_REQUESTS 64
 
@@ -31,12 +32,6 @@ struct SpriteCopyRequest
     const u8 *src;
     u8 *dest;
     u16 size;
-};
-
-struct OamDimensions32
-{
-    s32 width;
-    s32 height;
 };
 
 struct OamDimensions
@@ -164,8 +159,8 @@ static const struct Sprite sDummySprite =
     .template = &gDummySpriteTemplate,
     .subspriteTables = NULL,
     .callback = SpriteCallbackDummy,
-    .x = 304, .y = 160,
-    .x2 =  0, .y2 =  0,
+    .pos1 = { 304, 160 },
+    .pos2 = {   0,   0 },
     .centerToCornerVecX = 0,
     .centerToCornerVecY = 0,
     .animNum = 0,
@@ -246,28 +241,25 @@ static const AffineAnimCmdFunc sAffineAnimCmdFuncs[] =
     AffineAnimCmd_frame,
 };
 
-static const struct OamDimensions32 sOamDimensions32[3][4] =
+static const s32 sUnknown_082EC6F4[3][4][2] =
 {
-    [ST_OAM_SQUARE] = 
     {
-        [SPRITE_SIZE(8x8)]   = {  8,  8 },
-        [SPRITE_SIZE(16x16)] = { 16, 16 },
-        [SPRITE_SIZE(32x32)] = { 32, 32 },
-        [SPRITE_SIZE(64x64)] = { 64, 64 },
+        {8, 8},
+        {0x10, 0x10},
+        {0x20, 0x20},
+        {0x40, 0x40},
     },
-    [ST_OAM_H_RECTANGLE] =
     {
-        [SPRITE_SIZE(16x8)]  = { 16,  8 },
-        [SPRITE_SIZE(32x8)]  = { 32,  8 },
-        [SPRITE_SIZE(32x16)] = { 32, 16 },
-        [SPRITE_SIZE(64x32)] = { 64, 32 },
+        {0x10, 8},
+        {0x20, 8},
+        {0x20, 0x10},
+        {0x40, 0x20},
     },
-    [ST_OAM_V_RECTANGLE] = 
     {
-        [SPRITE_SIZE(8x16)]  = {  8, 16 },
-        [SPRITE_SIZE(8x32)]  = {  8, 32 },
-        [SPRITE_SIZE(16x32)] = { 16, 32 },
-        [SPRITE_SIZE(32x64)] = { 32, 64 },
+        {8, 0x10},
+        {8, 0x20},
+        {0x10, 0x20},
+        {0x20, 0x40},
     },
 };
 
@@ -375,13 +367,13 @@ void UpdateOamCoords(void)
         {
             if (sprite->coordOffsetEnabled)
             {
-                sprite->oam.x = sprite->x + sprite->x2 + sprite->centerToCornerVecX + gSpriteCoordOffsetX;
-                sprite->oam.y = sprite->y + sprite->y2 + sprite->centerToCornerVecY + gSpriteCoordOffsetY;
+                sprite->oam.x = sprite->pos1.x + sprite->pos2.x + sprite->centerToCornerVecX + gSpriteCoordOffsetX;
+                sprite->oam.y = sprite->pos1.y + sprite->pos2.y + sprite->centerToCornerVecY + gSpriteCoordOffsetY;
             }
             else
             {
-                sprite->oam.x = sprite->x + sprite->x2 + sprite->centerToCornerVecX;
-                sprite->oam.y = sprite->y + sprite->y2 + sprite->centerToCornerVecY;
+                sprite->oam.x = sprite->pos1.x + sprite->pos2.x + sprite->centerToCornerVecX;
+                sprite->oam.y = sprite->pos1.y + sprite->pos2.y + sprite->centerToCornerVecY;
             }
         }
     }
@@ -452,10 +444,6 @@ void SortSprites(void)
             // Although this doesn't result in a bug in the ROM,
             // the behavior is undefined.
             j--;
-#ifdef UBFIX
-            if (j == 0)
-                break;
-#endif
 
             sprite1 = &gSprites[sSpriteOrder[j - 1]];
             sprite2 = &gSprites[sSpriteOrder[j]];
@@ -583,8 +571,8 @@ u8 CreateSpriteAt(u8 index, const struct SpriteTemplate *template, s16 x, s16 y,
     sprite->affineAnims = template->affineAnims;
     sprite->template = template;
     sprite->callback = template->callback;
-    sprite->x = x;
-    sprite->y = y;
+    sprite->pos1.x = x;
+    sprite->pos1.y = y;
 
     CalcCenterToCornerVec(sprite, sprite->oam.shape, sprite->oam.size, sprite->oam.affineMode);
 
@@ -665,7 +653,8 @@ void ResetOamRange(u8 a, u8 b)
 
     for (i = a; i < b; i++)
     {
-        gMain.oamBuffer[i] = *(struct OamData *)&gDummyOamData;
+        struct OamData *oamBuffer = gMain.oamBuffer;
+        oamBuffer[i] = *(struct OamData *)&gDummyOamData;
     }
 }
 
@@ -1245,17 +1234,17 @@ void obj_update_pos2(struct Sprite *sprite, s32 a1, s32 a2)
     u32 matrixNum = sprite->oam.matrixNum;
     if (a1 != 0x800)
     {
-        var0 = sOamDimensions32[sprite->oam.shape][sprite->oam.size].width;
+        var0 = sUnknown_082EC6F4[sprite->oam.shape][sprite->oam.size][0];
         var1 = var0 << 8;
         var2 = (var0 << 16) / gOamMatrices[matrixNum].a;
-        sprite->x2 = sub_8007E28(var1, var2, a1);
+        sprite->pos2.x = sub_8007E28(var1, var2, a1);
     }
     if (a2 != 0x800)
     {
-        var0 = sOamDimensions32[sprite->oam.shape][sprite->oam.size].height;
+        var0 = sUnknown_082EC6F4[sprite->oam.shape][sprite->oam.size][1];
         var1 = var0 << 8;
         var2 = (var0 << 16) / gOamMatrices[matrixNum].d;
-        sprite->y2 = sub_8007E28(var1, var2, a2);
+        sprite->pos2.y = sub_8007E28(var1, var2, a2);
     }
 }
 
@@ -1332,7 +1321,7 @@ void ApplyAffineAnimFrameRelativeAndUpdateMatrix(u8 matrixNum, struct AffineAnim
 s16 ConvertScaleParam(s16 scale)
 {
     s32 val = 0x10000;
-    return SAFE_DIV(val, scale);
+    return val / scale;
 }
 
 void GetAffineAnimFrame(u8 matrixNum, struct Sprite *sprite, struct AffineAnimFrameCmd *frameCmd)
@@ -1619,6 +1608,27 @@ u8 LoadSpritePalette(const struct SpritePalette *palette)
     {
         sSpritePaletteTags[index] = palette->tag;
         DoLoadSpritePalette(palette->data, index * 16);
+        return index;
+    }
+}
+
+u8 LoadSpritePaletteDayNight(const struct SpritePalette *palette)
+{
+    u8 index = IndexOfSpritePaletteTag(palette->tag);
+
+    if (index != 0xFF)
+        return index;
+
+    index = IndexOfSpritePaletteTag(0xFFFF);
+
+    if (index == 0xFF)
+    {
+        return 0xFF;
+    }
+    else
+    {
+        sSpritePaletteTags[index] = palette->tag;
+        DoLoadSpritePaletteDayNight(palette->data, index * 16);
         return index;
     }
 }

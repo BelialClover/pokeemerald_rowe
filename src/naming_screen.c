@@ -172,7 +172,8 @@ struct NamingScreenData
     const struct NamingScreenTemplate *template;
     u8 templateNum;
     u8 *destBuffer;
-    u16 monSpecies;
+    u16 monSpecies:11;
+    u16 monFormId:5;
     u16 monGender;
     u32 monPersonality;
     MainCallback returnCallback;
@@ -394,7 +395,7 @@ static void VBlankCB_NamingScreen(void);
 static void NamingScreen_ShowBgs(void);
 static bool8 IsWideLetter(u8);
 
-void DoNamingScreen(u8 templateNum, u8 *destBuffer, u16 monSpecies, u16 monGender, u32 monPersonality, MainCallback returnCallback)
+void DoNamingScreen(u8 templateNum, u8 *destBuffer, u16 monSpecies, u16 monGender, u32 monPersonality, MainCallback returnCallback, u8 monFormId)
 {
     sNamingScreen = Alloc(sizeof(struct NamingScreenData));
     if (!sNamingScreen)
@@ -405,6 +406,7 @@ void DoNamingScreen(u8 templateNum, u8 *destBuffer, u16 monSpecies, u16 monGende
     {
         sNamingScreen->templateNum = templateNum;
         sNamingScreen->monSpecies = monSpecies;
+        sNamingScreen->monFormId = monFormId;
         sNamingScreen->monGender = monGender;
         sNamingScreen->monPersonality = monPersonality;
         sNamingScreen->destBuffer = destBuffer;
@@ -475,7 +477,7 @@ static void NamingScreen_Init(void)
     sNamingScreen->bgToHide = 1;
     sNamingScreen->template = sNamingScreenTemplates[sNamingScreen->templateNum];
     sNamingScreen->currentPage = sNamingScreen->template->initialPage;
-    sNamingScreen->inputCharBaseXPos = (DISPLAY_WIDTH - sNamingScreen->template->maxChars * 8) / 2 + 6;
+    sNamingScreen->inputCharBaseXPos = (240 - sNamingScreen->template->maxChars * 8) / 2 + 6;
     if (sNamingScreen->templateNum == NAMING_SCREEN_WALDA)
         sNamingScreen->inputCharBaseXPos += 11;
     sNamingScreen->keyRepeatStartDelayCopy = gKeyRepeatStartDelay;
@@ -635,8 +637,8 @@ static bool8 MainState_FadeIn(void)
     CopyBgTilemapBufferToVram(1);
     CopyBgTilemapBufferToVram(2);
     CopyBgTilemapBufferToVram(3);
-    BlendPalettes(PALETTES_ALL, 16, 0);
-    BeginNormalPaletteFade(PALETTES_ALL, 0, 16, 0, RGB_BLACK);
+    BlendPalettes(-1, 16, 0);
+    BeginNormalPaletteFade(0xFFFFFFFF, 0, 16, 0, RGB_BLACK);
     sNamingScreen->state++;
     return FALSE;
 }
@@ -690,7 +692,7 @@ static bool8 MainState_PressedOKButton(void)
 
 static bool8 MainState_FadeOut(void)
 {
-    BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, RGB_BLACK);
+    BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB_BLACK);
     sNamingScreen->state++;
     return FALSE;
 }
@@ -826,7 +828,7 @@ static void Task_HandlePageSwapAnim(u8 taskId)
 
 static bool8 IsPageSwapAnimNotInProgress(void)
 {
-    if (FindTaskIdByFunc(Task_HandlePageSwapAnim) == TASK_NONE)
+    if (FindTaskIdByFunc(Task_HandlePageSwapAnim) == 0xFF)
         return TRUE;
     else
         return FALSE;
@@ -1071,7 +1073,7 @@ static void SpriteCB_InputArrow(struct Sprite *sprite)
         sprite->sDelay = 8;
         sprite->sXPosId = (sprite->sXPosId + 1) & (ARRAY_COUNT(x) - 1);
     }
-    sprite->x2 = x[sprite->sXPosId];
+    sprite->pos2.x = x[sprite->sXPosId];
 }
 
 #undef sDelay
@@ -1089,13 +1091,13 @@ static void SpriteCB_Underscore(struct Sprite *sprite)
     pos = GetTextEntryPosition();
     if (pos != (u8)sprite->sId)
     {
-        sprite->y2 = 0;
+        sprite->pos2.y = 0;
         sprite->sYPosId = 0;
         sprite->sDelay = 0;
     }
     else
     {
-        sprite->y2 = y[sprite->sYPosId];
+        sprite->pos2.y = y[sprite->sYPosId];
         sprite->sDelay++;
         if (sprite->sDelay > 8)
         {
@@ -1134,11 +1136,11 @@ static void SetCursorPos(s16 x, s16 y)
     struct Sprite *cursorSprite = &gSprites[sNamingScreen->cursorSpriteId];
 
     if (x < sPageColumnCounts[CurrentPageToKeyboardId()])
-        cursorSprite->x = sPageColumnXPos[x + CurrentPageToKeyboardId() * KBCOL_COUNT] + 38;
+        cursorSprite->pos1.x = sPageColumnXPos[x + CurrentPageToKeyboardId() * KBCOL_COUNT] + 38;
     else
-        cursorSprite->x = 0;
+        cursorSprite->pos1.x = 0;
 
-    cursorSprite->y = y * 16 + 88;
+    cursorSprite->pos1.y = y * 16 + 88;
     cursorSprite->sPrevX = cursorSprite->sX;
     cursorSprite->sPrevY = cursorSprite->sY;
     cursorSprite->sX = x;
@@ -1284,11 +1286,11 @@ static bool8 PageSwapSprite_SlideOff(struct Sprite *sprite)
     struct Sprite *text = &gSprites[sprite->sTextSpriteId];
     struct Sprite *button = &gSprites[sprite->sButtonSpriteId];
 
-    text->y2++;
-    if (text->y2 > 7)
+    text->pos2.y++;
+    if (text->pos2.y > 7)
     {
         sprite->sState++;
-        text->y2 = -4;
+        text->pos2.y = -4;
         text->invisible = TRUE;
         SetPageSwapButtonGfx(PageToNextGfxId(((u8)sprite->sPage + 1) % KBPAGE_COUNT), text, button);
     }
@@ -1300,10 +1302,10 @@ static bool8 PageSwapSprite_SlideOn(struct Sprite *sprite)
     struct Sprite *text = &gSprites[sprite->sTextSpriteId];
 
     text->invisible = FALSE;
-    text->y2++;
-    if (text->y2 >= 0)
+    text->pos2.y++;
+    if (text->pos2.y >= 0)
     {
-        text->y2 = 0;
+        text->pos2.y = 0;
         sprite->sState = 1; // go to PageSwapSprite_Idle
     }
     return FALSE;
@@ -1420,7 +1422,7 @@ static void NamingScreen_CreateMonIcon(void)
     u8 spriteId;
 
     LoadMonIconPalettes();
-    spriteId = CreateMonIcon(sNamingScreen->monSpecies, SpriteCallbackDummy, 56, 40, 0, sNamingScreen->monPersonality);
+    spriteId = CreateMonIcon(sNamingScreen->monSpecies, SpriteCallbackDummy, 56, 40, 0, sNamingScreen->monPersonality, 1, sNamingScreen->monFormId);
     gSprites[spriteId].oam.priority = 3;
 }
 
@@ -1481,6 +1483,9 @@ static bool8 KeyboardKeyHandler_Character(u8 input)
     if (input == INPUT_A_BUTTON)
     {
         bool8 textFull = AddTextCharacter();
+
+        if (sNamingScreen->currentPage == KBPAGE_LETTERS_UPPER && GetTextEntryPosition() == 1)
+            MainState_StartPageSwap();
 
         SquishCursor();
         if (textFull)
@@ -1714,8 +1719,14 @@ static void DrawMonTextEntryBox(void)
 {
     u8 buffer[32];
 
+#if GAME_LANGUAGE == LANGUAGE_SPANISH
+    StringCopy(buffer, sNamingScreen->template->title);
+    StringAppendN(buffer, gSpeciesNames[sNamingScreen->monSpecies], 15);
+    StringAppendN(buffer, gText_QuestionMark, 15);
+#else
     StringCopy(buffer, gSpeciesNames[sNamingScreen->monSpecies]);
     StringAppendN(buffer, sNamingScreen->template->title, 15);
+#endif
     FillWindowPixelBuffer(sNamingScreen->windows[WIN_TEXT_ENTRY_BOX], PIXEL_FILL(1));
     AddTextPrinterParameterized(sNamingScreen->windows[WIN_TEXT_ENTRY_BOX], 1, buffer, 8, 1, 0, 0);
     PutWindowTilemap(sNamingScreen->windows[WIN_TEXT_ENTRY_BOX]);
@@ -1929,9 +1940,9 @@ struct TextColor   // Needed because of alignment
 static const struct TextColor sTextColorStruct =
 {
     {
-        {TEXT_DYNAMIC_COLOR_4, TEXT_COLOR_WHITE, TEXT_COLOR_DARK_GRAY},
-        {TEXT_DYNAMIC_COLOR_5, TEXT_COLOR_WHITE, TEXT_COLOR_DARK_GRAY},
-        {TEXT_DYNAMIC_COLOR_6, TEXT_COLOR_WHITE, TEXT_COLOR_DARK_GRAY}
+        {TEXT_DYNAMIC_COLOR_4, TEXT_COLOR_WHITE, TEXT_COLOR_DARK_GREY},
+        {TEXT_DYNAMIC_COLOR_5, TEXT_COLOR_WHITE, TEXT_COLOR_DARK_GREY},
+        {TEXT_DYNAMIC_COLOR_6, TEXT_COLOR_WHITE, TEXT_COLOR_DARK_GREY}
     }
 };
 
@@ -1999,7 +2010,7 @@ static void DrawKeyboardPageOnDeck(void)
 
 static void PrintControls(void)
 {
-    const u8 color[3] = { TEXT_DYNAMIC_COLOR_6, TEXT_COLOR_WHITE, TEXT_COLOR_DARK_GRAY };
+    const u8 color[3] = { TEXT_DYNAMIC_COLOR_6, TEXT_COLOR_WHITE, TEXT_COLOR_DARK_GREY };
 
     FillWindowPixelBuffer(sNamingScreen->windows[WIN_BANNER], PIXEL_FILL(15));
     AddTextPrinterParameterized3(sNamingScreen->windows[WIN_BANNER], 0, 2, 1, color, 0, gText_MoveOkBack);
@@ -2063,22 +2074,22 @@ static bool8 IsWideLetter(u8 character)
 // Debug? Unused, and arguments aren't sensible for non-player screens.
 static void Debug_NamingScreenPlayer(void)
 {
-    DoNamingScreen(NAMING_SCREEN_PLAYER, gSaveBlock2Ptr->playerName, gSaveBlock2Ptr->playerGender, 0, 0, CB2_ReturnToFieldWithOpenMenu);
+    DoNamingScreen(NAMING_SCREEN_PLAYER, gSaveBlock2Ptr->playerName, gSaveBlock2Ptr->playerGender, 0, 0, CB2_ReturnToFieldWithOpenMenu, 0);
 }
 
 static void Debug_NamingScreenBox(void)
 {
-    DoNamingScreen(NAMING_SCREEN_BOX, gSaveBlock2Ptr->playerName, gSaveBlock2Ptr->playerGender, 0, 0, CB2_ReturnToFieldWithOpenMenu);
+    DoNamingScreen(NAMING_SCREEN_BOX, gSaveBlock2Ptr->playerName, gSaveBlock2Ptr->playerGender, 0, 0, CB2_ReturnToFieldWithOpenMenu, 0);
 }
 
 static void Debug_NamingScreenCaughtMon(void)
 {
-    DoNamingScreen(NAMING_SCREEN_CAUGHT_MON, gSaveBlock2Ptr->playerName, gSaveBlock2Ptr->playerGender, 0, 0, CB2_ReturnToFieldWithOpenMenu);
+    DoNamingScreen(NAMING_SCREEN_CAUGHT_MON, gSaveBlock2Ptr->playerName, gSaveBlock2Ptr->playerGender, 0, 0, CB2_ReturnToFieldWithOpenMenu, 0);
 }
 
 static void Debug_NamingScreenNickname(void)
 {
-    DoNamingScreen(NAMING_SCREEN_NICKNAME, gSaveBlock2Ptr->playerName, gSaveBlock2Ptr->playerGender, 0, 0, CB2_ReturnToFieldWithOpenMenu);
+    DoNamingScreen(NAMING_SCREEN_NICKNAME, gSaveBlock2Ptr->playerName, gSaveBlock2Ptr->playerGender, 0, 0, CB2_ReturnToFieldWithOpenMenu, 0);
 }
 
 //--------------------------------------------------

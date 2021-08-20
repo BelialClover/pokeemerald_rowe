@@ -23,7 +23,7 @@
 #include "intro.h"
 #include "main.h"
 #include "trainer_hill.h"
-#include "constants/rgb.h"
+#include "mgba.h"
 
 static void VBlankIntr(void);
 static void HBlankIntr(void);
@@ -91,7 +91,7 @@ void AgbMain()
 #if !MODERN
     RegisterRamReset(RESET_ALL);
 #endif //MODERN
-    *(vu16 *)BG_PLTT = RGB_WHITE; // Set the backdrop to white on startup
+    *(vu16 *)BG_PLTT = 0x7FFF;
     InitGpuRegManager();
     REG_WAITCNT = WAITCNT_PREFETCH_ENABLE | WAITCNT_WS0_S_1 | WAITCNT_WS0_N_3;
     InitKeys();
@@ -103,18 +103,19 @@ void AgbMain()
     CheckForFlashMemory();
     InitMainCallbacks();
     InitMapMusic();
-#ifdef BUGFIX
-    SeedRngWithRtc(); // see comment at SeedRngWithRtc definition below
-#endif
+    SeedRngWithRtc();
     ClearDma3Requests();
     ResetBgs();
     SetDefaultFontsPointer();
+    #ifdef GBA_PRINTF
+    mgba_open();
+    #endif
     InitHeap(gHeap, HEAP_SIZE);
 
     gSoftResetDisabled = FALSE;
 
-    if (gFlashMemoryPresent != TRUE)
-        SetMainCallback2(NULL);
+    //if (gFlashMemoryPresent != TRUE)
+    //    SetMainCallback2(NULL);
 
     gLinkTransferringData = FALSE;
     gUnknown_03000000 = 0xFC0;
@@ -132,7 +133,7 @@ void AgbMain()
             DoSoftReset();
         }
 
-        if (Overworld_SendKeysToLinkIsRunning() == TRUE)
+        if (sub_8087634() == 1)
         {
             gLinkTransferringData = TRUE;
             UpdateLinkAndCallCallbacks();
@@ -143,7 +144,7 @@ void AgbMain()
             gLinkTransferringData = FALSE;
             UpdateLinkAndCallCallbacks();
 
-            if (Overworld_RecvKeysFromLinkIsRunning() == TRUE)
+            if (sub_80875C8() == 1)
             {
                 gMain.newKeys = 0;
                 ClearSpriteCopyRequests();
@@ -216,15 +217,12 @@ void EnableVCountIntrAtLine150(void)
     EnableInterrupts(INTR_FLAG_VCOUNT);
 }
 
-// FRLG commented this out to remove RTC, however Emerald didn't undo this!
-#ifdef BUGFIX
 static void SeedRngWithRtc(void)
 {
     u32 seed = RtcGetMinuteCount();
     seed = (seed >> 16) ^ (seed & 0xFFFF);
     SeedRng(seed);
 }
-#endif
 
 void InitKeys(void)
 {
@@ -299,7 +297,7 @@ void InitIntrHandlers(void)
 
     REG_IME = 1;
 
-    EnableInterrupts(INTR_FLAG_VBLANK);
+    EnableInterrupts(0x1);
 }
 
 void SetVBlankCallback(IntrCallback callback)
@@ -351,7 +349,7 @@ static void VBlankIntr(void)
     gPcmDmaCounter = gSoundInfo.pcmDmaCounter;
 
     m4aSoundMain();
-    TryReceiveLinkBattleData();
+    sub_8033648();
 
     if (!gMain.inBattle || !(gBattleTypeFlags & (BATTLE_TYPE_LINK | BATTLE_TYPE_FRONTIER | BATTLE_TYPE_RECORDED)))
         Random();
@@ -402,8 +400,7 @@ static void WaitForVBlank(void)
 {
     gMain.intrCheck &= ~INTR_FLAG_VBLANK;
 
-    while (!(gMain.intrCheck & INTR_FLAG_VBLANK))
-        ;
+    asm("swi 0x5");
 }
 
 void SetTrainerHillVBlankCounter(u32 *counter)

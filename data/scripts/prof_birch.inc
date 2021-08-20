@@ -1,4 +1,4 @@
-ProfBirch_EventScript_UpdateLocation::
+ProfBirch_EventScript_UpdateLocation:: @ 82720AD
 	compare VAR_PETALBURG_GYM_STATE, 0
 	goto_if_eq Common_EventScript_NopReturn
 	goto_if_set FLAG_SYS_GAME_CLEAR, ProfBirch_EventScript_MoveToLab
@@ -20,34 +20,34 @@ ProfBirch_EventScript_UpdateLocation::
 	call_if_eq ProfBirch_EventScript_MoveToLab
 	return
 
-ProfBirch_EventScript_MoveToLab::
+ProfBirch_EventScript_MoveToLab:: @ 827211A
 	clearflag FLAG_HIDE_LITTLEROOT_TOWN_BIRCHS_LAB_BIRCH
 	clearflag FLAG_HIDE_LITTLEROOT_TOWN_BIRCHS_LAB_UNKNOWN_0x380
 	setflag FLAG_HIDE_ROUTE_101_BIRCH
 	setflag FLAG_HIDE_ROUTE_103_BIRCH
 	return
 
-ProfBirch_EventScript_MoveToRoute101::
+ProfBirch_EventScript_MoveToRoute101:: @ 8272127
 	clearflag FLAG_HIDE_ROUTE_101_BIRCH
 	setflag FLAG_HIDE_LITTLEROOT_TOWN_BIRCHS_LAB_BIRCH
 	setflag FLAG_HIDE_LITTLEROOT_TOWN_BIRCHS_LAB_UNKNOWN_0x380
 	setflag FLAG_HIDE_ROUTE_103_BIRCH
 	return
 
-ProfBirch_EventScript_MoveToRoute103::
+ProfBirch_EventScript_MoveToRoute103:: @ 8272134
 	clearflag FLAG_HIDE_ROUTE_103_BIRCH
 	setflag FLAG_HIDE_ROUTE_101_BIRCH
 	setflag FLAG_HIDE_LITTLEROOT_TOWN_BIRCHS_LAB_BIRCH
 	setflag FLAG_HIDE_LITTLEROOT_TOWN_BIRCHS_LAB_UNKNOWN_0x380
 	return
 
-ProfBirch_EventScript_RatePokedexOrRegister::
+ProfBirch_EventScript_RatePokedexOrRegister:: @ 8272141
 	lock
 	faceplayer
 	goto_if_unset FLAG_HAS_MATCH_CALL, ProfBirch_EventScript_AskRatePokedex
 	goto_if_unset FLAG_ENABLE_PROF_BIRCH_MATCH_CALL, EventScript_RegisterProfBirch
 
-ProfBirch_EventScript_AskRatePokedex::
+ProfBirch_EventScript_AskRatePokedex:: @ 8272155
 	msgbox gBirchDexRatingText_AreYouCurious, MSGBOX_YESNO
 	compare VAR_RESULT, NO
 	goto_if_eq ProfBirch_EventScript_DeclineRating
@@ -55,19 +55,19 @@ ProfBirch_EventScript_AskRatePokedex::
 	release
 	end
 
-ProfBirch_EventScript_DeclineRating::
+ProfBirch_EventScript_DeclineRating:: @ 827216F
 	msgbox gBirchDexRatingText_Cancel, MSGBOX_DEFAULT
 	release
 	end
 
-ProfBirch_EventScript_ShowRatingMessage::
+ProfBirch_EventScript_ShowRatingMessage:: @ 8272179
 	copyvar VAR_0x8004, VAR_0x8009
 	special ShowPokedexRatingMessage
 	waitmessage
 	waitbuttonpress
 	return
 
-ProfBirch_EventScript_RatePokedex::
+ProfBirch_EventScript_RatePokedex:: @ 8272184
 	setvar VAR_0x8004, 0
 	specialvar VAR_RESULT, ScriptGetPokedexInfo
 	copyvar VAR_0x8008, VAR_0x8005

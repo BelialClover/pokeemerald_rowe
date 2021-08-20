@@ -37,6 +37,8 @@
 #include "mirage_tower.h"
 #include "field_screen_effect.h"
 #include "data.h"
+#include "day_night.h"
+#include "constants/day_night.h"
 #include "constants/battle_frontier.h"
 #include "constants/battle_setup.h"
 #include "constants/game_stat.h"
@@ -480,7 +482,7 @@ static void sub_80B0828(void)
 // Initiates battle where Wally catches Ralts
 void StartWallyTutorialBattle(void)
 {
-    CreateMaleMon(&gEnemyParty[0], SPECIES_RALTS, 5);
+    CreateMaleMon(&gEnemyParty[0], SPECIES_RALTS, 5, 0);
     ScriptContext2_Enable();
     gMain.savedCallback = CB2_ReturnToFieldContinueScriptPlayMapMusic;
     gBattleTypeFlags = BATTLE_TYPE_WALLY_TUTORIAL;
@@ -624,7 +626,7 @@ static void CB2_EndWildBattle(void)
     else
     {
         SetMainCallback2(CB2_ReturnToField);
-        gFieldCallback = FieldCB_ReturnToFieldNoScriptCheckMusic;
+        gFieldCallback = sub_80AF6F0;
     }
 }
 
@@ -655,7 +657,18 @@ u8 BattleSetup_GetTerrainId(void)
     tileBehavior = MapGridGetMetatileBehaviorAt(x, y);
 
     if (MetatileBehavior_IsTallGrass(tileBehavior))
-        return BATTLE_TERRAIN_GRASS;
+    {
+        u8 time = GetCurrentTimeOfDay();
+        switch(time)
+        {
+            case TIME_SUNSET:
+                return BATTLE_TERRAIN_GRASS_DUSK;
+            case TIME_NIGHT:
+                return BATTLE_TERRAIN_GRASS_NIGHT;
+            default:
+                return BATTLE_TERRAIN_GRASS;
+        }
+    }
     if (MetatileBehavior_IsLongGrass(tileBehavior))
         return BATTLE_TERRAIN_LONG_GRASS;
     if (MetatileBehavior_IsSandOrDeepSand(tileBehavior))
@@ -1215,7 +1228,7 @@ void ConfigureAndSetUpOneTrainerBattle(u8 trainerObjEventId, const u8 *trainerSc
     gSelectedObjectEvent = trainerObjEventId;
     gSpecialVar_LastTalked = gObjectEvents[trainerObjEventId].localId;
     BattleSetup_ConfigureTrainerBattle(trainerScript + 1);
-    ScriptContext1_SetupScript(EventScript_StartTrainerApproach);
+    ScriptContext1_SetupScript(EventScript_271354);
     ScriptContext2_Enable();
 }
 
@@ -1228,7 +1241,7 @@ void ConfigureTwoTrainersBattle(u8 trainerObjEventId, const u8 *trainerScript)
 
 void SetUpTwoTrainersBattle(void)
 {
-    ScriptContext1_SetupScript(EventScript_StartTrainerApproach);
+    ScriptContext1_SetupScript(EventScript_271354);
     ScriptContext2_Enable();
 }
 
@@ -1238,12 +1251,10 @@ bool32 GetTrainerFlagFromScriptPointer(const u8 *data)
     return FlagGet(TRAINER_FLAGS_START + flag);
 }
 
-// Set trainer's movement type so they stop and remain facing that direction
-// Note: Only for trainers who are spoken to directly
-//       For trainers who spot the player this is handled by PlayerFaceApproachingTrainer
-void SetTrainerFacingDirection(void)
+void SetUpTrainerMovement(void)
 {
     struct ObjectEvent *objectEvent = &gObjectEvents[gSelectedObjectEvent];
+
     SetTrainerMovementType(objectEvent, GetTrainerFacingDirectionMovementType(objectEvent->facingDirection));
 }
 
@@ -1457,7 +1468,7 @@ void ShowTrainerCantBattleSpeech(void)
     ShowFieldMessage(GetTrainerCantBattleSpeech());
 }
 
-void PlayTrainerEncounterMusic(void)
+void SetUpTrainerEncounterMusic(void)
 {
     u16 trainerId;
     u16 music;
@@ -1584,7 +1595,8 @@ static s32 TrainerIdToRematchTableId(const struct RematchTrainer *table, u16 tra
     {
         for (j = 0; j < REMATCHES_COUNT; j++)
         {
-            if (table[i].trainerIds[j] == 0) break; // one line required to match -g
+            if (table[i].trainerIds[j] == 0)
+                break;
             if (table[i].trainerIds[j] == trainerId)
                 return i;
         }

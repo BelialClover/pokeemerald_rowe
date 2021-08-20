@@ -26,6 +26,7 @@
 #include "item_menu_icons.h"
 #include "decompress.h"
 #include "international_string_util.h"
+#include "constants/berry.h"
 #include "constants/items.h"
 #include "constants/rgb.h"
 #include "constants/songs.h"
@@ -276,11 +277,11 @@ static bool8 InitBerryTagScreen(void)
         gMain.state++;
         break;
     case 14:
-        BlendPalettes(PALETTES_ALL, 0x10, 0);
+        BlendPalettes(-1, 0x10, 0);
         gMain.state++;
         break;
     case 15:
-        BeginNormalPaletteFade(PALETTES_ALL, 0, 0x10, 0, RGB_BLACK);
+        BeginNormalPaletteFade(0xFFFFFFFF, 0, 0x10, 0, RGB_BLACK);
         gPaletteFade.bufferTransferDisabled = 0;
         gMain.state++;
         break;
@@ -514,7 +515,7 @@ static void DestroyFlavorCircleSprites(void)
 static void PrepareToCloseBerryTagScreen(u8 taskId)
 {
     PlaySE(SE_SELECT);
-    BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 0x10, RGB_BLACK);
+    BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 0x10, RGB_BLACK);
     gTasks[taskId].func = Task_CloseBerryTagScreen;
 }
 
@@ -548,9 +549,9 @@ static void Task_HandleInput(u8 taskId)
 static void TryChangeDisplayedBerry(u8 taskId, s8 toMove)
 {
     s16 *data = gTasks[taskId].data;
-    s16 currPocketPosition = gBagPosition.scrollPosition[BERRIES_POCKET] + gBagPosition.cursorPosition[BERRIES_POCKET];
+    s16 currPocketPosition = gBagPositionStruct.scrollPosition[3] + gBagPositionStruct.cursorPosition[3];
     u32 newPocketPosition = currPocketPosition + toMove;
-    if (newPocketPosition < ITEM_TO_BERRY(LAST_BERRY_INDEX) && BagGetItemIdByPocketPosition(POCKET_BERRIES, newPocketPosition) != ITEM_NONE)
+    if (newPocketPosition < 46 && BagGetItemIdByPocketPosition(POCKET_BERRIES, newPocketPosition) != 0)
     {
         if (toMove < 0)
             data[1] = 2;
@@ -566,8 +567,8 @@ static void TryChangeDisplayedBerry(u8 taskId, s8 toMove)
 
 static void HandleBagCursorPositionChange(s8 toMove)
 {
-    u16 *scrollPos = &gBagPosition.scrollPosition[BERRIES_POCKET];
-    u16 *cursorPos = &gBagPosition.cursorPosition[BERRIES_POCKET];
+    u16 *scrollPos = &gBagPositionStruct.scrollPosition[3];
+    u16 *cursorPos = &gBagPositionStruct.cursorPosition[3];
     if (toMove > 0)
     {
         if (*cursorPos < 4 || BagGetItemIdByPocketPosition(POCKET_BERRIES, *scrollPos + 8) == 0)
@@ -674,9 +675,9 @@ static void Task_DisplayAnotherBerry(u8 taskId)
     else
         posY = data[0];
 
-    gSprites[sBerryTag->berrySpriteId].y2 = posY;
+    gSprites[sBerryTag->berrySpriteId].pos2.y = posY;
     for (i = 0; i < FLAVOR_COUNT; i++)
-        gSprites[sBerryTag->flavorCircleIds[i]].y2 = posY;
+        gSprites[sBerryTag->flavorCircleIds[i]].pos2.y = posY;
 
     ChangeBgY(1, 0x1000, data[1]);
     ChangeBgY(2, 0x1000, data[1]);

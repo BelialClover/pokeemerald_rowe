@@ -30,7 +30,7 @@
 class CFile
 {
 public:
-    CFile(const char * filenameCStr, bool isStdin);
+    CFile(std::string filename);
     CFile(CFile&& other);
     CFile(const CFile&) = delete;
     ~CFile();
@@ -42,7 +42,6 @@ private:
     long m_size;
     long m_lineNum;
     std::string m_filename;
-    bool m_isStdin;
 
     bool ConsumeHorizontalWhitespace();
     bool ConsumeNewline();
@@ -55,7 +54,5 @@ private:
     void RaiseError(const char* format, ...);
     void RaiseWarning(const char* format, ...);
 };
-
-#define CHUNK_SIZE 4096
 
 #endif // C_FILE_H

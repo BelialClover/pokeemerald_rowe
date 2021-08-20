@@ -102,7 +102,7 @@ static const struct SpriteTemplate sVsLetter_V_SpriteTemplate =
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = sVsLetterAffineAnimTable,
-    .callback = SpriteCB_VsLetterDummy
+    .callback = nullsub_17
 };
 
 static const struct SpriteTemplate sVsLetter_S_SpriteTemplate =
@@ -113,7 +113,7 @@ static const struct SpriteTemplate sVsLetter_S_SpriteTemplate =
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = sVsLetterAffineAnimTable,
-    .callback = SpriteCB_VsLetterDummy
+    .callback = nullsub_17
 };
 
 static const struct CompressedSpriteSheet sVsLettersSpriteSheet =
@@ -194,44 +194,44 @@ static const struct WindowTemplate gStandardBattleWindowTemplates[] =
         .bg = 0,
         .tilemapLeft = 2,
         .tilemapTop = 55,
-        .width = 8,
+        .width = 10,
         .height = 2,
         .paletteNum = 5,
         .baseBlock = 0x0300,
     },
     { // 4 Top right move
         .bg = 0,
-        .tilemapLeft = 11,
+        .tilemapLeft = 13,
         .tilemapTop = 55,
-        .width = 8,
+        .width = 10,
         .height = 2,
         .paletteNum = 5,
-        .baseBlock = 0x0310,
+        .baseBlock = 0x0314,
     },
     { // 5 Bottom left move
         .bg = 0,
         .tilemapLeft = 2,
         .tilemapTop = 57,
-        .width = 8,
+        .width = 10,
         .height = 2,
         .paletteNum = 5,
-        .baseBlock = 0x0320,
+        .baseBlock = 0x0328,
     },
     { // 6 Bottom right move
         .bg = 0,
-        .tilemapLeft = 11,
+        .tilemapLeft = 13,
         .tilemapTop = 57,
-        .width = 8,
+        .width = 10,
         .height = 2,
         .paletteNum = 5,
-        .baseBlock = 0x0330,
+        .baseBlock = 0x033c,
     },
-    {
+    { // 7 PP string
         .bg = 0,
         .tilemapLeft = 21,
         .tilemapTop = 55,
-        .width = 4,
-        .height = 2,
+        .width = 0,
+        .height = 0,
         .paletteNum = 5,
         .baseBlock = 0x0290,
     },
@@ -244,29 +244,29 @@ static const struct WindowTemplate gStandardBattleWindowTemplates[] =
         .paletteNum = 5,
         .baseBlock = 0x0298,
     },
-    {
+    { // 9 PP number
+        .bg = 0,
+        .tilemapLeft = 25,
+        .tilemapTop = 57,
+        .width = 4,
+        .height = 2,
+        .paletteNum = 5,
+        .baseBlock = 0x0298,
+    },
+    { // 10 Move type
         .bg = 0,
         .tilemapLeft = 25,
         .tilemapTop = 55,
         .width = 4,
         .height = 2,
         .paletteNum = 5,
-        .baseBlock = 0x0298,
-    },
-    {
-        .bg = 0,
-        .tilemapLeft = 21,
-        .tilemapTop = 57,
-        .width = 8,
-        .height = 2,
-        .paletteNum = 5,
         .baseBlock = 0x02a0,
     },
-    {
+    { // 11 "Switch which?"
         .bg = 0,
-        .tilemapLeft = 21,
+        .tilemapLeft = 25,
         .tilemapTop = 55,
-        .width = 8,
+        .width = 4,
         .height = 4,
         .paletteNum = 5,
         .baseBlock = 0x02b0,
@@ -378,6 +378,33 @@ static const struct WindowTemplate gStandardBattleWindowTemplates[] =
         .height = 2,
         .paletteNum = 0,
         .baseBlock = 0x00b0,
+    },
+    { // super effective
+        .bg = 0,
+        .tilemapLeft = 25,
+        .tilemapTop = 55,
+        .width = 4,
+        .height = 2,
+        .paletteNum = 5,
+        .baseBlock = 0x02a0,
+    },
+    { // not very effective
+        .bg = 0,
+        .tilemapLeft = 25,
+        .tilemapTop = 55,
+        .width = 4,
+        .height = 2,
+        .paletteNum = 5,
+        .baseBlock = 0x02a0,
+    },
+    { // no effect
+        .bg = 0,
+        .tilemapLeft = 25,
+        .tilemapTop = 55,
+        .width = 4,
+        .height = 2,
+        .paletteNum = 5,
+        .baseBlock = 0x02a0,
     },
     DUMMY_WIN_TEMPLATE
 };
@@ -611,6 +638,24 @@ static const struct BattleBackground gBattleTerrainTable[] =
         .palette = gBattleTerrainPalette_TallGrass,
     },
 
+    [BATTLE_TERRAIN_GRASS_DUSK] =
+    {
+        .tileset = gBattleTerrainTiles_TallGrass,
+        .tilemap = gBattleTerrainTilemap_TallGrass,
+        .entryTileset = gBattleTerrainAnimTiles_TallGrass,
+        .entryTilemap = gBattleTerrainAnimTilemap_TallGrass,
+        .palette = gBattleTerrainPalette_TallGrass_Dusk,
+    },
+
+    [BATTLE_TERRAIN_GRASS_NIGHT] =
+    {
+        .tileset = gBattleTerrainTiles_TallGrass,
+        .tilemap = gBattleTerrainTilemap_TallGrass,
+        .entryTileset = gBattleTerrainAnimTiles_TallGrass,
+        .entryTilemap = gBattleTerrainAnimTilemap_TallGrass,
+        .palette = gBattleTerrainPalette_TallGrass_Night,
+    },
+
     [BATTLE_TERRAIN_LONG_GRASS] =
     {
         .tileset = gBattleTerrainTiles_LongGrass,
@@ -761,7 +806,7 @@ void LoadBattleMenuWindowGfx(void)
 
 void DrawMainBattleBackground(void)
 {
-    if (gBattleTypeFlags & (BATTLE_TYPE_LINK | BATTLE_TYPE_FRONTIER | BATTLE_TYPE_EREADER_TRAINER | BATTLE_TYPE_RECORDED_LINK))
+    if (gBattleTypeFlags & (BATTLE_TYPE_LINK | BATTLE_TYPE_FRONTIER | BATTLE_TYPE_EREADER_TRAINER | BATTLE_TYPE_x2000000))
     {
         LZDecompressVram(gBattleTerrainTiles_Building, (void*)(BG_CHAR_ADDR(2)));
         LZDecompressVram(gBattleTerrainTilemap_Building, (void*)(BG_SCREEN_ADDR(26)));
@@ -1118,8 +1163,8 @@ void InitLinkBattleVsScreen(u8 taskId)
             gSprites[gBattleStruct->linkBattleVsSpriteId_S].oam.tileNum += 0x40;
             gSprites[gBattleStruct->linkBattleVsSpriteId_V].data[0] = 0;
             gSprites[gBattleStruct->linkBattleVsSpriteId_S].data[0] = 1;
-            gSprites[gBattleStruct->linkBattleVsSpriteId_V].data[1] = gSprites[gBattleStruct->linkBattleVsSpriteId_V].x;
-            gSprites[gBattleStruct->linkBattleVsSpriteId_S].data[1] = gSprites[gBattleStruct->linkBattleVsSpriteId_S].x;
+            gSprites[gBattleStruct->linkBattleVsSpriteId_V].data[1] = gSprites[gBattleStruct->linkBattleVsSpriteId_V].pos1.x;
+            gSprites[gBattleStruct->linkBattleVsSpriteId_S].data[1] = gSprites[gBattleStruct->linkBattleVsSpriteId_S].pos1.x;
             gSprites[gBattleStruct->linkBattleVsSpriteId_V].data[2] = 0;
             gSprites[gBattleStruct->linkBattleVsSpriteId_S].data[2] = 0;
         }
@@ -1132,7 +1177,7 @@ void DrawBattleEntryBackground(void)
     if (gBattleTypeFlags & BATTLE_TYPE_LINK)
     {
         LZDecompressVram(gUnknown_08D778F0, (void*)(BG_CHAR_ADDR(1)));
-        LZDecompressVram(gVsLettersGfx, (void*)OBJ_VRAM0);
+        LZDecompressVram(gVsLettersGfx, (void*)(VRAM + 0x10000));
         LoadCompressedPalette(gUnknown_08D77AE4, 0x60, 0x20);
         SetBgAttribute(1, BG_ATTR_SCREENSIZE, 1);
         SetGpuReg(REG_OFFSET_BG1CNT, 0x5C04);
@@ -1140,13 +1185,13 @@ void DrawBattleEntryBackground(void)
         CopyToBgTilemapBuffer(2, gUnknown_08D779D8, 0, 0);
         CopyBgTilemapBufferToVram(1);
         CopyBgTilemapBufferToVram(2);
-        SetGpuReg(REG_OFFSET_WININ, WININ_WIN0_BG1 | WININ_WIN0_BG2 | WININ_WIN0_OBJ | WININ_WIN0_CLR);
-        SetGpuReg(REG_OFFSET_WINOUT, WINOUT_WIN01_BG1 | WINOUT_WIN01_BG2 | WINOUT_WIN01_OBJ | WINOUT_WIN01_CLR);
+        SetGpuReg(REG_OFFSET_WININ, 0x36);
+        SetGpuReg(REG_OFFSET_WINOUT, 0x36);
         gBattle_BG1_Y = 0xFF5C;
         gBattle_BG2_Y = 0xFF5C;
         LoadCompressedSpriteSheetUsingHeap(&sVsLettersSpriteSheet);
     }
-    else if (gBattleTypeFlags & (BATTLE_TYPE_FRONTIER | BATTLE_TYPE_LINK | BATTLE_TYPE_RECORDED_LINK | BATTLE_TYPE_EREADER_TRAINER))
+    else if (gBattleTypeFlags & (BATTLE_TYPE_FRONTIER | BATTLE_TYPE_LINK | BATTLE_TYPE_x2000000 | BATTLE_TYPE_EREADER_TRAINER))
     {
         if (!(gBattleTypeFlags & BATTLE_TYPE_INGAME_PARTNER) || gPartnerTrainerId == TRAINER_STEVEN_PARTNER || gPartnerTrainerId >= TRAINER_CUSTOM_PARTNER)
         {
@@ -1227,7 +1272,7 @@ bool8 LoadChosenBattleElement(u8 caseId)
         LoadCompressedPalette(gBattleTextboxPalette, 0, 0x40);
         break;
     case 3:
-        if (gBattleTypeFlags & (BATTLE_TYPE_FRONTIER | BATTLE_TYPE_LINK | BATTLE_TYPE_RECORDED_LINK | BATTLE_TYPE_EREADER_TRAINER))
+        if (gBattleTypeFlags & (BATTLE_TYPE_FRONTIER | BATTLE_TYPE_LINK | BATTLE_TYPE_x2000000 | BATTLE_TYPE_EREADER_TRAINER))
         {
             LZDecompressVram(gBattleTerrainTiles_Building, (void*)(BG_CHAR_ADDR(2)));
         }
@@ -1286,7 +1331,7 @@ bool8 LoadChosenBattleElement(u8 caseId)
         }
         break;
     case 4:
-        if (gBattleTypeFlags & (BATTLE_TYPE_FRONTIER | BATTLE_TYPE_LINK | BATTLE_TYPE_RECORDED_LINK | BATTLE_TYPE_EREADER_TRAINER))
+        if (gBattleTypeFlags & (BATTLE_TYPE_FRONTIER | BATTLE_TYPE_LINK | BATTLE_TYPE_x2000000 | BATTLE_TYPE_EREADER_TRAINER))
         {
             LZDecompressVram(gBattleTerrainTilemap_Building, (void*)(BG_SCREEN_ADDR(26)));
         }
@@ -1348,7 +1393,7 @@ bool8 LoadChosenBattleElement(u8 caseId)
         }
         break;
     case 5:
-        if (gBattleTypeFlags & (BATTLE_TYPE_FRONTIER | BATTLE_TYPE_LINK | BATTLE_TYPE_RECORDED_LINK | BATTLE_TYPE_EREADER_TRAINER))
+        if (gBattleTypeFlags & (BATTLE_TYPE_FRONTIER | BATTLE_TYPE_LINK | BATTLE_TYPE_x2000000 | BATTLE_TYPE_EREADER_TRAINER))
         {
             LoadCompressedPalette(gBattleTerrainPalette_Frontier, 0x20, 0x60);
         }

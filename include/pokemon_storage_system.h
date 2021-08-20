@@ -2,13 +2,13 @@
 #define GUARD_POKEMON_STORAGE_SYSTEM_H
 
 #define TOTAL_BOXES_COUNT       14
-#define IN_BOX_ROWS             5 // Number of rows, 6 Pokémon per row
-#define IN_BOX_COLUMNS          6 // Number of columns, 5 Pokémon per column
+#define IN_BOX_ROWS             6
+#define IN_BOX_COLUMNS          5
 #define IN_BOX_COUNT            (IN_BOX_ROWS * IN_BOX_COLUMNS)
 
-/* 
-            COLUMNS         
-ROWS        0   1   2   3   4   5
+/*
+            ROWS
+COLUMNS     0   1   2   3   4   5
             6   7   8   9   10  11
             12  13  14  15  16  17
             18  19  20  21  22  23
@@ -46,18 +46,19 @@ void SetBoxMonNickAt(u8 boxId, u8 boxPosition, const u8 *nick);
 u32 GetAndCopyBoxMonDataAt(u8 boxId, u8 boxPosition, s32 request, void *dst);
 void SetBoxMonAt(u8 boxId, u8 boxPosition, struct BoxPokemon *src);
 void CopyBoxMonAt(u8 boxId, u8 boxPosition, struct BoxPokemon *dst);
-void CreateBoxMonAt(u8 boxId, u8 boxPosition, u16 species, u8 level, u8 fixedIV, u8 hasFixedPersonality, u32 personality, u8 otIDType, u32 otID);
+void CreateBoxMonAt(u8 boxId, u8 boxPosition, u16 species, u8 level, u8 fixedIV, u8 hasFixedPersonality, u32 personality, u8 otIDType, u32 otID, u8 formId);
 void ZeroBoxMonAt(u8 boxId, u8 boxPosition);
 void BoxMonAtToMon(u8 boxId, u8 boxPosition, struct Pokemon *dst);
 struct BoxPokemon *GetBoxedMonPtr(u8 boxId, u8 boxPosition);
 u8 *GetBoxNamePtr(u8 boxId);
-s16 AdvanceStorageMonIndex(struct BoxPokemon *boxMons, u8 currIndex, u8 maxIndex, u8 arg3);
+u8 GetBoxWallpaper(u8 boxId);
+void SetBoxWallpaper(u8 boxId, u8 wallpaperId);
+s16 sub_80D214C(struct BoxPokemon *boxMons, u8 currIndex, u8 maxIndex, u8 arg3);
 bool8 CheckFreePokemonStorageSpace(void);
 bool32 CheckBoxMonSanityAt(u32 boxId, u32 boxPosition);
 u32 CountStorageNonEggMons(void);
 u32 CountAllStorageMons(void);
 bool32 AnyStorageMonWithMove(u16 moveId);
-
 void ResetWaldaWallpaper(void);
 void SetWaldaWallpaperLockedOrUnlocked(bool32 unlocked);
 bool32 IsWaldaWallpaperUnlocked(void);
@@ -70,5 +71,6 @@ void SetWaldaWallpaperColors(u16 color1, u16 color2);
 u8 *GetWaldaPhrasePtr(void);
 void SetWaldaPhrase(const u8 *src);
 bool32 IsWaldaPhraseEmpty(void);
+u8 CountPartyNonEggMons(void);
 
 #endif // GUARD_POKEMON_STORAGE_SYSTEM_H

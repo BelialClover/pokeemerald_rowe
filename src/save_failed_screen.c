@@ -25,29 +25,29 @@ extern const u8 gText_SaveCompleteGameCannotContinue[];
 extern const u8 gText_SaveCompletePressA[];
 extern const u8 gText_GamePlayCannotBeContinued[];
 
-// sClockInfo enum
+// gSaveFailedClockInfo enum
 enum
 {
     CLOCK_RUNNING,
     DEBUG_TIMER
 };
 
-// sWindowIds enum
+// gSaveFailedWindowIds enum
 enum
 {
     TEXT_WIN_ID,
     CLOCK_WIN_ID
 };
 
-static EWRAM_DATA u16 sSaveFailedType = {0};
-static EWRAM_DATA u16 sClockInfo[2] = {0};
-static EWRAM_DATA u8 sUnused1[12] = {0};
-static EWRAM_DATA u8 sWindowIds[2] = {0};
-static EWRAM_DATA u8 sUnused2[4] = {0};
+EWRAM_DATA u16 gSaveFailedType = {0};
+EWRAM_DATA u16 gSaveFailedClockInfo[2] = {0};
+EWRAM_DATA u8 gSaveFailedUnused1[12] = {0};
+EWRAM_DATA u8 gSaveFailedWindowIds[2] = {0};
+EWRAM_DATA u8 gSaveFailedUnused2[4] = {0};
 
 static const struct OamData sClockOamData =
 {
-    .y = DISPLAY_HEIGHT,
+    .y = 160,
     .affineMode = ST_OAM_AFFINE_OFF,
     .objMode = ST_OAM_OBJ_NORMAL,
     .mosaic = 0,
@@ -62,7 +62,7 @@ static const struct OamData sClockOamData =
     .affineParam = 0
 };
 
-static const struct BgTemplate sBgTemplates[3] =
+static const struct BgTemplate gUnknown_085EFD88[3] =
 {
     {
         .bg = 0,
@@ -93,9 +93,20 @@ static const struct BgTemplate sBgTemplates[3] =
     },
 };
 
-static const struct WindowTemplate sDummyWindowTemplate[] = { DUMMY_WIN_TEMPLATE };
+static const struct WindowTemplate gUnknown_085EFD94[] =
+{
+    {
+        .bg = 255,
+        .tilemapLeft = 0,
+        .tilemapTop = 0,
+        .width = 0,
+        .height = 0,
+        .paletteNum = 0,
+        .baseBlock = 0,
+    }
+};
 
-static const struct WindowTemplate sWindowTemplate_Text[] =
+static const struct WindowTemplate gUnknown_085EFD9C[] =
 {
     {
         .bg = 0,
@@ -108,7 +119,7 @@ static const struct WindowTemplate sWindowTemplate_Text[] =
     }
 };
 
-static const struct WindowTemplate sWindowTemplate_Clock[] =
+static const struct WindowTemplate gUnknown_085EFDA4[] =
 {
     {
         .bg = 0,
@@ -146,24 +157,24 @@ static bool8 VerifySectorWipe(u16 sector);
 static bool8 WipeSectors(u32);
 
 // Although this is a general text printer, it's only used in this file.
-static void SaveFailedScreenTextPrint(const u8 *text, u8 x, u8 y)
+static void SaveFailedScreenTextPrint(const u8 *text, u8 var1, u8 var2)
 {
     u8 color[3];
 
-    color[0] = TEXT_COLOR_TRANSPARENT;
-    color[1] = TEXT_DYNAMIC_COLOR_6;
-    color[2] = TEXT_COLOR_LIGHT_GRAY;
-    AddTextPrinterParameterized4(sWindowIds[TEXT_WIN_ID], 1, x * 8, y * 8 + 1, 0, 0, color, 0, text);
+    color[0] = 0;
+    color[1] = 15;
+    color[2] = 3;
+    AddTextPrinterParameterized4(gSaveFailedWindowIds[TEXT_WIN_ID], 1, var1 * 8, var2 * 8 + 1, 0, 0, color, 0, text);
 }
 
 void DoSaveFailedScreen(u8 saveType)
 {
     SetMainCallback2(CB2_SaveFailedScreen);
-    sSaveFailedType = saveType;
-    sClockInfo[CLOCK_RUNNING] = FALSE;
-    sClockInfo[DEBUG_TIMER] = 0;
-    sWindowIds[TEXT_WIN_ID] = 0;
-    sWindowIds[CLOCK_WIN_ID] = 0;
+    gSaveFailedType = saveType;
+    gSaveFailedClockInfo[CLOCK_RUNNING] = FALSE;
+    gSaveFailedClockInfo[DEBUG_TIMER] = 0;
+    gSaveFailedWindowIds[TEXT_WIN_ID] = 0;
+    gSaveFailedWindowIds[CLOCK_WIN_ID] = 0;
 }
 
 static void VBlankCB(void)
@@ -199,17 +210,17 @@ static void CB2_SaveFailedScreen(void)
         LZ77UnCompVram(gBirchHelpGfx, (void *)VRAM);
         LZ77UnCompVram(gBirchBagTilemap, (void *)(BG_SCREEN_ADDR(14)));
         LZ77UnCompVram(gBirchGrassTilemap, (void *)(BG_SCREEN_ADDR(15)));
-        LZ77UnCompVram(sSaveFailedClockGfx, (void *)(OBJ_VRAM0 + 0x20));
+        LZ77UnCompVram(sSaveFailedClockGfx, (void *)(VRAM + 0x10020));
         ResetBgsAndClearDma3BusyFlags(0);
-        InitBgsFromTemplates(0, sBgTemplates, ARRAY_COUNT(sBgTemplates));
+        InitBgsFromTemplates(0, gUnknown_085EFD88, 3);
         SetBgTilemapBuffer(0, (void *)&gDecompressionBuffer[0x2000]);
         CpuFill32(0, &gDecompressionBuffer[0x2000], 0x800);
         LoadBgTiles(0, gTextWindowFrame1_Gfx, 0x120, 0x214);
-        InitWindows(sDummyWindowTemplate);
-        sWindowIds[TEXT_WIN_ID] = AddWindowWithoutTileMap(sWindowTemplate_Text);
-        SetWindowAttribute(sWindowIds[TEXT_WIN_ID], 7, (u32)&gDecompressionBuffer[0x2800]);
-        sWindowIds[CLOCK_WIN_ID] = AddWindowWithoutTileMap(sWindowTemplate_Clock);
-        SetWindowAttribute(sWindowIds[CLOCK_WIN_ID], 7, (u32)&gDecompressionBuffer[0x3D00]);
+        InitWindows(gUnknown_085EFD94);
+        gSaveFailedWindowIds[TEXT_WIN_ID] = AddWindowWithoutTileMap(gUnknown_085EFD9C);
+        SetWindowAttribute(gSaveFailedWindowIds[TEXT_WIN_ID], 7, (u32)&gDecompressionBuffer[0x2800]);
+        gSaveFailedWindowIds[CLOCK_WIN_ID] = AddWindowWithoutTileMap(gUnknown_085EFDA4);
+        SetWindowAttribute(gSaveFailedWindowIds[CLOCK_WIN_ID], 7, (u32)&gDecompressionBuffer[0x3D00]);
         DeactivateAllTextPrinters();
         ResetSpriteData();
         ResetTasks();
@@ -218,14 +229,14 @@ static void CB2_SaveFailedScreen(void)
         LoadPalette(sSaveFailedClockPal, 0x100, 0x20);
         LoadPalette(gTextWindowFrame1_Pal, 0xE0, 0x20);
         LoadPalette(gUnknown_0860F074, 0xF0, 0x20);
-        DrawStdFrameWithCustomTileAndPalette(sWindowIds[TEXT_WIN_ID], FALSE, 0x214, 0xE);
-        DrawStdFrameWithCustomTileAndPalette(sWindowIds[CLOCK_WIN_ID], FALSE, 0x214, 0xE);
-        FillWindowPixelBuffer(sWindowIds[CLOCK_WIN_ID], PIXEL_FILL(1)); // backwards?
-        FillWindowPixelBuffer(sWindowIds[TEXT_WIN_ID], PIXEL_FILL(1));
-        CopyWindowToVram(sWindowIds[CLOCK_WIN_ID], 2); // again?
-        CopyWindowToVram(sWindowIds[TEXT_WIN_ID], 1);
+        DrawStdFrameWithCustomTileAndPalette(gSaveFailedWindowIds[TEXT_WIN_ID], FALSE, 0x214, 0xE);
+        DrawStdFrameWithCustomTileAndPalette(gSaveFailedWindowIds[CLOCK_WIN_ID], FALSE, 0x214, 0xE);
+        FillWindowPixelBuffer(gSaveFailedWindowIds[CLOCK_WIN_ID], PIXEL_FILL(1)); // backwards?
+        FillWindowPixelBuffer(gSaveFailedWindowIds[TEXT_WIN_ID], PIXEL_FILL(1));
+        CopyWindowToVram(gSaveFailedWindowIds[CLOCK_WIN_ID], 2); // again?
+        CopyWindowToVram(gSaveFailedWindowIds[TEXT_WIN_ID], 1);
         SaveFailedScreenTextPrint(gText_SaveFailedCheckingBackup, 1, 0);
-        BeginNormalPaletteFade(PALETTES_ALL, 0, 16, 0, RGB_BLACK);
+        BeginNormalPaletteFade(0xFFFFFFFF, 0, 16, 0, RGB_BLACK);
         EnableInterrupts(1);
         SetVBlankCallback(VBlankCB);
         SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_OBJ_ON | DISPCNT_OBJ_1D_MAP);
@@ -248,25 +259,25 @@ static void CB2_WipeSave(void)
 {
     u8 wipeTries = 0;
 
-    sClockInfo[CLOCK_RUNNING] = TRUE;
+    gSaveFailedClockInfo[CLOCK_RUNNING] = TRUE;
 
     while (gDamagedSaveSectors != 0 && wipeTries < 3)
     {
-        if (WipeSectors(gDamagedSaveSectors))
+        if (WipeSectors(gDamagedSaveSectors) != FALSE)
         {
-            FillWindowPixelBuffer(sWindowIds[TEXT_WIN_ID], PIXEL_FILL(1));
+            FillWindowPixelBuffer(gSaveFailedWindowIds[TEXT_WIN_ID], PIXEL_FILL(1));
             SaveFailedScreenTextPrint(gText_BackupMemoryDamaged, 1, 0);
             SetMainCallback2(CB2_GameplayCannotBeContinued);
             return;
         }
 
-        FillWindowPixelBuffer(sWindowIds[TEXT_WIN_ID], PIXEL_FILL(1));
+        FillWindowPixelBuffer(gSaveFailedWindowIds[TEXT_WIN_ID], PIXEL_FILL(1));
         SaveFailedScreenTextPrint(gText_CheckCompleted, 1, 0);
-        HandleSavingData(sSaveFailedType);
+        HandleSavingData(gSaveFailedType);
 
         if (gDamagedSaveSectors != 0)
         {
-            FillWindowPixelBuffer(sWindowIds[TEXT_WIN_ID], PIXEL_FILL(1));
+            FillWindowPixelBuffer(gSaveFailedWindowIds[TEXT_WIN_ID], PIXEL_FILL(1));
             SaveFailedScreenTextPrint(gText_SaveFailedCheckingBackup, 1, 0);
         }
 
@@ -275,12 +286,12 @@ static void CB2_WipeSave(void)
 
     if (wipeTries == 3)
     {
-        FillWindowPixelBuffer(sWindowIds[TEXT_WIN_ID], PIXEL_FILL(1));
+        FillWindowPixelBuffer(gSaveFailedWindowIds[TEXT_WIN_ID], PIXEL_FILL(1));
         SaveFailedScreenTextPrint(gText_BackupMemoryDamaged, 1, 0);
     }
     else
     {
-        FillWindowPixelBuffer(sWindowIds[TEXT_WIN_ID], PIXEL_FILL(1));
+        FillWindowPixelBuffer(gSaveFailedWindowIds[TEXT_WIN_ID], PIXEL_FILL(1));
 
         if (gGameContinueCallback == NULL)
             SaveFailedScreenTextPrint(gText_SaveCompleteGameCannotContinue, 1, 0);
@@ -293,11 +304,11 @@ static void CB2_WipeSave(void)
 
 static void CB2_GameplayCannotBeContinued(void)
 {
-    sClockInfo[CLOCK_RUNNING] = FALSE;
+    gSaveFailedClockInfo[CLOCK_RUNNING] = FALSE;
 
     if (JOY_NEW(A_BUTTON))
     {
-        FillWindowPixelBuffer(sWindowIds[TEXT_WIN_ID], PIXEL_FILL(1));
+        FillWindowPixelBuffer(gSaveFailedWindowIds[TEXT_WIN_ID], PIXEL_FILL(1));
         SaveFailedScreenTextPrint(gText_GamePlayCannotBeContinued, 1, 0);
         SetVBlankCallback(VBlankCB);
         SetMainCallback2(CB2_FadeAndReturnToTitleScreen);
@@ -306,11 +317,11 @@ static void CB2_GameplayCannotBeContinued(void)
 
 static void CB2_FadeAndReturnToTitleScreen(void)
 {
-    sClockInfo[CLOCK_RUNNING] = FALSE;
+    gSaveFailedClockInfo[CLOCK_RUNNING] = FALSE;
 
     if (JOY_NEW(A_BUTTON))
     {
-        BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, RGB_BLACK);
+        BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB_BLACK);
         SetVBlankCallback(VBlankCB);
         SetMainCallback2(CB2_ReturnToTitleScreen);
     }
@@ -340,7 +351,7 @@ static void VBlankCB_UpdateClockGraphics(void)
     gMain.oamBuffer[0].x = 112;
     gMain.oamBuffer[0].y = (CLOCK_WIN_TOP + 1) * 8;
 
-    if (sClockInfo[CLOCK_RUNNING])
+    if (gSaveFailedClockInfo[CLOCK_RUNNING] != FALSE)
     {
         gMain.oamBuffer[0].tileNum = sClockFrames[n][0];
         gMain.oamBuffer[0].matrixNum = (sClockFrames[n][2] << 4) | (sClockFrames[n][1] << 3);
@@ -352,8 +363,8 @@ static void VBlankCB_UpdateClockGraphics(void)
 
     CpuFastCopy(gMain.oamBuffer, (void *)OAM, 4);
 
-    if (sClockInfo[DEBUG_TIMER])
-        sClockInfo[DEBUG_TIMER]--;
+    if (gSaveFailedClockInfo[DEBUG_TIMER])
+        gSaveFailedClockInfo[DEBUG_TIMER]--;
 }
 
 static bool8 VerifySectorWipe(u16 sector)
@@ -361,7 +372,7 @@ static bool8 VerifySectorWipe(u16 sector)
     u32 *ptr = (u32 *)&gSaveDataBuffer;
     u16 i;
 
-    ReadFlash(sector, 0, (u8 *)ptr, SECTOR_SIZE);
+    ReadFlash(sector, 0, (u8 *)ptr, 4096);
 
     for (i = 0; i < 0x400; i++, ptr++)
         if (*ptr)
@@ -377,7 +388,7 @@ static bool8 WipeSector(u16 sector)
 
     for (i = 0; failed && i < 130; i++)
     {
-        for (j = 0; j < SECTOR_SIZE; j++)
+        for (j = 0; j < 0x1000; j++)
             ProgramFlashByte(sector, j, 0);
 
         failed = VerifySectorWipe(sector);
@@ -390,7 +401,7 @@ static bool8 WipeSectors(u32 sectorBits)
 {
     u16 i;
 
-    for (i = 0; i < SECTORS_COUNT; i++)
+    for (i = 0; i < 0x20; i++)
         if ((sectorBits & (1 << i)) && !WipeSector(i))
             sectorBits &= ~(1 << i);
 

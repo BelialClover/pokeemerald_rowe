@@ -345,12 +345,11 @@
 	.byte 0x32
 	.endm
 
-	@ Plays the specified (song_number) song. If save_song is TRUE, the
-	@ specified (song_number) will be saved as if savebgm was called with it.
-	.macro playbgm song_number:req, save_song:req
+	@ Plays the specified (song_number) song. The byte is apparently supposed to be 0x00.
+	.macro playbgm song_number:req, unknown:req
 	.byte 0x33
 	.2byte \song_number
-	.byte \save_song
+	.byte \unknown
 	.endm
 
 	@ Saves the specified (song_number) song to be played later.
@@ -813,12 +812,12 @@
 	.byte 0x68
 	.endm
 
-	@ Freezes all objects immediately except the player. The player is frozen once their movement is finished.
+	@ Ceases movement for all Objects on-screen.
 	.macro lockall
 	.byte 0x69
 	.endm
 
-	@ Freezes all objects immediately except the player and the selected object. The player and selected object are frozen once their movement is finished.
+	@ If the script was called by an Object, then that Object's movement will cease.
 	.macro lock
 	.byte 0x6a
 	.endm
@@ -847,40 +846,38 @@
 	.endm
 
 	@ Displays a multichoice box from which the user can choose a selection, and blocks script execution until a selection is made. 
-	@ Lists of options are predefined (sMultichoiceLists) and the one to be used is specified with multichoiceId.
-	@ If ignoreBPress is set to a non-zero value, then the user will not be allowed to back out of the multichoice with the B button.
-	.macro multichoice x:req, y:req, multichoiceId:req, ignoreBPress:req
+	@ Lists of options are predefined (sMultichoiceLists) and the one to be used is specified with list. If b is set to a non-zero value, then the user will not be allowed to back out of the multichoice with the B button.
+	.macro multichoice x:req, y:req, list:req, b:req
 	.byte 0x6f
 	.byte \x
 	.byte \y
-	.byte \multichoiceId
-	.byte \ignoreBPress
+	.byte \list
+	.byte \b
 	.endm
 
 	@ Displays a multichoice box from which the user can choose a selection, and blocks script execution until a selection is made.
-	@ Lists of options are predefined (sMultichoiceLists) and the one to be used is specified with multichoiceId.
-	@ The default argument determines the initial position of the cursor when the box is first opened; it is zero-indexed, and if it is too large, it is treated as 0x00. 
-	@ If ignoreBPress is set to a non-zero value, then the user will not be allowed to back out of the multichoice with the B button.
-	.macro multichoicedefault x:req, y:req, multichoiceId:req, default:req, ignoreBPress:req
+	@ Lists of options are predefined (sMultichoiceLists) and the one to be used is specified with list. The default argument determines 
+	@ the initial position of the cursor when the box is first opened; it is zero-indexed, and if it is too large, it is treated as 0x00. 
+	@ If b is set to a non-zero value, then the user will not be allowed to back out of the multichoice with the B button.
+	.macro multichoicedefault x:req, y:req, list:req, default:req, b:req
 	.byte 0x70
 	.byte \x
 	.byte \y
-	.byte \multichoiceId
+	.byte \list
 	.byte \default
-	.byte \ignoreBPress
+	.byte \b
 	.endm
 
 	@ Displays a multichoice box from which the user can choose a selection, and blocks script execution until a selection is made.
-	@ Lists of options are predefined (sMultichoiceLists) and the one to be used is specified with multichoiceId.
+	@ Lists of options are predefined (sMultichoiceLists) and the one to be used is specified with list.
 	@ The per_row argument determines how many list items will be shown on a single row of the box.
-	@ If ignoreBPress is set to a non-zero value, then the user will not be allowed to back out of the multichoice with the B button.
-	.macro multichoicegrid x:req, y:req, multichoiceId:req, per_row:req, ignoreBPress:req
+	.macro multichoicegrid x:req, y:req, list:req, per_row:req, B:req
 	.byte 0x71
 	.byte \x
 	.byte \y
-	.byte \multichoiceId
+	.byte \list
 	.byte \per_row
-	.byte \ignoreBPress
+	.byte \B
 	.endm
 
 	@ Nopped in Emerald.
@@ -889,21 +886,21 @@
 	.endm
 
 	@ Nopped in Emerald, but still consumes parameters.
-	.macro erasebox left:req, top:req, right:req, bottom:req
+	.macro erasebox byte1:req, byte2:req, byte3:req, byte4:req
 	.byte 0x73
-	.byte \left
-	.byte \top
-	.byte \right
-	.byte \bottom
+	.byte \byte1
+	.byte \byte2
+	.byte \byte3
+	.byte \byte4
 	.endm
 
 	@ Nopped in Emerald, but still consumes parameters.
-	.macro drawboxtext left:req, top:req, multichoiceId:req, ignoreBPress:req
+	.macro drawboxtext byte1:req, byte2:req, byte3:req, byte4:req
 	.byte 0x74
-	.byte \left
-	.byte \top
-	.byte \multichoiceId
-	.byte \ignoreBPress
+	.byte \byte1
+	.byte \byte2
+	.byte \byte3
+	.byte \byte4
 	.endm
 
 	@ Displays a box containing the front sprite for the specified (species) Pokemon species.
@@ -919,10 +916,10 @@
 	.byte 0x76
 	.endm
 
-	@ Draws an image of the winner of the contest. winnerId is any CONTEST_WINNER_* constant.
-	.macro showcontestpainting winnerId:req
+	@ Draws an image of the winner of the contest. In FireRed, this command is a nop. (The argument is discarded.)
+	.macro showcontestwinner a:req
 	.byte 0x77
-	.byte \winnerId
+	.byte \a
 	.endm
 
 	@ Displays the string at pointer as braille text in a standard message box. The string must be formatted to use braille 
@@ -933,24 +930,13 @@
 	.4byte \text
 	.endm
 
-	@ Formatting for the braille window, to be put at the start of a pointer used by braillemessage.
-	@ These are from RS and are ignored in Emerald (see ScrCmd_braillemessage, and comment above)
-	.macro brailleformat winLeft:req, winTop:req, winRight:req, winBottom:req, textLeft:req, textTop:req
-	.byte \winLeft
-	.byte \winTop
-	.byte \winRight
-	.byte \winBottom
-	.byte \textLeft
-	.byte \textTop
-	.endm
-
-	@ Gives the player one of the specified (species) Pokemon at level level holding item. The trailing 0s are unused parameters
-	.macro givemon species:req, level:req, item:req
+	@ Gives the player one of the specified (species) Pokemon at level level holding item. Option to set an ability (random by default). The trailing 0s are unused parameters
+	.macro givemon species:req, level:req, item:req, ability=3
 	.byte 0x79
 	.2byte \species
 	.byte \level
 	.2byte \item
-	.4byte 0x0
+	.4byte \ability
 	.4byte 0x0
 	.byte 0
 	.endm
@@ -1495,15 +1481,15 @@
 	.4byte \value
 	.endm
 
-	@ Sets the Pokemon in the specified slot of the player party's eventLegal bit.
-	.macro setmoneventlegal slot:req
+	@ Makes the Pokemon in the specified slot of the player's party obedient. It will not randomly disobey orders in battle.
+	.macro setmonobedient slot:req
 	.byte 0xcd
 	.2byte \slot
 	.endm
 
-	@ Checks if the Pokemon in the specified slot of the player's party has its eventLegal bit set. If it isn't set,
-	@ VAR_RESULT is TRUE. If the bit is set (or if the specified slot is empty or invalid), VAR_RESULT is FALSE.
-	.macro checkmoneventlegal slot:req
+	@ Checks if the Pokemon in the specified slot of the player's party is obedient. If the Pokemon is disobedient,
+	@ VAR_RESULT is TRUE. If the Pokemon is obedient (or if the specified slot is empty or invalid), VAR_RESULT is FALSE.
+	.macro checkmonobedience slot:req
 	.byte 0xce
 	.2byte \slot
 	.endm
@@ -1570,11 +1556,11 @@
 	.2byte \y
 	.endm
 
-	.macro selectapproachingtrainer
+	.macro cmdD8
 	.byte 0xd8
 	.endm
 
-	.macro lockfortrainer
+	.macro cmdD9
 	.byte 0xd9
 	.endm
 
@@ -1582,7 +1568,7 @@
 	.byte 0xda
 	.endm
 
-	.macro messageinstant pointer:req
+	.macro message3 pointer:req
 	.byte 0xdb
 	.4byte \pointer
 	.endm
@@ -1633,7 +1619,141 @@
 	.2byte \item
 	.2byte \quantity
 	.endm
-
+    
+    .macro showdescription
+    .byte 0xe3
+    .endm
+    
+    .macro showitemdesc
+    setvar VAR_0x8009, 0
+    showdescription
+    .endm
+    
+    .macro showberrydesc
+    setvar VAR_0x8009, 1
+    showdescription
+    .endm
+    
+    .macro hideitemdesc
+    .byte 0xe4
+    .endm
+	
+	.macro givecustommon species:req, level:req, item, ball, nature, abilityNum, hpEv, atkEv, defEv, speedEv, spAtkEv, spDefEv, hpIv, atkIv, defIv, speedIv, spAtkIv, spDefIv, move1, move2, move3, move4, isShiny
+    .byte 0xe5
+    .2byte \species
+    .byte \level
+    .ifb \item
+        .2byte ITEM_NONE
+    .else
+        .2byte \item
+    .endif
+    .ifb \ball
+        .byte 0
+    .else
+        .byte \ball
+    .endif
+    .ifb \nature
+        .byte NUM_NATURES
+    .else
+        .byte \nature
+    .endif
+    .ifb \abilityNum
+        .byte 3
+    .else
+        .byte \abilityNum
+    .endif
+    @evs
+    .ifb \hpEv
+        .byte 0
+    .else
+        .byte \hpEv
+    .endif
+    .ifb \atkEv
+        .byte 0
+    .else
+        .byte \atkEv
+    .endif
+    .ifb \defEv
+        .byte 0
+    .else
+        .byte \defEv
+    .endif
+    .ifb \speedEv
+        .byte 0
+    .else
+        .byte \speedEv
+    .endif
+    .ifb \spAtkEv
+        .byte 0
+    .else
+        .byte \spAtkEv
+    .endif
+    .ifb \spDefEv
+        .byte 0
+    .else
+        .byte \spDefEv
+    .endif
+    @ivs
+    .ifb \hpIv
+        .byte 32
+    .else
+        .byte \hpIv
+    .endif
+    .ifb \atkIv
+        .byte 32
+    .else
+        .byte \atkIv
+    .endif
+    .ifb \defIv
+        .byte 32
+    .else
+        .byte \defIv
+    .endif
+    .ifb \speedIv
+        .byte 32
+    .else
+        .byte \speedIv
+    .endif
+    .ifb \spAtkIv
+        .byte 32
+    .else
+        .byte \spAtkIv
+    .endif
+    .ifb \spDefIv
+        .byte 32
+    .else
+        .byte \spDefIv
+    .endif
+    .ifb \move1
+        .2byte 0
+    .else
+        .2byte \move1
+    .endif
+    .ifb \move2
+        .2byte 0
+    .else
+        .2byte \move2
+    .endif
+    .ifb \move3
+        .2byte 0
+    .else
+        .2byte \move3
+    .endif
+    .ifb \move4
+        .2byte 0
+    .else
+        .2byte \move4
+    .endif
+    .ifb \isShiny
+        .byte 0
+    .else
+        .byte \isShiny
+    .endif
+    .endm
+    
+    .macro givemonmoves species:req, level:req, move1:req, move2:req, move3:req, move4:req
+    customgivemon \species, \level, 0, 0, NUM_NATURES, 0xFF, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, \move1, \move2, \move3, \move4, 0
+    .endm
 
 @ Supplementary
 
@@ -1798,65 +1918,13 @@
 	setfieldeffectargument 2, \priority
 	dofieldeffect FLDEFF_SPARKLE
 	.endm
-
-	@ Set up a totem boost for the next battle.
-	@ 'battler' is the position of the mon you want to gain a boost. see B_POSITION_xx in include/constants/battle.h.
-	@ The rest of the arguments are the stat change values to each stat.
-	@ For example, giving the first opponent +1 to atk and -2 to speed would be: settotemboost B_POSITION_OPPONENT_LEFT, 1, 0, -2
-	.macro settotemboost battler:req, atk=0,def=0,speed=0,spatk=0,spdef=0,acc=0,evas=0
-	setvar VAR_0x8000, \battler
-	setvar VAR_0x8001, \atk
-	setvar VAR_0x8002, \def
-	setvar VAR_0x8003, \speed
-	setvar VAR_0x8004, \spatk
-	setvar VAR_0x8005, \spdef
-	setvar VAR_0x8006, \acc
-	setvar VAR_0x8007, \evas
-	special SetTotemBoost
+	
+	.macro scrollingmultichoice id:req, x:req, y:req, show:req, b:req
+	setvar VAR_0x8004, \id,
+	setvar VAR_0x8005, \x,
+	setvar VAR_0x8006, \y,
+	setvar VAR_0x8007, \show,
+	setvar VAR_0x8008, \b,
+	callnative ScriptMenu_ScrollingMultichoice
+	waitstate
 	.endm
-
-	@ useful totem boost macros
-	.macro totemboost_atk1 battler:req
-	settotemboost \battler, 1
-	.endm
-	.macro totemboost_def1 battler:req
-	settotemboost \battler, 0, 1
-	.endm
-	.macro totemboost_speed1 battler:req
-	settotemboost \battler, 0, 0, 1
-	.endm
-	.macro totemboost_spatk1 battler:req
-	settotemboost \battler, 0, 0, 0, 1
-	.endm
-	.macro totemboost_spdef1 battler:req
-	settotemboost \battler, 0, 0, 0, 0, 1
-	.endm
-	.macro totemboost_acc1 battler:req
-	settotemboost \battler, 0, 0, 0, 0, 0, 1
-	.endm
-	.macro totemboost_evas1 battler:req
-	settotemboost \battler, 0, 0, 0, 0, 0, 0, 1
-	.endm
-
-	.macro totemboost_atk2 battler:req
-	settotemboost \battler, 2
-	.endm
-	.macro totemboost_def2 battler:req
-	settotemboost \battler, 0, 2
-	.endm
-	.macro totemboost_speed2 battler:req
-	settotemboost \battler, 0, 0, 2
-	.endm
-	.macro totemboost_spatk2 battler:req
-	settotemboost \battler, 0, 0, 0, 2
-	.endm
-	.macro totemboost_spdef2 battler:req
-	settotemboost \battler, 0, 0, 0, 0, 2
-	.endm
-	.macro totemboost_acc2 battler:req
-	settotemboost \battler, 0, 0, 0, 0, 0, 2
-	.endm
-	.macro totemboost_evas2 battler:req
-	settotemboost \battler, 0, 0, 0, 0, 0, 0, 2
-	.endm
-

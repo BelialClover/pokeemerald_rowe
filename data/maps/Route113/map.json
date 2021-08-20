@@ -126,7 +126,7 @@
       "x": 29,
       "y": 6,
       "elevation": 3,
-      "movement_type": "MOVEMENT_TYPE_BURIED",
+      "movement_type": "MOVEMENT_TYPE_HIDDEN",
       "movement_range_x": 0,
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_BURIED",
@@ -139,7 +139,7 @@
       "x": 71,
       "y": 2,
       "elevation": 3,
-      "movement_type": "MOVEMENT_TYPE_BURIED",
+      "movement_type": "MOVEMENT_TYPE_HIDDEN",
       "movement_range_x": 0,
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_BURIED",
@@ -237,6 +237,19 @@
       "trainer_sight_or_berry_tree_id": "6",
       "script": "Route113_EventScript_Coby",
       "flag": "0"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_KECLEON_1",
+      "x": 69,
+      "y": 9,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_INVISIBLE",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "Route120_EventScript_Kecleon5",
+      "flag": "FLAG_HIDE_ROUTE_120_KECLEON_5"
     }
   ],
   "warp_events": [
@@ -263,139 +276,7 @@
     }
   ],
   "coord_events": [
-    {
-      "type": "weather",
-      "x": 19,
-      "y": 11,
-      "elevation": 3,
-      "weather": "COORD_EVENT_WEATHER_VOLCANIC_ASH"
-    },
-    {
-      "type": "weather",
-      "x": 19,
-      "y": 10,
-      "elevation": 3,
-      "weather": "COORD_EVENT_WEATHER_VOLCANIC_ASH"
-    },
-    {
-      "type": "weather",
-      "x": 19,
-      "y": 12,
-      "elevation": 3,
-      "weather": "COORD_EVENT_WEATHER_VOLCANIC_ASH"
-    },
-    {
-      "type": "weather",
-      "x": 19,
-      "y": 13,
-      "elevation": 3,
-      "weather": "COORD_EVENT_WEATHER_VOLCANIC_ASH"
-    },
-    {
-      "type": "weather",
-      "x": 86,
-      "y": 9,
-      "elevation": 3,
-      "weather": "COORD_EVENT_WEATHER_VOLCANIC_ASH"
-    },
-    {
-      "type": "weather",
-      "x": 85,
-      "y": 10,
-      "elevation": 3,
-      "weather": "COORD_EVENT_WEATHER_VOLCANIC_ASH"
-    },
-    {
-      "type": "weather",
-      "x": 85,
-      "y": 11,
-      "elevation": 3,
-      "weather": "COORD_EVENT_WEATHER_VOLCANIC_ASH"
-    },
-    {
-      "type": "weather",
-      "x": 14,
-      "y": 10,
-      "elevation": 3,
-      "weather": "COORD_EVENT_WEATHER_SUNNY"
-    },
-    {
-      "type": "weather",
-      "x": 14,
-      "y": 11,
-      "elevation": 3,
-      "weather": "COORD_EVENT_WEATHER_SUNNY"
-    },
-    {
-      "type": "weather",
-      "x": 14,
-      "y": 12,
-      "elevation": 3,
-      "weather": "COORD_EVENT_WEATHER_SUNNY"
-    },
-    {
-      "type": "weather",
-      "x": 14,
-      "y": 13,
-      "elevation": 3,
-      "weather": "COORD_EVENT_WEATHER_SUNNY"
-    },
-    {
-      "type": "weather",
-      "x": 94,
-      "y": 8,
-      "elevation": 3,
-      "weather": "COORD_EVENT_WEATHER_SUNNY"
-    },
-    {
-      "type": "weather",
-      "x": 94,
-      "y": 9,
-      "elevation": 3,
-      "weather": "COORD_EVENT_WEATHER_SUNNY"
-    },
-    {
-      "type": "weather",
-      "x": 94,
-      "y": 10,
-      "elevation": 3,
-      "weather": "COORD_EVENT_WEATHER_SUNNY"
-    },
-    {
-      "type": "weather",
-      "x": 94,
-      "y": 11,
-      "elevation": 0,
-      "weather": "COORD_EVENT_WEATHER_SUNNY"
-    },
-    {
-      "type": "weather",
-      "x": 19,
-      "y": 14,
-      "elevation": 3,
-      "weather": "COORD_EVENT_WEATHER_VOLCANIC_ASH"
-    },
-    {
-      "type": "weather",
-      "x": 87,
-      "y": 8,
-      "elevation": 3,
-      "weather": "COORD_EVENT_WEATHER_VOLCANIC_ASH"
-    },
-    {
-      "type": "weather",
-      "x": 87,
-      "y": 6,
-      "elevation": 3,
-      "weather": "COORD_EVENT_WEATHER_VOLCANIC_ASH"
-    },
-    {
-      "type": "weather",
-      "x": 87,
-      "y": 7,
-      "elevation": 3,
-      "weather": "COORD_EVENT_WEATHER_VOLCANIC_ASH"
-    }
+
   ],
   "bg_events": [
     {
@@ -450,7 +331,7 @@
       "x": 22,
       "y": 5,
       "elevation": 3,
-      "item": "ITEM_TM32",
+      "item": "ITEM_UP_GRADE",
       "flag": "FLAG_HIDDEN_ITEM_ROUTE_113_TM_32"
     },
     {

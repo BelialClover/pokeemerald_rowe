@@ -6,4 +6,4 @@ gBattlerControllerFuncs
 gHealthboxSpriteIds
 gMultiUsePlayerCursor
 gNumberOfMovesToChoose
-gBattleControllerData
+gUnknown_03005D7C

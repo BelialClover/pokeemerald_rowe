@@ -47,7 +47,7 @@ u16 TryBufferWaldaPhrase(void)
 void DoWaldaNamingScreen(void)
 {
     StringCopy(gStringVar2, GetWaldaPhrasePtr());
-    DoNamingScreen(NAMING_SCREEN_WALDA, gStringVar2, 0, 0, 0, CB2_HandleGivenWaldaPhrase);
+    DoNamingScreen(NAMING_SCREEN_WALDA, gStringVar2, 0, 0, 0, CB2_HandleGivenWaldaPhrase, 0);
 }
 
 static void CB2_HandleGivenWaldaPhrase(void)
@@ -173,12 +173,14 @@ static void sub_81D9C90(u8 *array, s32 arg1, s32 arg2)
     {
         var1 = (array[0] & 0x80) >> 7;
 
+        var1++; var1--; // needed to match
+
         for (j = arg1 - 1; j >= 0; j--)
         {
-            var2 = (array[j] & 0x80) >> 7;
+            var2 = array[j] & 0x80;
             array[j] <<= 1;
             array[j] |= var1;
-            var1 = var2;
+            var1 = var2 >> 7;
         }
     }
 }

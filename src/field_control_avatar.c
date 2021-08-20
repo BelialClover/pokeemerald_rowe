@@ -3,6 +3,8 @@
 #include "bike.h"
 #include "coord_event_weather.h"
 #include "daycare.h"
+#include "debug.h"
+#include "dexnav.h"
 #include "faraway_island.h"
 #include "event_data.h"
 #include "event_object_movement.h"
@@ -35,6 +37,7 @@
 #include "constants/maps.h"
 #include "constants/songs.h"
 #include "constants/trainer_hill.h"
+#include "data/scripts/field_move_scripts.inc"
 
 static EWRAM_DATA u8 sWildEncounterImmunitySteps = 0;
 static EWRAM_DATA u16 sPreviousPlayerMetatileBehavior = 0;
@@ -67,8 +70,9 @@ static bool8 TryStartCoordEventScript(struct MapPosition *);
 static bool8 TryStartWarpEventScript(struct MapPosition *, u16);
 static bool8 TryStartMiscWalkingScripts(u16);
 static bool8 TryStartStepCountScript(u16);
-static void UpdateFriendshipStepCounter(void);
+static void UpdateHappinessStepCounter(void);
 static bool8 UpdatePoisonStepCounter(void);
+static bool8 EnableAutoRun(void);
 
 void FieldClearPlayerInput(struct FieldInput *input)
 {
@@ -80,8 +84,8 @@ void FieldClearPlayerInput(struct FieldInput *input)
     input->heldDirection2 = FALSE;
     input->tookStep = FALSE;
     input->pressedBButton = FALSE;
-    input->input_field_1_0 = FALSE;
-    input->input_field_1_1 = FALSE;
+    input->pressedLButton = FALSE;
+    input->pressedRButton = FALSE;
     input->input_field_1_2 = FALSE;
     input->input_field_1_3 = FALSE;
     input->dpadDirection = 0;
@@ -105,6 +109,10 @@ void FieldGetPlayerInput(struct FieldInput *input, u16 newKeys, u16 heldKeys)
                 input->pressedAButton = TRUE;
             if (newKeys & B_BUTTON)
                 input->pressedBButton = TRUE;
+            if (newKeys & L_BUTTON)
+                input->pressedLButton = TRUE;
+            if (newKeys & R_BUTTON)
+                input->pressedRButton = TRUE;
         }
 
         if (heldKeys & (DPAD_UP | DPAD_DOWN | DPAD_LEFT | DPAD_RIGHT))
@@ -130,6 +138,18 @@ void FieldGetPlayerInput(struct FieldInput *input, u16 newKeys, u16 heldKeys)
         input->dpadDirection = DIR_WEST;
     else if (heldKeys & DPAD_RIGHT)
         input->dpadDirection = DIR_EAST;
+
+    if ((heldKeys & B_BUTTON) && input->pressedStartButton)
+    {
+        input->input_field_1_2 = TRUE;
+        input->pressedStartButton = FALSE;
+    }
+
+    if ((heldKeys & B_BUTTON) && input->pressedStartButton)
+    {
+        input->input_field_1_2 = TRUE;
+        input->pressedStartButton = FALSE;
+    }
 }
 
 int ProcessPlayerFieldInput(struct FieldInput *input)
@@ -182,12 +202,38 @@ int ProcessPlayerFieldInput(struct FieldInput *input)
         return TRUE;
     if (input->pressedStartButton)
     {
-        PlaySE(SE_WIN_OPEN);
-        ShowStartMenu();
+        if (FlagGet(FLAG_SYS_DEXNAV_SEARCH))
+        {
+            ResetDexNavSearch();
+            return FALSE;
+        }
+        else
+        {
+            PlaySE(SE_WIN_OPEN);
+            ShowStartMenu();
+        }
         return TRUE;
     }
-    if (input->pressedSelectButton && UseRegisteredKeyItemOnField() == TRUE)
+    
+    if (input->pressedSelectButton && UseRegisteredKeyItemOnField(0))
         return TRUE;
+    else if (input->pressedLButton && UseRegisteredKeyItemOnField(1))
+        return TRUE;
+    else if (input->pressedRButton && TryStartDexnavSearch())
+        return TRUE;
+    else if (input->pressedRButton && UseRegisteredKeyItemOnField(2))
+        return TRUE;
+    
+    if (input->tookStep && TryFindHiddenPokemon())
+        return TRUE;
+
+
+    if (input->input_field_1_2 && FlagGet(FLAG_UNUSED_0x020))
+    {
+        PlaySE(SE_WIN_OPEN);
+        Debug_ShowMainMenu();
+        return TRUE;
+    }
 
     return FALSE;
 }
@@ -381,6 +427,8 @@ static const u8 *GetInteractedMetatileScript(struct MapPosition *position, u8 me
         return EventScript_CableBoxResults;
     if (MetatileBehavior_IsPokeblockFeeder(metatileBehavior) == TRUE)
         return EventScript_PokeBlockFeeder;
+	if (MetatileBehavior_IsHeadbuttTree(metatileBehavior) == TRUE)
+        return EventScript_CutTree;
     if (MetatileBehavior_IsTrickHousePuzzleDoor(metatileBehavior) == TRUE)
         return Route110_TrickHousePuzzle_EventScript_Door;
     if (MetatileBehavior_IsRegionMap(metatileBehavior) == TRUE)
@@ -448,12 +496,12 @@ static const u8 *GetInteractedMetatileScript(struct MapPosition *position, u8 me
 
 static const u8 *GetInteractedWaterScript(struct MapPosition *unused1, u8 metatileBehavior, u8 direction)
 {
-    if (FlagGet(FLAG_BADGE05_GET) == TRUE && PartyHasMonWithSurf() == TRUE && IsPlayerFacingSurfableFishableWater() == TRUE)
+    if (IsPlayerFacingSurfableFishableWater() == TRUE)
         return EventScript_UseSurf;
 
     if (MetatileBehavior_IsWaterfall(metatileBehavior) == TRUE)
     {
-        if (FlagGet(FLAG_BADGE08_GET) == TRUE && IsPlayerSurfingNorth() == TRUE)
+        if (FlagGet(FLAG_RECEIVED_TM40) == TRUE && IsPlayerSurfingNorth() == TRUE)
             return EventScript_UseWaterfall;
         else
             return EventScript_CannotUseWaterfall;
@@ -463,7 +511,7 @@ static const u8 *GetInteractedWaterScript(struct MapPosition *unused1, u8 metati
 
 static bool32 TrySetupDiveDownScript(void)
 {
-    if (FlagGet(FLAG_BADGE07_GET) && TrySetDiveWarp() == 2)
+    if (TrySetDiveWarp() == 2)
     {
         ScriptContext1_SetupScript(EventScript_UseDive);
         return TRUE;
@@ -473,7 +521,7 @@ static bool32 TrySetupDiveDownScript(void)
 
 static bool32 TrySetupDiveEmergeScript(void)
 {
-    if (FlagGet(FLAG_BADGE07_GET) && gMapHeader.mapType == MAP_TYPE_UNDERWATER && TrySetDiveWarp() == 1)
+    if (gMapHeader.mapType == MAP_TYPE_UNDERWATER && TrySetDiveWarp() == 1)
     {
         ScriptContext1_SetupScript(EventScript_UseDiveUnderwater);
         return TRUE;
@@ -492,6 +540,8 @@ static bool8 TryStartStepBasedScript(struct MapPosition *position, u16 metatileB
     if (TryStartStepCountScript(metatileBehavior) == TRUE)
         return TRUE;
     if (UpdateRepelCounter() == TRUE)
+        return TRUE;
+    if (UpdateLureCounter() == TRUE)
         return TRUE;
     return FALSE;
 }
@@ -542,7 +592,7 @@ static bool8 TryStartStepCountScript(u16 metatileBehavior)
     }
 
     IncrementRematchStepCounter();
-    UpdateFriendshipStepCounter();
+    UpdateHappinessStepCounter();
     UpdateFarawayIslandStepCounter();
 
     if (!(gPlayerAvatar.flags & PLAYER_AVATAR_FLAG_FORCED_MOVE) && !MetatileBehavior_IsForcedMovementTile(metatileBehavior))
@@ -607,15 +657,14 @@ static bool8 TryStartStepCountScript(u16 metatileBehavior)
     return FALSE;
 }
 
-// Unused
-static void ClearFriendshipStepCounter(void)
+void Unref_ClearHappinessStepCounter(void)
 {
-    VarSet(VAR_FRIENDSHIP_STEP_COUNTER, 0);
+    VarSet(VAR_HAPPINESS_STEP_COUNTER, 0);
 }
 
-static void UpdateFriendshipStepCounter(void)
+static void UpdateHappinessStepCounter(void)
 {
-    u16 *ptr = GetVarPointer(VAR_FRIENDSHIP_STEP_COUNTER);
+    u16 *ptr = GetVarPointer(VAR_HAPPINESS_STEP_COUNTER);
     int i;
 
     (*ptr)++;
@@ -669,6 +718,9 @@ void RestartWildEncounterImmunitySteps(void)
 
 static bool8 CheckStandardWildEncounter(u16 metatileBehavior)
 {
+    if (FlagGet(FLAG_SYS_NO_ENCOUNTER)) //DEBUG
+        return FALSE;//
+
     if (sWildEncounterImmunitySteps < 4)
     {
         sWildEncounterImmunitySteps++;
@@ -684,7 +736,7 @@ static bool8 CheckStandardWildEncounter(u16 metatileBehavior)
     }
 
     sPreviousPlayerMetatileBehavior = metatileBehavior;
-    return FALSE;
+    return FALSE;   
 }
 
 static bool8 TryArrowWarp(struct MapPosition *position, u16 metatileBehavior, u8 direction)
@@ -731,8 +783,7 @@ static bool8 TryStartWarpEventScript(struct MapPosition *position, u16 metatileB
         }
         if (MetatileBehavior_IsWarpOrBridge(metatileBehavior) == TRUE)
         {
-            // Maybe unused? This MB is used by log bridges, but there's never a warp event on them
-            DoSpinExitWarp();
+            sub_80B0268();
             return TRUE;
         }
         if (MetatileBehavior_IsMtPyreHole(metatileBehavior) == TRUE)

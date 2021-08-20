@@ -704,7 +704,7 @@
     {
       "id": "LAYOUT_LAVARIDGE_TOWN_POKEMON_CENTER_1F",
       "name": "LavaridgeTown_PokemonCenter_1F_Layout",
-      "width": 14,
+      "width": 15,
       "height": 9,
       "primary_tileset": "gTileset_Building",
       "secondary_tileset": "gTileset_PokemonCenter",
@@ -742,14 +742,14 @@
       "blockdata_filepath": "data/layouts/LilycoveCity_House2/map.bin"
     },
     {
-      "id": "LAYOUT_UNUSED_CONTEST_ROOM1",
-      "name": "UnusedContestRoom1_Layout",
+      "id": "LAYOUT_UNKNOWN_08428450",
+      "name": "Unknown_08428450_Layout",
       "width": 1,
       "height": 1,
       "primary_tileset": "gTileset_Building",
       "secondary_tileset": "gTileset_Contest",
-      "border_filepath": "data/layouts/UnusedContestRoom1/border.bin",
-      "blockdata_filepath": "data/layouts/UnusedContestRoom1/map.bin"
+      "border_filepath": "data/layouts/Unknown_08428450/border.bin",
+      "blockdata_filepath": "data/layouts/Unknown_08428450/map.bin"
     },
     {
       "id": "LAYOUT_VERDANTURF_TOWN_WANDAS_HOUSE",
@@ -822,24 +822,24 @@
       "blockdata_filepath": "data/layouts/SlateportCity_SternsShipyard_2F/map.bin"
     },
     {
-      "id": "LAYOUT_UNUSED_CONTEST_ROOM2",
-      "name": "UnusedContestRoom2_Layout",
+      "id": "LAYOUT_UNKNOWN_084294C4",
+      "name": "Unknown_084294C4_Layout",
       "width": 1,
       "height": 1,
       "primary_tileset": "gTileset_Building",
       "secondary_tileset": "gTileset_Contest",
-      "border_filepath": "data/layouts/UnusedContestRoom2/border.bin",
-      "blockdata_filepath": "data/layouts/UnusedContestRoom2/map.bin"
+      "border_filepath": "data/layouts/Unknown_084294C4/border.bin",
+      "blockdata_filepath": "data/layouts/Unknown_084294C4/map.bin"
     },
     {
-      "id": "LAYOUT_UNUSED_CONTEST_ROOM3",
-      "name": "UnusedContestRoom3_Layout",
+      "id": "LAYOUT_UNKNOWN_084294E8",
+      "name": "Unknown_084294E8_Layout",
       "width": 1,
       "height": 1,
       "primary_tileset": "gTileset_Building",
       "secondary_tileset": "gTileset_Contest",
-      "border_filepath": "data/layouts/UnusedContestRoom3/border.bin",
-      "blockdata_filepath": "data/layouts/UnusedContestRoom3/map.bin"
+      "border_filepath": "data/layouts/Unknown_084294E8/border.bin",
+      "blockdata_filepath": "data/layouts/Unknown_084294E8/map.bin"
     },
     {
       "id": "LAYOUT_SLATEPORT_CITY_POKEMON_FAN_CLUB",
@@ -1344,10 +1344,10 @@
     {
       "id": "LAYOUT_PETALBURG_WOODS",
       "name": "PetalburgWoods_Layout",
-      "width": 48,
+      "width": 54,
       "height": 44,
-      "primary_tileset": "gTileset_General",
-      "secondary_tileset": "gTileset_Rustboro",
+      "primary_tileset": "gTileset_FRLG_General",
+      "secondary_tileset": "gTileset_Viridian_Forest",
       "border_filepath": "data/layouts/PetalburgWoods/border.bin",
       "blockdata_filepath": "data/layouts/PetalburgWoods/map.bin"
     },
@@ -1692,144 +1692,144 @@
       "blockdata_filepath": "data/layouts/ShoalCave_HighTideInnerRoom/map.bin"
     },
     {
-      "id": "LAYOUT_UNUSED_CAVE1",
-      "name": "UnusedCave1_Layout",
+      "id": "LAYOUT_UNKNOWN_0843E6C0",
+      "name": "Unknown_0843E6C0_Layout",
       "width": 1,
       "height": 1,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_Cave",
-      "border_filepath": "data/layouts/UnusedCave1/border.bin",
-      "blockdata_filepath": "data/layouts/UnusedCave1/map.bin"
+      "border_filepath": "data/layouts/Unknown_0843E6C0/border.bin",
+      "blockdata_filepath": "data/layouts/Unknown_0843E6C0/map.bin"
     },
     {
-      "id": "LAYOUT_UNUSED_CAVE2",
-      "name": "UnusedCave2_Layout",
+      "id": "LAYOUT_UNKNOWN_0843E6E4",
+      "name": "Unknown_0843E6E4_Layout",
       "width": 1,
       "height": 1,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_Cave",
-      "border_filepath": "data/layouts/UnusedCave2/border.bin",
-      "blockdata_filepath": "data/layouts/UnusedCave2/map.bin"
+      "border_filepath": "data/layouts/Unknown_0843E6E4/border.bin",
+      "blockdata_filepath": "data/layouts/Unknown_0843E6E4/map.bin"
     },
     {
-      "id": "LAYOUT_UNUSED_CAVE3",
-      "name": "UnusedCave3_Layout",
+      "id": "LAYOUT_UNKNOWN_0843E708",
+      "name": "Unknown_0843E708_Layout",
       "width": 1,
       "height": 1,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_Cave",
-      "border_filepath": "data/layouts/UnusedCave3/border.bin",
-      "blockdata_filepath": "data/layouts/UnusedCave3/map.bin"
+      "border_filepath": "data/layouts/Unknown_0843E708/border.bin",
+      "blockdata_filepath": "data/layouts/Unknown_0843E708/map.bin"
     },
     {
-      "id": "LAYOUT_UNUSED_CAVE4",
-      "name": "UnusedCave4_Layout",
+      "id": "LAYOUT_UNKNOWN_0843E72C",
+      "name": "Unknown_0843E72C_Layout",
       "width": 1,
       "height": 1,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_Cave",
-      "border_filepath": "data/layouts/UnusedCave4/border.bin",
-      "blockdata_filepath": "data/layouts/UnusedCave4/map.bin"
+      "border_filepath": "data/layouts/Unknown_0843E72C/border.bin",
+      "blockdata_filepath": "data/layouts/Unknown_0843E72C/map.bin"
     },
     {
-      "id": "LAYOUT_UNUSED_CAVE5",
-      "name": "UnusedCave5_Layout",
+      "id": "LAYOUT_UNKNOWN_0843E750",
+      "name": "Unknown_0843E750_Layout",
       "width": 1,
       "height": 1,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_Cave",
-      "border_filepath": "data/layouts/UnusedCave5/border.bin",
-      "blockdata_filepath": "data/layouts/UnusedCave5/map.bin"
+      "border_filepath": "data/layouts/Unknown_0843E750/border.bin",
+      "blockdata_filepath": "data/layouts/Unknown_0843E750/map.bin"
     },
     {
-      "id": "LAYOUT_UNUSED_CAVE6",
-      "name": "UnusedCave6_Layout",
+      "id": "LAYOUT_UNKNOWN_0843E774",
+      "name": "Unknown_0843E774_Layout",
       "width": 1,
       "height": 1,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_Cave",
-      "border_filepath": "data/layouts/UnusedCave6/border.bin",
-      "blockdata_filepath": "data/layouts/UnusedCave6/map.bin"
+      "border_filepath": "data/layouts/Unknown_0843E774/border.bin",
+      "blockdata_filepath": "data/layouts/Unknown_0843E774/map.bin"
     },
     {
-      "id": "LAYOUT_UNUSED_CAVE7",
-      "name": "UnusedCave7_Layout",
+      "id": "LAYOUT_UNKNOWN_0843E798",
+      "name": "Unknown_0843E798_Layout",
       "width": 1,
       "height": 1,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_Cave",
-      "border_filepath": "data/layouts/UnusedCave7/border.bin",
-      "blockdata_filepath": "data/layouts/UnusedCave7/map.bin"
+      "border_filepath": "data/layouts/Unknown_0843E798/border.bin",
+      "blockdata_filepath": "data/layouts/Unknown_0843E798/map.bin"
     },
     {
-      "id": "LAYOUT_UNUSED_CAVE8",
-      "name": "UnusedCave8_Layout",
+      "id": "LAYOUT_UNKNOWN_0843E7BC",
+      "name": "Unknown_0843E7BC_Layout",
       "width": 1,
       "height": 1,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_Cave",
-      "border_filepath": "data/layouts/UnusedCave8/border.bin",
-      "blockdata_filepath": "data/layouts/UnusedCave8/map.bin"
+      "border_filepath": "data/layouts/Unknown_0843E7BC/border.bin",
+      "blockdata_filepath": "data/layouts/Unknown_0843E7BC/map.bin"
     },
     {
-      "id": "LAYOUT_UNUSED_CAVE9",
-      "name": "UnusedCave9_Layout",
+      "id": "LAYOUT_UNKNOWN_0843E7E0",
+      "name": "Unknown_0843E7E0_Layout",
       "width": 1,
       "height": 1,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_Cave",
-      "border_filepath": "data/layouts/UnusedCave9/border.bin",
-      "blockdata_filepath": "data/layouts/UnusedCave9/map.bin"
+      "border_filepath": "data/layouts/Unknown_0843E7E0/border.bin",
+      "blockdata_filepath": "data/layouts/Unknown_0843E7E0/map.bin"
     },
     {
-      "id": "LAYOUT_UNUSED_CAVE10",
-      "name": "UnusedCave10_Layout",
+      "id": "LAYOUT_UNKNOWN_0843E804",
+      "name": "Unknown_0843E804_Layout",
       "width": 1,
       "height": 1,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_Cave",
-      "border_filepath": "data/layouts/UnusedCave10/border.bin",
-      "blockdata_filepath": "data/layouts/UnusedCave10/map.bin"
+      "border_filepath": "data/layouts/Unknown_0843E804/border.bin",
+      "blockdata_filepath": "data/layouts/Unknown_0843E804/map.bin"
     },
     {
-      "id": "LAYOUT_UNUSED_CAVE11",
-      "name": "UnusedCave11_Layout",
+      "id": "LAYOUT_UNKNOWN_0843E828",
+      "name": "Unknown_0843E828_Layout",
       "width": 1,
       "height": 1,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_Cave",
-      "border_filepath": "data/layouts/UnusedCave11/border.bin",
-      "blockdata_filepath": "data/layouts/UnusedCave11/map.bin"
+      "border_filepath": "data/layouts/Unknown_0843E828/border.bin",
+      "blockdata_filepath": "data/layouts/Unknown_0843E828/map.bin"
     },
     {
-      "id": "LAYOUT_UNUSED_CAVE12",
-      "name": "UnusedCave12_Layout",
+      "id": "LAYOUT_UNKNOWN_0843E84C",
+      "name": "Unknown_0843E84C_Layout",
       "width": 1,
       "height": 1,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_Cave",
-      "border_filepath": "data/layouts/UnusedCave12/border.bin",
-      "blockdata_filepath": "data/layouts/UnusedCave12/map.bin"
+      "border_filepath": "data/layouts/Unknown_0843E84C/border.bin",
+      "blockdata_filepath": "data/layouts/Unknown_0843E84C/map.bin"
     },
     {
-      "id": "LAYOUT_UNUSED_CAVE13",
-      "name": "UnusedCave13_Layout",
+      "id": "LAYOUT_UNKNOWN_0843E870",
+      "name": "Unknown_0843E870_Layout",
       "width": 1,
       "height": 1,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_Cave",
-      "border_filepath": "data/layouts/UnusedCave13/border.bin",
-      "blockdata_filepath": "data/layouts/UnusedCave13/map.bin"
+      "border_filepath": "data/layouts/Unknown_0843E870/border.bin",
+      "blockdata_filepath": "data/layouts/Unknown_0843E870/map.bin"
     },
     {
-      "id": "LAYOUT_UNUSED_CAVE14",
-      "name": "UnusedCave14_Layout",
+      "id": "LAYOUT_UNKNOWN_0843E894",
+      "name": "Unknown_0843E894_Layout",
       "width": 1,
       "height": 1,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_Cave",
-      "border_filepath": "data/layouts/UnusedCave14/border.bin",
-      "blockdata_filepath": "data/layouts/UnusedCave14/map.bin"
+      "border_filepath": "data/layouts/Unknown_0843E894/border.bin",
+      "blockdata_filepath": "data/layouts/Unknown_0843E894/map.bin"
     },
     {
       "id": "LAYOUT_NEW_MAUVILLE_ENTRANCE",
@@ -2252,64 +2252,64 @@
       "blockdata_filepath": "data/layouts/ContestHall/map.bin"
     },
     {
-      "id": "LAYOUT_UNUSED_CONTEST_HALL1",
-      "name": "UnusedContestHall1_Layout",
+      "id": "LAYOUT_UNKNOWN_LINK_CONTEST_ROOM_25_29",
+      "name": "UnknownLinkContestRoom_25_29_Layout",
       "width": 1,
       "height": 1,
       "primary_tileset": "gTileset_Building",
       "secondary_tileset": "gTileset_Contest",
-      "border_filepath": "data/layouts/UnusedContestHall1/border.bin",
-      "blockdata_filepath": "data/layouts/UnusedContestHall1/map.bin"
+      "border_filepath": "data/layouts/UnknownLinkContestRoom_25_29/border.bin",
+      "blockdata_filepath": "data/layouts/UnknownLinkContestRoom_25_29/map.bin"
     },
     {
-      "id": "LAYOUT_UNUSED_CONTEST_HALL2",
-      "name": "UnusedContestHall2_Layout",
+      "id": "LAYOUT_UNKNOWN_LINK_CONTEST_ROOM_25_30",
+      "name": "UnknownLinkContestRoom_25_30_Layout",
       "width": 1,
       "height": 1,
       "primary_tileset": "gTileset_Building",
       "secondary_tileset": "gTileset_Contest",
-      "border_filepath": "data/layouts/UnusedContestHall2/border.bin",
-      "blockdata_filepath": "data/layouts/UnusedContestHall2/map.bin"
+      "border_filepath": "data/layouts/UnknownLinkContestRoom_25_30/border.bin",
+      "blockdata_filepath": "data/layouts/UnknownLinkContestRoom_25_30/map.bin"
     },
     {
-      "id": "LAYOUT_UNUSED_CONTEST_HALL3",
-      "name": "UnusedContestHall3_Layout",
+      "id": "LAYOUT_UNKNOWN_LINK_CONTEST_ROOM_25_31",
+      "name": "UnknownLinkContestRoom_25_31_Layout",
       "width": 1,
       "height": 1,
       "primary_tileset": "gTileset_Building",
       "secondary_tileset": "gTileset_Contest",
-      "border_filepath": "data/layouts/UnusedContestHall3/border.bin",
-      "blockdata_filepath": "data/layouts/UnusedContestHall3/map.bin"
+      "border_filepath": "data/layouts/UnknownLinkContestRoom_25_31/border.bin",
+      "blockdata_filepath": "data/layouts/UnknownLinkContestRoom_25_31/map.bin"
     },
     {
-      "id": "LAYOUT_UNUSED_CONTEST_HALL4",
-      "name": "UnusedContestHall4_Layout",
+      "id": "LAYOUT_UNKNOWN_LINK_CONTEST_ROOM_25_32",
+      "name": "UnknownLinkContestRoom_25_32_Layout",
       "width": 1,
       "height": 1,
       "primary_tileset": "gTileset_Building",
       "secondary_tileset": "gTileset_Contest",
-      "border_filepath": "data/layouts/UnusedContestHall4/border.bin",
-      "blockdata_filepath": "data/layouts/UnusedContestHall4/map.bin"
+      "border_filepath": "data/layouts/UnknownLinkContestRoom_25_32/border.bin",
+      "blockdata_filepath": "data/layouts/UnknownLinkContestRoom_25_32/map.bin"
     },
     {
-      "id": "LAYOUT_UNUSED_CONTEST_HALL5",
-      "name": "UnusedContestHall5_Layout",
+      "id": "LAYOUT_UNKNOWN_LINK_CONTEST_ROOM_25_33",
+      "name": "UnknownLinkContestRoom_25_33_Layout",
       "width": 1,
       "height": 1,
       "primary_tileset": "gTileset_Building",
       "secondary_tileset": "gTileset_Contest",
-      "border_filepath": "data/layouts/UnusedContestHall5/border.bin",
-      "blockdata_filepath": "data/layouts/UnusedContestHall5/map.bin"
+      "border_filepath": "data/layouts/UnknownLinkContestRoom_25_33/border.bin",
+      "blockdata_filepath": "data/layouts/UnknownLinkContestRoom_25_33/map.bin"
     },
     {
-      "id": "LAYOUT_UNUSED_CONTEST_HALL6",
-      "name": "UnusedContestHall6_Layout",
+      "id": "LAYOUT_UNKNOWN_LINK_CONTEST_ROOM_25_34",
+      "name": "UnknownLinkContestRoom_25_34_Layout",
       "width": 1,
       "height": 1,
       "primary_tileset": "gTileset_Building",
       "secondary_tileset": "gTileset_Contest",
-      "border_filepath": "data/layouts/UnusedContestHall6/border.bin",
-      "blockdata_filepath": "data/layouts/UnusedContestHall6/map.bin"
+      "border_filepath": "data/layouts/UnknownLinkContestRoom_25_34/border.bin",
+      "blockdata_filepath": "data/layouts/UnknownLinkContestRoom_25_34/map.bin"
     },
     {
       "id": "LAYOUT_CONTEST_HALL_BEAUTY",
@@ -2364,10 +2364,10 @@
     {
       "id": "LAYOUT_INSIDE_OF_TRUCK",
       "name": "InsideOfTruck_Layout",
-      "width": 5,
-      "height": 5,
-      "primary_tileset": "gTileset_General",
-      "secondary_tileset": "gTileset_InsideOfTruck",
+      "width": 10,
+      "height": 10,
+      "primary_tileset": "gTileset_Building",
+      "secondary_tileset": "gTileset_BrendansMaysHouse",
       "border_filepath": "data/layouts/InsideOfTruck/border.bin",
       "blockdata_filepath": "data/layouts/InsideOfTruck/map.bin"
     },
@@ -2412,14 +2412,14 @@
       "blockdata_filepath": "data/layouts/SafariZone_South/map.bin"
     },
     {
-      "id": "LAYOUT_UNUSED_OUTDOOR_AREA",
-      "name": "UnusedOutdoorArea_Layout",
+      "id": "LAYOUT_UNKNOWN_08447028",
+      "name": "Unknown_08447028_Layout",
       "width": 58,
       "height": 26,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "0",
-      "border_filepath": "data/layouts/UnusedOutdoorArea/border.bin",
-      "blockdata_filepath": "data/layouts/UnusedOutdoorArea/map.bin"
+      "border_filepath": "data/layouts/Unknown_08447028/border.bin",
+      "blockdata_filepath": "data/layouts/Unknown_08447028/map.bin"
     },
     {
       "id": "LAYOUT_ROUTE109_SEASHORE_HOUSE",
@@ -3582,14 +3582,14 @@
       "blockdata_filepath": "data/layouts/BattleFrontier_BattlePikeRoomWildMons/map.bin"
     },
     {
-      "id": "LAYOUT_BATTLE_FRONTIER_BATTLE_PIKE_ROOM_UNUSED",
-      "name": "BattleFrontier_BattlePikeRoomUnused_Layout",
+      "id": "LAYOUT_UNKNOWN_084693AC",
+      "name": "Unknown_084693AC_Layout",
       "width": 1,
       "height": 1,
       "primary_tileset": "gTileset_Building",
       "secondary_tileset": "gTileset_BattlePike",
-      "border_filepath": "data/layouts/BattleFrontier_BattlePikeRoomUnused/border.bin",
-      "blockdata_filepath": "data/layouts/BattleFrontier_BattlePikeRoomUnused/map.bin"
+      "border_filepath": "data/layouts/Unknown_084693AC/border.bin",
+      "blockdata_filepath": "data/layouts/Unknown_084693AC/map.bin"
     },
     {
       "id": "LAYOUT_BATTLE_FRONTIER_BATTLE_PYRAMID_LOBBY",
@@ -4410,6 +4410,56 @@
       "secondary_tileset": "gTileset_MysteryEventsHouse",
       "border_filepath": "data/layouts/SootopolisCity_MysteryEventsHouse_1F_StairsUnblocked/border.bin",
       "blockdata_filepath": "data/layouts/SootopolisCity_MysteryEventsHouse_1F_StairsUnblocked/map.bin"
+    },
+    {
+      "id": "LAYOUT_SCORCHED_SLAB_B1F",
+      "name": "ScorchedSlab_B1F_Layout",
+      "width": 27,
+      "height": 30,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Cave",
+      "border_filepath": "data/layouts/ScorchedSlab_B1F/border.bin",
+      "blockdata_filepath": "data/layouts/ScorchedSlab_B1F/map.bin"
+    },
+    {
+      "id": "LAYOUT_SCORCHED_SLAB_B2F",
+      "name": "ScorchedSlab_B2F_Layout",
+      "width": 36,
+      "height": 32,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Cave",
+      "border_filepath": "data/layouts/ScorchedSlab_B2F/border.bin",
+      "blockdata_filepath": "data/layouts/ScorchedSlab_B2F/map.bin"
+    },
+    {
+      "id": "LAYOUT_SCORCHED_SLAB_HEATRANS_ROOM",
+      "name": "ScorchedSlab_HeatransRoom_Layout",
+      "width": 21,
+      "height": 21,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Cave",
+      "border_filepath": "data/layouts/ScorchedSlab_HeatransRoom/border.bin",
+      "blockdata_filepath": "data/layouts/ScorchedSlab_HeatransRoom/map.bin"
+    },
+    {
+      "id": "LAYOUT_VIRIDIAN_FOREST",
+      "name": "viridian_forest_Layout",
+      "width": 54,
+      "height": 69,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Petalburg",
+      "border_filepath": "data/layouts/viridian_forest/border.bin",
+      "blockdata_filepath": "data/layouts/viridian_forest/map.bin"
+    },
+    {
+      "id": "LAYOUT_PETALBURG_WOODS_2",
+      "name": "Petalburg_Woods_2_Layout",
+      "width": 42,
+      "height": 40,
+      "primary_tileset": "gTileset_FRLG_General",
+      "secondary_tileset": "gTileset_Viridian_Forest",
+      "border_filepath": "data/layouts/Petalburg_Woods_2/border.bin",
+      "blockdata_filepath": "data/layouts/Petalburg_Woods_2/map.bin"
     }
   ]
 }
