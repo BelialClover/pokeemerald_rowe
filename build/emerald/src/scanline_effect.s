@@ -198,26 +198,24 @@ ScanlineEffect_InitHBlankDmaTransfer:
 	.word	0x7fff
 	.word	sShouldStopWaveTask
 .L20:
-	ldr	r1, .L24
-	ldrh	r2, [r1, #0xa]
+	ldr	r3, .L24
+	ldrh	r1, [r3, #0xa]
 	ldr	r0, .L24+0x4
-	and	r0, r0, r2
-	strh	r0, [r1, #0xa]
-	ldrh	r2, [r1, #0xa]
+	and	r0, r0, r1
+	strh	r0, [r3, #0xa]
+	ldrh	r1, [r3, #0xa]
 	ldr	r0, .L24+0x8
-	and	r0, r0, r2
-	strh	r0, [r1, #0xa]
-	ldrh	r0, [r1, #0xa]
+	and	r0, r0, r1
+	strh	r0, [r3, #0xa]
+	ldrh	r0, [r3, #0xa]
 	ldrb	r0, [r4, #0x14]
 	lsl	r0, r0, #0x2
 	add	r0, r0, r4
 	ldr	r0, [r0]
-	str	r0, [r1]
-	ldr	r0, [r4, #0x8]
-	str	r0, [r1, #0x4]
-	ldr	r0, [r4, #0xc]
-	str	r0, [r1, #0x8]
-	ldr	r0, [r1, #0x8]
+	ldr	r1, [r4, #0x8]
+	ldr	r2, [r4, #0xc]
+	stmia r3!, {r0, r1, r2}
+	.code	16
 	ldr	r0, [r4, #0x10]
 	bl	_call_via_r0
 	ldrb	r0, [r4, #0x14]

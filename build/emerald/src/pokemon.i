@@ -6452,8 +6452,8 @@ struct SoundInfo
     u32 plynote;
     u32 ExtVolPit;
     u8 gap2[16];
-    struct SoundChannel chans[12];
-    s8 pcmBuffer[1584 * 2];
+    struct SoundChannel chans[15];
+    s8 pcmBuffer[0x620 * 2];
 };
 
 struct SongHeader
@@ -10828,6 +10828,8 @@ const u8 GetTimeOfDayString(void);
 # 52 "src/pokemon.c" 2
 # 1 "include/constants/songs.h" 1
 # 53 "src/pokemon.c" 2
+# 1 "include/constants/species.h" 1
+# 54 "src/pokemon.c" 2
 # 1 "include/constants/trainers.h" 1
 
 
@@ -10835,9 +10837,9 @@ const u8 GetTimeOfDayString(void);
 
 # 1 "include/constants/battle_frontier_trainers.h" 1
 # 6 "include/constants/trainers.h" 2
-# 54 "src/pokemon.c" 2
-# 1 "include/constants/weather.h" 1
 # 55 "src/pokemon.c" 2
+# 1 "include/constants/weather.h" 1
+# 56 "src/pokemon.c" 2
 
 struct SpeciesItem
 {
@@ -22347,7 +22349,7 @@ const struct BattleMove gBattleMoves[755] =
         .split = 0x1,
     },
 };
-# 83 "src/pokemon.c" 2
+# 84 "src/pokemon.c" 2
 
 
 
@@ -24675,7 +24677,7 @@ const u8 *const gItemEffectTable[773] =
     [169] = gItemEffect_TamatoBerry,
     [210] = ((void *)0)
 };
-# 1858 "src/pokemon.c" 2
+# 1859 "src/pokemon.c" 2
 
 const s8 gNatureStatTable[25][6 - 1] =
 {
@@ -60785,7 +60787,7 @@ const u8 *const gTMHMLearnsets[] =
     [898 + 134] = sDeoxysDefenseTMHMLearnset,
     [898 + 135] = sDeoxysSpeedTMHMLearnset,
 };
-# 1890 "src/pokemon.c" 2
+# 1891 "src/pokemon.c" 2
 # 1 "src/data/pokemon/trainer_class_lookups.h" 1
 const u8 gFacilityClassToPicIndex[] =
 {
@@ -60958,7 +60960,7 @@ const u8 gFacilityClassToTrainerClass[] =
     [0x50] = 0x41,
     [0x51] = 0x41,
 };
-# 1891 "src/pokemon.c" 2
+# 1892 "src/pokemon.c" 2
 # 1 "src/data/pokemon/experience_tables.h" 1
 # 18 "src/data/pokemon/experience_tables.h"
 const u32 gExperienceTables[][100 + 1] =
@@ -61788,7 +61790,7 @@ const u32 gExperienceTables[][100 + 1] =
         ((100 * 100 * 100)),
     }
 };
-# 1892 "src/pokemon.c" 2
+# 1893 "src/pokemon.c" 2
 # 1 "src/data/pokemon/base_stats.h" 1
 
 
@@ -96042,7 +96044,7 @@ const struct BaseStats gBaseStats[] =
         .noFlip = 0,
     },
 };
-# 1893 "src/pokemon.c" 2
+# 1894 "src/pokemon.c" 2
 # 1 "src/data/pokemon/level_up_learnsets.h" 1
 
 
@@ -118964,7 +118966,7 @@ static const struct LevelUpMove sCalyrexShadowRiderLevelUpLearnset[] = {
     {.move = 248, .level = 88},
     0xFFFF
 };
-# 1894 "src/pokemon.c" 2
+# 1895 "src/pokemon.c" 2
 # 1 "src/data/pokemon/evolution.h" 1
 const struct Evolution gEvolutionTable[898 + 308 + 1][10] =
 {
@@ -119509,7 +119511,7 @@ const struct Evolution gEvolutionTable[898 + 308 + 1][10] =
     [898 + 289] = {{4, 34, 898 + 290}},
  [898 + 102] = {{1, 0, 898 + 88}},
 };
-# 1895 "src/pokemon.c" 2
+# 1896 "src/pokemon.c" 2
 # 1 "src/data/pokemon/level_up_learnset_pointers.h" 1
 const struct LevelUpMove *const gLevelUpLearnsets[898 + 308 + 1] =
 {
@@ -120786,7 +120788,7 @@ const struct LevelUpMove *const gLevelUpLearnsets[898 + 308 + 1] =
     [898 + 307] = sCalyrexIceRiderLevelUpLearnset,
     [898 + 308] = sCalyrexShadowRiderLevelUpLearnset,
 };
-# 1896 "src/pokemon.c" 2
+# 1897 "src/pokemon.c" 2
 # 1 "src/data/pokemon/form_species_table.h" 1
 static const u16 sVenusaurFormSpeciesIdTable[] = {
     3,
@@ -121716,7 +121718,7 @@ static const u16 sStunfiskFormSpeciesIdTable[] = {
     898 + 87,
     0xFFFF,
 };
-# 1897 "src/pokemon.c" 2
+# 1898 "src/pokemon.c" 2
 # 1 "src/data/pokemon/form_species_table_pointers.h" 1
 const u16 *const gFormSpeciesIdTables[898 + 308 + 1] =
 {
@@ -122185,7 +122187,7 @@ const u16 *const gFormSpeciesIdTables[898 + 308 + 1] =
  [618] = sStunfiskFormSpeciesIdTable,
  [898 + 87] = sStunfiskFormSpeciesIdTable,
 };
-# 1898 "src/pokemon.c" 2
+# 1899 "src/pokemon.c" 2
 
 
 
@@ -123945,7 +123947,7 @@ static u16 CalculateBoxMonChecksum(struct BoxPokemon *boxMon)
 
     return checksum;
 }
-# 3667 "src/pokemon.c"
+# 3668 "src/pokemon.c"
 void CalculateMonStats(struct Pokemon *mon)
 {
     s32 oldMaxHP = GetMonData(mon, 58, ((void *)0));
@@ -124398,7 +124400,7 @@ static void DecryptBoxMon(struct BoxPokemon *boxMon)
         boxMon->secure.raw[i] ^= boxMon->personality;
     }
 }
-# 4167 "src/pokemon.c"
+# 4168 "src/pokemon.c"
 static union PokemonSubstruct *GetSubstruct(struct BoxPokemon *boxMon, u32 personality, u8 substructType)
 {
     union PokemonSubstruct *substruct = ((void *)0);
@@ -127441,11 +127443,11 @@ void ClearBattleMonForms(void)
 u16 GetBattleBGM(void)
 {
     if (gBattleTypeFlags & (1 << 12))
-        return 480;
+        return 434;
     else if (gBattleTypeFlags & (1 << 14))
-        return 479;
+        return 433;
     else if (gBattleTypeFlags & ((1 << 1) | (1 << 25)))
-        return 476;
+        return 430;
     else if (gBattleTypeFlags & (1 << 3))
     {
         u8 trainerClass;
@@ -127461,24 +127463,24 @@ u16 GetBattleBGM(void)
         {
         case 0xd:
         case 0x35:
-            return 483;
+            return 437;
         case 0x3:
         case 0x9:
         case 0xb:
         case 0x31:
-            return 475;
+            return 429;
         case 0x20:
-            return 477;
+            return 431;
         case 0x26:
-            return 478;
+            return 432;
         case 0x32:
             if (gBattleTypeFlags & ((1 << 8) | (1 << 16) | (1 << 17) | (1 << 18) | (1 << 19) | (1 << 20) | (1 << 21)))
-                return 481;
+                return 435;
             if (!StringCompare(gTrainers[gTrainerBattleOpponent_A].trainerName, gText_BattleWallyName))
-                return 476;
-            return 481;
+                return 430;
+            return 435;
         case 0x1f:
-            return 482;
+            return 436;
         case 0x3a:
         case 0x3b:
         case 0x3c:
@@ -127486,13 +127488,43 @@ u16 GetBattleBGM(void)
         case 0x3e:
         case 0x3f:
         case 0x40:
-            return 471;
+            return 520;
         default:
-            return 476;
+            return 430;
         }
     }
     else
-        return 474;
+    {
+        switch (GetMonData(&gEnemyParty[0], 11, ((void *)0)))
+        {
+        case 144:
+        case 145:
+        case 146:
+            return 500;
+        case 150:
+            return 499;
+        case 151:
+        case 251:
+        case 385:
+            return 521;
+        case 249:
+            return 876;
+        case 250:
+            return 802;
+        case 377:
+        case 378:
+        case 379:
+            return 433;
+        case 383:
+        case 382:
+        case 384:
+            return 434;
+        case 386:
+            return 498;
+        default:
+            return 428;
+        }
+    }
 }
 
 void PlayBattleBGM(void)
@@ -127599,7 +127631,7 @@ const struct CompressedSpritePalette *GetMonSpritePalStructFromOtIdPersonality(u
 
 bool32 IsHMMove2(u16 move)
 {
-# 7375 "src/pokemon.c"
+# 7406 "src/pokemon.c"
     return 0;
 }
 
@@ -127798,7 +127830,7 @@ const u8 *GetTrainerPartnerName(void)
         return gLinkPlayers[GetBattlerMultiplayerId(gLinkPlayers[id].id ^ 2)].name;
     }
 }
-# 7585 "src/pokemon.c"
+# 7616 "src/pokemon.c"
 static void Task_AnimateAfterDelay(u8 taskId)
 {
     if (--gTasks[taskId].data[3] == 0)

@@ -6866,13 +6866,12 @@ LoadMoveBg:
 	add	r1, r5, #0
 	mov	r3, #0x0
 	bl	sub_80A4720
+	add	r0, r5, #0
 	ldr	r1, .L477+0x8
-	ldr	r0, .L477+0xc
-	str	r5, [r0]
-	str	r1, [r0, #0x4]
-	ldr	r1, .L477+0x10
-	str	r1, [r0, #0x8]
-	ldr	r0, [r0, #0x8]
+	ldr	r2, .L477+0xc
+	ldr	r3, .L477+0x10
+	stmia r3!, {r0, r1, r2}
+	.code	16
 	add	r0, r4, r6
 	ldr	r0, [r0]
 	ldr	r1, .L477+0x14
@@ -6894,8 +6893,8 @@ LoadMoveBg:
 	.word	gBattleAnimBackgroundTable
 	.word	gDecompressionBuffer
 	.word	0x600d000
-	.word	0x40000d4
 	.word	-0x7bfffe00
+	.word	0x40000d4
 	.word	0x6002000
 .L475:
 	ldr	r5, .L479

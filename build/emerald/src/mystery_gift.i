@@ -8842,7 +8842,7 @@ bool32 HandleMysteryGiftOrEReaderSetup(s32 mg_or_ereader)
     case 3:
         ShowBg(0);
         ShowBg(3);
-        PlayBGM(541);
+        PlayBGM(492);
         SetVBlankCallback(vblankcb_mystery_gift_e_reader_run);
         EnableInterrupts((1 << 0) | (1 << 2) | (1 << 6) | (1 << 7));
         return 1;
@@ -9434,7 +9434,7 @@ static bool32 PrintMGSuccessMessage(u8 * state, const u8 * arg1, u16 * arg2)
         {
             AddTextPrinterToWindow1(arg1);
         }
-        PlayFanfare(370);
+        PlayFanfare(341);
         *arg2 = 0;
         (*state)++;
         break;

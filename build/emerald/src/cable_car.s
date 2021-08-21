@@ -1443,9 +1443,10 @@ CableCar:
 	.thumb_func
 CB2_LoadCableCar:
 	push	{r4, r5, r6, r7, lr}
-	mov	r7, r9
-	mov	r6, r8
-	push	{r6, r7}
+	mov	r7, sl
+	mov	r6, r9
+	mov	r5, r8
+	push	{r5, r6, r7}
 	add	sp, sp, #-0x18
 	mov	r4, #0x0
 	str	r4, [sp, #0x14]
@@ -1486,85 +1487,86 @@ CB2_LoadCableCar:
 	mov	r0, #0x0
 	bl	SetBgRegs
 	bl	ScanlineEffect_Stop
+	mov	r6, #0xc0
+	lsl	r6, r6, #0x13
 	mov	r3, #0xc0
-	lsl	r3, r3, #0x13
-	mov	r4, #0xc0
-	lsl	r4, r4, #0x9
-	add	r0, sp, #0x10
-	mov	r9, r0
-	add	r2, sp, #0xc
-	mov	r6, #0x0
-	ldr	r1, .L54
+	lsl	r3, r3, #0x9
+	add	r4, sp, #0x10
+	mov	ip, r4
+	add	r4, sp, #0xc
+	mov	r7, #0x0
+	mov	sl, r7
+	ldr	r0, .L54
+	mov	r8, r0
 	mov	r5, #0x80
 	lsl	r5, r5, #0x5
-	ldr	r7, .L54+0x4
-	mov	r0, #0x81
-	lsl	r0, r0, #0x18
-	mov	r8, r0
+	mov	r1, #0x81
+	lsl	r1, r1, #0x18
+	mov	r9, r1
 .L15:
-	strh	r6, [r2]
+	mov	r2, sl
+	strh	r2, [r4]
 	add	r0, sp, #0xc
-	str	r0, [r1]
-	str	r3, [r1, #0x4]
-	str	r7, [r1, #0x8]
-	ldr	r0, [r1, #0x8]
-	add	r3, r3, r5
-	sub	r4, r4, r5
-	cmp	r4, r5
+	add	r1, r6, #0
+	mov	r2, r8
+	ldr	r7, .L54+0x4
+	stmia r7!, {r0, r1, r2}
+	.code	16
+	add	r6, r6, r5
+	sub	r3, r3, r5
+	cmp	r3, r5
 	bhi	.L15	@cond_branch
-	strh	r6, [r2]
-	add	r2, sp, #0xc
-	str	r2, [r1]
-	str	r3, [r1, #0x4]
-	lsr	r0, r4, #0x1
-	mov	r3, r8
-	orr	r0, r0, r3
-	str	r0, [r1, #0x8]
-	ldr	r0, [r1, #0x8]
-	mov	r0, #0xe0
-	lsl	r0, r0, #0x13
+	mov	r0, sl
+	strh	r0, [r4]
+	lsr	r2, r3, #0x1
+	add	r0, sp, #0xc
+	add	r1, r6, #0
+	mov	r3, r9
+	orr	r2, r2, r3
+	ldr	r4, .L54+0x4
+	stmia r4!, {r0, r1, r2}
+	.code	16
 	mov	r3, #0x80
 	lsl	r3, r3, #0x3
-	mov	r4, #0x0
-	str	r4, [sp, #0x10]
-	ldr	r2, .L54
-	mov	r1, r9
-	str	r1, [r2]
-	str	r0, [r2, #0x4]
-	lsr	r0, r3, #0x2
-	mov	r1, #0x85
-	lsl	r1, r1, #0x18
-	orr	r0, r0, r1
-	str	r0, [r2, #0x8]
-	ldr	r0, [r2, #0x8]
+	mov	r5, #0x0
+	str	r5, [sp, #0x10]
+	lsr	r2, r3, #0x2
+	mov	r4, #0x85
+	lsl	r4, r4, #0x18
+	mov	r0, ip
+	mov	r1, #0xe0
+	lsl	r1, r1, #0x13
+	orr	r2, r2, r4
+	ldr	r7, .L54+0x4
+	stmia r7!, {r0, r1, r2}
+	.code	16
+	add	r0, sp, #0xc
+	strh	r5, [r0]
+	lsr	r3, r3, #0x1
+	mov	r2, #0x81
+	lsl	r2, r2, #0x18
 	mov	r1, #0xa0
 	lsl	r1, r1, #0x13
-	add	r0, sp, #0xc
-	strh	r4, [r0]
-	str	r0, [r2]
-	str	r1, [r2, #0x4]
-	lsr	r3, r3, #0x1
-	mov	r0, #0x81
-	lsl	r0, r0, #0x18
-	orr	r3, r3, r0
-	str	r3, [r2, #0x8]
-	ldr	r0, [r2, #0x8]
+	orr	r2, r2, r3
+	ldr	r3, .L54+0x4
+	stmia r3!, {r0, r1, r2}
+	.code	16
 	ldr	r4, .L54+0x8
 	ldr	r0, .L54+0xc
 	bl	AllocZeroed
 	str	r0, [r4]
 	ldr	r1, .L54+0x10
-	mov	r2, #0x87
-	lsl	r2, r2, #0x3
-	add	r1, r1, r2
+	mov	r4, #0x87
+	lsl	r4, r4, #0x3
+	add	r1, r1, r4
 	ldrb	r0, [r1]
 	add	r0, r0, #0x1
 	b	.L50
 .L55:
 	.align	2, 0
 .L54:
-	.word	0x40000d4
 	.word	-0x7efff800
+	.word	0x40000d4
 	.word	sCableCar
 	.word	0x4110
 	.word	gMain
@@ -1604,8 +1606,8 @@ CB2_LoadCableCar:
 	mov	r0, #0x0
 	bl	SetBgTilemapBuffer
 	ldr	r1, [r4]
-	ldr	r3, .L56+0xc
-	add	r1, r1, r3
+	ldr	r7, .L56+0xc
+	add	r1, r1, r7
 	mov	r0, #0x1
 	bl	SetBgTilemapBuffer
 	ldr	r1, [r4]
@@ -1662,45 +1664,45 @@ CB2_LoadCableCar:
 	bl	malloc_and_decompress
 	ldr	r4, .L58+0xc
 	ldr	r1, [r4]
-	ldr	r2, .L58+0x10
-	add	r1, r1, r2
+	ldr	r7, .L58+0x10
+	add	r1, r1, r7
 	str	r0, [r1]
 	ldr	r0, .L58+0x14
 	add	r1, r5, #0
 	bl	malloc_and_decompress
 	ldr	r1, [r4]
-	mov	r3, #0x82
-	lsl	r3, r3, #0x7
-	add	r1, r1, r3
+	mov	r2, #0x82
+	lsl	r2, r2, #0x7
+	add	r1, r1, r2
 	str	r0, [r1]
 	ldr	r0, .L58+0x18
 	add	r1, r5, #0
 	bl	malloc_and_decompress
 	ldr	r1, [r4]
-	ldr	r2, .L58+0x1c
-	add	r1, r1, r2
+	ldr	r3, .L58+0x1c
+	add	r1, r1, r3
 	str	r0, [r1]
 	ldr	r0, .L58+0x20
 	add	r1, r5, #0
 	bl	malloc_and_decompress
 	ldr	r1, [r4]
-	ldr	r3, .L58+0x24
-	add	r2, r1, r3
+	ldr	r4, .L58+0x24
+	add	r2, r1, r4
 	str	r0, [r2]
+	add	r7, r7, #0xc
+	add	r1, r1, r7
 	ldr	r0, .L58+0x28
-	add	r1, r1, r0
-	ldr	r0, .L58+0x2c
 	str	r0, [r1]
-	ldr	r1, .L58+0x30
+	ldr	r1, .L58+0x2c
 	mov	r0, #0x0
 	str	r0, [sp]
 	mov	r2, #0x0
 	mov	r3, #0x0
 	bl	DecompressAndCopyTileDataToVram
-	ldr	r1, .L58+0x34
-	mov	r2, #0x87
-	lsl	r2, r2, #0x3
-	add	r1, r1, r2
+	ldr	r1, .L58+0x30
+	mov	r0, #0x87
+	lsl	r0, r0, #0x3
+	add	r1, r1, r0
 	ldrb	r0, [r1]
 	add	r0, r0, #0x1
 	b	.L50
@@ -1717,7 +1719,6 @@ CB2_LoadCableCar:
 	.word	0x4104
 	.word	sPylonStems_Tilemap
 	.word	0x410c
-	.word	0x4108
 	.word	sPylonHook_TilemapEntries
 	.word	gCableCarBg_Gfx
 	.word	gMain
@@ -1725,17 +1726,17 @@ CB2_LoadCableCar:
 	bl	FreeTempTileDataBuffersIfPossible
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.LCB432
+	beq	.LCB438
 	b	.L10	@long jump
-.LCB432:
+.LCB438:
 	ldr	r0, .L60
 	mov	r1, #0x0
 	mov	r2, #0x80
 	bl	LoadPalette
 	ldr	r1, .L60+0x4
-	mov	r3, #0x87
-	lsl	r3, r3, #0x3
-	add	r1, r1, r3
+	mov	r2, #0x87
+	lsl	r2, r2, #0x3
+	add	r1, r1, r2
 	ldrb	r0, [r1]
 	add	r0, r0, #0x1
 	b	.L50
@@ -1748,9 +1749,9 @@ CB2_LoadCableCar:
 	bl	CreateCableCarSprites
 	bl	RunTasks
 	ldr	r1, .L62
-	mov	r0, #0x87
-	lsl	r0, r0, #0x3
-	add	r1, r1, r0
+	mov	r3, #0x87
+	lsl	r3, r3, #0x3
+	add	r1, r1, r3
 	ldrb	r0, [r1]
 	add	r0, r0, #0x1
 	b	.L50
@@ -1764,9 +1765,9 @@ CB2_LoadCableCar:
 	ldrb	r0, [r0, #0x2]
 	cmp	r0, #0x7
 	bne	.L34	@cond_branch
-	mov	r2, #0x87
-	lsl	r2, r2, #0x3
-	add	r1, r6, r2
+	mov	r4, #0x87
+	lsl	r4, r4, #0x3
+	add	r1, r6, r4
 	ldrb	r0, [r1]
 	add	r0, r0, #0x1
 	b	.L50
@@ -1781,9 +1782,9 @@ CB2_LoadCableCar:
 	add	r1, r1, #0xf0
 	ldr	r0, [r1]
 	cmp	r0, #0
-	bne	.LCB504
+	bne	.LCB510
 	b	.L10	@long jump
-.LCB504:
+.LCB510:
 	mov	r4, #0x0
 	add	r3, r1, #0
 	mov	r5, #0xd
@@ -1804,9 +1805,9 @@ CB2_LoadCableCar:
 	lsr	r4, r0, #0x18
 	cmp	r4, #0x13
 	bls	.L40	@cond_branch
-	mov	r3, #0x87
-	lsl	r3, r3, #0x3
-	add	r1, r6, r3
+	mov	r7, #0x87
+	lsl	r7, r7, #0x3
+	add	r1, r6, r7
 	ldrb	r0, [r1]
 	add	r0, r0, #0x1
 	b	.L50
@@ -1846,8 +1847,8 @@ CB2_LoadCableCar:
 	mov	r3, #0x0
 	bl	CopyToBgTilemapBufferRect_ChangePalette
 	ldr	r0, [r6]
-	ldr	r1, .L68+0x8
-	add	r0, r0, r1
+	ldr	r4, .L68+0x8
+	add	r0, r0, r4
 	ldr	r1, [r0]
 	mov	r0, #0x5
 	str	r0, [sp]
@@ -1859,21 +1860,21 @@ CB2_LoadCableCar:
 	mov	r3, #0x0
 	bl	CopyToBgTilemapBufferRect_ChangePalette
 	ldr	r0, [r6]
-	ldr	r2, .L68+0xc
-	add	r0, r0, r2
+	ldr	r7, .L68+0xc
+	add	r0, r0, r7
 	ldr	r1, [r0]
 	str	r4, [sp]
-	mov	r3, r8
-	str	r3, [sp, #0x4]
+	mov	r0, r8
+	str	r0, [sp, #0x4]
 	str	r5, [sp, #0x8]
 	mov	r0, #0x3
 	mov	r2, #0x0
 	mov	r3, #0x2
 	bl	CopyToBgTilemapBufferRect_ChangePalette
 	ldr	r1, .L68+0x10
-	mov	r0, #0x87
-	lsl	r0, r0, #0x3
-	add	r1, r1, r0
+	mov	r2, #0x87
+	lsl	r2, r2, #0x3
+	add	r1, r1, r2
 	ldrb	r0, [r1]
 	add	r0, r0, #0x1
 	b	.L50
@@ -1889,11 +1890,11 @@ CB2_LoadCableCar:
 	ldr	r0, .L70
 	ldrb	r0, [r0]
 	bl	InitGroundTilemapData
-	ldr	r1, .L70+0x4
-	mov	r9, r1
-	ldr	r0, [r1]
-	ldr	r2, .L70+0x8
-	mov	r8, r2
+	ldr	r3, .L70+0x4
+	mov	r9, r3
+	ldr	r0, [r3]
+	ldr	r4, .L70+0x8
+	mov	r8, r4
 	add	r0, r0, r8
 	ldr	r1, [r0]
 	add	r1, r1, #0x90
@@ -1907,8 +1908,8 @@ CB2_LoadCableCar:
 	mov	r2, #0x0
 	mov	r3, #0xe
 	bl	CopyToBgTilemapBufferRect_ChangePalette
-	mov	r3, r9
-	ldr	r0, [r3]
+	mov	r7, r9
+	ldr	r0, [r7]
 	add	r0, r0, r8
 	ldr	r1, [r0]
 	add	r1, r1, #0xd8
@@ -1919,13 +1920,12 @@ CB2_LoadCableCar:
 	mov	r2, #0xc
 	mov	r3, #0x11
 	bl	CopyToBgTilemapBufferRect_ChangePalette
-	mov	r1, r9
-	ldr	r0, [r1]
+	ldr	r0, [r7]
 	add	r0, r0, r8
 	ldr	r1, [r0]
-	mov	r2, #0x90
-	lsl	r2, r2, #0x1
-	add	r1, r1, r2
+	mov	r0, #0x90
+	lsl	r0, r0, #0x1
+	add	r1, r1, r0
 	str	r6, [sp]
 	str	r5, [sp, #0x4]
 	str	r4, [sp, #0x8]
@@ -1933,8 +1933,7 @@ CB2_LoadCableCar:
 	mov	r2, #0x18
 	mov	r3, #0x14
 	bl	CopyToBgTilemapBufferRect_ChangePalette
-	mov	r3, r9
-	ldr	r0, [r3]
+	ldr	r0, [r7]
 	add	r0, r0, r8
 	ldr	r1, [r0]
 	str	r6, [sp]
@@ -1944,8 +1943,7 @@ CB2_LoadCableCar:
 	mov	r2, #0x0
 	mov	r3, #0x11
 	bl	CopyToBgTilemapBufferRect_ChangePalette
-	mov	r1, r9
-	ldr	r0, [r1]
+	ldr	r0, [r7]
 	add	r0, r0, r8
 	ldr	r1, [r0]
 	add	r1, r1, #0x48
@@ -1956,8 +1954,7 @@ CB2_LoadCableCar:
 	mov	r2, #0x0
 	mov	r3, #0x14
 	bl	CopyToBgTilemapBufferRect_ChangePalette
-	mov	r2, r9
-	ldr	r0, [r2]
+	ldr	r0, [r7]
 	add	r0, r0, r8
 	ldr	r1, [r0]
 	str	r6, [sp]
@@ -1967,8 +1964,7 @@ CB2_LoadCableCar:
 	mov	r2, #0xc
 	mov	r3, #0x14
 	bl	CopyToBgTilemapBufferRect_ChangePalette
-	mov	r3, r9
-	ldr	r0, [r3]
+	ldr	r0, [r7]
 	add	r0, r0, r8
 	ldr	r1, [r0]
 	add	r1, r1, #0x48
@@ -1979,8 +1975,7 @@ CB2_LoadCableCar:
 	mov	r2, #0xc
 	mov	r3, #0x17
 	bl	CopyToBgTilemapBufferRect_ChangePalette
-	mov	r1, r9
-	ldr	r0, [r1]
+	ldr	r0, [r7]
 	add	r0, r0, r8
 	ldr	r1, [r0]
 	str	r6, [sp]
@@ -2013,12 +2008,13 @@ CB2_LoadCableCar:
 	mov	r2, #0x10
 	mov	r3, #0x0
 	bl	BeginNormalPaletteFade
-	ldr	r0, .L72
+	mov	r0, #0xc6
+	lsl	r0, r0, #0x1
 	mov	r1, #0x1
 	bl	FadeInNewBGM
 	mov	r0, #0x1
 	bl	SetBgRegs
-	ldr	r1, .L72+0x4
+	ldr	r1, .L72
 	mov	r3, #0x87
 	lsl	r3, r3, #0x3
 	add	r1, r1, r3
@@ -2028,7 +2024,6 @@ CB2_LoadCableCar:
 .L73:
 	.align	2, 0
 .L72:
-	.word	0x1a9
 	.word	gMain
 .L46:
 	ldr	r3, .L74
@@ -2075,9 +2070,10 @@ CB2_LoadCableCar:
 	strb	r0, [r1]
 .L10:
 	add	sp, sp, #0x18
-	pop	{r3, r4}
+	pop	{r3, r4, r5}
 	mov	r8, r3
 	mov	r9, r4
+	mov	sl, r5
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
@@ -2107,8 +2103,10 @@ CB2_CableCar:
 	.thumb_func
 CB2_EndCableCar:
 	push	{r4, r5, r6, r7, lr}
-	mov	r7, r8
-	push	{r7}
+	mov	r7, sl
+	mov	r6, r9
+	mov	r5, r8
+	push	{r5, r6, r7}
 	add	sp, sp, #-0x8
 	mov	r4, #0x0
 	mov	r0, #0x0
@@ -2126,7 +2124,7 @@ CB2_EndCableCar:
 	mov	r0, #0x0
 	bl	SetCurrentAndNextWeatherNoDelay
 	add	r0, sp, #0x4
-	mov	r8, r0
+	mov	r9, r0
 	ldr	r0, .L90+0x4
 	ldr	r0, [r0]
 	add	r1, r0, #0
@@ -2191,75 +2189,78 @@ CB2_EndCableCar:
 	str	r5, [r4]
 	bl	Free
 	str	r5, [r6]
-	mov	r2, #0xc0
-	lsl	r2, r2, #0x13
+	mov	r6, #0xc0
+	lsl	r6, r6, #0x13
 	mov	r3, #0xc0
 	lsl	r3, r3, #0x9
 	mov	r4, sp
-	mov	r6, #0x0
-	ldr	r1, .L90+0x1c
+	mov	r7, #0x0
+	mov	sl, r7
+	ldr	r0, .L90+0x1c
+	mov	ip, r0
 	mov	r5, #0x80
 	lsl	r5, r5, #0x5
-	ldr	r7, .L90+0x20
-	mov	r0, #0x81
-	lsl	r0, r0, #0x18
-	mov	ip, r0
+	mov	r2, #0x81
+	lsl	r2, r2, #0x18
+	mov	r8, r2
 .L87:
-	strh	r6, [r4]
+	mov	r7, sl
+	strh	r7, [r4]
 	mov	r0, sp
-	str	r0, [r1]
-	str	r2, [r1, #0x4]
-	str	r7, [r1, #0x8]
-	ldr	r0, [r1, #0x8]
-	add	r2, r2, r5
+	add	r1, r6, #0
+	mov	r2, ip
+	ldr	r7, .L90+0x20
+	stmia r7!, {r0, r1, r2}
+	.code	16
+	add	r6, r6, r5
 	sub	r3, r3, r5
 	cmp	r3, r5
 	bhi	.L87	@cond_branch
-	strh	r6, [r4]
+	mov	r0, sl
+	strh	r0, [r4]
+	lsr	r2, r3, #0x1
 	mov	r0, sp
-	str	r0, [r1]
-	str	r2, [r1, #0x4]
-	lsr	r0, r3, #0x1
-	mov	r2, ip
-	orr	r0, r0, r2
-	str	r0, [r1, #0x8]
-	ldr	r0, [r1, #0x8]
-	mov	r0, #0xe0
-	lsl	r0, r0, #0x13
+	add	r1, r6, #0
+	mov	r3, r8
+	orr	r2, r2, r3
+	ldr	r4, .L90+0x20
+	stmia r4!, {r0, r1, r2}
+	.code	16
 	mov	r3, #0x80
 	lsl	r3, r3, #0x3
-	mov	r4, #0x0
-	str	r4, [sp, #0x4]
-	ldr	r2, .L90+0x1c
-	mov	r1, r8
-	str	r1, [r2]
-	str	r0, [r2, #0x4]
-	lsr	r0, r3, #0x2
-	mov	r1, #0x85
-	lsl	r1, r1, #0x18
-	orr	r0, r0, r1
-	str	r0, [r2, #0x8]
-	ldr	r0, [r2, #0x8]
+	mov	r5, #0x0
+	str	r5, [sp, #0x4]
+	lsr	r2, r3, #0x2
+	mov	r4, #0x85
+	lsl	r4, r4, #0x18
+	mov	r0, r9
+	mov	r1, #0xe0
+	lsl	r1, r1, #0x13
+	orr	r2, r2, r4
+	ldr	r7, .L90+0x20
+	stmia r7!, {r0, r1, r2}
+	.code	16
+	mov	r0, sp
+	strh	r5, [r0]
+	lsr	r3, r3, #0x1
+	mov	r2, #0x81
+	lsl	r2, r2, #0x18
 	mov	r1, #0xa0
 	lsl	r1, r1, #0x13
-	mov	r0, sp
-	strh	r4, [r0]
-	str	r0, [r2]
-	str	r1, [r2, #0x4]
-	lsr	r3, r3, #0x1
-	mov	r0, #0x81
-	lsl	r0, r0, #0x18
-	orr	r3, r3, r0
-	str	r3, [r2, #0x8]
-	ldr	r0, [r2, #0x8]
+	orr	r2, r2, r3
+	ldr	r3, .L90+0x20
+	stmia r3!, {r0, r1, r2}
+	.code	16
 	bl	WarpIntoMap
 	ldr	r0, .L90+0x24
-	str	r4, [r0]
+	str	r5, [r0]
 	ldr	r0, .L90+0x28
 	bl	SetMainCallback2
 	add	sp, sp, #0x8
-	pop	{r3}
+	pop	{r3, r4, r5}
 	mov	r8, r3
+	mov	r9, r4
+	mov	sl, r5
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
@@ -2273,8 +2274,8 @@ CB2_EndCableCar:
 	.word	0x410c
 	.word	0x4104
 	.word	0x40fc
-	.word	0x40000d4
 	.word	-0x7efff800
+	.word	0x40000d4
 	.word	gFieldCallback
 	.word	CB2_LoadMap
 .Lfe5:
@@ -2310,22 +2311,22 @@ Task_CableCar:
 	.word	sCableCar
 .L125:
 	cmp	r2, #0x3
-	bne	.LCB1149
+	bne	.LCB1155
 	b	.L120	@long jump
-.LCB1149:
+.LCB1155:
 	cmp	r2, #0xff
-	bne	.LCB1151
+	bne	.LCB1157
 	b	.L122	@long jump
-.LCB1151:
+.LCB1157:
 	b	.L93
 .L94:
 	lsl	r0, r0, #0x10
 	lsr	r0, r0, #0x10
 	ldrh	r1, [r3, #0x4]
 	cmp	r0, r1
-	beq	.LCB1164
+	beq	.LCB1170
 	b	.L93	@long jump
-.LCB1164:
+.LCB1170:
 	ldrb	r0, [r3, #0x2]
 	bl	SetNextWeather
 	ldr	r1, [r5]
@@ -2337,9 +2338,9 @@ Task_CableCar:
 	cmp	r0, #0x2
 	beq	.L106	@cond_branch
 	cmp	r0, #0x7
-	beq	.LCB1180
+	beq	.LCB1186
 	b	.L93	@long jump
-.LCB1180:
+.LCB1186:
 	ldr	r0, .L128
 	ldr	r0, [r0]
 	add	r2, r0, #0
@@ -2643,9 +2644,9 @@ Task_AnimateBgGoingDown:
 	ldr	r1, [r7]
 	ldrb	r0, [r1, #0x1]
 	cmp	r0, #0xff
-	bne	.LCB1565
+	bne	.LCB1571
 	b	.L157	@long jump
-.LCB1565:
+.LCB1571:
 	ldrb	r0, [r1, #0x14]
 	add	r0, r0, #0x1
 	strb	r0, [r1, #0x14]
@@ -3016,9 +3017,9 @@ SpriteCB_Player:
 	ldr	r6, [r0]
 	ldrb	r0, [r6, #0x1]
 	cmp	r0, #0xff
-	bne	.LCB2059
+	bne	.LCB2065
 	b	.L198	@long jump
-.LCB2059:
+.LCB2065:
 	ldr	r0, .L211+0x4
 	ldrh	r0, [r0]
 	cmp	r0, #0

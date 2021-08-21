@@ -5631,7 +5631,7 @@ void unref_sub_8119094(u8 arg0, u8 arg1, u8 battlerPosition, u8 arg3, u8 arg4, u
 {
     int i, j, offset;
 
-    { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); dmaRegs[0] = (vu32)(gMonSpritesGfxPtr->sprites[battlerPosition] + 0x800 * arg3); dmaRegs[1] = (vu32)((void *)(0x6000000 + (0x800 * (0))) + arg5); dmaRegs[2] = (vu32)((0x8000 | 0x0000 | 0x0000 | 0x0000 | 0x0000) << 16 | ((0x800)/(16/8))); dmaRegs[2]; };
+    { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); u32 eval_src = (u32)(gMonSpritesGfxPtr->sprites[battlerPosition] + 0x800 * arg3); u32 eval_dst = (u32)((void *)(0x6000000 + (0x800 * (0))) + arg5); u32 eval_ctl = (u32)((0x8000 | 0x0000 | 0x0000 | 0x0000 | 0x0000) << 16 | ((0x800)/(16/8))); register u32 r_src asm("r0") = eval_src; register u32 r_dst asm("r1") = eval_dst; register u32 r_ctl asm("r2") = eval_ctl; asm volatile("stmia %0!, {%1, %2, %3}" : "+l" (dmaRegs) : "l" (r_src), "l" (r_dst), "l" (r_ctl) : "memory"); };
     offset = (arg5 >> 5) - (arg7 << 9);
     for (i = arg1; i < arg1 + 8; i++)
     {

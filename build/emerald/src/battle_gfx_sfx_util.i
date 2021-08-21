@@ -14962,8 +14962,8 @@ struct SoundInfo
     u32 plynote;
     u32 ExtVolPit;
     u8 gap2[16];
-    struct SoundChannel chans[12];
-    s8 pcmBuffer[1584 * 2];
+    struct SoundChannel chans[15];
+    s8 pcmBuffer[0x620 * 2];
 };
 
 struct SongHeader
@@ -16732,7 +16732,7 @@ void HandleSpeciesGfxDataChange(u8 battlerAtk, u8 battlerDef, bool8 notTransform
     {
         src = gMonSpritesGfxPtr->sprites[position];
         dst = (void *)(0x6000000 + 0x10000 + gSprites[gBattlerSpriteIds[battlerAtk]].oam.tileNum * 32);
-        { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); dmaRegs[0] = (vu32)(src); dmaRegs[1] = (vu32)(dst); dmaRegs[2] = (vu32)((0x8000 | 0x0000 | 0x0400 | 0x0000 | 0x0000) << 16 | ((0x800)/(32/8))); dmaRegs[2]; };
+        { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); u32 eval_src = (u32)(src); u32 eval_dst = (u32)(dst); u32 eval_ctl = (u32)((0x8000 | 0x0000 | 0x0400 | 0x0000 | 0x0000) << 16 | ((0x800)/(32/8))); register u32 r_src asm("r0") = eval_src; register u32 r_dst asm("r1") = eval_dst; register u32 r_ctl asm("r2") = eval_ctl; asm volatile("stmia %0!, {%1, %2, %3}" : "+l" (dmaRegs) : "l" (r_src), "l" (r_dst), "l" (r_ctl) : "memory"); };
         paletteOffset = 0x100 + battlerAtk * 16;
         lzPaletteData = GetMonSpritePalFromSpeciesAndPersonality(targetSpecies, otId, personalityValue);
         LZDecompressWram(lzPaletteData, gDecompressionBuffer);
@@ -16785,7 +16785,7 @@ void BattleLoadSubstituteOrMonSpriteGfx(u8 battlerId, bool8 loadMonSprite)
             u8 (*ptr)[4][0x800] = gMonSpritesGfxPtr->sprites[position];
             ptr++;ptr--;
 
-            { const void *_src = (*ptr)[0]; void *_dest = (*ptr)[i]; u32 _size = 0x800; { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); dmaRegs[0] = (vu32)(_src); dmaRegs[1] = (vu32)(_dest); dmaRegs[2] = (vu32)((0x8000 | 0x0000 | 0x0400 | 0x0000 | 0x0000) << 16 | ((_size)/(32/8))); dmaRegs[2]; }; };
+            { const void *_src = (*ptr)[0]; void *_dest = (*ptr)[i]; u32 _size = 0x800; { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); u32 eval_src = (u32)(_src); u32 eval_dst = (u32)(_dest); u32 eval_ctl = (u32)((0x8000 | 0x0000 | 0x0400 | 0x0000 | 0x0000) << 16 | ((_size)/(32/8))); register u32 r_src asm("r0") = eval_src; register u32 r_dst asm("r1") = eval_dst; register u32 r_ctl asm("r2") = eval_ctl; asm volatile("stmia %0!, {%1, %2, %3}" : "+l" (dmaRegs) : "l" (r_src), "l" (r_dst), "l" (r_ctl) : "memory"); }; };
         }
 
         palOffset = (battlerId * 16) + 0x100;

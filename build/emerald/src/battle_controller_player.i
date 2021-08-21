@@ -6157,8 +6157,8 @@ struct SoundInfo
     u32 plynote;
     u32 ExtVolPit;
     u8 gap2[16];
-    struct SoundChannel chans[12];
-    s8 pcmBuffer[1584 * 2];
+    struct SoundChannel chans[15];
+    s8 pcmBuffer[0x620 * 2];
 };
 
 struct SongHeader
@@ -9964,10 +9964,10 @@ static void PlayerHandleDMA3Transfer(void)
     {
         if (size <= 0x1000)
         {
-            { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); dmaRegs[0] = (vu32)(src); dmaRegs[1] = (vu32)(dst); dmaRegs[2] = (vu32)((0x8000 | 0x0000 | 0x0000 | 0x0000 | 0x0000) << 16 | ((size)/(16/8))); dmaRegs[2]; };
+            { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); u32 eval_src = (u32)(src); u32 eval_dst = (u32)(dst); u32 eval_ctl = (u32)((0x8000 | 0x0000 | 0x0000 | 0x0000 | 0x0000) << 16 | ((size)/(16/8))); register u32 r_src asm("r0") = eval_src; register u32 r_dst asm("r1") = eval_dst; register u32 r_ctl asm("r2") = eval_ctl; asm volatile("stmia %0!, {%1, %2, %3}" : "+l" (dmaRegs) : "l" (r_src), "l" (r_dst), "l" (r_ctl) : "memory"); };
             break;
         }
-        { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); dmaRegs[0] = (vu32)(src); dmaRegs[1] = (vu32)(dst); dmaRegs[2] = (vu32)((0x8000 | 0x0000 | 0x0000 | 0x0000 | 0x0000) << 16 | ((0x1000)/(16/8))); dmaRegs[2]; };
+        { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); u32 eval_src = (u32)(src); u32 eval_dst = (u32)(dst); u32 eval_ctl = (u32)((0x8000 | 0x0000 | 0x0000 | 0x0000 | 0x0000) << 16 | ((0x1000)/(16/8))); register u32 r_src asm("r0") = eval_src; register u32 r_dst asm("r1") = eval_dst; register u32 r_ctl asm("r2") = eval_ctl; asm volatile("stmia %0!, {%1, %2, %3}" : "+l" (dmaRegs) : "l" (r_src), "l" (r_dst), "l" (r_ctl) : "memory"); };
         src += 0x1000;
         dst += 0x1000;
         size -= 0x1000;

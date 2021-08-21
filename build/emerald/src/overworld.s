@@ -2667,12 +2667,9 @@ GetLocationMusic:
 	lsr	r0, r0, #0x10
 	cmp	r0, #0x1
 	bne	.L405	@cond_branch
-	ldr	r0, .L414
+	mov	r0, #0xfd
+	lsl	r0, r0, #0x1
 	b	.L411
-.L415:
-	.align	2, 0
-.L414:
-	.word	0x1bb
 .L405:
 	add	r0, r4, #0
 	bl	IsInflitratedSpaceCenter
@@ -2680,12 +2677,9 @@ GetLocationMusic:
 	lsr	r0, r0, #0x10
 	cmp	r0, #0x1
 	bne	.L407	@cond_branch
-	ldr	r0, .L416
+	mov	r0, #0xce
+	lsl	r0, r0, #0x1
 	b	.L411
-.L417:
-	.align	2, 0
-.L416:
-	.word	0x1b9
 .L407:
 	add	r0, r4, #0
 	bl	IsInfiltratedWeatherInstitute
@@ -2705,12 +2699,15 @@ GetLocationMusic:
 	ldrh	r0, [r0, #0x10]
 	b	.L411
 .L409:
-	mov	r0, #0xcb
-	lsl	r0, r0, #0x1
+	ldr	r0, .L414
 .L411:
 	pop	{r4}
 	pop	{r1}
 	bx	r1
+.L415:
+	.align	2, 0
+.L414:
+	.word	0x179
 .Lfe70:
 	.size	 GetLocationMusic,.Lfe70-GetLocationMusic
 	.align	2, 0
@@ -2719,58 +2716,64 @@ GetLocationMusic:
 	.thumb_func
 GetCurrLocationDefaultMusic:
 	push	{r4, lr}
-	ldr	r0, .L425
+	ldr	r0, .L423
 	ldr	r0, [r0]
 	ldrh	r1, [r0, #0x4]
 	mov	r0, #0xd0
 	lsl	r0, r0, #0x5
 	cmp	r1, r0
-	bne	.L419	@cond_branch
+	bne	.L417	@cond_branch
 	bl	GetSav1Weather
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	cmp	r0, #0x8
-	bne	.L419	@cond_branch
-	ldr	r0, .L425+0x4
-	b	.L424
-.L426:
+	bne	.L417	@cond_branch
+	mov	r0, #0xbe
+	lsl	r0, r0, #0x1
+	b	.L422
+.L424:
 	.align	2, 0
-.L425:
+.L423:
 	.word	gSaveBlock1Ptr
-	.word	0x199
-.L419:
-	ldr	r4, .L427
+.L417:
+	ldr	r4, .L425
 	ldr	r0, [r4]
 	add	r0, r0, #0x4
 	bl	GetLocationMusic
 	lsl	r0, r0, #0x10
 	lsr	r1, r0, #0x10
-	ldr	r0, .L427+0x4
+	ldr	r0, .L425+0x4
 	cmp	r1, r0
-	beq	.L420	@cond_branch
+	beq	.L418	@cond_branch
 	add	r0, r1, #0
-	b	.L424
-.L428:
+	b	.L422
+.L426:
 	.align	2, 0
-.L427:
+.L425:
 	.word	gSaveBlock1Ptr
 	.word	0x7fff
-.L420:
+.L418:
 	ldr	r0, [r4]
 	mov	r1, #0x0
 	ldrsh	r0, [r0, r1]
 	cmp	r0, #0x17
-	ble	.L422	@cond_branch
-	mov	r0, #0xc9
-	lsl	r0, r0, #0x1
-	b	.L424
+	ble	.L420	@cond_branch
+	ldr	r0, .L427
+	b	.L422
+.L428:
+	.align	2, 0
+.L427:
+	.word	0x175
+.L420:
+	ldr	r0, .L429
 .L422:
-	mov	r0, #0xb4
-	lsl	r0, r0, #0x1
-.L424:
 	pop	{r4}
 	pop	{r1}
 	bx	r1
+.L430:
+	.align	2, 0
+.L429:
+	.word	0x14b
 .Lfe71:
 	.size	 GetCurrLocationDefaultMusic,.Lfe71-GetCurrLocationDefaultMusic
 	.align	2, 0
@@ -2779,40 +2782,43 @@ GetCurrLocationDefaultMusic:
 	.thumb_func
 GetWarpDestinationMusic:
 	push	{lr}
-	ldr	r0, .L435
+	ldr	r0, .L437
 	bl	GetLocationMusic
 	lsl	r0, r0, #0x10
 	lsr	r1, r0, #0x10
-	ldr	r0, .L435+0x4
+	ldr	r0, .L437+0x4
 	cmp	r1, r0
-	beq	.L430	@cond_branch
+	beq	.L432	@cond_branch
 	add	r0, r1, #0
-	b	.L434
-.L436:
+	b	.L436
+.L438:
 	.align	2, 0
-.L435:
+.L437:
 	.word	sWarpDestination
 	.word	0x7fff
-.L430:
-	ldr	r0, .L437
+.L432:
+	ldr	r0, .L439
 	ldr	r0, [r0]
 	ldrh	r1, [r0, #0x4]
 	mov	r0, #0x80
 	lsl	r0, r0, #0x2
 	cmp	r1, r0
-	beq	.L432	@cond_branch
-	sub	r0, r0, #0x6e
-	b	.L434
-.L438:
+	beq	.L434	@cond_branch
+	sub	r0, r0, #0x8b
+	b	.L436
+.L440:
 	.align	2, 0
-.L437:
+.L439:
 	.word	gSaveBlock1Ptr
-.L432:
-	mov	r0, #0xb4
-	lsl	r0, r0, #0x1
 .L434:
+	ldr	r0, .L441
+.L436:
 	pop	{r1}
 	bx	r1
+.L442:
+	.align	2, 0
+.L441:
+	.word	0x14b
 .Lfe72:
 	.size	 GetWarpDestinationMusic,.Lfe72-GetWarpDestinationMusic
 	.align	2, 0
@@ -2835,60 +2841,54 @@ Overworld_PlaySpecialMapMusic:
 	bl	GetCurrLocationDefaultMusic
 	lsl	r0, r0, #0x10
 	lsr	r4, r0, #0x10
-	ldr	r0, .L448
+	mov	r0, #0xfd
+	lsl	r0, r0, #0x1
 	cmp	r4, r0
-	beq	.L441	@cond_branch
-	ldr	r0, .L448+0x4
+	beq	.L445	@cond_branch
+	ldr	r0, .L452
 	cmp	r4, r0
-	beq	.L441	@cond_branch
-	ldr	r0, .L448+0x8
+	beq	.L445	@cond_branch
+	ldr	r0, .L452+0x4
 	ldr	r1, [r0]
 	ldrh	r0, [r1, #0x2c]
 	cmp	r0, #0
-	beq	.L442	@cond_branch
+	beq	.L446	@cond_branch
 	add	r4, r0, #0
-	b	.L441
-.L449:
+	b	.L445
+.L453:
 	.align	2, 0
-.L448:
-	.word	0x1bb
+.L452:
 	.word	0xffff
 	.word	gSaveBlock1Ptr
-.L442:
+.L446:
 	bl	GetCurrentMapType
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	cmp	r0, #0x5
-	bne	.L444	@cond_branch
-	ldr	r4, .L450
-	b	.L441
-.L451:
-	.align	2, 0
-.L450:
-	.word	0x19b
-.L444:
+	bne	.L448	@cond_branch
+	mov	r4, #0xbf
+	lsl	r4, r4, #0x1
+	b	.L445
+.L448:
 	mov	r0, #0x8
 	bl	TestPlayerAvatarFlags
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.L441	@cond_branch
-	ldr	r4, .L452
-.L441:
+	beq	.L445	@cond_branch
+	mov	r4, #0xa8
+	lsl	r4, r4, #0x1
+.L445:
 	bl	GetCurrentMapMusic
 	lsl	r0, r0, #0x10
 	lsr	r0, r0, #0x10
 	cmp	r4, r0
-	beq	.L447	@cond_branch
+	beq	.L451	@cond_branch
 	add	r0, r4, #0
 	bl	PlayNewMapMusic
-.L447:
+.L451:
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L453:
-	.align	2, 0
-.L452:
-	.word	0x16d
 .Lfe74:
 	.size	 Overworld_PlaySpecialMapMusic,.Lfe74-Overworld_PlaySpecialMapMusic
 	.align	2, 0
@@ -2939,16 +2939,19 @@ TransitionMapMusic:
 	bl	GetCurrentMapMusic
 	lsl	r0, r0, #0x10
 	lsr	r5, r0, #0x10
+	mov	r0, #0xfd
+	lsl	r0, r0, #0x1
+	cmp	r4, r0
+	beq	.L462	@cond_branch
 	ldr	r0, .L469+0x4
 	cmp	r4, r0
 	beq	.L462	@cond_branch
-	ldr	r0, .L469+0x8
-	cmp	r4, r0
-	beq	.L462	@cond_branch
-	ldr	r0, .L469+0xc
+	mov	r0, #0xbf
+	lsl	r0, r0, #0x1
 	cmp	r5, r0
 	beq	.L460	@cond_branch
-	ldr	r6, .L469+0x10
+	mov	r6, #0xa8
+	lsl	r6, r6, #0x1
 	cmp	r5, r6
 	beq	.L460	@cond_branch
 	mov	r0, #0x8
@@ -2974,10 +2977,7 @@ TransitionMapMusic:
 	.align	2, 0
 .L469:
 	.word	0x4001
-	.word	0x1bb
 	.word	0xffff
-	.word	0x19b
-	.word	0x16d
 .L467:
 	add	r0, r4, #0
 	mov	r1, #0x8
@@ -3027,7 +3027,8 @@ Overworld_ChangeMusicTo:
 	lsr	r1, r0, #0x10
 	cmp	r1, r4
 	beq	.L474	@cond_branch
-	ldr	r0, .L475
+	mov	r0, #0xfd
+	lsl	r0, r0, #0x1
 	cmp	r1, r0
 	beq	.L474	@cond_branch
 	add	r0, r4, #0
@@ -3037,10 +3038,6 @@ Overworld_ChangeMusicTo:
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L476:
-	.align	2, 0
-.L475:
-	.word	0x1bb
 .Lfe79:
 	.size	 Overworld_ChangeMusicTo,.Lfe79-Overworld_ChangeMusicTo
 	.align	2, 0
@@ -3055,12 +3052,12 @@ GetMapMusicFadeoutSpeed:
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	cmp	r0, #0x1
-	beq	.L478	@cond_branch
+	beq	.L476	@cond_branch
 	mov	r0, #0x4
-	b	.L480
-.L478:
+	b	.L478
+.L476:
 	mov	r0, #0x2
-.L480:
+.L478:
 	pop	{r1}
 	bx	r1
 .Lfe80:
@@ -3077,57 +3074,57 @@ TryFadeOutOldMapMusic:
 	bl	GetWarpDestinationMusic
 	lsl	r0, r0, #0x10
 	lsr	r4, r0, #0x10
-	ldr	r0, .L484
+	ldr	r0, .L482
 	bl	FlagGet
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	cmp	r0, #0x1
-	beq	.L481	@cond_branch
+	beq	.L479	@cond_branch
 	bl	GetCurrentMapMusic
 	lsl	r0, r0, #0x10
 	lsr	r0, r0, #0x10
 	cmp	r4, r0
-	beq	.L481	@cond_branch
-	ldr	r0, .L484+0x4
+	beq	.L479	@cond_branch
+	mov	r0, #0xa8
+	lsl	r0, r0, #0x1
 	cmp	r5, r0
-	bne	.L483	@cond_branch
-	ldr	r0, .L484+0x8
+	bne	.L481	@cond_branch
+	ldr	r0, .L482+0x4
 	bl	VarGet
 	lsl	r0, r0, #0x10
 	lsr	r0, r0, #0x10
 	cmp	r0, #0x2
-	bne	.L483	@cond_branch
-	ldr	r0, .L484+0xc
+	bne	.L481	@cond_branch
+	ldr	r0, .L482+0x8
 	ldr	r0, [r0]
-	ldr	r1, .L484+0x10
+	ldr	r1, .L482+0xc
 	ldrh	r2, [r0, #0x4]
 	mov	r0, #0xe0
 	lsl	r0, r0, #0x3
 	cmp	r2, r0
-	bne	.L483	@cond_branch
-	ldr	r3, .L484+0x14
+	bne	.L481	@cond_branch
+	ldr	r3, .L482+0x10
 	ldrh	r0, [r3]
 	and	r1, r1, r0
 	cmp	r1, r2
-	bne	.L483	@cond_branch
+	bne	.L481	@cond_branch
 	ldr	r1, [r3, #0x4]
-	ldr	r0, .L484+0x18
+	ldr	r0, .L482+0x14
 	cmp	r1, r0
-	beq	.L481	@cond_branch
-.L483:
+	beq	.L479	@cond_branch
+.L481:
 	bl	GetMapMusicFadeoutSpeed
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	bl	FadeOutMapMusic
-.L481:
+.L479:
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.L485:
+.L483:
 	.align	2, 0
-.L484:
+.L482:
 	.word	0x4001
-	.word	0x16d
 	.word	0x40ca
 	.word	gSaveBlock1Ptr
 	.word	0xffff
@@ -3171,10 +3168,10 @@ PlayAmbientCry:
 	mov	r0, sp
 	add	r1, r4, #0
 	bl	PlayerGetDestCoords
-	ldr	r0, .L490
+	ldr	r0, .L488
 	ldrb	r0, [r0]
 	cmp	r0, #0x1
-	bne	.L489	@cond_branch
+	bne	.L487	@cond_branch
 	mov	r0, sp
 	mov	r1, #0x0
 	ldrsh	r0, [r0, r1]
@@ -3186,8 +3183,8 @@ PlayAmbientCry:
 	bl	MetatileBehavior_IsSurfableWaterOrUnderwater
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.L488	@cond_branch
-.L489:
+	beq	.L486	@cond_branch
+.L487:
 	bl	Random
 	lsl	r0, r0, #0x10
 	lsr	r0, r0, #0x10
@@ -3204,7 +3201,7 @@ PlayAmbientCry:
 	bl	__umodsi3
 	add	r2, r0, #0
 	add	r2, r2, #0x32
-	ldr	r0, .L490+0x4
+	ldr	r0, .L488+0x4
 	ldrh	r0, [r0]
 	lsl	r4, r4, #0x18
 	asr	r4, r4, #0x18
@@ -3213,14 +3210,14 @@ PlayAmbientCry:
 	add	r1, r4, #0
 	mov	r3, #0x1
 	bl	PlayCry2
-.L488:
+.L486:
 	add	sp, sp, #0x4
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L491:
+.L489:
 	.align	2, 0
-.L490:
+.L488:
 	.word	sIsAmbientCryWaterMon
 	.word	sAmbientCrySpecies
 .Lfe84:
@@ -3239,39 +3236,39 @@ UpdateAmbientCry:
 	mov	r1, #0x0
 	ldrsh	r0, [r6, r1]
 	cmp	r0, #0x4
-	bhi	.L493	@cond_branch
+	bhi	.L491	@cond_branch
 	lsl	r0, r0, #0x2
-	ldr	r1, .L511
+	ldr	r1, .L509
 	add	r0, r0, r1
 	ldr	r0, [r0]
 	mov	pc, r0
+.L510:
+	.align	2, 0
+.L509:
+	.word	.L506
+	.align	2, 0
+	.align	2, 0
+.L506:
+	.word	.L492
+	.word	.L495
+	.word	.L496
+	.word	.L503
+	.word	.L491
+.L492:
+	ldr	r0, .L511
+	ldrh	r0, [r0]
+	cmp	r0, #0
+	bne	.L493	@cond_branch
+	mov	r0, #0x4
+	b	.L508
 .L512:
 	.align	2, 0
 .L511:
-	.word	.L508
-	.align	2, 0
-	.align	2, 0
-.L508:
-	.word	.L494
-	.word	.L497
-	.word	.L498
-	.word	.L505
-	.word	.L493
-.L494:
-	ldr	r0, .L513
-	ldrh	r0, [r0]
-	cmp	r0, #0
-	bne	.L495	@cond_branch
-	mov	r0, #0x4
-	b	.L510
-.L514:
-	.align	2, 0
-.L513:
 	.word	sAmbientCrySpecies
-.L495:
+.L493:
 	mov	r0, #0x1
-	b	.L510
-.L497:
+	b	.L508
+.L495:
 	bl	Random
 	lsl	r0, r0, #0x10
 	lsr	r0, r0, #0x10
@@ -3283,8 +3280,8 @@ UpdateAmbientCry:
 	add	r0, r0, r1
 	strh	r0, [r7]
 	mov	r0, #0x3
-	b	.L510
-.L498:
+	b	.L508
+.L496:
 	mov	r0, #0x1
 	mov	r9, r0
 	bl	CalculatePlayerPartyCount
@@ -3292,31 +3289,31 @@ UpdateAmbientCry:
 	lsr	r0, r0, #0x18
 	mov	r8, r0
 	mov	r5, #0x0
-	b	.L499
-.L501:
+	b	.L497
+.L499:
 	add	r0, r5, #0x1
 	lsl	r0, r0, #0x18
 	lsr	r5, r0, #0x18
-.L499:
+.L497:
 	cmp	r5, r8
-	bcs	.L500	@cond_branch
+	bcs	.L498	@cond_branch
 	mov	r0, #0x64
 	mul	r0, r0, r5
-	ldr	r4, .L515
+	ldr	r4, .L513
 	add	r0, r0, r4
 	mov	r1, #0x6
 	bl	GetMonData
 	cmp	r0, #0
-	bne	.L501	@cond_branch
+	bne	.L499	@cond_branch
 	add	r0, r4, #0
 	bl	GetMonAbility
 	lsl	r0, r0, #0x10
 	lsr	r0, r0, #0x10
 	cmp	r0, #0x44
-	bne	.L501	@cond_branch
+	bne	.L499	@cond_branch
 	mov	r1, #0x2
 	mov	r9, r1
-.L500:
+.L498:
 	bl	Random
 	lsl	r0, r0, #0x10
 	lsr	r0, r0, #0x10
@@ -3331,23 +3328,23 @@ UpdateAmbientCry:
 	bl	__divsi3
 	strh	r0, [r7]
 	mov	r0, #0x3
-	b	.L510
-.L516:
+	b	.L508
+.L514:
 	.align	2, 0
-.L515:
+.L513:
 	.word	gPlayerParty
-.L505:
+.L503:
 	ldrh	r0, [r7]
 	sub	r0, r0, #0x1
 	strh	r0, [r7]
 	lsl	r0, r0, #0x10
 	cmp	r0, #0
-	bne	.L493	@cond_branch
+	bne	.L491	@cond_branch
 	bl	PlayAmbientCry
 	mov	r0, #0x2
-.L510:
+.L508:
 	strh	r0, [r6]
-.L493:
+.L491:
 	pop	{r3, r4}
 	mov	r8, r3
 	mov	r9, r4
@@ -3362,38 +3359,38 @@ UpdateAmbientCry:
 	.thumb_func
 ChooseAmbientCrySpecies:
 	push	{lr}
-	ldr	r0, .L521
+	ldr	r0, .L519
 	ldr	r0, [r0]
 	ldrh	r1, [r0, #0x4]
 	mov	r0, #0xb4
 	lsl	r0, r0, #0x6
 	cmp	r1, r0
-	bne	.L518	@cond_branch
+	bne	.L516	@cond_branch
 	bl	IsMirageIslandPresent
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	bne	.L518	@cond_branch
-	ldr	r1, .L521+0x4
+	bne	.L516	@cond_branch
+	ldr	r1, .L519+0x4
 	mov	r0, #0x1
 	strb	r0, [r1]
 	bl	GetLocalWaterMon
-	b	.L520
-.L522:
+	b	.L518
+.L520:
 	.align	2, 0
-.L521:
+.L519:
 	.word	gSaveBlock1Ptr
 	.word	sIsAmbientCryWaterMon
-.L518:
-	ldr	r0, .L523
+.L516:
+	ldr	r0, .L521
 	bl	GetLocalWildMon
-.L520:
-	ldr	r1, .L523+0x4
+.L518:
+	ldr	r1, .L521+0x4
 	strh	r0, [r1]
 	pop	{r0}
 	bx	r0
-.L524:
+.L522:
 	.align	2, 0
-.L523:
+.L521:
 	.word	sIsAmbientCryWaterMon
 	.word	sAmbientCrySpecies
 .Lfe86:
@@ -3440,7 +3437,7 @@ GetMapTypeByWarpData:
 	.thumb_func
 GetCurrentMapType:
 	push	{lr}
-	ldr	r0, .L528
+	ldr	r0, .L526
 	ldr	r0, [r0]
 	add	r0, r0, #0x4
 	bl	GetMapTypeByWarpData
@@ -3448,9 +3445,9 @@ GetCurrentMapType:
 	lsr	r0, r0, #0x18
 	pop	{r1}
 	bx	r1
-.L529:
+.L527:
 	.align	2, 0
-.L528:
+.L526:
 	.word	gSaveBlock1Ptr
 .Lfe89:
 	.size	 GetCurrentMapType,.Lfe89-GetCurrentMapType
@@ -3460,15 +3457,15 @@ GetCurrentMapType:
 	.thumb_func
 GetLastUsedWarpMapType:
 	push	{lr}
-	ldr	r0, .L531
+	ldr	r0, .L529
 	bl	GetMapTypeByWarpData
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	pop	{r1}
 	bx	r1
-.L532:
+.L530:
 	.align	2, 0
-.L531:
+.L529:
 	.word	gLastUsedWarp
 .Lfe90:
 	.size	 GetLastUsedWarpMapType,.Lfe90-GetLastUsedWarpMapType
@@ -3481,21 +3478,21 @@ IsMapTypeOutdoors:
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	cmp	r0, #0x3
-	beq	.L535	@cond_branch
+	beq	.L533	@cond_branch
 	cmp	r0, #0x1
-	beq	.L535	@cond_branch
+	beq	.L533	@cond_branch
 	cmp	r0, #0x5
-	beq	.L535	@cond_branch
+	beq	.L533	@cond_branch
 	cmp	r0, #0x2
-	beq	.L535	@cond_branch
+	beq	.L533	@cond_branch
 	cmp	r0, #0x6
-	bne	.L534	@cond_branch
-.L535:
+	bne	.L532	@cond_branch
+.L533:
 	mov	r0, #0x1
-	b	.L537
-.L534:
+	b	.L535
+.L532:
 	mov	r0, #0x0
-.L537:
+.L535:
 	pop	{r1}
 	bx	r1
 .Lfe91:
@@ -3509,19 +3506,19 @@ Overworld_MapTypeAllowsTeleportAndFly:
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	cmp	r0, #0x3
-	beq	.L540	@cond_branch
+	beq	.L538	@cond_branch
 	cmp	r0, #0x1
-	beq	.L540	@cond_branch
+	beq	.L538	@cond_branch
 	cmp	r0, #0x6
-	beq	.L540	@cond_branch
+	beq	.L538	@cond_branch
 	cmp	r0, #0x2
-	bne	.L539	@cond_branch
-.L540:
+	bne	.L537	@cond_branch
+.L538:
 	mov	r0, #0x1
-	b	.L542
-.L539:
+	b	.L540
+.L537:
 	mov	r0, #0x0
-.L542:
+.L540:
 	pop	{r1}
 	bx	r1
 .Lfe92:
@@ -3538,12 +3535,12 @@ IsMapTypeIndoors:
 	add	r0, r0, r1
 	lsr	r0, r0, #0x18
 	cmp	r0, #0x1
-	bls	.L544	@cond_branch
+	bls	.L542	@cond_branch
 	mov	r0, #0x0
-	b	.L546
-.L544:
+	b	.L544
+.L542:
 	mov	r0, #0x1
-.L546:
+.L544:
 	pop	{r1}
 	bx	r1
 .Lfe93:
@@ -3554,7 +3551,7 @@ IsMapTypeIndoors:
 	.thumb_func
 GetSavedWarpRegionMapSectionId:
 	push	{lr}
-	ldr	r0, .L548
+	ldr	r0, .L546
 	ldr	r1, [r0]
 	mov	r0, #0x14
 	ldrsb	r0, [r1, r0]
@@ -3569,9 +3566,9 @@ GetSavedWarpRegionMapSectionId:
 	ldrb	r0, [r0, #0x14]
 	pop	{r1}
 	bx	r1
-.L549:
+.L547:
 	.align	2, 0
-.L548:
+.L546:
 	.word	gSaveBlock1Ptr
 .Lfe94:
 	.size	 GetSavedWarpRegionMapSectionId,.Lfe94-GetSavedWarpRegionMapSectionId
@@ -3581,7 +3578,7 @@ GetSavedWarpRegionMapSectionId:
 	.thumb_func
 GetCurrentRegionMapSectionId:
 	push	{lr}
-	ldr	r0, .L551
+	ldr	r0, .L549
 	ldr	r1, [r0]
 	mov	r0, #0x4
 	ldrsb	r0, [r1, r0]
@@ -3596,9 +3593,9 @@ GetCurrentRegionMapSectionId:
 	ldrb	r0, [r0, #0x14]
 	pop	{r1}
 	bx	r1
-.L552:
+.L550:
 	.align	2, 0
-.L551:
+.L549:
 	.word	gSaveBlock1Ptr
 .Lfe95:
 	.size	 GetCurrentRegionMapSectionId,.Lfe95-GetCurrentRegionMapSectionId
@@ -3608,7 +3605,7 @@ GetCurrentRegionMapSectionId:
 	.thumb_func
 GetCurrentMapBattleScene:
 	push	{lr}
-	ldr	r0, .L554
+	ldr	r0, .L552
 	ldr	r1, [r0]
 	mov	r0, #0x4
 	ldrsb	r0, [r1, r0]
@@ -3623,9 +3620,9 @@ GetCurrentMapBattleScene:
 	ldrb	r0, [r0, #0x1b]
 	pop	{r1}
 	bx	r1
-.L555:
+.L553:
 	.align	2, 0
-.L554:
+.L552:
 	.word	gSaveBlock1Ptr
 .Lfe96:
 	.size	 GetCurrentMapBattleScene,.Lfe96-GetCurrentMapBattleScene
@@ -3636,7 +3633,7 @@ InitOverworldBgs:
 	push	{r4, r5, r6, lr}
 	mov	r6, r8
 	push	{r6}
-	ldr	r1, .L557
+	ldr	r1, .L555
 	mov	r0, #0x0
 	mov	r2, #0x4
 	bl	InitBgsFromTemplates
@@ -3652,7 +3649,7 @@ InitOverworldBgs:
 	mov	r1, #0x5
 	mov	r2, #0x1
 	bl	SetBgAttribute
-	ldr	r0, .L557+0x4
+	ldr	r0, .L555+0x4
 	mov	r8, r0
 	mov	r4, #0x80
 	lsl	r4, r4, #0x4
@@ -3660,11 +3657,11 @@ InitOverworldBgs:
 	bl	AllocZeroed
 	mov	r1, r8
 	str	r0, [r1]
-	ldr	r6, .L557+0x8
+	ldr	r6, .L555+0x8
 	add	r0, r4, #0
 	bl	AllocZeroed
 	str	r0, [r6]
-	ldr	r5, .L557+0xc
+	ldr	r5, .L555+0xc
 	add	r0, r4, #0
 	bl	AllocZeroed
 	str	r0, [r5]
@@ -3684,9 +3681,9 @@ InitOverworldBgs:
 	pop	{r4, r5, r6}
 	pop	{r0}
 	bx	r0
-.L558:
+.L556:
 	.align	2, 0
-.L557:
+.L555:
 	.word	sOverworldBgTemplates
 	.word	gBGTilemapBuffers2
 	.word	gBGTilemapBuffers1
@@ -3701,7 +3698,23 @@ CleanupOverworldWindowsAndTilemaps:
 	push	{r4, lr}
 	bl	ClearMirageTowerPulseBlendEffect
 	bl	FreeAllOverworldWindowBuffers
-	ldr	r4, .L563
+	ldr	r4, .L561
+	ldr	r0, [r4]
+	cmp	r0, #0
+	beq	.L558	@cond_branch
+	bl	Free
+	mov	r0, #0x0
+	str	r0, [r4]
+.L558:
+	ldr	r4, .L561+0x4
+	ldr	r0, [r4]
+	cmp	r0, #0
+	beq	.L559	@cond_branch
+	bl	Free
+	mov	r0, #0x0
+	str	r0, [r4]
+.L559:
+	ldr	r4, .L561+0x8
 	ldr	r0, [r4]
 	cmp	r0, #0
 	beq	.L560	@cond_branch
@@ -3709,28 +3722,12 @@ CleanupOverworldWindowsAndTilemaps:
 	mov	r0, #0x0
 	str	r0, [r4]
 .L560:
-	ldr	r4, .L563+0x4
-	ldr	r0, [r4]
-	cmp	r0, #0
-	beq	.L561	@cond_branch
-	bl	Free
-	mov	r0, #0x0
-	str	r0, [r4]
-.L561:
-	ldr	r4, .L563+0x8
-	ldr	r0, [r4]
-	cmp	r0, #0
-	beq	.L562	@cond_branch
-	bl	Free
-	mov	r0, #0x0
-	str	r0, [r4]
-.L562:
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L564:
+.L562:
 	.align	2, 0
-.L563:
+.L561:
 	.word	gBGTilemapBuffers3
 	.word	gBGTilemapBuffers1
 	.word	gBGTilemapBuffers2
@@ -3752,21 +3749,21 @@ ResetSafariZoneFlag_:
 	.thumb_func
 IsUpdateLinkStateCBActive:
 	push	{lr}
-	ldr	r0, .L570
+	ldr	r0, .L568
 	ldr	r1, [r0]
-	ldr	r0, .L570+0x4
+	ldr	r0, .L568+0x4
 	cmp	r1, r0
-	beq	.L567	@cond_branch
+	beq	.L565	@cond_branch
 	mov	r0, #0x0
-	b	.L569
-.L571:
+	b	.L567
+.L569:
 	.align	2, 0
-.L570:
+.L568:
 	.word	gMain
 	.word	CB1_UpdateLinkState
-.L567:
+.L565:
 	mov	r0, #0x1
-.L569:
+.L567:
 	pop	{r1}
 	bx	r1
 .Lfe100:
@@ -3794,20 +3791,20 @@ DoCB1_Overworld:
 	bl	ScriptContext2_IsEnabled
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	bne	.L573	@cond_branch
+	bne	.L571	@cond_branch
 	mov	r0, sp
 	bl	ProcessPlayerFieldInput
 	cmp	r0, #0x1
-	bne	.L574	@cond_branch
+	bne	.L572	@cond_branch
 	bl	ScriptContext2_Enable
 	bl	HideMapNamePopUpWindow
-	b	.L573
-.L574:
+	b	.L571
+.L572:
 	ldrb	r0, [r6, #0x2]
 	add	r1, r5, #0
 	add	r2, r4, #0
 	bl	PlayerStep
-.L573:
+.L571:
 	add	sp, sp, #0x4
 	pop	{r4, r5, r6}
 	pop	{r0}
@@ -3820,20 +3817,20 @@ DoCB1_Overworld:
 	.thumb_func
 CB1_Overworld:
 	push	{lr}
-	ldr	r2, .L578
+	ldr	r2, .L576
 	ldr	r1, [r2, #0x4]
-	ldr	r0, .L578+0x4
+	ldr	r0, .L576+0x4
 	cmp	r1, r0
-	bne	.L577	@cond_branch
+	bne	.L575	@cond_branch
 	ldrh	r0, [r2, #0x2e]
 	ldrh	r1, [r2, #0x2c]
 	bl	DoCB1_Overworld
-.L577:
+.L575:
 	pop	{r0}
 	bx	r0
-.L579:
+.L577:
 	.align	2, 0
-.L578:
+.L576:
 	.word	gMain
 	.word	CB2_Overworld
 .Lfe102:
@@ -3874,26 +3871,26 @@ CB2_OverworldBasic:
 	.thumb_func
 CB2_Overworld:
 	push	{r4, lr}
-	ldr	r0, .L585
+	ldr	r0, .L583
 	ldrb	r0, [r0, #0x7]
 	lsr	r0, r0, #0x7
 	add	r4, r0, #0
 	cmp	r4, #0
-	beq	.L583	@cond_branch
+	beq	.L581	@cond_branch
 	mov	r0, #0x0
 	bl	SetVBlankCallback
-.L583:
+.L581:
 	bl	OverworldBasic
 	cmp	r4, #0
-	beq	.L584	@cond_branch
+	beq	.L582	@cond_branch
 	bl	SetFieldVBlankCallback
-.L584:
+.L582:
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L586:
+.L584:
 	.align	2, 0
-.L585:
+.L583:
 	.word	gPaletteFade
 .Lfe105:
 	.size	 CB2_Overworld,.Lfe105-CB2_Overworld
@@ -3902,12 +3899,12 @@ CB2_Overworld:
 	.type	 SetMainCallback1,function
 	.thumb_func
 SetMainCallback1:
-	ldr	r1, .L588
+	ldr	r1, .L586
 	str	r0, [r1]
 	bx	lr
-.L589:
+.L587:
 	.align	2, 0
-.L588:
+.L586:
 	.word	gMain
 .Lfe106:
 	.size	 SetMainCallback1,.Lfe106-SetMainCallback1
@@ -3916,12 +3913,12 @@ SetMainCallback1:
 	.type	 SetUnusedCallback,function
 	.thumb_func
 SetUnusedCallback:
-	ldr	r1, .L591
+	ldr	r1, .L589
 	str	r0, [r1]
 	bx	lr
-.L592:
+.L590:
 	.align	2, 0
-.L591:
+.L589:
 	.word	sUnusedOverworldCallback
 .Lfe107:
 	.size	 SetUnusedCallback,.Lfe107-SetUnusedCallback
@@ -3930,56 +3927,56 @@ SetUnusedCallback:
 	.thumb_func
 RunFieldCallback:
 	push	{r4, lr}
-	ldr	r4, .L601
+	ldr	r4, .L599
 	ldr	r0, [r4]
 	cmp	r0, #0
-	beq	.L594	@cond_branch
+	beq	.L592	@cond_branch
 	bl	_call_via_r0
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	bne	.L595	@cond_branch
+	bne	.L593	@cond_branch
 	mov	r0, #0x0
-	b	.L600
+	b	.L598
+.L600:
+	.align	2, 0
+.L599:
+	.word	gFieldCallback2
+.L593:
+	mov	r1, #0x0
+	str	r1, [r4]
+	ldr	r0, .L601
+	str	r1, [r0]
+	b	.L595
 .L602:
 	.align	2, 0
 .L601:
-	.word	gFieldCallback2
-.L595:
-	mov	r1, #0x0
-	str	r1, [r4]
+	.word	gFieldCallback
+.L592:
 	ldr	r0, .L603
-	str	r1, [r0]
+	ldr	r0, [r0]
+	cmp	r0, #0
+	beq	.L596	@cond_branch
+	bl	_call_via_r0
 	b	.L597
 .L604:
 	.align	2, 0
 .L603:
 	.word	gFieldCallback
-.L594:
-	ldr	r0, .L605
-	ldr	r0, [r0]
-	cmp	r0, #0
-	beq	.L598	@cond_branch
-	bl	_call_via_r0
-	b	.L599
-.L606:
-	.align	2, 0
-.L605:
-	.word	gFieldCallback
-.L598:
+.L596:
 	bl	FieldCB_DefaultWarpExit
-.L599:
-	ldr	r1, .L607
+.L597:
+	ldr	r1, .L605
 	mov	r0, #0x0
 	str	r0, [r1]
-.L597:
+.L595:
 	mov	r0, #0x1
-.L600:
+.L598:
 	pop	{r4}
 	pop	{r1}
 	bx	r1
-.L608:
+.L606:
 	.align	2, 0
-.L607:
+.L605:
 	.word	gFieldCallback
 .Lfe108:
 	.size	 RunFieldCallback,.Lfe108-RunFieldCallback
@@ -3997,21 +3994,21 @@ CB2_NewGame:
 	bl	PlayTimeCounter_Start
 	bl	ScriptContext1_Init
 	bl	ScriptContext2_Disable
-	ldr	r1, .L610
+	ldr	r1, .L608
 	mov	r0, #0x0
 	str	r0, [r1]
-	ldr	r0, .L610+0x4
+	ldr	r0, .L608+0x4
 	bl	DoMapLoadLoop
 	bl	SetFieldVBlankCallback
-	ldr	r0, .L610+0x8
+	ldr	r0, .L608+0x8
 	bl	SetMainCallback1
-	ldr	r0, .L610+0xc
+	ldr	r0, .L608+0xc
 	bl	SetMainCallback2
 	pop	{r0}
 	bx	r0
-.L611:
+.L609:
 	.align	2, 0
-.L610:
+.L608:
 	.word	gFieldCallback2
 	.word	gMain+0x438
 	.word	CB1_Overworld
@@ -4025,7 +4022,7 @@ CB2_NewGame:
 CB2_WhiteOut:
 	push	{lr}
 	add	sp, sp, #-0x4
-	ldr	r1, .L614
+	ldr	r1, .L612
 	mov	r0, #0x87
 	lsl	r0, r0, #0x3
 	add	r1, r1, r0
@@ -4035,7 +4032,7 @@ CB2_WhiteOut:
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	cmp	r0, #0x77
-	bls	.L613	@cond_branch
+	bls	.L611	@cond_branch
 	bl	FieldClearVBlankHBlankCallbacks
 	bl	StopMapMusic
 	bl	ResetSafariZoneFlag_
@@ -4043,8 +4040,8 @@ CB2_WhiteOut:
 	bl	ResetInitialPlayerAvatarState
 	bl	ScriptContext1_Init
 	bl	ScriptContext2_Disable
-	ldr	r1, .L614+0x4
-	ldr	r0, .L614+0x8
+	ldr	r1, .L612+0x4
+	ldr	r0, .L612+0x8
 	str	r0, [r1]
 	mov	r1, sp
 	mov	r0, #0x0
@@ -4052,17 +4049,17 @@ CB2_WhiteOut:
 	mov	r0, sp
 	bl	DoMapLoadLoop
 	bl	SetFieldVBlankCallback
-	ldr	r0, .L614+0xc
+	ldr	r0, .L612+0xc
 	bl	SetMainCallback1
-	ldr	r0, .L614+0x10
+	ldr	r0, .L612+0x10
 	bl	SetMainCallback2
-.L613:
+.L611:
 	add	sp, sp, #0x4
 	pop	{r0}
 	bx	r0
-.L615:
+.L613:
 	.align	2, 0
-.L614:
+.L612:
 	.word	gMain
 	.word	gFieldCallback
 	.word	FieldCB_WarpExitFadeFromBlack
@@ -4081,16 +4078,16 @@ CB2_LoadMap:
 	bl	ScriptContext2_Disable
 	mov	r0, #0x0
 	bl	SetMainCallback1
-	ldr	r0, .L617
+	ldr	r0, .L615
 	bl	SetMainCallback2
-	ldr	r1, .L617+0x4
-	ldr	r0, .L617+0x8
+	ldr	r1, .L615+0x4
+	ldr	r0, .L615+0x8
 	str	r0, [r1, #0x8]
 	pop	{r0}
 	bx	r0
-.L618:
+.L616:
 	.align	2, 0
-.L617:
+.L615:
 	.word	CB2_DoChangeMap
 	.word	gMain
 	.word	CB2_LoadMap2
@@ -4101,18 +4098,18 @@ CB2_LoadMap:
 	.thumb_func
 CB2_LoadMap2:
 	push	{lr}
-	ldr	r0, .L620
+	ldr	r0, .L618
 	bl	DoMapLoadLoop
 	bl	SetFieldVBlankCallback
-	ldr	r0, .L620+0x4
+	ldr	r0, .L618+0x4
 	bl	SetMainCallback1
-	ldr	r0, .L620+0x8
+	ldr	r0, .L618+0x8
 	bl	SetMainCallback2
 	pop	{r0}
 	bx	r0
-.L621:
+.L619:
 	.align	2, 0
-.L620:
+.L618:
 	.word	gMain+0x438
 	.word	CB1_Overworld
 	.word	CB2_Overworld
@@ -4124,36 +4121,36 @@ CB2_LoadMap2:
 	.thumb_func
 CB2_ReturnToFieldContestHall:
 	push	{r4, lr}
-	ldr	r0, .L625
+	ldr	r0, .L623
 	mov	r1, #0x87
 	lsl	r1, r1, #0x3
 	add	r4, r0, r1
 	ldrb	r0, [r4]
 	cmp	r0, #0
-	bne	.L623	@cond_branch
+	bne	.L621	@cond_branch
 	bl	FieldClearVBlankHBlankCallbacks
 	bl	ScriptContext1_Init
 	bl	ScriptContext2_Disable
 	mov	r0, #0x0
 	bl	SetMainCallback1
-.L623:
+.L621:
 	add	r0, r4, #0
 	mov	r1, #0x1
 	bl	LoadMapInStepsLocal
 	cmp	r0, #0
-	beq	.L624	@cond_branch
+	beq	.L622	@cond_branch
 	bl	SetFieldVBlankCallback
-	ldr	r0, .L625+0x4
+	ldr	r0, .L623+0x4
 	bl	SetMainCallback1
-	ldr	r0, .L625+0x8
+	ldr	r0, .L623+0x8
 	bl	SetMainCallback2
-.L624:
+.L622:
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L626:
+.L624:
 	.align	2, 0
-.L625:
+.L623:
 	.word	gMain
 	.word	CB1_Overworld
 	.word	CB2_Overworld
@@ -4166,16 +4163,16 @@ CB2_ReturnToFieldContestHall:
 CB2_ReturnToFieldCableClub:
 	push	{lr}
 	bl	FieldClearVBlankHBlankCallbacks
-	ldr	r0, .L628
-	ldr	r1, .L628+0x4
+	ldr	r0, .L626
+	ldr	r1, .L626+0x4
 	str	r1, [r0]
-	ldr	r0, .L628+0x8
+	ldr	r0, .L626+0x8
 	bl	SetMainCallback2
 	pop	{r0}
 	bx	r0
-.L629:
+.L627:
 	.align	2, 0
-.L628:
+.L626:
 	.word	gFieldCallback
 	.word	FieldCB_ReturnToFieldWirelessLink
 	.word	CB2_LoadMapOnReturnToFieldCableClub
@@ -4186,22 +4183,22 @@ CB2_ReturnToFieldCableClub:
 	.thumb_func
 CB2_LoadMapOnReturnToFieldCableClub:
 	push	{lr}
-	ldr	r0, .L632
+	ldr	r0, .L630
 	bl	LoadMapInStepsLink
 	cmp	r0, #0
-	beq	.L631	@cond_branch
+	beq	.L629	@cond_branch
 	bl	SetFieldVBlankCallback
-	ldr	r0, .L632+0x4
+	ldr	r0, .L630+0x4
 	bl	SetMainCallback1
 	bl	ResetAllMultiplayerState
-	ldr	r0, .L632+0x8
+	ldr	r0, .L630+0x8
 	bl	SetMainCallback2
-.L631:
+.L629:
 	pop	{r0}
 	bx	r0
-.L633:
+.L631:
 	.align	2, 0
-.L632:
+.L630:
 	.word	gMain+0x438
 	.word	CB1_UpdateLinkState
 	.word	CB2_Overworld
@@ -4215,24 +4212,24 @@ CB2_ReturnToField:
 	push	{lr}
 	bl	IsUpdateLinkStateCBActive
 	cmp	r0, #0x1
-	bne	.L635	@cond_branch
+	bne	.L633	@cond_branch
+	ldr	r0, .L635
+	bl	SetMainCallback2
+	b	.L634
+.L636:
+	.align	2, 0
+.L635:
+	.word	CB2_ReturnToFieldLink
+.L633:
+	bl	FieldClearVBlankHBlankCallbacks
 	ldr	r0, .L637
 	bl	SetMainCallback2
-	b	.L636
+.L634:
+	pop	{r0}
+	bx	r0
 .L638:
 	.align	2, 0
 .L637:
-	.word	CB2_ReturnToFieldLink
-.L635:
-	bl	FieldClearVBlankHBlankCallbacks
-	ldr	r0, .L639
-	bl	SetMainCallback2
-.L636:
-	pop	{r0}
-	bx	r0
-.L640:
-	.align	2, 0
-.L639:
 	.word	CB2_ReturnToFieldLocal
 .Lfe116:
 	.size	 CB2_ReturnToField,.Lfe116-CB2_ReturnToField
@@ -4241,19 +4238,19 @@ CB2_ReturnToField:
 	.thumb_func
 CB2_ReturnToFieldLocal:
 	push	{lr}
-	ldr	r0, .L643
+	ldr	r0, .L641
 	bl	ReturnToFieldLocal
 	cmp	r0, #0
-	beq	.L642	@cond_branch
+	beq	.L640	@cond_branch
 	bl	SetFieldVBlankCallback
-	ldr	r0, .L643+0x4
+	ldr	r0, .L641+0x4
 	bl	SetMainCallback2
-.L642:
+.L640:
 	pop	{r0}
 	bx	r0
-.L644:
+.L642:
 	.align	2, 0
-.L643:
+.L641:
 	.word	gMain+0x438
 	.word	CB2_Overworld
 .Lfe117:
@@ -4265,19 +4262,19 @@ CB2_ReturnToFieldLink:
 	push	{lr}
 	bl	sub_8087598
 	cmp	r0, #0
-	bne	.L646	@cond_branch
-	ldr	r0, .L647
+	bne	.L644	@cond_branch
+	ldr	r0, .L645
 	bl	ReturnToFieldLink
 	cmp	r0, #0
-	beq	.L646	@cond_branch
-	ldr	r0, .L647+0x4
+	beq	.L644	@cond_branch
+	ldr	r0, .L645+0x4
 	bl	SetMainCallback2
-.L646:
+.L644:
 	pop	{r0}
 	bx	r0
-.L648:
+.L646:
 	.align	2, 0
-.L647:
+.L645:
 	.word	gMain+0x438
 	.word	CB2_Overworld
 .Lfe118:
@@ -4290,36 +4287,36 @@ CB2_ReturnToFieldFromMultiplayer:
 	push	{lr}
 	bl	FieldClearVBlankHBlankCallbacks
 	bl	StopMapMusic
-	ldr	r0, .L653
+	ldr	r0, .L651
 	bl	SetMainCallback1
 	bl	ResetAllMultiplayerState
-	ldr	r0, .L653+0x4
+	ldr	r0, .L651+0x4
 	ldrb	r0, [r0]
 	cmp	r0, #0
-	beq	.L650	@cond_branch
-	ldr	r1, .L653+0x8
-	ldr	r0, .L653+0xc
-	b	.L652
-.L654:
+	beq	.L648	@cond_branch
+	ldr	r1, .L651+0x8
+	ldr	r0, .L651+0xc
+	b	.L650
+.L652:
 	.align	2, 0
-.L653:
+.L651:
 	.word	CB1_UpdateLinkState
 	.word	gWirelessCommType
 	.word	gFieldCallback
 	.word	FieldCB_ReturnToFieldWirelessLink
+.L648:
+	ldr	r1, .L653
+	ldr	r0, .L653+0x4
 .L650:
-	ldr	r1, .L655
-	ldr	r0, .L655+0x4
-.L652:
 	str	r0, [r1]
 	bl	ScriptContext1_Init
 	bl	ScriptContext2_Disable
 	bl	CB2_ReturnToField
 	pop	{r0}
 	bx	r0
-.L656:
+.L654:
 	.align	2, 0
-.L655:
+.L653:
 	.word	gFieldCallback
 	.word	FieldCB_ReturnToFieldCableLink
 .Lfe119:
@@ -4331,15 +4328,15 @@ CB2_ReturnToFieldFromMultiplayer:
 CB2_ReturnToFieldWithOpenMenu:
 	push	{lr}
 	bl	FieldClearVBlankHBlankCallbacks
-	ldr	r1, .L658
-	ldr	r0, .L658+0x4
+	ldr	r1, .L656
+	ldr	r0, .L656+0x4
 	str	r0, [r1]
 	bl	CB2_ReturnToField
 	pop	{r0}
 	bx	r0
-.L659:
+.L657:
 	.align	2, 0
-.L658:
+.L656:
 	.word	gFieldCallback2
 	.word	FieldCB_ReturnToFieldOpenStartMenu
 .Lfe120:
@@ -4351,15 +4348,15 @@ CB2_ReturnToFieldWithOpenMenu:
 CB2_ReturnToFieldContinueScript:
 	push	{lr}
 	bl	FieldClearVBlankHBlankCallbacks
-	ldr	r1, .L661
-	ldr	r0, .L661+0x4
+	ldr	r1, .L659
+	ldr	r0, .L659+0x4
 	str	r0, [r1]
 	bl	CB2_ReturnToField
 	pop	{r0}
 	bx	r0
-.L662:
+.L660:
 	.align	2, 0
-.L661:
+.L659:
 	.word	gFieldCallback
 	.word	FieldCB_ContinueScript
 .Lfe121:
@@ -4371,15 +4368,15 @@ CB2_ReturnToFieldContinueScript:
 CB2_ReturnToFieldContinueScriptPlayMapMusic:
 	push	{lr}
 	bl	FieldClearVBlankHBlankCallbacks
-	ldr	r1, .L664
-	ldr	r0, .L664+0x4
+	ldr	r1, .L662
+	ldr	r0, .L662+0x4
 	str	r0, [r1]
 	bl	CB2_ReturnToField
 	pop	{r0}
 	bx	r0
-.L665:
+.L663:
 	.align	2, 0
-.L664:
+.L662:
 	.word	gFieldCallback
 	.word	FieldCB_ContinueScriptHandleMusic
 .Lfe122:
@@ -4391,15 +4388,15 @@ CB2_ReturnToFieldContinueScriptPlayMapMusic:
 sub_80861E8:
 	push	{lr}
 	bl	FieldClearVBlankHBlankCallbacks
-	ldr	r1, .L667
-	ldr	r0, .L667+0x4
+	ldr	r1, .L665
+	ldr	r0, .L665+0x4
 	str	r0, [r1]
 	bl	CB2_ReturnToField
 	pop	{r0}
 	bx	r0
-.L668:
+.L666:
 	.align	2, 0
-.L667:
+.L665:
 	.word	gFieldCallback
 	.word	FieldCB_WarpExitFadeFromBlack
 .Lfe123:
@@ -4409,25 +4406,25 @@ sub_80861E8:
 	.thumb_func
 sub_8086204:
 	push	{lr}
-	ldr	r0, .L671
+	ldr	r0, .L669
 	ldrb	r1, [r0, #0x1a]
 	mov	r0, #0xf8
 	and	r0, r0, r1
 	cmp	r0, #0x8
-	bne	.L670	@cond_branch
+	bne	.L668	@cond_branch
 	bl	SecretBaseMapPopupEnabled
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	cmp	r0, #0x1
-	bne	.L670	@cond_branch
+	bne	.L668	@cond_branch
 	bl	ShowMapNamePopup
-.L670:
+.L668:
 	bl	FieldCB_WarpExitFadeFromBlack
 	pop	{r0}
 	bx	r0
-.L672:
+.L670:
 	.align	2, 0
-.L671:
+.L669:
 	.word	gMapHeader
 .Lfe124:
 	.size	 sub_8086204,.Lfe124-sub_8086204
@@ -4440,97 +4437,97 @@ CB2_ContinueSavedGame:
 	bl	FieldClearVBlankHBlankCallbacks
 	bl	StopMapMusic
 	bl	ResetSafariZoneFlag_
-	ldr	r0, .L685
+	ldr	r0, .L683
 	ldrh	r0, [r0]
 	cmp	r0, #0xff
-	bne	.L674	@cond_branch
+	bne	.L672	@cond_branch
 	bl	ResetWinStreaks
-.L674:
+.L672:
 	bl	LoadSaveblockMapHeader
 	bl	ClearDiveAndHoleWarps
 	bl	GetCurrentTrainerHillMapId
 	lsl	r0, r0, #0x18
 	lsr	r4, r0, #0x18
-	ldr	r0, .L685+0x4
+	ldr	r0, .L683+0x4
 	ldrh	r1, [r0, #0x12]
-	ldr	r0, .L685+0x8
+	ldr	r0, .L683+0x8
 	cmp	r1, r0
-	bne	.L675	@cond_branch
+	bne	.L673	@cond_branch
 	bl	LoadBattlePyramidFloorObjectEventScripts
-	b	.L676
-.L686:
+	b	.L674
+.L684:
 	.align	2, 0
-.L685:
+.L683:
 	.word	gSaveFileStatus
 	.word	gMapHeader
 	.word	0x169
-.L675:
+.L673:
 	cmp	r4, #0
-	beq	.L677	@cond_branch
+	beq	.L675	@cond_branch
 	cmp	r4, #0x6
-	beq	.L677	@cond_branch
+	beq	.L675	@cond_branch
 	bl	LoadTrainerHillFloorObjectEventScripts
-	b	.L676
-.L677:
+	b	.L674
+.L675:
 	bl	LoadSaveblockObjEventScripts
-.L676:
+.L674:
 	bl	UnfreezeObjectEvents
 	bl	DoTimeBasedEvents
 	bl	sub_8084788
-	ldr	r0, .L687
+	ldr	r0, .L685
 	ldrh	r1, [r0, #0x12]
-	ldr	r0, .L687+0x4
+	ldr	r0, .L685+0x4
 	cmp	r1, r0
-	bne	.L679	@cond_branch
+	bne	.L677	@cond_branch
 	mov	r0, #0x1
 	bl	InitBattlePyramidMap
-	b	.L680
-.L688:
+	b	.L678
+.L686:
 	.align	2, 0
-.L687:
+.L685:
 	.word	gMapHeader
 	.word	0x169
-.L679:
+.L677:
 	cmp	r4, #0
-	beq	.L681	@cond_branch
+	beq	.L679	@cond_branch
 	bl	InitTrainerHillMap
-	b	.L680
-.L681:
+	b	.L678
+.L679:
 	bl	InitMapFromSavedGame
-.L680:
+.L678:
 	bl	PlayTimeCounter_Start
 	bl	ScriptContext1_Init
 	bl	ScriptContext2_Disable
 	bl	InitMatchCallCounters
 	bl	UseContinueGameWarp
 	cmp	r0, #0x1
-	bne	.L683	@cond_branch
+	bne	.L681	@cond_branch
 	bl	ClearContinueGameWarpStatus
 	bl	SetWarpDestinationToContinueGameWarp
 	bl	WarpIntoMap
 	bl	TryPutTodaysRivalTrainerOnAir
-	ldr	r0, .L689
+	ldr	r0, .L687
 	bl	SetMainCallback2
-	b	.L684
-.L690:
+	b	.L682
+.L688:
 	.align	2, 0
-.L689:
+.L687:
 	.word	CB2_LoadMap
-.L683:
+.L681:
 	bl	TryPutTodaysRivalTrainerOnAir
-	ldr	r0, .L691
-	ldr	r1, .L691+0x4
+	ldr	r0, .L689
+	ldr	r1, .L689+0x4
 	str	r1, [r0]
-	ldr	r0, .L691+0x8
+	ldr	r0, .L689+0x8
 	bl	SetMainCallback1
 	bl	CB2_ReturnToField
-.L684:
+.L682:
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L692:
+.L690:
 	.align	2, 0
-.L691:
+.L689:
 	.word	gFieldCallback
 	.word	sub_8086204
 	.word	CB1_Overworld
@@ -4545,29 +4542,29 @@ FieldClearVBlankHBlankCallbacks:
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	cmp	r0, #0x1
-	bne	.L694	@cond_branch
+	bne	.L692	@cond_branch
 	bl	CloseLink
-.L694:
-	ldr	r0, .L697
+.L692:
+	ldr	r0, .L695
 	ldrb	r0, [r0]
 	cmp	r0, #0
-	beq	.L695	@cond_branch
+	beq	.L693	@cond_branch
 	mov	r0, #0xc5
 	bl	EnableInterrupts
 	mov	r0, #0x2
 	bl	DisableInterrupts
-	b	.L696
-.L698:
+	b	.L694
+.L696:
 	.align	2, 0
-.L697:
-	.word	gWirelessCommType
 .L695:
-	ldr	r4, .L699
+	.word	gWirelessCommType
+.L693:
+	ldr	r4, .L697
 	ldrh	r3, [r4]
 	strh	r0, [r4]
-	ldr	r2, .L699+0x4
+	ldr	r2, .L697+0x4
 	ldrh	r1, [r2]
-	ldr	r0, .L699+0x8
+	ldr	r0, .L697+0x8
 	and	r0, r0, r1
 	strh	r0, [r2]
 	ldrh	r0, [r2]
@@ -4575,7 +4572,7 @@ FieldClearVBlankHBlankCallbacks:
 	orr	r0, r0, r1
 	strh	r0, [r2]
 	strh	r3, [r4]
-.L696:
+.L694:
 	mov	r0, #0x0
 	bl	SetVBlankCallback
 	mov	r0, #0x0
@@ -4583,9 +4580,9 @@ FieldClearVBlankHBlankCallbacks:
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L700:
+.L698:
 	.align	2, 0
-.L699:
+.L697:
 	.word	0x4000208
 	.word	0x4000200
 	.word	0xfffd
@@ -4596,13 +4593,13 @@ FieldClearVBlankHBlankCallbacks:
 	.thumb_func
 SetFieldVBlankCallback:
 	push	{lr}
-	ldr	r0, .L702
+	ldr	r0, .L700
 	bl	SetVBlankCallback
 	pop	{r0}
 	bx	r0
-.L703:
+.L701:
 	.align	2, 0
-.L702:
+.L700:
 	.word	VBlankCB_Field
 .Lfe127:
 	.size	 SetFieldVBlankCallback,.Lfe127-SetFieldVBlankCallback
@@ -4630,36 +4627,36 @@ InitCurrentFlashLevelScanlineEffect:
 	bl	InBattlePyramid_
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.L706	@cond_branch
+	beq	.L704	@cond_branch
 	bl	WriteBattlePyramidViewScanlineEffectBuffer
+	ldr	r2, .L707
+	ldr	r0, [r2]
+	ldr	r1, [r2, #0x4]
+	ldr	r2, [r2, #0x8]
+	bl	ScanlineEffect_SetParams
+	b	.L705
+.L708:
+	.align	2, 0
+.L707:
+	.word	sFlashEffectParams
+.L704:
+	bl	Overworld_GetFlashLevel
+	lsl	r0, r0, #0x18
+	lsr	r0, r0, #0x18
+	cmp	r0, #0
+	beq	.L705	@cond_branch
+	bl	WriteFlashScanlineEffectBuffer
 	ldr	r2, .L709
 	ldr	r0, [r2]
 	ldr	r1, [r2, #0x4]
 	ldr	r2, [r2, #0x8]
 	bl	ScanlineEffect_SetParams
-	b	.L707
+.L705:
+	pop	{r0}
+	bx	r0
 .L710:
 	.align	2, 0
 .L709:
-	.word	sFlashEffectParams
-.L706:
-	bl	Overworld_GetFlashLevel
-	lsl	r0, r0, #0x18
-	lsr	r0, r0, #0x18
-	cmp	r0, #0
-	beq	.L707	@cond_branch
-	bl	WriteFlashScanlineEffectBuffer
-	ldr	r2, .L711
-	ldr	r0, [r2]
-	ldr	r1, [r2, #0x4]
-	ldr	r2, [r2, #0x8]
-	bl	ScanlineEffect_SetParams
-.L707:
-	pop	{r0}
-	bx	r0
-.L712:
-	.align	2, 0
-.L711:
 	.word	sFlashEffectParams
 .Lfe129:
 	.size	 InitCurrentFlashLevelScanlineEffect,.Lfe129-InitCurrentFlashLevelScanlineEffect
@@ -4671,21 +4668,23 @@ LoadMapInStepsLink:
 	add	r4, r0, #0
 	ldrb	r0, [r4]
 	cmp	r0, #0xd
-	bls	.LCB5627
-	b	.L714	@long jump
-.LCB5627:
+	bls	.LCB5622
+	b	.L712	@long jump
+.LCB5622:
 	lsl	r0, r0, #0x2
-	ldr	r1, .L736
+	ldr	r1, .L734
 	add	r0, r0, r1
 	ldr	r0, [r0]
 	mov	pc, r0
-.L737:
+.L735:
 	.align	2, 0
-.L736:
-	.word	.L732
+.L734:
+	.word	.L730
 	.align	2, 0
 	.align	2, 0
-.L732:
+.L730:
+	.word	.L713
+	.word	.L714
 	.word	.L715
 	.word	.L716
 	.word	.L717
@@ -4693,110 +4692,108 @@ LoadMapInStepsLink:
 	.word	.L719
 	.word	.L720
 	.word	.L721
-	.word	.L722
 	.word	.L723
+	.word	.L724
 	.word	.L725
-	.word	.L726
 	.word	.L727
 	.word	.L729
-	.word	.L731
-.L715:
+.L713:
 	bl	InitOverworldBgs
 	bl	ScriptContext1_Init
 	bl	ScriptContext2_Disable
 	bl	ResetMirageTowerAndSaveBlockPtrs
 	bl	sub_80867D8
-	b	.L735
-.L716:
+	b	.L733
+.L714:
 	mov	r0, #0x1
 	bl	LoadMapFromWarp
-	b	.L735
-.L717:
+	b	.L733
+.L715:
 	mov	r0, #0x1
 	bl	ResumeMap
-	b	.L735
-.L718:
+	b	.L733
+.L716:
 	bl	OffsetCameraFocusByLinkPlayerId
 	bl	InitObjectEventsLink
 	bl	SpawnLinkPlayers
 	bl	SetCameraToTrackGuestPlayer
-	b	.L735
-.L719:
+	b	.L733
+.L717:
 	bl	InitCurrentFlashLevelScanlineEffect
 	bl	InitOverworldGraphicsRegisters
 	bl	InitTextBoxGfxAndPrinters
-	b	.L735
-.L720:
+	b	.L733
+.L718:
 	bl	ResetFieldCamera
-	b	.L735
-.L721:
-	ldr	r0, .L738
+	b	.L733
+.L719:
+	ldr	r0, .L736
 	ldr	r0, [r0]
 	bl	CopyPrimaryTilesetToVram
-	b	.L735
+	b	.L733
+.L737:
+	.align	2, 0
+.L736:
+	.word	gMapHeader
+.L720:
+	ldr	r0, .L738
+	ldr	r0, [r0]
+	bl	CopySecondaryTilesetToVram
+	b	.L733
 .L739:
 	.align	2, 0
 .L738:
 	.word	gMapHeader
-.L722:
+.L721:
+	bl	FreeTempTileDataBuffersIfPossible
+	lsl	r0, r0, #0x18
+	lsr	r0, r0, #0x18
+	cmp	r0, #0x1
+	beq	.L712	@cond_branch
 	ldr	r0, .L740
 	ldr	r0, [r0]
-	bl	CopySecondaryTilesetToVram
-	b	.L735
+	bl	LoadMapTilesetPalettes
+	b	.L733
 .L741:
 	.align	2, 0
 .L740:
 	.word	gMapHeader
 .L723:
-	bl	FreeTempTileDataBuffersIfPossible
-	lsl	r0, r0, #0x18
-	lsr	r0, r0, #0x18
-	cmp	r0, #0x1
-	beq	.L714	@cond_branch
-	ldr	r0, .L742
-	ldr	r0, [r0]
-	bl	LoadMapTilesetPalettes
-	b	.L735
-.L743:
-	.align	2, 0
-.L742:
-	.word	gMapHeader
-.L725:
 	bl	DrawWholeMapView
-	b	.L735
-.L726:
+	b	.L733
+.L724:
 	bl	InitTilesetAnimations
-	b	.L735
-.L727:
-	ldr	r0, .L744
+	b	.L733
+.L725:
+	ldr	r0, .L742
 	ldrb	r0, [r0]
 	cmp	r0, #0
-	beq	.L735	@cond_branch
+	beq	.L733	@cond_branch
 	bl	LoadWirelessStatusIndicatorSpriteGfx
 	mov	r0, #0x0
 	mov	r1, #0x0
 	bl	CreateWirelessStatusIndicatorSprite
-	b	.L735
-.L745:
+	b	.L733
+.L743:
 	.align	2, 0
-.L744:
+.L742:
 	.word	gWirelessCommType
-.L729:
+.L727:
 	bl	RunFieldCallback
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.L714	@cond_branch
-.L735:
+	beq	.L712	@cond_branch
+.L733:
 	ldrb	r0, [r4]
 	add	r0, r0, #0x1
 	strb	r0, [r4]
-	b	.L714
-.L731:
+	b	.L712
+.L729:
 	mov	r0, #0x1
-	b	.L734
-.L714:
+	b	.L732
+.L712:
 	mov	r0, #0x0
-.L734:
+.L732:
 	pop	{r4}
 	pop	{r1}
 	bx	r1
@@ -4811,21 +4808,23 @@ LoadMapInStepsLocal:
 	add	r5, r1, #0
 	ldrb	r0, [r4]
 	cmp	r0, #0xd
-	bls	.LCB5790
-	b	.L747	@long jump
-.LCB5790:
+	bls	.LCB5785
+	b	.L745	@long jump
+.LCB5785:
 	lsl	r0, r0, #0x2
-	ldr	r1, .L769
+	ldr	r1, .L767
 	add	r0, r0, r1
 	ldr	r0, [r0]
 	mov	pc, r0
-.L770:
+.L768:
 	.align	2, 0
-.L769:
-	.word	.L765
+.L767:
+	.word	.L763
 	.align	2, 0
 	.align	2, 0
-.L765:
+.L763:
+	.word	.L746
+	.word	.L747
 	.word	.L748
 	.word	.L749
 	.word	.L750
@@ -4833,110 +4832,108 @@ LoadMapInStepsLocal:
 	.word	.L752
 	.word	.L753
 	.word	.L754
-	.word	.L755
 	.word	.L756
+	.word	.L757
 	.word	.L758
-	.word	.L759
 	.word	.L760
 	.word	.L762
-	.word	.L764
-.L748:
+.L746:
 	bl	FieldClearVBlankHBlankCallbacks
 	add	r0, r5, #0
 	bl	LoadMapFromWarp
-	b	.L768
-.L749:
+	b	.L766
+.L747:
 	bl	ResetMirageTowerAndSaveBlockPtrs
 	bl	sub_80867D8
-	b	.L768
-.L750:
+	b	.L766
+.L748:
 	add	r0, r5, #0
 	bl	ResumeMap
-	b	.L768
-.L751:
+	b	.L766
+.L749:
 	bl	InitObjectEventsLocal
 	bl	SetCameraToTrackPlayer
-	b	.L768
-.L752:
+	b	.L766
+.L750:
 	bl	InitCurrentFlashLevelScanlineEffect
 	bl	InitOverworldGraphicsRegisters
 	bl	InitTextBoxGfxAndPrinters
-	b	.L768
-.L753:
+	b	.L766
+.L751:
 	bl	ResetFieldCamera
-	b	.L768
-.L754:
-	ldr	r0, .L771
+	b	.L766
+.L752:
+	ldr	r0, .L769
 	ldr	r0, [r0]
 	bl	CopyPrimaryTilesetToVram
-	b	.L768
+	b	.L766
+.L770:
+	.align	2, 0
+.L769:
+	.word	gMapHeader
+.L753:
+	ldr	r0, .L771
+	ldr	r0, [r0]
+	bl	CopySecondaryTilesetToVram
+	b	.L766
 .L772:
 	.align	2, 0
 .L771:
 	.word	gMapHeader
-.L755:
+.L754:
+	bl	FreeTempTileDataBuffersIfPossible
+	lsl	r0, r0, #0x18
+	lsr	r0, r0, #0x18
+	cmp	r0, #0x1
+	beq	.L745	@cond_branch
 	ldr	r0, .L773
 	ldr	r0, [r0]
-	bl	CopySecondaryTilesetToVram
-	b	.L768
+	bl	LoadMapTilesetPalettes
+	b	.L766
 .L774:
 	.align	2, 0
 .L773:
 	.word	gMapHeader
 .L756:
-	bl	FreeTempTileDataBuffersIfPossible
-	lsl	r0, r0, #0x18
-	lsr	r0, r0, #0x18
-	cmp	r0, #0x1
-	beq	.L747	@cond_branch
-	ldr	r0, .L775
-	ldr	r0, [r0]
-	bl	LoadMapTilesetPalettes
-	b	.L768
-.L776:
-	.align	2, 0
-.L775:
-	.word	gMapHeader
-.L758:
 	bl	DrawWholeMapView
-	b	.L768
-.L759:
+	b	.L766
+.L757:
 	bl	InitTilesetAnimations
-	b	.L768
-.L760:
-	ldr	r0, .L777
+	b	.L766
+.L758:
+	ldr	r0, .L775
 	ldrb	r1, [r0, #0x1a]
 	mov	r0, #0xf8
 	and	r0, r0, r1
 	cmp	r0, #0x8
-	bne	.L768	@cond_branch
+	bne	.L766	@cond_branch
 	bl	SecretBaseMapPopupEnabled
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	cmp	r0, #0x1
-	bne	.L768	@cond_branch
+	bne	.L766	@cond_branch
 	bl	ShowMapNamePopup
-	b	.L768
-.L778:
+	b	.L766
+.L776:
 	.align	2, 0
-.L777:
+.L775:
 	.word	gMapHeader
-.L762:
+.L760:
 	bl	RunFieldCallback
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.L747	@cond_branch
-.L768:
+	beq	.L745	@cond_branch
+.L766:
 	ldrb	r0, [r4]
 	add	r0, r0, #0x1
 	strb	r0, [r4]
-	b	.L747
-.L764:
+	b	.L745
+.L762:
 	mov	r0, #0x1
-	b	.L767
-.L747:
+	b	.L765
+.L745:
 	mov	r0, #0x0
-.L767:
+.L765:
 	pop	{r4, r5}
 	pop	{r1}
 	bx	r1
@@ -4950,46 +4947,46 @@ ReturnToFieldLocal:
 	add	r4, r0, #0
 	ldrb	r0, [r4]
 	cmp	r0, #0x1
-	beq	.L782	@cond_branch
+	beq	.L780	@cond_branch
 	cmp	r0, #0x1
-	bgt	.L788	@cond_branch
+	bgt	.L786	@cond_branch
 	cmp	r0, #0
-	beq	.L781	@cond_branch
-	b	.L780
-.L788:
+	beq	.L779	@cond_branch
+	b	.L778
+.L786:
 	cmp	r0, #0x2
-	beq	.L783	@cond_branch
+	beq	.L781	@cond_branch
 	cmp	r0, #0x3
-	beq	.L785	@cond_branch
-	b	.L780
-.L781:
+	beq	.L783	@cond_branch
+	b	.L778
+.L779:
 	bl	ResetMirageTowerAndSaveBlockPtrs
 	bl	sub_80867D8
 	mov	r0, #0x0
 	bl	ResumeMap
 	bl	sub_8086A68
 	bl	SetCameraToTrackPlayer
-	b	.L790
-.L782:
+	b	.L788
+.L780:
 	bl	InitViewGraphics
 	bl	TryLoadTrainerHillEReaderPalette
-	b	.L790
-.L783:
+	b	.L788
+.L781:
 	bl	RunFieldCallback
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.L780	@cond_branch
-.L790:
+	beq	.L778	@cond_branch
+.L788:
 	ldrb	r0, [r4]
 	add	r0, r0, #0x1
 	strb	r0, [r4]
-	b	.L780
-.L785:
+	b	.L778
+.L783:
 	mov	r0, #0x1
-	b	.L789
-.L780:
+	b	.L787
+.L778:
 	mov	r0, #0x0
-.L789:
+.L787:
 	pop	{r4}
 	pop	{r1}
 	bx	r1
@@ -5003,129 +5000,129 @@ ReturnToFieldLink:
 	add	r4, r0, #0
 	ldrb	r0, [r4]
 	cmp	r0, #0xd
-	bls	.LCB6016
-	b	.L792	@long jump
-.LCB6016:
+	bls	.LCB6011
+	b	.L790	@long jump
+.LCB6011:
 	lsl	r0, r0, #0x2
-	ldr	r1, .L813
+	ldr	r1, .L811
 	add	r0, r0, r1
 	ldr	r0, [r0]
 	mov	pc, r0
-.L814:
+.L812:
 	.align	2, 0
-.L813:
-	.word	.L810
+.L811:
+	.word	.L808
 	.align	2, 0
 	.align	2, 0
-.L810:
+.L808:
+	.word	.L791
+	.word	.L792
 	.word	.L793
 	.word	.L794
 	.word	.L795
 	.word	.L796
 	.word	.L797
 	.word	.L798
-	.word	.L799
 	.word	.L800
-	.word	.L802
-	.word	.L803
-	.word	.L808
-	.word	.L804
+	.word	.L801
 	.word	.L806
-	.word	.L809
-.L793:
+	.word	.L802
+	.word	.L804
+	.word	.L807
+.L791:
 	bl	FieldClearVBlankHBlankCallbacks
 	bl	ResetMirageTowerAndSaveBlockPtrs
 	bl	sub_80867D8
-	b	.L808
-.L794:
+	b	.L806
+.L792:
 	mov	r0, #0x1
 	bl	ResumeMap
-	b	.L808
-.L795:
+	b	.L806
+.L793:
 	bl	CreateLinkPlayerSprites
 	bl	sub_8086A68
 	bl	SetCameraToTrackGuestPlayer_2
-	b	.L808
-.L796:
+	b	.L806
+.L794:
 	bl	InitCurrentFlashLevelScanlineEffect
 	bl	InitOverworldGraphicsRegisters
 	bl	InitTextBoxGfxAndPrinters
-	b	.L808
-.L797:
+	b	.L806
+.L795:
 	bl	ResetFieldCamera
-	b	.L808
-.L798:
-	ldr	r0, .L815
+	b	.L806
+.L796:
+	ldr	r0, .L813
 	ldr	r0, [r0]
 	bl	CopyPrimaryTilesetToVram
-	b	.L808
+	b	.L806
+.L814:
+	.align	2, 0
+.L813:
+	.word	gMapHeader
+.L797:
+	ldr	r0, .L815
+	ldr	r0, [r0]
+	bl	CopySecondaryTilesetToVram
+	b	.L806
 .L816:
 	.align	2, 0
 .L815:
 	.word	gMapHeader
-.L799:
+.L798:
+	bl	FreeTempTileDataBuffersIfPossible
+	lsl	r0, r0, #0x18
+	lsr	r0, r0, #0x18
+	cmp	r0, #0x1
+	beq	.L790	@cond_branch
 	ldr	r0, .L817
 	ldr	r0, [r0]
-	bl	CopySecondaryTilesetToVram
-	b	.L808
+	bl	LoadMapTilesetPalettes
+	b	.L806
 .L818:
 	.align	2, 0
 .L817:
 	.word	gMapHeader
 .L800:
-	bl	FreeTempTileDataBuffersIfPossible
-	lsl	r0, r0, #0x18
-	lsr	r0, r0, #0x18
-	cmp	r0, #0x1
-	beq	.L792	@cond_branch
-	ldr	r0, .L819
-	ldr	r0, [r0]
-	bl	LoadMapTilesetPalettes
-	b	.L808
-.L820:
-	.align	2, 0
-.L819:
-	.word	gMapHeader
-.L802:
 	bl	DrawWholeMapView
-	b	.L808
-.L803:
+	b	.L806
+.L801:
 	bl	InitTilesetAnimations
-	b	.L808
-.L804:
-	ldr	r0, .L821
+	b	.L806
+.L802:
+	ldr	r0, .L819
 	ldrb	r0, [r0]
 	cmp	r0, #0
-	beq	.L808	@cond_branch
+	beq	.L806	@cond_branch
 	bl	LoadWirelessStatusIndicatorSpriteGfx
 	mov	r0, #0x0
 	mov	r1, #0x0
 	bl	CreateWirelessStatusIndicatorSprite
-	b	.L808
-.L822:
+	b	.L806
+.L820:
 	.align	2, 0
-.L821:
+.L819:
 	.word	gWirelessCommType
-.L806:
+.L804:
 	bl	RunFieldCallback
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.L792	@cond_branch
-.L808:
+	beq	.L790	@cond_branch
+.L806:
 	ldrb	r0, [r4]
 	add	r0, r0, #0x1
 	strb	r0, [r4]
-	b	.L792
-.L809:
+	b	.L790
+.L807:
 	bl	SetFieldVBlankCallback
 	ldrb	r0, [r4]
 	add	r0, r0, #0x1
 	strb	r0, [r4]
 	mov	r0, #0x1
-	b	.L812
-.L792:
+	b	.L810
+.L790:
 	mov	r0, #0x0
-.L812:
+.L810:
 	pop	{r4}
 	pop	{r1}
 	bx	r1
@@ -5137,12 +5134,12 @@ ReturnToFieldLink:
 DoMapLoadLoop:
 	push	{r4, lr}
 	add	r4, r0, #0
-.L824:
+.L822:
 	add	r0, r4, #0
 	mov	r1, #0x0
 	bl	LoadMapInStepsLocal
 	cmp	r0, #0
-	beq	.L824	@cond_branch
+	beq	.L822	@cond_branch
 	pop	{r4}
 	pop	{r0}
 	bx	r0
@@ -5164,68 +5161,76 @@ ResetMirageTowerAndSaveBlockPtrs:
 	.thumb_func
 sub_80867D8:
 	push	{r4, r5, r6, r7, lr}
+	mov	r7, r9
+	mov	r6, r8
+	push	{r6, r7}
 	add	sp, sp, #-0x4
 	mov	r0, #0x0
 	mov	r1, #0x0
 	bl	SetGpuReg
 	bl	ScanlineEffect_Stop
-	ldr	r2, .L835
 	mov	r1, sp
 	mov	r0, #0x0
 	strh	r0, [r1]
-	ldr	r1, .L835+0x4
-	mov	r0, sp
-	str	r0, [r1]
-	str	r2, [r1, #0x4]
-	ldr	r0, .L835+0x8
-	str	r0, [r1, #0x8]
-	ldr	r0, [r1, #0x8]
-	mov	r2, #0xc0
-	lsl	r2, r2, #0x13
-	mov	r3, #0xc0
-	lsl	r3, r3, #0x9
-	mov	r4, sp
-	mov	r6, #0x0
-	mov	r5, #0x80
-	lsl	r5, r5, #0x5
-	ldr	r7, .L835+0xc
 	mov	r0, #0x81
 	lsl	r0, r0, #0x18
 	mov	ip, r0
-.L832:
-	strh	r6, [r4]
 	mov	r0, sp
-	str	r0, [r1]
-	str	r2, [r1, #0x4]
-	str	r7, [r1, #0x8]
-	ldr	r0, [r1, #0x8]
-	add	r2, r2, r5
-	sub	r3, r3, r5
-	cmp	r3, r5
-	bhi	.L832	@cond_branch
-	strh	r6, [r4]
+	ldr	r1, .L833
+	ldr	r2, .L833+0x4
+	ldr	r3, .L833+0x8
+	stmia r3!, {r0, r1, r2}
+	.code	16
+	mov	r7, #0xc0
+	lsl	r7, r7, #0x13
+	mov	r4, #0xc0
+	lsl	r4, r4, #0x9
+	mov	r9, sp
+	mov	r3, #0x0
+	ldr	r5, .L833+0xc
+	mov	r8, r5
+	mov	r6, #0x80
+	lsl	r6, r6, #0x5
+.L830:
+	mov	r0, r9
+	strh	r3, [r0]
 	mov	r0, sp
-	str	r0, [r1]
-	str	r2, [r1, #0x4]
-	lsr	r0, r3, #0x1
-	mov	r2, ip
-	orr	r0, r0, r2
-	str	r0, [r1, #0x8]
-	ldr	r0, [r1, #0x8]
+	add	r1, r7, #0
+	mov	r2, r8
+	ldr	r5, .L833+0x8
+	stmia r5!, {r0, r1, r2}
+	.code	16
+	add	r7, r7, r6
+	sub	r4, r4, r6
+	cmp	r4, r6
+	bhi	.L830	@cond_branch
+	mov	r0, r9
+	strh	r3, [r0]
+	lsr	r2, r4, #0x1
+	mov	r0, sp
+	add	r1, r7, #0
+	mov	r3, ip
+	orr	r2, r2, r3
+	ldr	r5, .L833+0x8
+	stmia r5!, {r0, r1, r2}
+	.code	16
 	mov	r0, #0x0
 	mov	r1, #0x80
 	bl	ResetOamRange
 	bl	LoadOam
 	add	sp, sp, #0x4
+	pop	{r3, r4}
+	mov	r8, r3
+	mov	r9, r4
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L836:
+.L834:
 	.align	2, 0
-.L835:
+.L833:
 	.word	0x5000002
-	.word	0x40000d4
 	.word	-0x7efffe01
+	.word	0x40000d4
 	.word	-0x7efff800
 .Lfe136:
 	.size	 sub_80867D8,.Lfe136-sub_80867D8
@@ -5252,10 +5257,10 @@ InitOverworldGraphicsRegisters:
 	mov	r0, #0x4c
 	mov	r1, #0x0
 	bl	SetGpuReg
-	ldr	r1, .L839
+	ldr	r1, .L837
 	mov	r0, #0x48
 	bl	SetGpuReg
-	ldr	r1, .L839+0x4
+	ldr	r1, .L837+0x4
 	mov	r0, #0x4a
 	bl	SetGpuReg
 	mov	r0, #0x40
@@ -5264,14 +5269,14 @@ InitOverworldGraphicsRegisters:
 	mov	r0, #0x44
 	mov	r1, #0xff
 	bl	SetGpuReg
-	ldr	r4, .L839+0x8
+	ldr	r4, .L837+0x8
 	mov	r0, #0x42
 	add	r1, r4, #0
 	bl	SetGpuReg
 	mov	r0, #0x46
 	add	r1, r4, #0
 	bl	SetGpuReg
-	ldr	r0, .L839+0xc
+	ldr	r0, .L837+0xc
 	ldrh	r1, [r0, #0x2]
 	ldrh	r2, [r0, #0x4]
 	orr	r1, r1, r2
@@ -5283,7 +5288,7 @@ InitOverworldGraphicsRegisters:
 	orr	r1, r1, r0
 	mov	r0, #0x50
 	bl	SetGpuReg
-	ldr	r1, .L839+0x10
+	ldr	r1, .L837+0x10
 	mov	r0, #0x52
 	bl	SetGpuReg
 	bl	InitOverworldBgs
@@ -5325,7 +5330,7 @@ InitOverworldGraphicsRegisters:
 	mov	r1, #0x0
 	mov	r2, #0x0
 	bl	ChangeBgY
-	ldr	r1, .L839+0x14
+	ldr	r1, .L837+0x14
 	mov	r0, #0x0
 	bl	SetGpuReg
 	mov	r0, #0x0
@@ -5340,9 +5345,9 @@ InitOverworldGraphicsRegisters:
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L840:
+.L838:
 	.align	2, 0
-.L839:
+.L837:
 	.word	0x1f1f
 	.word	0x101
 	.word	0xffff
@@ -5365,21 +5370,21 @@ ResumeMap:
 	bl	ResetCameraUpdateInfo
 	bl	InstallCameraPanAheadCallback
 	cmp	r4, #0
-	bne	.L842	@cond_branch
+	bne	.L840	@cond_branch
 	mov	r0, #0x0
 	bl	InitObjectEventPalettes
-	b	.L843
-.L842:
+	b	.L841
+.L840:
 	mov	r0, #0x1
 	bl	InitObjectEventPalettes
-.L843:
+.L841:
 	bl	FieldEffectActiveListClear
 	bl	StartWeather
 	bl	ResumePausedWeather
 	cmp	r4, #0
-	bne	.L844	@cond_branch
+	bne	.L842	@cond_branch
 	bl	SetUpFieldTasks
-.L844:
+.L842:
 	bl	RunOnResumeMapScript
 	bl	TryStartMirageTowerPulseBlendEffect
 	pop	{r4}
@@ -5392,10 +5397,10 @@ ResumeMap:
 	.thumb_func
 InitObjectEventsLink:
 	push	{lr}
-	ldr	r0, .L846
+	ldr	r0, .L844
 	mov	r1, #0x0
 	strh	r1, [r0]
-	ldr	r0, .L846+0x4
+	ldr	r0, .L844+0x4
 	strh	r1, [r0]
 	bl	ResetObjectEvents
 	mov	r0, #0x0
@@ -5404,9 +5409,9 @@ InitObjectEventsLink:
 	bl	TryRunOnWarpIntoMapScript
 	pop	{r0}
 	bx	r0
-.L847:
+.L845:
 	.align	2, 0
-.L846:
+.L844:
 	.word	gTotalCameraPixelOffsetX
 	.word	gTotalCameraPixelOffsetY
 .Lfe140:
@@ -5417,10 +5422,10 @@ InitObjectEventsLink:
 InitObjectEventsLocal:
 	push	{r4, r5, lr}
 	add	sp, sp, #-0x4
-	ldr	r0, .L849
+	ldr	r0, .L847
 	mov	r1, #0x0
 	strh	r1, [r0]
-	ldr	r0, .L849+0x4
+	ldr	r0, .L847+0x4
 	strh	r1, [r0]
 	bl	ResetObjectEvents
 	mov	r4, sp
@@ -5436,7 +5441,7 @@ InitObjectEventsLocal:
 	mov	r2, #0x0
 	ldrsh	r1, [r4, r2]
 	ldrb	r2, [r5, #0x1]
-	ldr	r3, .L849+0x8
+	ldr	r3, .L847+0x8
 	ldr	r3, [r3]
 	ldrb	r3, [r3, #0x8]
 	bl	InitPlayerAvatar
@@ -5451,9 +5456,9 @@ InitObjectEventsLocal:
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.L850:
+.L848:
 	.align	2, 0
-.L849:
+.L847:
 	.word	gTotalCameraPixelOffsetX
 	.word	gTotalCameraPixelOffsetY
 	.word	gSaveBlock2Ptr
@@ -5478,8 +5483,8 @@ sub_8086A68:
 	.thumb_func
 SetCameraToTrackPlayer:
 	push	{lr}
-	ldr	r2, .L853
-	ldr	r3, .L853+0x4
+	ldr	r2, .L851
+	ldr	r3, .L851+0x4
 	ldrb	r1, [r3, #0x5]
 	lsl	r1, r1, #0x19
 	lsr	r1, r1, #0x19
@@ -5495,9 +5500,9 @@ SetCameraToTrackPlayer:
 	bl	InitCameraUpdateCallback
 	pop	{r0}
 	bx	r0
-.L854:
+.L852:
 	.align	2, 0
-.L853:
+.L851:
 	.word	gObjectEvents
 	.word	gPlayerAvatar
 .Lfe143:
@@ -5507,7 +5512,7 @@ SetCameraToTrackPlayer:
 	.thumb_func
 SetCameraToTrackGuestPlayer:
 	push	{lr}
-	ldr	r0, .L856
+	ldr	r0, .L854
 	ldrb	r0, [r0]
 	bl	GetSpriteForLinkedPlayer
 	lsl	r0, r0, #0x18
@@ -5515,9 +5520,9 @@ SetCameraToTrackGuestPlayer:
 	bl	InitCameraUpdateCallback
 	pop	{r0}
 	bx	r0
-.L857:
+.L855:
 	.align	2, 0
-.L856:
+.L854:
 	.word	gLocalLinkPlayerId
 .Lfe144:
 	.size	 SetCameraToTrackGuestPlayer,.Lfe144-SetCameraToTrackGuestPlayer
@@ -5526,7 +5531,7 @@ SetCameraToTrackGuestPlayer:
 	.thumb_func
 SetCameraToTrackGuestPlayer_2:
 	push	{lr}
-	ldr	r0, .L859
+	ldr	r0, .L857
 	ldrb	r0, [r0]
 	bl	GetSpriteForLinkedPlayer
 	lsl	r0, r0, #0x18
@@ -5534,9 +5539,9 @@ SetCameraToTrackGuestPlayer_2:
 	bl	InitCameraUpdateCallback
 	pop	{r0}
 	bx	r0
-.L860:
+.L858:
 	.align	2, 0
-.L859:
+.L857:
 	.word	gLocalLinkPlayerId
 .Lfe145:
 	.size	 SetCameraToTrackGuestPlayer_2,.Lfe145-SetCameraToTrackGuestPlayer_2
@@ -5552,7 +5557,7 @@ OffsetCameraFocusByLinkPlayerId:
 	add	r1, r4, #0
 	bl	GetCameraFocusCoords
 	mov	r2, sp
-	ldr	r0, .L862
+	ldr	r0, .L860
 	ldrb	r1, [r0]
 	ldrh	r0, [r2]
 	add	r0, r0, r1
@@ -5564,9 +5569,9 @@ OffsetCameraFocusByLinkPlayerId:
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L863:
+.L861:
 	.align	2, 0
-.L862:
+.L860:
 	.word	gLocalLinkPlayerId
 .Lfe146:
 	.size	 OffsetCameraFocusByLinkPlayerId,.Lfe146-OffsetCameraFocusByLinkPlayerId
@@ -5585,19 +5590,19 @@ SpawnLinkPlayers:
 	bl	GetCameraFocusCoords
 	mov	r3, sp
 	mov	r2, sp
-	ldr	r0, .L870
+	ldr	r0, .L868
 	ldrb	r1, [r0]
 	ldrh	r0, [r2]
 	sub	r0, r0, r1
 	strh	r0, [r3]
 	mov	r6, #0x0
-	ldr	r0, .L870+0x4
+	ldr	r0, .L868+0x4
 	mov	r8, r4
 	ldrb	r0, [r0]
 	cmp	r6, r0
-	bcs	.L866	@cond_branch
-	ldr	r7, .L870+0x8
-.L868:
+	bcs	.L864	@cond_branch
+	ldr	r7, .L868+0x8
+.L866:
 	lsl	r5, r6, #0x18
 	lsr	r5, r5, #0x18
 	mov	r0, sp
@@ -5621,11 +5626,11 @@ SpawnLinkPlayers:
 	add	r0, r6, #0x1
 	lsl	r0, r0, #0x10
 	lsr	r6, r0, #0x10
-	ldr	r0, .L870+0x4
+	ldr	r0, .L868+0x4
 	ldrb	r0, [r0]
 	cmp	r6, r0
-	bcc	.L868	@cond_branch
-.L866:
+	bcc	.L866	@cond_branch
+.L864:
 	bl	ClearAllPlayerKeys
 	add	sp, sp, #0x4
 	pop	{r3}
@@ -5633,9 +5638,9 @@ SpawnLinkPlayers:
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L871:
+.L869:
 	.align	2, 0
-.L870:
+.L868:
 	.word	gLocalLinkPlayerId
 	.word	gFieldLinkPlayerCount
 	.word	gLinkPlayers
@@ -5647,12 +5652,12 @@ SpawnLinkPlayers:
 CreateLinkPlayerSprites:
 	push	{r4, r5, lr}
 	mov	r4, #0x0
-	ldr	r0, .L878
+	ldr	r0, .L876
 	ldrb	r0, [r0]
 	cmp	r4, r0
-	bcs	.L874	@cond_branch
-	ldr	r5, .L878+0x4
-.L876:
+	bcs	.L872	@cond_branch
+	ldr	r5, .L876+0x4
+.L874:
 	lsl	r0, r4, #0x18
 	lsr	r0, r0, #0x18
 	lsl	r1, r4, #0x3
@@ -5664,17 +5669,17 @@ CreateLinkPlayerSprites:
 	add	r0, r4, #0x1
 	lsl	r0, r0, #0x10
 	lsr	r4, r0, #0x10
-	ldr	r0, .L878
+	ldr	r0, .L876
 	ldrb	r0, [r0]
 	cmp	r4, r0
-	bcc	.L876	@cond_branch
-.L874:
+	bcc	.L874	@cond_branch
+.L872:
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.L879:
+.L877:
 	.align	2, 0
-.L878:
+.L876:
 	.word	gFieldLinkPlayerCount
 	.word	gLinkPlayers
 .Lfe148:
@@ -5684,23 +5689,23 @@ CreateLinkPlayerSprites:
 	.thumb_func
 CB1_UpdateLinkState:
 	push	{r4, lr}
-	ldr	r0, .L883
+	ldr	r0, .L881
 	ldrb	r0, [r0]
 	cmp	r0, #0
-	beq	.L882	@cond_branch
+	beq	.L880	@cond_branch
 	bl	IsRfuRecvQueueEmpty
 	cmp	r0, #0
-	beq	.L882	@cond_branch
+	beq	.L880	@cond_branch
 	bl	IsSendingKeysToLink
 	cmp	r0, #0
-	bne	.L881	@cond_branch
-.L882:
-	ldr	r0, .L883+0x4
+	bne	.L879	@cond_branch
+.L880:
+	ldr	r0, .L881+0x4
 	ldrb	r4, [r0]
-	ldr	r0, .L883+0x8
+	ldr	r0, .L881+0x8
 	add	r1, r4, #0
 	bl	UpdateAllLinkPlayers
-	ldr	r0, .L883+0xc
+	ldr	r0, .L881+0xc
 	ldr	r1, [r0]
 	add	r0, r4, #0
 	bl	_call_via_r1
@@ -5708,13 +5713,13 @@ CB1_UpdateLinkState:
 	lsr	r0, r0, #0x10
 	bl	UpdateHeldKeyCode
 	bl	ClearAllPlayerKeys
-.L881:
+.L879:
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L884:
+.L882:
 	.align	2, 0
-.L883:
+.L881:
 	.word	gWirelessCommType
 	.word	gLocalLinkPlayerId
 	.word	gLinkPartnersHeldKeys
@@ -5728,13 +5733,13 @@ CB1_UpdateLinkState:
 ResetAllMultiplayerState:
 	push	{lr}
 	bl	ResetAllTradingStates
-	ldr	r0, .L886
+	ldr	r0, .L884
 	bl	SetKeyInterceptCallback
 	pop	{r0}
 	bx	r0
-.L887:
+.L885:
 	.align	2, 0
-.L886:
+.L884:
 	.word	KeyInterCB_SelfIdle
 .Lfe150:
 	.size	 ResetAllMultiplayerState,.Lfe150-ResetAllMultiplayerState
@@ -5743,13 +5748,13 @@ ResetAllMultiplayerState:
 	.thumb_func
 ClearAllPlayerKeys:
 	push	{lr}
-	ldr	r0, .L889
+	ldr	r0, .L887
 	bl	ResetPlayerHeldKeys
 	pop	{r0}
 	bx	r0
-.L890:
+.L888:
 	.align	2, 0
-.L889:
+.L887:
 	.word	gLinkPartnersHeldKeys
 .Lfe151:
 	.size	 ClearAllPlayerKeys,.Lfe151-ClearAllPlayerKeys
@@ -5757,15 +5762,15 @@ ClearAllPlayerKeys:
 	.type	 SetKeyInterceptCallback,function
 	.thumb_func
 SetKeyInterceptCallback:
-	ldr	r2, .L892
+	ldr	r2, .L890
 	mov	r1, #0x0
 	strb	r1, [r2]
-	ldr	r1, .L892+0x4
+	ldr	r1, .L890+0x4
 	str	r0, [r1]
 	bx	lr
-.L893:
+.L891:
 	.align	2, 0
-.L892:
+.L890:
 	.word	sRfuKeepAliveTimer
 	.word	sPlayerKeyInterceptCallback
 .Lfe152:
@@ -5775,25 +5780,25 @@ SetKeyInterceptCallback:
 	.thumb_func
 CheckRfuKeepAliveTimer:
 	push	{lr}
-	ldr	r0, .L896
+	ldr	r0, .L894
 	ldrb	r0, [r0]
 	cmp	r0, #0
-	beq	.L895	@cond_branch
-	ldr	r1, .L896+0x4
+	beq	.L893	@cond_branch
+	ldr	r1, .L894+0x4
 	ldrb	r0, [r1]
 	add	r0, r0, #0x1
 	strb	r0, [r1]
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	cmp	r0, #0x3c
-	bls	.L895	@cond_branch
+	bls	.L893	@cond_branch
 	bl	LinkRfu_FatalError
-.L895:
+.L893:
 	pop	{r0}
 	bx	r0
-.L897:
+.L895:
 	.align	2, 0
-.L896:
+.L894:
 	.word	gWirelessCommType
 	.word	sRfuKeepAliveTimer
 .Lfe153:
@@ -5803,19 +5808,19 @@ CheckRfuKeepAliveTimer:
 	.thumb_func
 ResetAllTradingStates:
 	push	{lr}
-	ldr	r1, .L904
+	ldr	r1, .L902
 	mov	r2, #0x80
 	add	r0, r1, #0x3
-.L902:
+.L900:
 	strb	r2, [r0]
 	sub	r0, r0, #0x1
 	cmp	r0, r1
-	bge	.L902	@cond_branch
+	bge	.L900	@cond_branch
 	pop	{r0}
 	bx	r0
-.L905:
+.L903:
 	.align	2, 0
-.L904:
+.L902:
 	.word	sPlayerTradingStates
 .Lfe154:
 	.size	 ResetAllTradingStates,.Lfe154-ResetAllTradingStates
@@ -5826,31 +5831,31 @@ AreAllPlayersInTradingState:
 	push	{r4, lr}
 	lsl	r0, r0, #0x10
 	lsr	r3, r0, #0x10
-	ldr	r0, .L914
+	ldr	r0, .L912
 	ldrb	r2, [r0]
 	mov	r1, #0x0
 	cmp	r1, r2
-	bge	.L908	@cond_branch
-	ldr	r4, .L914+0x4
-.L910:
+	bge	.L906	@cond_branch
+	ldr	r4, .L912+0x4
+.L908:
 	add	r0, r1, r4
 	ldrb	r0, [r0]
 	cmp	r0, r3
-	beq	.L909	@cond_branch
+	beq	.L907	@cond_branch
 	mov	r0, #0x0
-	b	.L913
-.L915:
+	b	.L911
+.L913:
 	.align	2, 0
-.L914:
+.L912:
 	.word	gFieldLinkPlayerCount
 	.word	sPlayerTradingStates
-.L909:
+.L907:
 	add	r1, r1, #0x1
 	cmp	r1, r2
-	blt	.L910	@cond_branch
-.L908:
+	blt	.L908	@cond_branch
+.L906:
 	mov	r0, #0x1
-.L913:
+.L911:
 	pop	{r4}
 	pop	{r1}
 	bx	r1
@@ -5863,31 +5868,31 @@ IsAnyPlayerInTradingState:
 	push	{r4, lr}
 	lsl	r0, r0, #0x10
 	lsr	r3, r0, #0x10
-	ldr	r0, .L924
+	ldr	r0, .L922
 	ldrb	r2, [r0]
 	mov	r1, #0x0
 	cmp	r1, r2
-	bge	.L918	@cond_branch
-	ldr	r4, .L924+0x4
-.L920:
+	bge	.L916	@cond_branch
+	ldr	r4, .L922+0x4
+.L918:
 	add	r0, r1, r4
 	ldrb	r0, [r0]
 	cmp	r0, r3
-	bne	.L919	@cond_branch
+	bne	.L917	@cond_branch
 	mov	r0, #0x1
-	b	.L923
-.L925:
+	b	.L921
+.L923:
 	.align	2, 0
-.L924:
+.L922:
 	.word	gFieldLinkPlayerCount
 	.word	sPlayerTradingStates
-.L919:
+.L917:
 	add	r1, r1, #0x1
 	cmp	r1, r2
-	blt	.L920	@cond_branch
-.L918:
+	blt	.L918	@cond_branch
+.L916:
 	mov	r0, #0x0
-.L923:
+.L921:
 	pop	{r4}
 	pop	{r1}
 	bx	r1
@@ -5907,18 +5912,18 @@ HandleLinkPlayerKeyInput:
 	lsl	r1, r1, #0x10
 	lsr	r1, r1, #0x10
 	mov	r8, r1
-	ldr	r0, .L960
+	ldr	r0, .L958
 	add	r5, r7, r0
 	ldrb	r0, [r5]
 	cmp	r0, #0x80
-	beq	.LCB7120
-	b	.L927	@long jump
-.LCB7120:
+	beq	.LCB7119
+	b	.L925	@long jump
+.LCB7119:
 	add	r0, r6, #0
 	bl	TryGetTileEventScript
 	add	r4, r0, #0
 	cmp	r4, #0
-	beq	.L928	@cond_branch
+	beq	.L926	@cond_branch
 	bl	GetDirectionForEventScript
 	mov	r1, r9
 	strh	r0, [r1]
@@ -5926,245 +5931,245 @@ HandleLinkPlayerKeyInput:
 	strb	r0, [r5]
 	ldrb	r0, [r6, #0x1]
 	cmp	r0, #0
-	bne	.LCB7138
-	b	.L926	@long jump
-.LCB7138:
-	ldr	r0, .L960+0x4
+	bne	.LCB7137
+	b	.L924	@long jump
+.LCB7137:
+	ldr	r0, .L958+0x4
 	bl	SetKeyInterceptCallback
 	add	r0, r4, #0
 	bl	sub_8087530
-	b	.L926
-.L961:
+	b	.L924
+.L959:
 	.align	2, 0
-.L960:
+.L958:
 	.word	sPlayerTradingStates
 	.word	KeyInterCB_DeferToEventScript
-.L928:
+.L926:
 	mov	r0, #0x83
 	bl	IsAnyPlayerInTradingState
 	cmp	r0, #0x1
-	bne	.L930	@cond_branch
+	bne	.L928	@cond_branch
 	mov	r0, #0x81
 	strb	r0, [r5]
 	ldrb	r0, [r6, #0x1]
 	cmp	r0, #0
-	bne	.LCB7167
-	b	.L926	@long jump
-.LCB7167:
-	ldr	r0, .L962
+	bne	.LCB7166
+	b	.L924	@long jump
+.LCB7166:
+	ldr	r0, .L960
 	bl	SetKeyInterceptCallback
 	bl	RunTerminateLinkScript
-	b	.L926
-.L963:
+	b	.L924
+.L961:
 	.align	2, 0
-.L962:
+.L960:
 	.word	KeyInterCB_DeferToEventScript
-.L930:
+.L928:
 	mov	r0, r8
 	sub	r0, r0, #0x12
 	cmp	r0, #0xa
-	bls	.LCB7186
-	b	.L927	@long jump
-.LCB7186:
+	bls	.LCB7185
+	b	.L925	@long jump
+.LCB7185:
 	lsl	r0, r0, #0x2
-	ldr	r1, .L964
+	ldr	r1, .L962
 	add	r0, r0, r1
 	ldr	r0, [r0]
 	mov	pc, r0
-.L965:
+.L963:
 	.align	2, 0
-.L964:
-	.word	.L948
+.L962:
+	.word	.L946
 	.align	2, 0
 	.align	2, 0
-.L948:
-	.word	.L936
-	.word	.L927
-	.word	.L927
-	.word	.L927
-	.word	.L927
-	.word	.L927
-	.word	.L933
-	.word	.L939
-	.word	.L927
-	.word	.L942
-	.word	.L945
-.L933:
+.L946:
+	.word	.L934
+	.word	.L925
+	.word	.L925
+	.word	.L925
+	.word	.L925
+	.word	.L925
+	.word	.L931
+	.word	.L937
+	.word	.L925
+	.word	.L940
+	.word	.L943
+.L931:
 	add	r0, r6, #0
 	bl	sub_8087340_2
 	cmp	r0, #0
-	beq	.L927	@cond_branch
+	beq	.L925	@cond_branch
+	ldr	r0, .L964
+	add	r0, r7, r0
+	mov	r1, #0x81
+	strb	r1, [r0]
+	ldrb	r0, [r6, #0x1]
+	cmp	r0, #0
+	beq	.L925	@cond_branch
+	ldr	r0, .L964+0x4
+	bl	SetKeyInterceptCallback
+	bl	InitLinkRoomStartMenuScript
+	b	.L925
+.L965:
+	.align	2, 0
+.L964:
+	.word	sPlayerTradingStates
+	.word	KeyInterCB_DeferToEventScript
+.L934:
+	add	r0, r6, #0
+	bl	PlayerIsAtSouthExit
+	cmp	r0, #0x1
+	bne	.L925	@cond_branch
 	ldr	r0, .L966
 	add	r0, r7, r0
 	mov	r1, #0x81
 	strb	r1, [r0]
 	ldrb	r0, [r6, #0x1]
 	cmp	r0, #0
-	beq	.L927	@cond_branch
+	beq	.L925	@cond_branch
 	ldr	r0, .L966+0x4
 	bl	SetKeyInterceptCallback
-	bl	InitLinkRoomStartMenuScript
-	b	.L927
+	bl	CreateConfirmLeaveTradeRoomPrompt
+	b	.L925
 .L967:
 	.align	2, 0
 .L966:
 	.word	sPlayerTradingStates
 	.word	KeyInterCB_DeferToEventScript
-.L936:
+.L937:
 	add	r0, r6, #0
-	bl	PlayerIsAtSouthExit
-	cmp	r0, #0x1
-	bne	.L927	@cond_branch
+	bl	TryInteractWithPlayer
+	add	r4, r0, #0
+	cmp	r4, #0
+	beq	.L925	@cond_branch
 	ldr	r0, .L968
 	add	r0, r7, r0
 	mov	r1, #0x81
 	strb	r1, [r0]
 	ldrb	r0, [r6, #0x1]
 	cmp	r0, #0
-	beq	.L927	@cond_branch
+	beq	.L925	@cond_branch
 	ldr	r0, .L968+0x4
 	bl	SetKeyInterceptCallback
-	bl	CreateConfirmLeaveTradeRoomPrompt
-	b	.L927
+	add	r0, r4, #0
+	bl	InitMenuBasedScript
+	b	.L925
 .L969:
 	.align	2, 0
 .L968:
 	.word	sPlayerTradingStates
 	.word	KeyInterCB_DeferToEventScript
-.L939:
+.L940:
 	add	r0, r6, #0
-	bl	TryInteractWithPlayer
-	add	r4, r0, #0
-	cmp	r4, #0
-	beq	.L927	@cond_branch
+	bl	sub_8087340
+	cmp	r0, #0
+	beq	.L925	@cond_branch
 	ldr	r0, .L970
 	add	r0, r7, r0
 	mov	r1, #0x81
 	strb	r1, [r0]
 	ldrb	r0, [r6, #0x1]
 	cmp	r0, #0
-	beq	.L927	@cond_branch
+	beq	.L925	@cond_branch
 	ldr	r0, .L970+0x4
 	bl	SetKeyInterceptCallback
-	add	r0, r4, #0
-	bl	InitMenuBasedScript
-	b	.L927
+	bl	sub_8087510
+	b	.L925
 .L971:
 	.align	2, 0
 .L970:
 	.word	sPlayerTradingStates
-	.word	KeyInterCB_DeferToEventScript
-.L942:
+	.word	KeyInterCB_DeferToRecvQueue
+.L943:
 	add	r0, r6, #0
 	bl	sub_8087340
 	cmp	r0, #0
-	beq	.L927	@cond_branch
+	beq	.L925	@cond_branch
 	ldr	r0, .L972
 	add	r0, r7, r0
 	mov	r1, #0x81
 	strb	r1, [r0]
 	ldrb	r0, [r6, #0x1]
 	cmp	r0, #0
-	beq	.L927	@cond_branch
+	beq	.L925	@cond_branch
 	ldr	r0, .L972+0x4
 	bl	SetKeyInterceptCallback
 	bl	sub_8087510
-	b	.L927
+.L925:
+	mov	r0, r8
+	cmp	r0, #0x17
+	beq	.L949	@cond_branch
+	cmp	r0, #0x17
+	bgt	.L957	@cond_branch
+	cmp	r0, #0x16
+	beq	.L950	@cond_branch
+	b	.L924
 .L973:
 	.align	2, 0
 .L972:
 	.word	sPlayerTradingStates
-	.word	KeyInterCB_DeferToRecvQueue
-.L945:
-	add	r0, r6, #0
-	bl	sub_8087340
-	cmp	r0, #0
-	beq	.L927	@cond_branch
+	.word	KeyInterCB_DeferToSendQueue
+.L957:
+	mov	r1, r8
+	cmp	r1, #0x1a
+	beq	.L951	@cond_branch
+	cmp	r1, #0x1d
+	beq	.L953	@cond_branch
+	b	.L924
+.L949:
 	ldr	r0, .L974
 	add	r0, r7, r0
-	mov	r1, #0x81
+	mov	r1, #0x83
 	strb	r1, [r0]
-	ldrb	r0, [r6, #0x1]
-	cmp	r0, #0
-	beq	.L927	@cond_branch
-	ldr	r0, .L974+0x4
-	bl	SetKeyInterceptCallback
-	bl	sub_8087510
-.L927:
-	mov	r0, r8
-	cmp	r0, #0x17
-	beq	.L951	@cond_branch
-	cmp	r0, #0x17
-	bgt	.L959	@cond_branch
-	cmp	r0, #0x16
-	beq	.L952	@cond_branch
-	b	.L926
+	b	.L924
 .L975:
 	.align	2, 0
 .L974:
 	.word	sPlayerTradingStates
-	.word	KeyInterCB_DeferToSendQueue
-.L959:
-	mov	r1, r8
-	cmp	r1, #0x1a
-	beq	.L953	@cond_branch
-	cmp	r1, #0x1d
-	beq	.L955	@cond_branch
-	b	.L926
-.L951:
+.L950:
 	ldr	r0, .L976
 	add	r0, r7, r0
-	mov	r1, #0x83
+	mov	r1, #0x82
 	strb	r1, [r0]
-	b	.L926
+	b	.L924
 .L977:
 	.align	2, 0
 .L976:
 	.word	sPlayerTradingStates
-.L952:
+.L951:
 	ldr	r0, .L978
-	add	r0, r7, r0
-	mov	r1, #0x82
-	strb	r1, [r0]
-	b	.L926
-.L979:
-	.align	2, 0
-.L978:
-	.word	sPlayerTradingStates
-.L953:
-	ldr	r0, .L980
 	add	r0, r7, r0
 	mov	r1, #0x80
 	strb	r1, [r0]
 	ldrb	r0, [r6, #0x1]
 	cmp	r0, #0
-	beq	.L926	@cond_branch
-	ldr	r0, .L980+0x4
+	beq	.L924	@cond_branch
+	ldr	r0, .L978+0x4
 	bl	SetKeyInterceptCallback
-	b	.L926
-.L981:
+	b	.L924
+.L979:
 	.align	2, 0
-.L980:
+.L978:
 	.word	sPlayerTradingStates
 	.word	KeyInterCB_SelfIdle
-.L955:
-	ldr	r0, .L982
+.L953:
+	ldr	r0, .L980
 	add	r1, r7, r0
 	ldrb	r0, [r1]
 	cmp	r0, #0x82
-	bne	.L926	@cond_branch
+	bne	.L924	@cond_branch
 	mov	r0, #0x81
 	strb	r0, [r1]
-.L926:
+.L924:
 	pop	{r3, r4}
 	mov	r8, r3
 	mov	r9, r4
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L983:
+.L981:
 	.align	2, 0
-.L982:
+.L980:
 	.word	sPlayerTradingStates
 .Lfe157:
 	.size	 HandleLinkPlayerKeyInput,.Lfe157-HandleLinkPlayerKeyInput
@@ -6182,7 +6187,7 @@ UpdateAllLinkPlayers:
 	add	r5, sp, #0x10
 	mov	r9, r5
 	add	r7, r0, #0
-.L988:
+.L986:
 	ldrb	r4, [r7]
 	mov	r0, #0x0
 	strh	r0, [r5]
@@ -6195,16 +6200,16 @@ UpdateAllLinkPlayers:
 	mov	r2, sp
 	add	r3, r5, #0
 	bl	HandleLinkPlayerKeyInput
-	ldr	r0, .L991
+	ldr	r0, .L989
 	add	r0, r6, r0
 	ldrb	r0, [r0]
 	cmp	r0, #0x80
-	bne	.L989	@cond_branch
+	bne	.L987	@cond_branch
 	add	r0, r4, #0
 	bl	GetDirectionForDpadKey
 	mov	r1, r9
 	strh	r0, [r1]
-.L989:
+.L987:
 	lsl	r0, r6, #0x18
 	lsr	r0, r0, #0x18
 	ldrb	r1, [r5]
@@ -6212,7 +6217,7 @@ UpdateAllLinkPlayers:
 	add	r7, r7, #0x2
 	add	r6, r6, #0x1
 	cmp	r6, #0x3
-	ble	.L988	@cond_branch
+	ble	.L986	@cond_branch
 	add	sp, sp, #0x14
 	pop	{r3, r4}
 	mov	r8, r3
@@ -6220,9 +6225,9 @@ UpdateAllLinkPlayers:
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L992:
+.L990:
 	.align	2, 0
-.L991:
+.L989:
 	.word	sPlayerTradingStates
 .Lfe158:
 	.size	 UpdateAllLinkPlayers,.Lfe158-UpdateAllLinkPlayers
@@ -6233,56 +6238,56 @@ UpdateHeldKeyCode:
 	push	{r4, lr}
 	lsl	r0, r0, #0x10
 	lsr	r4, r0, #0x10
-	ldr	r1, .L1007
+	ldr	r1, .L1005
 	add	r0, r0, r1
 	lsr	r0, r0, #0x10
 	cmp	r0, #0xc
-	bhi	.L994	@cond_branch
-	ldr	r0, .L1007+0x4
+	bhi	.L992	@cond_branch
+	ldr	r0, .L1005+0x4
 	strh	r4, [r0]
-	b	.L995
-.L1008:
+	b	.L993
+.L1006:
 	.align	2, 0
-.L1007:
+.L1005:
 	.word	-0x110000
 	.word	gHeldKeyCodeToSend
-.L994:
-	ldr	r1, .L1009
+.L992:
+	ldr	r1, .L1007
 	mov	r0, #0x11
 	strh	r0, [r1]
-.L995:
-	ldr	r0, .L1009+0x4
+.L993:
+	ldr	r0, .L1007+0x4
 	ldrb	r0, [r0]
 	cmp	r0, #0
-	beq	.L996	@cond_branch
+	beq	.L994	@cond_branch
 	bl	GetLinkSendQueueLength
 	cmp	r0, #0x1
-	bls	.L996	@cond_branch
+	bls	.L994	@cond_branch
 	bl	IsUpdateLinkStateCBActive
 	cmp	r0, #0x1
-	bne	.L996	@cond_branch
+	bne	.L994	@cond_branch
 	bl	IsSendingKeysToLink
 	cmp	r0, #0x1
-	bne	.L996	@cond_branch
+	bne	.L994	@cond_branch
 	cmp	r4, #0x11
-	blt	.L996	@cond_branch
+	blt	.L994	@cond_branch
 	cmp	r4, #0x15
-	ble	.L1004	@cond_branch
+	ble	.L1002	@cond_branch
 	cmp	r4, #0x19
-	bgt	.L996	@cond_branch
+	bgt	.L994	@cond_branch
 	cmp	r4, #0x18
-	blt	.L996	@cond_branch
-.L1004:
-	ldr	r1, .L1009
+	blt	.L994	@cond_branch
+.L1002:
+	ldr	r1, .L1007
 	mov	r0, #0x0
 	strh	r0, [r1]
-.L996:
+.L994:
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L1010:
+.L1008:
 	.align	2, 0
-.L1009:
+.L1007:
 	.word	gHeldKeyCodeToSend
 	.word	gWirelessCommType
 .Lfe159:
@@ -6292,57 +6297,57 @@ UpdateHeldKeyCode:
 	.thumb_func
 KeyInterCB_ReadButtons:
 	push	{lr}
-	ldr	r2, .L1019
+	ldr	r2, .L1017
 	ldrh	r1, [r2, #0x2c]
 	mov	r0, #0x40
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L1012	@cond_branch
+	beq	.L1010	@cond_branch
 	mov	r0, #0x13
-	b	.L1018
-.L1020:
+	b	.L1016
+.L1018:
 	.align	2, 0
-.L1019:
+.L1017:
 	.word	gMain
-.L1012:
+.L1010:
 	mov	r0, #0x80
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L1013	@cond_branch
+	beq	.L1011	@cond_branch
 	mov	r0, #0x12
-	b	.L1018
-.L1013:
+	b	.L1016
+.L1011:
 	mov	r0, #0x20
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L1014	@cond_branch
+	beq	.L1012	@cond_branch
 	mov	r0, #0x14
-	b	.L1018
-.L1014:
+	b	.L1016
+.L1012:
 	mov	r0, #0x10
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L1015	@cond_branch
+	beq	.L1013	@cond_branch
 	mov	r0, #0x15
-	b	.L1018
-.L1015:
+	b	.L1016
+.L1013:
 	ldrh	r1, [r2, #0x2e]
 	mov	r0, #0x8
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L1016	@cond_branch
+	beq	.L1014	@cond_branch
 	mov	r0, #0x18
-	b	.L1018
-.L1016:
+	b	.L1016
+.L1014:
 	mov	r0, #0x1
 	and	r0, r0, r1
 	cmp	r0, #0
-	bne	.L1017	@cond_branch
+	bne	.L1015	@cond_branch
 	mov	r0, #0x11
-	b	.L1018
-.L1017:
+	b	.L1016
+.L1015:
 	mov	r0, #0x19
-.L1018:
+.L1016:
 	pop	{r1}
 	bx	r1
 .Lfe160:
@@ -6356,31 +6361,31 @@ GetDirectionForDpadKey:
 	lsr	r0, r0, #0x10
 	add	r1, r0, #0
 	cmp	r0, #0x13
-	beq	.L1025	@cond_branch
+	beq	.L1023	@cond_branch
 	cmp	r0, #0x13
-	bgt	.L1029	@cond_branch
+	bgt	.L1027	@cond_branch
 	cmp	r0, #0x12
-	beq	.L1026	@cond_branch
-	b	.L1027
-.L1029:
-	cmp	r1, #0x14
 	beq	.L1024	@cond_branch
-	cmp	r1, #0x15
-	bne	.L1027	@cond_branch
-	mov	r0, #0x4
-	b	.L1030
-.L1024:
-	mov	r0, #0x3
-	b	.L1030
-.L1025:
-	mov	r0, #0x1
-	b	.L1030
-.L1026:
-	mov	r0, #0x2
-	b	.L1030
+	b	.L1025
 .L1027:
+	cmp	r1, #0x14
+	beq	.L1022	@cond_branch
+	cmp	r1, #0x15
+	bne	.L1025	@cond_branch
+	mov	r0, #0x4
+	b	.L1028
+.L1022:
+	mov	r0, #0x3
+	b	.L1028
+.L1023:
+	mov	r0, #0x1
+	b	.L1028
+.L1024:
+	mov	r0, #0x2
+	b	.L1028
+.L1025:
 	mov	r0, #0x0
-.L1030:
+.L1028:
 	pop	{r1}
 	bx	r1
 .Lfe161:
@@ -6392,11 +6397,11 @@ ResetPlayerHeldKeys:
 	push	{lr}
 	mov	r2, #0x11
 	add	r1, r0, #0x6
-.L1035:
+.L1033:
 	strh	r2, [r1]
 	sub	r1, r1, #0x2
 	cmp	r1, r0
-	bge	.L1035	@cond_branch
+	bge	.L1033	@cond_branch
 	pop	{r0}
 	bx	r0
 .Lfe162:
@@ -6411,27 +6416,27 @@ KeyInterCB_SelfIdle:
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	cmp	r0, #0x1
-	bne	.L1038	@cond_branch
+	bne	.L1036	@cond_branch
 	mov	r0, #0x11
-	b	.L1041
-.L1038:
+	b	.L1039
+.L1036:
 	bl	GetLinkRecvQueueLength
 	cmp	r0, #0x4
-	bls	.L1039	@cond_branch
+	bls	.L1037	@cond_branch
 	mov	r0, #0x1b
-	b	.L1041
-.L1039:
+	b	.L1039
+.L1037:
 	bl	GetLinkSendQueueLength
 	cmp	r0, #0x4
-	bls	.L1040	@cond_branch
+	bls	.L1038	@cond_branch
 	mov	r0, #0x1c
-	b	.L1041
-.L1040:
+	b	.L1039
+.L1038:
 	add	r0, r4, #0
 	bl	KeyInterCB_ReadButtons
 	lsl	r0, r0, #0x10
 	lsr	r0, r0, #0x10
-.L1041:
+.L1039:
 	pop	{r4}
 	pop	{r1}
 	bx	r1
@@ -6458,18 +6463,18 @@ KeyInterCB_DeferToEventScript:
 	lsr	r0, r0, #0x18
 	mov	r4, #0x11
 	cmp	r0, #0x1
-	beq	.L1045	@cond_branch
+	beq	.L1043	@cond_branch
 	mov	r4, #0x1a
-	ldr	r0, .L1046
+	ldr	r0, .L1044
 	bl	SetKeyInterceptCallback
-.L1045:
+.L1043:
 	add	r0, r4, #0
 	pop	{r4}
 	pop	{r1}
 	bx	r1
-.L1047:
+.L1045:
 	.align	2, 0
-.L1046:
+.L1044:
 	.word	sub_80870EC
 .Lfe165:
 	.size	 KeyInterCB_DeferToEventScript,.Lfe165-KeyInterCB_DeferToEventScript
@@ -6481,19 +6486,19 @@ KeyInterCB_DeferToRecvQueue:
 	bl	GetLinkRecvQueueLength
 	mov	r4, #0x11
 	cmp	r0, #0x2
-	bhi	.L1050	@cond_branch
+	bhi	.L1048	@cond_branch
 	mov	r4, #0x1a
 	bl	ScriptContext2_Disable
-	ldr	r0, .L1051
+	ldr	r0, .L1049
 	bl	SetKeyInterceptCallback
-.L1050:
+.L1048:
 	add	r0, r4, #0
 	pop	{r4}
 	pop	{r1}
 	bx	r1
-.L1052:
+.L1050:
 	.align	2, 0
-.L1051:
+.L1049:
 	.word	sub_80870EC
 .Lfe166:
 	.size	 KeyInterCB_DeferToRecvQueue,.Lfe166-KeyInterCB_DeferToRecvQueue
@@ -6505,19 +6510,19 @@ KeyInterCB_DeferToSendQueue:
 	bl	GetLinkSendQueueLength
 	mov	r4, #0x11
 	cmp	r0, #0x2
-	bhi	.L1055	@cond_branch
+	bhi	.L1053	@cond_branch
 	mov	r4, #0x1a
 	bl	ScriptContext2_Disable
-	ldr	r0, .L1056
+	ldr	r0, .L1054
 	bl	SetKeyInterceptCallback
-.L1055:
+.L1053:
 	add	r0, r4, #0
 	pop	{r4}
 	pop	{r1}
 	bx	r1
-.L1057:
+.L1055:
 	.align	2, 0
-.L1056:
+.L1054:
 	.word	sub_80870EC
 .Lfe167:
 	.size	 KeyInterCB_DeferToSendQueue,.Lfe167-KeyInterCB_DeferToSendQueue
@@ -6537,32 +6542,32 @@ KeyInterCB_DoNothingAndKeepAlive:
 	.thumb_func
 sub_8087170:
 	push	{lr}
-	ldr	r1, .L1066
+	ldr	r1, .L1064
 	add	r0, r0, r1
 	ldrb	r0, [r0]
 	cmp	r0, #0x82
-	bne	.L1060	@cond_branch
-	ldr	r0, .L1066+0x4
+	bne	.L1058	@cond_branch
+	ldr	r0, .L1064+0x4
 	ldrh	r1, [r0, #0x2e]
 	mov	r0, #0x2
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L1065	@cond_branch
-	ldr	r0, .L1066+0x8
+	beq	.L1063	@cond_branch
+	ldr	r0, .L1064+0x8
 	bl	SetKeyInterceptCallback
 	mov	r0, #0x1d
-	b	.L1064
-.L1067:
+	b	.L1062
+.L1065:
 	.align	2, 0
-.L1066:
+.L1064:
 	.word	sPlayerTradingStates
 	.word	gMain
 	.word	KeyInterCB_DoNothingAndKeepAlive
-.L1060:
+.L1058:
 	bl	CheckRfuKeepAliveTimer
-.L1065:
+.L1063:
 	mov	r0, #0x11
-.L1064:
+.L1062:
 	pop	{r1}
 	bx	r1
 .Lfe169:
@@ -6572,14 +6577,14 @@ sub_8087170:
 	.thumb_func
 sub_80871AC:
 	push	{lr}
-	ldr	r0, .L1069
+	ldr	r0, .L1067
 	bl	SetKeyInterceptCallback
 	mov	r0, #0x16
 	pop	{r1}
 	bx	r1
-.L1070:
+.L1068:
 	.align	2, 0
-.L1069:
+.L1067:
 	.word	sub_8087170
 .Lfe170:
 	.size	 sub_80871AC,.Lfe170-sub_80871AC
@@ -6596,28 +6601,28 @@ KeyInterCB_SendNothing:
 	.thumb_func
 KeyInterCB_WaitForPlayersToExit:
 	push	{lr}
-	ldr	r1, .L1075
+	ldr	r1, .L1073
 	add	r0, r0, r1
 	ldrb	r0, [r0]
 	cmp	r0, #0x83
-	beq	.L1073	@cond_branch
+	beq	.L1071	@cond_branch
 	bl	CheckRfuKeepAliveTimer
-.L1073:
+.L1071:
 	mov	r0, #0x83
 	bl	AreAllPlayersInTradingState
 	cmp	r0, #0x1
-	bne	.L1074	@cond_branch
-	ldr	r0, .L1075+0x4
+	bne	.L1072	@cond_branch
+	ldr	r0, .L1073+0x4
 	bl	ScriptContext1_SetupScript
-	ldr	r0, .L1075+0x8
+	ldr	r0, .L1073+0x8
 	bl	SetKeyInterceptCallback
-.L1074:
+.L1072:
 	mov	r0, #0x11
 	pop	{r1}
 	bx	r1
-.L1076:
+.L1074:
 	.align	2, 0
-.L1075:
+.L1073:
 	.word	sPlayerTradingStates
 	.word	EventScript_DoLinkRoomExit
 	.word	KeyInterCB_SendNothing
@@ -6628,14 +6633,14 @@ KeyInterCB_WaitForPlayersToExit:
 	.thumb_func
 KeyInterCB_SendExitRoomKey:
 	push	{lr}
-	ldr	r0, .L1078
+	ldr	r0, .L1076
 	bl	SetKeyInterceptCallback
 	mov	r0, #0x17
 	pop	{r1}
 	bx	r1
-.L1079:
+.L1077:
 	.align	2, 0
-.L1078:
+.L1076:
 	.word	KeyInterCB_WaitForPlayersToExit
 .Lfe173:
 	.size	 KeyInterCB_SendExitRoomKey,.Lfe173-KeyInterCB_SendExitRoomKey
@@ -6656,54 +6661,54 @@ sub_8087214:
 	mov	r0, #0x83
 	bl	IsAnyPlayerInTradingState
 	cmp	r0, #0x1
-	beq	.L1087	@cond_branch
-	ldr	r0, .L1089
+	beq	.L1085	@cond_branch
+	ldr	r0, .L1087
 	ldr	r2, [r0]
-	ldr	r1, .L1089+0x4
+	ldr	r1, .L1087+0x4
 	add	r3, r0, #0
 	cmp	r2, r1
-	bne	.L1083	@cond_branch
-	ldr	r1, .L1089+0x8
-	ldr	r0, .L1089+0xc
+	bne	.L1081	@cond_branch
+	ldr	r1, .L1087+0x8
+	ldr	r0, .L1087+0xc
 	ldrb	r0, [r0]
 	add	r0, r0, r1
 	ldrb	r0, [r0]
 	cmp	r0, #0x82
-	bne	.L1088	@cond_branch
-.L1083:
+	bne	.L1086	@cond_branch
+.L1081:
 	ldr	r1, [r3]
-	ldr	r0, .L1089+0x10
+	ldr	r0, .L1087+0x10
 	cmp	r1, r0
-	bne	.L1084	@cond_branch
-	ldr	r1, .L1089+0x8
-	ldr	r0, .L1089+0xc
+	bne	.L1082	@cond_branch
+	ldr	r1, .L1087+0x8
+	ldr	r0, .L1087+0xc
 	ldrb	r0, [r0]
 	add	r0, r0, r1
 	ldrb	r0, [r0]
 	cmp	r0, #0x81
-	bne	.L1084	@cond_branch
-.L1087:
+	bne	.L1082	@cond_branch
+.L1085:
 	mov	r0, #0x2
-	b	.L1086
-.L1090:
+	b	.L1084
+.L1088:
 	.align	2, 0
-.L1089:
+.L1087:
 	.word	sPlayerKeyInterceptCallback
 	.word	sub_8087170
 	.word	sPlayerTradingStates
 	.word	gLocalLinkPlayerId
 	.word	KeyInterCB_DoNothingAndKeepAlive
-.L1084:
+.L1082:
 	mov	r0, #0x82
 	bl	AreAllPlayersInTradingState
 	cmp	r0, #0
-	bne	.L1085	@cond_branch
-.L1088:
-	mov	r0, #0x0
-	b	.L1086
-.L1085:
-	mov	r0, #0x1
+	bne	.L1083	@cond_branch
 .L1086:
+	mov	r0, #0x0
+	b	.L1084
+.L1083:
+	mov	r0, #0x1
+.L1084:
 	pop	{r1}
 	bx	r1
 .Lfe175:
@@ -6726,14 +6731,14 @@ sub_808727C:
 	.thumb_func
 sub_8087288:
 	push	{lr}
-	ldr	r0, .L1093
+	ldr	r0, .L1091
 	bl	SetKeyInterceptCallback
 	mov	r0, #0x0
 	pop	{r1}
 	bx	r1
-.L1094:
+.L1092:
 	.align	2, 0
-.L1093:
+.L1091:
 	.word	sub_80871AC
 .Lfe177:
 	.size	 sub_8087288,.Lfe177-sub_8087288
@@ -6743,14 +6748,14 @@ sub_8087288:
 	.thumb_func
 sub_808729C:
 	push	{lr}
-	ldr	r0, .L1096
+	ldr	r0, .L1094
 	bl	SetKeyInterceptCallback
 	mov	r0, #0x0
 	pop	{r1}
 	bx	r1
-.L1097:
+.L1095:
 	.align	2, 0
-.L1096:
+.L1094:
 	.word	KeyInterCB_DeferToEventScript
 .Lfe178:
 	.size	 sub_808729C,.Lfe178-sub_808729C
@@ -6760,14 +6765,14 @@ sub_808729C:
 	.thumb_func
 QueueExitLinkRoomKey:
 	push	{lr}
-	ldr	r0, .L1099
+	ldr	r0, .L1097
 	bl	SetKeyInterceptCallback
 	mov	r0, #0x0
 	pop	{r1}
 	bx	r1
-.L1100:
+.L1098:
 	.align	2, 0
-.L1099:
+.L1097:
 	.word	KeyInterCB_SendExitRoomKey
 .Lfe179:
 	.size	 QueueExitLinkRoomKey,.Lfe179-QueueExitLinkRoomKey
@@ -6777,14 +6782,14 @@ QueueExitLinkRoomKey:
 	.thumb_func
 sub_80872C4:
 	push	{lr}
-	ldr	r0, .L1102
+	ldr	r0, .L1100
 	bl	SetKeyInterceptCallback
 	mov	r0, #0x0
 	pop	{r1}
 	bx	r1
-.L1103:
+.L1101:
 	.align	2, 0
-.L1102:
+.L1100:
 	.word	KeyInterCB_SendNothing_2
 .Lfe180:
 	.size	 sub_80872C4,.Lfe180-sub_80872C4
@@ -6799,11 +6804,11 @@ LoadTradeRoomPlayer:
 	strb	r4, [r6]
 	mov	r0, #0x0
 	cmp	r4, r1
-	bne	.L1105	@cond_branch
+	bne	.L1103	@cond_branch
 	mov	r0, #0x1
-.L1105:
+.L1103:
 	strb	r0, [r6, #0x1]
-	ldr	r1, .L1106
+	ldr	r1, .L1104
 	lsl	r0, r4, #0x2
 	add	r0, r0, r1
 	ldrb	r0, [r0, #0x3]
@@ -6838,9 +6843,9 @@ LoadTradeRoomPlayer:
 	pop	{r4, r5, r6}
 	pop	{r0}
 	bx	r0
-.L1107:
+.L1105:
 	.align	2, 0
-.L1106:
+.L1104:
 	.word	gLinkPlayerObjectEvents
 .Lfe181:
 	.size	 LoadTradeRoomPlayer,.Lfe181-LoadTradeRoomPlayer
@@ -6851,15 +6856,15 @@ sub_8087340:
 	push	{lr}
 	ldrb	r0, [r0, #0x2]
 	cmp	r0, #0x2
-	beq	.L1110	@cond_branch
+	beq	.L1108	@cond_branch
 	cmp	r0, #0
-	bne	.L1109	@cond_branch
-.L1110:
+	bne	.L1107	@cond_branch
+.L1108:
 	mov	r0, #0x1
-	b	.L1112
-.L1109:
+	b	.L1110
+.L1107:
 	mov	r0, #0x0
-.L1112:
+.L1110:
 	pop	{r1}
 	bx	r1
 .Lfe182:
@@ -6871,15 +6876,15 @@ sub_8087340_2:
 	push	{lr}
 	ldrb	r0, [r0, #0x2]
 	cmp	r0, #0x2
-	beq	.L1115	@cond_branch
+	beq	.L1113	@cond_branch
 	cmp	r0, #0
-	bne	.L1114	@cond_branch
-.L1115:
+	bne	.L1112	@cond_branch
+.L1113:
 	mov	r0, #0x1
-	b	.L1117
-.L1114:
+	b	.L1115
+.L1112:
 	mov	r0, #0x0
-.L1117:
+.L1115:
 	pop	{r1}
 	bx	r1
 .Lfe183:
@@ -6892,13 +6897,13 @@ TryGetTileEventScript:
 	add	r1, r0, #0
 	ldrb	r0, [r1, #0x2]
 	cmp	r0, #0x2
-	bne	.L1119	@cond_branch
+	bne	.L1117	@cond_branch
 	add	r0, r1, #0x4
 	bl	GetCoordEventScriptAtMapPosition
-	b	.L1120
-.L1119:
+	b	.L1118
+.L1117:
 	mov	r0, #0x0
-.L1120:
+.L1118:
 	pop	{r1}
 	bx	r1
 .Lfe184:
@@ -6911,23 +6916,23 @@ PlayerIsAtSouthExit:
 	add	r4, r0, #0
 	ldrb	r0, [r4, #0x2]
 	cmp	r0, #0x2
-	beq	.L1122	@cond_branch
+	beq	.L1120	@cond_branch
 	cmp	r0, #0
-	bne	.L1126	@cond_branch
-.L1122:
+	bne	.L1124	@cond_branch
+.L1120:
 	ldrb	r0, [r4, #0xc]
 	bl	MetatileBehavior_IsSouthArrowWarp
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.L1126	@cond_branch
+	beq	.L1124	@cond_branch
 	ldrb	r0, [r4, #0x3]
 	cmp	r0, #0x1
-	bne	.L1126	@cond_branch
+	bne	.L1124	@cond_branch
 	mov	r0, #0x1
-	b	.L1128
-.L1126:
+	b	.L1126
+.L1124:
 	mov	r0, #0x0
-.L1128:
+.L1126:
 	pop	{r4}
 	pop	{r1}
 	bx	r1
@@ -6942,17 +6947,17 @@ TryInteractWithPlayer:
 	add	r4, r0, #0
 	ldrb	r0, [r4, #0x2]
 	cmp	r0, #0
-	beq	.L1130	@cond_branch
+	beq	.L1128	@cond_branch
 	cmp	r0, #0x2
-	beq	.L1130	@cond_branch
+	beq	.L1128	@cond_branch
 	mov	r0, #0x0
-	b	.L1138
-.L1130:
+	b	.L1136
+.L1128:
 	ldr	r0, [r4, #0x4]		@ created by thumb_load_double_from_address
 	ldr	r1, [r4, #0x8]		@ created by thumb_load_double_from_address
 	str	r0, [sp]
 	str	r1, [sp, #0x4]
-	ldr	r3, .L1140
+	ldr	r3, .L1138
 	ldrb	r0, [r4, #0x3]
 	lsl	r0, r0, #0x3
 	add	r0, r0, r3
@@ -6962,7 +6967,7 @@ TryInteractWithPlayer:
 	add	r0, r0, r1
 	lsl	r0, r0, #0x10
 	lsr	r0, r0, #0x10
-	ldr	r1, .L1140+0x4
+	ldr	r1, .L1138+0x4
 	ldr	r2, [sp]
 	and	r2, r2, r1
 	orr	r2, r2, r0
@@ -6975,11 +6980,11 @@ TryInteractWithPlayer:
 	ldr	r0, [r0]
 	add	r0, r0, r1
 	lsl	r0, r0, #0x10
-	ldr	r1, .L1140+0x8
+	ldr	r1, .L1138+0x8
 	and	r1, r1, r2
 	orr	r1, r1, r0
 	str	r1, [sp]
-	ldr	r2, .L1140+0xc
+	ldr	r2, .L1138+0xc
 	ldr	r0, [sp, #0x4]
 	and	r0, r0, r2
 	str	r0, [sp, #0x4]
@@ -6992,51 +6997,51 @@ TryInteractWithPlayer:
 	lsr	r1, r0, #0x18
 	add	r2, r1, #0
 	cmp	r1, #0x4
-	beq	.L1131	@cond_branch
+	beq	.L1129	@cond_branch
 	ldrb	r0, [r4, #0x1]
 	cmp	r0, #0
-	beq	.L1139	@cond_branch
-	ldr	r0, .L1140+0x10
+	beq	.L1137	@cond_branch
+	ldr	r0, .L1138+0x10
 	add	r0, r1, r0
 	ldrb	r0, [r0]
 	cmp	r0, #0x80
-	beq	.L1134	@cond_branch
+	beq	.L1132	@cond_branch
+.L1137:
+	ldr	r0, .L1138+0x14
+	b	.L1136
 .L1139:
-	ldr	r0, .L1140+0x14
-	b	.L1138
-.L1141:
 	.align	2, 0
-.L1140:
+.L1138:
 	.word	gDirectionToVectors
 	.word	-0x10000
 	.word	0xffff
 	.word	-0x100
 	.word	sPlayerTradingStates
 	.word	CableClub_EventScript_TooBusyToNotice
-.L1134:
+.L1132:
 	add	r0, r2, #0
 	bl	GetLinkTrainerCardColor
 	cmp	r0, #0
-	bne	.L1136	@cond_branch
+	bne	.L1134	@cond_branch
+	ldr	r0, .L1140
+	b	.L1136
+.L1141:
+	.align	2, 0
+.L1140:
+	.word	CableClub_EventScript_ReadTrainerCard
+.L1134:
 	ldr	r0, .L1142
-	b	.L1138
+	b	.L1136
 .L1143:
 	.align	2, 0
 .L1142:
-	.word	CableClub_EventScript_ReadTrainerCard
-.L1136:
-	ldr	r0, .L1144
-	b	.L1138
-.L1145:
-	.align	2, 0
-.L1144:
 	.word	CableClub_EventScript_ReadTrainerCardColored
-.L1131:
+.L1129:
 	ldrb	r1, [r4, #0xc]
 	ldrb	r2, [r4, #0x3]
 	mov	r0, sp
 	bl	GetInteractedLinkPlayerScript
-.L1138:
+.L1136:
 	add	sp, sp, #0x8
 	pop	{r4}
 	pop	{r1}
@@ -7049,45 +7054,45 @@ TryInteractWithPlayer:
 GetDirectionForEventScript:
 	push	{lr}
 	add	r1, r0, #0
-	ldr	r0, .L1173
+	ldr	r0, .L1171
 	cmp	r1, r0
-	beq	.L1172	@cond_branch
-	ldr	r0, .L1173+0x4
+	beq	.L1170	@cond_branch
+	ldr	r0, .L1171+0x4
 	cmp	r1, r0
-	beq	.L1169	@cond_branch
-	ldr	r0, .L1173+0x8
+	beq	.L1167	@cond_branch
+	ldr	r0, .L1171+0x8
 	cmp	r1, r0
-	beq	.L1172	@cond_branch
-	ldr	r0, .L1173+0xc
+	beq	.L1170	@cond_branch
+	ldr	r0, .L1171+0xc
 	cmp	r1, r0
-	beq	.L1169	@cond_branch
-	ldr	r0, .L1173+0x10
+	beq	.L1167	@cond_branch
+	ldr	r0, .L1171+0x10
 	cmp	r1, r0
-	beq	.L1172	@cond_branch
-	ldr	r0, .L1173+0x14
+	beq	.L1170	@cond_branch
+	ldr	r0, .L1171+0x14
 	cmp	r1, r0
-	beq	.L1169	@cond_branch
-	ldr	r0, .L1173+0x18
+	beq	.L1167	@cond_branch
+	ldr	r0, .L1171+0x18
 	cmp	r1, r0
-	beq	.L1172	@cond_branch
-	ldr	r0, .L1173+0x1c
+	beq	.L1170	@cond_branch
+	ldr	r0, .L1171+0x1c
 	cmp	r1, r0
-	beq	.L1169	@cond_branch
-	ldr	r0, .L1173+0x20
+	beq	.L1167	@cond_branch
+	ldr	r0, .L1171+0x20
 	cmp	r1, r0
-	beq	.L1172	@cond_branch
-	ldr	r0, .L1173+0x24
+	beq	.L1170	@cond_branch
+	ldr	r0, .L1171+0x24
 	cmp	r1, r0
-	beq	.L1169	@cond_branch
-	ldr	r0, .L1173+0x28
+	beq	.L1167	@cond_branch
+	ldr	r0, .L1171+0x28
 	cmp	r1, r0
-	bne	.L1167	@cond_branch
-.L1172:
+	bne	.L1165	@cond_branch
+.L1170:
 	mov	r0, #0xa
-	b	.L1171
-.L1174:
+	b	.L1169
+.L1172:
 	.align	2, 0
-.L1173:
+.L1171:
 	.word	EventScript_BattleColosseum_4P_PlayerSpot0
 	.word	EventScript_BattleColosseum_4P_PlayerSpot1
 	.word	EventScript_BattleColosseum_4P_PlayerSpot2
@@ -7099,19 +7104,19 @@ GetDirectionForEventScript:
 	.word	EventScript_BattleColosseum_2P_PlayerSpot0
 	.word	EventScript_BattleColosseum_2P_PlayerSpot1
 	.word	EventScript_TradeCenter_Chair0
-.L1167:
-	ldr	r0, .L1175
+.L1165:
+	ldr	r0, .L1173
 	cmp	r1, r0
-	beq	.L1169	@cond_branch
+	beq	.L1167	@cond_branch
 	mov	r0, #0x0
-	b	.L1171
-.L1176:
+	b	.L1169
+.L1174:
 	.align	2, 0
-.L1175:
+.L1173:
 	.word	EventScript_TradeCenter_Chair1
-.L1169:
+.L1167:
 	mov	r0, #0x9
-.L1171:
+.L1169:
 	pop	{r1}
 	bx	r1
 .Lfe187:
@@ -7162,14 +7167,14 @@ CreateConfirmLeaveTradeRoomPrompt:
 	push	{lr}
 	mov	r0, #0x6
 	bl	PlaySE
-	ldr	r0, .L1181
+	ldr	r0, .L1179
 	bl	ScriptContext1_SetupScript
 	bl	ScriptContext2_Enable
 	pop	{r0}
 	bx	r0
-.L1182:
+.L1180:
 	.align	2, 0
-.L1181:
+.L1179:
 	.word	EventScript_ConfirmLeaveTradeRoom
 .Lfe191:
 	.size	 CreateConfirmLeaveTradeRoomPrompt,.Lfe191-CreateConfirmLeaveTradeRoomPrompt
@@ -7194,14 +7199,14 @@ InitMenuBasedScript:
 	.thumb_func
 RunTerminateLinkScript:
 	push	{lr}
-	ldr	r0, .L1185
+	ldr	r0, .L1183
 	bl	ScriptContext1_SetupScript
 	bl	ScriptContext2_Enable
 	pop	{r0}
 	bx	r0
-.L1186:
+.L1184:
 	.align	2, 0
-.L1185:
+.L1183:
 	.word	EventScript_TerminateLink
 .Lfe193:
 	.size	 RunTerminateLinkScript,.Lfe193-RunTerminateLinkScript
@@ -7213,32 +7218,32 @@ sub_8087598:
 	push	{lr}
 	bl	IsUpdateLinkStateCBActive
 	cmp	r0, #0
-	bne	.L1188	@cond_branch
+	bne	.L1186	@cond_branch
 	mov	r0, #0x0
-	b	.L1191
-.L1188:
+	b	.L1189
+.L1186:
 	bl	GetLinkRecvQueueLength
 	cmp	r0, #0x2
-	bls	.L1189	@cond_branch
-	ldr	r1, .L1193
+	bls	.L1187	@cond_branch
+	ldr	r1, .L1191
 	mov	r0, #0x1
-	b	.L1192
+	b	.L1190
+.L1192:
+	.align	2, 0
+.L1191:
+	.word	sUnknown_03000E18
+.L1187:
+	ldr	r1, .L1193
+	mov	r0, #0x0
+.L1190:
+	strb	r0, [r1]
+	ldrb	r0, [r1]
+.L1189:
+	pop	{r1}
+	bx	r1
 .L1194:
 	.align	2, 0
 .L1193:
-	.word	sUnknown_03000E18
-.L1189:
-	ldr	r1, .L1195
-	mov	r0, #0x0
-.L1192:
-	strb	r0, [r1]
-	ldrb	r0, [r1]
-.L1191:
-	pop	{r1}
-	bx	r1
-.L1196:
-	.align	2, 0
-.L1195:
 	.word	sUnknown_03000E18
 .Lfe194:
 	.size	 sub_8087598,.Lfe194-sub_8087598
@@ -7250,52 +7255,52 @@ sub_80875C8:
 	push	{lr}
 	bl	GetLinkRecvQueueLength
 	cmp	r0, #0x1
-	bls	.L1209	@cond_branch
+	bls	.L1207	@cond_branch
 	bl	IsUpdateLinkStateCBActive
 	cmp	r0, #0x1
-	bne	.L1209	@cond_branch
+	bne	.L1207	@cond_branch
 	bl	IsSendingKeysToLink
 	cmp	r0, #0x1
-	bne	.L1209	@cond_branch
-	ldr	r0, .L1213
+	bne	.L1207	@cond_branch
+	ldr	r0, .L1211
 	ldr	r1, [r0]
-	ldr	r0, .L1213+0x4
+	ldr	r0, .L1211+0x4
 	cmp	r1, r0
-	beq	.L1212	@cond_branch
-	ldr	r0, .L1213+0x8
+	beq	.L1210	@cond_branch
+	ldr	r0, .L1211+0x8
 	cmp	r1, r0
-	bne	.L1209	@cond_branch
-	ldr	r0, .L1213+0xc
+	bne	.L1207	@cond_branch
+	ldr	r0, .L1211+0xc
 	ldrb	r2, [r0]
 	mov	r1, #0x0
 	strb	r1, [r0]
 	cmp	r2, #0x1
-	beq	.L1212	@cond_branch
-	ldr	r2, .L1213+0x10
+	beq	.L1210	@cond_branch
+	ldr	r2, .L1211+0x10
 	ldrb	r1, [r2, #0x7]
 	mov	r0, #0x80
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L1209	@cond_branch
+	beq	.L1207	@cond_branch
 	ldrb	r1, [r2, #0xa]
 	mov	r0, #0x2
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L1209	@cond_branch
-.L1212:
+	beq	.L1207	@cond_branch
+.L1210:
 	mov	r0, #0x1
-	b	.L1211
-.L1214:
+	b	.L1209
+.L1212:
 	.align	2, 0
-.L1213:
+.L1211:
 	.word	sPlayerKeyInterceptCallback
 	.word	KeyInterCB_DeferToRecvQueue
 	.word	KeyInterCB_DeferToEventScript
 	.word	sUnknown_03000E18
 	.word	gPaletteFade
-.L1209:
+.L1207:
 	mov	r0, #0x0
-.L1211:
+.L1209:
 	pop	{r1}
 	bx	r1
 .Lfe195:
@@ -7308,29 +7313,29 @@ sub_8087634:
 	push	{lr}
 	bl	GetLinkSendQueueLength
 	cmp	r0, #0x1
-	bls	.L1225	@cond_branch
+	bls	.L1223	@cond_branch
 	bl	IsUpdateLinkStateCBActive
 	cmp	r0, #0x1
-	bne	.L1225	@cond_branch
+	bne	.L1223	@cond_branch
 	bl	IsSendingKeysToLink
 	cmp	r0, #0x1
-	bne	.L1225	@cond_branch
-	ldr	r0, .L1226
+	bne	.L1223	@cond_branch
+	ldr	r0, .L1224
 	ldr	r1, [r0]
-	ldr	r0, .L1226+0x4
+	ldr	r0, .L1224+0x4
 	cmp	r1, r0
-	beq	.L1222	@cond_branch
-.L1225:
+	beq	.L1220	@cond_branch
+.L1223:
 	mov	r0, #0x0
-	b	.L1224
-.L1227:
+	b	.L1222
+.L1225:
 	.align	2, 0
-.L1226:
+.L1224:
 	.word	sPlayerKeyInterceptCallback
 	.word	KeyInterCB_DeferToSendQueue
-.L1222:
+.L1220:
 	mov	r0, #0x1
-.L1224:
+.L1222:
 	pop	{r1}
 	bx	r1
 .Lfe196:
@@ -7341,22 +7346,22 @@ sub_8087634:
 	.thumb_func
 sub_808766C:
 	push	{lr}
-	ldr	r0, .L1234
+	ldr	r0, .L1232
 	ldrb	r0, [r0]
 	cmp	r0, #0
-	bne	.L1231	@cond_branch
+	bne	.L1229	@cond_branch
 	bl	IsSendingKeysToLink
 	cmp	r0, #0
-	beq	.L1231	@cond_branch
+	beq	.L1229	@cond_branch
 	mov	r0, #0x1
-	b	.L1233
-.L1235:
-	.align	2, 0
-.L1234:
-	.word	gWirelessCommType
-.L1231:
-	mov	r0, #0x0
+	b	.L1231
 .L1233:
+	.align	2, 0
+.L1232:
+	.word	gWirelessCommType
+.L1229:
+	mov	r0, #0x0
+.L1231:
 	pop	{r1}
 	bx	r1
 .Lfe197:
@@ -7366,32 +7371,32 @@ sub_808766C:
 	.thumb_func
 GetLinkSendQueueLength:
 	push	{lr}
-	ldr	r0, .L1241
+	ldr	r0, .L1239
 	ldrb	r0, [r0]
 	cmp	r0, #0
-	bne	.L1237	@cond_branch
-	ldr	r0, .L1241+0x4
-	ldr	r1, .L1241+0x8
+	bne	.L1235	@cond_branch
+	ldr	r0, .L1239+0x4
+	ldr	r1, .L1239+0x8
 	add	r0, r0, r1
 	ldrb	r0, [r0]
-	b	.L1240
-.L1242:
+	b	.L1238
+.L1240:
 	.align	2, 0
-.L1241:
+.L1239:
 	.word	gWirelessCommType
 	.word	gLink
 	.word	0x339
-.L1237:
-	ldr	r0, .L1243
-	ldr	r1, .L1243+0x4
+.L1235:
+	ldr	r0, .L1241
+	ldr	r1, .L1241+0x4
 	add	r0, r0, r1
 	ldrb	r0, [r0]
-.L1240:
+.L1238:
 	pop	{r1}
 	bx	r1
-.L1244:
+.L1242:
 	.align	2, 0
-.L1243:
+.L1241:
 	.word	Rfu
 	.word	0xc1a
 .Lfe198:
@@ -7411,15 +7416,15 @@ ZeroLinkPlayerObjectEvent:
 	.thumb_func
 ClearLinkPlayerObjectEvents:
 	push	{lr}
-	ldr	r0, .L1247
+	ldr	r0, .L1245
 	mov	r1, #0x0
 	mov	r2, #0x10
 	bl	memset
 	pop	{r0}
 	bx	r0
-.L1248:
+.L1246:
 	.align	2, 0
-.L1247:
+.L1245:
 	.word	gLinkPlayerObjectEvents
 .Lfe200:
 	.size	 ClearLinkPlayerObjectEvents,.Lfe200-ClearLinkPlayerObjectEvents
@@ -7466,12 +7471,12 @@ SpawnLinkPlayerObjectEvent:
 	lsl	r6, r6, #0x18
 	lsr	r6, r6, #0x18
 	lsl	r4, r7, #0x2
-	ldr	r0, .L1251
+	ldr	r0, .L1249
 	add	r4, r4, r0
 	lsl	r5, r6, #0x3
 	add	r5, r5, r6
 	lsl	r5, r5, #0x2
-	ldr	r0, .L1251+0x4
+	ldr	r0, .L1249+0x4
 	add	r5, r5, r0
 	add	r0, r4, #0
 	bl	ZeroLinkPlayerObjectEvent
@@ -7517,9 +7522,9 @@ SpawnLinkPlayerObjectEvent:
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L1252:
+.L1250:
 	.align	2, 0
-.L1251:
+.L1249:
 	.word	gLinkPlayerObjectEvents
 	.word	gObjectEvents
 .Lfe202:
@@ -7567,25 +7572,25 @@ sub_80877DC:
 	lsl	r0, r0, #0x18
 	lsl	r1, r1, #0x18
 	lsr	r2, r1, #0x18
-	ldr	r1, .L1256
+	ldr	r1, .L1254
 	lsr	r0, r0, #0x16
 	add	r1, r0, r1
 	ldrb	r0, [r1]
 	cmp	r0, #0
-	beq	.L1255	@cond_branch
+	beq	.L1253	@cond_branch
 	ldrb	r0, [r1, #0x2]
 	lsl	r1, r0, #0x3
 	add	r1, r1, r0
 	lsl	r1, r1, #0x2
-	ldr	r0, .L1256+0x4
+	ldr	r0, .L1254+0x4
 	add	r1, r1, r0
 	strb	r2, [r1, #0x19]
-.L1255:
+.L1253:
 	pop	{r0}
 	bx	r0
-.L1257:
+.L1255:
 	.align	2, 0
-.L1256:
+.L1254:
 	.word	gLinkPlayerObjectEvents
 	.word	gObjectEvents
 .Lfe204:
@@ -7597,25 +7602,25 @@ sub_808780C:
 	push	{r4, r5, lr}
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x16
-	ldr	r1, .L1260
+	ldr	r1, .L1258
 	add	r5, r0, r1
 	ldrb	r1, [r5, #0x2]
 	lsl	r0, r1, #0x3
 	add	r0, r0, r1
 	lsl	r0, r0, #0x2
-	ldr	r1, .L1260+0x4
+	ldr	r1, .L1258+0x4
 	add	r4, r0, r1
 	ldrb	r0, [r4, #0x4]
 	cmp	r0, #0x40
-	beq	.L1259	@cond_branch
+	beq	.L1257	@cond_branch
 	add	r1, r0, #0
 	lsl	r0, r1, #0x4
 	add	r0, r0, r1
 	lsl	r0, r0, #0x2
-	ldr	r1, .L1260+0x8
+	ldr	r1, .L1258+0x8
 	add	r0, r0, r1
 	bl	DestroySprite
-.L1259:
+.L1257:
 	mov	r0, #0x0
 	strb	r0, [r5]
 	ldrb	r1, [r4]
@@ -7625,9 +7630,9 @@ sub_808780C:
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.L1261:
+.L1259:
 	.align	2, 0
-.L1260:
+.L1258:
 	.word	gLinkPlayerObjectEvents
 	.word	gObjectEvents
 	.word	gSprites
@@ -7638,20 +7643,20 @@ sub_808780C:
 	.thumb_func
 GetSpriteForLinkedPlayer:
 	lsl	r0, r0, #0x18
-	ldr	r1, .L1263
+	ldr	r1, .L1261
 	lsr	r0, r0, #0x16
 	add	r0, r0, r1
 	ldrb	r1, [r0, #0x2]
 	lsl	r0, r1, #0x3
 	add	r0, r0, r1
 	lsl	r0, r0, #0x2
-	ldr	r1, .L1263+0x4
+	ldr	r1, .L1261+0x4
 	add	r0, r0, r1
 	ldrb	r0, [r0, #0x4]
 	bx	lr
-.L1264:
+.L1262:
 	.align	2, 0
-.L1263:
+.L1261:
 	.word	gLinkPlayerObjectEvents
 	.word	gObjectEvents
 .Lfe206:
@@ -7661,23 +7666,23 @@ GetSpriteForLinkedPlayer:
 	.thumb_func
 GetLinkPlayerCoords:
 	lsl	r0, r0, #0x18
-	ldr	r3, .L1266
+	ldr	r3, .L1264
 	lsr	r0, r0, #0x16
 	add	r0, r0, r3
 	ldrb	r3, [r0, #0x2]
 	lsl	r0, r3, #0x3
 	add	r0, r0, r3
 	lsl	r0, r0, #0x2
-	ldr	r3, .L1266+0x4
+	ldr	r3, .L1264+0x4
 	add	r0, r0, r3
 	ldrh	r3, [r0, #0x10]
 	strh	r3, [r1]
 	ldrh	r0, [r0, #0x12]
 	strh	r0, [r2]
 	bx	lr
-.L1267:
+.L1265:
 	.align	2, 0
-.L1266:
+.L1264:
 	.word	gLinkPlayerObjectEvents
 	.word	gObjectEvents
 .Lfe207:
@@ -7687,20 +7692,20 @@ GetLinkPlayerCoords:
 	.thumb_func
 GetLinkPlayerFacingDirection:
 	lsl	r0, r0, #0x18
-	ldr	r1, .L1269
+	ldr	r1, .L1267
 	lsr	r0, r0, #0x16
 	add	r0, r0, r1
 	ldrb	r1, [r0, #0x2]
 	lsl	r0, r1, #0x3
 	add	r0, r0, r1
 	lsl	r0, r0, #0x2
-	ldr	r1, .L1269+0x4
+	ldr	r1, .L1267+0x4
 	add	r0, r0, r1
 	ldrb	r0, [r0, #0x19]
 	bx	lr
-.L1270:
+.L1268:
 	.align	2, 0
-.L1269:
+.L1267:
 	.word	gLinkPlayerObjectEvents
 	.word	gObjectEvents
 .Lfe208:
@@ -7710,22 +7715,22 @@ GetLinkPlayerFacingDirection:
 	.thumb_func
 GetLinkPlayerElevation:
 	lsl	r0, r0, #0x18
-	ldr	r1, .L1272
+	ldr	r1, .L1270
 	lsr	r0, r0, #0x16
 	add	r0, r0, r1
 	ldrb	r1, [r0, #0x2]
 	lsl	r0, r1, #0x3
 	add	r0, r0, r1
 	lsl	r0, r0, #0x2
-	ldr	r1, .L1272+0x4
+	ldr	r1, .L1270+0x4
 	add	r0, r0, r1
 	ldrb	r0, [r0, #0xb]
 	lsl	r0, r0, #0x1c
 	lsr	r0, r0, #0x1c
 	bx	lr
-.L1273:
+.L1271:
 	.align	2, 0
-.L1272:
+.L1270:
 	.word	gLinkPlayerObjectEvents
 	.word	gObjectEvents
 .Lfe209:
@@ -7735,14 +7740,14 @@ GetLinkPlayerElevation:
 	.thumb_func
 sub_80878E4:
 	lsl	r0, r0, #0x18
-	ldr	r1, .L1275
+	ldr	r1, .L1273
 	lsr	r0, r0, #0x16
 	add	r0, r0, r1
 	ldrb	r1, [r0, #0x2]
 	lsl	r0, r1, #0x3
 	add	r0, r0, r1
 	lsl	r0, r0, #0x2
-	ldr	r1, .L1275+0x4
+	ldr	r1, .L1273+0x4
 	add	r0, r0, r1
 	add	r0, r0, #0x21
 	mov	r1, #0x0
@@ -7750,9 +7755,9 @@ sub_80878E4:
 	mov	r0, #0x10
 	sub	r0, r0, r1
 	bx	lr
-.L1276:
+.L1274:
 	.align	2, 0
-.L1275:
+.L1273:
 	.word	gLinkPlayerObjectEvents
 	.word	gObjectEvents
 .Lfe210:
@@ -7763,52 +7768,52 @@ sub_80878E4:
 GetLinkPlayerIdAt:
 	push	{r4, r5, r6, lr}
 	mov	r2, #0x0
-	ldr	r5, .L1287
+	ldr	r5, .L1285
 	lsl	r0, r0, #0x10
 	asr	r4, r0, #0x10
 	lsl	r1, r1, #0x10
 	asr	r3, r1, #0x10
-.L1281:
+.L1279:
 	lsl	r0, r2, #0x2
 	add	r1, r0, r5
 	ldrb	r0, [r1]
 	cmp	r0, #0
-	beq	.L1280	@cond_branch
+	beq	.L1278	@cond_branch
 	ldrb	r0, [r1, #0x3]
 	cmp	r0, #0
-	beq	.L1283	@cond_branch
+	beq	.L1281	@cond_branch
 	cmp	r0, #0x2
-	bne	.L1280	@cond_branch
-.L1283:
+	bne	.L1278	@cond_branch
+.L1281:
 	ldrb	r1, [r1, #0x2]
 	lsl	r0, r1, #0x3
 	add	r0, r0, r1
 	lsl	r0, r0, #0x2
-	ldr	r1, .L1287+0x4
+	ldr	r1, .L1285+0x4
 	add	r1, r0, r1
 	mov	r6, #0x10
 	ldrsh	r0, [r1, r6]
 	cmp	r0, r4
-	bne	.L1280	@cond_branch
+	bne	.L1278	@cond_branch
 	mov	r6, #0x12
 	ldrsh	r0, [r1, r6]
 	cmp	r0, r3
-	bne	.L1280	@cond_branch
+	bne	.L1278	@cond_branch
 	add	r0, r2, #0
-	b	.L1286
-.L1288:
+	b	.L1284
+.L1286:
 	.align	2, 0
-.L1287:
+.L1285:
 	.word	gLinkPlayerObjectEvents
 	.word	gObjectEvents
-.L1280:
+.L1278:
 	add	r0, r2, #0x1
 	lsl	r0, r0, #0x18
 	lsr	r2, r0, #0x18
 	cmp	r2, #0x3
-	bls	.L1281	@cond_branch
+	bls	.L1279	@cond_branch
 	mov	r0, #0x4
-.L1286:
+.L1284:
 	pop	{r4, r5, r6}
 	pop	{r1}
 	bx	r1
@@ -7824,32 +7829,32 @@ SetPlayerFacingDirection:
 	lsr	r3, r1, #0x18
 	add	r2, r3, #0
 	lsr	r0, r0, #0x16
-	ldr	r1, .L1293
+	ldr	r1, .L1291
 	add	r5, r0, r1
 	ldrb	r1, [r5, #0x2]
 	lsl	r0, r1, #0x3
 	add	r0, r0, r1
 	lsl	r0, r0, #0x2
-	ldr	r1, .L1293+0x4
+	ldr	r1, .L1291+0x4
 	add	r6, r0, r1
 	ldrb	r0, [r5]
 	cmp	r0, #0
-	beq	.L1290	@cond_branch
+	beq	.L1288	@cond_branch
 	cmp	r3, #0xa
-	bls	.L1291	@cond_branch
+	bls	.L1289	@cond_branch
 	ldrb	r0, [r6]
 	mov	r1, #0x4
 	orr	r0, r0, r1
 	strb	r0, [r6]
-	b	.L1290
-.L1294:
+	b	.L1288
+.L1292:
 	.align	2, 0
-.L1293:
+.L1291:
 	.word	gLinkPlayerObjectEvents
 	.word	gObjectEvents
-.L1291:
-	ldr	r4, .L1295
-	ldr	r1, .L1295+0x4
+.L1289:
+	ldr	r4, .L1293
+	ldr	r1, .L1293+0x4
 	ldrb	r0, [r5, #0x3]
 	lsl	r0, r0, #0x2
 	add	r0, r0, r1
@@ -7864,13 +7869,13 @@ SetPlayerFacingDirection:
 	add	r0, r5, #0
 	add	r1, r6, #0
 	bl	_call_via_r2
-.L1290:
+.L1288:
 	pop	{r4, r5, r6}
 	pop	{r0}
 	bx	r0
-.L1296:
+.L1294:
 	.align	2, 0
-.L1295:
+.L1293:
 	.word	gMovementStatusHandler
 	.word	gLinkPlayerMovementModes
 .Lfe212:
@@ -7882,7 +7887,7 @@ MovementEventModeCB_Normal:
 	push	{r4, lr}
 	lsl	r2, r2, #0x18
 	lsr	r2, r2, #0x18
-	ldr	r4, .L1298
+	ldr	r4, .L1296
 	lsl	r3, r2, #0x2
 	add	r3, r3, r4
 	ldr	r3, [r3]
@@ -7892,9 +7897,9 @@ MovementEventModeCB_Normal:
 	pop	{r4}
 	pop	{r1}
 	bx	r1
-.L1299:
+.L1297:
 	.align	2, 0
-.L1298:
+.L1296:
 	.word	gLinkPlayerFacingHandlers
 .Lfe213:
 	.size	 MovementEventModeCB_Normal,.Lfe213-MovementEventModeCB_Normal
@@ -7913,7 +7918,7 @@ MovementEventModeCB_Normal_2:
 	push	{r4, lr}
 	lsl	r2, r2, #0x18
 	lsr	r2, r2, #0x18
-	ldr	r4, .L1302
+	ldr	r4, .L1300
 	lsl	r3, r2, #0x2
 	add	r3, r3, r4
 	ldr	r3, [r3]
@@ -7923,9 +7928,9 @@ MovementEventModeCB_Normal_2:
 	pop	{r4}
 	pop	{r1}
 	bx	r1
-.L1303:
+.L1301:
 	.align	2, 0
-.L1302:
+.L1300:
 	.word	gLinkPlayerFacingHandlers
 .Lfe215:
 	.size	 MovementEventModeCB_Normal_2,.Lfe215-MovementEventModeCB_Normal_2
@@ -7967,7 +7972,7 @@ FacingHandler_DpadMovement:
 	bl	LinkPlayerDetectCollision
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	bne	.L1306	@cond_branch
+	bne	.L1304	@cond_branch
 	add	r1, r5, #0
 	add	r1, r1, #0x21
 	mov	r0, #0x10
@@ -7982,10 +7987,10 @@ FacingHandler_DpadMovement:
 	add	r0, r5, #0
 	bl	ObjectEventUpdateZCoord
 	mov	r0, #0x1
-	b	.L1308
-.L1306:
+	b	.L1306
+.L1304:
 	mov	r0, #0x0
-.L1308:
+.L1306:
 	add	sp, sp, #0x4
 	pop	{r4, r5, r6}
 	pop	{r1}
@@ -8039,12 +8044,12 @@ MovementStatusHandler_TryAdvanceScript:
 	bl	MoveCoords
 	ldrb	r0, [r5]
 	cmp	r0, #0
-	bne	.L1312	@cond_branch
+	bne	.L1310	@cond_branch
 	add	r0, r4, #0
 	bl	ShiftStillObjectEventCoords
 	mov	r0, #0x2
 	strb	r0, [r6, #0x3]
-.L1312:
+.L1310:
 	pop	{r4, r5, r6}
 	pop	{r0}
 	bx	r0
@@ -8061,44 +8066,44 @@ FlipVerticalAndClearForced:
 	lsr	r2, r1, #0x18
 	sub	r0, r0, #0x1
 	cmp	r0, #0x9
-	bhi	.L1314	@cond_branch
+	bhi	.L1312	@cond_branch
 	lsl	r0, r0, #0x2
-	ldr	r1, .L1326
+	ldr	r1, .L1324
 	add	r0, r0, r1
 	ldr	r0, [r0]
 	mov	pc, r0
-.L1327:
-	.align	2, 0
-.L1326:
-	.word	.L1323
-	.align	2, 0
-	.align	2, 0
-.L1323:
-	.word	.L1316
-	.word	.L1318
-	.word	.L1320
-	.word	.L1322
-	.word	.L1314
-	.word	.L1314
-	.word	.L1316
-	.word	.L1318
-	.word	.L1320
-	.word	.L1322
-.L1316:
-	mov	r0, #0x2
-	b	.L1325
-.L1318:
-	mov	r0, #0x1
-	b	.L1325
-.L1320:
-	mov	r0, #0x3
-	b	.L1325
-.L1322:
-	mov	r0, #0x4
-	b	.L1325
-.L1314:
-	add	r0, r2, #0
 .L1325:
+	.align	2, 0
+.L1324:
+	.word	.L1321
+	.align	2, 0
+	.align	2, 0
+.L1321:
+	.word	.L1314
+	.word	.L1316
+	.word	.L1318
+	.word	.L1320
+	.word	.L1312
+	.word	.L1312
+	.word	.L1314
+	.word	.L1316
+	.word	.L1318
+	.word	.L1320
+.L1314:
+	mov	r0, #0x2
+	b	.L1323
+.L1316:
+	mov	r0, #0x1
+	b	.L1323
+.L1318:
+	mov	r0, #0x3
+	b	.L1323
+.L1320:
+	mov	r0, #0x4
+	b	.L1323
+.L1312:
+	add	r0, r2, #0
+.L1323:
 	pop	{r1}
 	bx	r1
 .Lfe221:
@@ -8120,18 +8125,18 @@ LinkPlayerDetectCollision:
 	mov	ip, r2
 	lsl	r3, r3, #0x10
 	mov	r4, #0x0
-	ldr	r0, .L1339
+	ldr	r0, .L1337
 	mov	r9, r0
 	lsr	r2, r3, #0x10
 	mov	sl, r2
 	asr	r6, r3, #0x10
-.L1332:
+.L1330:
 	mov	r7, ip
 	lsl	r3, r7, #0x10
 	mov	r0, sl
 	lsl	r5, r0, #0x10
 	cmp	r4, r8
-	beq	.L1331	@cond_branch
+	beq	.L1329	@cond_branch
 	lsl	r0, r4, #0x3
 	add	r0, r0, r4
 	lsl	r0, r0, #0x2
@@ -8141,40 +8146,40 @@ LinkPlayerDetectCollision:
 	ldrsh	r0, [r1, r7]
 	asr	r2, r3, #0x10
 	cmp	r0, r2
-	bne	.L1336	@cond_branch
+	bne	.L1334	@cond_branch
 	mov	r7, #0x12
 	ldrsh	r0, [r1, r7]
 	cmp	r0, r6
-	beq	.L1335	@cond_branch
-.L1336:
+	beq	.L1333	@cond_branch
+.L1334:
 	mov	r7, #0x14
 	ldrsh	r0, [r1, r7]
 	cmp	r0, r2
-	bne	.L1331	@cond_branch
+	bne	.L1329	@cond_branch
 	mov	r0, #0x16
 	ldrsh	r1, [r1, r0]
 	asr	r0, r5, #0x10
 	cmp	r1, r0
-	bne	.L1331	@cond_branch
-.L1335:
+	bne	.L1329	@cond_branch
+.L1333:
 	mov	r0, #0x1
-	b	.L1338
-.L1340:
+	b	.L1336
+.L1338:
 	.align	2, 0
-.L1339:
+.L1337:
 	.word	gObjectEvents
-.L1331:
+.L1329:
 	add	r0, r4, #0x1
 	lsl	r0, r0, #0x18
 	lsr	r4, r0, #0x18
 	cmp	r4, #0xf
-	bls	.L1332	@cond_branch
+	bls	.L1330	@cond_branch
 	asr	r0, r3, #0x10
 	asr	r1, r5, #0x10
 	bl	MapGridIsImpassableAt
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
-.L1338:
+.L1336:
 	pop	{r3, r4, r5}
 	mov	r8, r3
 	mov	r9, r4
@@ -8195,72 +8200,72 @@ CreateLinkPlayerSprite:
 	lsl	r1, r1, #0x18
 	lsr	r3, r1, #0x18
 	lsl	r2, r5, #0x2
-	ldr	r0, .L1352
+	ldr	r0, .L1350
 	add	r2, r2, r0
 	ldrb	r1, [r2, #0x2]
 	lsl	r0, r1, #0x3
 	add	r0, r0, r1
 	lsl	r0, r0, #0x2
-	ldr	r1, .L1352+0x4
+	ldr	r1, .L1350+0x4
 	add	r4, r0, r1
 	ldrb	r0, [r2]
 	cmp	r0, #0
-	beq	.L1342	@cond_branch
+	beq	.L1340	@cond_branch
 	sub	r0, r3, #0x1
 	cmp	r0, #0x4
-	bhi	.L1343	@cond_branch
+	bhi	.L1341	@cond_branch
 	lsl	r0, r0, #0x2
-	ldr	r1, .L1352+0x8
+	ldr	r1, .L1350+0x8
 	add	r0, r0, r1
 	ldr	r0, [r0]
 	mov	pc, r0
-.L1353:
+.L1351:
 	.align	2, 0
-.L1352:
+.L1350:
 	.word	gLinkPlayerObjectEvents
 	.word	gObjectEvents
-	.word	.L1349
+	.word	.L1347
 	.align	2, 0
 	.align	2, 0
-.L1349:
-	.word	.L1347
-	.word	.L1347
-	.word	.L1348
+.L1347:
 	.word	.L1345
 	.word	.L1345
-.L1345:
+	.word	.L1346
+	.word	.L1343
+	.word	.L1343
+.L1343:
 	ldrb	r0, [r4]
 	lsl	r0, r0, #0x1e
 	lsr	r0, r0, #0x1f
 	bl	GetFRLGAvatarGraphicsIdByGender
-	b	.L1351
-.L1347:
+	b	.L1349
+.L1345:
 	ldrb	r0, [r4]
 	lsl	r0, r0, #0x1e
 	lsr	r0, r0, #0x1f
 	bl	GetRSAvatarGraphicsIdByGender
-	b	.L1351
-.L1348:
+	b	.L1349
+.L1346:
 	ldrb	r1, [r4]
 	lsl	r1, r1, #0x1e
 	lsr	r1, r1, #0x1f
 	mov	r0, #0x0
 	bl	GetRivalAvatarGraphicsIdByStateIdAndGender
-.L1351:
+.L1349:
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
-	ldr	r1, .L1354
+	ldr	r1, .L1352
 	mov	r2, #0x0
 	str	r2, [sp]
 	mov	r3, #0x0
 	bl	AddPseudoObjectEvent
 	strb	r0, [r4, #0x4]
-.L1343:
+.L1341:
 	ldrb	r1, [r4, #0x4]
 	lsl	r0, r1, #0x4
 	add	r0, r0, r1
 	lsl	r0, r0, #0x2
-	ldr	r1, .L1354+0x4
+	ldr	r1, .L1352+0x4
 	add	r0, r0, r1
 	add	r3, r0, #0
 	add	r3, r3, #0x3e
@@ -8274,14 +8279,14 @@ CreateLinkPlayerSprite:
 	neg	r0, r0
 	and	r0, r0, r1
 	strb	r0, [r4]
-.L1342:
+.L1340:
 	add	sp, sp, #0x4
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.L1355:
+.L1353:
 	.align	2, 0
-.L1354:
+.L1352:
 	.word	SpriteCB_LinkPlayer
 	.word	gSprites
 .Lfe223:
@@ -8295,13 +8300,13 @@ SpriteCB_LinkPlayer:
 	mov	r0, #0x2e
 	ldrsh	r4, [r5, r0]
 	lsl	r4, r4, #0x2
-	ldr	r0, .L1360
+	ldr	r0, .L1358
 	add	r4, r4, r0
 	ldrb	r1, [r4, #0x2]
 	lsl	r0, r1, #0x3
 	add	r0, r0, r1
 	lsl	r0, r0, #0x2
-	ldr	r1, .L1360+0x4
+	ldr	r1, .L1358+0x4
 	add	r6, r0, r1
 	ldrh	r0, [r6, #0xc]
 	strh	r0, [r5, #0x20]
@@ -8326,7 +8331,7 @@ SpriteCB_LinkPlayer:
 	strb	r0, [r5, #0x5]
 	ldrb	r0, [r4, #0x3]
 	cmp	r0, #0
-	bne	.L1357	@cond_branch
+	bne	.L1355	@cond_branch
 	ldrb	r0, [r6, #0x19]
 	bl	GetFaceDirectionAnimNum
 	add	r1, r0, #0
@@ -8334,13 +8339,13 @@ SpriteCB_LinkPlayer:
 	lsr	r1, r1, #0x18
 	add	r0, r5, #0
 	bl	StartSpriteAnim
-	b	.L1358
-.L1361:
+	b	.L1356
+.L1359:
 	.align	2, 0
-.L1360:
+.L1358:
 	.word	gLinkPlayerObjectEvents
 	.word	gObjectEvents
-.L1357:
+.L1355:
 	ldrb	r0, [r6, #0x19]
 	bl	GetMoveDirectionAnimNum
 	add	r1, r0, #0
@@ -8348,14 +8353,14 @@ SpriteCB_LinkPlayer:
 	lsr	r1, r1, #0x18
 	add	r0, r5, #0
 	bl	StartSpriteAnimIfDifferent
-.L1358:
+.L1356:
 	add	r0, r5, #0
 	mov	r1, #0x0
 	bl	UpdateObjectEventSpriteVisibility
 	ldrb	r0, [r6]
 	lsl	r0, r0, #0x1d
 	cmp	r0, #0
-	bge	.L1359	@cond_branch
+	bge	.L1357	@cond_branch
 	ldrh	r0, [r5, #0x3c]
 	mov	r1, #0x4
 	and	r1, r1, r0
@@ -8373,7 +8378,7 @@ SpriteCB_LinkPlayer:
 	ldrh	r0, [r5, #0x3c]
 	add	r0, r0, #0x1
 	strh	r0, [r5, #0x3c]
-.L1359:
+.L1357:
 	pop	{r4, r5, r6}
 	pop	{r0}
 	bx	r0

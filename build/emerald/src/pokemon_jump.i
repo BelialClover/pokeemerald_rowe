@@ -10683,7 +10683,7 @@ static void sub_802ACA0(u8 taskId)
     case 2:
         if (!sub_802D0F0() && IsNotWaitingForBGMStop() == 1)
         {
-            FadeOutAndPlayNewMapMusic(538, 8);
+            FadeOutAndPlayNewMapMusic(489, 8);
             gUnknown_02022CFC->unk8++;
         }
         break;
@@ -13382,7 +13382,7 @@ static void sub_802D7E8(u16 itemId, u16 quantity)
     gUnknown_02022D00->unk12 = sub_802DA9C(4, 8, 22, 4);
     AddTextPrinterParameterized(gUnknown_02022D00->unk12, 1, gUnknown_02022D00->strBuff, 0, 1, 0xFF, ((void *)0));
     CopyWindowToVram(gUnknown_02022D00->unk12, 2);
-    gUnknown_02022D00->unk14 = 367;
+    gUnknown_02022D00->unk14 = 338;
     gUnknown_02022D00->unkD = 0;
 }
 

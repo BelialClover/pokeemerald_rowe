@@ -4836,8 +4836,8 @@ struct SoundInfo
     u32 plynote;
     u32 ExtVolPit;
     u8 gap2[16];
-    struct SoundChannel chans[12];
-    s8 pcmBuffer[1584 * 2];
+    struct SoundChannel chans[15];
+    s8 pcmBuffer[0x620 * 2];
 };
 
 struct SongHeader
@@ -9089,7 +9089,7 @@ void StartDodrioBerryPicking(u16 a0, void (*callback)(void))
         sub_80273F0();
         sub_8026B5C(gUnknown_02022C98->unk24, &gUnknown_02022C98->unk44, &gUnknown_02022C98->unk48);
         StopMapMusic();
-        PlayNewMapMusic(542);
+        PlayNewMapMusic(493);
     }
     else
     {
@@ -9499,7 +9499,7 @@ static void sub_8025198(void)
         if (WaitFanfare(1))
         {
             sub_8026240(6);
-            FadeOutAndPlayNewMapMusic(523, 4);
+            FadeOutAndPlayNewMapMusic(370, 4);
         }
         break;
     }
@@ -9538,7 +9538,7 @@ static void sub_8025230(void)
         if (WaitFanfare(1)) {
             gUnknown_02022C98->unk114 = gUnknown_02022C98->unk4A[gUnknown_02022C98->multiplayerId][5];
             sub_8026240(6);
-            FadeOutAndPlayNewMapMusic(523, 4);
+            FadeOutAndPlayNewMapMusic(370, 4);
         }
         break;
     }
@@ -9796,7 +9796,7 @@ static void sub_8025758(void)
         gUnknown_02022C98->unk10++;
         break;
     case 4:
-        PlayNewMapMusic(542);
+        PlayNewMapMusic(493);
         sub_8028E4C();
         gUnknown_02022C98->unk10++;
         break;
@@ -12934,7 +12934,7 @@ static void sub_802988C(void)
         }
         break;
     case 9:
-        PlayNewMapMusic(367);
+        PlayNewMapMusic(338);
         FillWindowPixelBuffer(gUnknown_02022CF8->unk3008[0], ((1) | ((1) << 4)));
         FillWindowPixelBuffer(gUnknown_02022CF8->unk3008[1], ((1) | ((1) << 4)));
         strWidth = GetStringWidth(1, gText_AnnouncingPrizes, -1);
@@ -12968,7 +12968,7 @@ static void sub_802988C(void)
             PutWindowTilemap(gUnknown_02022CF8->unk3008[1]);
         }
         CopyBgTilemapBufferToVram(0);
-        FadeOutAndFadeInNewMapMusic(523, 20, 10);
+        FadeOutAndFadeInNewMapMusic(370, 20, 10);
         gUnknown_02022CF8->state++;
         break;
     case 11:
@@ -13228,9 +13228,9 @@ static u8 sub_802A794(void)
 
 static void sub_802A7A8(void)
 {
-    { void *_dest = (void *)0x6000000; u32 _size = 0x18000; while (1) { { vu16 tmp = (vu16)(0); { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); dmaRegs[0] = (vu32)(&tmp); dmaRegs[1] = (vu32)(_dest); dmaRegs[2] = (vu32)((0x8000 | 0x0000 | 0x0000 | 0x0100 | 0x0000) << 16 | (((0x1000))/(16/8))); dmaRegs[2]; }; }; _dest += (0x1000); _size -= (0x1000); if (_size <= (0x1000)) { { vu16 tmp = (vu16)(0); { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); dmaRegs[0] = (vu32)(&tmp); dmaRegs[1] = (vu32)(_dest); dmaRegs[2] = (vu32)((0x8000 | 0x0000 | 0x0000 | 0x0100 | 0x0000) << 16 | ((_size)/(16/8))); dmaRegs[2]; }; }; break; } } };
-    { vu32 *_dest = (vu32 *)((void *)0x7000000); u32 _size = 0x400; { vu32 tmp = (vu32)(0); { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); dmaRegs[0] = (vu32)(&tmp); dmaRegs[1] = (vu32)(_dest); dmaRegs[2] = (vu32)((0x8000 | 0x0000 | 0x0400 | 0x0100 | 0x0000) << 16 | ((_size)/(32/8))); dmaRegs[2]; }; }; };
-    { vu16 *_dest = (vu16 *)((void *)0x5000000); u32 _size = 0x400; { vu16 tmp = (vu16)(0); { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); dmaRegs[0] = (vu32)(&tmp); dmaRegs[1] = (vu32)(_dest); dmaRegs[2] = (vu32)((0x8000 | 0x0000 | 0x0000 | 0x0100 | 0x0000) << 16 | ((_size)/(16/8))); dmaRegs[2]; }; }; };
+    { void *_dest = (void *)0x6000000; u32 _size = 0x18000; while (1) { { vu16 tmp = (vu16)(0); { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); u32 eval_src = (u32)(&tmp); u32 eval_dst = (u32)(_dest); u32 eval_ctl = (u32)((0x8000 | 0x0000 | 0x0000 | 0x0100 | 0x0000) << 16 | (((0x1000))/(16/8))); register u32 r_src asm("r0") = eval_src; register u32 r_dst asm("r1") = eval_dst; register u32 r_ctl asm("r2") = eval_ctl; asm volatile("stmia %0!, {%1, %2, %3}" : "+l" (dmaRegs) : "l" (r_src), "l" (r_dst), "l" (r_ctl) : "memory"); }; }; _dest += (0x1000); _size -= (0x1000); if (_size <= (0x1000)) { { vu16 tmp = (vu16)(0); { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); u32 eval_src = (u32)(&tmp); u32 eval_dst = (u32)(_dest); u32 eval_ctl = (u32)((0x8000 | 0x0000 | 0x0000 | 0x0100 | 0x0000) << 16 | ((_size)/(16/8))); register u32 r_src asm("r0") = eval_src; register u32 r_dst asm("r1") = eval_dst; register u32 r_ctl asm("r2") = eval_ctl; asm volatile("stmia %0!, {%1, %2, %3}" : "+l" (dmaRegs) : "l" (r_src), "l" (r_dst), "l" (r_ctl) : "memory"); }; }; break; } } };
+    { vu32 *_dest = (vu32 *)((void *)0x7000000); u32 _size = 0x400; { vu32 tmp = (vu32)(0); { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); u32 eval_src = (u32)(&tmp); u32 eval_dst = (u32)(_dest); u32 eval_ctl = (u32)((0x8000 | 0x0000 | 0x0400 | 0x0100 | 0x0000) << 16 | ((_size)/(32/8))); register u32 r_src asm("r0") = eval_src; register u32 r_dst asm("r1") = eval_dst; register u32 r_ctl asm("r2") = eval_ctl; asm volatile("stmia %0!, {%1, %2, %3}" : "+l" (dmaRegs) : "l" (r_src), "l" (r_dst), "l" (r_ctl) : "memory"); }; }; };
+    { vu16 *_dest = (vu16 *)((void *)0x5000000); u32 _size = 0x400; { vu16 tmp = (vu16)(0); { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); u32 eval_src = (u32)(&tmp); u32 eval_dst = (u32)(_dest); u32 eval_ctl = (u32)((0x8000 | 0x0000 | 0x0000 | 0x0100 | 0x0000) << 16 | ((_size)/(16/8))); register u32 r_src asm("r0") = eval_src; register u32 r_dst asm("r1") = eval_dst; register u32 r_ctl asm("r2") = eval_ctl; asm volatile("stmia %0!, {%1, %2, %3}" : "+l" (dmaRegs) : "l" (r_src), "l" (r_dst), "l" (r_ctl) : "memory"); }; }; };
     SetGpuReg(0x0, 0);
     ResetBgsAndClearDma3BusyFlags(0);
     InitBgsFromTemplates(0, gUnknown_082F7BA4, (size_t)(sizeof(gUnknown_082F7BA4) / sizeof((gUnknown_082F7BA4)[0])));

@@ -17661,12 +17661,12 @@ static void SlotMachineSetup_InitVBlank(void)
 
 static void SlotMachineSetup_InitVRAM(void)
 {
-    { void *_dest = (u16 *)(0x6000000); u32 _size = 0x10000; while (1) { { vu16 tmp = (vu16)(0); { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); dmaRegs[0] = (vu32)(&tmp); dmaRegs[1] = (vu32)(_dest); dmaRegs[2] = (vu32)((0x8000 | 0x0000 | 0x0000 | 0x0100 | 0x0000) << 16 | (((0x1000))/(16/8))); dmaRegs[2]; }; }; _dest += (0x1000); _size -= (0x1000); if (_size <= (0x1000)) { { vu16 tmp = (vu16)(0); { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); dmaRegs[0] = (vu32)(&tmp); dmaRegs[1] = (vu32)(_dest); dmaRegs[2] = (vu32)((0x8000 | 0x0000 | 0x0000 | 0x0100 | 0x0000) << 16 | ((_size)/(16/8))); dmaRegs[2]; }; }; break; } } };
+    { void *_dest = (u16 *)(0x6000000); u32 _size = 0x10000; while (1) { { vu16 tmp = (vu16)(0); { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); u32 eval_src = (u32)(&tmp); u32 eval_dst = (u32)(_dest); u32 eval_ctl = (u32)((0x8000 | 0x0000 | 0x0000 | 0x0100 | 0x0000) << 16 | (((0x1000))/(16/8))); register u32 r_src asm("r0") = eval_src; register u32 r_dst asm("r1") = eval_dst; register u32 r_ctl asm("r2") = eval_ctl; asm volatile("stmia %0!, {%1, %2, %3}" : "+l" (dmaRegs) : "l" (r_src), "l" (r_dst), "l" (r_ctl) : "memory"); }; }; _dest += (0x1000); _size -= (0x1000); if (_size <= (0x1000)) { { vu16 tmp = (vu16)(0); { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); u32 eval_src = (u32)(&tmp); u32 eval_dst = (u32)(_dest); u32 eval_ctl = (u32)((0x8000 | 0x0000 | 0x0000 | 0x0100 | 0x0000) << 16 | ((_size)/(16/8))); register u32 r_src asm("r0") = eval_src; register u32 r_dst asm("r1") = eval_dst; register u32 r_ctl asm("r2") = eval_ctl; asm volatile("stmia %0!, {%1, %2, %3}" : "+l" (dmaRegs) : "l" (r_src), "l" (r_dst), "l" (r_ctl) : "memory"); }; }; break; } } };
 }
 
 static void SlotMachineSetup_InitOAM(void)
 {
-    { vu16 *_dest = (vu16 *)((u16 *)0x7000000); u32 _size = 0x400; { vu16 tmp = (vu16)(0); { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); dmaRegs[0] = (vu32)(&tmp); dmaRegs[1] = (vu32)(_dest); dmaRegs[2] = (vu32)((0x8000 | 0x0000 | 0x0000 | 0x0100 | 0x0000) << 16 | ((_size)/(16/8))); dmaRegs[2]; }; }; };
+    { vu16 *_dest = (vu16 *)((u16 *)0x7000000); u32 _size = 0x400; { vu16 tmp = (vu16)(0); { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); u32 eval_src = (u32)(&tmp); u32 eval_dst = (u32)(_dest); u32 eval_ctl = (u32)((0x8000 | 0x0000 | 0x0000 | 0x0100 | 0x0000) << 16 | ((_size)/(16/8))); register u32 r_src asm("r0") = eval_src; register u32 r_dst asm("r1") = eval_dst; register u32 r_ctl asm("r2") = eval_ctl; asm volatile("stmia %0!, {%1, %2, %3}" : "+l" (dmaRegs) : "l" (r_src), "l" (r_dst), "l" (r_ctl) : "memory"); }; }; };
 }
 
 static void SlotMachineSetup_InitGpuRegs(void)
@@ -18022,17 +18022,17 @@ static bool8 SlotAction_CheckMatches(struct Task *task)
         }
         if (sSlotMachine->matchedSymbols & ((1 << MATCHED_777_BLUE) | (1 << MATCHED_777_RED)))
         {
-            PlayFanfare(389);
+            PlayFanfare(360);
             CreateDigitalDisplayScene(DIG_DISPLAY_BONUS_BIG);
         }
         else if (sSlotMachine->matchedSymbols & (1 << MATCHED_777_MIXED))
         {
-            PlayFanfare(389);
+            PlayFanfare(360);
             CreateDigitalDisplayScene(DIG_DISPLAY_BONUS_REG);
         }
         else
         {
-            PlayFanfare(390);
+            PlayFanfare(361);
             CreateDigitalDisplayScene(DIG_DISPLAY_WIN);
         }
 
@@ -19687,7 +19687,7 @@ static void ReelTime_Init(struct Task *task)
     CreateReelTimeNumberGapSprite();
     GetReeltimeDraw();
     StopMapMusic();
-    PlayNewMapMusic(392);
+    PlayNewMapMusic(363);
 }
 
 static void ReelTime_WindowEnter(struct Task *task)
@@ -19829,7 +19829,7 @@ static void ReelTime_PikachuReact(struct Task *task)
         {
             task->data[4] = 0xa0;
             StartSpriteAnimIfDifferent(&gSprites[sSlotMachine->reelTimePikachuSpriteId], 5);
-            PlayFanfare(391);
+            PlayFanfare(362);
         }
         else
         {
@@ -19841,7 +19841,7 @@ static void ReelTime_PikachuReact(struct Task *task)
                 ResetPikaPowerBolts();
                 sSlotMachine->pikaPower = 0;
             }
-            PlayFanfare(390);
+            PlayFanfare(361);
         }
     }
 }
@@ -19917,7 +19917,7 @@ static void ReelTime_ExplodeMachine(struct Task *task)
     task->data[4] = 4;
     task->data[5] = 0;
     StopMapMusic();
-    PlayFanfare(391);
+    PlayFanfare(362);
     PlaySE(178);
 }
 

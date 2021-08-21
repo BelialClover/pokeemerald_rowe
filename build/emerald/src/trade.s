@@ -43023,7 +43023,8 @@ CB2_CreateTradeMenu:
 	ldrb	r0, [r1]
 	add	r0, r0, #0x1
 	strb	r0, [r1]
-	ldr	r0, .L171+0x8
+	mov	r0, #0xcb
+	lsl	r0, r0, #0x1
 	bl	PlayBGM
 	b	.L51
 .L172:
@@ -43031,7 +43032,6 @@ CB2_CreateTradeMenu:
 .L171:
 	.word	sTradeMenuData
 	.word	gMain
-	.word	0x1b3
 .L121:
 	mov	r0, #0x1
 	bl	SetTradePartyLiveStatuses
@@ -51325,6 +51325,8 @@ CB2_UpdateInGameTrade:
 	.thumb_func
 SetTradeSequenceBgGpuRegs:
 	push	{r4, r5, r6, r7, lr}
+	mov	r7, r8
+	push	{r7}
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	cmp	r0, #0x7
@@ -51332,13 +51334,13 @@ SetTradeSequenceBgGpuRegs:
 	b	.L1363	@long jump
 .LCB11665:
 	lsl	r0, r0, #0x2
-	ldr	r1, .L1412
+	ldr	r1, .L1409
 	add	r0, r0, r1
 	ldr	r0, [r0]
 	mov	pc, r0
-.L1413:
+.L1410:
 	.align	2, 0
-.L1412:
+.L1409:
 	.word	.L1405
 	.align	2, 0
 	.align	2, 0
@@ -51352,7 +51354,7 @@ SetTradeSequenceBgGpuRegs:
 	.word	.L1391
 	.word	.L1399
 .L1364:
-	ldr	r0, .L1414
+	ldr	r0, .L1411
 	ldr	r1, [r0]
 	add	r2, r1, #0
 	add	r2, r2, #0xe4
@@ -51365,46 +51367,65 @@ SetTradeSequenceBgGpuRegs:
 	lsl	r1, r1, #0x5
 	mov	r0, #0x0
 	bl	SetGpuReg
-	ldr	r1, .L1414+0x4
+	ldr	r1, .L1411+0x4
 	mov	r0, #0xc
 	bl	SetGpuReg
-	ldr	r0, .L1414+0x8
+	ldr	r0, .L1411+0x8
 	mov	r1, #0x10
 	mov	r2, #0x60
 	bl	LoadPalette
-	ldr	r3, .L1414+0xc
-	ldr	r4, .L1414+0x10
-	mov	r5, #0xa1
-	lsl	r5, r5, #0x5
-	ldr	r1, .L1414+0x14
-	ldr	r6, .L1414+0x18
-	mov	r2, #0x80
-	lsl	r2, r2, #0x5
+	ldr	r5, .L1411+0xc
+	ldr	r6, .L1411+0x10
+	mov	r4, #0xa1
+	lsl	r4, r4, #0x5
+	ldr	r0, .L1411+0x14
+	mov	r8, r0
+	mov	r3, #0x80
+	lsl	r3, r3, #0x5
 	mov	r7, #0x80
 	lsl	r7, r7, #0x18
+	mov	ip, r7
 .L1365:
-	str	r3, [r1]
-	str	r4, [r1, #0x4]
-	str	r6, [r1, #0x8]
-	ldr	r0, [r1, #0x8]
-	add	r3, r3, r2
-	add	r4, r4, r2
-	sub	r5, r5, r2
-	cmp	r5, r2
+	add	r0, r5, #0
+	add	r1, r6, #0
+	mov	r2, r8
+	ldr	r7, .L1411+0x18
+	stmia r7!, {r0, r1, r2}
+	.code	16
+	add	r5, r5, r3
+	add	r6, r6, r3
+	sub	r4, r4, r3
+	cmp	r4, r3
 	bhi	.L1365	@cond_branch
-	b	.L1407
-.L1415:
+	lsr	r2, r4, #0x1
+	add	r0, r5, #0
+	add	r1, r6, #0
+	mov	r3, ip
+	orr	r2, r2, r3
+	ldr	r7, .L1411+0x18
+	stmia r7!, {r0, r1, r2}
+	.code	16
+	ldr	r0, .L1411+0x1c
+	ldr	r1, .L1411+0x20
+	ldr	r2, .L1411+0x14
+	ldr	r3, .L1411+0x18
+	stmia r3!, {r0, r1, r2}
+	.code	16
+	b	.L1363
+.L1412:
 	.align	2, 0
-.L1414:
+.L1411:
 	.word	sTradeData
 	.word	0x5206
 	.word	gTradeGba2_Pal
 	.word	gTradeGba_Gfx
 	.word	0x6004000
-	.word	0x40000d4
 	.word	-0x7ffff800
+	.word	0x40000d4
+	.word	gUnknown_08331F60
+	.word	0x6009000
 .L1370:
-	ldr	r4, .L1416
+	ldr	r4, .L1413
 	ldr	r2, [r4]
 	add	r1, r2, #0
 	add	r1, r1, #0xe2
@@ -51416,10 +51437,10 @@ SetTradeSequenceBgGpuRegs:
 	strh	r1, [r2]
 	mov	r0, #0x16
 	bl	SetGpuReg
-	ldr	r1, .L1416+0x4
+	ldr	r1, .L1413+0x4
 	mov	r0, #0xa
 	bl	SetGpuReg
-	ldr	r1, .L1416+0x8
+	ldr	r1, .L1413+0x8
 	mov	r0, #0xc
 	bl	SetGpuReg
 	ldr	r0, [r4]
@@ -51427,65 +51448,76 @@ SetTradeSequenceBgGpuRegs:
 	ldrb	r0, [r0]
 	cmp	r0, #0
 	beq	.L1371	@cond_branch
-	ldr	r1, .L1416+0xc
-	b	.L1408
-.L1417:
+	ldr	r0, .L1413+0xc
+	ldr	r1, .L1413+0x10
+	ldr	r2, .L1413+0x14
+	ldr	r7, .L1413+0x18
+	stmia r7!, {r0, r1, r2}
+	.code	16
+	b	.L1372
+.L1414:
 	.align	2, 0
-.L1416:
+.L1413:
 	.word	sTradeData
 	.word	0x8502
 	.word	0x9206
 	.word	sTradeTilemap_GbaCable
+	.word	0x6002800
+	.word	-0x7ffff800
+	.word	0x40000d4
 .L1371:
-	ldr	r1, .L1418
-.L1408:
-	ldr	r2, .L1418+0x4
-	ldr	r0, .L1418+0x8
-	str	r1, [r0]
-	str	r2, [r0, #0x4]
-	ldr	r1, .L1418+0xc
-	str	r1, [r0, #0x8]
-	ldr	r0, [r0, #0x8]
-	ldr	r3, .L1418+0x10
-	mov	r4, #0xc0
-	lsl	r4, r4, #0x13
-	mov	r5, #0xa1
-	lsl	r5, r5, #0x5
-	ldr	r1, .L1418+0x8
-	ldr	r6, .L1418+0xc
-	mov	r2, #0x80
-	lsl	r2, r2, #0x5
-	mov	r7, #0x80
-	lsl	r7, r7, #0x18
+	ldr	r0, .L1415
+	ldr	r1, .L1415+0x4
+	ldr	r2, .L1415+0x8
+	ldr	r3, .L1415+0xc
+	stmia r3!, {r0, r1, r2}
+	.code	16
+.L1372:
+	ldr	r5, .L1415+0x10
+	mov	r6, #0xc0
+	lsl	r6, r6, #0x13
+	mov	r4, #0xa1
+	lsl	r4, r4, #0x5
+	ldr	r7, .L1415+0x8
+	mov	r8, r7
+	mov	r3, #0x80
+	lsl	r3, r3, #0x5
+	mov	r0, #0x80
+	lsl	r0, r0, #0x18
+	mov	ip, r0
 .L1373:
-	str	r3, [r1]
-	str	r4, [r1, #0x4]
-	str	r6, [r1, #0x8]
-	ldr	r0, [r1, #0x8]
-	add	r3, r3, r2
-	add	r4, r4, r2
-	sub	r5, r5, r2
-	cmp	r5, r2
+	add	r0, r5, #0
+	add	r1, r6, #0
+	mov	r2, r8
+	ldr	r7, .L1415+0xc
+	stmia r7!, {r0, r1, r2}
+	.code	16
+	add	r5, r5, r3
+	add	r6, r6, r3
+	sub	r4, r4, r3
+	cmp	r4, r3
 	bhi	.L1373	@cond_branch
-	str	r3, [r1]
-	str	r4, [r1, #0x4]
-	lsr	r0, r5, #0x1
-	orr	r0, r0, r7
-	str	r0, [r1, #0x8]
-	ldr	r0, [r1, #0x8]
+	lsr	r2, r4, #0x1
+	add	r0, r5, #0
+	add	r1, r6, #0
+	mov	r3, ip
+	orr	r2, r2, r3
+	ldr	r7, .L1415+0xc
+	stmia r7!, {r0, r1, r2}
+	.code	16
 	mov	r1, #0x92
 	lsl	r1, r1, #0x5
-	b	.L1409
-.L1419:
+	b	.L1407
+.L1416:
 	.align	2, 0
-.L1418:
+.L1415:
 	.word	sTradeTilemap_GbaWireless
 	.word	0x6002800
-	.word	0x40000d4
 	.word	-0x7ffff800
+	.word	0x40000d4
 	.word	gTradeGba_Gfx
 .L1378:
-	ldr	r0, .L1420
+	ldr	r0, .L1417
 	ldr	r2, [r0]
 	add	r0, r2, #0
 	add	r0, r0, #0xe0
@@ -51497,72 +51529,70 @@ SetTradeSequenceBgGpuRegs:
 	ldrb	r0, [r0]
 	cmp	r0, #0
 	bne	.L1379	@cond_branch
-	ldr	r1, .L1420+0x4
+	ldr	r1, .L1417+0x4
 	mov	r0, #0x0
 	bl	SetGpuReg
-	ldr	r0, .L1420+0x8
-	ldr	r1, .L1420+0xc
+	ldr	r0, .L1417+0x8
+	ldr	r1, .L1417+0xc
 	bl	LZ77UnCompVram
 	mov	r0, #0x8
-	b	.L1410
-.L1421:
+	b	.L1408
+.L1418:
 	.align	2, 0
-.L1420:
+.L1417:
 	.word	sTradeData
 	.word	0x1241
 	.word	gUnknown_083379A0
 	.word	0x6002800
 .L1379:
-	ldr	r1, .L1422
+	ldr	r1, .L1419
 	mov	r0, #0x0
 	bl	SetGpuReg
-	ldr	r1, .L1422+0x4
-	ldr	r2, .L1422+0x8
-	ldr	r0, .L1422+0xc
-	str	r1, [r0]
-	str	r2, [r0, #0x4]
-	ldr	r1, .L1422+0x10
-	str	r1, [r0, #0x8]
-	ldr	r0, [r0, #0x8]
+	ldr	r0, .L1419+0x4
+	ldr	r1, .L1419+0x8
+	ldr	r2, .L1419+0xc
+	ldr	r3, .L1419+0x10
+	stmia r3!, {r0, r1, r2}
+	.code	16
 	mov	r0, #0x1
-.L1410:
+.L1408:
 	mov	r1, #0x10
 	mov	r2, #0x0
 	bl	BlendPalettes
 	b	.L1363
-.L1423:
+.L1420:
 	.align	2, 0
-.L1422:
+.L1419:
 	.word	0x1241
 	.word	sTradeTilemap_Cable
 	.word	0x6002800
-	.word	0x40000d4
 	.word	-0x7ffffc00
+	.word	0x40000d4
 .L1381:
-	ldr	r0, .L1424
+	ldr	r0, .L1421
 	mov	r1, #0x30
 	mov	r2, #0x20
 	bl	LoadPalette
-	ldr	r0, .L1424+0x4
-	ldr	r1, .L1424+0x8
+	ldr	r0, .L1421+0x4
+	ldr	r1, .L1421+0x8
 	bl	LZ77UnCompVram
-	ldr	r0, .L1424+0xc
-	ldr	r1, .L1424+0x10
+	ldr	r0, .L1421+0xc
+	ldr	r1, .L1421+0x10
 	bl	LZ77UnCompVram
-	ldr	r0, .L1424+0x14
+	ldr	r0, .L1421+0x14
 	ldr	r0, [r0]
 	add	r0, r0, #0xe4
 	mov	r1, #0x50
 	strh	r1, [r0]
 	mov	r1, #0xb2
 	lsl	r1, r1, #0x5
-.L1409:
+.L1407:
 	mov	r0, #0x0
 	bl	SetGpuReg
 	b	.L1363
-.L1425:
+.L1422:
 	.align	2, 0
-.L1424:
+.L1421:
 	.word	sTradePal_Black
 	.word	sTradeGfx_WirelessSignal
 	.word	0x6004000
@@ -51570,13 +51600,13 @@ SetTradeSequenceBgGpuRegs:
 	.word	0x6009000
 	.word	sTradeData
 .L1382:
-	ldr	r1, .L1426
+	ldr	r1, .L1423
 	mov	r0, #0x0
 	bl	SetGpuReg
-	ldr	r1, .L1426+0x4
+	ldr	r1, .L1423+0x4
 	mov	r0, #0xc
 	bl	SetGpuReg
-	ldr	r0, .L1426+0x8
+	ldr	r0, .L1423+0x8
 	ldr	r3, [r0]
 	add	r1, r3, #0
 	add	r1, r1, #0xd4
@@ -51596,75 +51626,80 @@ SetTradeSequenceBgGpuRegs:
 	add	r0, r3, #0
 	add	r0, r0, #0xec
 	strh	r2, [r0]
-	ldr	r3, .L1426+0xc
-	ldr	r4, .L1426+0x10
-	mov	r5, #0xa1
-	lsl	r5, r5, #0x6
-	ldr	r1, .L1426+0x14
-	ldr	r6, .L1426+0x18
-	mov	r2, #0x80
-	lsl	r2, r2, #0x5
-	mov	r7, #0x80
-	lsl	r7, r7, #0x18
+	ldr	r5, .L1423+0xc
+	ldr	r6, .L1423+0x10
+	mov	r4, #0xa1
+	lsl	r4, r4, #0x6
+	ldr	r7, .L1423+0x14
+	mov	r8, r7
+	mov	r3, #0x80
+	lsl	r3, r3, #0x5
+	mov	r0, #0x80
+	lsl	r0, r0, #0x18
+	mov	ip, r0
 .L1383:
-	str	r3, [r1]
-	str	r4, [r1, #0x4]
-	str	r6, [r1, #0x8]
-	ldr	r0, [r1, #0x8]
-	add	r3, r3, r2
-	add	r4, r4, r2
-	sub	r5, r5, r2
-	cmp	r5, r2
+	add	r0, r5, #0
+	add	r1, r6, #0
+	mov	r2, r8
+	ldr	r7, .L1423+0x18
+	stmia r7!, {r0, r1, r2}
+	.code	16
+	add	r5, r5, r3
+	add	r6, r6, r3
+	sub	r4, r4, r3
+	cmp	r4, r3
 	bhi	.L1383	@cond_branch
-	str	r3, [r1]
-	str	r4, [r1, #0x4]
-	lsr	r0, r5, #0x1
-	orr	r0, r0, r7
-	str	r0, [r1, #0x8]
-	ldr	r0, [r1, #0x8]
-	ldr	r0, .L1426+0x8
+	lsr	r2, r4, #0x1
+	add	r0, r5, #0
+	add	r1, r6, #0
+	mov	r3, ip
+	orr	r2, r2, r3
+	ldr	r7, .L1423+0x18
+	stmia r7!, {r0, r1, r2}
+	.code	16
+	ldr	r0, .L1423+0x8
 	ldr	r0, [r0]
 	add	r0, r0, #0xfa
 	ldrb	r0, [r0]
 	cmp	r0, #0
 	beq	.L1388	@cond_branch
-	ldr	r1, .L1426+0x1c
-	ldr	r2, .L1426+0x20
-	ldr	r0, .L1426+0x14
-	str	r1, [r0]
-	str	r2, [r0, #0x4]
-	ldr	r1, .L1426+0x24
-	b	.L1411
-.L1427:
+	ldr	r0, .L1423+0x1c
+	ldr	r1, .L1423+0x20
+	ldr	r2, .L1423+0x24
+	ldr	r3, .L1423+0x18
+	stmia r3!, {r0, r1, r2}
+	.code	16
+	b	.L1363
+.L1424:
 	.align	2, 0
-.L1426:
+.L1423:
 	.word	0x1441
 	.word	0x1287
 	.word	sTradeData
 	.word	sTradeAffine_Gba
 	.word	0x6004000
-	.word	0x40000d4
 	.word	-0x7ffff800
+	.word	0x40000d4
 	.word	sTradeAffineMap_GbaCable
 	.word	0x6009000
 	.word	-0x7fffff80
 .L1388:
-	ldr	r1, .L1428
-	ldr	r2, .L1428+0x4
-	ldr	r0, .L1428+0x8
-	str	r1, [r0]
-	str	r2, [r0, #0x4]
-	ldr	r1, .L1428+0xc
-	b	.L1411
-.L1429:
+	ldr	r0, .L1425
+	ldr	r1, .L1425+0x4
+	ldr	r2, .L1425+0x8
+	ldr	r7, .L1425+0xc
+	stmia r7!, {r0, r1, r2}
+	.code	16
+	b	.L1363
+.L1426:
 	.align	2, 0
-.L1428:
+.L1425:
 	.word	sTradeAffineMap_GbaWireless
 	.word	0x6009000
-	.word	0x40000d4
 	.word	-0x7fffff80
+	.word	0x40000d4
 .L1390:
-	ldr	r0, .L1430
+	ldr	r0, .L1427
 	ldr	r0, [r0]
 	add	r1, r0, #0
 	add	r1, r1, #0xe0
@@ -51673,18 +51708,18 @@ SetTradeSequenceBgGpuRegs:
 	add	r0, r0, #0xe2
 	strh	r2, [r0]
 	b	.L1363
-.L1431:
+.L1428:
 	.align	2, 0
-.L1430:
+.L1427:
 	.word	sTradeData
 .L1391:
-	ldr	r1, .L1432
+	ldr	r1, .L1429
 	mov	r0, #0x0
 	bl	SetGpuReg
-	ldr	r1, .L1432+0x4
+	ldr	r1, .L1429+0x4
 	mov	r0, #0xc
 	bl	SetGpuReg
-	ldr	r0, .L1432+0x8
+	ldr	r0, .L1429+0x8
 	ldr	r3, [r0]
 	add	r1, r3, #0
 	add	r1, r1, #0xd4
@@ -51709,75 +51744,80 @@ SetTradeSequenceBgGpuRegs:
 	add	r0, r3, #0
 	add	r0, r0, #0xec
 	strh	r2, [r0]
-	ldr	r3, .L1432+0xc
-	ldr	r4, .L1432+0x10
-	mov	r5, #0xa1
-	lsl	r5, r5, #0x6
-	ldr	r1, .L1432+0x14
-	ldr	r6, .L1432+0x18
-	mov	r2, #0x80
-	lsl	r2, r2, #0x5
+	ldr	r5, .L1429+0xc
+	ldr	r6, .L1429+0x10
+	mov	r4, #0xa1
+	lsl	r4, r4, #0x6
+	ldr	r0, .L1429+0x14
+	mov	r8, r0
+	mov	r3, #0x80
+	lsl	r3, r3, #0x5
 	mov	r7, #0x80
 	lsl	r7, r7, #0x18
+	mov	ip, r7
 .L1392:
-	str	r3, [r1]
-	str	r4, [r1, #0x4]
-	str	r6, [r1, #0x8]
-	ldr	r0, [r1, #0x8]
-	add	r3, r3, r2
-	add	r4, r4, r2
-	sub	r5, r5, r2
-	cmp	r5, r2
+	add	r0, r5, #0
+	add	r1, r6, #0
+	mov	r2, r8
+	ldr	r7, .L1429+0x18
+	stmia r7!, {r0, r1, r2}
+	.code	16
+	add	r5, r5, r3
+	add	r6, r6, r3
+	sub	r4, r4, r3
+	cmp	r4, r3
 	bhi	.L1392	@cond_branch
-	str	r3, [r1]
-	str	r4, [r1, #0x4]
-	lsr	r0, r5, #0x1
-	orr	r0, r0, r7
-	str	r0, [r1, #0x8]
-	ldr	r0, [r1, #0x8]
-	ldr	r0, .L1432+0x8
+	lsr	r2, r4, #0x1
+	add	r0, r5, #0
+	add	r1, r6, #0
+	mov	r3, ip
+	orr	r2, r2, r3
+	ldr	r7, .L1429+0x18
+	stmia r7!, {r0, r1, r2}
+	.code	16
+	ldr	r0, .L1429+0x8
 	ldr	r0, [r0]
 	add	r0, r0, #0xfa
 	ldrb	r0, [r0]
 	cmp	r0, #0
 	beq	.L1397	@cond_branch
-	ldr	r1, .L1432+0x1c
-	ldr	r2, .L1432+0x20
-	ldr	r0, .L1432+0x14
-	str	r1, [r0]
-	str	r2, [r0, #0x4]
-	ldr	r1, .L1432+0x24
-	b	.L1411
-.L1433:
+	ldr	r0, .L1429+0x1c
+	ldr	r1, .L1429+0x20
+	ldr	r2, .L1429+0x24
+	ldr	r3, .L1429+0x18
+	stmia r3!, {r0, r1, r2}
+	.code	16
+	b	.L1363
+.L1430:
 	.align	2, 0
-.L1432:
+.L1429:
 	.word	0x1441
 	.word	0x1287
 	.word	sTradeData
 	.word	sTradeAffine_Gba
 	.word	0x6004000
-	.word	0x40000d4
 	.word	-0x7ffff800
+	.word	0x40000d4
 	.word	sTradeAffineMap_GbaCable
 	.word	0x6009000
 	.word	-0x7fffff80
 .L1397:
-	ldr	r1, .L1434
-	ldr	r2, .L1434+0x4
-	ldr	r0, .L1434+0x8
-	str	r1, [r0]
-	str	r2, [r0, #0x4]
-	ldr	r1, .L1434+0xc
-	b	.L1411
-.L1435:
+	ldr	r0, .L1431
+	ldr	r1, .L1431+0x4
+	ldr	r2, .L1431+0x8
+	ldr	r7, .L1431+0xc
+	stmia r7!, {r0, r1, r2}
+	.code	16
+	b	.L1363
+.L1432:
 	.align	2, 0
-.L1434:
+.L1431:
 	.word	sTradeAffineMap_GbaWireless
 	.word	0x6009000
-	.word	0x40000d4
 	.word	-0x7fffff80
+	.word	0x40000d4
 .L1399:
-	ldr	r0, .L1436
+	ldr	r0, .L1433
 	ldr	r0, [r0]
 	add	r1, r0, #0
 	add	r1, r1, #0xe4
@@ -51788,63 +51828,66 @@ SetTradeSequenceBgGpuRegs:
 	mov	r0, #0x50
 	mov	r1, #0x0
 	bl	SetGpuReg
-	ldr	r1, .L1436+0x4
+	ldr	r1, .L1433+0x4
 	mov	r0, #0xc
 	bl	SetGpuReg
-	ldr	r0, .L1436+0x8
+	ldr	r0, .L1433+0x8
 	mov	r1, #0x10
 	mov	r2, #0x60
 	bl	LoadPalette
-	ldr	r3, .L1436+0xc
-	ldr	r4, .L1436+0x10
-	mov	r5, #0xa1
-	lsl	r5, r5, #0x5
-	ldr	r1, .L1436+0x14
-	ldr	r6, .L1436+0x18
-	mov	r2, #0x80
-	lsl	r2, r2, #0x5
+	ldr	r5, .L1433+0xc
+	ldr	r6, .L1433+0x10
+	mov	r4, #0xa1
+	lsl	r4, r4, #0x5
+	ldr	r0, .L1433+0x14
+	mov	r8, r0
+	mov	r3, #0x80
+	lsl	r3, r3, #0x5
 	mov	r7, #0x80
 	lsl	r7, r7, #0x18
+	mov	ip, r7
 .L1400:
-	str	r3, [r1]
-	str	r4, [r1, #0x4]
-	str	r6, [r1, #0x8]
-	ldr	r0, [r1, #0x8]
-	add	r3, r3, r2
-	add	r4, r4, r2
-	sub	r5, r5, r2
-	cmp	r5, r2
+	add	r0, r5, #0
+	add	r1, r6, #0
+	mov	r2, r8
+	ldr	r7, .L1433+0x18
+	stmia r7!, {r0, r1, r2}
+	.code	16
+	add	r5, r5, r3
+	add	r6, r6, r3
+	sub	r4, r4, r3
+	cmp	r4, r3
 	bhi	.L1400	@cond_branch
-.L1407:
-	str	r3, [r1]
-	str	r4, [r1, #0x4]
-	lsr	r0, r5, #0x1
-	orr	r0, r0, r7
-	str	r0, [r1, #0x8]
-	ldr	r0, [r1, #0x8]
-	ldr	r1, .L1436+0x1c
-	ldr	r2, .L1436+0x20
-	ldr	r0, .L1436+0x14
-	str	r1, [r0]
-	str	r2, [r0, #0x4]
-	ldr	r1, .L1436+0x18
-.L1411:
-	str	r1, [r0, #0x8]
-	ldr	r0, [r0, #0x8]
+	lsr	r2, r4, #0x1
+	add	r0, r5, #0
+	add	r1, r6, #0
+	mov	r3, ip
+	orr	r2, r2, r3
+	ldr	r7, .L1433+0x18
+	stmia r7!, {r0, r1, r2}
+	.code	16
+	ldr	r0, .L1433+0x1c
+	ldr	r1, .L1433+0x20
+	ldr	r2, .L1433+0x14
+	ldr	r3, .L1433+0x18
+	stmia r3!, {r0, r1, r2}
+	.code	16
 .L1363:
+	pop	{r3}
+	mov	r8, r3
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L1437:
+.L1434:
 	.align	2, 0
-.L1436:
+.L1433:
 	.word	sTradeData
 	.word	0x5206
 	.word	gTradeGba2_Pal
 	.word	gTradeGba_Gfx
 	.word	0x6004000
-	.word	0x40000d4
 	.word	-0x7ffff800
+	.word	0x40000d4
 	.word	gUnknown_08331F60
 	.word	0x6009000
 .Lfe104:
@@ -51854,23 +51897,23 @@ SetTradeSequenceBgGpuRegs:
 	.thumb_func
 LoadTradeSequenceSpriteSheetsAndPalettes:
 	push	{lr}
-	ldr	r0, .L1439
+	ldr	r0, .L1436
 	bl	LoadSpriteSheet
-	ldr	r0, .L1439+0x4
+	ldr	r0, .L1436+0x4
 	bl	LoadSpriteSheet
-	ldr	r0, .L1439+0x8
+	ldr	r0, .L1436+0x8
 	bl	LoadSpriteSheet
-	ldr	r0, .L1439+0xc
+	ldr	r0, .L1436+0xc
 	bl	LoadSpriteSheet
-	ldr	r0, .L1439+0x10
+	ldr	r0, .L1436+0x10
 	bl	LoadSpritePalette
-	ldr	r0, .L1439+0x14
+	ldr	r0, .L1436+0x14
 	bl	LoadSpritePalette
 	pop	{r0}
 	bx	r0
-.L1440:
+.L1437:
 	.align	2, 0
-.L1439:
+.L1436:
 	.word	sGlow1SpriteSheet
 	.word	sGlow2SpriteSheet
 	.word	sCableEndSpriteSheet
@@ -51885,15 +51928,15 @@ LoadTradeSequenceSpriteSheetsAndPalettes:
 BufferTradeSceneStrings:
 	push	{r4, r5, lr}
 	add	sp, sp, #-0x14
-	ldr	r0, .L1444
+	ldr	r0, .L1441
 	ldr	r0, [r0]
 	add	r0, r0, #0xee
 	ldrb	r0, [r0]
 	cmp	r0, #0
-	beq	.L1442	@cond_branch
+	beq	.L1439	@cond_branch
 	bl	GetMultiplayerId
 	lsl	r0, r0, #0x18
-	ldr	r3, .L1444+0x4
+	ldr	r3, .L1441+0x4
 	mov	r2, #0x80
 	lsl	r2, r2, #0x11
 	eor	r2, r2, r0
@@ -51901,11 +51944,11 @@ BufferTradeSceneStrings:
 	lsl	r1, r2, #0x3
 	sub	r1, r1, r2
 	lsl	r1, r1, #0x2
-	ldr	r0, .L1444+0x8
+	ldr	r0, .L1441+0x8
 	add	r1, r1, r0
 	add	r0, r3, #0
 	bl	StringCopy
-	ldr	r5, .L1444+0xc
+	ldr	r5, .L1441+0xc
 	ldrb	r0, [r5, #0x1]
 	mov	r1, #0x6
 	bl	__umodsi3
@@ -51913,28 +51956,28 @@ BufferTradeSceneStrings:
 	lsr	r0, r0, #0x18
 	mov	r4, #0x64
 	mul	r0, r0, r4
-	ldr	r1, .L1444+0x10
+	ldr	r1, .L1441+0x10
 	add	r0, r0, r1
 	mov	r1, #0x2
 	mov	r2, sp
 	bl	GetMonData
-	ldr	r0, .L1444+0x14
+	ldr	r0, .L1441+0x14
 	mov	r1, sp
 	bl	StringCopy10
 	ldrb	r0, [r5]
 	mul	r0, r0, r4
-	ldr	r1, .L1444+0x18
+	ldr	r1, .L1441+0x18
 	add	r0, r0, r1
 	mov	r1, #0x2
 	mov	r2, sp
 	bl	GetMonData
-	ldr	r0, .L1444+0x1c
+	ldr	r0, .L1441+0x1c
 	mov	r1, sp
 	bl	StringCopy10
-	b	.L1443
-.L1445:
+	b	.L1440
+.L1442:
 	.align	2, 0
-.L1444:
+.L1441:
 	.word	sTradeData
 	.word	gStringVar1
 	.word	gLinkPlayers+0x8
@@ -51943,9 +51986,9 @@ BufferTradeSceneStrings:
 	.word	gStringVar3
 	.word	gPlayerParty
 	.word	gStringVar2
-.L1442:
-	ldr	r4, .L1446
-	ldr	r2, .L1446+0x4
+.L1439:
+	ldr	r4, .L1443
+	ldr	r2, .L1443+0x4
 	add	r0, r4, #0
 	mov	r1, #0x7
 	bl	GetMonData
@@ -51953,29 +51996,29 @@ BufferTradeSceneStrings:
 	mov	r1, #0x2
 	mov	r2, sp
 	bl	GetMonData
-	ldr	r0, .L1446+0x8
+	ldr	r0, .L1443+0x8
 	mov	r1, sp
 	bl	StringCopy10
-	ldr	r0, .L1446+0xc
+	ldr	r0, .L1443+0xc
 	ldrh	r1, [r0]
 	mov	r0, #0x64
 	mul	r0, r0, r1
-	ldr	r1, .L1446+0x10
+	ldr	r1, .L1443+0x10
 	add	r0, r0, r1
 	mov	r1, #0x2
 	mov	r2, sp
 	bl	GetMonData
-	ldr	r0, .L1446+0x14
+	ldr	r0, .L1443+0x14
 	mov	r1, sp
 	bl	StringCopy10
-.L1443:
+.L1440:
 	add	sp, sp, #0x14
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.L1447:
+.L1444:
 	.align	2, 0
-.L1446:
+.L1443:
 	.word	gEnemyParty
 	.word	gStringVar1
 	.word	gStringVar3
@@ -51989,21 +52032,21 @@ BufferTradeSceneStrings:
 	.thumb_func
 AnimateTradeSequence:
 	push	{lr}
-	ldr	r0, .L1454
+	ldr	r0, .L1451
 	ldr	r0, [r0]
 	add	r0, r0, #0xfa
 	ldrb	r0, [r0]
 	cmp	r0, #0
-	bne	.L1449	@cond_branch
+	bne	.L1446	@cond_branch
 	bl	AnimateTradeSequenceWireless
-	b	.L1453
-.L1455:
+	b	.L1450
+.L1452:
 	.align	2, 0
-.L1454:
+.L1451:
 	.word	sTradeData
-.L1449:
+.L1446:
 	bl	AnimateTradeSequenceCable
-.L1453:
+.L1450:
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	pop	{r1}
@@ -52016,300 +52059,300 @@ AnimateTradeSequence:
 AnimateTradeSequenceCable:
 	push	{r4, r5, r6, r7, lr}
 	add	sp, sp, #-0x18
-	ldr	r0, .L1570
+	ldr	r0, .L1567
 	ldr	r1, [r0]
 	add	r1, r1, #0x94
 	ldrh	r5, [r1]
-	ldr	r1, .L1570+0x4
+	ldr	r1, .L1567+0x4
 	add	r6, r0, #0
 	cmp	r5, r1
-	bls	.LCB12596
-	bl	.L1457	@far jump
-.LCB12596:
+	bls	.LCB12667
+	bl	.L1454	@far jump
+.LCB12667:
 	lsl	r0, r5, #0x2
-	ldr	r1, .L1570+0x8
+	ldr	r1, .L1567+0x8
 	add	r0, r0, r1
 	ldr	r0, [r0]
 	mov	pc, r0
-.L1571:
+.L1568:
 	.align	2, 0
-.L1570:
+.L1567:
 	.word	sTradeData
 	.word	0x10b
-	.word	.L1562
+	.word	.L1559
 	.align	2, 0
 	.align	2, 0
-.L1562:
-	.word	.L1458
+.L1559:
+	.word	.L1455
+	.word	.L1456
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
 	.word	.L1459
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1462
-	.word	.L1464
+	.word	.L1461
+	.word	.L1463
+	.word	.L1454
 	.word	.L1466
-	.word	.L1457
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1467
 	.word	.L1469
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
 	.word	.L1470
 	.word	.L1472
-	.word	.L1473
 	.word	.L1475
-	.word	.L1478
-	.word	.L1480
+	.word	.L1477
+	.word	.L1479
 	.word	.L1482
-	.word	.L1485
-	.word	.L1486
+	.word	.L1483
+	.word	.L1487
+	.word	.L1488
 	.word	.L1490
 	.word	.L1491
 	.word	.L1493
-	.word	.L1494
+	.word	.L1495
 	.word	.L1496
+	.word	.L1497
 	.word	.L1498
-	.word	.L1499
-	.word	.L1500
 	.word	.L1501
 	.word	.L1504
-	.word	.L1507
+	.word	.L1506
+	.word	.L1508
 	.word	.L1509
 	.word	.L1511
-	.word	.L1512
-	.word	.L1514
+	.word	.L1513
+	.word	.L1515
 	.word	.L1516
 	.word	.L1518
-	.word	.L1519
 	.word	.L1521
+	.word	.L1454
+	.word	.L1522
 	.word	.L1524
-	.word	.L1457
-	.word	.L1525
 	.word	.L1527
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1528
 	.word	.L1530
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
 	.word	.L1531
 	.word	.L1533
 	.word	.L1534
-	.word	.L1536
+	.word	.L1535
 	.word	.L1537
 	.word	.L1538
-	.word	.L1540
-	.word	.L1541
+	.word	.L1543
 	.word	.L1546
+	.word	.L1548
 	.word	.L1549
-	.word	.L1551
-	.word	.L1552
+	.word	.L1553
+	.word	.L1555
 	.word	.L1556
-	.word	.L1558
-	.word	.L1559
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1542
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1488
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1457
-	.word	.L1544
-.L1458:
-	ldr	r4, .L1572
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1539
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1485
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1454
+	.word	.L1541
+.L1455:
+	ldr	r4, .L1569
 	ldr	r0, [r6]
 	add	r0, r0, #0x8e
 	ldrb	r1, [r0]
@@ -52331,7 +52374,7 @@ AnimateTradeSequenceCable:
 	add	r0, r0, r1
 	lsl	r0, r0, #0x2
 	add	r0, r0, r4
-	ldr	r1, .L1572+0x4
+	ldr	r1, .L1569+0x4
 	strh	r1, [r0, #0x24]
 	add	r0, r2, #0
 	add	r0, r0, #0xf0
@@ -52348,7 +52391,7 @@ AnimateTradeSequenceCable:
 	add	r1, r1, r2
 	lsl	r1, r1, #0x2
 	add	r1, r1, r4
-	ldr	r2, .L1572+0x8
+	ldr	r2, .L1569+0x8
 	lsl	r0, r0, #0x10
 	lsr	r0, r0, #0xe
 	add	r0, r0, r2
@@ -52362,25 +52405,25 @@ AnimateTradeSequenceCable:
 	ldr	r1, [r6]
 	add	r1, r1, #0xf4
 	strh	r0, [r1]
-	ldr	r0, .L1572+0xc
+	mov	r0, #0xae
+	lsl	r0, r0, #0x1
 	bl	PlayNewMapMusic
-	bl	.L1457	@ far jump
-.L1573:
+	bl	.L1454	@ far jump
+.L1570:
 	.align	2, 0
-.L1572:
+.L1569:
 	.word	gSprites
 	.word	0xff4c
 	.word	gMonFrontPicCoords
-	.word	0x179
-.L1459:
+.L1456:
 	ldr	r5, [r6]
 	add	r6, r5, #0
 	add	r6, r6, #0xe6
 	mov	r1, #0x0
 	ldrsh	r0, [r6, r1]
 	cmp	r0, #0
-	ble	.L1460	@cond_branch
-	ldr	r2, .L1574
+	ble	.L1457	@cond_branch
+	ldr	r2, .L1571
 	add	r0, r5, #0
 	add	r0, r0, #0x8e
 	ldrb	r1, [r0]
@@ -52394,13 +52437,13 @@ AnimateTradeSequenceCable:
 	ldrh	r0, [r6]
 	sub	r0, r0, #0x3
 	strh	r0, [r6]
-	bl	.L1457	@ far jump
-.L1575:
+	bl	.L1454	@ far jump
+.L1572:
 	.align	2, 0
-.L1574:
+.L1571:
 	.word	gSprites
-.L1460:
-	ldr	r2, .L1576
+.L1457:
+	ldr	r2, .L1573
 	add	r0, r5, #0
 	add	r0, r0, #0x8e
 	ldrb	r1, [r0]
@@ -52415,28 +52458,28 @@ AnimateTradeSequenceCable:
 	add	r1, r1, #0x94
 	mov	r0, #0xa
 	strh	r0, [r1]
-	bl	.L1457	@ far jump
-.L1577:
+	bl	.L1454	@ far jump
+.L1574:
 	.align	2, 0
-.L1576:
+.L1573:
 	.word	gSprites
-.L1462:
-	ldr	r4, .L1578
-	ldr	r1, .L1578+0x4
+.L1459:
+	ldr	r4, .L1575
+	ldr	r1, .L1575+0x4
 	add	r0, r4, #0
 	bl	StringExpandPlaceholders
 	mov	r0, #0x0
 	add	r1, r4, #0
 	mov	r2, #0x0
 	bl	DrawTextOnTradeWindow
-	ldr	r4, .L1578+0x8
+	ldr	r4, .L1575+0x8
 	ldr	r3, [r4]
 	add	r2, r3, #0
 	add	r2, r2, #0xf0
 	ldrh	r1, [r2]
-	ldr	r0, .L1578+0xc
+	ldr	r0, .L1575+0xc
 	cmp	r1, r0
-	beq	.L1463	@cond_branch
+	beq	.L1460	@cond_branch
 	add	r0, r1, #0
 	add	r1, r3, #0
 	add	r1, r1, #0x70
@@ -52446,33 +52489,33 @@ AnimateTradeSequenceCable:
 	lsr	r0, r0, #0x10
 	mov	r1, #0x0
 	bl	PlayCry1
-.L1463:
+.L1460:
 	ldr	r3, [r4]
 	add	r1, r3, #0
 	add	r1, r1, #0x94
 	mov	r2, #0x0
 	mov	r0, #0xb
-	bl	.L1565	@ far jump
-.L1579:
+	bl	.L1562	@ far jump
+.L1576:
 	.align	2, 0
-.L1578:
+.L1575:
 	.word	gStringVar4
 	.word	gText_XWillBeSentToY
 	.word	sTradeData
 	.word	0x4b7
-.L1464:
+.L1461:
 	ldr	r1, [r6]
 	ldr	r0, [r1, #0x64]
 	add	r0, r0, #0x1
 	str	r0, [r1, #0x64]
 	cmp	r0, #0x50
-	beq	.LCB12812
-	bl	.L1457	@far jump
-.LCB12812:
+	beq	.LCB12883
+	bl	.L1454	@far jump
+.LCB12883:
 	add	r0, r1, #0
 	add	r0, r0, #0x8e
 	ldrb	r0, [r0]
-	ldr	r2, .L1580
+	ldr	r2, .L1577
 	lsl	r1, r0, #0x4
 	add	r1, r1, r0
 	lsl	r1, r1, #0x2
@@ -52485,7 +52528,7 @@ AnimateTradeSequenceCable:
 	str	r2, [sp, #0x4]
 	mov	r2, #0x14
 	str	r2, [sp, #0x8]
-	ldr	r2, .L1580+0x4
+	ldr	r2, .L1577+0x4
 	str	r2, [sp, #0xc]
 	mov	r2, #0x78
 	mov	r3, #0x20
@@ -52498,24 +52541,24 @@ AnimateTradeSequenceCable:
 	ldrh	r0, [r1]
 	add	r0, r0, #0x1
 	strh	r0, [r1]
-	ldr	r4, .L1580+0x8
-	ldr	r1, .L1580+0xc
+	ldr	r4, .L1577+0x8
+	ldr	r1, .L1577+0xc
 	add	r0, r4, #0
 	bl	StringExpandPlaceholders
 	mov	r0, #0x0
 	add	r1, r4, #0
 	mov	r2, #0x0
 	bl	DrawTextOnTradeWindow
-	bl	.L1457	@ far jump
-.L1581:
+	bl	.L1454	@ far jump
+.L1578:
 	.align	2, 0
-.L1580:
+.L1577:
 	.word	gSprites
 	.word	0xfffff
 	.word	gStringVar4
 	.word	gText_ByeByeVar1
-.L1466:
-	ldr	r5, .L1582
+.L1463:
+	ldr	r5, .L1579
 	ldr	r0, [r6]
 	add	r0, r0, #0xd2
 	ldrb	r1, [r0]
@@ -52526,12 +52569,12 @@ AnimateTradeSequenceCable:
 	add	r4, r4, #0x1c
 	add	r0, r0, r4
 	ldr	r1, [r0]
-	ldr	r0, .L1582+0x4
+	ldr	r0, .L1579+0x4
 	cmp	r1, r0
-	beq	.LCB12885
-	bl	.L1457	@far jump
-.LCB12885:
-	ldr	r0, .L1582+0x8
+	beq	.LCB12956
+	bl	.L1454	@far jump
+.LCB12956:
+	ldr	r0, .L1579+0x8
 	mov	r1, #0x78
 	mov	r2, #0x20
 	mov	r3, #0x0
@@ -52547,7 +52590,7 @@ AnimateTradeSequenceCable:
 	add	r0, r0, r1
 	lsl	r0, r0, #0x2
 	add	r0, r0, r4
-	ldr	r1, .L1582+0xc
+	ldr	r1, .L1579+0xc
 	str	r1, [r0]
 	add	r2, r2, #0xd2
 	ldrb	r1, [r2]
@@ -52557,15 +52600,15 @@ AnimateTradeSequenceCable:
 	add	r0, r0, r5
 	bl	DestroySprite
 	ldr	r1, [r6]
-	bl	.L1566	@ far jump
-.L1583:
+	bl	.L1563	@ far jump
+.L1580:
 	.align	2, 0
-.L1582:
+.L1579:
 	.word	gSprites
 	.word	SpriteCallbackDummy
 	.word	gSpriteTemplate_8338D28
 	.word	sub_807E5D8
-.L1469:
+.L1466:
 	mov	r0, #0x1
 	neg	r0, r0
 	mov	r1, #0x0
@@ -52573,25 +52616,25 @@ AnimateTradeSequenceCable:
 	mov	r2, #0x0
 	mov	r3, #0x10
 	bl	BeginNormalPaletteFade
-	ldr	r0, .L1584
+	ldr	r0, .L1581
 	ldr	r0, [r0]
 	add	r0, r0, #0x94
 	mov	r1, #0x14
 	strh	r1, [r0]
-	bl	.L1457	@ far jump
-.L1585:
+	bl	.L1454	@ far jump
+.L1582:
 	.align	2, 0
-.L1584:
+.L1581:
 	.word	sTradeData
-.L1470:
-	ldr	r0, .L1586
+.L1467:
+	ldr	r0, .L1583
 	ldrb	r1, [r0, #0x7]
 	mov	r0, #0x80
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.LCB12958
-	bl	.L1457	@far jump
-.LCB12958:
+	beq	.LCB13029
+	bl	.L1454	@far jump
+.LCB13029:
 	mov	r0, #0x4
 	bl	SetTradeSequenceBgGpuRegs
 	mov	r0, #0x0
@@ -52600,12 +52643,12 @@ AnimateTradeSequenceCable:
 	mov	r0, #0x0
 	mov	r1, #0x3
 	bl	CopyWindowToVram
-	bl	.L1567	@ far jump
-.L1587:
+	bl	.L1564	@ far jump
+.L1584:
 	.align	2, 0
-.L1586:
+.L1583:
 	.word	gPaletteFade
-.L1472:
+.L1469:
 	mov	r1, #0x1
 	neg	r1, r1
 	mov	r0, #0x0
@@ -52613,27 +52656,27 @@ AnimateTradeSequenceCable:
 	add	r0, r1, #0
 	mov	r2, #0x10
 	mov	r3, #0x0
-	bl	.L1568	@ far jump
-.L1473:
-	ldr	r0, .L1588
+	bl	.L1565	@ far jump
+.L1470:
+	ldr	r0, .L1585
 	ldrb	r1, [r0, #0x7]
 	mov	r0, #0x80
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.LCB12995
-	bl	.L1457	@far jump
-.LCB12995:
+	beq	.LCB13066
+	bl	.L1454	@far jump
+.LCB13066:
 	ldr	r0, [r6]
 	add	r0, r0, #0x94
 	mov	r1, #0x17
 	strh	r1, [r0]
-	bl	.L1457	@ far jump
-.L1589:
+	bl	.L1454	@ far jump
+.L1586:
 	.align	2, 0
-.L1588:
+.L1585:
 	.word	gPaletteFade
-.L1475:
-	ldr	r4, .L1590
+.L1472:
+	ldr	r4, .L1587
 	ldr	r0, [r4]
 	add	r2, r0, #0
 	add	r2, r2, #0xea
@@ -52641,16 +52684,16 @@ AnimateTradeSequenceCable:
 	mov	r0, #0x80
 	lsl	r0, r0, #0x1
 	cmp	r1, r0
-	bls	.L1476	@cond_branch
+	bls	.L1473	@cond_branch
 	add	r0, r1, #0
 	sub	r0, r0, #0x34
 	strh	r0, [r2]
-	b	.L1477
-.L1591:
+	b	.L1474
+.L1588:
 	.align	2, 0
-.L1590:
+.L1587:
 	.word	sTradeData
-.L1476:
+.L1473:
 	mov	r0, #0x1
 	bl	SetTradeSequenceBgGpuRegs
 	ldr	r3, [r4]
@@ -52664,25 +52707,25 @@ AnimateTradeSequenceCable:
 	add	r0, r0, #0x1
 	strh	r0, [r1]
 	str	r2, [r3, #0x64]
-.L1477:
-	ldr	r0, .L1592
+.L1474:
+	ldr	r0, .L1589
 	ldr	r4, [r0]
-	bl	.L1569	@ far jump
-.L1593:
+	bl	.L1566	@ far jump
+.L1590:
 	.align	2, 0
-.L1592:
+.L1589:
 	.word	sTradeData
-.L1478:
+.L1475:
 	ldr	r1, [r6]
 	ldr	r0, [r1, #0x64]
 	add	r0, r0, #0x1
 	str	r0, [r1, #0x64]
 	cmp	r0, #0x14
-	bhi	.LCB13073
-	bl	.L1457	@far jump
-.LCB13073:
+	bhi	.LCB13144
+	bl	.L1454	@far jump
+.LCB13144:
 	bl	SetTradeBGAffine
-	ldr	r0, .L1594
+	ldr	r0, .L1591
 	mov	r1, #0x78
 	mov	r2, #0x50
 	mov	r3, #0x0
@@ -52691,13 +52734,13 @@ AnimateTradeSequenceCable:
 	add	r1, r1, #0x91
 	strb	r0, [r1]
 	ldr	r1, [r6]
-	bl	.L1566	@ far jump
-.L1595:
+	bl	.L1563	@ far jump
+.L1592:
 	.align	2, 0
-.L1594:
+.L1591:
 	.word	gSpriteTemplate_8338E74
-.L1480:
-	ldr	r2, .L1596
+.L1477:
+	ldr	r2, .L1593
 	ldr	r0, [r6]
 	add	r0, r0, #0x91
 	ldrb	r1, [r0]
@@ -52710,26 +52753,26 @@ AnimateTradeSequenceCable:
 	ldrb	r0, [r0]
 	lsl	r0, r0, #0x1b
 	cmp	r0, #0
-	blt	.LCB13113
-	bl	.L1457	@far jump
-.LCB13113:
+	blt	.LCB13184
+	bl	.L1454	@far jump
+.LCB13184:
 	add	r0, r1, #0
 	bl	DestroySprite
 	mov	r1, #0xc8
 	lsl	r1, r1, #0x3
 	mov	r0, #0x50
 	bl	SetGpuReg
-	ldr	r1, .L1596+0x4
+	ldr	r1, .L1593+0x4
 	mov	r0, #0x52
 	bl	SetGpuReg
 	ldr	r1, [r6]
-	bl	.L1566	@ far jump
-.L1597:
+	bl	.L1563	@ far jump
+.L1594:
 	.align	2, 0
-.L1596:
+.L1593:
 	.word	gSprites
 	.word	0x40c
-.L1482:
+.L1479:
 	ldr	r2, [r6]
 	add	r0, r2, #0
 	add	r0, r0, #0xe0
@@ -52740,13 +52783,13 @@ AnimateTradeSequenceCable:
 	mov	r0, #0x9e
 	lsl	r0, r0, #0x11
 	cmp	r1, r0
-	bne	.L1483	@cond_branch
+	bne	.L1480	@cond_branch
 	add	r1, r2, #0
 	add	r1, r1, #0x94
 	ldrh	r0, [r1]
 	add	r0, r0, #0x1
 	strh	r0, [r1]
-.L1483:
+.L1480:
 	ldr	r0, [r6]
 	add	r0, r0, #0xe0
 	mov	r2, #0x0
@@ -52754,10 +52797,10 @@ AnimateTradeSequenceCable:
 	mov	r0, #0xa4
 	lsl	r0, r0, #0x1
 	cmp	r1, r0
-	beq	.LCB13169
-	bl	.L1457	@far jump
-.LCB13169:
-	ldr	r0, .L1598
+	beq	.LCB13240
+	bl	.L1454	@far jump
+.LCB13240:
+	ldr	r0, .L1595
 	mov	r1, #0x80
 	mov	r2, #0x41
 	mov	r3, #0x0
@@ -52765,22 +52808,22 @@ AnimateTradeSequenceCable:
 	ldr	r1, [r6]
 	add	r1, r1, #0x92
 	strb	r0, [r1]
-	bl	.L1457	@ far jump
-.L1599:
+	bl	.L1454	@ far jump
+.L1596:
 	.align	2, 0
-.L1598:
+.L1595:
 	.word	gSpriteTemplate_8338DFC
-.L1485:
-	ldr	r0, .L1600
+.L1482:
+	ldr	r0, .L1597
 	mov	r1, #0x80
 	mov	r2, #0x50
 	mov	r3, #0x3
 	bl	CreateSprite
-	ldr	r4, .L1600+0x4
+	ldr	r4, .L1597+0x4
 	ldr	r1, [r4]
 	add	r1, r1, #0x90
 	strb	r0, [r1]
-	ldr	r0, .L1600+0x8
+	ldr	r0, .L1597+0x8
 	mov	r1, #0x80
 	mov	r2, #0x50
 	mov	r3, #0x0
@@ -52794,20 +52837,20 @@ AnimateTradeSequenceCable:
 	lsl	r0, r1, #0x4
 	add	r0, r0, r1
 	lsl	r0, r0, #0x2
-	ldr	r1, .L1600+0xc
+	ldr	r1, .L1597+0xc
 	add	r0, r0, r1
 	mov	r1, #0x1
 	bl	StartSpriteAnim
 	ldr	r1, [r4]
-	bl	.L1566	@ far jump
-.L1601:
+	bl	.L1563	@ far jump
+.L1598:
 	.align	2, 0
-.L1600:
+.L1597:
 	.word	gUnknown_08338D88
 	.word	sTradeData
 	.word	sGlowBallSpriteTemplate
 	.word	gSprites
-.L1486:
+.L1483:
 	ldr	r2, [r6]
 	add	r1, r2, #0
 	add	r1, r1, #0xe0
@@ -52817,21 +52860,21 @@ AnimateTradeSequenceCable:
 	lsl	r0, r0, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, #0xa6
-	bne	.L1487	@cond_branch
+	bne	.L1484	@cond_branch
 	sub	r1, r1, #0x4c
 	mov	r0, #0xc8
 	strh	r0, [r1]
-.L1487:
-	ldr	r1, .L1602
+.L1484:
+	ldr	r1, .L1599
 	mov	r0, #0x0
 	bl	SetGpuReg
-	bl	.L1457	@ far jump
-.L1603:
+	bl	.L1454	@ far jump
+.L1600:
 	.align	2, 0
-.L1602:
+.L1599:
 	.word	0x1241
-.L1488:
-	ldr	r2, .L1604
+.L1485:
+	ldr	r2, .L1601
 	ldr	r4, [r6]
 	add	r3, r4, #0
 	add	r3, r3, #0x90
@@ -52863,19 +52906,19 @@ AnimateTradeSequenceCable:
 	mov	r0, #0x8
 	neg	r0, r0
 	cmp	r1, r0
-	blt	.LCB13301
-	bl	.L1457	@far jump
-.LCB13301:
+	blt	.LCB13372
+	bl	.L1454	@far jump
+.LCB13372:
 	add	r1, r4, #0
 	add	r1, r1, #0x94
 	mov	r0, #0x1d
 	strh	r0, [r1]
-	bl	.L1457	@ far jump
-.L1605:
+	bl	.L1454	@ far jump
+.L1602:
 	.align	2, 0
-.L1604:
+.L1601:
 	.word	gSprites
-.L1490:
+.L1487:
 	mov	r1, #0x1
 	neg	r1, r1
 	mov	r0, #0x0
@@ -52884,32 +52927,32 @@ AnimateTradeSequenceCable:
 	mov	r2, #0x0
 	mov	r3, #0x10
 	bl	BeginNormalPaletteFade
-	ldr	r0, .L1606
+	ldr	r0, .L1603
 	ldr	r0, [r0]
 	add	r0, r0, #0x94
 	mov	r1, #0x1e
 	strh	r1, [r0]
-	bl	.L1457	@ far jump
-.L1607:
+	bl	.L1454	@ far jump
+.L1604:
 	.align	2, 0
-.L1606:
+.L1603:
 	.word	sTradeData
-.L1491:
-	ldr	r0, .L1608
+.L1488:
+	ldr	r0, .L1605
 	ldrb	r1, [r0, #0x7]
 	mov	r0, #0x80
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.LCB13346
-	bl	.L1457	@far jump
-.LCB13346:
+	beq	.LCB13417
+	bl	.L1454	@far jump
+.LCB13417:
 	ldr	r0, [r6]
 	add	r0, r0, #0x90
 	ldrb	r1, [r0]
 	lsl	r0, r1, #0x4
 	add	r0, r0, r1
 	lsl	r0, r0, #0x2
-	ldr	r4, .L1608+0x4
+	ldr	r4, .L1605+0x4
 	add	r0, r0, r4
 	bl	DestroySprite
 	ldr	r0, [r6]
@@ -52923,13 +52966,13 @@ AnimateTradeSequenceCable:
 	mov	r0, #0x2
 	bl	SetTradeSequenceBgGpuRegs
 	ldr	r1, [r6]
-	bl	.L1566	@ far jump
-.L1609:
+	bl	.L1563	@ far jump
+.L1606:
 	.align	2, 0
-.L1608:
+.L1605:
 	.word	gPaletteFade
 	.word	gSprites
-.L1493:
+.L1490:
 	mov	r1, #0x1
 	neg	r1, r1
 	mov	r0, #0x0
@@ -52938,13 +52981,13 @@ AnimateTradeSequenceCable:
 	mov	r2, #0x10
 	mov	r3, #0x0
 	bl	BeginNormalPaletteFade
-	ldr	r5, .L1610
+	ldr	r5, .L1607
 	add	r0, r5, #0
 	mov	r1, #0x6f
 	mov	r2, #0xaa
 	mov	r3, #0x0
 	bl	CreateSprite
-	ldr	r4, .L1610+0x4
+	ldr	r4, .L1607+0x4
 	ldr	r1, [r4]
 	add	r1, r1, #0x90
 	strb	r0, [r1]
@@ -52958,30 +53001,30 @@ AnimateTradeSequenceCable:
 	add	r1, r1, #0x91
 	strb	r0, [r1]
 	ldr	r1, [r4]
-	bl	.L1566	@ far jump
-.L1611:
+	bl	.L1563	@ far jump
+.L1608:
 	.align	2, 0
-.L1610:
+.L1607:
 	.word	sGlowBallSpriteTemplate
 	.word	sTradeData
-.L1494:
-	ldr	r0, .L1612
+.L1491:
+	ldr	r0, .L1609
 	ldrb	r1, [r0, #0x7]
 	mov	r0, #0x80
 	and	r0, r0, r1
 	cmp	r0, #0
-	bne	.L1495	@cond_branch
+	bne	.L1492	@cond_branch
 	mov	r0, #0x2e
 	bl	PlaySE
-	ldr	r0, .L1612+0x4
+	ldr	r0, .L1609+0x4
 	ldr	r1, [r0]
 	add	r1, r1, #0x94
 	ldrh	r0, [r1]
 	add	r0, r0, #0x1
 	strh	r0, [r1]
-.L1495:
-	ldr	r3, .L1612+0x8
-	ldr	r0, .L1612+0x4
+.L1492:
+	ldr	r3, .L1609+0x8
+	ldr	r0, .L1609+0x4
 	ldr	r2, [r0]
 	add	r0, r2, #0
 	add	r0, r0, #0x90
@@ -53002,15 +53045,15 @@ AnimateTradeSequenceCable:
 	ldrh	r1, [r0, #0x26]
 	add	r1, r1, #0x3
 	strh	r1, [r0, #0x26]
-	bl	.L1457	@ far jump
-.L1613:
+	bl	.L1454	@ far jump
+.L1610:
 	.align	2, 0
-.L1612:
+.L1609:
 	.word	gPaletteFade
 	.word	sTradeData
 	.word	gSprites
-.L1496:
-	ldr	r5, .L1614
+.L1493:
+	ldr	r5, .L1611
 	ldr	r4, [r6]
 	add	r2, r4, #0
 	add	r2, r2, #0x90
@@ -53042,9 +53085,9 @@ AnimateTradeSequenceCable:
 	mov	r0, #0x5a
 	neg	r0, r0
 	cmp	r1, r0
-	ble	.LCB13510
-	bl	.L1457	@far jump
-.LCB13510:
+	ble	.LCB13581
+	bl	.L1454	@far jump
+.LCB13581:
 	mov	r2, #0x1
 	strh	r2, [r3, #0x30]
 	ldrb	r1, [r6]
@@ -53054,43 +53097,43 @@ AnimateTradeSequenceCable:
 	add	r0, r0, r5
 	strh	r2, [r0, #0x30]
 	add	r1, r4, #0
-	bl	.L1566	@ far jump
-.L1615:
+	bl	.L1563	@ far jump
+.L1612:
 	.align	2, 0
-.L1614:
+.L1611:
 	.word	gSprites
-.L1498:
-	ldr	r2, .L1616
+.L1495:
+	ldr	r2, .L1613
 	mov	r0, #0x1
 	mov	r1, #0x10
 	bl	BlendPalettes
-	bl	.L1567	@ far jump
-.L1617:
+	bl	.L1564	@ far jump
+.L1614:
 	.align	2, 0
-.L1616:
+.L1613:
 	.word	0xffff
-.L1499:
-	ldr	r2, .L1618
+.L1496:
+	ldr	r2, .L1615
 	mov	r0, #0x1
 	mov	r1, #0x0
 	bl	BlendPalettes
-	bl	.L1567	@ far jump
-.L1619:
+	bl	.L1564	@ far jump
+.L1616:
 	.align	2, 0
-.L1618:
+.L1615:
 	.word	0xffff
-.L1500:
-	ldr	r2, .L1620
+.L1497:
+	ldr	r2, .L1617
 	mov	r0, #0x1
 	mov	r1, #0x10
 	bl	BlendPalettes
-	bl	.L1567	@ far jump
-.L1621:
+	bl	.L1564	@ far jump
+.L1618:
 	.align	2, 0
-.L1620:
+.L1617:
 	.word	0xffff
-.L1501:
-	ldr	r5, .L1622
+.L1498:
+	ldr	r5, .L1619
 	ldr	r1, [r5]
 	add	r0, r1, #0
 	add	r0, r0, #0xf0
@@ -53103,8 +53146,8 @@ AnimateTradeSequenceCable:
 	bl	IsMonSpriteNotFlipped
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	bne	.L1502	@cond_branch
-	ldr	r4, .L1622+0x4
+	bne	.L1499	@cond_branch
+	ldr	r4, .L1619+0x4
 	ldr	r2, [r5]
 	add	r2, r2, #0x8e
 	ldrb	r1, [r2]
@@ -53114,7 +53157,7 @@ AnimateTradeSequenceCable:
 	add	r1, r4, #0
 	add	r1, r1, #0x10
 	add	r0, r0, r1
-	ldr	r1, .L1622+0x8
+	ldr	r1, .L1619+0x8
 	str	r1, [r0]
 	ldrb	r1, [r2]
 	lsl	r0, r1, #0x4
@@ -53145,33 +53188,33 @@ AnimateTradeSequenceCable:
 	add	r0, r0, r4
 	mov	r1, #0x0
 	bl	StartSpriteAffineAnim
-	b	.L1503
-.L1623:
+	b	.L1500
+.L1620:
 	.align	2, 0
-.L1622:
+.L1619:
 	.word	sTradeData
 	.word	gSprites
 	.word	gSpriteAffineAnimTable_8338ECC
-.L1502:
+.L1499:
 	ldr	r0, [r5]
 	add	r0, r0, #0x8e
 	ldrb	r1, [r0]
 	lsl	r0, r1, #0x4
 	add	r0, r0, r1
 	lsl	r0, r0, #0x2
-	ldr	r1, .L1624
+	ldr	r1, .L1621
 	add	r0, r0, r1
 	mov	r1, #0x0
 	bl	StartSpriteAffineAnim
-.L1503:
-	ldr	r5, .L1624+0x4
+.L1500:
+	ldr	r5, .L1621+0x4
 	ldr	r0, [r5]
 	add	r0, r0, #0x8f
 	ldrb	r1, [r0]
 	lsl	r0, r1, #0x4
 	add	r0, r0, r1
 	lsl	r0, r0, #0x2
-	ldr	r4, .L1624
+	ldr	r4, .L1621
 	add	r0, r0, r4
 	mov	r1, #0x0
 	bl	StartSpriteAffineAnim
@@ -53205,7 +53248,7 @@ AnimateTradeSequenceCable:
 	add	r0, r0, r1
 	lsl	r0, r0, #0x2
 	add	r0, r0, r4
-	ldr	r1, .L1624+0x8
+	ldr	r1, .L1621+0x8
 	strh	r1, [r0, #0x22]
 	ldrb	r0, [r3]
 	lsl	r1, r0, #0x4
@@ -53231,15 +53274,15 @@ AnimateTradeSequenceCable:
 	and	r2, r2, r1
 	strb	r2, [r0]
 	ldr	r1, [r5]
-	bl	.L1566	@ far jump
-.L1625:
+	bl	.L1563	@ far jump
+.L1622:
 	.align	2, 0
-.L1624:
+.L1621:
 	.word	gSprites
 	.word	sTradeData
 	.word	0xffe0
-.L1504:
-	ldr	r4, .L1626
+.L1501:
+	ldr	r4, .L1623
 	ldr	r2, [r6]
 	add	r3, r2, #0
 	add	r3, r3, #0x8e
@@ -53271,10 +53314,10 @@ AnimateTradeSequenceCable:
 	lsl	r0, r0, #0x10
 	lsr	r0, r0, #0x10
 	cmp	r0, #0x2
-	bhi	.L1505	@cond_branch
+	bhi	.L1502	@cond_branch
 	mov	r0, #0x2d
 	bl	PlaySE
-.L1505:
+.L1502:
 	ldr	r2, [r6]
 	add	r3, r2, #0
 	add	r3, r3, #0x8e
@@ -53288,9 +53331,9 @@ AnimateTradeSequenceCable:
 	mov	r0, #0xde
 	neg	r0, r0
 	cmp	r1, r0
-	blt	.LCB13799
-	bl	.L1457	@far jump
-.LCB13799:
+	blt	.LCB13870
+	bl	.L1454	@far jump
+.LCB13870:
 	add	r0, r2, #0
 	add	r0, r0, #0x90
 	ldrb	r1, [r0]
@@ -53333,18 +53376,18 @@ AnimateTradeSequenceCable:
 	ldrb	r1, [r0]
 	orr	r1, r1, r2
 	strb	r1, [r0]
-	ldr	r2, .L1626+0x4
+	ldr	r2, .L1623+0x4
 	mov	r0, #0x1
 	mov	r1, #0x0
 	bl	BlendPalettes
-	bl	.L1457	@ far jump
-.L1627:
+	bl	.L1454	@ far jump
+.L1624:
 	.align	2, 0
-.L1626:
+.L1623:
 	.word	gSprites
 	.word	0xffff
-.L1507:
-	ldr	r4, .L1628
+.L1504:
+	ldr	r4, .L1625
 	ldr	r2, [r6]
 	add	r3, r2, #0
 	add	r3, r3, #0x90
@@ -53375,9 +53418,9 @@ AnimateTradeSequenceCable:
 	mov	r0, #0xde
 	neg	r0, r0
 	cmp	r1, r0
-	ble	.LCB13894
-	b	.L1457	@long jump
-.LCB13894:
+	ble	.LCB13965
+	b	.L1454	@long jump
+.LCB13965:
 	mov	r1, #0x1
 	neg	r1, r1
 	mov	r0, #0x0
@@ -53407,20 +53450,20 @@ AnimateTradeSequenceCable:
 	lsl	r0, r0, #0x2
 	add	r0, r0, r4
 	bl	DestroySprite
-	b	.L1457
-.L1629:
+	b	.L1454
+.L1626:
 	.align	2, 0
-.L1628:
+.L1625:
 	.word	gSprites
-.L1509:
-	ldr	r0, .L1630
+.L1506:
+	ldr	r0, .L1627
 	ldrb	r1, [r0, #0x7]
 	mov	r0, #0x80
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.LCB13944
-	b	.L1457	@long jump
-.LCB13944:
+	beq	.LCB14015
+	b	.L1454	@long jump
+.LCB14015:
 	ldr	r1, [r6]
 	add	r1, r1, #0x94
 	ldrh	r0, [r1]
@@ -53432,7 +53475,7 @@ AnimateTradeSequenceCable:
 	add	r0, r0, #0xe0
 	mov	r1, #0xa6
 	strh	r1, [r0]
-	ldr	r0, .L1630+0x4
+	ldr	r0, .L1627+0x4
 	mov	r4, #0x14
 	neg	r4, r4
 	mov	r1, #0x80
@@ -53442,7 +53485,7 @@ AnimateTradeSequenceCable:
 	ldr	r1, [r6]
 	add	r1, r1, #0x90
 	strb	r0, [r1]
-	ldr	r0, .L1630+0x8
+	ldr	r0, .L1627+0x8
 	mov	r1, #0x80
 	add	r2, r4, #0
 	mov	r3, #0x0
@@ -53456,19 +53499,19 @@ AnimateTradeSequenceCable:
 	lsl	r0, r1, #0x4
 	add	r0, r0, r1
 	lsl	r0, r0, #0x2
-	ldr	r1, .L1630+0xc
+	ldr	r1, .L1627+0xc
 	add	r0, r0, r1
 	mov	r1, #0x1
 	bl	StartSpriteAnim
-	b	.L1457
-.L1631:
+	b	.L1454
+.L1628:
 	.align	2, 0
-.L1630:
+.L1627:
 	.word	gPaletteFade
 	.word	gUnknown_08338D88
 	.word	sGlowBallSpriteTemplate
 	.word	gSprites
-.L1511:
+.L1508:
 	mov	r1, #0x1
 	neg	r1, r1
 	mov	r0, #0x0
@@ -53476,27 +53519,27 @@ AnimateTradeSequenceCable:
 	add	r0, r1, #0
 	mov	r2, #0x10
 	mov	r3, #0x0
-	b	.L1568
-.L1512:
+	b	.L1565
+.L1509:
 	mov	r1, #0x92
 	lsl	r1, r1, #0x5
 	mov	r0, #0x0
 	bl	SetGpuReg
-	ldr	r0, .L1632
+	ldr	r0, .L1629
 	ldrb	r1, [r0, #0x7]
 	mov	r0, #0x80
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.LCB14026
-	b	.L1457	@long jump
-.LCB14026:
-	b	.L1567
-.L1633:
+	beq	.LCB14097
+	b	.L1454	@long jump
+.LCB14097:
+	b	.L1564
+.L1630:
 	.align	2, 0
-.L1632:
+.L1629:
 	.word	gPaletteFade
-.L1514:
-	ldr	r2, .L1634
+.L1511:
+	ldr	r2, .L1631
 	ldr	r4, [r6]
 	add	r3, r4, #0
 	add	r3, r3, #0x90
@@ -53529,16 +53572,16 @@ AnimateTradeSequenceCable:
 	ldrsh	r0, [r0, r7]
 	add	r1, r1, r0
 	cmp	r1, #0x40
-	beq	.LCB14069
-	b	.L1457	@long jump
-.LCB14069:
+	beq	.LCB14140
+	b	.L1454	@long jump
+.LCB14140:
 	add	r1, r4, #0
-	b	.L1566
-.L1635:
+	b	.L1563
+.L1632:
 	.align	2, 0
-.L1634:
+.L1631:
 	.word	gSprites
-.L1516:
+.L1513:
 	ldr	r1, [r6]
 	add	r5, r1, #0
 	add	r5, r5, #0xe0
@@ -53550,19 +53593,19 @@ AnimateTradeSequenceCable:
 	mov	r6, #0x9e
 	lsl	r6, r6, #0x1
 	cmp	r0, r6
-	bgt	.LCB14095
-	b	.L1457	@long jump
-.LCB14095:
+	bgt	.LCB14166
+	b	.L1454	@long jump
+.LCB14166:
 	strh	r6, [r5]
-	b	.L1566
-.L1518:
+	b	.L1563
+.L1515:
 	ldr	r0, [r6]
 	add	r0, r0, #0x90
 	ldrb	r1, [r0]
 	lsl	r0, r1, #0x4
 	add	r0, r0, r1
 	lsl	r0, r0, #0x2
-	ldr	r4, .L1636
+	ldr	r4, .L1633
 	add	r0, r0, r4
 	bl	DestroySprite
 	ldr	r0, [r6]
@@ -53581,22 +53624,22 @@ AnimateTradeSequenceCable:
 	mov	r1, #0x0
 	strh	r0, [r2]
 	str	r1, [r3, #0x64]
-	b	.L1457
-.L1637:
+	b	.L1454
+.L1634:
 	.align	2, 0
-.L1636:
+.L1633:
 	.word	gSprites
-.L1519:
+.L1516:
 	ldr	r1, [r6]
 	ldr	r0, [r1, #0x64]
 	add	r0, r0, #0x1
 	str	r0, [r1, #0x64]
 	cmp	r0, #0xa
-	beq	.LCB14144
-	b	.L1457	@long jump
-.LCB14144:
-	b	.L1566
-.L1521:
+	beq	.LCB14215
+	b	.L1454	@long jump
+.LCB14215:
+	b	.L1563
+.L1518:
 	ldr	r1, [r6]
 	add	r2, r1, #0
 	add	r2, r2, #0xe0
@@ -53608,13 +53651,13 @@ AnimateTradeSequenceCable:
 	mov	r3, #0xae
 	lsl	r3, r3, #0x1
 	cmp	r0, r3
-	ble	.L1522	@cond_branch
+	ble	.L1519	@cond_branch
 	strh	r3, [r2]
 	add	r1, r1, #0x94
 	ldrh	r0, [r1]
 	add	r0, r0, #0x1
 	strh	r0, [r1]
-.L1522:
+.L1519:
 	ldr	r2, [r6]
 	add	r0, r2, #0
 	add	r0, r0, #0xe0
@@ -53623,17 +53666,17 @@ AnimateTradeSequenceCable:
 	mov	r0, #0xa4
 	lsl	r0, r0, #0x1
 	cmp	r1, r0
-	beq	.LCB14182
-	b	.L1457	@long jump
-.LCB14182:
+	beq	.LCB14253
+	b	.L1454	@long jump
+.LCB14253:
 	add	r0, r2, #0
 	add	r0, r0, #0xfa
 	ldrb	r0, [r0]
 	cmp	r0, #0
-	bne	.LCB14189
-	b	.L1457	@long jump
-.LCB14189:
-	ldr	r0, .L1638
+	bne	.LCB14260
+	b	.L1454	@long jump
+.LCB14260:
+	ldr	r0, .L1635
 	mov	r1, #0x80
 	mov	r2, #0x41
 	mov	r3, #0x0
@@ -53641,7 +53684,7 @@ AnimateTradeSequenceCable:
 	ldr	r1, [r6]
 	add	r1, r1, #0x92
 	strb	r0, [r1]
-	ldr	r2, .L1638+0x4
+	ldr	r2, .L1635+0x4
 	ldr	r0, [r6]
 	add	r0, r0, #0x92
 	ldrb	r1, [r0]
@@ -53650,22 +53693,22 @@ AnimateTradeSequenceCable:
 	lsl	r0, r0, #0x2
 	add	r2, r2, #0x1c
 	add	r0, r0, r2
-	ldr	r1, .L1638+0x8
+	ldr	r1, .L1635+0x8
 	str	r1, [r0]
-	b	.L1457
-.L1639:
+	b	.L1454
+.L1636:
 	.align	2, 0
-.L1638:
+.L1635:
 	.word	gSpriteTemplate_8338DFC
 	.word	gSprites
 	.word	sub_807AAE0
-.L1524:
-	ldr	r0, .L1640
+.L1521:
+	ldr	r0, .L1637
 	mov	r1, #0x78
 	mov	r2, #0x50
 	mov	r3, #0x0
 	bl	CreateSprite
-	ldr	r2, .L1640+0x4
+	ldr	r2, .L1637+0x4
 	ldr	r1, [r2]
 	add	r1, r1, #0x91
 	strb	r0, [r1]
@@ -53673,14 +53716,14 @@ AnimateTradeSequenceCable:
 	add	r0, r0, #0x94
 	mov	r1, #0x32
 	strh	r1, [r0]
-	b	.L1457
-.L1641:
+	b	.L1454
+.L1638:
 	.align	2, 0
-.L1640:
+.L1637:
 	.word	gSpriteTemplate_8338E74
 	.word	sTradeData
-.L1525:
-	ldr	r2, .L1642
+.L1522:
+	ldr	r2, .L1639
 	ldr	r0, [r6]
 	add	r0, r0, #0x91
 	ldrb	r1, [r0]
@@ -53693,9 +53736,9 @@ AnimateTradeSequenceCable:
 	ldrb	r0, [r0]
 	lsl	r0, r0, #0x1b
 	cmp	r0, #0
-	blt	.LCB14265
-	b	.L1457	@long jump
-.LCB14265:
+	blt	.LCB14336
+	b	.L1454	@long jump
+.LCB14336:
 	add	r0, r1, #0
 	bl	DestroySprite
 	mov	r0, #0x6
@@ -53707,28 +53750,28 @@ AnimateTradeSequenceCable:
 	strh	r0, [r1]
 	mov	r0, #0x9f
 	bl	PlaySE
-	b	.L1457
-.L1643:
+	b	.L1454
+.L1640:
 	.align	2, 0
-.L1642:
+.L1639:
 	.word	gSprites
-.L1527:
+.L1524:
 	ldr	r1, [r6]
 	add	r2, r1, #0
 	add	r2, r2, #0xea
 	ldrh	r3, [r2]
-	ldr	r0, .L1644
+	ldr	r0, .L1641
 	cmp	r3, r0
-	bhi	.L1528	@cond_branch
+	bhi	.L1525	@cond_branch
 	add	r0, r3, #0
 	add	r0, r0, #0x34
 	strh	r0, [r2]
-	b	.L1529
-.L1645:
+	b	.L1526
+.L1642:
 	.align	2, 0
-.L1644:
+.L1641:
 	.word	0x3ff
-.L1528:
+.L1525:
 	mov	r0, #0x80
 	lsl	r0, r0, #0x3
 	strh	r0, [r2]
@@ -53736,9 +53779,9 @@ AnimateTradeSequenceCable:
 	ldrh	r0, [r1]
 	add	r0, r0, #0x1
 	strh	r0, [r1]
-.L1529:
+.L1526:
 	ldr	r4, [r6]
-.L1569:
+.L1566:
 	add	r0, r4, #0
 	add	r0, r0, #0xea
 	ldrh	r1, [r0]
@@ -53747,8 +53790,8 @@ AnimateTradeSequenceCable:
 	bl	__divsi3
 	add	r4, r4, #0xe8
 	strh	r0, [r4]
-	b	.L1457
-.L1530:
+	b	.L1454
+.L1527:
 	mov	r0, #0x1
 	neg	r0, r0
 	mov	r1, #0x0
@@ -53756,25 +53799,25 @@ AnimateTradeSequenceCable:
 	mov	r2, #0x0
 	mov	r3, #0x10
 	bl	BeginNormalPaletteFade
-	ldr	r0, .L1646
+	ldr	r0, .L1643
 	ldr	r0, [r0]
 	add	r0, r0, #0x94
 	mov	r1, #0x3c
 	strh	r1, [r0]
-	b	.L1457
-.L1647:
+	b	.L1454
+.L1644:
 	.align	2, 0
-.L1646:
+.L1643:
 	.word	sTradeData
-.L1531:
-	ldr	r4, .L1648
+.L1528:
+	ldr	r4, .L1645
 	ldrb	r1, [r4, #0x7]
 	mov	r0, #0x80
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.LCB14369
-	b	.L1457	@long jump
-.LCB14369:
+	beq	.LCB14440
+	b	.L1454	@long jump
+.LCB14440:
 	mov	r0, #0x5
 	bl	SetTradeSequenceBgGpuRegs
 	mov	r0, #0x7
@@ -53783,13 +53826,13 @@ AnimateTradeSequenceCable:
 	mov	r1, #0x80
 	orr	r0, r0, r1
 	strb	r0, [r4, #0x8]
-	b	.L1567
-.L1649:
+	b	.L1564
+.L1646:
 	.align	2, 0
-.L1648:
+.L1645:
 	.word	gPaletteFade
-.L1533:
-	ldr	r2, .L1650
+.L1530:
+	ldr	r2, .L1647
 	ldrb	r1, [r2, #0x8]
 	mov	r0, #0x7f
 	and	r0, r0, r1
@@ -53800,42 +53843,42 @@ AnimateTradeSequenceCable:
 	str	r1, [sp]
 	mov	r2, #0x10
 	mov	r3, #0x0
-	b	.L1568
-.L1651:
+	b	.L1565
+.L1648:
 	.align	2, 0
-.L1650:
+.L1647:
 	.word	gPaletteFade
-.L1534:
+.L1531:
 	mov	r1, #0xa2
 	lsl	r1, r1, #0x5
 	mov	r0, #0x0
 	bl	SetGpuReg
-	ldr	r0, .L1652
+	ldr	r0, .L1649
 	ldrb	r1, [r0, #0x7]
 	mov	r0, #0x80
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.LCB14422
-	b	.L1457	@long jump
-.LCB14422:
-	b	.L1567
-.L1653:
+	beq	.LCB14493
+	b	.L1454	@long jump
+.LCB14493:
+	b	.L1564
+.L1650:
 	.align	2, 0
-.L1652:
+.L1649:
 	.word	gPaletteFade
-.L1536:
-	ldr	r0, .L1654
+.L1533:
+	ldr	r0, .L1651
 	mov	r2, #0x8
 	neg	r2, r2
 	mov	r1, #0x78
 	mov	r3, #0x0
 	bl	CreateSprite
-	ldr	r5, .L1654+0x4
+	ldr	r5, .L1651+0x4
 	ldr	r1, [r5]
 	add	r1, r1, #0xd3
 	mov	r6, #0x0
 	strb	r0, [r1]
-	ldr	r4, .L1654+0x8
+	ldr	r4, .L1651+0x8
 	ldr	r2, [r5]
 	add	r2, r2, #0xd3
 	ldrb	r1, [r2]
@@ -53852,7 +53895,7 @@ AnimateTradeSequenceCable:
 	add	r1, r4, #0
 	add	r1, r1, #0x1c
 	add	r0, r0, r1
-	ldr	r1, .L1654+0xc
+	ldr	r1, .L1651+0xc
 	str	r1, [r0]
 	ldrb	r1, [r2]
 	lsl	r0, r1, #0x4
@@ -53882,7 +53925,7 @@ AnimateTradeSequenceCable:
 	add	r1, r1, #0x10
 	mov	r0, #0x1
 	lsl	r0, r0, r1
-	ldr	r2, .L1654+0x10
+	ldr	r2, .L1651+0x10
 	mov	r1, #0x10
 	bl	BlendPalettes
 	ldr	r2, [r5]
@@ -53892,17 +53935,17 @@ AnimateTradeSequenceCable:
 	add	r0, r0, #0x1
 	strh	r0, [r1]
 	str	r6, [r2, #0x64]
-	b	.L1457
-.L1655:
+	b	.L1454
+.L1652:
 	.align	2, 0
-.L1654:
+.L1651:
 	.word	gSpriteTemplate_8338D28
 	.word	sTradeData
 	.word	gSprites
 	.word	sub_807E6AC
 	.word	0xffff
-.L1537:
-	ldr	r2, .L1656
+.L1534:
+	ldr	r2, .L1653
 	ldr	r0, [r6]
 	add	r0, r0, #0xd3
 	ldrb	r1, [r0]
@@ -53915,21 +53958,21 @@ AnimateTradeSequenceCable:
 	add	r1, r1, #0x10
 	mov	r0, #0x1
 	lsl	r0, r0, r1
-	ldr	r1, .L1656+0x4
+	ldr	r1, .L1653+0x4
 	str	r1, [sp]
 	mov	r1, #0x1
 	mov	r2, #0x10
 	mov	r3, #0x0
 	bl	BeginNormalPaletteFade
 	ldr	r1, [r6]
-	b	.L1566
-.L1657:
+	b	.L1563
+.L1654:
 	.align	2, 0
-.L1656:
+.L1653:
 	.word	gSprites
 	.word	0xffff
-.L1538:
-	ldr	r2, .L1658
+.L1535:
+	ldr	r2, .L1655
 	ldr	r3, [r6]
 	add	r0, r3, #0
 	add	r0, r0, #0xd3
@@ -53940,11 +53983,11 @@ AnimateTradeSequenceCable:
 	add	r2, r2, #0x1c
 	add	r0, r0, r2
 	ldr	r1, [r0]
-	ldr	r0, .L1658+0x4
+	ldr	r0, .L1655+0x4
 	cmp	r1, r0
-	beq	.LCB14573
-	b	.L1457	@long jump
-.LCB14573:
+	beq	.LCB14644
+	b	.L1454	@long jump
+.LCB14644:
 	add	r0, r3, #0
 	add	r0, r0, #0xf2
 	ldrh	r0, [r0]
@@ -53955,9 +53998,9 @@ AnimateTradeSequenceCable:
 	add	r4, r0, #0
 	lsl	r4, r4, #0x10
 	lsr	r4, r4, #0xd
-	ldr	r0, .L1658+0x8
+	ldr	r0, .L1655+0x8
 	add	r4, r4, r0
-	ldr	r0, .L1658+0xc
+	ldr	r0, .L1655+0xc
 	ldr	r0, [r0]
 	ldr	r5, [r0, #0x10]
 	ldr	r1, [r6]
@@ -53976,16 +54019,16 @@ AnimateTradeSequenceCable:
 	add	r1, r5, #0
 	bl	HandleLoadSpecialPokePic_DontHandleDeoxys
 	ldr	r1, [r6]
-	b	.L1566
-.L1659:
+	b	.L1563
+.L1656:
 	.align	2, 0
-.L1658:
+.L1655:
 	.word	gSprites
 	.word	SpriteCallbackDummy
 	.word	gMonFrontPicTable
 	.word	gMonSpritesGfxPtr
-.L1540:
-	ldr	r4, .L1660
+.L1537:
+	ldr	r4, .L1657
 	ldr	r2, [r6]
 	add	r0, r2, #0
 	add	r0, r0, #0x8f
@@ -54011,7 +54054,7 @@ AnimateTradeSequenceCable:
 	add	r1, r1, r2
 	lsl	r1, r1, #0x2
 	add	r1, r1, r4
-	ldr	r2, .L1660+0x4
+	ldr	r2, .L1657+0x4
 	lsl	r0, r0, #0x10
 	lsr	r0, r0, #0xe
 	add	r0, r0, r2
@@ -54061,7 +54104,7 @@ AnimateTradeSequenceCable:
 	str	r2, [sp, #0x4]
 	mov	r2, #0x14
 	str	r2, [sp, #0x8]
-	ldr	r2, .L1660+0x8
+	ldr	r2, .L1657+0x8
 	str	r2, [sp, #0xc]
 	str	r0, [sp, #0x10]
 	add	r0, r3, #0
@@ -54085,102 +54128,103 @@ AnimateTradeSequenceCable:
 	add	r0, r0, r4
 	bl	DestroySprite
 	ldr	r1, [r6]
-	b	.L1566
-.L1661:
+	b	.L1563
+.L1658:
 	.align	2, 0
-.L1660:
+.L1657:
 	.word	gSprites
 	.word	gMonFrontPicCoords
 	.word	0xfffff
-.L1541:
+.L1538:
 	mov	r1, #0xaa
 	lsl	r1, r1, #0x5
 	mov	r0, #0x0
 	bl	SetGpuReg
-	ldr	r4, .L1662
-	ldr	r1, .L1662+0x4
+	ldr	r4, .L1659
+	ldr	r1, .L1659+0x4
 	add	r0, r4, #0
 	bl	StringExpandPlaceholders
 	mov	r0, #0x0
 	add	r1, r4, #0
 	mov	r2, #0x0
 	bl	DrawTextOnTradeWindow
-	ldr	r0, .L1662+0x8
+	ldr	r0, .L1659+0x8
 	ldr	r3, [r0]
 	add	r1, r3, #0
 	add	r1, r1, #0x94
 	mov	r2, #0x0
 	mov	r0, #0xa7
-.L1565:
+.L1562:
 	strh	r0, [r1]
 	str	r2, [r3, #0x64]
-	b	.L1457
-.L1663:
+	b	.L1454
+.L1660:
 	.align	2, 0
-.L1662:
+.L1659:
 	.word	gStringVar4
 	.word	gText_XSentOverY
 	.word	sTradeData
-.L1542:
+.L1539:
 	ldr	r3, [r6]
 	ldr	r0, [r3, #0x64]
 	add	r0, r0, #0x1
 	str	r0, [r3, #0x64]
 	cmp	r0, #0x3c
-	bhi	.LCB14792
-	b	.L1457	@long jump
-.LCB14792:
+	bhi	.LCB14863
+	b	.L1454	@long jump
+.LCB14863:
 	add	r0, r3, #0
 	add	r0, r0, #0x94
 	mov	r2, #0x0
-	ldr	r1, .L1664
+	ldr	r1, .L1661
 	strh	r1, [r0]
 	str	r2, [r3, #0x64]
-	b	.L1457
-.L1665:
+	b	.L1454
+.L1662:
 	.align	2, 0
-.L1664:
+.L1661:
 	.word	0x10b
-.L1544:
+.L1541:
 	bl	IsCryFinished
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	bne	.LCB14816
-	b	.L1457	@long jump
-.LCB14816:
-	ldr	r0, .L1666
+	bne	.LCB14887
+	b	.L1454	@long jump
+.LCB14887:
+	ldr	r0, .L1663
 	ldr	r0, [r0]
 	add	r0, r0, #0x94
 	mov	r1, #0x44
 	strh	r1, [r0]
-	b	.L1457
-.L1667:
+	b	.L1454
+.L1664:
 	.align	2, 0
-.L1666:
+.L1663:
 	.word	sTradeData
-.L1546:
+.L1543:
 	ldr	r1, [r6]
 	ldr	r0, [r1, #0x64]
 	add	r0, r0, #0x1
 	str	r0, [r1, #0x64]
 	cmp	r0, #0xa
-	bne	.L1547	@cond_branch
-	ldr	r0, .L1668
+	bne	.L1544	@cond_branch
+	mov	r0, #0xab
+	lsl	r0, r0, #0x1
 	bl	PlayFanfare
-.L1547:
+.L1544:
 	ldr	r1, [r6]
 	ldr	r0, [r1, #0x64]
 	cmp	r0, #0xfa
-	beq	.LCB14848
-	b	.L1457	@long jump
-.LCB14848:
+	beq	.LCB14920
+	b	.L1454	@long jump
+.LCB14920:
 	add	r1, r1, #0x94
 	ldrh	r0, [r1]
 	add	r0, r0, #0x1
 	mov	r5, #0x0
 	strh	r0, [r1]
-	ldr	r4, .L1668+0x4
-	ldr	r1, .L1668+0x8
+	ldr	r4, .L1665
+	ldr	r1, .L1665+0x4
 	add	r0, r4, #0
 	bl	StringExpandPlaceholders
 	mov	r0, #0x0
@@ -54189,63 +54233,62 @@ AnimateTradeSequenceCable:
 	bl	DrawTextOnTradeWindow
 	ldr	r0, [r6]
 	str	r5, [r0, #0x64]
-	b	.L1457
-.L1669:
+	b	.L1454
+.L1666:
 	.align	2, 0
-.L1668:
-	.word	0x173
+.L1665:
 	.word	gStringVar4
 	.word	gText_TakeGoodCareOfX
-.L1549:
+.L1546:
 	ldr	r1, [r6]
 	ldr	r0, [r1, #0x64]
 	add	r0, r0, #0x1
 	str	r0, [r1, #0x64]
 	cmp	r0, #0x3c
-	beq	.LCB14883
-	b	.L1457	@long jump
-.LCB14883:
-	b	.L1566
-.L1551:
+	beq	.LCB14954
+	b	.L1454	@long jump
+.LCB14954:
+	b	.L1563
+.L1548:
 	bl	CheckPartnersMonForRibbons
-	b	.L1567
-.L1552:
+	b	.L1564
+.L1549:
 	ldr	r2, [r6]
 	add	r0, r2, #0
 	add	r0, r0, #0xee
 	ldrb	r0, [r0]
 	cmp	r0, #0
-	beq	.L1553	@cond_branch
+	beq	.L1550	@cond_branch
 	mov	r0, #0x1
-	b	.L1564
-.L1553:
-	ldr	r0, .L1670
+	b	.L1561
+.L1550:
+	ldr	r0, .L1667
 	ldrh	r1, [r0, #0x2e]
 	mov	r0, #0x1
 	and	r0, r0, r1
 	cmp	r0, #0
-	bne	.LCB14916
-	b	.L1457	@long jump
-.LCB14916:
+	bne	.LCB14987
+	b	.L1454	@long jump
+.LCB14987:
 	add	r1, r2, #0
-	b	.L1566
-.L1671:
+	b	.L1563
+.L1668:
 	.align	2, 0
-.L1670:
+.L1667:
 	.word	gMain
-.L1556:
-	ldr	r0, .L1672
+.L1553:
+	ldr	r0, .L1669
 	ldrb	r0, [r0]
 	mov	r1, #0x0
 	bl	TradeMons
-	ldr	r1, .L1672+0x4
-	ldr	r0, .L1672+0x8
+	ldr	r1, .L1669+0x4
+	ldr	r0, .L1669+0x8
 	str	r0, [r1]
-	ldr	r7, .L1672+0xc
+	ldr	r7, .L1669+0xc
 	ldrb	r0, [r7, #0x1]
 	mov	r6, #0x64
 	mul	r0, r0, r6
-	ldr	r5, .L1672+0x10
+	ldr	r5, .L1669+0x10
 	add	r0, r0, r5
 	mov	r1, #0xb
 	bl	GetMonData
@@ -54263,12 +54306,12 @@ AnimateTradeSequenceCable:
 	lsl	r0, r0, #0x10
 	lsr	r4, r0, #0x10
 	cmp	r4, #0
-	beq	.L1567	@cond_branch
+	beq	.L1564	@cond_branch
 	ldrb	r3, [r7]
 	mov	r0, r3
 	mul	r0, r0, r6
 	add	r0, r0, r5
-	ldr	r1, .L1672+0x14
+	ldr	r1, .L1669+0x14
 	ldr	r1, [r1]
 	add	r1, r1, #0x8f
 	ldrb	r2, [r1]
@@ -54277,54 +54320,54 @@ AnimateTradeSequenceCable:
 	str	r1, [sp]
 	add	r1, r4, #0
 	bl	TradeEvolutionScene
-	b	.L1567
-.L1673:
+	b	.L1564
+.L1670:
 	.align	2, 0
-.L1672:
+.L1669:
 	.word	gSpecialVar_0x8005
 	.word	gCB2_AfterEvolution
 	.word	CB2_UpdateInGameTrade
 	.word	gSelectedTradeMonPositions
 	.word	gPlayerParty
 	.word	sTradeData
-.L1558:
+.L1555:
 	mov	r0, #0x1
 	neg	r0, r0
 	mov	r1, #0x0
 	str	r1, [sp]
 	mov	r2, #0x0
 	mov	r3, #0x10
-.L1568:
+.L1565:
 	bl	BeginNormalPaletteFade
-.L1567:
-	ldr	r0, .L1674
+.L1564:
+	ldr	r0, .L1671
 	ldr	r1, [r0]
-.L1566:
+.L1563:
 	add	r1, r1, #0x94
 	ldrh	r0, [r1]
 	add	r0, r0, #0x1
 	strh	r0, [r1]
-	b	.L1457
-.L1675:
+	b	.L1454
+.L1672:
 	.align	2, 0
-.L1674:
+.L1671:
 	.word	sTradeData
-.L1559:
-	ldr	r0, .L1676
+.L1556:
+	ldr	r0, .L1673
 	ldrb	r1, [r0, #0x7]
 	mov	r0, #0x80
 	and	r0, r0, r1
 	lsl	r0, r0, #0x18
 	lsr	r4, r0, #0x18
 	cmp	r4, #0
-	bne	.L1457	@cond_branch
+	bne	.L1454	@cond_branch
 	ldr	r0, [r6]
 	add	r0, r0, #0xf4
 	ldrh	r0, [r0]
 	bl	PlayNewMapMusic
 	ldr	r0, [r6]
 	cmp	r0, #0
-	beq	.L1561	@cond_branch
+	beq	.L1558	@cond_branch
 	bl	FreeAllWindowBuffers
 	mov	r0, #0x3
 	bl	GetBgTilemapBuffer
@@ -54339,20 +54382,20 @@ AnimateTradeSequenceCable:
 	ldr	r0, [r6]
 	bl	Free
 	str	r4, [r6]
-.L1561:
-	ldr	r0, .L1676+0x4
+.L1558:
+	ldr	r0, .L1673+0x4
 	bl	SetMainCallback2
 	bl	BufferInGameTradeMonName
-.L1457:
+.L1454:
 	mov	r0, #0x0
-.L1564:
+.L1561:
 	add	sp, sp, #0x18
 	pop	{r4, r5, r6, r7}
 	pop	{r1}
 	bx	r1
-.L1677:
+.L1674:
 	.align	2, 0
-.L1676:
+.L1673:
 	.word	gPaletteFade
 	.word	CB2_ReturnToField
 .Lfe108:
@@ -54363,300 +54406,300 @@ AnimateTradeSequenceCable:
 AnimateTradeSequenceWireless:
 	push	{r4, r5, r6, r7, lr}
 	add	sp, sp, #-0x18
-	ldr	r0, .L1796
+	ldr	r0, .L1793
 	ldr	r1, [r0]
 	add	r1, r1, #0x94
 	ldrh	r5, [r1]
-	ldr	r1, .L1796+0x4
+	ldr	r1, .L1793+0x4
 	add	r6, r0, #0
 	cmp	r5, r1
-	bls	.LCB15103
-	bl	.L1679	@far jump
-.LCB15103:
+	bls	.LCB15174
+	bl	.L1676	@far jump
+.LCB15174:
 	lsl	r0, r5, #0x2
-	ldr	r1, .L1796+0x8
+	ldr	r1, .L1793+0x8
 	add	r0, r0, r1
 	ldr	r0, [r0]
 	mov	pc, r0
-.L1797:
+.L1794:
 	.align	2, 0
-.L1796:
+.L1793:
 	.word	sTradeData
 	.word	0x10b
-	.word	.L1787
+	.word	.L1784
 	.align	2, 0
 	.align	2, 0
-.L1787:
-	.word	.L1680
+.L1784:
+	.word	.L1677
+	.word	.L1678
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
 	.word	.L1681
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1684
-	.word	.L1686
+	.word	.L1683
+	.word	.L1685
+	.word	.L1676
 	.word	.L1688
-	.word	.L1679
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1689
 	.word	.L1691
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
 	.word	.L1692
 	.word	.L1694
-	.word	.L1695
-	.word	.L1697
-	.word	.L1679
-	.word	.L1679
+	.word	.L1676
+	.word	.L1676
+	.word	.L1703
+	.word	.L1705
 	.word	.L1706
-	.word	.L1708
-	.word	.L1709
+	.word	.L1710
+	.word	.L1711
 	.word	.L1713
 	.word	.L1714
 	.word	.L1716
-	.word	.L1717
+	.word	.L1718
 	.word	.L1719
+	.word	.L1720
 	.word	.L1721
-	.word	.L1722
-	.word	.L1723
 	.word	.L1724
 	.word	.L1727
-	.word	.L1730
+	.word	.L1729
+	.word	.L1731
 	.word	.L1732
 	.word	.L1734
-	.word	.L1735
-	.word	.L1737
-	.word	.L1679
-	.word	.L1679
-	.word	.L1745
+	.word	.L1676
+	.word	.L1676
+	.word	.L1742
+	.word	.L1744
+	.word	.L1746
+	.word	.L1676
 	.word	.L1747
 	.word	.L1749
-	.word	.L1679
-	.word	.L1750
 	.word	.L1752
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1753
 	.word	.L1755
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
 	.word	.L1756
 	.word	.L1758
 	.word	.L1759
-	.word	.L1761
+	.word	.L1760
 	.word	.L1762
 	.word	.L1763
-	.word	.L1765
-	.word	.L1766
+	.word	.L1768
 	.word	.L1771
+	.word	.L1773
 	.word	.L1774
-	.word	.L1776
-	.word	.L1777
+	.word	.L1778
+	.word	.L1780
 	.word	.L1781
-	.word	.L1783
-	.word	.L1784
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1700
-	.word	.L1702
-	.word	.L1704
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1697
+	.word	.L1699
+	.word	.L1701
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1736
 	.word	.L1739
-	.word	.L1742
-	.word	.L1743
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1767
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1711
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1679
-	.word	.L1769
-.L1680:
-	ldr	r4, .L1798
+	.word	.L1740
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1764
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1708
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1676
+	.word	.L1766
+.L1677:
+	ldr	r4, .L1795
 	ldr	r0, [r6]
 	add	r0, r0, #0x8e
 	ldrb	r1, [r0]
@@ -54678,7 +54721,7 @@ AnimateTradeSequenceWireless:
 	add	r0, r0, r1
 	lsl	r0, r0, #0x2
 	add	r0, r0, r4
-	ldr	r1, .L1798+0x4
+	ldr	r1, .L1795+0x4
 	strh	r1, [r0, #0x24]
 	add	r0, r2, #0
 	add	r0, r0, #0xf0
@@ -54695,7 +54738,7 @@ AnimateTradeSequenceWireless:
 	add	r1, r1, r2
 	lsl	r1, r1, #0x2
 	add	r1, r1, r4
-	ldr	r2, .L1798+0x8
+	ldr	r2, .L1795+0x8
 	lsl	r0, r0, #0x10
 	lsr	r0, r0, #0xe
 	add	r0, r0, r2
@@ -54709,25 +54752,25 @@ AnimateTradeSequenceWireless:
 	ldr	r1, [r6]
 	add	r1, r1, #0xf4
 	strh	r0, [r1]
-	ldr	r0, .L1798+0xc
+	mov	r0, #0xae
+	lsl	r0, r0, #0x1
 	bl	PlayNewMapMusic
-	bl	.L1679	@ far jump
-.L1799:
+	bl	.L1676	@ far jump
+.L1796:
 	.align	2, 0
-.L1798:
+.L1795:
 	.word	gSprites
 	.word	0xff4c
 	.word	gMonFrontPicCoords
-	.word	0x179
-.L1681:
+.L1678:
 	ldr	r5, [r6]
 	add	r6, r5, #0
 	add	r6, r6, #0xe6
 	mov	r1, #0x0
 	ldrsh	r0, [r6, r1]
 	cmp	r0, #0
-	ble	.L1682	@cond_branch
-	ldr	r2, .L1800
+	ble	.L1679	@cond_branch
+	ldr	r2, .L1797
 	add	r0, r5, #0
 	add	r0, r0, #0x8e
 	ldrb	r1, [r0]
@@ -54741,13 +54784,13 @@ AnimateTradeSequenceWireless:
 	ldrh	r0, [r6]
 	sub	r0, r0, #0x3
 	strh	r0, [r6]
-	bl	.L1679	@ far jump
-.L1801:
+	bl	.L1676	@ far jump
+.L1798:
 	.align	2, 0
-.L1800:
+.L1797:
 	.word	gSprites
-.L1682:
-	ldr	r2, .L1802
+.L1679:
+	ldr	r2, .L1799
 	add	r0, r5, #0
 	add	r0, r0, #0x8e
 	ldrb	r1, [r0]
@@ -54762,28 +54805,28 @@ AnimateTradeSequenceWireless:
 	add	r1, r1, #0x94
 	mov	r0, #0xa
 	strh	r0, [r1]
-	bl	.L1679	@ far jump
-.L1803:
+	bl	.L1676	@ far jump
+.L1800:
 	.align	2, 0
-.L1802:
+.L1799:
 	.word	gSprites
-.L1684:
-	ldr	r4, .L1804
-	ldr	r1, .L1804+0x4
+.L1681:
+	ldr	r4, .L1801
+	ldr	r1, .L1801+0x4
 	add	r0, r4, #0
 	bl	StringExpandPlaceholders
 	mov	r0, #0x0
 	add	r1, r4, #0
 	mov	r2, #0x0
 	bl	DrawTextOnTradeWindow
-	ldr	r4, .L1804+0x8
+	ldr	r4, .L1801+0x8
 	ldr	r3, [r4]
 	add	r2, r3, #0
 	add	r2, r2, #0xf0
 	ldrh	r1, [r2]
-	ldr	r0, .L1804+0xc
+	ldr	r0, .L1801+0xc
 	cmp	r1, r0
-	beq	.L1685	@cond_branch
+	beq	.L1682	@cond_branch
 	add	r0, r1, #0
 	add	r1, r3, #0
 	add	r1, r1, #0x70
@@ -54793,33 +54836,33 @@ AnimateTradeSequenceWireless:
 	lsr	r0, r0, #0x10
 	mov	r1, #0x0
 	bl	PlayCry1
-.L1685:
+.L1682:
 	ldr	r3, [r4]
 	add	r1, r3, #0
 	add	r1, r1, #0x94
 	mov	r2, #0x0
 	mov	r0, #0xb
-	bl	.L1790	@ far jump
-.L1805:
+	bl	.L1787	@ far jump
+.L1802:
 	.align	2, 0
-.L1804:
+.L1801:
 	.word	gStringVar4
 	.word	gText_XWillBeSentToY
 	.word	sTradeData
 	.word	0x4b7
-.L1686:
+.L1683:
 	ldr	r1, [r6]
 	ldr	r0, [r1, #0x64]
 	add	r0, r0, #0x1
 	str	r0, [r1, #0x64]
 	cmp	r0, #0x50
-	beq	.LCB15319
-	bl	.L1679	@far jump
-.LCB15319:
+	beq	.LCB15390
+	bl	.L1676	@far jump
+.LCB15390:
 	add	r0, r1, #0
 	add	r0, r0, #0x8e
 	ldrb	r0, [r0]
-	ldr	r2, .L1806
+	ldr	r2, .L1803
 	lsl	r1, r0, #0x4
 	add	r1, r1, r0
 	lsl	r1, r1, #0x2
@@ -54832,7 +54875,7 @@ AnimateTradeSequenceWireless:
 	str	r2, [sp, #0x4]
 	mov	r2, #0x14
 	str	r2, [sp, #0x8]
-	ldr	r2, .L1806+0x4
+	ldr	r2, .L1803+0x4
 	str	r2, [sp, #0xc]
 	mov	r2, #0x78
 	mov	r3, #0x20
@@ -54845,24 +54888,24 @@ AnimateTradeSequenceWireless:
 	ldrh	r0, [r1]
 	add	r0, r0, #0x1
 	strh	r0, [r1]
-	ldr	r4, .L1806+0x8
-	ldr	r1, .L1806+0xc
+	ldr	r4, .L1803+0x8
+	ldr	r1, .L1803+0xc
 	add	r0, r4, #0
 	bl	StringExpandPlaceholders
 	mov	r0, #0x0
 	add	r1, r4, #0
 	mov	r2, #0x0
 	bl	DrawTextOnTradeWindow
-	bl	.L1679	@ far jump
-.L1807:
+	bl	.L1676	@ far jump
+.L1804:
 	.align	2, 0
-.L1806:
+.L1803:
 	.word	gSprites
 	.word	0xfffff
 	.word	gStringVar4
 	.word	gText_ByeByeVar1
-.L1688:
-	ldr	r5, .L1808
+.L1685:
+	ldr	r5, .L1805
 	ldr	r0, [r6]
 	add	r0, r0, #0xd2
 	ldrb	r1, [r0]
@@ -54873,12 +54916,12 @@ AnimateTradeSequenceWireless:
 	add	r4, r4, #0x1c
 	add	r0, r0, r4
 	ldr	r1, [r0]
-	ldr	r0, .L1808+0x4
+	ldr	r0, .L1805+0x4
 	cmp	r1, r0
-	beq	.LCB15392
-	bl	.L1679	@far jump
-.LCB15392:
-	ldr	r0, .L1808+0x8
+	beq	.LCB15463
+	bl	.L1676	@far jump
+.LCB15463:
+	ldr	r0, .L1805+0x8
 	mov	r1, #0x78
 	mov	r2, #0x20
 	mov	r3, #0x0
@@ -54894,7 +54937,7 @@ AnimateTradeSequenceWireless:
 	add	r0, r0, r1
 	lsl	r0, r0, #0x2
 	add	r0, r0, r4
-	ldr	r1, .L1808+0xc
+	ldr	r1, .L1805+0xc
 	str	r1, [r0]
 	add	r2, r2, #0xd2
 	ldrb	r1, [r2]
@@ -54904,15 +54947,15 @@ AnimateTradeSequenceWireless:
 	add	r0, r0, r5
 	bl	DestroySprite
 	ldr	r1, [r6]
-	bl	.L1791	@ far jump
-.L1809:
+	bl	.L1788	@ far jump
+.L1806:
 	.align	2, 0
-.L1808:
+.L1805:
 	.word	gSprites
 	.word	SpriteCallbackDummy
 	.word	gSpriteTemplate_8338D28
 	.word	sub_807E5D8
-.L1691:
+.L1688:
 	mov	r0, #0x1
 	neg	r0, r0
 	mov	r1, #0x0
@@ -54920,25 +54963,25 @@ AnimateTradeSequenceWireless:
 	mov	r2, #0x0
 	mov	r3, #0x10
 	bl	BeginNormalPaletteFade
-	ldr	r0, .L1810
+	ldr	r0, .L1807
 	ldr	r0, [r0]
 	add	r0, r0, #0x94
 	mov	r1, #0x14
 	strh	r1, [r0]
-	bl	.L1679	@ far jump
-.L1811:
+	bl	.L1676	@ far jump
+.L1808:
 	.align	2, 0
-.L1810:
+.L1807:
 	.word	sTradeData
-.L1692:
-	ldr	r0, .L1812
+.L1689:
+	ldr	r0, .L1809
 	ldrb	r1, [r0, #0x7]
 	mov	r0, #0x80
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.LCB15465
-	bl	.L1679	@far jump
-.LCB15465:
+	beq	.LCB15536
+	bl	.L1676	@far jump
+.LCB15536:
 	mov	r0, #0x4
 	bl	SetTradeSequenceBgGpuRegs
 	mov	r0, #0x0
@@ -54947,12 +54990,12 @@ AnimateTradeSequenceWireless:
 	mov	r0, #0x0
 	mov	r1, #0x3
 	bl	CopyWindowToVram
-	bl	.L1792	@ far jump
-.L1813:
+	bl	.L1789	@ far jump
+.L1810:
 	.align	2, 0
-.L1812:
+.L1809:
 	.word	gPaletteFade
-.L1694:
+.L1691:
 	mov	r1, #0x1
 	neg	r1, r1
 	mov	r0, #0x0
@@ -54960,27 +55003,27 @@ AnimateTradeSequenceWireless:
 	add	r0, r1, #0
 	mov	r2, #0x10
 	mov	r3, #0x0
-	bl	.L1793	@ far jump
-.L1695:
-	ldr	r0, .L1814
+	bl	.L1790	@ far jump
+.L1692:
+	ldr	r0, .L1811
 	ldrb	r1, [r0, #0x7]
 	mov	r0, #0x80
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.LCB15502
-	bl	.L1679	@far jump
-.LCB15502:
+	beq	.LCB15573
+	bl	.L1676	@far jump
+.LCB15573:
 	ldr	r0, [r6]
 	add	r0, r0, #0x94
 	mov	r1, #0x17
 	strh	r1, [r0]
-	bl	.L1679	@ far jump
-.L1815:
+	bl	.L1676	@ far jump
+.L1812:
 	.align	2, 0
-.L1814:
+.L1811:
 	.word	gPaletteFade
-.L1697:
-	ldr	r4, .L1816
+.L1694:
+	ldr	r4, .L1813
 	ldr	r0, [r4]
 	add	r2, r0, #0
 	add	r2, r2, #0xea
@@ -54988,16 +55031,16 @@ AnimateTradeSequenceWireless:
 	mov	r0, #0x80
 	lsl	r0, r0, #0x1
 	cmp	r1, r0
-	bls	.L1698	@cond_branch
+	bls	.L1695	@cond_branch
 	add	r0, r1, #0
 	sub	r0, r0, #0x34
 	strh	r0, [r2]
-	b	.L1699
-.L1817:
+	b	.L1696
+.L1814:
 	.align	2, 0
-.L1816:
+.L1813:
 	.word	sTradeData
-.L1698:
+.L1695:
 	mov	r0, #0x1
 	bl	SetTradeSequenceBgGpuRegs
 	ldr	r3, [r4]
@@ -55010,26 +55053,26 @@ AnimateTradeSequenceWireless:
 	mov	r0, #0x7c
 	strh	r0, [r1]
 	str	r2, [r3, #0x64]
-.L1699:
-	ldr	r0, .L1818
+.L1696:
+	ldr	r0, .L1815
 	ldr	r4, [r0]
-	bl	.L1794	@ far jump
-.L1819:
+	bl	.L1791	@ far jump
+.L1816:
 	.align	2, 0
-.L1818:
+.L1815:
 	.word	sTradeData
-.L1700:
+.L1697:
 	ldr	r1, [r6]
 	ldr	r0, [r1, #0x64]
 	add	r0, r0, #0x1
 	str	r0, [r1, #0x64]
 	cmp	r0, #0x14
-	bhi	.LCB15579
-	bl	.L1679	@far jump
-.LCB15579:
+	bhi	.LCB15650
+	bl	.L1676	@far jump
+.LCB15650:
 	mov	r0, #0x3
 	bl	SetTradeSequenceBgGpuRegs
-	ldr	r0, .L1820
+	ldr	r0, .L1817
 	mov	r1, #0x78
 	mov	r2, #0x50
 	mov	r3, #0x0
@@ -55038,13 +55081,13 @@ AnimateTradeSequenceWireless:
 	add	r1, r1, #0x91
 	strb	r0, [r1]
 	ldr	r1, [r6]
-	bl	.L1791	@ far jump
-.L1821:
+	bl	.L1788	@ far jump
+.L1818:
 	.align	2, 0
-.L1820:
+.L1817:
 	.word	gSpriteTemplate_8338E8C
-.L1702:
-	ldr	r2, .L1822
+.L1699:
+	ldr	r2, .L1819
 	ldr	r0, [r6]
 	add	r0, r0, #0x91
 	ldrb	r1, [r0]
@@ -55057,49 +55100,49 @@ AnimateTradeSequenceWireless:
 	ldrb	r0, [r0]
 	lsl	r0, r0, #0x1b
 	cmp	r0, #0
-	blt	.LCB15620
-	bl	.L1679	@far jump
-.LCB15620:
+	blt	.LCB15691
+	bl	.L1676	@far jump
+.LCB15691:
 	add	r0, r1, #0
 	bl	DestroySprite
-	ldr	r1, .L1822+0x4
+	ldr	r1, .L1819+0x4
 	mov	r0, #0x50
 	bl	SetGpuReg
 	mov	r1, #0x82
 	lsl	r1, r1, #0x3
 	mov	r0, #0x52
 	bl	SetGpuReg
-	ldr	r0, .L1822+0x8
+	ldr	r0, .L1819+0x8
 	mov	r1, #0x5
 	bl	CreateTask
 	ldr	r1, [r6]
-	bl	.L1791	@ far jump
-.L1823:
+	bl	.L1788	@ far jump
+.L1820:
 	.align	2, 0
-.L1822:
+.L1819:
 	.word	gSprites
 	.word	0x452
 	.word	Task_AnimateWirelessSignal
-.L1704:
-	ldr	r0, .L1824
+.L1701:
+	ldr	r0, .L1821
 	bl	FuncIsActiveTask
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.LCB15656
-	bl	.L1679	@far jump
-.LCB15656:
-	ldr	r0, .L1824+0x4
+	beq	.LCB15727
+	bl	.L1676	@far jump
+.LCB15727:
+	ldr	r0, .L1821+0x4
 	ldr	r0, [r0]
 	add	r0, r0, #0x94
 	mov	r1, #0x1a
 	strh	r1, [r0]
-	bl	.L1679	@ far jump
-.L1825:
+	bl	.L1676	@ far jump
+.L1822:
 	.align	2, 0
-.L1824:
+.L1821:
 	.word	Task_AnimateWirelessSignal
 	.word	sTradeData
-.L1706:
+.L1703:
 	ldr	r2, [r6]
 	add	r0, r2, #0
 	add	r0, r0, #0xe0
@@ -55110,22 +55153,22 @@ AnimateTradeSequenceWireless:
 	mov	r0, #0x9e
 	lsl	r0, r0, #0x11
 	cmp	r1, r0
-	beq	.LCB15687
-	bl	.L1679	@far jump
-.LCB15687:
+	beq	.LCB15758
+	bl	.L1676	@far jump
+.LCB15758:
 	add	r1, r2, #0
-	bl	.L1791	@ far jump
-.L1708:
-	ldr	r0, .L1826
+	bl	.L1788	@ far jump
+.L1705:
+	ldr	r0, .L1823
 	mov	r1, #0x78
 	mov	r2, #0x50
 	mov	r3, #0x3
 	bl	CreateSprite
-	ldr	r4, .L1826+0x4
+	ldr	r4, .L1823+0x4
 	ldr	r1, [r4]
 	add	r1, r1, #0x90
 	strb	r0, [r1]
-	ldr	r5, .L1826+0x8
+	ldr	r5, .L1823+0x8
 	ldr	r0, [r4]
 	add	r0, r0, #0x90
 	ldrb	r1, [r0]
@@ -55135,9 +55178,9 @@ AnimateTradeSequenceWireless:
 	add	r1, r5, #0
 	add	r1, r1, #0x1c
 	add	r0, r0, r1
-	ldr	r1, .L1826+0xc
+	ldr	r1, .L1823+0xc
 	str	r1, [r0]
-	ldr	r0, .L1826+0x10
+	ldr	r0, .L1823+0x10
 	mov	r1, #0x78
 	mov	r2, #0x50
 	mov	r3, #0x0
@@ -55155,16 +55198,16 @@ AnimateTradeSequenceWireless:
 	mov	r1, #0x1
 	bl	StartSpriteAnim
 	ldr	r1, [r4]
-	bl	.L1791	@ far jump
-.L1827:
+	bl	.L1788	@ far jump
+.L1824:
 	.align	2, 0
-.L1826:
+.L1823:
 	.word	gUnknown_08338D88
 	.word	sTradeData
 	.word	gSprites
 	.word	sub_807AA4C
 	.word	sGlowBallSpriteTemplate
-.L1709:
+.L1706:
 	ldr	r2, [r6]
 	add	r1, r2, #0
 	add	r1, r1, #0xe0
@@ -55174,21 +55217,21 @@ AnimateTradeSequenceWireless:
 	lsl	r0, r0, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, #0xa6
-	bne	.L1710	@cond_branch
+	bne	.L1707	@cond_branch
 	sub	r1, r1, #0x4c
 	mov	r0, #0xc8
 	strh	r0, [r1]
-.L1710:
-	ldr	r1, .L1828
+.L1707:
+	ldr	r1, .L1825
 	mov	r0, #0x0
 	bl	SetGpuReg
-	bl	.L1679	@ far jump
-.L1829:
+	bl	.L1676	@ far jump
+.L1826:
 	.align	2, 0
-.L1828:
+.L1825:
 	.word	0x1241
-.L1711:
-	ldr	r2, .L1830
+.L1708:
+	ldr	r2, .L1827
 	ldr	r4, [r6]
 	add	r3, r4, #0
 	add	r3, r3, #0x90
@@ -55220,19 +55263,19 @@ AnimateTradeSequenceWireless:
 	mov	r0, #0x8
 	neg	r0, r0
 	cmp	r1, r0
-	blt	.LCB15816
-	bl	.L1679	@far jump
-.LCB15816:
+	blt	.LCB15887
+	bl	.L1676	@far jump
+.LCB15887:
 	add	r1, r4, #0
 	add	r1, r1, #0x94
 	mov	r0, #0x1d
 	strh	r0, [r1]
-	bl	.L1679	@ far jump
-.L1831:
+	bl	.L1676	@ far jump
+.L1828:
 	.align	2, 0
-.L1830:
+.L1827:
 	.word	gSprites
-.L1713:
+.L1710:
 	mov	r1, #0x1
 	neg	r1, r1
 	mov	r0, #0x0
@@ -55241,32 +55284,32 @@ AnimateTradeSequenceWireless:
 	mov	r2, #0x0
 	mov	r3, #0x10
 	bl	BeginNormalPaletteFade
-	ldr	r0, .L1832
+	ldr	r0, .L1829
 	ldr	r0, [r0]
 	add	r0, r0, #0x94
 	mov	r1, #0x1e
 	strh	r1, [r0]
-	bl	.L1679	@ far jump
-.L1833:
+	bl	.L1676	@ far jump
+.L1830:
 	.align	2, 0
-.L1832:
+.L1829:
 	.word	sTradeData
-.L1714:
-	ldr	r0, .L1834
+.L1711:
+	ldr	r0, .L1831
 	ldrb	r1, [r0, #0x7]
 	mov	r0, #0x80
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.LCB15861
-	bl	.L1679	@far jump
-.LCB15861:
+	beq	.LCB15932
+	bl	.L1676	@far jump
+.LCB15932:
 	ldr	r0, [r6]
 	add	r0, r0, #0x90
 	ldrb	r1, [r0]
 	lsl	r0, r1, #0x4
 	add	r0, r0, r1
 	lsl	r0, r0, #0x2
-	ldr	r4, .L1834+0x4
+	ldr	r4, .L1831+0x4
 	add	r0, r0, r4
 	bl	DestroySprite
 	ldr	r0, [r6]
@@ -55280,13 +55323,13 @@ AnimateTradeSequenceWireless:
 	mov	r0, #0x2
 	bl	SetTradeSequenceBgGpuRegs
 	ldr	r1, [r6]
-	bl	.L1791	@ far jump
-.L1835:
+	bl	.L1788	@ far jump
+.L1832:
 	.align	2, 0
-.L1834:
+.L1831:
 	.word	gPaletteFade
 	.word	gSprites
-.L1716:
+.L1713:
 	mov	r1, #0x1
 	neg	r1, r1
 	mov	r0, #0x0
@@ -55295,13 +55338,13 @@ AnimateTradeSequenceWireless:
 	mov	r2, #0x10
 	mov	r3, #0x0
 	bl	BeginNormalPaletteFade
-	ldr	r5, .L1836
+	ldr	r5, .L1833
 	add	r0, r5, #0
 	mov	r1, #0x6f
 	mov	r2, #0xaa
 	mov	r3, #0x0
 	bl	CreateSprite
-	ldr	r4, .L1836+0x4
+	ldr	r4, .L1833+0x4
 	ldr	r1, [r4]
 	add	r1, r1, #0x90
 	strb	r0, [r1]
@@ -55315,30 +55358,30 @@ AnimateTradeSequenceWireless:
 	add	r1, r1, #0x91
 	strb	r0, [r1]
 	ldr	r1, [r4]
-	bl	.L1791	@ far jump
-.L1837:
+	bl	.L1788	@ far jump
+.L1834:
 	.align	2, 0
-.L1836:
+.L1833:
 	.word	sGlowBallSpriteTemplate
 	.word	sTradeData
-.L1717:
-	ldr	r0, .L1838
+.L1714:
+	ldr	r0, .L1835
 	ldrb	r1, [r0, #0x7]
 	mov	r0, #0x80
 	and	r0, r0, r1
 	cmp	r0, #0
-	bne	.L1718	@cond_branch
+	bne	.L1715	@cond_branch
 	mov	r0, #0x2e
 	bl	PlaySE
-	ldr	r0, .L1838+0x4
+	ldr	r0, .L1835+0x4
 	ldr	r1, [r0]
 	add	r1, r1, #0x94
 	ldrh	r0, [r1]
 	add	r0, r0, #0x1
 	strh	r0, [r1]
-.L1718:
-	ldr	r3, .L1838+0x8
-	ldr	r0, .L1838+0x4
+.L1715:
+	ldr	r3, .L1835+0x8
+	ldr	r0, .L1835+0x4
 	ldr	r2, [r0]
 	add	r0, r2, #0
 	add	r0, r0, #0x90
@@ -55359,15 +55402,15 @@ AnimateTradeSequenceWireless:
 	ldrh	r1, [r0, #0x26]
 	add	r1, r1, #0x3
 	strh	r1, [r0, #0x26]
-	bl	.L1679	@ far jump
-.L1839:
+	bl	.L1676	@ far jump
+.L1836:
 	.align	2, 0
-.L1838:
+.L1835:
 	.word	gPaletteFade
 	.word	sTradeData
 	.word	gSprites
-.L1719:
-	ldr	r5, .L1840
+.L1716:
+	ldr	r5, .L1837
 	ldr	r4, [r6]
 	add	r2, r4, #0
 	add	r2, r2, #0x90
@@ -55399,9 +55442,9 @@ AnimateTradeSequenceWireless:
 	mov	r0, #0x5a
 	neg	r0, r0
 	cmp	r1, r0
-	ble	.LCB16025
-	bl	.L1679	@far jump
-.LCB16025:
+	ble	.LCB16096
+	bl	.L1676	@far jump
+.LCB16096:
 	mov	r2, #0x1
 	strh	r2, [r3, #0x30]
 	ldrb	r1, [r6]
@@ -55415,45 +55458,45 @@ AnimateTradeSequenceWireless:
 	ldrh	r0, [r1]
 	add	r0, r0, #0x1
 	strh	r0, [r1]
-	ldr	r0, .L1840+0x4
-	b	.L1795
-.L1841:
+	ldr	r0, .L1837+0x4
+	b	.L1792
+.L1838:
 	.align	2, 0
-.L1840:
+.L1837:
 	.word	gSprites
 	.word	c3_0805465C
-.L1721:
-	ldr	r2, .L1842
+.L1718:
+	ldr	r2, .L1839
 	mov	r0, #0x8
 	mov	r1, #0x10
 	bl	BlendPalettes
-	bl	.L1792	@ far jump
-.L1843:
+	bl	.L1789	@ far jump
+.L1840:
 	.align	2, 0
+.L1839:
+	.word	0xffff
+.L1719:
+	ldr	r2, .L1841
+	mov	r0, #0x8
+	mov	r1, #0x10
+	bl	BlendPalettes
+	bl	.L1789	@ far jump
 .L1842:
+	.align	2, 0
+.L1841:
 	.word	0xffff
-.L1722:
-	ldr	r2, .L1844
+.L1720:
+	ldr	r2, .L1843
 	mov	r0, #0x8
 	mov	r1, #0x10
 	bl	BlendPalettes
-	bl	.L1792	@ far jump
-.L1845:
-	.align	2, 0
+	bl	.L1789	@ far jump
 .L1844:
-	.word	0xffff
-.L1723:
-	ldr	r2, .L1846
-	mov	r0, #0x8
-	mov	r1, #0x10
-	bl	BlendPalettes
-	bl	.L1792	@ far jump
-.L1847:
 	.align	2, 0
-.L1846:
+.L1843:
 	.word	0xffff
-.L1724:
-	ldr	r5, .L1848
+.L1721:
+	ldr	r5, .L1845
 	ldr	r1, [r5]
 	add	r0, r1, #0
 	add	r0, r0, #0xf0
@@ -55466,8 +55509,8 @@ AnimateTradeSequenceWireless:
 	bl	IsMonSpriteNotFlipped
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	bne	.L1725	@cond_branch
-	ldr	r4, .L1848+0x4
+	bne	.L1722	@cond_branch
+	ldr	r4, .L1845+0x4
 	ldr	r2, [r5]
 	add	r2, r2, #0x8e
 	ldrb	r1, [r2]
@@ -55477,7 +55520,7 @@ AnimateTradeSequenceWireless:
 	add	r1, r4, #0
 	add	r1, r1, #0x10
 	add	r0, r0, r1
-	ldr	r1, .L1848+0x8
+	ldr	r1, .L1845+0x8
 	str	r1, [r0]
 	ldrb	r1, [r2]
 	lsl	r0, r1, #0x4
@@ -55508,33 +55551,33 @@ AnimateTradeSequenceWireless:
 	add	r0, r0, r4
 	mov	r1, #0x0
 	bl	StartSpriteAffineAnim
-	b	.L1726
-.L1849:
+	b	.L1723
+.L1846:
 	.align	2, 0
-.L1848:
+.L1845:
 	.word	sTradeData
 	.word	gSprites
 	.word	gSpriteAffineAnimTable_8338ECC
-.L1725:
+.L1722:
 	ldr	r0, [r5]
 	add	r0, r0, #0x8e
 	ldrb	r1, [r0]
 	lsl	r0, r1, #0x4
 	add	r0, r0, r1
 	lsl	r0, r0, #0x2
-	ldr	r1, .L1850
+	ldr	r1, .L1847
 	add	r0, r0, r1
 	mov	r1, #0x0
 	bl	StartSpriteAffineAnim
-.L1726:
-	ldr	r5, .L1850+0x4
+.L1723:
+	ldr	r5, .L1847+0x4
 	ldr	r0, [r5]
 	add	r0, r0, #0x8f
 	ldrb	r1, [r0]
 	lsl	r0, r1, #0x4
 	add	r0, r0, r1
 	lsl	r0, r0, #0x2
-	ldr	r4, .L1850
+	ldr	r4, .L1847
 	add	r0, r0, r4
 	mov	r1, #0x0
 	bl	StartSpriteAffineAnim
@@ -55568,7 +55611,7 @@ AnimateTradeSequenceWireless:
 	add	r0, r0, r1
 	lsl	r0, r0, #0x2
 	add	r0, r0, r4
-	ldr	r1, .L1850+0x8
+	ldr	r1, .L1847+0x8
 	strh	r1, [r0, #0x22]
 	ldrb	r0, [r3]
 	lsl	r1, r0, #0x4
@@ -55594,15 +55637,15 @@ AnimateTradeSequenceWireless:
 	and	r2, r2, r1
 	strb	r2, [r0]
 	ldr	r1, [r5]
-	bl	.L1791	@ far jump
-.L1851:
+	bl	.L1788	@ far jump
+.L1848:
 	.align	2, 0
-.L1850:
+.L1847:
 	.word	gSprites
 	.word	sTradeData
 	.word	0xffe0
-.L1727:
-	ldr	r4, .L1852
+.L1724:
+	ldr	r4, .L1849
 	ldr	r2, [r6]
 	add	r3, r2, #0
 	add	r3, r3, #0x8e
@@ -55634,10 +55677,10 @@ AnimateTradeSequenceWireless:
 	lsl	r0, r0, #0x10
 	lsr	r0, r0, #0x10
 	cmp	r0, #0x2
-	bhi	.L1728	@cond_branch
+	bhi	.L1725	@cond_branch
 	mov	r0, #0x2d
 	bl	PlaySE
-.L1728:
+.L1725:
 	ldr	r2, [r6]
 	add	r3, r2, #0
 	add	r3, r3, #0x8e
@@ -55651,9 +55694,9 @@ AnimateTradeSequenceWireless:
 	mov	r0, #0xde
 	neg	r0, r0
 	cmp	r1, r0
-	blt	.LCB16321
-	bl	.L1679	@far jump
-.LCB16321:
+	blt	.LCB16392
+	bl	.L1676	@far jump
+.LCB16392:
 	add	r0, r2, #0
 	add	r0, r0, #0x90
 	ldrb	r1, [r0]
@@ -55696,18 +55739,18 @@ AnimateTradeSequenceWireless:
 	ldrb	r1, [r0]
 	orr	r1, r1, r2
 	strb	r1, [r0]
-	ldr	r0, .L1852+0x4
-.L1795:
+	ldr	r0, .L1849+0x4
+.L1792:
 	mov	r1, #0x5
 	bl	CreateTask
-	bl	.L1679	@ far jump
-.L1853:
+	bl	.L1676	@ far jump
+.L1850:
 	.align	2, 0
-.L1852:
+.L1849:
 	.word	gSprites
 	.word	sub_807F39C
-.L1730:
-	ldr	r4, .L1854
+.L1727:
+	ldr	r4, .L1851
 	ldr	r2, [r6]
 	add	r3, r2, #0
 	add	r3, r3, #0x90
@@ -55738,9 +55781,9 @@ AnimateTradeSequenceWireless:
 	mov	r0, #0xde
 	neg	r0, r0
 	cmp	r1, r0
-	ble	.LCB16416
-	bl	.L1679	@far jump
-.LCB16416:
+	ble	.LCB16487
+	bl	.L1676	@far jump
+.LCB16487:
 	mov	r1, #0x1
 	neg	r1, r1
 	mov	r0, #0x0
@@ -55770,20 +55813,20 @@ AnimateTradeSequenceWireless:
 	lsl	r0, r0, #0x2
 	add	r0, r0, r4
 	bl	DestroySprite
-	b	.L1679
-.L1855:
+	b	.L1676
+.L1852:
 	.align	2, 0
-.L1854:
+.L1851:
 	.word	gSprites
-.L1732:
-	ldr	r0, .L1856
+.L1729:
+	ldr	r0, .L1853
 	ldrb	r1, [r0, #0x7]
 	mov	r0, #0x80
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.LCB16466
-	b	.L1679	@long jump
-.LCB16466:
+	beq	.LCB16537
+	b	.L1676	@long jump
+.LCB16537:
 	ldr	r1, [r6]
 	add	r1, r1, #0x94
 	ldrh	r0, [r1]
@@ -55802,7 +55845,7 @@ AnimateTradeSequenceWireless:
 	mov	r1, #0xce
 	lsl	r1, r1, #0x1
 	strh	r1, [r0]
-	ldr	r0, .L1856+0x4
+	ldr	r0, .L1853+0x4
 	mov	r4, #0x14
 	neg	r4, r4
 	mov	r1, #0x78
@@ -55812,7 +55855,7 @@ AnimateTradeSequenceWireless:
 	ldr	r1, [r6]
 	add	r1, r1, #0x90
 	strb	r0, [r1]
-	ldr	r5, .L1856+0x8
+	ldr	r5, .L1853+0x8
 	ldr	r0, [r6]
 	add	r0, r0, #0x90
 	ldrb	r1, [r0]
@@ -55822,9 +55865,9 @@ AnimateTradeSequenceWireless:
 	add	r1, r5, #0
 	add	r1, r1, #0x1c
 	add	r0, r0, r1
-	ldr	r1, .L1856+0xc
+	ldr	r1, .L1853+0xc
 	str	r1, [r0]
-	ldr	r0, .L1856+0x10
+	ldr	r0, .L1853+0x10
 	mov	r1, #0x78
 	add	r2, r4, #0
 	mov	r3, #0x0
@@ -55841,16 +55884,16 @@ AnimateTradeSequenceWireless:
 	add	r0, r0, r5
 	mov	r1, #0x1
 	bl	StartSpriteAnim
-	b	.L1679
-.L1857:
+	b	.L1676
+.L1854:
 	.align	2, 0
-.L1856:
+.L1853:
 	.word	gPaletteFade
 	.word	gUnknown_08338D88
 	.word	gSprites
 	.word	sub_807AA4C
 	.word	sGlowBallSpriteTemplate
-.L1734:
+.L1731:
 	mov	r1, #0x1
 	neg	r1, r1
 	mov	r0, #0x0
@@ -55858,27 +55901,27 @@ AnimateTradeSequenceWireless:
 	add	r0, r1, #0
 	mov	r2, #0x10
 	mov	r3, #0x0
-	b	.L1793
-.L1735:
+	b	.L1790
+.L1732:
 	mov	r1, #0x92
 	lsl	r1, r1, #0x5
 	mov	r0, #0x0
 	bl	SetGpuReg
-	ldr	r0, .L1858
+	ldr	r0, .L1855
 	ldrb	r1, [r0, #0x7]
 	mov	r0, #0x80
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.LCB16567
-	b	.L1679	@long jump
-.LCB16567:
-	b	.L1792
-.L1859:
+	beq	.LCB16638
+	b	.L1676	@long jump
+.LCB16638:
+	b	.L1789
+.L1856:
 	.align	2, 0
-.L1858:
+.L1855:
 	.word	gPaletteFade
-.L1737:
-	ldr	r2, .L1860
+.L1734:
+	ldr	r2, .L1857
 	ldr	r4, [r6]
 	add	r3, r4, #0
 	add	r3, r3, #0x90
@@ -55911,26 +55954,26 @@ AnimateTradeSequenceWireless:
 	ldrsh	r0, [r0, r2]
 	add	r1, r1, r0
 	cmp	r1, #0x40
-	beq	.LCB16611
-	b	.L1679	@long jump
-.LCB16611:
+	beq	.LCB16682
+	b	.L1676	@long jump
+.LCB16682:
 	add	r0, r4, #0
 	add	r0, r0, #0x94
 	mov	r1, #0x90
 	strh	r1, [r0]
 	mov	r0, #0x0
 	str	r0, [r4, #0x64]
-	b	.L1679
-.L1861:
+	b	.L1676
+.L1858:
 	.align	2, 0
-.L1860:
+.L1857:
 	.word	gSprites
-.L1739:
+.L1736:
 	mov	r1, #0xb2
 	lsl	r1, r1, #0x5
 	mov	r0, #0x0
 	bl	SetGpuReg
-	ldr	r4, .L1862
+	ldr	r4, .L1859
 	ldr	r2, [r4]
 	add	r1, r2, #0
 	add	r1, r1, #0xe0
@@ -55945,20 +55988,20 @@ AnimateTradeSequenceWireless:
 	add	r0, r0, #0x1
 	str	r0, [r2, #0x64]
 	cmp	r0, #0xa
-	bne	.L1740	@cond_branch
-	ldr	r0, .L1862+0x4
+	bne	.L1737	@cond_branch
+	ldr	r0, .L1859+0x4
 	mov	r1, #0x5
 	bl	CreateTask
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
-	ldr	r2, .L1862+0x8
+	ldr	r2, .L1859+0x8
 	lsl	r1, r0, #0x2
 	add	r1, r1, r0
 	lsl	r1, r1, #0x3
 	add	r1, r1, r2
 	mov	r0, #0x1
 	strh	r0, [r1, #0xc]
-.L1740:
+.L1737:
 	ldr	r1, [r4]
 	add	r3, r1, #0
 	add	r3, r3, #0xe0
@@ -55967,25 +56010,25 @@ AnimateTradeSequenceWireless:
 	mov	r2, #0x9e
 	lsl	r2, r2, #0x1
 	cmp	r0, r2
-	bgt	.LCB16678
-	b	.L1679	@long jump
-.LCB16678:
+	bgt	.LCB16749
+	b	.L1676	@long jump
+.LCB16749:
 	strh	r2, [r3]
-	b	.L1791
-.L1863:
+	b	.L1788
+.L1860:
 	.align	2, 0
-.L1862:
+.L1859:
 	.word	sTradeData
 	.word	Task_AnimateWirelessSignal
 	.word	gTasks
-.L1742:
+.L1739:
 	ldr	r0, [r6]
 	add	r0, r0, #0x90
 	ldrb	r1, [r0]
 	lsl	r0, r1, #0x4
 	add	r0, r0, r1
 	lsl	r0, r0, #0x2
-	ldr	r4, .L1864
+	ldr	r4, .L1861
 	add	r0, r0, r4
 	bl	DestroySprite
 	ldr	r0, [r6]
@@ -56004,44 +56047,44 @@ AnimateTradeSequenceWireless:
 	mov	r1, #0x0
 	strh	r0, [r2]
 	str	r1, [r3, #0x64]
-	b	.L1679
-.L1865:
+	b	.L1676
+.L1862:
 	.align	2, 0
-.L1864:
+.L1861:
 	.word	gSprites
-.L1743:
-	ldr	r0, .L1866
+.L1740:
+	ldr	r0, .L1863
 	bl	FuncIsActiveTask
 	lsl	r0, r0, #0x18
 	lsr	r3, r0, #0x18
 	cmp	r3, #0
-	beq	.LCB16736
-	b	.L1679	@long jump
-.LCB16736:
-	ldr	r0, .L1866+0x4
+	beq	.LCB16807
+	b	.L1676	@long jump
+.LCB16807:
+	ldr	r0, .L1863+0x4
 	ldr	r2, [r0]
 	add	r1, r2, #0
 	add	r1, r1, #0x94
 	mov	r0, #0x2e
 	strh	r0, [r1]
 	str	r3, [r2, #0x64]
-	b	.L1679
-.L1867:
+	b	.L1676
+.L1864:
 	.align	2, 0
-.L1866:
+.L1863:
 	.word	Task_AnimateWirelessSignal
 	.word	sTradeData
-.L1745:
+.L1742:
 	ldr	r1, [r6]
 	ldr	r0, [r1, #0x64]
 	add	r0, r0, #0x1
 	str	r0, [r1, #0x64]
 	cmp	r0, #0xa
-	beq	.LCB16761
-	b	.L1679	@long jump
-.LCB16761:
-	b	.L1791
-.L1747:
+	beq	.LCB16832
+	b	.L1676	@long jump
+.LCB16832:
+	b	.L1788
+.L1744:
 	ldr	r1, [r6]
 	add	r5, r1, #0
 	add	r5, r5, #0xe0
@@ -56053,18 +56096,18 @@ AnimateTradeSequenceWireless:
 	mov	r6, #0xae
 	lsl	r6, r6, #0x1
 	cmp	r0, r6
-	bgt	.LCB16780
-	b	.L1679	@long jump
-.LCB16780:
+	bgt	.LCB16851
+	b	.L1676	@long jump
+.LCB16851:
 	strh	r6, [r5]
-	b	.L1791
-.L1749:
-	ldr	r0, .L1868
+	b	.L1788
+.L1746:
+	ldr	r0, .L1865
 	mov	r1, #0x78
 	mov	r2, #0x50
 	mov	r3, #0x0
 	bl	CreateSprite
-	ldr	r2, .L1868+0x4
+	ldr	r2, .L1865+0x4
 	ldr	r1, [r2]
 	add	r1, r1, #0x91
 	strb	r0, [r1]
@@ -56072,14 +56115,14 @@ AnimateTradeSequenceWireless:
 	add	r0, r0, #0x94
 	mov	r1, #0x32
 	strh	r1, [r0]
-	b	.L1679
-.L1869:
+	b	.L1676
+.L1866:
 	.align	2, 0
-.L1868:
+.L1865:
 	.word	gSpriteTemplate_8338E74
 	.word	sTradeData
-.L1750:
-	ldr	r2, .L1870
+.L1747:
+	ldr	r2, .L1867
 	ldr	r0, [r6]
 	add	r0, r0, #0x91
 	ldrb	r1, [r0]
@@ -56092,9 +56135,9 @@ AnimateTradeSequenceWireless:
 	ldrb	r0, [r0]
 	lsl	r0, r0, #0x1b
 	cmp	r0, #0
-	blt	.LCB16828
-	b	.L1679	@long jump
-.LCB16828:
+	blt	.LCB16899
+	b	.L1676	@long jump
+.LCB16899:
 	add	r0, r1, #0
 	bl	DestroySprite
 	mov	r0, #0x6
@@ -56106,28 +56149,28 @@ AnimateTradeSequenceWireless:
 	strh	r0, [r1]
 	mov	r0, #0x9f
 	bl	PlaySE
-	b	.L1679
-.L1871:
+	b	.L1676
+.L1868:
 	.align	2, 0
-.L1870:
+.L1867:
 	.word	gSprites
-.L1752:
+.L1749:
 	ldr	r1, [r6]
 	add	r2, r1, #0
 	add	r2, r2, #0xea
 	ldrh	r3, [r2]
-	ldr	r0, .L1872
+	ldr	r0, .L1869
 	cmp	r3, r0
-	bhi	.L1753	@cond_branch
+	bhi	.L1750	@cond_branch
 	add	r0, r3, #0
 	add	r0, r0, #0x34
 	strh	r0, [r2]
-	b	.L1754
-.L1873:
+	b	.L1751
+.L1870:
 	.align	2, 0
-.L1872:
+.L1869:
 	.word	0x3ff
-.L1753:
+.L1750:
 	mov	r0, #0x80
 	lsl	r0, r0, #0x3
 	strh	r0, [r2]
@@ -56135,9 +56178,9 @@ AnimateTradeSequenceWireless:
 	ldrh	r0, [r1]
 	add	r0, r0, #0x1
 	strh	r0, [r1]
-.L1754:
+.L1751:
 	ldr	r4, [r6]
-.L1794:
+.L1791:
 	add	r0, r4, #0
 	add	r0, r0, #0xea
 	ldrh	r1, [r0]
@@ -56146,8 +56189,8 @@ AnimateTradeSequenceWireless:
 	bl	__divsi3
 	add	r4, r4, #0xe8
 	strh	r0, [r4]
-	b	.L1679
-.L1755:
+	b	.L1676
+.L1752:
 	mov	r0, #0x1
 	neg	r0, r0
 	mov	r1, #0x0
@@ -56155,25 +56198,25 @@ AnimateTradeSequenceWireless:
 	mov	r2, #0x0
 	mov	r3, #0x10
 	bl	BeginNormalPaletteFade
-	ldr	r0, .L1874
+	ldr	r0, .L1871
 	ldr	r0, [r0]
 	add	r0, r0, #0x94
 	mov	r1, #0x3c
 	strh	r1, [r0]
-	b	.L1679
-.L1875:
+	b	.L1676
+.L1872:
 	.align	2, 0
-.L1874:
+.L1871:
 	.word	sTradeData
-.L1756:
-	ldr	r4, .L1876
+.L1753:
+	ldr	r4, .L1873
 	ldrb	r1, [r4, #0x7]
 	mov	r0, #0x80
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.LCB16932
-	b	.L1679	@long jump
-.LCB16932:
+	beq	.LCB17003
+	b	.L1676	@long jump
+.LCB17003:
 	mov	r0, #0x5
 	bl	SetTradeSequenceBgGpuRegs
 	mov	r0, #0x7
@@ -56182,13 +56225,13 @@ AnimateTradeSequenceWireless:
 	mov	r1, #0x80
 	orr	r0, r0, r1
 	strb	r0, [r4, #0x8]
-	b	.L1792
-.L1877:
+	b	.L1789
+.L1874:
 	.align	2, 0
-.L1876:
+.L1873:
 	.word	gPaletteFade
-.L1758:
-	ldr	r2, .L1878
+.L1755:
+	ldr	r2, .L1875
 	ldrb	r1, [r2, #0x8]
 	mov	r0, #0x7f
 	and	r0, r0, r1
@@ -56199,42 +56242,42 @@ AnimateTradeSequenceWireless:
 	str	r1, [sp]
 	mov	r2, #0x10
 	mov	r3, #0x0
-	b	.L1793
-.L1879:
+	b	.L1790
+.L1876:
 	.align	2, 0
-.L1878:
+.L1875:
 	.word	gPaletteFade
-.L1759:
+.L1756:
 	mov	r1, #0xa2
 	lsl	r1, r1, #0x5
 	mov	r0, #0x0
 	bl	SetGpuReg
-	ldr	r0, .L1880
+	ldr	r0, .L1877
 	ldrb	r1, [r0, #0x7]
 	mov	r0, #0x80
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.LCB16985
-	b	.L1679	@long jump
-.LCB16985:
-	b	.L1792
-.L1881:
+	beq	.LCB17056
+	b	.L1676	@long jump
+.LCB17056:
+	b	.L1789
+.L1878:
 	.align	2, 0
-.L1880:
+.L1877:
 	.word	gPaletteFade
-.L1761:
-	ldr	r0, .L1882
+.L1758:
+	ldr	r0, .L1879
 	mov	r2, #0x8
 	neg	r2, r2
 	mov	r1, #0x78
 	mov	r3, #0x0
 	bl	CreateSprite
-	ldr	r5, .L1882+0x4
+	ldr	r5, .L1879+0x4
 	ldr	r1, [r5]
 	add	r1, r1, #0xd3
 	mov	r6, #0x0
 	strb	r0, [r1]
-	ldr	r4, .L1882+0x8
+	ldr	r4, .L1879+0x8
 	ldr	r2, [r5]
 	add	r2, r2, #0xd3
 	ldrb	r1, [r2]
@@ -56251,7 +56294,7 @@ AnimateTradeSequenceWireless:
 	add	r1, r4, #0
 	add	r1, r1, #0x1c
 	add	r0, r0, r1
-	ldr	r1, .L1882+0xc
+	ldr	r1, .L1879+0xc
 	str	r1, [r0]
 	ldrb	r1, [r2]
 	lsl	r0, r1, #0x4
@@ -56281,7 +56324,7 @@ AnimateTradeSequenceWireless:
 	add	r1, r1, #0x10
 	mov	r0, #0x1
 	lsl	r0, r0, r1
-	ldr	r2, .L1882+0x10
+	ldr	r2, .L1879+0x10
 	mov	r1, #0x10
 	bl	BlendPalettes
 	ldr	r2, [r5]
@@ -56291,17 +56334,17 @@ AnimateTradeSequenceWireless:
 	add	r0, r0, #0x1
 	strh	r0, [r1]
 	str	r6, [r2, #0x64]
-	b	.L1679
-.L1883:
+	b	.L1676
+.L1880:
 	.align	2, 0
-.L1882:
+.L1879:
 	.word	gSpriteTemplate_8338D28
 	.word	sTradeData
 	.word	gSprites
 	.word	sub_807E6AC
 	.word	0xffff
-.L1762:
-	ldr	r2, .L1884
+.L1759:
+	ldr	r2, .L1881
 	ldr	r0, [r6]
 	add	r0, r0, #0xd3
 	ldrb	r1, [r0]
@@ -56314,21 +56357,21 @@ AnimateTradeSequenceWireless:
 	add	r1, r1, #0x10
 	mov	r0, #0x1
 	lsl	r0, r0, r1
-	ldr	r1, .L1884+0x4
+	ldr	r1, .L1881+0x4
 	str	r1, [sp]
 	mov	r1, #0x1
 	mov	r2, #0x10
 	mov	r3, #0x0
 	bl	BeginNormalPaletteFade
 	ldr	r1, [r6]
-	b	.L1791
-.L1885:
+	b	.L1788
+.L1882:
 	.align	2, 0
-.L1884:
+.L1881:
 	.word	gSprites
 	.word	0xffff
-.L1763:
-	ldr	r2, .L1886
+.L1760:
+	ldr	r2, .L1883
 	ldr	r3, [r6]
 	add	r0, r3, #0
 	add	r0, r0, #0xd3
@@ -56339,11 +56382,11 @@ AnimateTradeSequenceWireless:
 	add	r2, r2, #0x1c
 	add	r0, r0, r2
 	ldr	r1, [r0]
-	ldr	r0, .L1886+0x4
+	ldr	r0, .L1883+0x4
 	cmp	r1, r0
-	beq	.LCB17136
-	b	.L1679	@long jump
-.LCB17136:
+	beq	.LCB17207
+	b	.L1676	@long jump
+.LCB17207:
 	add	r0, r3, #0
 	add	r0, r0, #0xf2
 	ldrh	r0, [r0]
@@ -56354,9 +56397,9 @@ AnimateTradeSequenceWireless:
 	add	r4, r0, #0
 	lsl	r4, r4, #0x10
 	lsr	r4, r4, #0xd
-	ldr	r0, .L1886+0x8
+	ldr	r0, .L1883+0x8
 	add	r4, r4, r0
-	ldr	r0, .L1886+0xc
+	ldr	r0, .L1883+0xc
 	ldr	r0, [r0]
 	ldr	r5, [r0, #0x10]
 	ldr	r1, [r6]
@@ -56375,16 +56418,16 @@ AnimateTradeSequenceWireless:
 	add	r1, r5, #0
 	bl	HandleLoadSpecialPokePic_DontHandleDeoxys
 	ldr	r1, [r6]
-	b	.L1791
-.L1887:
+	b	.L1788
+.L1884:
 	.align	2, 0
-.L1886:
+.L1883:
 	.word	gSprites
 	.word	SpriteCallbackDummy
 	.word	gMonFrontPicTable
 	.word	gMonSpritesGfxPtr
-.L1765:
-	ldr	r4, .L1888
+.L1762:
+	ldr	r4, .L1885
 	ldr	r2, [r6]
 	add	r0, r2, #0
 	add	r0, r0, #0x8f
@@ -56410,7 +56453,7 @@ AnimateTradeSequenceWireless:
 	add	r1, r1, r2
 	lsl	r1, r1, #0x2
 	add	r1, r1, r4
-	ldr	r2, .L1888+0x4
+	ldr	r2, .L1885+0x4
 	lsl	r0, r0, #0x10
 	lsr	r0, r0, #0xe
 	add	r0, r0, r2
@@ -56452,7 +56495,7 @@ AnimateTradeSequenceWireless:
 	str	r2, [sp, #0x4]
 	mov	r2, #0x14
 	str	r2, [sp, #0x8]
-	ldr	r2, .L1888+0x8
+	ldr	r2, .L1885+0x8
 	str	r2, [sp, #0xc]
 	add	r3, r3, #0xf2
 	ldrh	r2, [r3]
@@ -56477,102 +56520,103 @@ AnimateTradeSequenceWireless:
 	add	r0, r0, r4
 	bl	DestroySprite
 	ldr	r1, [r6]
-	b	.L1791
-.L1889:
+	b	.L1788
+.L1886:
 	.align	2, 0
-.L1888:
+.L1885:
 	.word	gSprites
 	.word	gMonFrontPicCoords
 	.word	0xfffff
-.L1766:
+.L1763:
 	mov	r1, #0xaa
 	lsl	r1, r1, #0x5
 	mov	r0, #0x0
 	bl	SetGpuReg
-	ldr	r4, .L1890
-	ldr	r1, .L1890+0x4
+	ldr	r4, .L1887
+	ldr	r1, .L1887+0x4
 	add	r0, r4, #0
 	bl	StringExpandPlaceholders
 	mov	r0, #0x0
 	add	r1, r4, #0
 	mov	r2, #0x0
 	bl	DrawTextOnTradeWindow
-	ldr	r0, .L1890+0x8
+	ldr	r0, .L1887+0x8
 	ldr	r3, [r0]
 	add	r1, r3, #0
 	add	r1, r1, #0x94
 	mov	r2, #0x0
 	mov	r0, #0xa7
-.L1790:
+.L1787:
 	strh	r0, [r1]
 	str	r2, [r3, #0x64]
-	b	.L1679
-.L1891:
+	b	.L1676
+.L1888:
 	.align	2, 0
-.L1890:
+.L1887:
 	.word	gStringVar4
 	.word	gText_XSentOverY
 	.word	sTradeData
-.L1767:
+.L1764:
 	ldr	r3, [r6]
 	ldr	r0, [r3, #0x64]
 	add	r0, r0, #0x1
 	str	r0, [r3, #0x64]
 	cmp	r0, #0x3c
-	bhi	.LCB17346
-	b	.L1679	@long jump
-.LCB17346:
+	bhi	.LCB17417
+	b	.L1676	@long jump
+.LCB17417:
 	add	r0, r3, #0
 	add	r0, r0, #0x94
 	mov	r2, #0x0
-	ldr	r1, .L1892
+	ldr	r1, .L1889
 	strh	r1, [r0]
 	str	r2, [r3, #0x64]
-	b	.L1679
-.L1893:
+	b	.L1676
+.L1890:
 	.align	2, 0
-.L1892:
+.L1889:
 	.word	0x10b
-.L1769:
+.L1766:
 	bl	IsCryFinished
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	bne	.LCB17370
-	b	.L1679	@long jump
-.LCB17370:
-	ldr	r0, .L1894
+	bne	.LCB17441
+	b	.L1676	@long jump
+.LCB17441:
+	ldr	r0, .L1891
 	ldr	r0, [r0]
 	add	r0, r0, #0x94
 	mov	r1, #0x44
 	strh	r1, [r0]
-	b	.L1679
-.L1895:
+	b	.L1676
+.L1892:
 	.align	2, 0
-.L1894:
+.L1891:
 	.word	sTradeData
-.L1771:
+.L1768:
 	ldr	r1, [r6]
 	ldr	r0, [r1, #0x64]
 	add	r0, r0, #0x1
 	str	r0, [r1, #0x64]
 	cmp	r0, #0xa
-	bne	.L1772	@cond_branch
-	ldr	r0, .L1896
+	bne	.L1769	@cond_branch
+	mov	r0, #0xab
+	lsl	r0, r0, #0x1
 	bl	PlayFanfare
-.L1772:
+.L1769:
 	ldr	r1, [r6]
 	ldr	r0, [r1, #0x64]
 	cmp	r0, #0xfa
-	beq	.LCB17402
-	b	.L1679	@long jump
-.LCB17402:
+	beq	.LCB17474
+	b	.L1676	@long jump
+.LCB17474:
 	add	r1, r1, #0x94
 	ldrh	r0, [r1]
 	add	r0, r0, #0x1
 	mov	r5, #0x0
 	strh	r0, [r1]
-	ldr	r4, .L1896+0x4
-	ldr	r1, .L1896+0x8
+	ldr	r4, .L1893
+	ldr	r1, .L1893+0x4
 	add	r0, r4, #0
 	bl	StringExpandPlaceholders
 	mov	r0, #0x0
@@ -56581,63 +56625,62 @@ AnimateTradeSequenceWireless:
 	bl	DrawTextOnTradeWindow
 	ldr	r0, [r6]
 	str	r5, [r0, #0x64]
-	b	.L1679
-.L1897:
+	b	.L1676
+.L1894:
 	.align	2, 0
-.L1896:
-	.word	0x173
+.L1893:
 	.word	gStringVar4
 	.word	gText_TakeGoodCareOfX
-.L1774:
+.L1771:
 	ldr	r1, [r6]
 	ldr	r0, [r1, #0x64]
 	add	r0, r0, #0x1
 	str	r0, [r1, #0x64]
 	cmp	r0, #0x3c
-	beq	.LCB17437
-	b	.L1679	@long jump
-.LCB17437:
-	b	.L1791
-.L1776:
+	beq	.LCB17508
+	b	.L1676	@long jump
+.LCB17508:
+	b	.L1788
+.L1773:
 	bl	CheckPartnersMonForRibbons
-	b	.L1792
-.L1777:
+	b	.L1789
+.L1774:
 	ldr	r2, [r6]
 	add	r0, r2, #0
 	add	r0, r0, #0xee
 	ldrb	r0, [r0]
 	cmp	r0, #0
-	beq	.L1778	@cond_branch
+	beq	.L1775	@cond_branch
 	mov	r0, #0x1
-	b	.L1789
-.L1778:
-	ldr	r0, .L1898
+	b	.L1786
+.L1775:
+	ldr	r0, .L1895
 	ldrh	r1, [r0, #0x2e]
 	mov	r0, #0x1
 	and	r0, r0, r1
 	cmp	r0, #0
-	bne	.LCB17470
-	b	.L1679	@long jump
-.LCB17470:
+	bne	.LCB17541
+	b	.L1676	@long jump
+.LCB17541:
 	add	r1, r2, #0
-	b	.L1791
-.L1899:
+	b	.L1788
+.L1896:
 	.align	2, 0
-.L1898:
+.L1895:
 	.word	gMain
-.L1781:
-	ldr	r0, .L1900
+.L1778:
+	ldr	r0, .L1897
 	ldrb	r0, [r0]
 	mov	r1, #0x0
 	bl	TradeMons
-	ldr	r1, .L1900+0x4
-	ldr	r0, .L1900+0x8
+	ldr	r1, .L1897+0x4
+	ldr	r0, .L1897+0x8
 	str	r0, [r1]
-	ldr	r7, .L1900+0xc
+	ldr	r7, .L1897+0xc
 	ldrb	r0, [r7, #0x1]
 	mov	r6, #0x64
 	mul	r0, r0, r6
-	ldr	r5, .L1900+0x10
+	ldr	r5, .L1897+0x10
 	add	r0, r0, r5
 	mov	r1, #0xb
 	bl	GetMonData
@@ -56655,12 +56698,12 @@ AnimateTradeSequenceWireless:
 	lsl	r0, r0, #0x10
 	lsr	r4, r0, #0x10
 	cmp	r4, #0
-	beq	.L1792	@cond_branch
+	beq	.L1789	@cond_branch
 	ldrb	r3, [r7]
 	mov	r0, r3
 	mul	r0, r0, r6
 	add	r0, r0, r5
-	ldr	r1, .L1900+0x14
+	ldr	r1, .L1897+0x14
 	ldr	r1, [r1]
 	add	r1, r1, #0x8f
 	ldrb	r2, [r1]
@@ -56669,54 +56712,54 @@ AnimateTradeSequenceWireless:
 	str	r1, [sp]
 	add	r1, r4, #0
 	bl	TradeEvolutionScene
-	b	.L1792
-.L1901:
+	b	.L1789
+.L1898:
 	.align	2, 0
-.L1900:
+.L1897:
 	.word	gSpecialVar_0x8005
 	.word	gCB2_AfterEvolution
 	.word	CB2_UpdateInGameTrade
 	.word	gSelectedTradeMonPositions
 	.word	gPlayerParty
 	.word	sTradeData
-.L1783:
+.L1780:
 	mov	r0, #0x1
 	neg	r0, r0
 	mov	r1, #0x0
 	str	r1, [sp]
 	mov	r2, #0x0
 	mov	r3, #0x10
-.L1793:
+.L1790:
 	bl	BeginNormalPaletteFade
-.L1792:
-	ldr	r0, .L1902
+.L1789:
+	ldr	r0, .L1899
 	ldr	r1, [r0]
-.L1791:
+.L1788:
 	add	r1, r1, #0x94
 	ldrh	r0, [r1]
 	add	r0, r0, #0x1
 	strh	r0, [r1]
-	b	.L1679
-.L1903:
+	b	.L1676
+.L1900:
 	.align	2, 0
-.L1902:
+.L1899:
 	.word	sTradeData
-.L1784:
-	ldr	r0, .L1904
+.L1781:
+	ldr	r0, .L1901
 	ldrb	r1, [r0, #0x7]
 	mov	r0, #0x80
 	and	r0, r0, r1
 	lsl	r0, r0, #0x18
 	lsr	r4, r0, #0x18
 	cmp	r4, #0
-	bne	.L1679	@cond_branch
+	bne	.L1676	@cond_branch
 	ldr	r0, [r6]
 	add	r0, r0, #0xf4
 	ldrh	r0, [r0]
 	bl	PlayNewMapMusic
 	ldr	r0, [r6]
 	cmp	r0, #0
-	beq	.L1786	@cond_branch
+	beq	.L1783	@cond_branch
 	bl	FreeAllWindowBuffers
 	mov	r0, #0x3
 	bl	GetBgTilemapBuffer
@@ -56731,20 +56774,20 @@ AnimateTradeSequenceWireless:
 	ldr	r0, [r6]
 	bl	Free
 	str	r4, [r6]
-.L1786:
-	ldr	r0, .L1904+0x4
+.L1783:
+	ldr	r0, .L1901+0x4
 	bl	SetMainCallback2
 	bl	BufferInGameTradeMonName
-.L1679:
+.L1676:
 	mov	r0, #0x0
-.L1789:
+.L1786:
 	add	sp, sp, #0x18
 	pop	{r4, r5, r6, r7}
 	pop	{r1}
 	bx	r1
-.L1905:
+.L1902:
 	.align	2, 0
-.L1904:
+.L1901:
 	.word	gPaletteFade
 	.word	CB2_ReturnToField
 .Lfe109:
@@ -56757,40 +56800,40 @@ CB2_TryTradeEvolution:
 	mov	r7, r8
 	push	{r7}
 	add	sp, sp, #-0x8
-	ldr	r0, .L1918
+	ldr	r0, .L1915
 	mov	r2, #0x87
 	lsl	r2, r2, #0x3
 	add	r1, r0, r2
 	ldrb	r0, [r1]
 	cmp	r0, #0
-	beq	.L1908	@cond_branch
+	beq	.L1905	@cond_branch
 	cmp	r0, #0x4
-	beq	.L1909	@cond_branch
-	b	.L1907
-.L1919:
+	beq	.L1906	@cond_branch
+	b	.L1904
+.L1916:
 	.align	2, 0
-.L1918:
+.L1915:
 	.word	gMain
-.L1908:
+.L1905:
 	mov	r0, #0x4
 	strb	r0, [r1]
-	ldr	r1, .L1920
+	ldr	r1, .L1917
 	mov	r0, #0x1
-	b	.L1917
-.L1921:
+	b	.L1914
+.L1918:
 	.align	2, 0
-.L1920:
+.L1917:
 	.word	gSoftResetDisabled
-.L1909:
-	ldr	r0, .L1922
-	ldr	r1, .L1922+0x4
+.L1906:
+	ldr	r0, .L1919
+	ldr	r1, .L1919+0x4
 	mov	r8, r1
 	str	r1, [r0]
-	ldr	r7, .L1922+0x8
+	ldr	r7, .L1919+0x8
 	ldrb	r0, [r7, #0x1]
 	mov	r6, #0x64
 	mul	r0, r0, r6
-	ldr	r5, .L1922+0xc
+	ldr	r5, .L1919+0xc
 	add	r0, r0, r5
 	mov	r1, #0xb
 	bl	GetMonData
@@ -56808,12 +56851,12 @@ CB2_TryTradeEvolution:
 	lsl	r0, r0, #0x10
 	lsr	r4, r0, #0x10
 	cmp	r4, #0
-	beq	.L1910	@cond_branch
+	beq	.L1907	@cond_branch
 	ldrb	r3, [r7]
 	mov	r0, r3
 	mul	r0, r0, r6
 	add	r0, r0, r5
-	ldr	r1, .L1922+0x10
+	ldr	r1, .L1919+0x10
 	ldr	r1, [r1]
 	add	r1, r1, #0x8f
 	ldrb	r2, [r1]
@@ -56822,41 +56865,41 @@ CB2_TryTradeEvolution:
 	str	r1, [sp]
 	add	r1, r4, #0
 	bl	TradeEvolutionScene
-	b	.L1911
-.L1923:
+	b	.L1908
+.L1920:
 	.align	2, 0
-.L1922:
+.L1919:
 	.word	gCB2_AfterEvolution
 	.word	CB2_SaveAndEndTrade
 	.word	gSelectedTradeMonPositions
 	.word	gPlayerParty
 	.word	sTradeData
-.L1910:
+.L1907:
 	bl	IsWirelessTrade
 	cmp	r0, #0
-	beq	.L1912	@cond_branch
-	ldr	r0, .L1924
+	beq	.L1909	@cond_branch
+	ldr	r0, .L1921
 	bl	SetMainCallback2
-	b	.L1911
-.L1925:
+	b	.L1908
+.L1922:
 	.align	2, 0
-.L1924:
+.L1921:
 	.word	CB2_SaveAndEndWirelessTrade
-.L1912:
+.L1909:
 	mov	r0, r8
 	bl	SetMainCallback2
-.L1911:
-	ldr	r1, .L1926
+.L1908:
+	ldr	r1, .L1923
 	mov	r0, #0xff
-.L1917:
+.L1914:
 	strb	r0, [r1]
-.L1907:
+.L1904:
 	bl	HasLinkErrorOccurred
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	bne	.L1916	@cond_branch
+	bne	.L1913	@cond_branch
 	bl	RunTasks
-.L1916:
+.L1913:
 	bl	AnimateSprites
 	bl	BuildOamBuffer
 	bl	UpdatePaletteFade
@@ -56866,9 +56909,9 @@ CB2_TryTradeEvolution:
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L1927:
+.L1924:
 	.align	2, 0
-.L1926:
+.L1923:
 	.word	gSelectedTradeMonPositions
 .Lfe110:
 	.size	 CB2_TryTradeEvolution,.Lfe110-CB2_TryTradeEvolution
@@ -56885,54 +56928,54 @@ UpdateTradeFinishFlags:
 	add	r0, r5, #0
 	and	r0, r0, r6
 	cmp	r0, #0
-	beq	.L1929	@cond_branch
-	ldr	r4, .L1934
+	beq	.L1926	@cond_branch
+	ldr	r4, .L1931
 	ldrh	r1, [r4]
-	ldr	r0, .L1934+0x4
+	ldr	r0, .L1931+0x4
 	cmp	r1, r0
-	bne	.L1930	@cond_branch
-	ldr	r0, .L1934+0x8
+	bne	.L1927	@cond_branch
+	ldr	r0, .L1931+0x8
 	bl	SetMainCallback2
-.L1930:
+.L1927:
 	ldrh	r1, [r4]
-	ldr	r0, .L1934+0xc
+	ldr	r0, .L1931+0xc
 	cmp	r1, r0
-	bne	.L1931	@cond_branch
-	ldr	r0, .L1934+0x10
+	bne	.L1928	@cond_branch
+	ldr	r0, .L1931+0x10
 	ldr	r0, [r0]
 	add	r0, r0, #0x72
 	strb	r6, [r0]
-.L1931:
+.L1928:
 	mov	r0, #0x0
 	bl	ResetBlockReceivedFlag
-.L1929:
+.L1926:
 	mov	r0, #0x2
 	and	r0, r0, r5
 	cmp	r0, #0
-	beq	.L1932	@cond_branch
-	ldr	r0, .L1934
+	beq	.L1929	@cond_branch
+	ldr	r0, .L1931
 	mov	r1, #0x80
 	lsl	r1, r1, #0x1
 	add	r0, r0, r1
 	ldrh	r1, [r0]
-	ldr	r0, .L1934+0xc
+	ldr	r0, .L1931+0xc
 	cmp	r1, r0
-	bne	.L1933	@cond_branch
-	ldr	r0, .L1934+0x10
+	bne	.L1930	@cond_branch
+	ldr	r0, .L1931+0x10
 	ldr	r0, [r0]
 	add	r0, r0, #0x73
 	mov	r1, #0x1
 	strb	r1, [r0]
-.L1933:
+.L1930:
 	mov	r0, #0x1
 	bl	ResetBlockReceivedFlag
-.L1932:
+.L1929:
 	pop	{r4, r5, r6}
 	pop	{r0}
 	bx	r0
-.L1935:
+.L1932:
 	.align	2, 0
-.L1934:
+.L1931:
 	.word	gBlockRecvBuffer
 	.word	0xdcba
 	.word	CB2_TryTradeEvolution
@@ -56965,7 +57008,7 @@ sub_807E55C:
 	lsl	r4, r4, #0x10
 	asr	r4, r4, #0x10
 	cmp	r4, #0x4c
-	ble	.L1937	@cond_branch
+	ble	.L1934	@cond_branch
 	mov	r0, #0x4c
 	strh	r0, [r5, #0x22]
 	mov	r2, #0x2e
@@ -56980,14 +57023,14 @@ sub_807E55C:
 	ldrh	r0, [r5, #0x34]
 	add	r0, r0, #0x1
 	strh	r0, [r5, #0x34]
-.L1937:
+.L1934:
 	mov	r1, #0x20
 	ldrsh	r0, [r5, r1]
 	cmp	r0, #0x78
-	bne	.L1938	@cond_branch
+	bne	.L1935	@cond_branch
 	mov	r0, #0x0
 	strh	r0, [r5, #0x30]
-.L1938:
+.L1935:
 	ldrh	r0, [r5, #0x36]
 	ldrh	r2, [r5, #0x2e]
 	add	r0, r0, r2
@@ -56995,18 +57038,18 @@ sub_807E55C:
 	mov	r1, #0x34
 	ldrsh	r0, [r5, r1]
 	cmp	r0, #0x4
-	bne	.L1939	@cond_branch
+	bne	.L1936	@cond_branch
 	mov	r0, #0x1
 	strh	r0, [r5, #0x3c]
-	ldr	r0, .L1940
+	ldr	r0, .L1937
 	str	r0, [r5, #0x1c]
-.L1939:
+.L1936:
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.L1941:
+.L1938:
 	.align	2, 0
-.L1940:
+.L1937:
 	.word	SpriteCallbackDummy
 .Lfe112:
 	.size	 sub_807E55C,.Lfe112-sub_807E55C
@@ -57017,7 +57060,7 @@ sub_807E5D8:
 	push	{r4, lr}
 	add	sp, sp, #-0x4
 	add	r4, r0, #0
-	ldr	r1, .L1945
+	ldr	r1, .L1942
 	mov	r2, #0x2e
 	ldrsh	r0, [r4, r2]
 	add	r0, r0, r1
@@ -57030,20 +57073,20 @@ sub_807E5D8:
 	mov	r2, #0x2e
 	ldrsh	r0, [r4, r2]
 	cmp	r0, #0x16
-	bne	.L1943	@cond_branch
+	bne	.L1940	@cond_branch
 	mov	r0, #0x38
 	bl	PlaySE
-.L1943:
+.L1940:
 	ldrh	r0, [r4, #0x2e]
 	add	r0, r0, #0x1
 	strh	r0, [r4, #0x2e]
 	lsl	r0, r0, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, #0x2c
-	bne	.L1944	@cond_branch
+	bne	.L1941	@cond_branch
 	mov	r0, #0x8c
 	bl	PlaySE
-	ldr	r0, .L1945+0x4
+	ldr	r0, .L1942+0x4
 	str	r0, [r4, #0x1c]
 	mov	r0, #0x0
 	strh	r0, [r4, #0x2e]
@@ -57054,19 +57097,19 @@ sub_807E5D8:
 	lsl	r0, r0, r1
 	mov	r1, #0x1
 	neg	r1, r1
-	ldr	r2, .L1945+0x8
+	ldr	r2, .L1942+0x8
 	str	r2, [sp]
 	mov	r2, #0x0
 	mov	r3, #0x10
 	bl	BeginNormalPaletteFade
-.L1944:
+.L1941:
 	add	sp, sp, #0x4
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L1946:
+.L1943:
 	.align	2, 0
-.L1945:
+.L1942:
 	.word	sTradeBallVerticalVelocityTable
 	.word	sub_807E64C
 	.word	0xffff
@@ -57081,19 +57124,19 @@ sub_807E64C:
 	mov	r1, #0x30
 	ldrsh	r0, [r4, r1]
 	cmp	r0, #0x14
-	bne	.L1948	@cond_branch
+	bne	.L1945	@cond_branch
 	add	r0, r4, #0
 	mov	r1, #0x1
 	bl	StartSpriteAffineAnim
-.L1948:
+.L1945:
 	ldrh	r0, [r4, #0x30]
 	add	r0, r0, #0x1
 	strh	r0, [r4, #0x30]
 	lsl	r0, r0, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, #0x14
-	ble	.L1949	@cond_branch
-	ldr	r1, .L1951
+	ble	.L1946	@cond_branch
+	ldr	r1, .L1948
 	mov	r2, #0x2e
 	ldrsh	r0, [r4, r2]
 	add	r0, r0, r1
@@ -57108,21 +57151,21 @@ sub_807E64C:
 	lsl	r0, r0, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, #0x17
-	bne	.L1949	@cond_branch
+	bne	.L1946	@cond_branch
 	add	r0, r4, #0
 	bl	DestroySprite
-	ldr	r0, .L1951+0x4
+	ldr	r0, .L1948+0x4
 	ldr	r0, [r0]
 	add	r0, r0, #0x94
 	mov	r1, #0xe
 	strh	r1, [r0]
-.L1949:
+.L1946:
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L1952:
+.L1949:
 	.align	2, 0
-.L1951:
+.L1948:
 	.word	sTradeBallVerticalVelocityTable
 	.word	sTradeData
 .Lfe114:
@@ -57137,7 +57180,7 @@ sub_807E6AC:
 	mov	r1, #0x32
 	ldrsh	r0, [r4, r1]
 	cmp	r0, #0
-	bne	.L1954	@cond_branch
+	bne	.L1951	@cond_branch
 	ldrh	r0, [r4, #0x22]
 	add	r0, r0, #0x4
 	strh	r0, [r4, #0x22]
@@ -57146,37 +57189,37 @@ sub_807E6AC:
 	mov	r3, #0x34
 	ldrsh	r1, [r4, r3]
 	cmp	r0, r1
-	ble	.L1956	@cond_branch
+	ble	.L1953	@cond_branch
 	add	r0, r2, #0x1
 	strh	r0, [r4, #0x32]
 	mov	r0, #0x16
 	strh	r0, [r4, #0x2e]
 	mov	r0, #0x38
 	bl	PlaySE
-	b	.L1956
-.L1954:
+	b	.L1953
+.L1951:
 	mov	r1, #0x2e
 	ldrsh	r0, [r4, r1]
 	cmp	r0, #0x42
-	bne	.L1957	@cond_branch
+	bne	.L1954	@cond_branch
 	mov	r0, #0x39
 	bl	PlaySE
-.L1957:
+.L1954:
 	mov	r2, #0x2e
 	ldrsh	r0, [r4, r2]
 	cmp	r0, #0x5c
-	bne	.L1958	@cond_branch
+	bne	.L1955	@cond_branch
 	mov	r0, #0x3a
 	bl	PlaySE
-.L1958:
+.L1955:
 	mov	r3, #0x2e
 	ldrsh	r0, [r4, r3]
 	cmp	r0, #0x6b
-	bne	.L1959	@cond_branch
+	bne	.L1956	@cond_branch
 	mov	r0, #0x3b
 	bl	PlaySE
-.L1959:
-	ldr	r1, .L1961
+.L1956:
+	ldr	r1, .L1958
 	mov	r2, #0x2e
 	ldrsh	r0, [r4, r2]
 	add	r0, r0, r1
@@ -57192,16 +57235,16 @@ sub_807E6AC:
 	lsl	r0, r0, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, #0x6c
-	bne	.L1956	@cond_branch
-	ldr	r0, .L1961+0x4
+	bne	.L1953	@cond_branch
+	ldr	r0, .L1958+0x4
 	str	r0, [r4, #0x1c]
-.L1956:
+.L1953:
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L1962:
+.L1959:
 	.align	2, 0
-.L1961:
+.L1958:
 	.word	sTradeBallVerticalVelocityTable
 	.word	SpriteCallbackDummy
 .Lfe115:
@@ -57212,21 +57255,21 @@ sub_807E6AC:
 	.thumb_func
 GetInGameTradeSpeciesInfo:
 	push	{r4, r5, r6, lr}
-	ldr	r0, .L1964
+	ldr	r0, .L1961
 	ldrh	r0, [r0]
 	lsl	r4, r0, #0x4
 	sub	r4, r4, r0
 	lsl	r4, r4, #0x2
-	ldr	r0, .L1964+0x4
+	ldr	r0, .L1961+0x4
 	add	r4, r4, r0
-	ldr	r0, .L1964+0x8
+	ldr	r0, .L1961+0x8
 	ldrh	r1, [r4, #0x38]
 	mov	r6, #0xb
 	mul	r1, r1, r6
-	ldr	r5, .L1964+0xc
+	ldr	r5, .L1961+0xc
 	add	r1, r1, r5
 	bl	StringCopy
-	ldr	r0, .L1964+0x10
+	ldr	r0, .L1961+0x10
 	ldrh	r1, [r4, #0xc]
 	mul	r1, r1, r6
 	add	r1, r1, r5
@@ -57235,9 +57278,9 @@ GetInGameTradeSpeciesInfo:
 	pop	{r4, r5, r6}
 	pop	{r1}
 	bx	r1
-.L1965:
+.L1962:
 	.align	2, 0
-.L1964:
+.L1961:
 	.word	gSpecialVar_0x8004
 	.word	sIngameTrades
 	.word	gStringVar1
@@ -57251,39 +57294,39 @@ GetInGameTradeSpeciesInfo:
 BufferInGameTradeMonName:
 	push	{r4, lr}
 	add	sp, sp, #-0x20
-	ldr	r0, .L1967
+	ldr	r0, .L1964
 	ldrh	r0, [r0]
 	lsl	r4, r0, #0x4
 	sub	r4, r4, r0
 	lsl	r4, r4, #0x2
-	ldr	r0, .L1967+0x4
+	ldr	r0, .L1964+0x4
 	add	r4, r4, r0
-	ldr	r0, .L1967+0x8
+	ldr	r0, .L1964+0x8
 	ldrh	r1, [r0]
 	mov	r0, #0x64
 	mul	r0, r0, r1
-	ldr	r1, .L1967+0xc
+	ldr	r1, .L1964+0xc
 	add	r0, r0, r1
 	mov	r1, #0x2
 	mov	r2, sp
 	bl	GetMonData
-	ldr	r0, .L1967+0x10
+	ldr	r0, .L1964+0x10
 	mov	r1, sp
 	bl	StringCopy10
-	ldr	r0, .L1967+0x14
+	ldr	r0, .L1964+0x14
 	ldrh	r2, [r4, #0xc]
 	mov	r1, #0xb
 	mul	r1, r1, r2
-	ldr	r2, .L1967+0x18
+	ldr	r2, .L1964+0x18
 	add	r1, r1, r2
 	bl	StringCopy
 	add	sp, sp, #0x20
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L1968:
+.L1965:
 	.align	2, 0
-.L1967:
+.L1964:
 	.word	gSpecialVar_0x8004
 	.word	sIngameTrades
 	.word	gSpecialVar_0x8005
@@ -57306,11 +57349,11 @@ _CreateInGameTradePokemon:
 	lsl	r2, r1, #0x4
 	sub	r2, r2, r1
 	lsl	r2, r2, #0x2
-	ldr	r1, .L1973
+	ldr	r1, .L1970
 	add	r6, r2, r1
 	mov	r1, #0x64
 	mul	r0, r0, r1
-	ldr	r1, .L1973+0x4
+	ldr	r1, .L1970+0x4
 	add	r0, r0, r1
 	mov	r1, #0x38
 	bl	GetMonData
@@ -57320,7 +57363,7 @@ _CreateInGameTradePokemon:
 	add	r5, sp, #0x38
 	mov	r0, #0xfe
 	strb	r0, [r5]
-	ldr	r7, .L1973+0x8
+	ldr	r7, .L1970+0x8
 	ldrh	r0, [r6, #0xc]
 	bl	GetFormIdFromFormSpeciesId
 	lsl	r0, r0, #0x18
@@ -57427,15 +57470,15 @@ _CreateInGameTradePokemon:
 	strb	r0, [r4]
 	ldrh	r0, [r6, #0x28]
 	cmp	r0, #0
-	beq	.L1970	@cond_branch
+	beq	.L1967	@cond_branch
 	bl	ItemIsMail
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.L1971	@cond_branch
+	beq	.L1968	@cond_branch
 	add	r0, sp, #0x14
 	add	r1, r6, #0
 	bl	SetInGameTradeMail
-	ldr	r0, .L1973+0xc
+	ldr	r0, .L1970+0xc
 	add	r1, sp, #0x14
 	ldmia	r1!, {r2, r3, r5}
 	stmia	r0!, {r2, r3, r5}
@@ -57452,30 +57495,30 @@ _CreateInGameTradePokemon:
 	add	r0, r7, #0
 	mov	r1, #0xc
 	bl	SetMonData
-	b	.L1970
-.L1974:
+	b	.L1967
+.L1971:
 	.align	2, 0
-.L1973:
+.L1970:
 	.word	sIngameTrades
 	.word	gPlayerParty
 	.word	gEnemyParty
 	.word	gTradeMail
-.L1971:
+.L1968:
 	add	r2, r6, #0
 	add	r2, r2, #0x28
 	add	r0, r7, #0
 	mov	r1, #0xc
 	bl	SetMonData
-.L1970:
-	ldr	r0, .L1975
+.L1967:
+	ldr	r0, .L1972
 	bl	CalculateMonStats
 	add	sp, sp, #0x3c
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L1976:
+.L1973:
 	.align	2, 0
-.L1975:
+.L1972:
 	.word	gEnemyParty
 .Lfe118:
 	.size	 _CreateInGameTradePokemon,.Lfe118-_CreateInGameTradePokemon
@@ -57515,50 +57558,50 @@ CreateWonderTradePokemon:
 	bl	Random
 	lsl	r0, r0, #0x10
 	lsr	r0, r0, #0x10
-	ldr	r1, .L1985
+	ldr	r1, .L1982
 	bl	__umodsi3
 	add	r0, r0, #0x1
 	lsl	r0, r0, #0x10
 	lsr	r5, r0, #0x10
-	ldr	r1, .L1985+0x4
+	ldr	r1, .L1982+0x4
 	mov	r0, sp
 	mov	r2, #0x14
 	bl	memcpy
 	add	r4, sp, #0x14
-	ldr	r1, .L1985+0x8
+	ldr	r1, .L1982+0x8
 	add	r0, r4, #0
 	mov	r2, #0x14
 	bl	memcpy
 	mov	r2, #0x0
-.L1981:
+.L1978:
 	lsl	r1, r2, #0x1
 	mov	r3, sp
 	add	r0, r3, r1
 	ldrh	r0, [r0]
 	cmp	r5, r0
-	bcc	.L1980	@cond_branch
+	bcc	.L1977	@cond_branch
 	add	r0, r4, r1
 	ldrh	r0, [r0]
 	cmp	r5, r0
-	bcs	.L1980	@cond_branch
+	bcs	.L1977	@cond_branch
 	bl	CreateWonderTradePokemon
 	lsl	r0, r0, #0x10
 	lsr	r0, r0, #0x10
-	b	.L1984
-.L1986:
+	b	.L1981
+.L1983:
 	.align	2, 0
-.L1985:
+.L1982:
 	.word	0x377
 	.word	.LC486
 	.word	.LC488
-.L1980:
+.L1977:
 	add	r0, r2, #0x1
 	lsl	r0, r0, #0x18
 	lsr	r2, r0, #0x18
 	cmp	r2, #0x9
-	bls	.L1981	@cond_branch
+	bls	.L1978	@cond_branch
 	add	r0, r5, #0
-.L1984:
+.L1981:
 	add	sp, sp, #0x28
 	pop	{r4, r5}
 	pop	{r1}
@@ -57577,9 +57620,9 @@ WonderTradeGetFirstStage:
 	lsr	r2, r0, #0x10
 	mov	r0, #0x0
 	mov	r8, r0
-	ldr	r0, .L2006
+	ldr	r0, .L2003
 	mov	ip, r0
-.L1991:
+.L1988:
 	mov	r7, #0x0
 	mov	r6, #0x1
 	mov	r4, #0x80
@@ -57587,60 +57630,60 @@ WonderTradeGetFirstStage:
 	mov	r5, #0x50
 	mov	r3, ip
 	add	r3, r3, #0x50
-.L1995:
+.L1992:
 	mov	r1, #0x0
 	ldrh	r0, [r3, #0x4]
 	cmp	r0, r2
-	bne	.L1998	@cond_branch
+	bne	.L1995	@cond_branch
 	lsr	r2, r4, #0x10
-	b	.L1993
-.L2007:
+	b	.L1990
+.L2004:
 	.align	2, 0
-.L2006:
+.L2003:
 	.word	gEvolutionTable
-.L1998:
+.L1995:
 	add	r1, r1, #0x1
 	cmp	r1, #0x4
-	bgt	.L1997	@cond_branch
+	bgt	.L1994	@cond_branch
 	lsl	r0, r1, #0x3
 	add	r0, r0, r5
 	add	r0, r0, ip
 	ldrh	r0, [r0, #0x4]
 	cmp	r0, r2
-	bne	.L1998	@cond_branch
+	bne	.L1995	@cond_branch
 	lsr	r2, r4, #0x10
 	mov	r7, #0x1
-.L1997:
+.L1994:
 	cmp	r7, #0
-	bne	.L1993	@cond_branch
+	bne	.L1990	@cond_branch
 	mov	r0, #0x80
 	lsl	r0, r0, #0x9
 	add	r4, r4, r0
 	add	r5, r5, #0x50
 	add	r3, r3, #0x50
 	add	r6, r6, #0x1
-	ldr	r0, .L2008
+	ldr	r0, .L2005
 	cmp	r6, r0
-	ble	.L1995	@cond_branch
-.L1993:
-	ldr	r0, .L2008+0x4
+	ble	.L1992	@cond_branch
+.L1990:
+	ldr	r0, .L2005+0x4
 	cmp	r6, r0
-	beq	.L1989	@cond_branch
+	beq	.L1986	@cond_branch
 	mov	r0, #0x1
 	add	r8, r8, r0
 	mov	r0, r8
 	cmp	r0, #0x4
-	ble	.L1991	@cond_branch
-.L1989:
+	ble	.L1988	@cond_branch
+.L1986:
 	add	r0, r2, #0
 	pop	{r3}
 	mov	r8, r3
 	pop	{r4, r5, r6, r7}
 	pop	{r1}
 	bx	r1
-.L2009:
+.L2006:
 	.align	2, 0
-.L2008:
+.L2005:
 	.word	0x4b6
 	.word	0x4b7
 .Lfe120:
@@ -57655,7 +57698,7 @@ WonderTradeGetEvolvedForm:
 	lsr	r2, r0, #0x10
 	lsl	r1, r1, #0x18
 	lsr	r5, r1, #0x18
-	ldr	r1, .L2042
+	ldr	r1, .L2039
 	lsl	r0, r2, #0x2
 	add	r0, r0, r2
 	lsl	r0, r0, #0x4
@@ -57664,98 +57707,98 @@ WonderTradeGetEvolvedForm:
 	sub	r0, r0, #0x1
 	add	r3, r1, #0
 	cmp	r0, #0x1d
-	bhi	.L2011	@cond_branch
+	bhi	.L2008	@cond_branch
 	lsl	r0, r0, #0x2
-	ldr	r1, .L2042+0x4
+	ldr	r1, .L2039+0x4
 	add	r0, r0, r1
 	ldr	r0, [r0]
 	mov	pc, r0
-.L2043:
+.L2040:
 	.align	2, 0
-.L2042:
+.L2039:
 	.word	gEvolutionTable
-	.word	.L2037
+	.word	.L2034
 	.align	2, 0
 	.align	2, 0
-.L2037:
-	.word	.L2013
-	.word	.L2011
-	.word	.L2011
-	.word	.L2019
-	.word	.L2011
-	.word	.L2035
-	.word	.L2035
-	.word	.L2011
-	.word	.L2011
-	.word	.L2011
-	.word	.L2011
-	.word	.L2011
-	.word	.L2011
-	.word	.L2011
-	.word	.L2027
-	.word	.L2019
-	.word	.L2019
-	.word	.L2019
-	.word	.L2019
-	.word	.L2027
-	.word	.L2013
-	.word	.L2027
-	.word	.L2035
-	.word	.L2011
-	.word	.L2035
-	.word	.L2035
-	.word	.L2035
-	.word	.L2035
-	.word	.L2027
-	.word	.L2027
-.L2013:
+.L2034:
+	.word	.L2010
+	.word	.L2008
+	.word	.L2008
+	.word	.L2016
+	.word	.L2008
+	.word	.L2032
+	.word	.L2032
+	.word	.L2008
+	.word	.L2008
+	.word	.L2008
+	.word	.L2008
+	.word	.L2008
+	.word	.L2008
+	.word	.L2008
+	.word	.L2024
+	.word	.L2016
+	.word	.L2016
+	.word	.L2016
+	.word	.L2016
+	.word	.L2024
+	.word	.L2010
+	.word	.L2024
+	.word	.L2032
+	.word	.L2008
+	.word	.L2032
+	.word	.L2032
+	.word	.L2032
+	.word	.L2032
+	.word	.L2024
+	.word	.L2024
+.L2010:
 	cmp	r5, #0x18
-	bcc	.L2011	@cond_branch
-	b	.L2040
-.L2019:
+	bcc	.L2008	@cond_branch
+	b	.L2037
+.L2016:
 	lsl	r0, r2, #0x2
 	add	r0, r0, r2
 	lsl	r0, r0, #0x4
 	add	r0, r0, r3
 	ldrh	r3, [r0, #0x2]
 	cmp	r3, #0
-	beq	.L2011	@cond_branch
+	beq	.L2008	@cond_branch
 	cmp	r3, r5
-	bhi	.L2011	@cond_branch
+	bhi	.L2008	@cond_branch
 	ldrh	r4, [r0, #0x4]
 	add	r0, r4, #0
 	add	r1, r5, #0
 	bl	WonderTradeGetEvolvedForm
 	lsl	r0, r0, #0x10
 	cmp	r0, #0
-	beq	.L2021	@cond_branch
+	beq	.L2018	@cond_branch
 	add	r0, r4, #0
-	b	.L2041
-.L2021:
+	b	.L2038
+.L2018:
 	add	r0, r4, #0
-	b	.L2039
-.L2027:
+	b	.L2036
+.L2024:
 	cmp	r5, #0x1e
-	bcc	.L2011	@cond_branch
-	b	.L2040
-.L2035:
+	bcc	.L2008	@cond_branch
+	b	.L2037
+.L2032:
 	cmp	r5, #0x2d
-	bcc	.L2011	@cond_branch
-.L2040:
+	bcc	.L2008	@cond_branch
+.L2037:
 	lsl	r0, r2, #0x2
 	add	r0, r0, r2
 	lsl	r0, r0, #0x4
 	add	r0, r0, r3
 	ldrh	r0, [r0, #0x4]
-.L2041:
+.L2038:
 	add	r1, r5, #0
 	bl	WonderTradeGetEvolvedForm
 	lsl	r0, r0, #0x10
 	lsr	r0, r0, #0x10
-	b	.L2039
-.L2011:
+	b	.L2036
+.L2008:
 	add	r0, r2, #0
-.L2039:
+.L2036:
 	pop	{r4, r5}
 	pop	{r1}
 	bx	r1
@@ -57780,7 +57823,7 @@ CreateWonderTradeItem:
 	lsl	r0, r0, #0x10
 	lsr	r3, r0, #0x10
 	lsr	r5, r5, #0x19
-	ldr	r1, .L2055
+	ldr	r1, .L2052
 	lsl	r0, r4, #0x3
 	add	r0, r0, r4
 	lsl	r0, r0, #0x2
@@ -57788,39 +57831,39 @@ CreateWonderTradeItem:
 	ldrh	r2, [r0, #0xe]
 	ldrh	r1, [r0, #0x10]
 	cmp	r2, r1
-	bne	.L2045	@cond_branch
+	bne	.L2042	@cond_branch
 	add	r0, r2, #0
-	b	.L2054
-.L2056:
+	b	.L2051
+.L2053:
 	.align	2, 0
-.L2055:
+.L2052:
 	.word	gBaseStats
-.L2045:
+.L2042:
 	cmp	r1, #0
-	bne	.L2047	@cond_branch
+	bne	.L2044	@cond_branch
 	cmp	r2, #0
-	beq	.L2050	@cond_branch
+	beq	.L2047	@cond_branch
 	mov	r0, #0x0
 	cmp	r3, #0x31
-	bhi	.L2054	@cond_branch
+	bhi	.L2051	@cond_branch
 	add	r0, r2, #0
-	b	.L2054
-.L2047:
+	b	.L2051
+.L2044:
 	add	r0, r6, #0
 	add	r0, r0, #0x37
 	add	r0, r5, r0
 	cmp	r3, r0
-	bge	.L2050	@cond_branch
+	bge	.L2047	@cond_branch
 	add	r0, r5, #0x5
 	cmp	r3, r0
-	ble	.L2051	@cond_branch
+	ble	.L2048	@cond_branch
 	add	r1, r2, #0
-.L2051:
+.L2048:
 	add	r0, r1, #0
-	b	.L2054
-.L2050:
+	b	.L2051
+.L2047:
 	mov	r0, #0x0
-.L2054:
+.L2051:
 	pop	{r4, r5, r6}
 	pop	{r1}
 	bx	r1
@@ -57840,18 +57883,18 @@ WonderTradeGetAbilityNum:
 	bl	Random
 	lsl	r0, r0, #0x10
 	lsr	r0, r0, #0x10
-	ldr	r1, .L2061
+	ldr	r1, .L2058
 	bl	__umodsi3
 	lsl	r0, r0, #0x10
 	lsr	r0, r0, #0x10
 	mov	r1, #0x0
 	cmp	r0, r4
-	bcs	.L2058	@cond_branch
+	bcs	.L2055	@cond_branch
 	mov	r6, #0x1
-.L2058:
+.L2055:
 	cmp	r6, #0
-	beq	.L2059	@cond_branch
-	ldr	r1, .L2061+0x4
+	beq	.L2056	@cond_branch
+	ldr	r1, .L2058+0x4
 	lsl	r0, r5, #0x3
 	add	r0, r0, r5
 	lsl	r0, r0, #0x2
@@ -57862,14 +57905,14 @@ WonderTradeGetAbilityNum:
 	asr	r1, r0, #0x1f
 	mov	r0, #0x2
 	and	r1, r1, r0
-.L2059:
+.L2056:
 	add	r0, r1, #0
 	pop	{r4, r5, r6}
 	pop	{r1}
 	bx	r1
-.L2062:
+.L2059:
 	.align	2, 0
-.L2061:
+.L2058:
 	.word	0x382
 	.word	gBaseStats
 .Lfe123:
@@ -57913,18 +57956,18 @@ WonderTradeCreateMoveset:
 	lsl	r1, r1, #0x10
 	lsr	r1, r1, #0x10
 	cmp	r1, r4
-	bcs	.L2064	@cond_branch
+	bcs	.L2061	@cond_branch
 	mov	r0, #0x1
 	mov	r9, r0
-.L2064:
+.L2061:
 	mov	r0, r8
 	add	r1, r7, #0
 	bl	CreateWildMon
 	mov	r4, #0x0
-.L2068:
+.L2065:
 	add	r1, r4, #0
 	add	r1, r1, #0xd
-	ldr	r0, .L2072
+	ldr	r0, .L2069
 	mov	r2, #0x0
 	bl	GetMonData
 	lsl	r1, r4, #0x1
@@ -57934,17 +57977,17 @@ WonderTradeCreateMoveset:
 	lsl	r0, r0, #0x18
 	lsr	r4, r0, #0x18
 	cmp	r4, #0x3
-	bls	.L2068	@cond_branch
+	bls	.L2065	@cond_branch
 	mov	r0, r9
 	cmp	r0, #0x1
-	bne	.L2070	@cond_branch
-	ldr	r0, .L2072
+	bne	.L2067	@cond_branch
+	ldr	r0, .L2069
 	mov	r1, sp
 	bl	GetEggMoves
 	lsl	r0, r0, #0x18
 	lsr	r1, r0, #0x18
 	cmp	r1, #0
-	beq	.L2070	@cond_branch
+	beq	.L2067	@cond_branch
 	mov	r0, #0x0
 	bl	RandRange
 	lsl	r0, r0, #0x18
@@ -57952,7 +57995,7 @@ WonderTradeCreateMoveset:
 	add	r0, r0, sp
 	ldrh	r0, [r0]
 	strh	r0, [r6]
-.L2070:
+.L2067:
 	add	sp, sp, #0x14
 	pop	{r3, r4}
 	mov	r8, r3
@@ -57960,9 +58003,9 @@ WonderTradeCreateMoveset:
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L2073:
+.L2070:
 	.align	2, 0
-.L2072:
+.L2069:
 	.word	gEnemyParty
 .Lfe124:
 	.size	 WonderTradeCreateMoveset,.Lfe124-WonderTradeCreateMoveset
@@ -57986,7 +58029,7 @@ WonderTradeCreateMoveset:
 WonderTradeCreatePokeball:
 	push	{lr}
 	add	sp, sp, #-0x14
-	ldr	r1, .L2075
+	ldr	r1, .L2072
 	mov	r0, sp
 	mov	r2, #0x12
 	bl	memcpy
@@ -58002,9 +58045,9 @@ WonderTradeCreatePokeball:
 	add	sp, sp, #0x14
 	pop	{r1}
 	bx	r1
-.L2076:
+.L2073:
 	.align	2, 0
-.L2075:
+.L2072:
 	.word	.LC496
 .Lfe125:
 	.size	 WonderTradeCreatePokeball,.Lfe125-WonderTradeCreatePokeball
@@ -58025,13 +58068,13 @@ _CreateInGameWonderTradePokemon:
 	lsl	r2, r1, #0x4
 	sub	r2, r2, r1
 	lsl	r2, r2, #0x2
-	ldr	r1, .L2087
+	ldr	r1, .L2084
 	add	r2, r2, r1
 	str	r2, [sp, #0x5c]
 	mov	r1, #0x64
 	mov	r4, r0
 	mul	r4, r4, r1
-	ldr	r0, .L2087+0x4
+	ldr	r0, .L2084+0x4
 	add	r4, r4, r0
 	add	r0, r4, #0
 	mov	r1, #0x38
@@ -58168,7 +58211,7 @@ _CreateInGameWonderTradePokemon:
 	mov	sl, r2
 	mov	r0, #0xfe
 	strb	r0, [r2]
-	ldr	r7, .L2087+0x8
+	ldr	r7, .L2084+0x8
 	ldr	r1, [sp, #0x5c]
 	ldrh	r0, [r1, #0xc]
 	bl	GetFormIdFromFormSpeciesId
@@ -58202,8 +58245,8 @@ _CreateInGameWonderTradePokemon:
 	lsl	r0, r1, #0x2
 	add	r0, r0, r1
 	lsl	r4, r0, #0x3
-	ldr	r5, .L2087+0xc
-.L2081:
+	ldr	r5, .L2084+0xc
+.L2078:
 	add	r1, r6, r3
 	add	r0, r3, r4
 	add	r0, r0, r5
@@ -58213,7 +58256,7 @@ _CreateInGameWonderTradePokemon:
 	lsl	r0, r0, #0x18
 	lsr	r3, r0, #0x18
 	cmp	r3, #0xc
-	bls	.L2081	@cond_branch
+	bls	.L2078	@cond_branch
 	add	r0, r7, #0
 	mov	r1, #0x27
 	bl	SetMonData
@@ -58286,38 +58329,38 @@ _CreateInGameWonderTradePokemon:
 	bl	SetMonData
 	ldr	r2, [sp, #0x70]
 	cmp	r2, #0x1
-	bls	.L2083	@cond_branch
+	bls	.L2080	@cond_branch
 	add	r0, r7, #0
 	mov	r1, #0x26
 	add	r2, sp, #0x54
 	bl	SetMonData
-.L2083:
+.L2080:
 	ldr	r0, [sp, #0x70]
 	cmp	r0, #0x3
-	bls	.L2084	@cond_branch
+	bls	.L2081	@cond_branch
 	add	r0, r7, #0
 	mov	r1, #0x2e
 	mov	r2, sp
 	add	r2, r2, #0x56
 	bl	SetMonData
-.L2084:
+.L2081:
 	ldr	r1, [sp, #0x60]
 	cmp	r1, #0
-	beq	.L2085	@cond_branch
+	beq	.L2082	@cond_branch
 	add	r0, r7, #0
 	mov	r1, #0xc
 	add	r2, sp, #0x58
 	bl	SetMonData
-.L2085:
+.L2082:
 	ldr	r2, [sp, #0x70]
 	cmp	r2, #0x2
-	bls	.L2086	@cond_branch
+	bls	.L2083	@cond_branch
 	add	r0, r7, #0
 	mov	r1, #0xd
 	add	r2, sp, #0x14
 	bl	SetMonData
-.L2086:
-	ldr	r0, .L2087+0x8
+.L2083:
+	ldr	r0, .L2084+0x8
 	bl	CalculateMonStats
 	add	sp, sp, #0x9c
 	pop	{r3, r4, r5}
@@ -58327,9 +58370,9 @@ _CreateInGameWonderTradePokemon:
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L2088:
+.L2085:
 	.align	2, 0
-.L2087:
+.L2084:
 	.word	sIngameTrades
 	.word	gPlayerParty
 	.word	gEnemyParty
@@ -58343,7 +58386,7 @@ SetInGameTradeMail:
 	push	{r4, r5, r6, lr}
 	add	r5, r0, #0
 	add	r6, r1, #0
-	ldr	r2, .L2095
+	ldr	r2, .L2092
 	add	r0, r6, #0
 	add	r0, r0, #0x2a
 	ldrb	r1, [r0]
@@ -58353,14 +58396,14 @@ SetInGameTradeMail:
 	add	r2, r0, r2
 	add	r1, r5, #0
 	mov	r3, #0x8
-.L2093:
+.L2090:
 	ldrh	r0, [r2]
 	strh	r0, [r1]
 	add	r2, r2, #0x2
 	add	r1, r1, #0x2
 	sub	r3, r3, #0x1
 	cmp	r3, #0
-	bge	.L2093	@cond_branch
+	bge	.L2090	@cond_branch
 	add	r4, r5, #0
 	add	r4, r4, #0x12
 	add	r1, r6, #0
@@ -58385,9 +58428,9 @@ SetInGameTradeMail:
 	pop	{r4, r5, r6}
 	pop	{r0}
 	bx	r0
-.L2096:
+.L2093:
 	.align	2, 0
-.L2095:
+.L2092:
 	.word	sIngameTradeMail
 .Lfe127:
 	.size	 SetInGameTradeMail,.Lfe127-SetInGameTradeMail
@@ -58397,16 +58440,16 @@ SetInGameTradeMail:
 	.thumb_func
 GetTradeSpecies:
 	push	{r4, r5, r6, lr}
-	ldr	r6, .L2100
+	ldr	r6, .L2097
 	ldrh	r0, [r6]
 	mov	r5, #0x64
 	mul	r0, r0, r5
-	ldr	r4, .L2100+0x4
+	ldr	r4, .L2097+0x4
 	add	r0, r0, r4
 	mov	r1, #0x2d
 	bl	GetMonData
 	cmp	r0, #0
-	bne	.L2098	@cond_branch
+	bne	.L2095	@cond_branch
 	ldrh	r0, [r6]
 	mul	r0, r0, r5
 	add	r0, r0, r4
@@ -58414,15 +58457,15 @@ GetTradeSpecies:
 	bl	GetMonData
 	lsl	r0, r0, #0x10
 	lsr	r0, r0, #0x10
-	b	.L2099
-.L2101:
+	b	.L2096
+.L2098:
 	.align	2, 0
-.L2100:
+.L2097:
 	.word	gSpecialVar_0x8005
 	.word	gPlayerParty
-.L2098:
+.L2095:
 	mov	r0, #0x0
-.L2099:
+.L2096:
 	pop	{r4, r5, r6}
 	pop	{r1}
 	bx	r1
@@ -58435,31 +58478,31 @@ GetTradeSpecies:
 CreateInGameTradePokemon:
 	push	{r4, lr}
 	add	sp, sp, #-0x14
-	ldr	r0, .L2110
+	ldr	r0, .L2107
 	ldrh	r1, [r0]
 	add	r0, r1, #0
 	cmp	r0, #0x6
-	bne	.L2103	@cond_branch
-	ldr	r0, .L2110+0x4
-	ldr	r3, .L2110+0x8
-	ldr	r1, .L2110+0xc
+	bne	.L2100	@cond_branch
+	ldr	r0, .L2107+0x4
+	ldr	r3, .L2107+0x8
+	ldr	r1, .L2107+0xc
 	ldrh	r2, [r1]
 	mov	r1, #0x64
 	mul	r1, r1, r2
 	add	r1, r1, r3
-	b	.L2109
-.L2111:
+	b	.L2106
+.L2108:
 	.align	2, 0
-.L2110:
+.L2107:
 	.word	gSpecialVar_0x8004
 	.word	gEnemyParty
 	.word	gPlayerParty
 	.word	gSpecialVar_0x8005
-.L2103:
+.L2100:
 	cmp	r0, #0x7
-	bne	.L2105	@cond_branch
-	ldr	r4, .L2112
-	ldr	r1, .L2112+0x4
+	bne	.L2102	@cond_branch
+	ldr	r4, .L2109
+	ldr	r1, .L2109+0x4
 	mov	r2, #0x0
 	str	r2, [sp]
 	str	r2, [sp, #0x4]
@@ -58471,50 +58514,50 @@ CreateInGameTradePokemon:
 	mov	r2, #0xa
 	mov	r3, #0x20
 	bl	CreateMon
-	ldr	r2, .L2112+0x8
-	ldr	r0, .L2112+0xc
+	ldr	r2, .L2109+0x8
+	ldr	r0, .L2109+0xc
 	ldrh	r1, [r0]
 	mov	r0, #0x64
 	mul	r1, r1, r0
 	add	r1, r1, r2
 	add	r4, r4, #0x64
 	add	r0, r4, #0
-	b	.L2109
-.L2113:
+	b	.L2106
+.L2110:
 	.align	2, 0
-.L2112:
+.L2109:
 	.word	gEnemyParty
 	.word	0x109
 	.word	gPlayerParty
 	.word	gSpecialVar_0x8005
-.L2105:
+.L2102:
 	cmp	r0, #0x8
-	bne	.L2107	@cond_branch
-	ldr	r0, .L2114
+	bne	.L2104	@cond_branch
+	ldr	r0, .L2111
 	add	r1, r0, #0
 	add	r1, r1, #0x64
-.L2109:
+.L2106:
 	mov	r2, #0x64
 	bl	memcpy
-	b	.L2104
-.L2115:
+	b	.L2101
+.L2112:
 	.align	2, 0
-.L2114:
+.L2111:
 	.word	gEnemyParty
-.L2107:
-	ldr	r0, .L2116
+.L2104:
+	ldr	r0, .L2113
 	ldrb	r0, [r0]
 	lsl	r1, r1, #0x18
 	lsr	r1, r1, #0x18
 	bl	_CreateInGameTradePokemon
-.L2104:
+.L2101:
 	add	sp, sp, #0x14
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L2117:
+.L2114:
 	.align	2, 0
-.L2116:
+.L2113:
 	.word	gSpecialVar_0x8005
 .Lfe129:
 	.size	 CreateInGameTradePokemon,.Lfe129-CreateInGameTradePokemon
@@ -58525,31 +58568,31 @@ CreateInGameTradePokemon:
 CreateInGameWonderTradePokemon:
 	push	{r4, lr}
 	add	sp, sp, #-0x14
-	ldr	r0, .L2126
+	ldr	r0, .L2123
 	ldrh	r1, [r0]
 	add	r0, r1, #0
 	cmp	r0, #0x6
-	bne	.L2119	@cond_branch
-	ldr	r0, .L2126+0x4
-	ldr	r3, .L2126+0x8
-	ldr	r1, .L2126+0xc
+	bne	.L2116	@cond_branch
+	ldr	r0, .L2123+0x4
+	ldr	r3, .L2123+0x8
+	ldr	r1, .L2123+0xc
 	ldrh	r2, [r1]
 	mov	r1, #0x64
 	mul	r1, r1, r2
 	add	r1, r1, r3
-	b	.L2125
-.L2127:
+	b	.L2122
+.L2124:
 	.align	2, 0
-.L2126:
+.L2123:
 	.word	gSpecialVar_0x8004
 	.word	gEnemyParty
 	.word	gPlayerParty
 	.word	gSpecialVar_0x8005
-.L2119:
+.L2116:
 	cmp	r0, #0x7
-	bne	.L2121	@cond_branch
-	ldr	r4, .L2128
-	ldr	r1, .L2128+0x4
+	bne	.L2118	@cond_branch
+	ldr	r4, .L2125
+	ldr	r1, .L2125+0x4
 	mov	r2, #0x0
 	str	r2, [sp]
 	str	r2, [sp, #0x4]
@@ -58561,50 +58604,50 @@ CreateInGameWonderTradePokemon:
 	mov	r2, #0xa
 	mov	r3, #0x20
 	bl	CreateMon
-	ldr	r2, .L2128+0x8
-	ldr	r0, .L2128+0xc
+	ldr	r2, .L2125+0x8
+	ldr	r0, .L2125+0xc
 	ldrh	r1, [r0]
 	mov	r0, #0x64
 	mul	r1, r1, r0
 	add	r1, r1, r2
 	add	r4, r4, #0x64
 	add	r0, r4, #0
-	b	.L2125
-.L2129:
+	b	.L2122
+.L2126:
 	.align	2, 0
-.L2128:
+.L2125:
 	.word	gEnemyParty
 	.word	0x109
 	.word	gPlayerParty
 	.word	gSpecialVar_0x8005
-.L2121:
+.L2118:
 	cmp	r0, #0x8
-	bne	.L2123	@cond_branch
-	ldr	r0, .L2130
+	bne	.L2120	@cond_branch
+	ldr	r0, .L2127
 	add	r1, r0, #0
 	add	r1, r1, #0x64
-.L2125:
+.L2122:
 	mov	r2, #0x64
 	bl	memcpy
-	b	.L2120
-.L2131:
+	b	.L2117
+.L2128:
 	.align	2, 0
-.L2130:
+.L2127:
 	.word	gEnemyParty
-.L2123:
-	ldr	r0, .L2132
+.L2120:
+	ldr	r0, .L2129
 	ldrb	r0, [r0]
 	lsl	r1, r1, #0x18
 	lsr	r1, r1, #0x18
 	bl	_CreateInGameWonderTradePokemon
-.L2120:
+.L2117:
 	add	sp, sp, #0x14
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L2133:
+.L2130:
 	.align	2, 0
-.L2132:
+.L2129:
 	.word	gSpecialVar_0x8005
 .Lfe130:
 	.size	 CreateInGameWonderTradePokemon,.Lfe130-CreateInGameWonderTradePokemon
@@ -58617,15 +58660,15 @@ CB2_UpdateLinkTrade:
 	lsl	r0, r0, #0x18
 	lsr	r6, r0, #0x18
 	cmp	r6, #0x1
-	bne	.L2135	@cond_branch
-	ldr	r5, .L2137
+	bne	.L2132	@cond_branch
+	ldr	r5, .L2134
 	ldr	r0, [r5]
 	add	r0, r0, #0x8e
 	ldrb	r1, [r0]
 	lsl	r0, r1, #0x4
 	add	r0, r0, r1
 	lsl	r0, r0, #0x2
-	ldr	r4, .L2137+0x4
+	ldr	r4, .L2134+0x4
 	add	r0, r0, r4
 	bl	DestroySprite
 	ldr	r0, [r5]
@@ -58636,7 +58679,7 @@ CB2_UpdateLinkTrade:
 	lsl	r0, r0, #0x2
 	add	r0, r0, r4
 	bl	FreeSpriteOamMatrix
-	ldr	r0, .L2137+0x8
+	ldr	r0, .L2134+0x8
 	ldrb	r4, [r0]
 	ldrb	r0, [r0, #0x1]
 	mov	r1, #0x6
@@ -58648,18 +58691,18 @@ CB2_UpdateLinkTrade:
 	bl	TradeMons
 	bl	IsWirelessTrade
 	cmp	r0, #0
-	bne	.L2136	@cond_branch
+	bne	.L2133	@cond_branch
 	ldr	r0, [r5]
 	add	r2, r0, #0
 	add	r2, r2, #0x74
-	ldr	r1, .L2137+0xc
+	ldr	r1, .L2134+0xc
 	strh	r1, [r2]
 	add	r0, r0, #0x93
 	strb	r6, [r0]
-.L2136:
-	ldr	r0, .L2137+0x10
+.L2133:
+	ldr	r0, .L2134+0x10
 	bl	SetMainCallback2
-.L2135:
+.L2132:
 	bl	TrySendTradeFinishData
 	bl	UpdateTradeFinishFlags
 	bl	RunTasks
@@ -58670,9 +58713,9 @@ CB2_UpdateLinkTrade:
 	pop	{r4, r5, r6}
 	pop	{r0}
 	bx	r0
-.L2138:
+.L2135:
 	.align	2, 0
-.L2137:
+.L2134:
 	.word	sTradeData
 	.word	gSprites
 	.word	gSelectedTradeMonPositions
@@ -58690,29 +58733,29 @@ CB2_TryFinishTrade:
 	lsr	r4, r0, #0x18
 	bl	IsWirelessTrade
 	cmp	r0, #0
-	beq	.L2140	@cond_branch
-	ldr	r0, .L2143
+	beq	.L2137	@cond_branch
+	ldr	r0, .L2140
 	bl	SetMainCallback2
-	b	.L2141
-.L2144:
+	b	.L2138
+.L2141:
 	.align	2, 0
-.L2143:
-	.word	CB2_TryTradeEvolution
 .L2140:
+	.word	CB2_TryTradeEvolution
+.L2137:
 	bl	UpdateTradeFinishFlags
 	cmp	r4, #0
-	bne	.L2141	@cond_branch
-	ldr	r4, .L2145
+	bne	.L2138	@cond_branch
+	ldr	r4, .L2142
 	ldr	r2, [r4]
 	add	r0, r2, #0
 	add	r0, r0, #0x72
 	ldrh	r1, [r0]
-	ldr	r0, .L2145+0x4
+	ldr	r0, .L2142+0x4
 	cmp	r1, r0
-	bne	.L2141	@cond_branch
+	bne	.L2138	@cond_branch
 	add	r1, r2, #0
 	add	r1, r1, #0x74
-	ldr	r0, .L2145+0x8
+	ldr	r0, .L2142+0x8
 	strh	r0, [r1]
 	bl	bitmask_all_link_players_but_self
 	lsl	r0, r0, #0x18
@@ -58728,7 +58771,7 @@ CB2_TryFinishTrade:
 	ldr	r0, [r4]
 	add	r0, r0, #0x73
 	strb	r1, [r0]
-.L2141:
+.L2138:
 	bl	RunTasks
 	bl	AnimateSprites
 	bl	BuildOamBuffer
@@ -58736,9 +58779,9 @@ CB2_TryFinishTrade:
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L2146:
+.L2143:
 	.align	2, 0
-.L2145:
+.L2142:
 	.word	sTradeData
 	.word	0x101
 	.word	0xdcba
@@ -58750,168 +58793,168 @@ CB2_TryFinishTrade:
 CB2_SaveAndEndTrade:
 	push	{r4, lr}
 	add	sp, sp, #-0x4
-	ldr	r1, .L2198
+	ldr	r1, .L2195
 	mov	r2, #0x87
 	lsl	r2, r2, #0x3
 	add	r0, r1, r2
 	ldrb	r0, [r0]
 	add	r2, r1, #0
 	cmp	r0, #0x65
-	bls	.LCB20100
-	b	.L2148	@long jump
-.LCB20100:
+	bls	.LCB20171
+	b	.L2145	@long jump
+.LCB20171:
 	lsl	r0, r0, #0x2
-	ldr	r1, .L2198+0x4
+	ldr	r1, .L2195+0x4
 	add	r0, r0, r1
 	ldr	r0, [r0]
 	mov	pc, r0
-.L2199:
+.L2196:
 	.align	2, 0
-.L2198:
+.L2195:
 	.word	gMain
-	.word	.L2190
+	.word	.L2187
 	.align	2, 0
 	.align	2, 0
-.L2190:
-	.word	.L2149
-	.word	.L2150
-	.word	.L2156
-	.word	.L2148
-	.word	.L2165
-	.word	.L2175
-	.word	.L2177
-	.word	.L2179
-	.word	.L2181
-	.word	.L2185
-	.word	.L2148
-	.word	.L2148
-	.word	.L2148
-	.word	.L2148
-	.word	.L2148
-	.word	.L2148
-	.word	.L2148
-	.word	.L2148
-	.word	.L2148
-	.word	.L2148
-	.word	.L2148
-	.word	.L2148
-	.word	.L2148
-	.word	.L2148
-	.word	.L2148
-	.word	.L2148
-	.word	.L2148
-	.word	.L2148
-	.word	.L2148
-	.word	.L2148
-	.word	.L2148
-	.word	.L2148
-	.word	.L2148
-	.word	.L2148
-	.word	.L2148
-	.word	.L2148
-	.word	.L2148
-	.word	.L2148
-	.word	.L2148
-	.word	.L2148
-	.word	.L2166
-	.word	.L2170
-	.word	.L2173
-	.word	.L2148
-	.word	.L2148
-	.word	.L2148
-	.word	.L2148
-	.word	.L2148
-	.word	.L2148
-	.word	.L2148
-	.word	.L2157
-	.word	.L2160
+.L2187:
+	.word	.L2146
+	.word	.L2147
+	.word	.L2153
+	.word	.L2145
 	.word	.L2162
-	.word	.L2148
-	.word	.L2148
-	.word	.L2148
-	.word	.L2148
-	.word	.L2148
-	.word	.L2148
-	.word	.L2148
-	.word	.L2148
-	.word	.L2148
-	.word	.L2148
-	.word	.L2148
-	.word	.L2148
-	.word	.L2148
-	.word	.L2148
-	.word	.L2148
-	.word	.L2148
-	.word	.L2148
-	.word	.L2148
-	.word	.L2148
-	.word	.L2148
-	.word	.L2148
-	.word	.L2148
-	.word	.L2148
-	.word	.L2148
-	.word	.L2148
-	.word	.L2148
-	.word	.L2148
-	.word	.L2148
-	.word	.L2148
-	.word	.L2148
-	.word	.L2148
-	.word	.L2148
-	.word	.L2148
-	.word	.L2148
-	.word	.L2148
-	.word	.L2148
-	.word	.L2148
-	.word	.L2148
-	.word	.L2148
-	.word	.L2148
-	.word	.L2148
-	.word	.L2148
-	.word	.L2148
-	.word	.L2148
-	.word	.L2148
-	.word	.L2148
+	.word	.L2172
+	.word	.L2174
+	.word	.L2176
+	.word	.L2178
+	.word	.L2182
+	.word	.L2145
+	.word	.L2145
+	.word	.L2145
+	.word	.L2145
+	.word	.L2145
+	.word	.L2145
+	.word	.L2145
+	.word	.L2145
+	.word	.L2145
+	.word	.L2145
+	.word	.L2145
+	.word	.L2145
+	.word	.L2145
+	.word	.L2145
+	.word	.L2145
+	.word	.L2145
+	.word	.L2145
+	.word	.L2145
+	.word	.L2145
+	.word	.L2145
+	.word	.L2145
+	.word	.L2145
+	.word	.L2145
+	.word	.L2145
+	.word	.L2145
+	.word	.L2145
+	.word	.L2145
+	.word	.L2145
+	.word	.L2145
+	.word	.L2145
+	.word	.L2163
+	.word	.L2167
+	.word	.L2170
+	.word	.L2145
+	.word	.L2145
+	.word	.L2145
+	.word	.L2145
+	.word	.L2145
+	.word	.L2145
+	.word	.L2145
+	.word	.L2154
+	.word	.L2157
+	.word	.L2159
+	.word	.L2145
+	.word	.L2145
+	.word	.L2145
+	.word	.L2145
+	.word	.L2145
+	.word	.L2145
+	.word	.L2145
+	.word	.L2145
+	.word	.L2145
+	.word	.L2145
+	.word	.L2145
+	.word	.L2145
+	.word	.L2145
+	.word	.L2145
+	.word	.L2145
+	.word	.L2145
+	.word	.L2145
+	.word	.L2145
+	.word	.L2145
+	.word	.L2145
+	.word	.L2145
+	.word	.L2145
+	.word	.L2145
+	.word	.L2145
+	.word	.L2145
+	.word	.L2145
+	.word	.L2145
+	.word	.L2145
+	.word	.L2145
+	.word	.L2145
+	.word	.L2145
+	.word	.L2145
+	.word	.L2145
+	.word	.L2145
+	.word	.L2145
+	.word	.L2145
+	.word	.L2145
+	.word	.L2145
+	.word	.L2145
+	.word	.L2145
+	.word	.L2145
+	.word	.L2145
+	.word	.L2145
+	.word	.L2145
+	.word	.L2145
+	.word	.L2145
+	.word	.L2145
 	.word	.L2148
 	.word	.L2151
-	.word	.L2154
-.L2149:
+.L2146:
 	mov	r0, #0x87
 	lsl	r0, r0, #0x3
 	add	r1, r2, r0
 	ldrb	r0, [r1]
 	add	r0, r0, #0x1
 	strb	r0, [r1]
-	ldr	r4, .L2200
-	ldr	r1, .L2200+0x4
-	b	.L2193
-.L2201:
+	ldr	r4, .L2197
+	ldr	r1, .L2197+0x4
+	b	.L2190
+.L2198:
 	.align	2, 0
-.L2200:
+.L2197:
 	.word	gStringVar4
 	.word	gText_CommunicationStandby5
-.L2150:
+.L2147:
 	mov	r0, #0x0
 	bl	SetTradeLinkStandbyCallback
-	ldr	r0, .L2202
+	ldr	r0, .L2199
 	mov	r1, #0x87
 	lsl	r1, r1, #0x3
 	add	r0, r0, r1
 	mov	r2, #0x0
 	mov	r1, #0x64
-	b	.L2194
-.L2203:
+	b	.L2191
+.L2200:
 	.align	2, 0
-.L2202:
+.L2199:
 	.word	gMain
-.L2151:
-	ldr	r0, .L2204
+.L2148:
+	ldr	r0, .L2201
 	ldr	r3, [r0]
 	ldr	r0, [r3, #0x64]
 	add	r0, r0, #0x1
 	str	r0, [r3, #0x64]
 	cmp	r0, #0xb4
-	bls	.L2152	@cond_branch
+	bls	.L2149	@cond_branch
 	mov	r1, #0x87
 	lsl	r1, r1, #0x3
 	add	r0, r2, r1
@@ -58919,73 +58962,73 @@ CB2_SaveAndEndTrade:
 	mov	r1, #0x65
 	strb	r1, [r0]
 	str	r2, [r3, #0x64]
-.L2152:
+.L2149:
 	bl	_IsLinkTaskFinished
 	cmp	r0, #0
-	bne	.LCB20181
-	b	.L2148	@long jump
-.LCB20181:
-	ldr	r0, .L2204+0x4
+	bne	.LCB20252
+	b	.L2145	@long jump
+.LCB20252:
+	ldr	r0, .L2201+0x4
 	mov	r2, #0x87
 	lsl	r2, r2, #0x3
 	add	r0, r0, r2
-	b	.L2195
-.L2205:
+	b	.L2192
+.L2202:
 	.align	2, 0
-.L2204:
+.L2201:
 	.word	sTradeData
 	.word	gMain
-.L2154:
+.L2151:
 	bl	_IsLinkTaskFinished
 	cmp	r0, #0
-	bne	.LCB20201
-	b	.L2148	@long jump
-.LCB20201:
-	ldr	r0, .L2206
+	bne	.LCB20272
+	b	.L2145	@long jump
+.LCB20272:
+	ldr	r0, .L2203
 	mov	r1, #0x87
 	lsl	r1, r1, #0x3
 	add	r0, r0, r1
-.L2195:
+.L2192:
 	mov	r1, #0x2
 	strb	r1, [r0]
-	b	.L2148
-.L2207:
+	b	.L2145
+.L2204:
 	.align	2, 0
-.L2206:
+.L2203:
 	.word	gMain
-.L2156:
+.L2153:
 	mov	r0, #0x87
 	lsl	r0, r0, #0x3
 	add	r1, r2, r0
 	mov	r0, #0x32
 	strb	r0, [r1]
-	ldr	r4, .L2208
-	ldr	r1, .L2208+0x4
-.L2193:
+	ldr	r4, .L2205
+	ldr	r1, .L2205+0x4
+.L2190:
 	add	r0, r4, #0
 	bl	StringExpandPlaceholders
 	mov	r0, #0x0
 	add	r1, r4, #0
 	mov	r2, #0x0
 	bl	DrawTextOnTradeWindow
-	b	.L2148
-.L2209:
+	b	.L2145
+.L2206:
 	.align	2, 0
-.L2208:
+.L2205:
 	.word	gStringVar4
 	.word	gText_SavingDontTurnOffPower
-.L2157:
+.L2154:
 	bl	InUnionRoom
 	cmp	r0, #0
-	bne	.L2158	@cond_branch
+	bne	.L2155	@cond_branch
 	mov	r0, #0x15
 	bl	IncrementGameStat
-.L2158:
-	ldr	r0, .L2210
+.L2155:
+	ldr	r0, .L2207
 	ldrb	r0, [r0]
 	cmp	r0, #0
-	beq	.L2159	@cond_branch
-	ldr	r4, .L2210+0x4
+	beq	.L2156	@cond_branch
+	ldr	r4, .L2207+0x4
 	bl	GetMultiplayerId
 	mov	r1, #0x1
 	eor	r0, r0, r1
@@ -58999,10 +59042,10 @@ CB2_SaveAndEndTrade:
 	ldr	r1, [r1]
 	mov	r0, #0x2
 	bl	RecordIdOfWonderCardSenderByEventType
-.L2159:
+.L2156:
 	bl	SetContinueGameWarpStatusToDynamicWarp
 	bl	sub_8153380
-	ldr	r1, .L2210+0x8
+	ldr	r1, .L2207+0x8
 	mov	r2, #0x87
 	lsl	r2, r2, #0x3
 	add	r1, r1, r2
@@ -59010,99 +59053,99 @@ CB2_SaveAndEndTrade:
 	add	r0, r0, #0x1
 	mov	r2, #0x0
 	strb	r0, [r1]
-	b	.L2196
-.L2211:
+	b	.L2193
+.L2208:
 	.align	2, 0
-.L2210:
+.L2207:
 	.word	gWirelessCommType
 	.word	gLinkPlayers
 	.word	gMain
-.L2160:
-	ldr	r0, .L2212
+.L2157:
+	ldr	r0, .L2209
 	ldr	r1, [r0]
 	ldr	r0, [r1, #0x64]
 	add	r0, r0, #0x1
 	str	r0, [r1, #0x64]
 	cmp	r0, #0x5
-	beq	.LCB20308
-	b	.L2148	@long jump
-.LCB20308:
+	beq	.LCB20379
+	b	.L2145	@long jump
+.LCB20379:
 	mov	r0, #0x87
 	lsl	r0, r0, #0x3
 	add	r1, r2, r0
-	b	.L2197
-.L2213:
+	b	.L2194
+.L2210:
 	.align	2, 0
-.L2212:
+.L2209:
 	.word	sTradeData
-.L2162:
+.L2159:
 	bl	sub_81533AC
 	lsl	r0, r0, #0x18
 	lsr	r1, r0, #0x18
 	cmp	r1, #0
-	beq	.L2163	@cond_branch
+	beq	.L2160	@cond_branch
 	bl	ClearContinueGameWarpStatus2
-	ldr	r0, .L2214
+	ldr	r0, .L2211
 	mov	r1, #0x87
 	lsl	r1, r1, #0x3
 	add	r0, r0, r1
 	mov	r1, #0x4
 	strb	r1, [r0]
-	b	.L2148
-.L2215:
+	b	.L2145
+.L2212:
 	.align	2, 0
-.L2214:
+.L2211:
 	.word	gMain
-.L2163:
-	ldr	r0, .L2216
+.L2160:
+	ldr	r0, .L2213
 	ldr	r0, [r0]
 	str	r1, [r0, #0x64]
-	ldr	r0, .L2216+0x4
+	ldr	r0, .L2213+0x4
 	mov	r2, #0x87
 	lsl	r2, r2, #0x3
 	add	r0, r0, r2
 	mov	r1, #0x33
 	strb	r1, [r0]
-	b	.L2148
-.L2217:
+	b	.L2145
+.L2214:
 	.align	2, 0
-.L2216:
+.L2213:
 	.word	sTradeData
 	.word	gMain
-.L2165:
+.L2162:
 	bl	sub_81533E0
-	ldr	r0, .L2218
+	ldr	r0, .L2215
 	mov	r1, #0x87
 	lsl	r1, r1, #0x3
 	add	r0, r0, r1
 	mov	r2, #0x0
 	mov	r1, #0x28
-.L2194:
+.L2191:
 	strb	r1, [r0]
-.L2196:
-	ldr	r0, .L2218+0x4
+.L2193:
+	ldr	r0, .L2215+0x4
 	ldr	r0, [r0]
 	str	r2, [r0, #0x64]
-	b	.L2148
-.L2219:
+	b	.L2145
+.L2216:
 	.align	2, 0
-.L2218:
+.L2215:
 	.word	gMain
 	.word	sTradeData
-.L2166:
-	ldr	r4, .L2220
+.L2163:
+	ldr	r4, .L2217
 	ldr	r1, [r4]
 	ldr	r0, [r1, #0x64]
 	add	r0, r0, #0x1
 	str	r0, [r1, #0x64]
 	cmp	r0, #0x32
-	bhi	.LCB20399
-	b	.L2148	@long jump
-.LCB20399:
+	bhi	.LCB20470
+	b	.L2145	@long jump
+.LCB20470:
 	bl	GetMultiplayerId
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	bne	.L2168	@cond_branch
+	bne	.L2165	@cond_branch
 	bl	Random
 	ldr	r4, [r4]
 	lsl	r0, r0, #0x10
@@ -59112,77 +59155,77 @@ CB2_SaveAndEndTrade:
 	lsl	r0, r0, #0x10
 	lsr	r0, r0, #0x10
 	str	r0, [r4, #0x64]
-	b	.L2169
-.L2221:
+	b	.L2166
+.L2218:
 	.align	2, 0
-.L2220:
+.L2217:
 	.word	sTradeData
-.L2168:
+.L2165:
 	ldr	r1, [r4]
 	mov	r0, #0x0
 	str	r0, [r1, #0x64]
-.L2169:
-	ldr	r0, .L2222
+.L2166:
+	ldr	r0, .L2219
 	mov	r2, #0x87
 	lsl	r2, r2, #0x3
 	add	r0, r0, r2
 	mov	r1, #0x29
 	strb	r1, [r0]
-	b	.L2148
-.L2223:
+	b	.L2145
+.L2220:
 	.align	2, 0
-.L2222:
+.L2219:
 	.word	gMain
-.L2170:
-	ldr	r0, .L2224
+.L2167:
+	ldr	r0, .L2221
 	ldr	r1, [r0]
 	ldr	r0, [r1, #0x64]
 	cmp	r0, #0
-	bne	.L2171	@cond_branch
+	bne	.L2168	@cond_branch
 	mov	r0, #0x1
 	bl	SetTradeLinkStandbyCallback
-	ldr	r0, .L2224+0x4
+	ldr	r0, .L2221+0x4
 	mov	r1, #0x87
 	lsl	r1, r1, #0x3
 	add	r0, r0, r1
 	mov	r1, #0x2a
 	strb	r1, [r0]
-	b	.L2148
-.L2225:
+	b	.L2145
+.L2222:
 	.align	2, 0
-.L2224:
+.L2221:
 	.word	sTradeData
 	.word	gMain
-.L2171:
+.L2168:
 	sub	r0, r0, #0x1
 	str	r0, [r1, #0x64]
-	b	.L2148
-.L2173:
+	b	.L2145
+.L2170:
 	bl	_IsLinkTaskFinished
 	cmp	r0, #0
-	bne	.LCB20484
-	b	.L2148	@long jump
-.LCB20484:
+	bne	.LCB20555
+	b	.L2145	@long jump
+.LCB20555:
 	bl	sub_8153408
-	ldr	r0, .L2226
+	ldr	r0, .L2223
 	mov	r2, #0x87
 	lsl	r2, r2, #0x3
 	add	r0, r0, r2
 	mov	r1, #0x5
 	strb	r1, [r0]
-	b	.L2148
-.L2227:
+	b	.L2145
+.L2224:
 	.align	2, 0
-.L2226:
+.L2223:
 	.word	gMain
-.L2175:
-	ldr	r0, .L2228
+.L2172:
+	ldr	r0, .L2225
 	ldr	r1, [r0]
 	ldr	r0, [r1, #0x64]
 	add	r0, r0, #0x1
 	str	r0, [r1, #0x64]
 	cmp	r0, #0x3c
-	bls	.L2148	@cond_branch
+	bls	.L2145	@cond_branch
 	mov	r0, #0x87
 	lsl	r0, r0, #0x3
 	add	r1, r2, r0
@@ -59191,15 +59234,15 @@ CB2_SaveAndEndTrade:
 	strb	r0, [r1]
 	mov	r0, #0x2
 	bl	SetTradeLinkStandbyCallback
-	b	.L2148
-.L2229:
+	b	.L2145
+.L2226:
 	.align	2, 0
-.L2228:
+.L2225:
 	.word	sTradeData
-.L2177:
+.L2174:
 	bl	_IsLinkTaskFinished
 	cmp	r0, #0
-	beq	.L2148	@cond_branch
+	beq	.L2145	@cond_branch
 	mov	r0, #0x1
 	neg	r0, r0
 	mov	r1, #0x0
@@ -59207,107 +59250,107 @@ CB2_SaveAndEndTrade:
 	mov	r2, #0x0
 	mov	r3, #0x10
 	bl	BeginNormalPaletteFade
-	b	.L2184
-.L2179:
-	ldr	r0, .L2230
+	b	.L2181
+.L2176:
+	ldr	r0, .L2227
 	ldrb	r1, [r0, #0x7]
 	mov	r0, #0x80
 	and	r0, r0, r1
 	cmp	r0, #0
-	bne	.L2148	@cond_branch
+	bne	.L2145	@cond_branch
 	mov	r0, #0x3
 	bl	FadeOutBGM
-	ldr	r1, .L2230+0x4
+	ldr	r1, .L2227+0x4
 	mov	r0, #0x87
 	lsl	r0, r0, #0x3
 	add	r1, r1, r0
-	b	.L2197
-.L2231:
+	b	.L2194
+.L2228:
 	.align	2, 0
-.L2230:
+.L2227:
 	.word	gPaletteFade
 	.word	gMain
-.L2181:
+.L2178:
 	bl	IsBGMStopped
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	cmp	r0, #0x1
-	bne	.L2148	@cond_branch
-	ldr	r0, .L2232
+	bne	.L2145	@cond_branch
+	ldr	r0, .L2229
 	ldrb	r0, [r0]
 	cmp	r0, #0
-	beq	.L2183	@cond_branch
-	ldr	r0, .L2232+0x4
+	beq	.L2180	@cond_branch
+	ldr	r0, .L2229+0x4
 	ldr	r1, [r0, #0x8]
-	ldr	r0, .L2232+0x8
+	ldr	r0, .L2229+0x8
 	cmp	r1, r0
-	bne	.L2183	@cond_branch
+	bne	.L2180	@cond_branch
 	mov	r0, #0x3
 	bl	SetTradeLinkStandbyCallback
-	b	.L2184
-.L2233:
+	b	.L2181
+.L2230:
 	.align	2, 0
-.L2232:
+.L2229:
 	.word	gWirelessCommType
 	.word	gMain
 	.word	CB2_StartCreateTradeMenu
-.L2183:
+.L2180:
 	bl	SetCloseLinkCallback
-.L2184:
-	ldr	r1, .L2234
+.L2181:
+	ldr	r1, .L2231
 	mov	r2, #0x87
 	lsl	r2, r2, #0x3
 	add	r1, r1, r2
-.L2197:
+.L2194:
 	ldrb	r0, [r1]
 	add	r0, r0, #0x1
 	strb	r0, [r1]
-	b	.L2148
-.L2235:
+	b	.L2145
+.L2232:
 	.align	2, 0
-.L2234:
+.L2231:
 	.word	gMain
-.L2185:
-	ldr	r0, .L2236
+.L2182:
+	ldr	r0, .L2233
 	ldrb	r0, [r0]
 	cmp	r0, #0
-	beq	.L2186	@cond_branch
+	beq	.L2183	@cond_branch
 	ldr	r1, [r2, #0x8]
-	ldr	r0, .L2236+0x4
+	ldr	r0, .L2233+0x4
 	cmp	r1, r0
-	bne	.L2186	@cond_branch
+	bne	.L2183	@cond_branch
 	bl	_IsLinkTaskFinished
 	cmp	r0, #0
-	beq	.L2148	@cond_branch
-	ldr	r0, .L2236+0x8
+	beq	.L2145	@cond_branch
+	ldr	r0, .L2233+0x8
 	mov	r1, #0x0
 	strb	r1, [r0]
-	ldr	r0, .L2236+0xc
+	ldr	r0, .L2233+0xc
 	bl	SetMainCallback2
-	b	.L2148
-.L2237:
+	b	.L2145
+.L2234:
 	.align	2, 0
-.L2236:
+.L2233:
 	.word	gWirelessCommType
 	.word	CB2_StartCreateTradeMenu
 	.word	gSoftResetDisabled
 	.word	CB2_FreeTradeData
-.L2186:
-	ldr	r0, .L2238
+.L2183:
+	ldr	r0, .L2235
 	ldrb	r1, [r0]
 	cmp	r1, #0
-	bne	.L2148	@cond_branch
-	ldr	r0, .L2238+0x4
+	bne	.L2145	@cond_branch
+	ldr	r0, .L2235+0x4
 	strb	r1, [r0]
-	ldr	r0, .L2238+0x8
+	ldr	r0, .L2235+0x8
 	bl	SetMainCallback2
-.L2148:
+.L2145:
 	bl	HasLinkErrorOccurred
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	bne	.L2192	@cond_branch
+	bne	.L2189	@cond_branch
 	bl	RunTasks
-.L2192:
+.L2189:
 	bl	AnimateSprites
 	bl	BuildOamBuffer
 	bl	UpdatePaletteFade
@@ -59315,9 +59358,9 @@ CB2_SaveAndEndTrade:
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L2239:
+.L2236:
 	.align	2, 0
-.L2238:
+.L2235:
 	.word	gReceivedRemoteLinkPlayers
 	.word	gSoftResetDisabled
 	.word	CB2_FreeTradeData
@@ -59328,14 +59371,14 @@ CB2_SaveAndEndTrade:
 	.thumb_func
 CB2_FreeTradeData:
 	push	{r4, r5, lr}
-	ldr	r0, .L2243
+	ldr	r0, .L2240
 	ldrb	r1, [r0, #0x7]
 	mov	r0, #0x80
 	and	r0, r0, r1
 	lsl	r0, r0, #0x18
 	lsr	r5, r0, #0x18
 	cmp	r5, #0
-	bne	.L2241	@cond_branch
+	bne	.L2238	@cond_branch
 	bl	FreeAllWindowBuffers
 	mov	r0, #0x3
 	bl	GetBgTilemapBuffer
@@ -59347,20 +59390,20 @@ CB2_FreeTradeData:
 	bl	GetBgTilemapBuffer
 	bl	Free
 	bl	FreeMonSpritesGfx
-	ldr	r4, .L2243+0x4
+	ldr	r4, .L2240+0x4
 	ldr	r0, [r4]
 	bl	Free
 	str	r5, [r4]
-	ldr	r0, .L2243+0x8
+	ldr	r0, .L2240+0x8
 	ldrb	r0, [r0]
 	cmp	r0, #0
-	beq	.L2242	@cond_branch
+	beq	.L2239	@cond_branch
 	bl	DestroyWirelessStatusIndicatorSprite
-.L2242:
-	ldr	r0, .L2243+0xc
+.L2239:
+	ldr	r0, .L2240+0xc
 	ldr	r0, [r0, #0x8]
 	bl	SetMainCallback2
-.L2241:
+.L2238:
 	bl	RunTasks
 	bl	AnimateSprites
 	bl	BuildOamBuffer
@@ -59368,9 +59411,9 @@ CB2_FreeTradeData:
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.L2244:
+.L2241:
 	.align	2, 0
-.L2243:
+.L2240:
 	.word	gPaletteFade
 	.word	sTradeData
 	.word	gWirelessCommType
@@ -59385,7 +59428,7 @@ DoInGameTradeScene:
 	push	{lr}
 	add	sp, sp, #-0x4
 	bl	ScriptContext2_Enable
-	ldr	r0, .L2246
+	ldr	r0, .L2243
 	mov	r1, #0xa
 	bl	CreateTask
 	mov	r0, #0x1
@@ -59398,9 +59441,9 @@ DoInGameTradeScene:
 	add	sp, sp, #0x4
 	pop	{r0}
 	bx	r0
-.L2247:
+.L2244:
 	.align	2, 0
-.L2246:
+.L2243:
 	.word	Task_InGameTrade
 .Lfe135:
 	.size	 DoInGameTradeScene,.Lfe135-DoInGameTradeScene
@@ -59411,26 +59454,26 @@ Task_InGameTrade:
 	push	{r4, lr}
 	lsl	r0, r0, #0x18
 	lsr	r4, r0, #0x18
-	ldr	r0, .L2250
+	ldr	r0, .L2247
 	ldrb	r1, [r0, #0x7]
 	mov	r0, #0x80
 	and	r0, r0, r1
 	cmp	r0, #0
-	bne	.L2249	@cond_branch
-	ldr	r0, .L2250+0x4
+	bne	.L2246	@cond_branch
+	ldr	r0, .L2247+0x4
 	bl	SetMainCallback2
-	ldr	r1, .L2250+0x8
-	ldr	r0, .L2250+0xc
+	ldr	r1, .L2247+0x8
+	ldr	r0, .L2247+0xc
 	str	r0, [r1]
 	add	r0, r4, #0
 	bl	DestroyTask
-.L2249:
+.L2246:
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L2251:
+.L2248:
 	.align	2, 0
-.L2250:
+.L2247:
 	.word	gPaletteFade
 	.word	CB2_InGameTrade
 	.word	gFieldCallback
@@ -59444,8 +59487,8 @@ CheckPartnersMonForRibbons:
 	push	{r4, r5, lr}
 	mov	r5, #0x0
 	mov	r4, #0x0
-.L2256:
-	ldr	r0, .L2259
+.L2253:
+	ldr	r0, .L2256
 	ldrb	r0, [r0, #0x1]
 	mov	r1, #0x6
 	bl	__umodsi3
@@ -59453,7 +59496,7 @@ CheckPartnersMonForRibbons:
 	lsr	r0, r0, #0x18
 	mov	r1, #0x64
 	mul	r0, r0, r1
-	ldr	r1, .L2259+0x4
+	ldr	r1, .L2256+0x4
 	add	r0, r0, r1
 	add	r1, r4, #0
 	add	r1, r1, #0x43
@@ -59465,18 +59508,18 @@ CheckPartnersMonForRibbons:
 	lsl	r0, r0, #0x18
 	lsr	r4, r0, #0x18
 	cmp	r4, #0xb
-	bls	.L2256	@cond_branch
+	bls	.L2253	@cond_branch
 	cmp	r5, #0
-	beq	.L2258	@cond_branch
-	ldr	r0, .L2259+0x8
+	beq	.L2255	@cond_branch
+	ldr	r0, .L2256+0x8
 	bl	FlagSet
-.L2258:
+.L2255:
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.L2260:
+.L2257:
 	.align	2, 0
-.L2259:
+.L2256:
 	.word	gSelectedTradeMonPositions
 	.word	gEnemyParty
 	.word	0x89b
@@ -59510,7 +59553,7 @@ DrawTextOnTradeWindow:
 	add	r0, r5, #0
 	mov	r1, #0xff
 	bl	FillWindowPixelBuffer
-	ldr	r2, .L2263
+	ldr	r2, .L2260
 	ldr	r0, [r2]
 	add	r0, r0, #0xf6
 	mov	r3, #0x0
@@ -59545,9 +59588,9 @@ DrawTextOnTradeWindow:
 	pop	{r4, r5, r6}
 	pop	{r0}
 	bx	r0
-.L2264:
+.L2261:
 	.align	2, 0
-.L2263:
+.L2260:
 	.word	sTradeData
 .Lfe139:
 	.size	 DrawTextOnTradeWindow,.Lfe139-DrawTextOnTradeWindow
@@ -59561,9 +59604,9 @@ Task_AnimateWirelessSignal:
 	lsl	r0, r5, #0x2
 	add	r0, r0, r5
 	lsl	r0, r0, #0x3
-	ldr	r1, .L2278
+	ldr	r1, .L2275
 	add	r4, r0, r1
-	ldr	r1, .L2278+0x4
+	ldr	r1, .L2275+0x4
 	mov	r2, #0x0
 	ldrsh	r0, [r4, r2]
 	lsl	r0, r0, #0x1
@@ -59574,63 +59617,63 @@ Task_AnimateWirelessSignal:
 	mov	r3, #0x4
 	ldrsh	r0, [r4, r3]
 	cmp	r0, #0
-	bne	.L2266	@cond_branch
+	bne	.L2263	@cond_branch
 	mov	r0, #0x80
 	lsl	r0, r0, #0x1
 	cmp	r1, r0
-	beq	.L2276	@cond_branch
+	beq	.L2273	@cond_branch
 	lsl	r0, r1, #0x1
-	ldr	r1, .L2278+0x8
+	ldr	r1, .L2275+0x8
 	add	r0, r0, r1
-	b	.L2277
-.L2279:
+	b	.L2274
+.L2276:
 	.align	2, 0
-.L2278:
+.L2275:
 	.word	gTasks+0x8
 	.word	sWirelessSignalTiming
 	.word	sTradePal_WirelessSignalSend
-.L2266:
+.L2263:
 	mov	r0, #0x80
 	lsl	r0, r0, #0x1
 	cmp	r1, r0
-	bne	.L2270	@cond_branch
-.L2276:
-	ldr	r0, .L2280
-.L2277:
+	bne	.L2267	@cond_branch
+.L2273:
+	ldr	r0, .L2277
+.L2274:
 	mov	r1, #0x30
 	mov	r2, #0x20
 	bl	LoadPalette
-	b	.L2269
-.L2281:
+	b	.L2266
+.L2278:
 	.align	2, 0
-.L2280:
+.L2277:
 	.word	sTradePal_Black
-.L2270:
+.L2267:
 	lsl	r0, r2, #0x1
-	ldr	r1, .L2282
+	ldr	r1, .L2279
 	add	r0, r0, r1
 	mov	r1, #0x30
 	mov	r2, #0x20
 	bl	LoadPalette
-.L2269:
-	ldr	r0, .L2282+0x4
+.L2266:
+	ldr	r0, .L2279+0x4
 	mov	r2, #0x0
 	ldrsh	r1, [r4, r2]
 	lsl	r1, r1, #0x1
 	add	r1, r1, r0
 	ldrb	r0, [r1]
 	cmp	r0, #0
-	bne	.L2272	@cond_branch
+	bne	.L2269	@cond_branch
 	mov	r3, #0x2
 	ldrsh	r0, [r4, r3]
 	cmp	r0, #0
-	bne	.L2272	@cond_branch
+	bne	.L2269	@cond_branch
 	mov	r0, #0xc3
 	bl	PlaySE
-.L2272:
+.L2269:
 	mov	r0, #0x2
 	ldrsh	r2, [r4, r0]
-	ldr	r1, .L2282+0x4
+	ldr	r1, .L2279+0x4
 	mov	r3, #0x0
 	ldrsh	r0, [r4, r3]
 	lsl	r0, r0, #0x1
@@ -59638,7 +59681,7 @@ Task_AnimateWirelessSignal:
 	add	r0, r0, r1
 	ldrb	r0, [r0]
 	cmp	r2, r0
-	bne	.L2273	@cond_branch
+	bne	.L2270	@cond_branch
 	ldrh	r0, [r4]
 	add	r0, r0, #0x1
 	strh	r0, [r4]
@@ -59650,20 +59693,20 @@ Task_AnimateWirelessSignal:
 	add	r0, r0, r1
 	ldrb	r0, [r0]
 	cmp	r0, #0xff
-	bne	.L2275	@cond_branch
+	bne	.L2272	@cond_branch
 	add	r0, r5, #0
 	bl	DestroyTask
-	b	.L2275
-.L2283:
+	b	.L2272
+.L2280:
 	.align	2, 0
-.L2282:
+.L2279:
 	.word	sTradePal_WirelessSignalReceive
 	.word	sWirelessSignalTiming
-.L2273:
+.L2270:
 	ldrh	r0, [r4, #0x2]
 	add	r0, r0, #0x1
 	strh	r0, [r4, #0x2]
-.L2275:
+.L2272:
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
@@ -59680,13 +59723,13 @@ c3_0805465C:
 	lsl	r0, r6, #0x2
 	add	r0, r0, r6
 	lsl	r0, r0, #0x3
-	ldr	r1, .L2287
+	ldr	r1, .L2284
 	add	r5, r0, r1
 	mov	r0, #0x0
 	ldrsh	r4, [r5, r0]
 	cmp	r4, #0
-	bne	.L2285	@cond_branch
-	ldr	r2, .L2287+0x4
+	bne	.L2282	@cond_branch
+	ldr	r2, .L2284+0x4
 	ldr	r0, [r2]
 	add	r3, r0, #0
 	add	r3, r3, #0xfd
@@ -59711,8 +59754,8 @@ c3_0805465C:
 	mov	r0, #0x48
 	mov	r1, #0x13
 	bl	SetGpuReg
-.L2285:
-	ldr	r4, .L2287+0x4
+.L2282:
+	ldr	r4, .L2284+0x4
 	ldr	r0, [r4]
 	add	r1, r0, #0
 	add	r1, r1, #0xfd
@@ -59750,16 +59793,16 @@ c3_0805465C:
 	add	r0, r0, #0xfb
 	ldrb	r0, [r0]
 	cmp	r0, #0x4f
-	bhi	.L2286	@cond_branch
+	bhi	.L2283	@cond_branch
 	add	r0, r6, #0
 	bl	DestroyTask
-.L2286:
+.L2283:
 	pop	{r4, r5, r6}
 	pop	{r0}
 	bx	r0
-.L2288:
+.L2285:
 	.align	2, 0
-.L2287:
+.L2284:
 	.word	gTasks+0x8
 	.word	sTradeData
 .Lfe141:
@@ -59775,13 +59818,13 @@ sub_807F39C:
 	lsl	r0, r6, #0x2
 	add	r0, r0, r6
 	lsl	r0, r0, #0x3
-	ldr	r1, .L2294
+	ldr	r1, .L2291
 	add	r5, r0, r1
 	mov	r1, #0x0
 	ldrsh	r0, [r5, r1]
 	cmp	r0, #0
-	bne	.L2290	@cond_branch
-	ldr	r2, .L2294+0x4
+	bne	.L2287	@cond_branch
+	ldr	r2, .L2291+0x4
 	ldr	r0, [r2]
 	add	r0, r0, #0xfb
 	mov	r1, #0x50
@@ -59796,8 +59839,8 @@ sub_807F39C:
 	mov	r0, #0x48
 	mov	r1, #0x13
 	bl	SetGpuReg
-.L2290:
-	ldr	r4, .L2294+0x4
+.L2287:
+	ldr	r4, .L2291+0x4
 	ldr	r0, [r4]
 	add	r1, r0, #0
 	add	r1, r1, #0xfd
@@ -59822,7 +59865,7 @@ sub_807F39C:
 	add	r0, r0, #0xfb
 	ldrb	r0, [r0]
 	cmp	r0, #0x78
-	beq	.L2291	@cond_branch
+	beq	.L2288	@cond_branch
 	ldrh	r0, [r5]
 	add	r0, r0, #0x1
 	strh	r0, [r5]
@@ -59840,26 +59883,26 @@ sub_807F39C:
 	add	r0, r0, #0xfb
 	ldrb	r0, [r0]
 	cmp	r0, #0x73
-	bls	.L2293	@cond_branch
-	ldr	r2, .L2294+0x8
+	bls	.L2290	@cond_branch
+	ldr	r2, .L2291+0x8
 	mov	r0, #0x8
 	mov	r1, #0x0
 	bl	BlendPalettes
-	b	.L2293
-.L2295:
+	b	.L2290
+.L2292:
 	.align	2, 0
-.L2294:
+.L2291:
 	.word	gTasks+0x8
 	.word	sTradeData
 	.word	0xffff
-.L2291:
+.L2288:
 	mov	r1, #0x80
 	lsl	r1, r1, #0x6
 	mov	r0, #0x0
 	bl	ClearGpuRegBits
 	add	r0, r6, #0
 	bl	DestroyTask
-.L2293:
+.L2290:
 	pop	{r4, r5, r6}
 	pop	{r0}
 	bx	r0
@@ -59871,91 +59914,91 @@ sub_807F39C:
 CB2_SaveAndEndWirelessTrade:
 	push	{r4, r5, lr}
 	add	sp, sp, #-0x4
-	ldr	r1, .L2329
+	ldr	r1, .L2326
 	mov	r2, #0x87
 	lsl	r2, r2, #0x3
 	add	r0, r1, r2
 	ldrb	r0, [r0]
 	add	r2, r1, #0
 	cmp	r0, #0xc
-	bls	.LCB21371
-	b	.L2297	@long jump
-.LCB21371:
+	bls	.LCB21442
+	b	.L2294	@long jump
+.LCB21442:
 	lsl	r0, r0, #0x2
-	ldr	r1, .L2329+0x4
+	ldr	r1, .L2326+0x4
 	add	r0, r0, r1
 	ldr	r0, [r0]
 	mov	pc, r0
-.L2330:
+.L2327:
 	.align	2, 0
-.L2329:
+.L2326:
 	.word	gMain
-	.word	.L2325
+	.word	.L2322
 	.align	2, 0
 	.align	2, 0
-.L2325:
-	.word	.L2298
+.L2322:
+	.word	.L2295
+	.word	.L2296
+	.word	.L2297
 	.word	.L2299
-	.word	.L2300
-	.word	.L2302
+	.word	.L2301
 	.word	.L2304
-	.word	.L2307
-	.word	.L2308
+	.word	.L2305
+	.word	.L2309
 	.word	.L2312
-	.word	.L2315
-	.word	.L2317
-	.word	.L2319
-	.word	.L2321
-	.word	.L2323
-.L2298:
+	.word	.L2314
+	.word	.L2316
+	.word	.L2318
+	.word	.L2320
+.L2295:
 	mov	r0, #0x87
 	lsl	r0, r0, #0x3
 	add	r1, r2, r0
 	mov	r0, #0x1
 	strb	r0, [r1]
-	ldr	r4, .L2331
-	ldr	r1, .L2331+0x4
+	ldr	r4, .L2328
+	ldr	r1, .L2328+0x4
 	add	r0, r4, #0
 	bl	StringExpandPlaceholders
 	mov	r0, #0x0
 	add	r1, r4, #0
 	mov	r2, #0x0
 	bl	DrawTextOnTradeWindow
-	b	.L2297
-.L2332:
+	b	.L2294
+.L2329:
 	.align	2, 0
-.L2331:
+.L2328:
 	.word	gStringVar4
 	.word	gText_CommunicationStandby5
-.L2299:
+.L2296:
 	mov	r0, #0x0
 	bl	SetTradeLinkStandbyCallback
-	ldr	r0, .L2333
+	ldr	r0, .L2330
 	mov	r1, #0x87
 	lsl	r1, r1, #0x3
 	add	r0, r0, r1
 	mov	r2, #0x0
 	mov	r1, #0x2
-	b	.L2328
-.L2334:
+	b	.L2325
+.L2331:
 	.align	2, 0
-.L2333:
+.L2330:
 	.word	gMain
-.L2300:
+.L2297:
 	bl	_IsLinkTaskFinished
 	cmp	r0, #0
-	bne	.LCB21438
-	b	.L2297	@long jump
-.LCB21438:
-	ldr	r0, .L2335
+	bne	.LCB21509
+	b	.L2294	@long jump
+.LCB21509:
+	ldr	r0, .L2332
 	mov	r2, #0x87
 	lsl	r2, r2, #0x3
 	add	r0, r0, r2
 	mov	r5, #0x0
 	mov	r1, #0x3
 	strb	r1, [r0]
-	ldr	r4, .L2335+0x4
-	ldr	r1, .L2335+0x8
+	ldr	r4, .L2332+0x4
+	ldr	r1, .L2332+0x8
 	add	r0, r4, #0
 	bl	StringExpandPlaceholders
 	mov	r0, #0x0
@@ -59965,103 +60008,103 @@ CB2_SaveAndEndWirelessTrade:
 	mov	r0, #0x15
 	bl	IncrementGameStat
 	bl	sub_8153380
-	ldr	r0, .L2335+0xc
+	ldr	r0, .L2332+0xc
 	ldr	r0, [r0]
 	str	r5, [r0, #0x64]
-	b	.L2297
-.L2336:
+	b	.L2294
+.L2333:
 	.align	2, 0
-.L2335:
+.L2332:
 	.word	gMain
 	.word	gStringVar4
 	.word	gText_SavingDontTurnOffPower
 	.word	sTradeData
-.L2302:
-	ldr	r0, .L2337
+.L2299:
+	ldr	r0, .L2334
 	ldr	r1, [r0]
 	ldr	r0, [r1, #0x64]
 	add	r0, r0, #0x1
 	str	r0, [r1, #0x64]
 	cmp	r0, #0x5
-	beq	.LCB21481
-	b	.L2297	@long jump
-.LCB21481:
+	beq	.LCB21552
+	b	.L2294	@long jump
+.LCB21552:
 	mov	r0, #0x87
 	lsl	r0, r0, #0x3
 	add	r1, r2, r0
 	mov	r0, #0x4
 	strb	r0, [r1]
-	b	.L2297
-.L2338:
+	b	.L2294
+.L2335:
 	.align	2, 0
-.L2337:
+.L2334:
 	.word	sTradeData
-.L2304:
+.L2301:
 	bl	sub_81533AC
 	lsl	r0, r0, #0x18
 	lsr	r1, r0, #0x18
 	cmp	r1, #0
-	beq	.L2305	@cond_branch
-	ldr	r0, .L2339
+	beq	.L2302	@cond_branch
+	ldr	r0, .L2336
 	mov	r1, #0x87
 	lsl	r1, r1, #0x3
 	add	r0, r0, r1
 	mov	r1, #0x5
 	strb	r1, [r0]
-	b	.L2297
-.L2340:
+	b	.L2294
+.L2337:
 	.align	2, 0
-.L2339:
+.L2336:
 	.word	gMain
-.L2305:
-	ldr	r0, .L2341
+.L2302:
+	ldr	r0, .L2338
 	ldr	r0, [r0]
 	str	r1, [r0, #0x64]
-	ldr	r0, .L2341+0x4
+	ldr	r0, .L2338+0x4
 	mov	r2, #0x87
 	lsl	r2, r2, #0x3
 	add	r0, r0, r2
 	mov	r1, #0x3
 	strb	r1, [r0]
-	b	.L2297
-.L2342:
+	b	.L2294
+.L2339:
 	.align	2, 0
-.L2341:
+.L2338:
 	.word	sTradeData
 	.word	gMain
-.L2307:
+.L2304:
 	bl	sub_81533E0
-	ldr	r0, .L2343
+	ldr	r0, .L2340
 	mov	r1, #0x87
 	lsl	r1, r1, #0x3
 	add	r0, r0, r1
 	mov	r2, #0x0
 	mov	r1, #0x6
-.L2328:
+.L2325:
 	strb	r1, [r0]
-	ldr	r0, .L2343+0x4
+	ldr	r0, .L2340+0x4
 	ldr	r0, [r0]
 	str	r2, [r0, #0x64]
-	b	.L2297
-.L2344:
+	b	.L2294
+.L2341:
 	.align	2, 0
-.L2343:
+.L2340:
 	.word	gMain
 	.word	sTradeData
-.L2308:
-	ldr	r4, .L2345
+.L2305:
+	ldr	r4, .L2342
 	ldr	r1, [r4]
 	ldr	r0, [r1, #0x64]
 	add	r0, r0, #0x1
 	str	r0, [r1, #0x64]
 	cmp	r0, #0xa
-	bhi	.LCB21571
-	b	.L2297	@long jump
-.LCB21571:
+	bhi	.LCB21642
+	b	.L2294	@long jump
+.LCB21642:
 	bl	GetMultiplayerId
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	bne	.L2310	@cond_branch
+	bne	.L2307	@cond_branch
 	bl	Random
 	ldr	r4, [r4]
 	lsl	r0, r0, #0x10
@@ -60071,75 +60114,75 @@ CB2_SaveAndEndWirelessTrade:
 	lsl	r0, r0, #0x10
 	lsr	r0, r0, #0x10
 	str	r0, [r4, #0x64]
-	b	.L2311
-.L2346:
+	b	.L2308
+.L2343:
 	.align	2, 0
-.L2345:
+.L2342:
 	.word	sTradeData
-.L2310:
+.L2307:
 	ldr	r1, [r4]
 	mov	r0, #0x0
 	str	r0, [r1, #0x64]
-.L2311:
-	ldr	r0, .L2347
+.L2308:
+	ldr	r0, .L2344
 	mov	r2, #0x87
 	lsl	r2, r2, #0x3
 	add	r0, r0, r2
 	mov	r1, #0x7
 	strb	r1, [r0]
-	b	.L2297
-.L2348:
+	b	.L2294
+.L2345:
 	.align	2, 0
-.L2347:
+.L2344:
 	.word	gMain
-.L2312:
-	ldr	r0, .L2349
+.L2309:
+	ldr	r0, .L2346
 	ldr	r1, [r0]
 	ldr	r0, [r1, #0x64]
 	cmp	r0, #0
-	bne	.L2313	@cond_branch
+	bne	.L2310	@cond_branch
 	mov	r0, #0x1
 	bl	SetTradeLinkStandbyCallback
-	ldr	r0, .L2349+0x4
+	ldr	r0, .L2346+0x4
 	mov	r1, #0x87
 	lsl	r1, r1, #0x3
 	add	r0, r0, r1
 	mov	r1, #0x8
 	strb	r1, [r0]
-	b	.L2297
-.L2350:
+	b	.L2294
+.L2347:
 	.align	2, 0
-.L2349:
+.L2346:
 	.word	sTradeData
 	.word	gMain
-.L2313:
+.L2310:
 	sub	r0, r0, #0x1
 	str	r0, [r1, #0x64]
-	b	.L2297
-.L2315:
+	b	.L2294
+.L2312:
 	bl	_IsLinkTaskFinished
 	cmp	r0, #0
-	beq	.L2297	@cond_branch
+	beq	.L2294	@cond_branch
 	bl	sub_8153408
-	ldr	r0, .L2351
+	ldr	r0, .L2348
 	mov	r2, #0x87
 	lsl	r2, r2, #0x3
 	add	r0, r0, r2
 	mov	r1, #0x9
 	strb	r1, [r0]
-	b	.L2297
-.L2352:
+	b	.L2294
+.L2349:
 	.align	2, 0
-.L2351:
+.L2348:
 	.word	gMain
-.L2317:
-	ldr	r0, .L2353
+.L2314:
+	ldr	r0, .L2350
 	ldr	r1, [r0]
 	ldr	r0, [r1, #0x64]
 	add	r0, r0, #0x1
 	str	r0, [r1, #0x64]
 	cmp	r0, #0x3c
-	bls	.L2297	@cond_branch
+	bls	.L2294	@cond_branch
 	mov	r0, #0x87
 	lsl	r0, r0, #0x3
 	add	r1, r2, r0
@@ -60148,15 +60191,15 @@ CB2_SaveAndEndWirelessTrade:
 	strb	r0, [r1]
 	mov	r0, #0x2
 	bl	SetTradeLinkStandbyCallback
-	b	.L2297
-.L2354:
+	b	.L2294
+.L2351:
 	.align	2, 0
-.L2353:
+.L2350:
 	.word	sTradeData
-.L2319:
+.L2316:
 	bl	_IsLinkTaskFinished
 	cmp	r0, #0
-	beq	.L2297	@cond_branch
+	beq	.L2294	@cond_branch
 	mov	r0, #0x3
 	bl	FadeOutBGM
 	mov	r0, #0x1
@@ -60166,59 +60209,59 @@ CB2_SaveAndEndWirelessTrade:
 	mov	r2, #0x0
 	mov	r3, #0x10
 	bl	BeginNormalPaletteFade
-	ldr	r0, .L2355
+	ldr	r0, .L2352
 	mov	r1, #0x87
 	lsl	r1, r1, #0x3
 	add	r0, r0, r1
 	mov	r1, #0xb
 	strb	r1, [r0]
-	b	.L2297
-.L2356:
+	b	.L2294
+.L2353:
 	.align	2, 0
-.L2355:
+.L2352:
 	.word	gMain
-.L2321:
-	ldr	r0, .L2357
+.L2318:
+	ldr	r0, .L2354
 	ldrb	r1, [r0, #0x7]
 	mov	r0, #0x80
 	and	r0, r0, r1
 	cmp	r0, #0
-	bne	.L2297	@cond_branch
+	bne	.L2294	@cond_branch
 	bl	IsBGMStopped
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	cmp	r0, #0x1
-	bne	.L2297	@cond_branch
+	bne	.L2294	@cond_branch
 	mov	r0, #0x3
 	bl	SetTradeLinkStandbyCallback
-	ldr	r0, .L2357+0x4
+	ldr	r0, .L2354+0x4
 	mov	r2, #0x87
 	lsl	r2, r2, #0x3
 	add	r0, r0, r2
 	mov	r1, #0xc
 	strb	r1, [r0]
-	b	.L2297
-.L2358:
+	b	.L2294
+.L2355:
 	.align	2, 0
-.L2357:
+.L2354:
 	.word	gPaletteFade
 	.word	gMain
-.L2323:
+.L2320:
 	bl	_IsLinkTaskFinished
 	cmp	r0, #0
-	beq	.L2297	@cond_branch
-	ldr	r0, .L2359
+	beq	.L2294	@cond_branch
+	ldr	r0, .L2356
 	mov	r1, #0x0
 	strb	r1, [r0]
-	ldr	r0, .L2359+0x4
+	ldr	r0, .L2356+0x4
 	bl	SetMainCallback2
-.L2297:
+.L2294:
 	bl	HasLinkErrorOccurred
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	bne	.L2327	@cond_branch
+	bne	.L2324	@cond_branch
 	bl	RunTasks
-.L2327:
+.L2324:
 	bl	AnimateSprites
 	bl	BuildOamBuffer
 	bl	UpdatePaletteFade
@@ -60226,9 +60269,9 @@ CB2_SaveAndEndWirelessTrade:
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.L2360:
+.L2357:
 	.align	2, 0
-.L2359:
+.L2356:
 	.word	gSoftResetDisabled
 	.word	CB2_FreeTradeData
 .Lfe143:

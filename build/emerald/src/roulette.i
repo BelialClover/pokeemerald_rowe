@@ -12815,8 +12815,8 @@ struct SoundInfo
     u32 plynote;
     u32 ExtVolPit;
     u8 gap2[16];
-    struct SoundChannel chans[12];
-    s8 pcmBuffer[1584 * 2];
+    struct SoundChannel chans[15];
+    s8 pcmBuffer[0x620 * 2];
 };
 
 struct SongHeader
@@ -18304,7 +18304,7 @@ static void VBlankCB_Roulette(void)
 
     if (sRoulette->updateGridHighlight)
     {
-        { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); dmaRegs[0] = (vu32)(&sRoulette->tilemapBuffers[2][0xE0]); dmaRegs[1] = (vu32)((void *)(0x6000000 + (0x800 * (4))) + 0x1C0); dmaRegs[2] = (vu32)((0x8000 | 0x0000 | 0x0000 | 0x0000 | 0x0000) << 16 | ((0x340)/(16/8))); dmaRegs[2]; };
+        { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); u32 eval_src = (u32)(&sRoulette->tilemapBuffers[2][0xE0]); u32 eval_dst = (u32)((void *)(0x6000000 + (0x800 * (4))) + 0x1C0); u32 eval_ctl = (u32)((0x8000 | 0x0000 | 0x0000 | 0x0000 | 0x0000) << 16 | ((0x340)/(16/8))); register u32 r_src asm("r0") = eval_src; register u32 r_dst asm("r1") = eval_dst; register u32 r_ctl asm("r2") = eval_ctl; asm volatile("stmia %0!, {%1, %2, %3}" : "+l" (dmaRegs) : "l" (r_src), "l" (r_dst), "l" (r_ctl) : "memory"); };
         sRoulette->updateGridHighlight = 0;
     }
     switch (sRoulette->selectionRectDrawState)
@@ -18312,16 +18312,16 @@ static void VBlankCB_Roulette(void)
     case SELECT_STATE_DRAW:
         SetBgAttribute(0, BG_ATTR_CHARBASEINDEX, 0);
         ShowBg(0);
-        { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); dmaRegs[0] = (vu32)(&sRoulette->tilemapBuffers[0][0xE0]); dmaRegs[1] = (vu32)((void *)(0x6000000 + (0x800 * (31))) + 0x1C0); dmaRegs[2] = (vu32)((0x8000 | 0x0000 | 0x0000 | 0x0000 | 0x0000) << 16 | ((0x340)/(16/8))); dmaRegs[2]; };
+        { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); u32 eval_src = (u32)(&sRoulette->tilemapBuffers[0][0xE0]); u32 eval_dst = (u32)((void *)(0x6000000 + (0x800 * (31))) + 0x1C0); u32 eval_ctl = (u32)((0x8000 | 0x0000 | 0x0000 | 0x0000 | 0x0000) << 16 | ((0x340)/(16/8))); register u32 r_src asm("r0") = eval_src; register u32 r_dst asm("r1") = eval_dst; register u32 r_ctl asm("r2") = eval_ctl; asm volatile("stmia %0!, {%1, %2, %3}" : "+l" (dmaRegs) : "l" (r_src), "l" (r_dst), "l" (r_ctl) : "memory"); };
         sRoulette->selectionRectDrawState = SELECT_STATE_UPDATE;
         break;
     case SELECT_STATE_UPDATE:
-        { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); dmaRegs[0] = (vu32)(&sRoulette->tilemapBuffers[0][0xE0]); dmaRegs[1] = (vu32)((void *)(0x6000000 + (0x800 * (31))) + 0x1C0); dmaRegs[2] = (vu32)((0x8000 | 0x0000 | 0x0000 | 0x0000 | 0x0000) << 16 | ((0x340)/(16/8))); dmaRegs[2]; };
+        { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); u32 eval_src = (u32)(&sRoulette->tilemapBuffers[0][0xE0]); u32 eval_dst = (u32)((void *)(0x6000000 + (0x800 * (31))) + 0x1C0); u32 eval_ctl = (u32)((0x8000 | 0x0000 | 0x0000 | 0x0000 | 0x0000) << 16 | ((0x340)/(16/8))); register u32 r_src asm("r0") = eval_src; register u32 r_dst asm("r1") = eval_dst; register u32 r_ctl asm("r2") = eval_ctl; asm volatile("stmia %0!, {%1, %2, %3}" : "+l" (dmaRegs) : "l" (r_src), "l" (r_dst), "l" (r_ctl) : "memory"); };
         break;
     case SELECT_STATE_ERASE:
         SetBgAttribute(0, BG_ATTR_CHARBASEINDEX, 2);
         ShowBg(0);
-        { vu16 tmp = (vu16)(0); { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); dmaRegs[0] = (vu32)(&tmp); dmaRegs[1] = (vu32)((void *)(0x6000000 + (0x800 * (31))) + 0x1C0); dmaRegs[2] = (vu32)((0x8000 | 0x0000 | 0x0000 | 0x0100 | 0x0000) << 16 | ((0x340)/(16/8))); dmaRegs[2]; }; };
+        { vu16 tmp = (vu16)(0); { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); u32 eval_src = (u32)(&tmp); u32 eval_dst = (u32)((void *)(0x6000000 + (0x800 * (31))) + 0x1C0); u32 eval_ctl = (u32)((0x8000 | 0x0000 | 0x0000 | 0x0100 | 0x0000) << 16 | ((0x340)/(16/8))); register u32 r_src asm("r0") = eval_src; register u32 r_dst asm("r1") = eval_dst; register u32 r_ctl asm("r2") = eval_ctl; asm volatile("stmia %0!, {%1, %2, %3}" : "+l" (dmaRegs) : "l" (r_src), "l" (r_dst), "l" (r_ctl) : "memory"); }; };
         sRoulette->selectionRectDrawState = SELECT_STATE_WAIT;
     case SELECT_STATE_WAIT:
         break;
@@ -19038,14 +19038,14 @@ static void Task_PrintSpinResult(u8 taskId)
     case 2:
         if (gTasks[taskId].data[2] == 12)
         {
-            PlayFanfare(389);
+            PlayFanfare(360);
             DrawStdWindowFrame(sTextWindowId, 0);
             AddTextPrinterParameterized(sTextWindowId, 1, Roulette_Text_Jackpot, 0, 1, 0xFF, ((void *)0));
             CopyWindowToVram(sTextWindowId, 3);
         }
         else
         {
-            PlayFanfare(390);
+            PlayFanfare(361);
             DrawStdWindowFrame(sTextWindowId, 0);
             AddTextPrinterParameterized(sTextWindowId, 1, Roulette_Text_ItsAHit, 0, 1, 0xFF, ((void *)0));
             CopyWindowToVram(sTextWindowId, 3);

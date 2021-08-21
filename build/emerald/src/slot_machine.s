@@ -808,49 +808,59 @@ SlotMachineSetup_InitVBlank:
 	.thumb_func
 SlotMachineSetup_InitVRAM:
 	push	{r4, r5, r6, r7, lr}
+	mov	r7, r9
+	mov	r6, r8
+	push	{r6, r7}
 	add	sp, sp, #-0x4
-	mov	r2, #0xc0
-	lsl	r2, r2, #0x13
+	mov	r6, #0xc0
+	lsl	r6, r6, #0x13
 	mov	r3, #0x80
 	lsl	r3, r3, #0x9
 	mov	r4, sp
-	mov	r6, #0x0
-	ldr	r1, .L62
+	mov	r0, #0x0
+	mov	r9, r0
+	ldr	r7, .L62
+	mov	ip, r7
 	mov	r5, #0x80
 	lsl	r5, r5, #0x5
-	ldr	r7, .L62+0x4
 	mov	r0, #0x81
 	lsl	r0, r0, #0x18
-	mov	ip, r0
+	mov	r8, r0
 .L59:
-	strh	r6, [r4]
+	mov	r7, r9
+	strh	r7, [r4]
 	mov	r0, sp
-	str	r0, [r1]
-	str	r2, [r1, #0x4]
-	str	r7, [r1, #0x8]
-	ldr	r0, [r1, #0x8]
-	add	r2, r2, r5
+	add	r1, r6, #0
+	mov	r2, ip
+	ldr	r7, .L62+0x4
+	stmia r7!, {r0, r1, r2}
+	.code	16
+	add	r6, r6, r5
 	sub	r3, r3, r5
 	cmp	r3, r5
 	bhi	.L59	@cond_branch
-	strh	r6, [r4]
+	mov	r0, r9
+	strh	r0, [r4]
+	lsr	r2, r3, #0x1
 	mov	r0, sp
-	str	r0, [r1]
-	str	r2, [r1, #0x4]
-	lsr	r0, r3, #0x1
-	mov	r2, ip
-	orr	r0, r0, r2
-	str	r0, [r1, #0x8]
-	ldr	r0, [r1, #0x8]
+	add	r1, r6, #0
+	mov	r3, r8
+	orr	r2, r2, r3
+	ldr	r7, .L62+0x4
+	stmia r7!, {r0, r1, r2}
+	.code	16
 	add	sp, sp, #0x4
+	pop	{r3, r4}
+	mov	r8, r3
+	mov	r9, r4
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
 .L63:
 	.align	2, 0
 .L62:
-	.word	0x40000d4
 	.word	-0x7efff800
+	.word	0x40000d4
 .Lfe11:
 	.size	 SlotMachineSetup_InitVRAM,.Lfe11-SlotMachineSetup_InitVRAM
 	.align	2, 0
@@ -858,24 +868,22 @@ SlotMachineSetup_InitVRAM:
 	.thumb_func
 SlotMachineSetup_InitOAM:
 	add	sp, sp, #-0x4
-	mov	r2, #0xe0
-	lsl	r2, r2, #0x13
-	mov	r1, sp
-	mov	r0, #0x0
-	strh	r0, [r1]
-	ldr	r0, .L65
-	str	r1, [r0]
-	str	r2, [r0, #0x4]
-	ldr	r1, .L65+0x4
-	str	r1, [r0, #0x8]
-	ldr	r0, [r0, #0x8]
+	mov	r0, sp
+	mov	r1, #0x0
+	strh	r1, [r0]
+	mov	r1, #0xe0
+	lsl	r1, r1, #0x13
+	ldr	r2, .L65
+	ldr	r3, .L65+0x4
+	stmia r3!, {r0, r1, r2}
+	.code	16
 	add	sp, sp, #0x4
 	bx	lr
 .L66:
 	.align	2, 0
 .L65:
-	.word	0x40000d4
 	.word	-0x7efffe00
+	.word	0x40000d4
 .Lfe12:
 	.size	 SlotMachineSetup_InitOAM,.Lfe12-SlotMachineSetup_InitOAM
 	.align	2, 0
@@ -1866,7 +1874,8 @@ SlotAction_CheckMatches:
 	and	r0, r0, r1
 	cmp	r0, #0
 	beq	.L183	@cond_branch
-	ldr	r0, .L193+0x4
+	mov	r0, #0xb4
+	lsl	r0, r0, #0x1
 	bl	PlayFanfare
 	mov	r0, #0x6
 	bl	CreateDigitalDisplayScene
@@ -1875,29 +1884,24 @@ SlotAction_CheckMatches:
 	.align	2, 0
 .L193:
 	.word	sSlotMachine
-	.word	0x185
 .L183:
 	mov	r0, #0x40
 	and	r0, r0, r1
 	cmp	r0, #0
 	beq	.L185	@cond_branch
-	ldr	r0, .L195
+	mov	r0, #0xb4
+	lsl	r0, r0, #0x1
 	bl	PlayFanfare
 	mov	r0, #0x5
 	bl	CreateDigitalDisplayScene
 	b	.L184
-.L196:
-	.align	2, 0
-.L195:
-	.word	0x185
 .L185:
-	mov	r0, #0xc3
-	lsl	r0, r0, #0x1
+	ldr	r0, .L195
 	bl	PlayFanfare
 	mov	r0, #0x2
 	bl	CreateDigitalDisplayScene
 .L184:
-	ldr	r2, .L197
+	ldr	r2, .L195+0x4
 	ldr	r3, [r2]
 	ldrh	r1, [r3, #0x8]
 	mov	r0, #0xe0
@@ -1947,9 +1951,10 @@ SlotAction_CheckMatches:
 	ldrb	r0, [r0, #0x2]
 	bl	AddPikaPowerBolt
 	b	.L191
-.L198:
+.L196:
 	.align	2, 0
-.L197:
+.L195:
+	.word	0x169
 	.word	sSlotMachine
 .L181:
 	mov	r0, #0x3
@@ -1964,7 +1969,7 @@ SlotAction_CheckMatches:
 	strh	r0, [r1, #0x10]
 	lsl	r0, r0, #0x10
 	asr	r0, r0, #0x10
-	ldr	r2, .L199
+	ldr	r2, .L197
 	cmp	r0, r2
 	ble	.L191	@cond_branch
 	strh	r2, [r1, #0x10]
@@ -1973,9 +1978,9 @@ SlotAction_CheckMatches:
 	pop	{r4}
 	pop	{r1}
 	bx	r1
-.L200:
+.L198:
 	.align	2, 0
-.L199:
+.L197:
 	.word	0x270f
 .Lfe36:
 	.size	 SlotAction_CheckMatches,.Lfe36-SlotAction_CheckMatches
@@ -1987,18 +1992,18 @@ SlotAction_WaitForPayoutToBeAwarded:
 	bl	IsFinalTask_RunAwardPayoutActions
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.L202	@cond_branch
-	ldr	r0, .L203
+	beq	.L200	@cond_branch
+	ldr	r0, .L201
 	ldr	r1, [r0]
 	mov	r0, #0x10
 	strb	r0, [r1]
-.L202:
+.L200:
 	mov	r0, #0x0
 	pop	{r1}
 	bx	r1
-.L204:
+.L202:
 	.align	2, 0
-.L203:
+.L201:
 	.word	sSlotMachine
 .Lfe37:
 	.size	 SlotAction_WaitForPayoutToBeAwarded,.Lfe37-SlotAction_WaitForPayoutToBeAwarded
@@ -2010,8 +2015,8 @@ SlotAction_EndPayout:
 	bl	TryStopSlotMachineLights
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.L206	@cond_branch
-	ldr	r4, .L211
+	beq	.L204	@cond_branch
+	ldr	r4, .L209
 	ldr	r1, [r4]
 	mov	r0, #0x13
 	strb	r0, [r1]
@@ -2021,53 +2026,53 @@ SlotAction_EndPayout:
 	lsl	r0, r0, #0x1
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L207	@cond_branch
+	beq	.L205	@cond_branch
 	mov	r0, #0x1c
 	bl	IncrementGameStat
-.L207:
+.L205:
 	ldr	r2, [r4]
 	ldrh	r1, [r2, #0x8]
 	mov	r3, #0x4
 	add	r0, r3, #0
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L208	@cond_branch
+	beq	.L206	@cond_branch
 	mov	r0, #0x0
 	strh	r0, [r2, #0x18]
 	mov	r0, #0x9
 	strb	r0, [r2]
-.L208:
+.L206:
 	ldr	r2, [r4]
 	ldrh	r1, [r2, #0x8]
 	mov	r0, #0x20
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L209	@cond_branch
+	beq	.L207	@cond_branch
 	mov	r0, #0x11
 	strb	r0, [r2]
-.L209:
+.L207:
 	ldr	r1, [r4]
 	ldrb	r0, [r1, #0xa]
 	cmp	r0, #0
-	beq	.L206	@cond_branch
+	beq	.L204	@cond_branch
 	ldrh	r1, [r1, #0x8]
 	add	r0, r3, #0
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L206	@cond_branch
+	beq	.L204	@cond_branch
 	mov	r0, #0x4
 	bl	CreateDigitalDisplayScene
 	ldr	r1, [r4]
 	mov	r0, #0x12
 	strb	r0, [r1]
-.L206:
+.L204:
 	mov	r0, #0x0
 	pop	{r4}
 	pop	{r1}
 	bx	r1
-.L212:
+.L210:
 	.align	2, 0
-.L211:
+.L209:
 	.word	sSlotMachine
 .Lfe38:
 	.size	 SlotAction_EndPayout,.Lfe38-SlotAction_EndPayout
@@ -2079,8 +2084,8 @@ SlotAction_MatchedPower:
 	bl	IsPikaPowerBoltAnimating
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	bne	.L214	@cond_branch
-	ldr	r4, .L217
+	bne	.L212	@cond_branch
+	ldr	r4, .L215
 	ldr	r1, [r4]
 	mov	r0, #0x13
 	strb	r0, [r1]
@@ -2089,26 +2094,26 @@ SlotAction_MatchedPower:
 	mov	r0, #0x4
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L214	@cond_branch
+	beq	.L212	@cond_branch
 	mov	r0, #0x9
 	strb	r0, [r2]
 	ldr	r0, [r4]
 	ldrb	r0, [r0, #0xa]
 	cmp	r0, #0
-	beq	.L214	@cond_branch
+	beq	.L212	@cond_branch
 	mov	r0, #0x4
 	bl	CreateDigitalDisplayScene
 	ldr	r1, [r4]
 	mov	r0, #0x12
 	strb	r0, [r1]
-.L214:
+.L212:
 	mov	r0, #0x0
 	pop	{r4}
 	pop	{r1}
 	bx	r1
-.L218:
+.L216:
 	.align	2, 0
-.L217:
+.L215:
 	.word	sSlotMachine
 .Lfe39:
 	.size	 SlotAction_MatchedPower,.Lfe39-SlotAction_MatchedPower
@@ -2120,8 +2125,8 @@ SlotAction_WaitReelTimeAnim:
 	bl	IsDigitalDisplayAnimFinished
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.L220	@cond_branch
-	ldr	r2, .L222
+	beq	.L218	@cond_branch
+	ldr	r2, .L220
 	ldr	r1, [r2]
 	mov	r0, #0x13
 	strb	r0, [r1]
@@ -2130,16 +2135,16 @@ SlotAction_WaitReelTimeAnim:
 	mov	r0, #0x4
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L220	@cond_branch
+	beq	.L218	@cond_branch
 	mov	r0, #0x9
 	strb	r0, [r2]
-.L220:
+.L218:
 	mov	r0, #0x0
 	pop	{r1}
 	bx	r1
-.L223:
+.L221:
 	.align	2, 0
-.L222:
+.L220:
 	.word	sSlotMachine
 .Lfe40:
 	.size	 SlotAction_WaitReelTimeAnim,.Lfe40-SlotAction_WaitReelTimeAnim
@@ -2154,16 +2159,16 @@ SlotAction_ResetBetTiles:
 	bl	DarkenBetTiles
 	mov	r0, #0x2
 	bl	DarkenBetTiles
-	ldr	r0, .L225
+	ldr	r0, .L223
 	ldr	r1, [r0]
 	mov	r0, #0x2
 	strb	r0, [r1]
 	mov	r0, #0x0
 	pop	{r1}
 	bx	r1
-.L226:
+.L224:
 	.align	2, 0
-.L225:
+.L223:
 	.word	sSlotMachine
 .Lfe41:
 	.size	 SlotAction_ResetBetTiles,.Lfe41-SlotAction_ResetBetTiles
@@ -2179,20 +2184,20 @@ SlotAction_NoMatches:
 	lsl	r0, r0, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, #0x40
-	ble	.L228	@cond_branch
+	ble	.L226	@cond_branch
 	mov	r0, #0x0
 	strh	r0, [r1, #0xa]
-	ldr	r0, .L229
+	ldr	r0, .L227
 	ldr	r1, [r0]
 	mov	r0, #0x13
 	strb	r0, [r1]
-.L228:
+.L226:
 	mov	r0, #0x0
 	pop	{r1}
 	bx	r1
-.L230:
+.L228:
 	.align	2, 0
-.L229:
+.L227:
 	.word	sSlotMachine
 .Lfe42:
 	.size	 SlotAction_NoMatches,.Lfe42-SlotAction_NoMatches
@@ -2205,7 +2210,7 @@ SlotAction_AskQuit:
 	mov	r0, #0x0
 	mov	r1, #0x0
 	bl	DrawDialogueFrame
-	ldr	r2, .L232
+	ldr	r2, .L230
 	mov	r0, #0x1
 	str	r0, [sp]
 	mov	r0, #0x0
@@ -2228,7 +2233,7 @@ SlotAction_AskQuit:
 	mov	r0, #0x15
 	mov	r1, #0x7
 	bl	CreateYesNoMenuParameterized
-	ldr	r0, .L232+0x4
+	ldr	r0, .L230+0x4
 	ldr	r1, [r0]
 	mov	r0, #0x16
 	strb	r0, [r1]
@@ -2236,9 +2241,9 @@ SlotAction_AskQuit:
 	add	sp, sp, #0xc
 	pop	{r1}
 	bx	r1
-.L233:
+.L231:
 	.align	2, 0
-.L232:
+.L230:
 	.word	gText_QuitTheGame
 	.word	sSlotMachine
 .Lfe43:
@@ -2252,7 +2257,7 @@ SlotAction_HandleQuitInput:
 	lsl	r0, r0, #0x18
 	asr	r1, r0, #0x18
 	cmp	r1, #0
-	bne	.L235	@cond_branch
+	bne	.L233	@cond_branch
 	mov	r0, #0x0
 	mov	r1, #0x1
 	bl	ClearDialogWindowAndFrame
@@ -2262,41 +2267,41 @@ SlotAction_HandleQuitInput:
 	bl	DarkenBetTiles
 	mov	r0, #0x2
 	bl	DarkenBetTiles
-	ldr	r0, .L240
+	ldr	r0, .L238
 	ldr	r1, [r0]
 	ldrh	r0, [r1, #0x12]
 	ldrh	r2, [r1, #0xc]
 	add	r0, r0, r2
 	strh	r0, [r1, #0xc]
 	mov	r0, #0x1b
-	b	.L239
-.L241:
+	b	.L237
+.L239:
 	.align	2, 0
-.L240:
+.L238:
 	.word	sSlotMachine
-.L235:
+.L233:
 	cmp	r1, #0x1
-	beq	.L238	@cond_branch
+	beq	.L236	@cond_branch
 	mov	r0, #0x1
 	neg	r0, r0
 	cmp	r1, r0
-	bne	.L236	@cond_branch
-.L238:
+	bne	.L234	@cond_branch
+.L236:
 	mov	r0, #0x0
 	mov	r1, #0x1
 	bl	ClearDialogWindowAndFrame
-	ldr	r0, .L242
+	ldr	r0, .L240
 	ldr	r1, [r0]
 	mov	r0, #0x5
-.L239:
+.L237:
 	strb	r0, [r1]
-.L236:
+.L234:
 	mov	r0, #0x0
 	pop	{r1}
 	bx	r1
-.L243:
+.L241:
 	.align	2, 0
-.L242:
+.L240:
 	.word	sSlotMachine
 .Lfe44:
 	.size	 SlotAction_HandleQuitInput,.Lfe44-SlotAction_HandleQuitInput
@@ -2309,7 +2314,7 @@ SlotAction_PrintMsg_9999Coins:
 	mov	r0, #0x0
 	mov	r1, #0x0
 	bl	DrawDialogueFrame
-	ldr	r2, .L245
+	ldr	r2, .L243
 	mov	r0, #0x1
 	str	r0, [sp]
 	mov	r0, #0x0
@@ -2321,7 +2326,7 @@ SlotAction_PrintMsg_9999Coins:
 	mov	r0, #0x0
 	mov	r1, #0x3
 	bl	CopyWindowToVram
-	ldr	r0, .L245+0x4
+	ldr	r0, .L243+0x4
 	ldr	r1, [r0]
 	mov	r0, #0x18
 	strb	r0, [r1]
@@ -2329,9 +2334,9 @@ SlotAction_PrintMsg_9999Coins:
 	add	sp, sp, #0xc
 	pop	{r1}
 	bx	r1
-.L246:
+.L244:
 	.align	2, 0
-.L245:
+.L243:
 	.word	gText_YouveGot9999Coins
 	.word	sSlotMachine
 .Lfe45:
@@ -2341,26 +2346,26 @@ SlotAction_PrintMsg_9999Coins:
 	.thumb_func
 SlotAction_WaitMsg_9999Coins:
 	push	{lr}
-	ldr	r0, .L249
+	ldr	r0, .L247
 	ldrh	r1, [r0, #0x2e]
 	mov	r0, #0x3
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L248	@cond_branch
+	beq	.L246	@cond_branch
 	mov	r0, #0x0
 	mov	r1, #0x1
 	bl	ClearDialogWindowAndFrame
-	ldr	r0, .L249+0x4
+	ldr	r0, .L247+0x4
 	ldr	r1, [r0]
 	mov	r0, #0x5
 	strb	r0, [r1]
-.L248:
+.L246:
 	mov	r0, #0x0
 	pop	{r1}
 	bx	r1
-.L250:
+.L248:
 	.align	2, 0
-.L249:
+.L247:
 	.word	gMain
 	.word	sSlotMachine
 .Lfe46:
@@ -2374,7 +2379,7 @@ SlotAction_PrintMsg_NoMoreCoins:
 	mov	r0, #0x0
 	mov	r1, #0x0
 	bl	DrawDialogueFrame
-	ldr	r2, .L252
+	ldr	r2, .L250
 	mov	r0, #0x1
 	str	r0, [sp]
 	mov	r0, #0x0
@@ -2386,7 +2391,7 @@ SlotAction_PrintMsg_NoMoreCoins:
 	mov	r0, #0x0
 	mov	r1, #0x3
 	bl	CopyWindowToVram
-	ldr	r0, .L252+0x4
+	ldr	r0, .L250+0x4
 	ldr	r1, [r0]
 	mov	r0, #0x1a
 	strb	r0, [r1]
@@ -2394,9 +2399,9 @@ SlotAction_PrintMsg_NoMoreCoins:
 	add	sp, sp, #0xc
 	pop	{r1}
 	bx	r1
-.L253:
+.L251:
 	.align	2, 0
-.L252:
+.L250:
 	.word	gText_YouveRunOutOfCoins
 	.word	sSlotMachine
 .Lfe47:
@@ -2406,26 +2411,26 @@ SlotAction_PrintMsg_NoMoreCoins:
 	.thumb_func
 SlotAction_WaitMsg_NoMoreCoins:
 	push	{lr}
-	ldr	r0, .L256
+	ldr	r0, .L254
 	ldrh	r1, [r0, #0x2e]
 	mov	r0, #0x3
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L255	@cond_branch
+	beq	.L253	@cond_branch
 	mov	r0, #0x0
 	mov	r1, #0x1
 	bl	ClearDialogWindowAndFrame
-	ldr	r0, .L256+0x4
+	ldr	r0, .L254+0x4
 	ldr	r1, [r0]
 	mov	r0, #0x1b
 	strb	r0, [r1]
-.L255:
+.L253:
 	mov	r0, #0x0
 	pop	{r1}
 	bx	r1
-.L257:
+.L255:
 	.align	2, 0
-.L256:
+.L254:
 	.word	gMain
 	.word	sSlotMachine
 .Lfe48:
@@ -2436,7 +2441,7 @@ SlotAction_WaitMsg_NoMoreCoins:
 SlotAction_EndGame:
 	push	{r4, lr}
 	add	sp, sp, #-0x4
-	ldr	r4, .L259
+	ldr	r4, .L257
 	ldr	r0, [r4]
 	ldrh	r0, [r0, #0xc]
 	bl	SetCoins
@@ -2460,9 +2465,9 @@ SlotAction_EndGame:
 	pop	{r4}
 	pop	{r1}
 	bx	r1
-.L260:
+.L258:
 	.align	2, 0
-.L259:
+.L257:
 	.word	sSlotMachine
 .Lfe49:
 	.size	 SlotAction_EndGame,.Lfe49-SlotAction_EndGame
@@ -2471,7 +2476,7 @@ SlotAction_EndGame:
 	.thumb_func
 SlotAction_FreeDataStructures:
 	push	{r4, r5, r6, lr}
-	ldr	r0, .L267
+	ldr	r0, .L265
 	ldrb	r1, [r0, #0x7]
 	mov	r0, #0x80
 	and	r0, r0, r1
@@ -2479,143 +2484,143 @@ SlotAction_FreeDataStructures:
 	lsr	r5, r0, #0x18
 	cmp	r5, #0
 	beq	.LCB2585
-	b	.L262	@long jump
+	b	.L260	@long jump
 .LCB2585:
-	ldr	r6, .L267+0x4
+	ldr	r6, .L265+0x4
 	ldr	r0, [r6]
 	ldr	r0, [r0, #0x64]
 	bl	SetMainCallback2
-	ldr	r4, .L267+0x8
+	ldr	r4, .L265+0x8
 	ldr	r0, [r4]
 	bl	Free
 	str	r5, [r4]
-	ldr	r4, .L267+0xc
+	ldr	r4, .L265+0xc
 	ldr	r0, [r4]
 	bl	Free
 	str	r5, [r4]
-	ldr	r4, .L267+0x10
+	ldr	r4, .L265+0x10
 	ldr	r0, [r4]
 	bl	Free
 	str	r5, [r4]
-	ldr	r4, .L267+0x14
+	ldr	r4, .L265+0x14
 	ldr	r0, [r4]
 	bl	Free
 	str	r5, [r4]
-	ldr	r4, .L267+0x18
+	ldr	r4, .L265+0x18
 	ldr	r0, [r4]
 	bl	Free
 	str	r5, [r4]
-	ldr	r4, .L267+0x1c
+	ldr	r4, .L265+0x1c
 	ldr	r0, [r4]
 	bl	Free
 	str	r5, [r4]
-	ldr	r4, .L267+0x20
+	ldr	r4, .L265+0x20
 	ldr	r0, [r4]
 	bl	Free
 	str	r5, [r4]
-	ldr	r4, .L267+0x24
+	ldr	r4, .L265+0x24
 	ldr	r0, [r4]
 	bl	Free
 	str	r5, [r4]
-	ldr	r4, .L267+0x28
+	ldr	r4, .L265+0x28
 	ldr	r0, [r4]
 	bl	Free
 	str	r5, [r4]
-	ldr	r4, .L267+0x2c
+	ldr	r4, .L265+0x2c
 	ldr	r0, [r4]
 	bl	Free
 	str	r5, [r4]
-	ldr	r4, .L267+0x30
+	ldr	r4, .L265+0x30
 	ldr	r0, [r4]
 	bl	Free
 	str	r5, [r4]
-	ldr	r4, .L267+0x34
+	ldr	r4, .L265+0x34
 	ldr	r0, [r4]
 	bl	Free
 	str	r5, [r4]
-	ldr	r4, .L267+0x38
+	ldr	r4, .L265+0x38
 	ldr	r0, [r4]
 	bl	Free
 	str	r5, [r4]
-	ldr	r4, .L267+0x3c
+	ldr	r4, .L265+0x3c
 	ldr	r0, [r4]
 	bl	Free
 	str	r5, [r4]
-	ldr	r4, .L267+0x40
+	ldr	r4, .L265+0x40
+	ldr	r0, [r4]
+	cmp	r0, #0
+	beq	.L261	@cond_branch
+	bl	Free
+	str	r5, [r4]
+.L261:
+	ldr	r4, .L265+0x44
+	ldr	r0, [r4]
+	cmp	r0, #0
+	beq	.L262	@cond_branch
+	bl	Free
+	str	r5, [r4]
+.L262:
+	ldr	r4, .L265+0x48
 	ldr	r0, [r4]
 	cmp	r0, #0
 	beq	.L263	@cond_branch
 	bl	Free
 	str	r5, [r4]
 .L263:
-	ldr	r4, .L267+0x44
+	ldr	r4, .L265+0x4c
 	ldr	r0, [r4]
 	cmp	r0, #0
 	beq	.L264	@cond_branch
 	bl	Free
 	str	r5, [r4]
 .L264:
-	ldr	r4, .L267+0x48
-	ldr	r0, [r4]
-	cmp	r0, #0
-	beq	.L265	@cond_branch
-	bl	Free
-	str	r5, [r4]
-.L265:
-	ldr	r4, .L267+0x4c
-	ldr	r0, [r4]
-	cmp	r0, #0
-	beq	.L266	@cond_branch
-	bl	Free
-	str	r5, [r4]
-.L266:
-	ldr	r4, .L267+0x50
+	ldr	r4, .L265+0x50
 	ldr	r0, [r4]
 	bl	Free
 	str	r5, [r4]
-	ldr	r4, .L267+0x54
+	ldr	r4, .L265+0x54
 	ldr	r0, [r4]
 	bl	Free
 	str	r5, [r4]
-	ldr	r4, .L267+0x58
+	ldr	r4, .L265+0x58
 	ldr	r0, [r4]
 	bl	Free
 	str	r5, [r4]
-	ldr	r4, .L267+0x5c
+	ldr	r4, .L265+0x5c
 	ldr	r0, [r4]
 	bl	Free
 	str	r5, [r4]
-	ldr	r4, .L267+0x60
+	ldr	r4, .L265+0x60
 	ldr	r0, [r4]
 	bl	Free
 	str	r5, [r4]
-	ldr	r4, .L267+0x64
+	ldr	r4, .L265+0x64
 	ldr	r0, [r4]
 	bl	Free
 	str	r5, [r4]
-	ldr	r4, .L267+0x68
+	ldr	r4, .L265+0x68
 	ldr	r0, [r4]
 	bl	Free
 	str	r5, [r4]
-	ldr	r4, .L267+0x6c
+	ldr	r4, .L265+0x6c
 	ldr	r0, [r4]
 	bl	Free
 	str	r5, [r4]
-	ldr	r4, .L267+0x70
+	ldr	r4, .L265+0x70
 	ldr	r0, [r4]
 	bl	Free
 	str	r5, [r4]
 	ldr	r0, [r6]
 	bl	Free
 	str	r5, [r6]
-.L262:
+.L260:
 	mov	r0, #0x0
 	pop	{r4, r5, r6}
 	pop	{r1}
 	bx	r1
-.L268:
+.L266:
 	.align	2, 0
-.L267:
+.L265:
 	.word	gPaletteFade
 	.word	sSlotMachine
 	.word	sImageTable_DigitalDisplay_Reel
@@ -2652,27 +2657,27 @@ SlotAction_FreeDataStructures:
 	.thumb_func
 DrawLuckyFlags:
 	push	{r4, lr}
-	ldr	r4, .L276
+	ldr	r4, .L274
 	ldr	r1, [r4]
 	ldrb	r0, [r1, #0xa]
 	cmp	r0, #0
-	bne	.L269	@cond_branch
+	bne	.L267	@cond_branch
 	ldrb	r1, [r1, #0x4]
 	mov	r0, #0xc0
 	and	r0, r0, r1
 	cmp	r0, #0
-	bne	.L269	@cond_branch
+	bne	.L267	@cond_branch
 	bl	IsThisRoundLucky
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.L272	@cond_branch
+	beq	.L270	@cond_branch
 	bl	AttemptsAtLuckyFlags_Top3
 	lsl	r0, r0, #0x18
 	lsr	r3, r0, #0x18
 	cmp	r3, #0x3
-	beq	.L272	@cond_branch
+	beq	.L270	@cond_branch
 	ldr	r2, [r4]
-	ldr	r1, .L276+0x4
+	ldr	r1, .L274+0x4
 	lsl	r0, r3, #0x1
 	add	r0, r0, r1
 	ldrb	r1, [r0]
@@ -2680,29 +2685,29 @@ DrawLuckyFlags:
 	orr	r0, r0, r1
 	strb	r0, [r2, #0x4]
 	cmp	r3, #0x1
-	bne	.L269	@cond_branch
-.L272:
+	bne	.L267	@cond_branch
+.L270:
 	bl	AttemptsAtLuckyFlags_NotTop3
 	lsl	r0, r0, #0x18
 	lsr	r3, r0, #0x18
 	cmp	r3, #0x5
-	beq	.L269	@cond_branch
-	ldr	r0, .L276
+	beq	.L267	@cond_branch
+	ldr	r0, .L274
 	ldr	r2, [r0]
-	ldr	r1, .L276+0x8
+	ldr	r1, .L274+0x8
 	lsl	r0, r3, #0x1
 	add	r0, r0, r1
 	ldrb	r1, [r0]
 	ldrb	r0, [r2, #0x4]
 	orr	r0, r0, r1
 	strb	r0, [r2, #0x4]
-.L269:
+.L267:
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L277:
+.L275:
 	.align	2, 0
-.L276:
+.L274:
 	.word	sSlotMachine
 	.word	sLuckyFlagSettings_Top3
 	.word	sLuckyFlagSettings_NotTop3
@@ -2713,22 +2718,22 @@ DrawLuckyFlags:
 	.thumb_func
 SetLuckySpins:
 	push	{lr}
-	ldr	r2, .L280
+	ldr	r2, .L278
 	ldr	r1, [r2]
 	mov	r0, #0x0
 	strb	r0, [r1, #0x6]
 	ldr	r2, [r2]
 	ldrb	r0, [r2, #0x4]
 	cmp	r0, #0
-	beq	.L279	@cond_branch
+	beq	.L277	@cond_branch
 	mov	r0, #0x1
 	strb	r0, [r2, #0x6]
-.L279:
+.L277:
 	pop	{r0}
 	bx	r0
-.L281:
+.L279:
 	.align	2, 0
-.L280:
+.L278:
 	.word	sSlotMachine
 .Lfe52:
 	.size	 SetLuckySpins,.Lfe52-SetLuckySpins
@@ -2741,28 +2746,28 @@ GetBiasTag:
 	lsr	r1, r0, #0x18
 	mov	r2, #0x0
 	mov	r3, #0x1
-	ldr	r4, .L290
-.L286:
+	ldr	r4, .L288
+.L284:
 	add	r0, r1, #0
 	and	r0, r0, r3
 	cmp	r0, #0
-	beq	.L287	@cond_branch
+	beq	.L285	@cond_branch
 	add	r0, r2, r4
 	ldrb	r0, [r0]
-	b	.L289
-.L291:
+	b	.L287
+.L289:
 	.align	2, 0
-.L290:
+.L288:
 	.word	sBiasTags
-.L287:
+.L285:
 	lsr	r1, r1, #0x1
 	add	r0, r2, #0x1
 	lsl	r0, r0, #0x18
 	lsr	r2, r0, #0x18
 	cmp	r2, #0x7
-	bls	.L286	@cond_branch
+	bls	.L284	@cond_branch
 	mov	r0, #0x0
-.L289:
+.L287:
 	pop	{r4}
 	pop	{r1}
 	bx	r1
@@ -2776,8 +2781,8 @@ IsThisRoundLucky:
 	bl	Random
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
-	ldr	r4, .L295
-	ldr	r1, .L295+0x4
+	ldr	r4, .L293
+	ldr	r1, .L293+0x4
 	ldr	r1, [r1]
 	mov	r3, #0x12
 	ldrsh	r2, [r1, r3]
@@ -2789,17 +2794,17 @@ IsThisRoundLucky:
 	add	r2, r2, r4
 	ldrb	r1, [r2]
 	cmp	r1, r0
-	bhi	.L293	@cond_branch
+	bhi	.L291	@cond_branch
 	mov	r0, #0x0
-	b	.L294
-.L296:
+	b	.L292
+.L294:
 	.align	2, 0
-.L295:
+.L293:
 	.word	sLuckyRoundProbabilities
 	.word	sSlotMachine
-.L293:
+.L291:
 	mov	r0, #0x1
-.L294:
+.L292:
 	pop	{r4}
 	pop	{r1}
 	bx	r1
@@ -2811,11 +2816,11 @@ IsThisRoundLucky:
 AttemptsAtLuckyFlags_Top3:
 	push	{r4, r5, r6, lr}
 	mov	r5, #0x0
-	ldr	r6, .L304
-.L301:
+	ldr	r6, .L302
+.L299:
 	bl	Random
 	mov	r2, #0xff
-	ldr	r1, .L304+0x4
+	ldr	r1, .L302+0x4
 	ldr	r3, [r1]
 	lsl	r1, r5, #0x10
 	asr	r4, r1, #0x10
@@ -2828,22 +2833,22 @@ AttemptsAtLuckyFlags_Top3:
 	ldrb	r1, [r1]
 	and	r2, r2, r0
 	cmp	r1, r2
-	bgt	.L299	@cond_branch
+	bgt	.L297	@cond_branch
 	add	r0, r4, #0x1
 	lsl	r0, r0, #0x10
 	lsr	r5, r0, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, #0x2
-	ble	.L301	@cond_branch
-.L299:
+	ble	.L299	@cond_branch
+.L297:
 	lsl	r0, r5, #0x18
 	lsr	r0, r0, #0x18
 	pop	{r4, r5, r6}
 	pop	{r1}
 	bx	r1
-.L305:
+.L303:
 	.align	2, 0
-.L304:
+.L302:
 	.word	sLuckyFlagProbabilities_Top3
 	.word	sSlotMachine
 .Lfe55:
@@ -2856,15 +2861,15 @@ AttemptsAtLuckyFlags_NotTop3:
 	mov	r7, r8
 	push	{r7}
 	mov	r6, #0x0
-	ldr	r0, .L318
+	ldr	r0, .L316
 	mov	r8, r0
 	mov	r7, #0x80
 	lsl	r7, r7, #0x11
-.L310:
+.L308:
 	bl	Random
 	mov	r5, #0xff
 	and	r5, r5, r0
-	ldr	r0, .L318+0x4
+	ldr	r0, .L316+0x4
 	ldr	r4, [r0]
 	lsl	r2, r6, #0x10
 	asr	r1, r2, #0x10
@@ -2876,50 +2881,50 @@ AttemptsAtLuckyFlags_NotTop3:
 	add	r0, r0, r8
 	ldrb	r3, [r0]
 	cmp	r1, #0
-	bne	.L311	@cond_branch
+	bne	.L309	@cond_branch
 	ldrb	r0, [r4, #0x3]
 	cmp	r0, #0x1
-	bne	.L311	@cond_branch
+	bne	.L309	@cond_branch
 	add	r3, r3, #0xa
 	asr	r0, r7, #0x10
 	cmp	r3, r0
-	ble	.L313	@cond_branch
+	ble	.L311	@cond_branch
 	add	r3, r0, #0
-	b	.L313
-.L319:
+	b	.L311
+.L317:
 	.align	2, 0
-.L318:
+.L316:
 	.word	sLuckyFlagProbabilities_NotTop3
 	.word	sSlotMachine
-.L311:
+.L309:
 	asr	r0, r2, #0x10
 	cmp	r0, #0x4
-	bne	.L313	@cond_branch
-	ldr	r0, .L320
+	bne	.L311	@cond_branch
+	ldr	r0, .L318
 	ldr	r0, [r0]
 	ldrb	r0, [r0, #0x3]
 	cmp	r0, #0x1
-	bne	.L313	@cond_branch
+	bne	.L311	@cond_branch
 	lsl	r0, r3, #0x10
-	ldr	r1, .L320+0x4
+	ldr	r1, .L318+0x4
 	add	r0, r0, r1
 	lsr	r3, r0, #0x10
 	cmp	r0, #0
-	bge	.L313	@cond_branch
+	bge	.L311	@cond_branch
 	mov	r3, #0x0
-.L313:
+.L311:
 	lsl	r0, r3, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, r5
-	bgt	.L308	@cond_branch
+	bgt	.L306	@cond_branch
 	mov	r3, #0x80
 	lsl	r3, r3, #0x9
 	add	r0, r2, r3
 	lsr	r6, r0, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, #0x4
-	ble	.L310	@cond_branch
-.L308:
+	ble	.L308	@cond_branch
+.L306:
 	lsl	r0, r6, #0x18
 	lsr	r0, r0, #0x18
 	pop	{r3}
@@ -2927,9 +2932,9 @@ AttemptsAtLuckyFlags_NotTop3:
 	pop	{r4, r5, r6, r7}
 	pop	{r1}
 	bx	r1
-.L321:
+.L319:
 	.align	2, 0
-.L320:
+.L318:
 	.word	sSlotMachine
 	.word	-0xa0000
 .Lfe56:
@@ -2941,21 +2946,21 @@ GetReelTimeProbability:
 	push	{lr}
 	lsl	r0, r0, #0x18
 	lsr	r3, r0, #0x18
-	ldr	r0, .L328
+	ldr	r0, .L326
 	ldr	r2, [r0]
 	ldrb	r0, [r2, #0x3]
 	cmp	r0, #0
-	beq	.L323	@cond_branch
-	ldr	r0, .L328+0x4
-	b	.L327
-.L329:
+	beq	.L321	@cond_branch
+	ldr	r0, .L326+0x4
+	b	.L325
+.L327:
 	.align	2, 0
-.L328:
+.L326:
 	.word	sSlotMachine
 	.word	sReelTimeProbabilities_LuckyGame
-.L323:
-	ldr	r0, .L330
-.L327:
+.L321:
+	ldr	r0, .L328
+.L325:
 	lsl	r1, r3, #0x4
 	add	r1, r1, r3
 	ldrb	r2, [r2, #0x2]
@@ -2964,9 +2969,9 @@ GetReelTimeProbability:
 	ldrb	r0, [r1]
 	pop	{r1}
 	bx	r1
-.L331:
+.L329:
 	.align	2, 0
-.L330:
+.L328:
 	.word	sReeltimeProbabilities_UnluckyGame
 .Lfe57:
 	.size	 GetReelTimeProbability,.Lfe57-GetReelTimeProbability
@@ -2975,7 +2980,7 @@ GetReelTimeProbability:
 	.thumb_func
 GetReeltimeDraw:
 	push	{r4, r5, r6, lr}
-	ldr	r0, .L340
+	ldr	r0, .L338
 	ldr	r1, [r0]
 	mov	r0, #0x0
 	strb	r0, [r1, #0x5]
@@ -2987,22 +2992,22 @@ GetReeltimeDraw:
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	cmp	r4, r0
-	bcc	.L332	@cond_branch
+	bcc	.L330	@cond_branch
 	mov	r6, #0x5
-	b	.L334
-.L341:
+	b	.L332
+.L339:
 	.align	2, 0
-.L340:
+.L338:
 	.word	sSlotMachine
-.L336:
+.L334:
 	sub	r0, r5, #0x1
 	lsl	r0, r0, #0x10
 	lsr	r6, r0, #0x10
-.L334:
+.L332:
 	lsl	r0, r6, #0x10
 	asr	r5, r0, #0x10
 	cmp	r5, #0
-	ble	.L335	@cond_branch
+	ble	.L333	@cond_branch
 	bl	Random
 	lsl	r0, r0, #0x18
 	lsr	r4, r0, #0x18
@@ -3012,18 +3017,18 @@ GetReeltimeDraw:
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	cmp	r4, r0
-	bcs	.L336	@cond_branch
-.L335:
-	ldr	r0, .L342
+	bcs	.L334	@cond_branch
+.L333:
+	ldr	r0, .L340
 	ldr	r0, [r0]
 	strb	r6, [r0, #0x5]
-.L332:
+.L330:
 	pop	{r4, r5, r6}
 	pop	{r0}
 	bx	r0
-.L343:
+.L341:
 	.align	2, 0
-.L342:
+.L340:
 	.word	sSlotMachine
 .Lfe58:
 	.size	 GetReeltimeDraw,.Lfe58-GetReeltimeDraw
@@ -3038,21 +3043,21 @@ ShouldReelTimeMachineExplode:
 	bl	Random
 	mov	r1, #0xff
 	and	r1, r1, r0
-	ldr	r0, .L348
+	ldr	r0, .L346
 	lsl	r4, r4, #0x1
 	add	r4, r4, r0
 	ldrh	r4, [r4]
 	cmp	r1, r4
-	bcc	.L345	@cond_branch
+	bcc	.L343	@cond_branch
 	mov	r0, #0x0
-	b	.L347
-.L349:
-	.align	2, 0
-.L348:
-	.word	sReelTimeExplodeProbability
-.L345:
-	mov	r0, #0x1
+	b	.L345
 .L347:
+	.align	2, 0
+.L346:
+	.word	sReelTimeExplodeProbability
+.L343:
+	mov	r0, #0x1
+.L345:
 	pop	{r4}
 	pop	{r1}
 	bx	r1
@@ -3064,35 +3069,35 @@ ShouldReelTimeMachineExplode:
 SlowReelSpeed:
 	push	{r4, r5, lr}
 	mov	r4, #0x0
-	ldr	r0, .L361
+	ldr	r0, .L359
 	ldr	r0, [r0]
 	mov	r2, #0x10
 	ldrsh	r1, [r0, r2]
-	ldr	r0, .L361+0x4
+	ldr	r0, .L359+0x4
 	cmp	r1, r0
-	ble	.L351	@cond_branch
+	ble	.L349	@cond_branch
 	mov	r4, #0x4
-	b	.L352
-.L362:
+	b	.L350
+.L360:
 	.align	2, 0
-.L361:
+.L359:
 	.word	sSlotMachine
 	.word	0x12b
-.L351:
+.L349:
 	cmp	r1, #0xf9
-	ble	.L353	@cond_branch
+	ble	.L351	@cond_branch
 	mov	r4, #0x3
-	b	.L352
-.L353:
+	b	.L350
+.L351:
 	cmp	r1, #0xc7
-	ble	.L355	@cond_branch
+	ble	.L353	@cond_branch
 	mov	r4, #0x2
-	b	.L352
-.L355:
+	b	.L350
+.L353:
 	cmp	r1, #0x95
-	ble	.L352	@cond_branch
+	ble	.L350	@cond_branch
 	mov	r4, #0x1
-.L352:
+.L350:
 	bl	Random
 	lsl	r0, r0, #0x10
 	lsr	r0, r0, #0x10
@@ -3100,19 +3105,19 @@ SlowReelSpeed:
 	bl	__umodsi3
 	lsl	r0, r0, #0x18
 	lsr	r1, r0, #0x18
-	ldr	r5, .L363
+	ldr	r5, .L361
 	lsl	r4, r4, #0x2
 	add	r0, r4, r5
 	ldrb	r0, [r0]
 	cmp	r1, r0
-	bcs	.L358	@cond_branch
+	bcs	.L356	@cond_branch
 	mov	r0, #0x4
-	b	.L360
-.L364:
+	b	.L358
+.L362:
 	.align	2, 0
-.L363:
+.L361:
 	.word	sReelIncrementTable
-.L358:
+.L356:
 	bl	Random
 	lsl	r0, r0, #0x10
 	lsr	r0, r0, #0x10
@@ -3121,8 +3126,8 @@ SlowReelSpeed:
 	lsl	r0, r0, #0x18
 	add	r2, r5, #0x2
 	add	r2, r4, r2
-	ldr	r3, .L365
-	ldr	r1, .L365+0x4
+	ldr	r3, .L363
+	ldr	r1, .L363+0x4
 	ldr	r1, [r1]
 	ldrb	r1, [r1, #0xb]
 	lsl	r1, r1, #0x1
@@ -3132,17 +3137,17 @@ SlowReelSpeed:
 	add	r1, r1, r2
 	lsl	r1, r1, #0x18
 	cmp	r0, r1
-	bcc	.L359	@cond_branch
+	bcc	.L357	@cond_branch
 	mov	r0, #0x8
-	b	.L360
-.L366:
+	b	.L358
+.L364:
 	.align	2, 0
-.L365:
+.L363:
 	.word	sReelTimeBonusIncrementTable
 	.word	sSlotMachine
-.L359:
+.L357:
 	mov	r0, #0x2
-.L360:
+.L358:
 	pop	{r4, r5}
 	pop	{r1}
 	bx	r1
@@ -3153,7 +3158,7 @@ SlowReelSpeed:
 	.thumb_func
 CheckMatch:
 	push	{r4, lr}
-	ldr	r4, .L370
+	ldr	r4, .L368
 	ldr	r1, [r4]
 	mov	r0, #0x0
 	strh	r0, [r1, #0x8]
@@ -3162,22 +3167,22 @@ CheckMatch:
 	mov	r1, #0x12
 	ldrsh	r0, [r0, r1]
 	cmp	r0, #0x1
-	ble	.L368	@cond_branch
+	ble	.L366	@cond_branch
 	bl	CheckMatch_TopAndBottom
-.L368:
+.L366:
 	ldr	r0, [r4]
 	mov	r1, #0x12
 	ldrsh	r0, [r0, r1]
 	cmp	r0, #0x2
-	ble	.L369	@cond_branch
+	ble	.L367	@cond_branch
 	bl	CheckMatch_Diagonals
-.L369:
+.L367:
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L371:
+.L369:
 	.align	2, 0
-.L370:
+.L368:
 	.word	sSlotMachine
 .Lfe61:
 	.size	 CheckMatch,.Lfe61-CheckMatch
@@ -3210,17 +3215,17 @@ CheckMatch_CenterRow:
 	lsl	r0, r0, #0x18
 	lsr	r1, r0, #0x18
 	cmp	r1, #0x9
-	beq	.L373	@cond_branch
-	ldr	r0, .L374
+	beq	.L371	@cond_branch
+	ldr	r0, .L372
 	ldr	r2, [r0]
-	ldr	r0, .L374+0x4
+	ldr	r0, .L372+0x4
 	lsl	r1, r1, #0x1
 	add	r0, r1, r0
 	ldrh	r0, [r0]
 	ldrh	r3, [r2, #0xe]
 	add	r0, r0, r3
 	strh	r0, [r2, #0xe]
-	ldr	r0, .L374+0x8
+	ldr	r0, .L372+0x8
 	add	r1, r1, r0
 	ldrh	r0, [r2, #0x8]
 	ldrh	r1, [r1]
@@ -3228,13 +3233,13 @@ CheckMatch_CenterRow:
 	strh	r0, [r2, #0x8]
 	mov	r0, #0x0
 	bl	FlashMatchLine
-.L373:
+.L371:
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.L375:
+.L373:
 	.align	2, 0
-.L374:
+.L372:
 	.word	sSlotMachine
 	.word	sSlotPayouts
 	.word	sSlotMatchFlags
@@ -3266,21 +3271,21 @@ CheckMatch_TopAndBottom:
 	lsl	r0, r0, #0x18
 	lsr	r1, r0, #0x18
 	cmp	r1, #0x9
-	beq	.L377	@cond_branch
+	beq	.L375	@cond_branch
 	cmp	r1, #0
-	bne	.L378	@cond_branch
+	bne	.L376	@cond_branch
 	mov	r1, #0x1
-.L378:
-	ldr	r0, .L381
+.L376:
+	ldr	r0, .L379
 	ldr	r2, [r0]
-	ldr	r0, .L381+0x4
+	ldr	r0, .L379+0x4
 	lsl	r1, r1, #0x1
 	add	r0, r1, r0
 	ldrh	r0, [r0]
 	ldrh	r3, [r2, #0xe]
 	add	r0, r0, r3
 	strh	r0, [r2, #0xe]
-	ldr	r0, .L381+0x8
+	ldr	r0, .L379+0x8
 	add	r1, r1, r0
 	ldrh	r0, [r2, #0x8]
 	ldrh	r1, [r1]
@@ -3288,7 +3293,7 @@ CheckMatch_TopAndBottom:
 	strh	r0, [r2, #0x8]
 	mov	r0, #0x1
 	bl	FlashMatchLine
-.L377:
+.L375:
 	mov	r0, #0x0
 	mov	r1, #0x3
 	bl	GetTagAtRest
@@ -3310,21 +3315,21 @@ CheckMatch_TopAndBottom:
 	lsl	r0, r0, #0x18
 	lsr	r1, r0, #0x18
 	cmp	r1, #0x9
-	beq	.L379	@cond_branch
+	beq	.L377	@cond_branch
 	cmp	r1, #0
-	bne	.L380	@cond_branch
+	bne	.L378	@cond_branch
 	mov	r1, #0x1
-.L380:
-	ldr	r0, .L381
+.L378:
+	ldr	r0, .L379
 	ldr	r2, [r0]
-	ldr	r0, .L381+0x4
+	ldr	r0, .L379+0x4
 	lsl	r1, r1, #0x1
 	add	r0, r1, r0
 	ldrh	r0, [r0]
 	ldrh	r3, [r2, #0xe]
 	add	r0, r0, r3
 	strh	r0, [r2, #0xe]
-	ldr	r0, .L381+0x8
+	ldr	r0, .L379+0x8
 	add	r1, r1, r0
 	ldrh	r0, [r2, #0x8]
 	ldrh	r1, [r1]
@@ -3332,13 +3337,13 @@ CheckMatch_TopAndBottom:
 	strh	r0, [r2, #0x8]
 	mov	r0, #0x2
 	bl	FlashMatchLine
-.L379:
+.L377:
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.L382:
+.L380:
 	.align	2, 0
-.L381:
+.L379:
 	.word	sSlotMachine
 	.word	sSlotPayouts
 	.word	sSlotMatchFlags
@@ -3370,28 +3375,28 @@ CheckMatch_Diagonals:
 	lsl	r0, r0, #0x18
 	lsr	r1, r0, #0x18
 	cmp	r1, #0x9
-	beq	.L384	@cond_branch
+	beq	.L382	@cond_branch
 	cmp	r1, #0
-	beq	.L385	@cond_branch
-	ldr	r0, .L388
+	beq	.L383	@cond_branch
+	ldr	r0, .L386
 	ldr	r2, [r0]
-	ldr	r0, .L388+0x4
+	ldr	r0, .L386+0x4
 	lsl	r1, r1, #0x1
 	add	r0, r1, r0
 	ldrh	r0, [r0]
 	ldrh	r3, [r2, #0xe]
 	add	r0, r0, r3
 	strh	r0, [r2, #0xe]
-	ldr	r0, .L388+0x8
+	ldr	r0, .L386+0x8
 	add	r1, r1, r0
 	ldrh	r0, [r2, #0x8]
 	ldrh	r1, [r1]
 	orr	r0, r0, r1
 	strh	r0, [r2, #0x8]
-.L385:
+.L383:
 	mov	r0, #0x3
 	bl	FlashMatchLine
-.L384:
+.L382:
 	mov	r0, #0x0
 	mov	r1, #0x3
 	bl	GetTagAtRest
@@ -3413,34 +3418,34 @@ CheckMatch_Diagonals:
 	lsl	r0, r0, #0x18
 	lsr	r1, r0, #0x18
 	cmp	r1, #0x9
-	beq	.L386	@cond_branch
+	beq	.L384	@cond_branch
 	cmp	r1, #0
-	beq	.L387	@cond_branch
-	ldr	r0, .L388
+	beq	.L385	@cond_branch
+	ldr	r0, .L386
 	ldr	r2, [r0]
-	ldr	r0, .L388+0x4
+	ldr	r0, .L386+0x4
 	lsl	r1, r1, #0x1
 	add	r0, r1, r0
 	ldrh	r0, [r0]
 	ldrh	r3, [r2, #0xe]
 	add	r0, r0, r3
 	strh	r0, [r2, #0xe]
-	ldr	r0, .L388+0x8
+	ldr	r0, .L386+0x8
 	add	r1, r1, r0
 	ldrh	r0, [r2, #0x8]
 	ldrh	r1, [r1]
 	orr	r0, r0, r1
 	strh	r0, [r2, #0x8]
-.L387:
+.L385:
 	mov	r0, #0x4
 	bl	FlashMatchLine
-.L386:
+.L384:
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.L389:
+.L387:
 	.align	2, 0
-.L388:
+.L386:
 	.word	sSlotMachine
 	.word	sSlotPayouts
 	.word	sSlotMatchFlags
@@ -3458,42 +3463,42 @@ GetMatchFromSymbols:
 	lsl	r2, r2, #0x18
 	lsr	r2, r2, #0x18
 	cmp	r3, r1
-	bne	.L391	@cond_branch
+	bne	.L389	@cond_branch
 	cmp	r3, r2
-	bne	.L391	@cond_branch
-	ldr	r0, .L397
+	bne	.L389	@cond_branch
+	ldr	r0, .L395
 	add	r0, r3, r0
 	ldrb	r0, [r0]
-	b	.L395
-.L398:
-	.align	2, 0
-.L397:
-	.word	sSymToMatch
-.L391:
-	cmp	r3, #0
-	bne	.L392	@cond_branch
-	cmp	r1, #0
-	bne	.L392	@cond_branch
-	cmp	r2, #0x1
-	beq	.L396	@cond_branch
-.L392:
-	cmp	r3, #0x1
-	bne	.L393	@cond_branch
-	cmp	r1, #0x1
-	bne	.L393	@cond_branch
-	cmp	r2, #0
-	bne	.L393	@cond_branch
+	b	.L393
 .L396:
-	mov	r0, #0x6
-	b	.L395
-.L393:
-	cmp	r3, #0x4
-	beq	.L394	@cond_branch
-	mov	r0, #0x9
-	b	.L395
-.L394:
-	mov	r0, #0x0
+	.align	2, 0
 .L395:
+	.word	sSymToMatch
+.L389:
+	cmp	r3, #0
+	bne	.L390	@cond_branch
+	cmp	r1, #0
+	bne	.L390	@cond_branch
+	cmp	r2, #0x1
+	beq	.L394	@cond_branch
+.L390:
+	cmp	r3, #0x1
+	bne	.L391	@cond_branch
+	cmp	r1, #0x1
+	bne	.L391	@cond_branch
+	cmp	r2, #0
+	bne	.L391	@cond_branch
+.L394:
+	mov	r0, #0x6
+	b	.L393
+.L391:
+	cmp	r3, #0x4
+	beq	.L392	@cond_branch
+	mov	r0, #0x9
+	b	.L393
+.L392:
+	mov	r0, #0x0
+.L393:
 	pop	{r1}
 	bx	r1
 .Lfe65:
@@ -3503,7 +3508,7 @@ GetMatchFromSymbols:
 	.thumb_func
 AwardPayout:
 	push	{r4, lr}
-	ldr	r4, .L400
+	ldr	r4, .L398
 	add	r0, r4, #0
 	mov	r1, #0x4
 	bl	CreateTask
@@ -3513,9 +3518,9 @@ AwardPayout:
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L401:
+.L399:
 	.align	2, 0
-.L400:
+.L398:
 	.word	RunAwardPayoutActions
 .Lfe66:
 	.size	 AwardPayout,.Lfe66-AwardPayout
@@ -3524,21 +3529,21 @@ AwardPayout:
 	.thumb_func
 IsFinalTask_RunAwardPayoutActions:
 	push	{lr}
-	ldr	r0, .L406
+	ldr	r0, .L404
 	bl	FindTaskIdByFunc
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	cmp	r0, #0xff
-	beq	.L403	@cond_branch
+	beq	.L401	@cond_branch
 	mov	r0, #0x0
-	b	.L405
-.L407:
-	.align	2, 0
-.L406:
-	.word	RunAwardPayoutActions
-.L403:
-	mov	r0, #0x1
+	b	.L403
 .L405:
+	.align	2, 0
+.L404:
+	.word	RunAwardPayoutActions
+.L401:
+	mov	r0, #0x1
+.L403:
 	pop	{r1}
 	bx	r1
 .Lfe67:
@@ -3550,13 +3555,13 @@ RunAwardPayoutActions:
 	push	{r4, r5, lr}
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
-	ldr	r5, .L413
-	ldr	r2, .L413+0x4
+	ldr	r5, .L411
+	ldr	r2, .L411+0x4
 	lsl	r1, r0, #0x2
 	add	r1, r1, r0
 	lsl	r1, r1, #0x3
 	add	r4, r1, r2
-.L409:
+.L407:
 	mov	r1, #0x8
 	ldrsh	r0, [r4, r1]
 	lsl	r0, r0, #0x2
@@ -3566,13 +3571,13 @@ RunAwardPayoutActions:
 	bl	_call_via_r1
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	bne	.L409	@cond_branch
+	bne	.L407	@cond_branch
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.L414:
+.L412:
 	.align	2, 0
-.L413:
+.L411:
 	.word	sAwardPayoutActions
 	.word	gTasks
 .Lfe68:
@@ -3586,27 +3591,27 @@ AwardPayoutAction0:
 	bl	IsMatchLineDoneFlashingBeforePayout
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.L416	@cond_branch
+	beq	.L414	@cond_branch
 	ldrh	r0, [r4, #0x8]
 	add	r0, r0, #0x1
 	strh	r0, [r4, #0x8]
-	ldr	r0, .L419
+	ldr	r0, .L417
 	ldr	r0, [r0]
 	mov	r1, #0xe
 	ldrsh	r0, [r0, r1]
 	cmp	r0, #0
-	bne	.L416	@cond_branch
+	bne	.L414	@cond_branch
 	mov	r0, #0x2
 	strh	r0, [r4, #0x8]
 	mov	r0, #0x1
-	b	.L418
-.L420:
-	.align	2, 0
-.L419:
-	.word	sSlotMachine
-.L416:
-	mov	r0, #0x0
+	b	.L416
 .L418:
+	.align	2, 0
+.L417:
+	.word	sSlotMachine
+.L414:
+	mov	r0, #0x0
+.L416:
 	pop	{r4}
 	pop	{r1}
 	bx	r1
@@ -3626,15 +3631,15 @@ AwardPayoutAction_GivePayoutToPlayer:
 	mov	r1, #0x1
 	neg	r1, r1
 	cmp	r0, r1
-	bne	.L422	@cond_branch
+	bne	.L420	@cond_branch
 	bl	IsFanfareTaskInactive
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.L423	@cond_branch
+	beq	.L421	@cond_branch
 	mov	r0, #0x15
 	bl	PlaySE
-.L423:
-	ldr	r0, .L429
+.L421:
+	ldr	r0, .L427
 	ldr	r2, [r0]
 	ldrh	r0, [r2, #0xe]
 	sub	r0, r0, #0x1
@@ -3642,36 +3647,36 @@ AwardPayoutAction_GivePayoutToPlayer:
 	ldrh	r3, [r2, #0xc]
 	mov	r0, #0xc
 	ldrsh	r1, [r2, r0]
-	ldr	r0, .L429+0x4
+	ldr	r0, .L427+0x4
 	cmp	r1, r0
-	bgt	.L424	@cond_branch
+	bgt	.L422	@cond_branch
 	add	r0, r3, #0x1
 	strh	r0, [r2, #0xc]
-.L424:
+.L422:
 	mov	r0, #0x8
 	strh	r0, [r4, #0xa]
-	ldr	r0, .L429+0x8
+	ldr	r0, .L427+0x8
 	ldrh	r1, [r0, #0x2c]
 	mov	r0, #0x1
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L422	@cond_branch
+	beq	.L420	@cond_branch
 	mov	r0, #0x4
 	strh	r0, [r4, #0xa]
-.L422:
+.L420:
 	bl	IsFanfareTaskInactive
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.L426	@cond_branch
-	ldr	r0, .L429+0x8
+	beq	.L424	@cond_branch
+	ldr	r0, .L427+0x8
 	ldrh	r1, [r0, #0x2e]
 	mov	r0, #0x8
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L426	@cond_branch
+	beq	.L424	@cond_branch
 	mov	r0, #0x15
 	bl	PlaySE
-	ldr	r1, .L429
+	ldr	r1, .L427
 	ldr	r2, [r1]
 	ldrh	r0, [r2, #0xe]
 	ldrh	r3, [r2, #0xc]
@@ -3679,32 +3684,32 @@ AwardPayoutAction_GivePayoutToPlayer:
 	strh	r0, [r2, #0xc]
 	lsl	r0, r0, #0x10
 	asr	r0, r0, #0x10
-	ldr	r3, .L429+0xc
+	ldr	r3, .L427+0xc
 	cmp	r0, r3
-	ble	.L427	@cond_branch
+	ble	.L425	@cond_branch
 	strh	r3, [r2, #0xc]
-.L427:
+.L425:
 	ldr	r1, [r1]
 	mov	r0, #0x0
 	strh	r0, [r1, #0xe]
-.L426:
-	ldr	r0, .L429
+.L424:
+	ldr	r0, .L427
 	ldr	r0, [r0]
 	mov	r1, #0xe
 	ldrsh	r0, [r0, r1]
 	cmp	r0, #0
-	bne	.L428	@cond_branch
+	bne	.L426	@cond_branch
 	ldrh	r0, [r4, #0x8]
 	add	r0, r0, #0x1
 	strh	r0, [r4, #0x8]
-.L428:
+.L426:
 	mov	r0, #0x0
 	pop	{r4}
 	pop	{r1}
 	bx	r1
-.L430:
+.L428:
 	.align	2, 0
-.L429:
+.L427:
 	.word	sSlotMachine
 	.word	0x270e
 	.word	gMain
@@ -3719,19 +3724,19 @@ AwardPayoutAction_FreeTask:
 	bl	TryStopMatchLinesFlashing
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.L432	@cond_branch
-	ldr	r0, .L433
+	beq	.L430	@cond_branch
+	ldr	r0, .L431
 	bl	FindTaskIdByFunc
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	bl	DestroyTask
-.L432:
+.L430:
 	mov	r0, #0x0
 	pop	{r1}
 	bx	r1
-.L434:
+.L432:
 	.align	2, 0
-.L433:
+.L431:
 	.word	RunAwardPayoutActions
 .Lfe71:
 	.size	 AwardPayoutAction_FreeTask,.Lfe71-AwardPayoutAction_FreeTask
@@ -3743,7 +3748,7 @@ GetTagAtRest:
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	add	r4, r0, #0
-	ldr	r0, .L437
+	ldr	r0, .L435
 	ldr	r0, [r0]
 	lsl	r2, r4, #0x1
 	add	r0, r0, #0x28
@@ -3759,12 +3764,12 @@ GetTagAtRest:
 	lsr	r1, r0, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, #0
-	bge	.L436	@cond_branch
+	bge	.L434	@cond_branch
 	add	r0, r0, #0x15
 	lsl	r0, r0, #0x10
 	lsr	r1, r0, #0x10
-.L436:
-	ldr	r2, .L437+0x4
+.L434:
+	ldr	r2, .L435+0x4
 	lsl	r1, r1, #0x10
 	asr	r1, r1, #0x10
 	lsl	r0, r4, #0x2
@@ -3777,9 +3782,9 @@ GetTagAtRest:
 	pop	{r4}
 	pop	{r1}
 	bx	r1
-.L438:
+.L436:
 	.align	2, 0
-.L437:
+.L435:
 	.word	sSlotMachine
 	.word	sReelSymbolTileTags
 .Lfe72:
@@ -3795,7 +3800,7 @@ GetTag:
 	lsl	r1, r1, #0x10
 	lsr	r5, r1, #0x10
 	mov	r6, #0x0
-	ldr	r0, .L441
+	ldr	r0, .L439
 	ldr	r0, [r0]
 	lsl	r1, r4, #0x1
 	add	r0, r0, #0x1c
@@ -3806,9 +3811,9 @@ GetTag:
 	bl	__modsi3
 	lsl	r0, r0, #0x10
 	cmp	r0, #0
-	beq	.L440	@cond_branch
-	ldr	r6, .L441+0x4
-.L440:
+	beq	.L438	@cond_branch
+	ldr	r6, .L439+0x4
+.L438:
 	lsl	r1, r5, #0x10
 	asr	r1, r1, #0x10
 	lsl	r0, r6, #0x10
@@ -3823,9 +3828,9 @@ GetTag:
 	pop	{r4, r5, r6}
 	pop	{r1}
 	bx	r1
-.L442:
+.L440:
 	.align	2, 0
-.L441:
+.L439:
 	.word	sSlotMachine
 	.word	0xffff
 .Lfe73:
@@ -3835,7 +3840,7 @@ GetTag:
 	.thumb_func
 GetNearbyReelTimeTag:
 	push	{lr}
-	ldr	r1, .L445
+	ldr	r1, .L443
 	ldr	r1, [r1]
 	mov	r2, #0x16
 	ldrsh	r1, [r1, r2]
@@ -3849,21 +3854,21 @@ GetNearbyReelTimeTag:
 	lsr	r1, r0, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, #0
-	bge	.L444	@cond_branch
+	bge	.L442	@cond_branch
 	add	r0, r0, #0x6
 	lsl	r0, r0, #0x10
 	lsr	r1, r0, #0x10
-.L444:
-	ldr	r0, .L445+0x4
+.L442:
+	ldr	r0, .L443+0x4
 	lsl	r1, r1, #0x10
 	asr	r1, r1, #0x10
 	add	r1, r1, r0
 	ldrb	r0, [r1]
 	pop	{r1}
 	bx	r1
-.L446:
+.L444:
 	.align	2, 0
-.L445:
+.L443:
 	.word	sSlotMachine
 	.word	sReelTimeTags
 .Lfe74:
@@ -3875,7 +3880,7 @@ AdvanceSlotReel:
 	push	{r4, r5, r6, lr}
 	add	r5, r0, #0
 	lsl	r5, r5, #0x18
-	ldr	r0, .L448
+	ldr	r0, .L446
 	ldr	r6, [r0]
 	lsr	r5, r5, #0x17
 	add	r4, r6, #0
@@ -3904,9 +3909,9 @@ AdvanceSlotReel:
 	pop	{r4, r5, r6}
 	pop	{r0}
 	bx	r0
-.L449:
+.L447:
 	.align	2, 0
-.L448:
+.L446:
 	.word	sSlotMachine
 .Lfe75:
 	.size	 AdvanceSlotReel,.Lfe75-AdvanceSlotReel
@@ -3921,7 +3926,7 @@ AdvanceSlotReelToNextTag:
 	add	r5, r0, #0
 	lsl	r1, r1, #0x10
 	lsr	r4, r1, #0x10
-	ldr	r7, .L453
+	ldr	r7, .L451
 	ldr	r0, [r7]
 	lsl	r6, r5, #0x1
 	add	r0, r0, #0x1c
@@ -3935,13 +3940,13 @@ AdvanceSlotReelToNextTag:
 	lsl	r2, r0, #0x10
 	asr	r1, r2, #0x10
 	cmp	r1, #0
-	beq	.L451	@cond_branch
+	beq	.L449	@cond_branch
 	lsl	r0, r4, #0x10
 	asr	r0, r0, #0x10
 	cmp	r1, r0
-	bge	.L452	@cond_branch
+	bge	.L450	@cond_branch
 	lsr	r4, r2, #0x10
-.L452:
+.L450:
 	lsl	r1, r4, #0x10
 	asr	r1, r1, #0x10
 	add	r0, r5, #0
@@ -3955,15 +3960,15 @@ AdvanceSlotReelToNextTag:
 	bl	__modsi3
 	lsl	r0, r0, #0x10
 	lsr	r0, r0, #0x10
-.L451:
+.L449:
 	lsl	r0, r0, #0x10
 	asr	r0, r0, #0x10
 	pop	{r4, r5, r6, r7}
 	pop	{r1}
 	bx	r1
-.L454:
+.L452:
 	.align	2, 0
-.L453:
+.L451:
 	.word	sSlotMachine
 .Lfe76:
 	.size	 AdvanceSlotReelToNextTag,.Lfe76-AdvanceSlotReelToNextTag
@@ -3972,7 +3977,7 @@ AdvanceSlotReelToNextTag:
 	.thumb_func
 AdvanceReeltimeReel:
 	push	{r4, lr}
-	ldr	r1, .L456
+	ldr	r1, .L454
 	ldr	r4, [r1]
 	lsl	r0, r0, #0x10
 	asr	r0, r0, #0x10
@@ -3994,9 +3999,9 @@ AdvanceReeltimeReel:
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L457:
+.L455:
 	.align	2, 0
-.L456:
+.L454:
 	.word	sSlotMachine
 .Lfe77:
 	.size	 AdvanceReeltimeReel,.Lfe77-AdvanceReeltimeReel
@@ -4008,7 +4013,7 @@ AdvanceReeltimeReelToNextTag:
 	push	{r4, r5, lr}
 	lsl	r0, r0, #0x10
 	lsr	r4, r0, #0x10
-	ldr	r5, .L461
+	ldr	r5, .L459
 	ldr	r0, [r5]
 	mov	r1, #0x14
 	ldrsh	r0, [r0, r1]
@@ -4019,13 +4024,13 @@ AdvanceReeltimeReelToNextTag:
 	lsl	r2, r0, #0x10
 	asr	r1, r2, #0x10
 	cmp	r1, #0
-	beq	.L459	@cond_branch
+	beq	.L457	@cond_branch
 	lsl	r0, r4, #0x10
 	asr	r0, r0, #0x10
 	cmp	r1, r0
-	bge	.L460	@cond_branch
+	bge	.L458	@cond_branch
 	lsr	r4, r2, #0x10
-.L460:
+.L458:
 	lsl	r0, r4, #0x10
 	asr	r0, r0, #0x10
 	bl	AdvanceReeltimeReel
@@ -4036,15 +4041,15 @@ AdvanceReeltimeReelToNextTag:
 	bl	__modsi3
 	lsl	r0, r0, #0x10
 	lsr	r0, r0, #0x10
-.L459:
+.L457:
 	lsl	r0, r0, #0x10
 	asr	r0, r0, #0x10
 	pop	{r4, r5}
 	pop	{r1}
 	bx	r1
-.L462:
+.L460:
 	.align	2, 0
-.L461:
+.L459:
 	.word	sSlotMachine
 .Lfe78:
 	.size	 AdvanceReeltimeReelToNextTag,.Lfe78-AdvanceReeltimeReelToNextTag
@@ -4054,9 +4059,9 @@ AdvanceReeltimeReelToNextTag:
 CreateSlotReelTasks:
 	push	{r4, r5, r6, lr}
 	mov	r4, #0x0
-	ldr	r5, .L469
-	ldr	r6, .L469+0x4
-.L467:
+	ldr	r5, .L467
+	ldr	r6, .L467+0x4
+.L465:
 	add	r0, r5, #0
 	mov	r1, #0x2
 	bl	CreateTask
@@ -4067,7 +4072,7 @@ CreateSlotReelTasks:
 	lsl	r1, r1, #0x3
 	add	r1, r1, r6
 	strh	r4, [r1, #0x26]
-	ldr	r1, .L469+0x8
+	ldr	r1, .L467+0x8
 	ldr	r1, [r1]
 	add	r1, r1, #0x3a
 	add	r1, r1, r4
@@ -4077,13 +4082,13 @@ CreateSlotReelTasks:
 	lsl	r0, r0, #0x18
 	lsr	r4, r0, #0x18
 	cmp	r4, #0x2
-	bls	.L467	@cond_branch
+	bls	.L465	@cond_branch
 	pop	{r4, r5, r6}
 	pop	{r0}
 	bx	r0
-.L470:
+.L468:
 	.align	2, 0
-.L469:
+.L467:
 	.word	Task_RunSlotReelActions
 	.word	gTasks
 	.word	sSlotMachine
@@ -4096,8 +4101,8 @@ SpinSlotReel:
 	push	{r4, lr}
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
-	ldr	r4, .L472
-	ldr	r1, .L472+0x4
+	ldr	r4, .L470
+	ldr	r1, .L470+0x4
 	ldr	r2, [r1]
 	add	r2, r2, #0x3a
 	add	r2, r2, r0
@@ -4117,9 +4122,9 @@ SpinSlotReel:
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L473:
+.L471:
 	.align	2, 0
-.L472:
+.L470:
 	.word	gTasks
 	.word	sSlotMachine
 .Lfe80:
@@ -4130,8 +4135,8 @@ SpinSlotReel:
 StopSlotReel:
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
-	ldr	r2, .L475
-	ldr	r1, .L475+0x4
+	ldr	r2, .L473
+	ldr	r1, .L473+0x4
 	ldr	r1, [r1]
 	add	r1, r1, #0x3a
 	add	r1, r1, r0
@@ -4143,9 +4148,9 @@ StopSlotReel:
 	mov	r1, #0x2
 	strh	r1, [r0, #0x8]
 	bx	lr
-.L476:
+.L474:
 	.align	2, 0
-.L475:
+.L473:
 	.word	gTasks
 	.word	sSlotMachine
 .Lfe81:
@@ -4156,8 +4161,8 @@ StopSlotReel:
 IsSlotReelMoving:
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
-	ldr	r2, .L478
-	ldr	r1, .L478+0x4
+	ldr	r2, .L476
+	ldr	r1, .L476+0x4
 	ldr	r1, [r1]
 	add	r1, r1, #0x3a
 	add	r1, r1, r0
@@ -4170,9 +4175,9 @@ IsSlotReelMoving:
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	bx	lr
-.L479:
+.L477:
 	.align	2, 0
-.L478:
+.L476:
 	.word	gTasks
 	.word	sSlotMachine
 .Lfe82:
@@ -4184,13 +4189,13 @@ Task_RunSlotReelActions:
 	push	{r4, r5, lr}
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
-	ldr	r5, .L485
-	ldr	r2, .L485+0x4
+	ldr	r5, .L483
+	ldr	r2, .L483+0x4
 	lsl	r1, r0, #0x2
 	add	r1, r1, r0
 	lsl	r1, r1, #0x3
 	add	r4, r1, r2
-.L481:
+.L479:
 	mov	r1, #0x8
 	ldrsh	r0, [r4, r1]
 	lsl	r0, r0, #0x2
@@ -4200,13 +4205,13 @@ Task_RunSlotReelActions:
 	bl	_call_via_r1
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	bne	.L481	@cond_branch
+	bne	.L479	@cond_branch
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.L486:
+.L484:
 	.align	2, 0
-.L485:
+.L483:
 	.word	sSlotReelActions
 	.word	gTasks
 .Lfe83:
@@ -4227,7 +4232,7 @@ SlotReelAction_Spin:
 	ldrh	r0, [r0, #0x26]
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
-	ldr	r1, .L489
+	ldr	r1, .L487
 	ldr	r1, [r1]
 	mov	r2, #0x1a
 	ldrsh	r1, [r1, r2]
@@ -4235,9 +4240,9 @@ SlotReelAction_Spin:
 	mov	r0, #0x0
 	pop	{r1}
 	bx	r1
-.L490:
+.L488:
 	.align	2, 0
-.L489:
+.L487:
 	.word	sSlotMachine
 .Lfe85:
 	.size	 SlotReelAction_Spin,.Lfe85-SlotReelAction_Spin
@@ -4251,7 +4256,7 @@ SlotReelAction_DecideWhereToStop:
 	add	r0, r0, #0x1
 	mov	r2, #0x0
 	strh	r0, [r4, #0x8]
-	ldr	r0, .L494
+	ldr	r0, .L492
 	ldr	r3, [r0]
 	mov	r0, #0x26
 	ldrsh	r1, [r4, r0]
@@ -4269,14 +4274,14 @@ SlotReelAction_DecideWhereToStop:
 	strh	r2, [r0]
 	ldrb	r0, [r3, #0xa]
 	cmp	r0, #0
-	bne	.L492	@cond_branch
+	bne	.L490	@cond_branch
 	ldrb	r0, [r3, #0x4]
 	cmp	r0, #0
-	beq	.L493	@cond_branch
+	beq	.L491	@cond_branch
 	ldrb	r0, [r3, #0x6]
 	cmp	r0, #0
-	beq	.L493	@cond_branch
-	ldr	r1, .L494+0x4
+	beq	.L491	@cond_branch
+	ldr	r1, .L492+0x4
 	mov	r2, #0x26
 	ldrsh	r0, [r4, r2]
 	lsl	r0, r0, #0x2
@@ -4285,21 +4290,21 @@ SlotReelAction_DecideWhereToStop:
 	bl	_call_via_r0
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	bne	.L492	@cond_branch
-.L493:
-	ldr	r0, .L494
+	bne	.L490	@cond_branch
+.L491:
+	ldr	r0, .L492
 	ldr	r1, [r0]
 	mov	r0, #0x0
 	strb	r0, [r1, #0x6]
-	ldr	r1, .L494+0x8
+	ldr	r1, .L492+0x8
 	mov	r2, #0x26
 	ldrsh	r0, [r4, r2]
 	lsl	r0, r0, #0x2
 	add	r0, r0, r1
 	ldr	r0, [r0]
 	bl	_call_via_r0
-.L492:
-	ldr	r0, .L494
+.L490:
+	ldr	r0, .L492
 	ldr	r1, [r0]
 	mov	r2, #0x26
 	ldrsh	r0, [r4, r2]
@@ -4312,9 +4317,9 @@ SlotReelAction_DecideWhereToStop:
 	pop	{r4}
 	pop	{r1}
 	bx	r1
-.L495:
+.L493:
 	.align	2, 0
-.L494:
+.L492:
 	.word	sSlotMachine
 	.word	sDecideReelTurns_BiasTag
 	.word	sDecideReelTurns_NoBiasTag
@@ -4327,11 +4332,11 @@ SlotReelAction_MoveToStop:
 	push	{r4, r5, r6, r7, lr}
 	add	sp, sp, #-0xc
 	add	r4, r0, #0
-	ldr	r1, .L502
+	ldr	r1, .L500
 	mov	r0, sp
 	mov	r2, #0xa
 	bl	memcpy
-	ldr	r7, .L502+0x4
+	ldr	r7, .L500+0x4
 	ldr	r5, [r7]
 	mov	r1, #0x26
 	ldrsh	r0, [r4, r1]
@@ -4346,20 +4351,20 @@ SlotReelAction_MoveToStop:
 	lsl	r0, r0, #0x10
 	lsr	r2, r0, #0x10
 	cmp	r0, #0
-	beq	.L497	@cond_branch
+	beq	.L495	@cond_branch
 	ldrh	r0, [r4, #0x26]
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	mov	r6, #0x1a
 	ldrsh	r1, [r5, r6]
 	bl	AdvanceSlotReelToNextTag
-	b	.L501
-.L503:
+	b	.L499
+.L501:
 	.align	2, 0
-.L502:
+.L500:
 	.word	sReelStopShocks
 	.word	sSlotMachine
-.L497:
+.L495:
 	add	r0, r5, #0
 	add	r0, r0, #0x2e
 	add	r1, r0, r6
@@ -4367,7 +4372,7 @@ SlotReelAction_MoveToStop:
 	mov	r6, #0x0
 	ldrsh	r0, [r1, r6]
 	cmp	r0, #0
-	beq	.L498	@cond_branch
+	beq	.L496	@cond_branch
 	sub	r0, r3, #0x1
 	strh	r0, [r1]
 	ldrh	r0, [r4, #0x26]
@@ -4386,13 +4391,13 @@ SlotReelAction_MoveToStop:
 	ldrsh	r0, [r1, r2]
 	mov	r1, #0x18
 	bl	__modsi3
-.L501:
+.L499:
 	lsl	r0, r0, #0x10
 	lsr	r2, r0, #0x10
-.L498:
+.L496:
 	cmp	r2, #0
-	bne	.L500	@cond_branch
-	ldr	r0, .L504
+	bne	.L498	@cond_branch
+	ldr	r0, .L502
 	ldr	r1, [r0]
 	mov	r6, #0x26
 	ldrsh	r0, [r4, r6]
@@ -4402,7 +4407,7 @@ SlotReelAction_MoveToStop:
 	mov	r0, #0x0
 	ldrsh	r1, [r1, r0]
 	cmp	r1, #0
-	bne	.L500	@cond_branch
+	bne	.L498	@cond_branch
 	ldrh	r0, [r4, #0x8]
 	add	r0, r0, #0x1
 	strh	r0, [r4, #0x8]
@@ -4413,15 +4418,15 @@ SlotReelAction_MoveToStop:
 	ldrh	r0, [r0]
 	strh	r0, [r4, #0xa]
 	strh	r1, [r4, #0xc]
-.L500:
+.L498:
 	mov	r0, #0x0
 	add	sp, sp, #0xc
 	pop	{r4, r5, r6, r7}
 	pop	{r1}
 	bx	r1
-.L505:
+.L503:
 	.align	2, 0
-.L504:
+.L502:
 	.word	sSlotMachine
 .Lfe87:
 	.size	 SlotReelAction_MoveToStop,.Lfe87-SlotReelAction_MoveToStop
@@ -4431,7 +4436,7 @@ SlotReelAction_MoveToStop:
 SlotReelAction_OscillatingStop:
 	push	{r4, lr}
 	add	r2, r0, #0
-	ldr	r4, .L509
+	ldr	r4, .L507
 	ldr	r1, [r4]
 	mov	r3, #0x26
 	ldrsh	r0, [r2, r3]
@@ -4449,15 +4454,15 @@ SlotReelAction_OscillatingStop:
 	mov	r1, #0x3
 	and	r0, r0, r1
 	cmp	r0, #0
-	bne	.L507	@cond_branch
+	bne	.L505	@cond_branch
 	lsl	r0, r3, #0x10
 	asr	r0, r0, #0x11
 	strh	r0, [r2, #0xa]
-.L507:
+.L505:
 	mov	r0, #0xa
 	ldrsh	r3, [r2, r0]
 	cmp	r3, #0
-	bne	.L508	@cond_branch
+	bne	.L506	@cond_branch
 	strh	r3, [r2, #0x8]
 	strh	r3, [r2, #0x24]
 	ldr	r1, [r4]
@@ -4467,14 +4472,14 @@ SlotReelAction_OscillatingStop:
 	add	r1, r1, #0x22
 	add	r1, r1, r0
 	strh	r3, [r1]
-.L508:
+.L506:
 	mov	r0, #0x0
 	pop	{r4}
 	pop	{r1}
 	bx	r1
-.L510:
+.L508:
 	.align	2, 0
-.L509:
+.L507:
 	.word	sSlotMachine
 .Lfe88:
 	.size	 SlotReelAction_OscillatingStop,.Lfe88-SlotReelAction_OscillatingStop
@@ -4483,7 +4488,7 @@ SlotReelAction_OscillatingStop:
 	.thumb_func
 DecideReelTurns_BiasTag_Reel1:
 	push	{r4, r5, lr}
-	ldr	r4, .L513
+	ldr	r4, .L511
 	ldr	r0, [r4]
 	ldrb	r0, [r0, #0x4]
 	bl	GetBiasTag
@@ -4495,11 +4500,11 @@ DecideReelTurns_BiasTag_Reel1:
 	mov	r0, #0xc0
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L512	@cond_branch
+	beq	.L510	@cond_branch
 	mov	r5, #0x0
 	mov	r3, #0x1
-.L512:
-	ldr	r1, .L513+0x4
+.L510:
+	ldr	r1, .L511+0x4
 	mov	r2, #0x12
 	ldrsh	r0, [r4, r2]
 	sub	r0, r0, #0x1
@@ -4514,9 +4519,9 @@ DecideReelTurns_BiasTag_Reel1:
 	pop	{r4, r5}
 	pop	{r1}
 	bx	r1
-.L514:
+.L512:
 	.align	2, 0
-.L513:
+.L511:
 	.word	sSlotMachine
 	.word	sDecideReelTurns_BiasTag_Reel1_Bets
 .Lfe89:
@@ -4541,22 +4546,22 @@ AreTagsAtPosition_Reel1:
 	lsr	r0, r0, #0x18
 	add	r1, r0, #0
 	cmp	r0, r4
-	beq	.L517	@cond_branch
+	beq	.L515	@cond_branch
 	cmp	r0, r5
-	bne	.L516	@cond_branch
-.L517:
-	ldr	r0, .L519
+	bne	.L514	@cond_branch
+.L515:
+	ldr	r0, .L517
 	ldr	r0, [r0]
 	strb	r1, [r0, #0x7]
 	mov	r0, #0x1
-	b	.L518
-.L520:
-	.align	2, 0
-.L519:
-	.word	sSlotMachine
-.L516:
-	mov	r0, #0x0
+	b	.L516
 .L518:
+	.align	2, 0
+.L517:
+	.word	sSlotMachine
+.L514:
+	mov	r0, #0x0
+.L516:
 	pop	{r4, r5}
 	pop	{r1}
 	bx	r1
@@ -4578,7 +4583,7 @@ AreCherriesOnScreen_Reel1:
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	cmp	r0, #0x4
-	beq	.L523	@cond_branch
+	beq	.L521	@cond_branch
 	mov	r1, #0x2
 	sub	r1, r1, r4
 	lsl	r1, r1, #0x10
@@ -4588,7 +4593,7 @@ AreCherriesOnScreen_Reel1:
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	cmp	r0, #0x4
-	beq	.L523	@cond_branch
+	beq	.L521	@cond_branch
 	mov	r1, #0x3
 	sub	r1, r1, r4
 	lsl	r1, r1, #0x10
@@ -4598,13 +4603,13 @@ AreCherriesOnScreen_Reel1:
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	cmp	r0, #0x4
-	bne	.L522	@cond_branch
-.L523:
+	bne	.L520	@cond_branch
+.L521:
 	mov	r0, #0x1
-	b	.L525
-.L522:
+	b	.L523
+.L520:
 	mov	r0, #0x0
-.L525:
+.L523:
 	pop	{r4}
 	pop	{r1}
 	bx	r1
@@ -4615,22 +4620,22 @@ AreCherriesOnScreen_Reel1:
 	.thumb_func
 IsBiasTowardsCherryOr7s:
 	push	{lr}
-	ldr	r0, .L530
+	ldr	r0, .L528
 	ldr	r0, [r0]
 	ldrb	r1, [r0, #0x4]
 	mov	r0, #0xc2
 	and	r0, r0, r1
 	cmp	r0, #0
-	bne	.L527	@cond_branch
+	bne	.L525	@cond_branch
 	mov	r0, #0x0
-	b	.L529
-.L531:
-	.align	2, 0
-.L530:
-	.word	sSlotMachine
-.L527:
-	mov	r0, #0x1
+	b	.L527
 .L529:
+	.align	2, 0
+.L528:
+	.word	sSlotMachine
+.L525:
+	mov	r0, #0x1
+.L527:
 	pop	{r1}
 	bx	r1
 .Lfe92:
@@ -4649,7 +4654,7 @@ DecideReelTurns_BiasTag_Reel1_Bet1:
 	mov	r5, #0x0
 	mov	r0, #0x2
 	mov	r8, r0
-.L536:
+.L534:
 	lsl	r0, r5, #0x10
 	asr	r4, r0, #0x10
 	mov	r1, r8
@@ -4661,27 +4666,27 @@ DecideReelTurns_BiasTag_Reel1_Bet1:
 	bl	AreTagsAtPosition_Reel1
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.L535	@cond_branch
-	ldr	r0, .L540
+	beq	.L533	@cond_branch
+	ldr	r0, .L538
 	ldr	r1, [r0]
 	mov	r0, #0x2
 	strh	r0, [r1, #0x34]
 	strh	r5, [r1, #0x2e]
 	mov	r0, #0x1
-	b	.L539
-.L541:
+	b	.L537
+.L539:
 	.align	2, 0
-.L540:
+.L538:
 	.word	sSlotMachine
-.L535:
+.L533:
 	add	r0, r4, #0x1
 	lsl	r0, r0, #0x10
 	lsr	r5, r0, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, #0x4
-	ble	.L536	@cond_branch
+	ble	.L534	@cond_branch
 	mov	r0, #0x0
-.L539:
+.L537:
 	pop	{r3}
 	mov	r8, r3
 	pop	{r4, r5, r6, r7}
@@ -4708,16 +4713,16 @@ DecideReelTurns_BiasTag_Reel1_Bet2or3:
 	lsl	r0, r0, #0x18
 	lsr	r5, r0, #0x18
 	cmp	r5, #0
-	bne	.L544	@cond_branch
+	bne	.L542	@cond_branch
 	mov	r0, #0x0
 	bl	AreCherriesOnScreen_Reel1
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	bne	.L543	@cond_branch
-.L544:
+	bne	.L541	@cond_branch
+.L542:
 	mov	r7, #0x1
 	mov	r6, #0x0
-.L548:
+.L546:
 	lsl	r0, r7, #0x10
 	asr	r4, r0, #0x10
 	add	r0, r4, #0
@@ -4726,39 +4731,39 @@ DecideReelTurns_BiasTag_Reel1_Bet2or3:
 	bl	AreTagsAtPosition_Reel1
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.L547	@cond_branch
-	ldr	r0, .L564
+	beq	.L545	@cond_branch
+	ldr	r0, .L562
 	ldr	r0, [r0]
 	strh	r7, [r0, #0x34]
 	strh	r6, [r0, #0x2e]
 	mov	r0, #0x1
-	b	.L563
-.L565:
+	b	.L561
+.L563:
 	.align	2, 0
-.L564:
+.L562:
 	.word	sSlotMachine
-.L547:
+.L545:
 	add	r0, r4, #0x1
 	lsl	r0, r0, #0x10
 	lsr	r7, r0, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, #0x3
-	ble	.L548	@cond_branch
-.L543:
+	ble	.L546	@cond_branch
+.L541:
 	mov	r7, #0x1
 	add	r6, r5, #0
-	ldr	r0, .L566
+	ldr	r0, .L564
 	mov	sl, r0
-.L554:
+.L552:
 	lsl	r5, r7, #0x10
 	cmp	r6, #0
-	bne	.L556	@cond_branch
+	bne	.L554	@cond_branch
 	asr	r0, r5, #0x10
 	bl	AreCherriesOnScreen_Reel1
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	bne	.L553	@cond_branch
-.L556:
+	bne	.L551	@cond_branch
+.L554:
 	mov	r0, #0x1
 	asr	r4, r5, #0x10
 	sub	r0, r0, r4
@@ -4769,12 +4774,37 @@ DecideReelTurns_BiasTag_Reel1_Bet2or3:
 	bl	AreTagsAtPosition_Reel1
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.L553	@cond_branch
+	beq	.L551	@cond_branch
 	cmp	r4, #0x1
-	bne	.L558	@cond_branch
+	bne	.L556	@cond_branch
+	cmp	r6, #0
+	bne	.L557	@cond_branch
+	mov	r0, #0x3
+	bl	AreCherriesOnScreen_Reel1
+	lsl	r0, r0, #0x18
+	cmp	r0, #0
+	bne	.L556	@cond_branch
+.L557:
+	mov	r0, sl
+	ldr	r1, [r0]
+	mov	r0, #0x3
+	strh	r0, [r1, #0x34]
+	strh	r0, [r1, #0x2e]
+	mov	r0, #0x1
+	b	.L561
+.L565:
+	.align	2, 0
+.L564:
+	.word	sSlotMachine
+.L556:
+	asr	r0, r5, #0x10
+	cmp	r0, #0x3
+	bgt	.L558	@cond_branch
+	add	r4, r0, #0x1
 	cmp	r6, #0
 	bne	.L559	@cond_branch
-	mov	r0, #0x3
+	lsl	r0, r4, #0x10
+	asr	r0, r0, #0x10
 	bl	AreCherriesOnScreen_Reel1
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
@@ -4782,53 +4812,28 @@ DecideReelTurns_BiasTag_Reel1_Bet2or3:
 .L559:
 	mov	r0, sl
 	ldr	r1, [r0]
-	mov	r0, #0x3
-	strh	r0, [r1, #0x34]
-	strh	r0, [r1, #0x2e]
-	mov	r0, #0x1
-	b	.L563
-.L567:
-	.align	2, 0
-.L566:
-	.word	sSlotMachine
-.L558:
-	asr	r0, r5, #0x10
-	cmp	r0, #0x3
-	bgt	.L560	@cond_branch
-	add	r4, r0, #0x1
-	cmp	r6, #0
-	bne	.L561	@cond_branch
-	lsl	r0, r4, #0x10
-	asr	r0, r0, #0x10
-	bl	AreCherriesOnScreen_Reel1
-	lsl	r0, r0, #0x18
-	cmp	r0, #0
-	bne	.L560	@cond_branch
-.L561:
-	mov	r0, sl
-	ldr	r1, [r0]
 	mov	r0, #0x2
 	strh	r0, [r1, #0x34]
 	strh	r4, [r1, #0x2e]
 	mov	r0, #0x1
-	b	.L563
-.L560:
+	b	.L561
+.L558:
 	mov	r0, sl
 	ldr	r1, [r0]
 	mov	r0, #0x1
 	strh	r0, [r1, #0x34]
 	strh	r7, [r1, #0x2e]
-	b	.L563
-.L553:
+	b	.L561
+.L551:
 	mov	r1, #0x80
 	lsl	r1, r1, #0x9
 	add	r0, r5, r1
 	lsr	r7, r0, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, #0x4
-	ble	.L554	@cond_branch
+	ble	.L552	@cond_branch
 	mov	r0, #0x0
-.L563:
+.L561:
 	pop	{r3, r4, r5}
 	mov	r8, r3
 	mov	r9, r4
@@ -4843,8 +4848,8 @@ DecideReelTurns_BiasTag_Reel1_Bet2or3:
 	.thumb_func
 DecideReelTurns_BiasTag_Reel2:
 	push	{lr}
-	ldr	r1, .L569
-	ldr	r0, .L569+0x4
+	ldr	r1, .L567
+	ldr	r0, .L567+0x4
 	ldr	r0, [r0]
 	mov	r2, #0x12
 	ldrsh	r0, [r0, r2]
@@ -4857,9 +4862,9 @@ DecideReelTurns_BiasTag_Reel2:
 	lsr	r0, r0, #0x18
 	pop	{r1}
 	bx	r1
-.L570:
+.L568:
 	.align	2, 0
-.L569:
+.L567:
 	.word	sDecideReelTurns_BiasTag_Reel2_Bets
 	.word	sSlotMachine
 .Lfe95:
@@ -4869,13 +4874,13 @@ DecideReelTurns_BiasTag_Reel2:
 	.thumb_func
 DecideReelTurns_BiasTag_Reel2_Bet1or2:
 	push	{r4, r5, r6, r7, lr}
-	ldr	r0, .L579
+	ldr	r0, .L577
 	ldr	r0, [r0]
 	mov	r5, #0x0
 	ldrh	r7, [r0, #0x34]
 	mov	r1, #0x34
 	ldrsh	r6, [r0, r1]
-.L575:
+.L573:
 	lsl	r0, r5, #0x10
 	asr	r4, r0, #0x10
 	sub	r1, r6, r4
@@ -4883,30 +4888,30 @@ DecideReelTurns_BiasTag_Reel2_Bet1or2:
 	asr	r1, r1, #0x10
 	mov	r0, #0x1
 	bl	GetTag
-	ldr	r1, .L579
+	ldr	r1, .L577
 	ldr	r1, [r1]
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	ldrb	r2, [r1, #0x7]
 	cmp	r0, r2
-	bne	.L574	@cond_branch
+	bne	.L572	@cond_branch
 	strh	r7, [r1, #0x36]
 	strh	r5, [r1, #0x30]
 	mov	r0, #0x1
-	b	.L578
-.L580:
+	b	.L576
+.L578:
 	.align	2, 0
-.L579:
+.L577:
 	.word	sSlotMachine
-.L574:
+.L572:
 	add	r0, r4, #0x1
 	lsl	r0, r0, #0x10
 	lsr	r5, r0, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, #0x4
-	ble	.L575	@cond_branch
+	ble	.L573	@cond_branch
 	mov	r0, #0x0
-.L578:
+.L576:
 	pop	{r4, r5, r6, r7}
 	pop	{r1}
 	bx	r1
@@ -4920,22 +4925,65 @@ DecideReelTurns_BiasTag_Reel2_Bet3:
 	bl	DecideReelTurns_BiasTag_Reel2_Bet1or2
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.L582	@cond_branch
-	ldr	r0, .L601
+	beq	.L580	@cond_branch
+	ldr	r0, .L599
 	ldr	r1, [r0]
 	mov	r2, #0x34
 	ldrsh	r0, [r1, r2]
 	cmp	r0, #0x2
-	beq	.L600	@cond_branch
+	beq	.L598	@cond_branch
 	mov	r2, #0x30
 	ldrsh	r0, [r1, r2]
 	cmp	r0, #0x1
-	ble	.L600	@cond_branch
+	ble	.L598	@cond_branch
 	cmp	r0, #0x4
-	beq	.L600	@cond_branch
+	beq	.L598	@cond_branch
 	mov	r5, #0x0
 	mov	r6, #0x2
-.L587:
+.L585:
+	lsl	r0, r5, #0x10
+	asr	r4, r0, #0x10
+	sub	r1, r6, r4
+	lsl	r1, r1, #0x10
+	asr	r1, r1, #0x10
+	mov	r0, #0x1
+	bl	GetTag
+	ldr	r1, .L599
+	ldr	r1, [r1]
+	lsl	r0, r0, #0x18
+	lsr	r0, r0, #0x18
+	ldrb	r2, [r1, #0x7]
+	cmp	r0, r2
+	beq	.L596	@cond_branch
+	add	r0, r4, #0x1
+	lsl	r0, r0, #0x10
+	lsr	r5, r0, #0x10
+	asr	r0, r0, #0x10
+	cmp	r0, #0x4
+	ble	.L585	@cond_branch
+	b	.L598
+.L600:
+	.align	2, 0
+.L599:
+	.word	sSlotMachine
+.L596:
+.L597:
+	mov	r0, #0x2
+	strh	r0, [r1, #0x36]
+	strh	r5, [r1, #0x30]
+.L598:
+	mov	r0, #0x1
+	b	.L595
+.L580:
+	ldr	r0, .L601
+	ldr	r0, [r0]
+	mov	r1, #0x34
+	ldrsh	r0, [r0, r1]
+	cmp	r0, #0x2
+	beq	.L588	@cond_branch
+	mov	r5, #0x0
+	mov	r6, #0x2
+.L592:
 	lsl	r0, r5, #0x10
 	asr	r4, r0, #0x10
 	sub	r1, r6, r4
@@ -4949,65 +4997,22 @@ DecideReelTurns_BiasTag_Reel2_Bet3:
 	lsr	r0, r0, #0x18
 	ldrb	r2, [r1, #0x7]
 	cmp	r0, r2
-	beq	.L598	@cond_branch
+	beq	.L597	@cond_branch
 	add	r0, r4, #0x1
 	lsl	r0, r0, #0x10
 	lsr	r5, r0, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, #0x4
-	ble	.L587	@cond_branch
-	b	.L600
-.L602:
-	.align	2, 0
-.L601:
-	.word	sSlotMachine
-.L598:
-.L599:
-	mov	r0, #0x2
-	strh	r0, [r1, #0x36]
-	strh	r5, [r1, #0x30]
-.L600:
-	mov	r0, #0x1
-	b	.L597
-.L582:
-	ldr	r0, .L603
-	ldr	r0, [r0]
-	mov	r1, #0x34
-	ldrsh	r0, [r0, r1]
-	cmp	r0, #0x2
-	beq	.L590	@cond_branch
-	mov	r5, #0x0
-	mov	r6, #0x2
-.L594:
-	lsl	r0, r5, #0x10
-	asr	r4, r0, #0x10
-	sub	r1, r6, r4
-	lsl	r1, r1, #0x10
-	asr	r1, r1, #0x10
-	mov	r0, #0x1
-	bl	GetTag
-	ldr	r1, .L603
-	ldr	r1, [r1]
-	lsl	r0, r0, #0x18
-	lsr	r0, r0, #0x18
-	ldrb	r2, [r1, #0x7]
-	cmp	r0, r2
-	beq	.L599	@cond_branch
-	add	r0, r4, #0x1
-	lsl	r0, r0, #0x10
-	lsr	r5, r0, #0x10
-	asr	r0, r0, #0x10
-	cmp	r0, #0x4
-	ble	.L594	@cond_branch
-.L590:
+	ble	.L592	@cond_branch
+.L588:
 	mov	r0, #0x0
-.L597:
+.L595:
 	pop	{r4, r5, r6}
 	pop	{r1}
 	bx	r1
-.L604:
+.L602:
 	.align	2, 0
-.L603:
+.L601:
 	.word	sSlotMachine
 .Lfe97:
 	.size	 DecideReelTurns_BiasTag_Reel2_Bet3,.Lfe97-DecideReelTurns_BiasTag_Reel2_Bet3
@@ -5016,7 +5021,7 @@ DecideReelTurns_BiasTag_Reel2_Bet3:
 	.thumb_func
 DecideReelTurns_BiasTag_Reel3:
 	push	{r4, lr}
-	ldr	r2, .L608
+	ldr	r2, .L606
 	ldr	r0, [r2]
 	ldrb	r3, [r0, #0x7]
 	add	r4, r3, #0
@@ -5024,13 +5029,13 @@ DecideReelTurns_BiasTag_Reel3:
 	mov	r0, #0x40
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L606	@cond_branch
+	beq	.L604	@cond_branch
 	mov	r3, #0x0
 	cmp	r4, #0
-	bne	.L606	@cond_branch
+	bne	.L604	@cond_branch
 	mov	r3, #0x1
-.L606:
-	ldr	r1, .L608+0x4
+.L604:
+	ldr	r1, .L606+0x4
 	ldr	r0, [r2]
 	mov	r2, #0x12
 	ldrsh	r0, [r0, r2]
@@ -5045,9 +5050,9 @@ DecideReelTurns_BiasTag_Reel3:
 	pop	{r4}
 	pop	{r1}
 	bx	r1
-.L609:
+.L607:
 	.align	2, 0
-.L608:
+.L606:
 	.word	sSlotMachine
 	.word	sDecideReelTurns_BiasTag_Reel3_Bets
 .Lfe98:
@@ -5061,14 +5066,14 @@ DecideReelTurns_BiasTag_Reel3_Bet1or2:
 	push	{r7}
 	lsl	r0, r0, #0x18
 	lsr	r7, r0, #0x18
-	ldr	r0, .L618
+	ldr	r0, .L616
 	ldr	r0, [r0]
 	mov	r5, #0x0
 	ldrh	r1, [r0, #0x36]
 	mov	r8, r1
 	mov	r1, #0x36
 	ldrsh	r6, [r0, r1]
-.L614:
+.L612:
 	lsl	r0, r5, #0x10
 	asr	r4, r0, #0x10
 	sub	r1, r6, r4
@@ -5079,27 +5084,27 @@ DecideReelTurns_BiasTag_Reel3_Bet1or2:
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	cmp	r0, r7
-	bne	.L613	@cond_branch
-	ldr	r0, .L618
+	bne	.L611	@cond_branch
+	ldr	r0, .L616
 	ldr	r0, [r0]
 	mov	r1, r8
 	strh	r1, [r0, #0x38]
 	strh	r5, [r0, #0x32]
 	mov	r0, #0x1
-	b	.L617
-.L619:
+	b	.L615
+.L617:
 	.align	2, 0
-.L618:
+.L616:
 	.word	sSlotMachine
-.L613:
+.L611:
 	add	r0, r4, #0x1
 	lsl	r0, r0, #0x10
 	lsr	r5, r0, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, #0x4
-	ble	.L614	@cond_branch
+	ble	.L612	@cond_branch
 	mov	r0, #0x0
-.L617:
+.L615:
 	pop	{r3}
 	mov	r8, r3
 	pop	{r4, r5, r6, r7}
@@ -5116,46 +5121,46 @@ DecideReelTurns_BiasTag_Reel3_Bet3:
 	push	{r7}
 	lsl	r0, r0, #0x18
 	lsr	r6, r0, #0x18
-	ldr	r0, .L632
+	ldr	r0, .L630
 	ldr	r0, [r0]
 	mov	r2, #0x34
 	ldrsh	r1, [r0, r2]
 	mov	r2, #0x36
 	ldrsh	r0, [r0, r2]
 	cmp	r1, r0
-	bne	.L621	@cond_branch
+	bne	.L619	@cond_branch
 	add	r0, r6, #0
 	bl	DecideReelTurns_BiasTag_Reel3_Bet1or2
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
-	b	.L630
-.L633:
-	.align	2, 0
-.L632:
-	.word	sSlotMachine
+	b	.L628
 .L631:
-	ldr	r0, .L634
+	.align	2, 0
+.L630:
+	.word	sSlotMachine
+.L629:
+	ldr	r0, .L632
 	ldr	r0, [r0]
 	strh	r5, [r0, #0x32]
 	mov	r1, r8
 	strh	r1, [r0, #0x38]
 	mov	r0, #0x1
-	b	.L630
-.L635:
+	b	.L628
+.L633:
 	.align	2, 0
-.L634:
+.L632:
 	.word	sSlotMachine
-.L621:
+.L619:
 	mov	r2, #0x1
 	mov	r8, r2
 	cmp	r1, #0x1
-	bne	.L622	@cond_branch
+	bne	.L620	@cond_branch
 	mov	r0, #0x3
 	mov	r8, r0
-.L622:
+.L620:
 	mov	r5, #0x0
 	mov	r7, r8
-.L627:
+.L625:
 	lsl	r0, r5, #0x10
 	asr	r4, r0, #0x10
 	sub	r1, r7, r4
@@ -5166,15 +5171,15 @@ DecideReelTurns_BiasTag_Reel3_Bet3:
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	cmp	r0, r6
-	beq	.L631	@cond_branch
+	beq	.L629	@cond_branch
 	add	r0, r4, #0x1
 	lsl	r0, r0, #0x10
 	lsr	r5, r0, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, #0x4
-	ble	.L627	@cond_branch
+	ble	.L625	@cond_branch
 	mov	r0, #0x0
-.L630:
+.L628:
 	pop	{r3}
 	mov	r8, r3
 	pop	{r4, r5, r6, r7}
@@ -5188,28 +5193,28 @@ DecideReelTurns_BiasTag_Reel3_Bet3:
 DecideReelTurns_NoBiasTag_Reel1:
 	push	{r4, r5, lr}
 	mov	r5, #0x0
-	b	.L637
-.L639:
+	b	.L635
+.L637:
 	add	r0, r4, #0x1
 	lsl	r0, r0, #0x10
 	lsr	r5, r0, #0x10
-.L637:
+.L635:
 	lsl	r0, r5, #0x10
 	asr	r4, r0, #0x10
 	add	r0, r4, #0
 	bl	AreCherriesOnScreen_Reel1
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	bne	.L639	@cond_branch
-	ldr	r0, .L641
+	bne	.L637	@cond_branch
+	ldr	r0, .L639
 	ldr	r0, [r0]
 	strh	r5, [r0, #0x2e]
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.L642:
+.L640:
 	.align	2, 0
-.L641:
+.L639:
 	.word	sSlotMachine
 .Lfe101:
 	.size	 DecideReelTurns_NoBiasTag_Reel1,.Lfe101-DecideReelTurns_NoBiasTag_Reel1
@@ -5221,20 +5226,20 @@ IsBiasTag777_SwitchColor:
 	add	r1, r0, #0
 	ldrb	r0, [r1]
 	cmp	r0, #0
-	bne	.L644	@cond_branch
+	bne	.L642	@cond_branch
 	mov	r0, #0x1
-	b	.L647
-.L644:
+	b	.L645
+.L642:
 	cmp	r0, #0x1
-	beq	.L645	@cond_branch
+	beq	.L643	@cond_branch
 	mov	r0, #0x0
-	b	.L646
+	b	.L644
+.L643:
+	mov	r0, #0x0
 .L645:
-	mov	r0, #0x0
-.L647:
 	strb	r0, [r1]
 	mov	r0, #0x1
-.L646:
+.L644:
 	pop	{r1}
 	bx	r1
 .Lfe102:
@@ -5244,8 +5249,8 @@ IsBiasTag777_SwitchColor:
 	.thumb_func
 DecideReelTurns_NoBiasTag_Reel2:
 	push	{lr}
-	ldr	r1, .L649
-	ldr	r0, .L649+0x4
+	ldr	r1, .L647
+	ldr	r0, .L647+0x4
 	ldr	r0, [r0]
 	mov	r2, #0x12
 	ldrsh	r0, [r0, r2]
@@ -5256,9 +5261,9 @@ DecideReelTurns_NoBiasTag_Reel2:
 	bl	_call_via_r0
 	pop	{r0}
 	bx	r0
-.L650:
+.L648:
 	.align	2, 0
-.L649:
+.L647:
 	.word	sDecideReelTurns_NoBiasTag_Reel2_Bets
 	.word	sSlotMachine
 .Lfe103:
@@ -5269,17 +5274,17 @@ DecideReelTurns_NoBiasTag_Reel2:
 DecideReelTurns_NoBiasTag_Reel2_Bet1:
 	push	{r4, r5, r6, r7, lr}
 	add	sp, sp, #-0x4
-	ldr	r0, .L660
+	ldr	r0, .L658
 	ldr	r2, [r0]
 	mov	r1, #0x34
 	ldrsh	r0, [r2, r1]
 	cmp	r0, #0
-	beq	.L652	@cond_branch
+	beq	.L650	@cond_branch
 	ldrb	r1, [r2, #0x4]
 	mov	r0, #0x80
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L652	@cond_branch
+	beq	.L650	@cond_branch
 	ldrh	r0, [r2, #0x2e]
 	mov	r1, #0x2
 	sub	r1, r1, r0
@@ -5293,11 +5298,11 @@ DecideReelTurns_NoBiasTag_Reel2_Bet1:
 	bl	IsBiasTag777_SwitchColor
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.L652	@cond_branch
+	beq	.L650	@cond_branch
 	mov	r5, #0x0
 	mov	r6, sp
 	mov	r7, #0x2
-.L657:
+.L655:
 	lsl	r0, r5, #0x10
 	asr	r4, r0, #0x10
 	sub	r1, r7, r4
@@ -5309,25 +5314,25 @@ DecideReelTurns_NoBiasTag_Reel2_Bet1:
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	cmp	r1, r0
-	bne	.L656	@cond_branch
-	ldr	r0, .L660
+	bne	.L654	@cond_branch
+	ldr	r0, .L658
 	ldr	r1, [r0]
 	mov	r0, #0x2
 	strh	r0, [r1, #0x36]
 	strh	r5, [r1, #0x30]
-	b	.L652
-.L661:
+	b	.L650
+.L659:
 	.align	2, 0
-.L660:
+.L658:
 	.word	sSlotMachine
-.L656:
+.L654:
 	add	r0, r4, #0x1
 	lsl	r0, r0, #0x10
 	lsr	r5, r0, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, #0x4
-	ble	.L657	@cond_branch
-.L652:
+	ble	.L655	@cond_branch
+.L650:
 	add	sp, sp, #0x4
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
@@ -5340,18 +5345,18 @@ DecideReelTurns_NoBiasTag_Reel2_Bet1:
 DecideReelTurns_NoBiasTag_Reel2_Bet2:
 	push	{r4, r5, r6, r7, lr}
 	add	sp, sp, #-0x4
-	ldr	r4, .L671
+	ldr	r4, .L669
 	ldr	r2, [r4]
 	ldrh	r3, [r2, #0x34]
 	mov	r1, #0x34
 	ldrsh	r0, [r2, r1]
 	cmp	r0, #0
-	beq	.L663	@cond_branch
+	beq	.L661	@cond_branch
 	ldrb	r1, [r2, #0x4]
 	mov	r0, #0x80
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L663	@cond_branch
+	beq	.L661	@cond_branch
 	ldrh	r1, [r2, #0x2e]
 	sub	r1, r3, r1
 	lsl	r1, r1, #0x10
@@ -5364,11 +5369,11 @@ DecideReelTurns_NoBiasTag_Reel2_Bet2:
 	bl	IsBiasTag777_SwitchColor
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.L663	@cond_branch
+	beq	.L661	@cond_branch
 	mov	r5, #0x0
 	mov	r7, sp
 	add	r6, r4, #0
-.L668:
+.L666:
 	ldr	r0, [r6]
 	ldrh	r1, [r0, #0x34]
 	lsl	r0, r5, #0x10
@@ -5382,24 +5387,24 @@ DecideReelTurns_NoBiasTag_Reel2_Bet2:
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	cmp	r1, r0
-	bne	.L667	@cond_branch
+	bne	.L665	@cond_branch
 	ldr	r0, [r6]
 	ldrh	r1, [r0, #0x34]
 	strh	r1, [r0, #0x36]
 	strh	r5, [r0, #0x30]
-	b	.L663
-.L672:
+	b	.L661
+.L670:
 	.align	2, 0
-.L671:
+.L669:
 	.word	sSlotMachine
-.L667:
+.L665:
 	add	r0, r4, #0x1
 	lsl	r0, r0, #0x10
 	lsr	r5, r0, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, #0x4
-	ble	.L668	@cond_branch
-.L663:
+	ble	.L666	@cond_branch
+.L661:
 	add	sp, sp, #0x4
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
@@ -5412,47 +5417,47 @@ DecideReelTurns_NoBiasTag_Reel2_Bet2:
 DecideReelTurns_NoBiasTag_Reel2_Bet3:
 	push	{r4, r5, r6, r7, lr}
 	add	sp, sp, #-0x4
-	ldr	r6, .L701
+	ldr	r6, .L699
 	ldr	r2, [r6]
 	ldrh	r4, [r2, #0x34]
 	mov	r0, #0x34
 	ldrsh	r3, [r2, r0]
 	cmp	r3, #0
-	beq	.L673	@cond_branch
+	beq	.L671	@cond_branch
 	ldrb	r1, [r2, #0x4]
 	mov	r0, #0x80
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L673	@cond_branch
+	beq	.L671	@cond_branch
 	cmp	r3, #0x2
-	bne	.L675	@cond_branch
+	bne	.L673	@cond_branch
 	bl	DecideReelTurns_NoBiasTag_Reel2_Bet2
-	b	.L673
-.L702:
+	b	.L671
+.L700:
 	.align	2, 0
-.L701:
+.L699:
 	.word	sSlotMachine
-.L697:
-	ldr	r0, .L703
+.L695:
+	ldr	r0, .L701
 	ldr	r0, [r0]
 	mov	r1, #0x0
 	strh	r5, [r0, #0x36]
 	strh	r1, [r0, #0x30]
-	b	.L673
-.L704:
+	b	.L671
+.L702:
 	.align	2, 0
-.L703:
+.L701:
 	.word	sSlotMachine
-.L698:
+.L696:
 	mov	r0, #0x2
 	strh	r0, [r1, #0x36]
 	add	r0, r4, #0x1
 	strh	r0, [r1, #0x30]
-	b	.L673
-.L699:
+	b	.L671
+.L697:
 	mov	r0, #0x3
-	b	.L700
-.L675:
+	b	.L698
+.L673:
 	ldrh	r1, [r2, #0x2e]
 	sub	r1, r4, r1
 	lsl	r1, r1, #0x10
@@ -5465,18 +5470,18 @@ DecideReelTurns_NoBiasTag_Reel2_Bet3:
 	bl	IsBiasTag777_SwitchColor
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.L673	@cond_branch
+	beq	.L671	@cond_branch
 	mov	r5, #0x2
 	ldr	r0, [r6]
 	mov	r1, #0x34
 	ldrsh	r0, [r0, r1]
 	cmp	r0, #0x3
-	bne	.L678	@cond_branch
+	bne	.L676	@cond_branch
 	mov	r5, #0x3
-.L678:
+.L676:
 	mov	r6, #0x0
 	mov	r7, sp
-.L682:
+.L680:
 	lsl	r0, r5, #0x10
 	asr	r4, r0, #0x10
 	mov	r0, #0x1
@@ -5486,7 +5491,7 @@ DecideReelTurns_NoBiasTag_Reel2_Bet3:
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	cmp	r1, r0
-	beq	.L697	@cond_branch
+	beq	.L695	@cond_branch
 	lsl	r1, r6, #0x10
 	mov	r2, #0x80
 	lsl	r2, r2, #0x9
@@ -5497,11 +5502,11 @@ DecideReelTurns_NoBiasTag_Reel2_Bet3:
 	lsr	r6, r1, #0x10
 	asr	r1, r1, #0x10
 	cmp	r1, #0x1
-	ble	.L682	@cond_branch
+	ble	.L680	@cond_branch
 	mov	r5, #0x1
 	mov	r7, sp
-	ldr	r6, .L705
-.L688:
+	ldr	r6, .L703
+.L686:
 	ldr	r0, [r6]
 	ldrh	r1, [r0, #0x34]
 	lsl	r0, r5, #0x10
@@ -5515,38 +5520,38 @@ DecideReelTurns_NoBiasTag_Reel2_Bet3:
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	cmp	r1, r0
-	bne	.L687	@cond_branch
+	bne	.L685	@cond_branch
 	ldr	r1, [r6]
 	mov	r2, #0x34
 	ldrsh	r0, [r1, r2]
 	cmp	r0, #0x1
-	bne	.L690	@cond_branch
+	bne	.L688	@cond_branch
 	cmp	r4, #0x2
-	ble	.L698	@cond_branch
-.L700:
+	ble	.L696	@cond_branch
+.L698:
 	strh	r0, [r1, #0x36]
 	strh	r5, [r1, #0x30]
-	b	.L673
-.L706:
+	b	.L671
+.L704:
 	.align	2, 0
-.L705:
+.L703:
 	.word	sSlotMachine
-.L690:
+.L688:
 	cmp	r4, #0x2
-	ble	.L699	@cond_branch
+	ble	.L697	@cond_branch
 	mov	r0, #0x2
 	strh	r0, [r1, #0x36]
 	sub	r0, r4, #0x1
 	strh	r0, [r1, #0x30]
-	b	.L673
-.L687:
+	b	.L671
+.L685:
 	add	r0, r4, #0x1
 	lsl	r0, r0, #0x10
 	lsr	r5, r0, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, #0x4
-	ble	.L688	@cond_branch
-.L673:
+	ble	.L686	@cond_branch
+.L671:
 	add	sp, sp, #0x4
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
@@ -5564,20 +5569,20 @@ AreTagsMixed77:
 	lsr	r1, r1, #0x18
 	add	r2, r1, #0
 	cmp	r0, #0
-	bne	.L710	@cond_branch
+	bne	.L708	@cond_branch
 	cmp	r1, #0x1
-	beq	.L709	@cond_branch
-.L710:
-	cmp	r0, #0x1
-	bne	.L708	@cond_branch
-	cmp	r2, #0
-	bne	.L708	@cond_branch
-.L709:
-	mov	r0, #0x1
-	b	.L712
+	beq	.L707	@cond_branch
 .L708:
+	cmp	r0, #0x1
+	bne	.L706	@cond_branch
+	cmp	r2, #0
+	bne	.L706	@cond_branch
+.L707:
+	mov	r0, #0x1
+	b	.L710
+.L706:
 	mov	r0, #0x0
-.L712:
+.L710:
 	pop	{r1}
 	bx	r1
 .Lfe107:
@@ -5594,24 +5599,24 @@ AreTagsMixed777:
 	lsl	r2, r2, #0x18
 	lsr	r2, r2, #0x18
 	cmp	r0, #0
-	bne	.L716	@cond_branch
+	bne	.L714	@cond_branch
 	cmp	r1, #0x1
-	bne	.L716	@cond_branch
+	bne	.L714	@cond_branch
 	cmp	r2, #0
-	beq	.L715	@cond_branch
-.L716:
-	cmp	r0, #0x1
-	bne	.L714	@cond_branch
-	cmp	r1, #0
-	bne	.L714	@cond_branch
-	cmp	r2, #0x1
-	bne	.L714	@cond_branch
-.L715:
-	mov	r0, #0x1
-	b	.L718
+	beq	.L713	@cond_branch
 .L714:
+	cmp	r0, #0x1
+	bne	.L712	@cond_branch
+	cmp	r1, #0
+	bne	.L712	@cond_branch
+	cmp	r2, #0x1
+	bne	.L712	@cond_branch
+.L713:
+	mov	r0, #0x1
+	b	.L716
+.L712:
 	mov	r0, #0x0
-.L718:
+.L716:
 	pop	{r1}
 	bx	r1
 .Lfe108:
@@ -5628,43 +5633,43 @@ TagsDontMatchOrHaveAny7s:
 	lsl	r2, r2, #0x18
 	lsr	r2, r2, #0x18
 	cmp	r0, #0
-	bne	.L722	@cond_branch
+	bne	.L720	@cond_branch
 	cmp	r1, #0x1
-	bne	.L722	@cond_branch
+	bne	.L720	@cond_branch
 	cmp	r2, #0
-	beq	.L721	@cond_branch
+	beq	.L719	@cond_branch
+.L720:
+	cmp	r0, #0x1
+	bne	.L721	@cond_branch
+	cmp	r1, #0
+	bne	.L721	@cond_branch
+	cmp	r2, #0x1
+	beq	.L719	@cond_branch
+.L721:
+	cmp	r0, #0
+	bne	.L722	@cond_branch
+	cmp	r1, #0
+	bne	.L722	@cond_branch
+	cmp	r2, #0x1
+	beq	.L719	@cond_branch
 .L722:
 	cmp	r0, #0x1
 	bne	.L723	@cond_branch
-	cmp	r1, #0
-	bne	.L723	@cond_branch
-	cmp	r2, #0x1
-	beq	.L721	@cond_branch
-.L723:
-	cmp	r0, #0
-	bne	.L724	@cond_branch
-	cmp	r1, #0
-	bne	.L724	@cond_branch
-	cmp	r2, #0x1
-	beq	.L721	@cond_branch
-.L724:
-	cmp	r0, #0x1
-	bne	.L725	@cond_branch
 	cmp	r1, #0x1
-	bne	.L725	@cond_branch
+	bne	.L723	@cond_branch
 	cmp	r2, #0
-	beq	.L721	@cond_branch
-.L725:
+	beq	.L719	@cond_branch
+.L723:
 	cmp	r0, r1
-	bne	.L720	@cond_branch
+	bne	.L718	@cond_branch
 	cmp	r0, r2
-	bne	.L720	@cond_branch
-.L721:
+	bne	.L718	@cond_branch
+.L719:
 	mov	r0, #0x0
-	b	.L726
-.L720:
+	b	.L724
+.L718:
 	mov	r0, #0x1
-.L726:
+.L724:
 	pop	{r1}
 	bx	r1
 .Lfe109:
@@ -5674,8 +5679,8 @@ TagsDontMatchOrHaveAny7s:
 	.thumb_func
 DecideReelTurns_NoBiasTag_Reel3:
 	push	{lr}
-	ldr	r1, .L728
-	ldr	r0, .L728+0x4
+	ldr	r1, .L726
+	ldr	r0, .L726+0x4
 	ldr	r0, [r0]
 	mov	r2, #0x12
 	ldrsh	r0, [r0, r2]
@@ -5686,9 +5691,9 @@ DecideReelTurns_NoBiasTag_Reel3:
 	bl	_call_via_r0
 	pop	{r0}
 	bx	r0
-.L729:
+.L727:
 	.align	2, 0
-.L728:
+.L726:
 	.word	sDecideReelTurns_NoBiasTag_Reel3_Bets
 	.word	sSlotMachine
 .Lfe110:
@@ -5699,7 +5704,7 @@ DecideReelTurns_NoBiasTag_Reel3:
 DecideReelTurns_NoBiasTag_Reel3_Bet1:
 	push	{r4, r5, r6, r7, lr}
 	mov	r6, #0x0
-	ldr	r7, .L754
+	ldr	r7, .L752
 	ldr	r0, [r7]
 	ldrh	r1, [r0, #0x2e]
 	mov	r4, #0x2
@@ -5721,20 +5726,20 @@ DecideReelTurns_NoBiasTag_Reel3_Bet1:
 	lsl	r0, r0, #0x18
 	lsr	r1, r0, #0x18
 	cmp	r5, r1
-	bne	.L731	@cond_branch
+	bne	.L729	@cond_branch
 	mov	r4, #0x2
-	b	.L734
-.L755:
+	b	.L732
+.L753:
 	.align	2, 0
-.L754:
+.L752:
 	.word	sSlotMachine
-.L735:
+.L733:
 	lsl	r0, r6, #0x10
 	mov	r1, #0x80
 	lsl	r1, r1, #0x9
 	add	r0, r0, r1
 	lsr	r6, r0, #0x10
-.L734:
+.L732:
 	lsl	r1, r6, #0x10
 	asr	r1, r1, #0x10
 	sub	r1, r4, r1
@@ -5745,31 +5750,31 @@ DecideReelTurns_NoBiasTag_Reel3_Bet1:
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	cmp	r5, r0
-	beq	.L735	@cond_branch
+	beq	.L733	@cond_branch
 	cmp	r5, #0
-	bne	.L736	@cond_branch
+	bne	.L734	@cond_branch
 	cmp	r0, #0x1
-	beq	.L735	@cond_branch
-.L736:
+	beq	.L733	@cond_branch
+.L734:
 	cmp	r5, #0x1
-	bne	.L739	@cond_branch
+	bne	.L737	@cond_branch
 	cmp	r0, #0
-	beq	.L735	@cond_branch
-	b	.L739
-.L731:
+	beq	.L733	@cond_branch
+	b	.L737
+.L729:
 	add	r0, r5, #0
 	bl	AreTagsMixed77
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.L739	@cond_branch
+	beq	.L737	@cond_branch
 	ldr	r0, [r7]
 	ldrb	r1, [r0, #0x4]
 	mov	r0, #0x80
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L741	@cond_branch
+	beq	.L739	@cond_branch
 	mov	r7, #0x2
-.L745:
+.L743:
 	lsl	r0, r6, #0x10
 	asr	r4, r0, #0x10
 	sub	r1, r7, r4
@@ -5780,22 +5785,22 @@ DecideReelTurns_NoBiasTag_Reel3_Bet1:
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	cmp	r5, r0
-	beq	.L739	@cond_branch
+	beq	.L737	@cond_branch
 	add	r0, r4, #0x1
 	lsl	r0, r0, #0x10
 	lsr	r6, r0, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, #0x4
-	ble	.L745	@cond_branch
-.L741:
+	ble	.L743	@cond_branch
+.L739:
 	mov	r6, #0x0
 	mov	r7, #0x2
-	b	.L750
-.L751:
+	b	.L748
+.L749:
 	add	r0, r4, #0x1
 	lsl	r0, r0, #0x10
 	lsr	r6, r0, #0x10
-.L750:
+.L748:
 	lsl	r0, r6, #0x10
 	asr	r4, r0, #0x10
 	sub	r1, r7, r4
@@ -5806,17 +5811,17 @@ DecideReelTurns_NoBiasTag_Reel3_Bet1:
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	cmp	r5, r0
-	beq	.L751	@cond_branch
-.L739:
-	ldr	r0, .L756
+	beq	.L749	@cond_branch
+.L737:
+	ldr	r0, .L754
 	ldr	r0, [r0]
 	strh	r6, [r0, #0x32]
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L757:
+.L755:
 	.align	2, 0
-.L756:
+.L754:
 	.word	sSlotMachine
 .Lfe111:
 	.size	 DecideReelTurns_NoBiasTag_Reel3_Bet1,.Lfe111-DecideReelTurns_NoBiasTag_Reel3_Bet1
@@ -5832,22 +5837,22 @@ DecideReelTurns_NoBiasTag_Reel3_Bet2:
 	add	sp, sp, #-0x4
 	mov	r0, #0x0
 	str	r0, [sp]
-	ldr	r4, .L779
+	ldr	r4, .L777
 	ldr	r2, [r4]
 	mov	r5, #0x36
 	ldrsh	r1, [r2, r5]
 	cmp	r1, #0
-	beq	.L759	@cond_branch
+	beq	.L757	@cond_branch
 	ldrh	r3, [r2, #0x34]
 	mov	r5, #0x34
 	ldrsh	r0, [r2, r5]
 	cmp	r0, r1
-	bne	.L759	@cond_branch
+	bne	.L757	@cond_branch
 	ldrb	r1, [r2, #0x4]
 	mov	r0, #0x80
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L759	@cond_branch
+	beq	.L757	@cond_branch
 	ldrh	r1, [r2, #0x2e]
 	sub	r1, r3, r1
 	lsl	r1, r1, #0x10
@@ -5871,23 +5876,23 @@ DecideReelTurns_NoBiasTag_Reel3_Bet2:
 	bl	AreTagsMixed77
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.L759	@cond_branch
+	beq	.L757	@cond_branch
 	mov	r5, #0x0
-	b	.L761
-.L780:
+	b	.L759
+.L778:
 	.align	2, 0
-.L779:
+.L777:
 	.word	sSlotMachine
-.L763:
+.L761:
 	add	r0, r5, #0x1
 	lsl	r0, r0, #0x10
 	lsr	r5, r0, #0x10
-.L761:
+.L759:
 	lsl	r6, r5, #0x10
 	asr	r5, r6, #0x10
 	cmp	r5, #0x4
-	bgt	.L759	@cond_branch
-	ldr	r0, .L781
+	bgt	.L757	@cond_branch
+	ldr	r0, .L779
 	ldr	r0, [r0]
 	ldrh	r1, [r0, #0x36]
 	sub	r1, r1, r5
@@ -5898,20 +5903,20 @@ DecideReelTurns_NoBiasTag_Reel3_Bet2:
 	lsl	r0, r0, #0x18
 	lsr	r4, r0, #0x18
 	cmp	r7, r4
-	bne	.L763	@cond_branch
+	bne	.L761	@cond_branch
 	lsr	r6, r6, #0x10
 	str	r6, [sp]
-.L759:
-	ldr	r0, .L781
+.L757:
+	ldr	r0, .L779
 	mov	r9, r0
-.L769:
+.L767:
 	mov	r5, #0x1
 	mov	r1, #0x0
 	mov	r8, r1
 	ldr	r2, [sp]
 	lsl	r2, r2, #0x10
 	mov	sl, r2
-.L773:
+.L771:
 	mov	r1, r9
 	ldr	r0, [r1]
 	ldrh	r1, [r0, #0x2e]
@@ -5950,22 +5955,22 @@ DecideReelTurns_NoBiasTag_Reel3_Bet2:
 	bl	TagsDontMatchOrHaveAny7s
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	bne	.L772	@cond_branch
+	bne	.L770	@cond_branch
 	add	r0, r7, #0
 	add	r1, r6, #0
 	add	r2, r4, #0
 	bl	AreTagsMixed777
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.L775	@cond_branch
+	beq	.L773	@cond_branch
 	mov	r2, r9
 	ldr	r0, [r2]
 	ldrb	r1, [r0, #0x4]
 	mov	r0, #0x80
 	and	r0, r0, r1
 	cmp	r0, #0
-	bne	.L772	@cond_branch
-.L775:
+	bne	.L770	@cond_branch
+.L773:
 	mov	r5, r8
 	lsl	r0, r5, #0x10
 	mov	r1, #0x80
@@ -5973,23 +5978,23 @@ DecideReelTurns_NoBiasTag_Reel3_Bet2:
 	add	r0, r0, r1
 	lsr	r0, r0, #0x10
 	mov	r8, r0
-	b	.L771
-.L782:
+	b	.L769
+.L780:
 	.align	2, 0
-.L781:
+.L779:
 	.word	sSlotMachine
-.L772:
+.L770:
 	mov	r2, #0x80
 	lsl	r2, r2, #0x9
 	add	r0, r5, r2
 	lsr	r5, r0, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, #0x3
-	ble	.L773	@cond_branch
-.L771:
+	ble	.L771	@cond_branch
+.L769:
 	mov	r5, r8
 	cmp	r5, #0
-	beq	.L768	@cond_branch
+	beq	.L766	@cond_branch
 	ldr	r1, [sp]
 	lsl	r0, r1, #0x10
 	mov	r2, #0x80
@@ -5997,9 +6002,9 @@ DecideReelTurns_NoBiasTag_Reel3_Bet2:
 	add	r0, r0, r2
 	lsr	r0, r0, #0x10
 	str	r0, [sp]
-	b	.L769
-.L768:
-	ldr	r0, .L783
+	b	.L767
+.L766:
+	ldr	r0, .L781
 	ldr	r0, [r0]
 	mov	r5, sp
 	ldrh	r5, [r5]
@@ -6012,9 +6017,9 @@ DecideReelTurns_NoBiasTag_Reel3_Bet2:
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L784:
+.L782:
 	.align	2, 0
-.L783:
+.L781:
 	.word	sSlotMachine
 .Lfe112:
 	.size	 DecideReelTurns_NoBiasTag_Reel3_Bet2,.Lfe112-DecideReelTurns_NoBiasTag_Reel3_Bet2
@@ -6026,22 +6031,22 @@ DecideReelTurns_NoBiasTag_Reel3_Bet3:
 	mov	r7, r8
 	push	{r7}
 	bl	DecideReelTurns_NoBiasTag_Reel3_Bet2
-	ldr	r4, .L807
+	ldr	r4, .L805
 	ldr	r2, [r4]
 	mov	r0, #0x36
 	ldrsh	r1, [r2, r0]
 	cmp	r1, #0
-	beq	.L786	@cond_branch
+	beq	.L784	@cond_branch
 	ldrh	r3, [r2, #0x34]
 	mov	r5, #0x34
 	ldrsh	r0, [r2, r5]
 	cmp	r0, r1
-	beq	.L786	@cond_branch
+	beq	.L784	@cond_branch
 	ldrb	r1, [r2, #0x4]
 	mov	r0, #0x80
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L786	@cond_branch
+	beq	.L784	@cond_branch
 	ldrh	r1, [r2, #0x2e]
 	sub	r1, r3, r1
 	lsl	r1, r1, #0x10
@@ -6065,20 +6070,20 @@ DecideReelTurns_NoBiasTag_Reel3_Bet3:
 	bl	AreTagsMixed77
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.L786	@cond_branch
+	beq	.L784	@cond_branch
 	mov	r1, #0x1
 	ldr	r0, [r4]
 	mov	r2, #0x34
 	ldrsh	r0, [r0, r2]
 	cmp	r0, #0x1
-	bne	.L788	@cond_branch
+	bne	.L786	@cond_branch
 	mov	r1, #0x3
-.L788:
+.L786:
 	mov	r3, #0x0
 	lsl	r1, r1, #0x10
 	mov	r8, r1
 	add	r7, r4, #0
-.L792:
+.L790:
 	ldr	r0, [r7]
 	ldrh	r2, [r0, #0x32]
 	lsl	r0, r3, #0x10
@@ -6094,26 +6099,26 @@ DecideReelTurns_NoBiasTag_Reel3_Bet3:
 	lsl	r0, r0, #0x18
 	lsr	r4, r0, #0x18
 	cmp	r6, r4
-	bne	.L791	@cond_branch
+	bne	.L789	@cond_branch
 	ldr	r1, [r7]
 	ldrh	r0, [r1, #0x32]
 	add	r0, r5, r0
 	strh	r0, [r1, #0x32]
-	b	.L786
-.L808:
+	b	.L784
+.L806:
 	.align	2, 0
-.L807:
+.L805:
 	.word	sSlotMachine
-.L791:
+.L789:
 	add	r0, r5, #0x1
 	lsl	r0, r0, #0x10
 	lsr	r3, r0, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, #0x4
-	ble	.L792	@cond_branch
-.L786:
-	ldr	r7, .L809
-.L797:
+	ble	.L790	@cond_branch
+.L784:
+	ldr	r7, .L807
+.L795:
 	ldr	r0, [r7]
 	ldrh	r0, [r0, #0x2e]
 	mov	r1, #0x1
@@ -6150,94 +6155,94 @@ DecideReelTurns_NoBiasTag_Reel3_Bet3:
 	bl	TagsDontMatchOrHaveAny7s
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	bne	.L796	@cond_branch
+	bne	.L794	@cond_branch
 	add	r0, r6, #0
 	add	r1, r5, #0
 	add	r2, r4, #0
 	bl	AreTagsMixed777
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.L798	@cond_branch
+	beq	.L796	@cond_branch
 	ldr	r0, [r7]
 	ldrb	r1, [r0, #0x4]
 	mov	r0, #0x80
 	and	r0, r0, r1
 	cmp	r0, #0
-	bne	.L796	@cond_branch
-.L798:
+	bne	.L794	@cond_branch
+.L796:
 	ldr	r1, [r7]
 	ldrh	r0, [r1, #0x32]
 	add	r0, r0, #0x1
 	strh	r0, [r1, #0x32]
-	b	.L797
+	b	.L795
+.L808:
+	.align	2, 0
+.L807:
+	.word	sSlotMachine
+.L794:
+	ldr	r7, .L809
+.L801:
+	ldr	r0, [r7]
+	ldrh	r0, [r0, #0x2e]
+	mov	r1, #0x3
+	sub	r1, r1, r0
+	lsl	r1, r1, #0x10
+	asr	r1, r1, #0x10
+	mov	r0, #0x0
+	bl	GetTag
+	lsl	r0, r0, #0x18
+	lsr	r6, r0, #0x18
+	ldr	r0, [r7]
+	ldrh	r0, [r0, #0x30]
+	mov	r1, #0x2
+	sub	r1, r1, r0
+	lsl	r1, r1, #0x10
+	asr	r1, r1, #0x10
+	mov	r0, #0x1
+	bl	GetTag
+	lsl	r0, r0, #0x18
+	lsr	r5, r0, #0x18
+	ldr	r0, [r7]
+	ldrh	r0, [r0, #0x32]
+	mov	r1, #0x1
+	sub	r1, r1, r0
+	lsl	r1, r1, #0x10
+	asr	r1, r1, #0x10
+	mov	r0, #0x2
+	bl	GetTag
+	lsl	r0, r0, #0x18
+	lsr	r4, r0, #0x18
+	add	r0, r6, #0
+	add	r1, r5, #0
+	add	r2, r4, #0
+	bl	TagsDontMatchOrHaveAny7s
+	lsl	r0, r0, #0x18
+	cmp	r0, #0
+	bne	.L800	@cond_branch
+	add	r0, r6, #0
+	add	r1, r5, #0
+	add	r2, r4, #0
+	bl	AreTagsMixed777
+	lsl	r0, r0, #0x18
+	cmp	r0, #0
+	beq	.L802	@cond_branch
+	ldr	r0, [r7]
+	ldrb	r1, [r0, #0x4]
+	mov	r0, #0x80
+	and	r0, r0, r1
+	cmp	r0, #0
+	bne	.L800	@cond_branch
+.L802:
+	ldr	r1, [r7]
+	ldrh	r0, [r1, #0x32]
+	add	r0, r0, #0x1
+	strh	r0, [r1, #0x32]
+	b	.L801
 .L810:
 	.align	2, 0
 .L809:
 	.word	sSlotMachine
-.L796:
-	ldr	r7, .L811
-.L803:
-	ldr	r0, [r7]
-	ldrh	r0, [r0, #0x2e]
-	mov	r1, #0x3
-	sub	r1, r1, r0
-	lsl	r1, r1, #0x10
-	asr	r1, r1, #0x10
-	mov	r0, #0x0
-	bl	GetTag
-	lsl	r0, r0, #0x18
-	lsr	r6, r0, #0x18
-	ldr	r0, [r7]
-	ldrh	r0, [r0, #0x30]
-	mov	r1, #0x2
-	sub	r1, r1, r0
-	lsl	r1, r1, #0x10
-	asr	r1, r1, #0x10
-	mov	r0, #0x1
-	bl	GetTag
-	lsl	r0, r0, #0x18
-	lsr	r5, r0, #0x18
-	ldr	r0, [r7]
-	ldrh	r0, [r0, #0x32]
-	mov	r1, #0x1
-	sub	r1, r1, r0
-	lsl	r1, r1, #0x10
-	asr	r1, r1, #0x10
-	mov	r0, #0x2
-	bl	GetTag
-	lsl	r0, r0, #0x18
-	lsr	r4, r0, #0x18
-	add	r0, r6, #0
-	add	r1, r5, #0
-	add	r2, r4, #0
-	bl	TagsDontMatchOrHaveAny7s
-	lsl	r0, r0, #0x18
-	cmp	r0, #0
-	bne	.L802	@cond_branch
-	add	r0, r6, #0
-	add	r1, r5, #0
-	add	r2, r4, #0
-	bl	AreTagsMixed777
-	lsl	r0, r0, #0x18
-	cmp	r0, #0
-	beq	.L804	@cond_branch
-	ldr	r0, [r7]
-	ldrb	r1, [r0, #0x4]
-	mov	r0, #0x80
-	and	r0, r0, r1
-	cmp	r0, #0
-	bne	.L802	@cond_branch
-.L804:
-	ldr	r1, [r7]
-	ldrh	r0, [r1, #0x32]
-	add	r0, r0, #0x1
-	strh	r0, [r1, #0x32]
-	b	.L803
-.L812:
-	.align	2, 0
-.L811:
-	.word	sSlotMachine
-.L802:
+.L800:
 	pop	{r3}
 	mov	r8, r3
 	pop	{r4, r5, r6, r7}
@@ -6253,13 +6258,13 @@ PressStopReelButton:
 	add	r4, r0, #0
 	lsl	r4, r4, #0x18
 	lsr	r4, r4, #0x18
-	ldr	r5, .L814
+	ldr	r5, .L812
 	add	r0, r5, #0
 	mov	r1, #0x5
 	bl	CreateTask
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
-	ldr	r2, .L814+0x4
+	ldr	r2, .L812+0x4
 	lsl	r1, r0, #0x2
 	add	r1, r1, r0
 	lsl	r1, r1, #0x3
@@ -6269,9 +6274,9 @@ PressStopReelButton:
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.L815:
+.L813:
 	.align	2, 0
-.L814:
+.L812:
 	.word	Task_PressStopReelButton
 	.word	gTasks
 .Lfe114:
@@ -6284,8 +6289,8 @@ Task_PressStopReelButton:
 	add	r1, r0, #0
 	lsl	r1, r1, #0x18
 	lsr	r1, r1, #0x18
-	ldr	r3, .L817
-	ldr	r2, .L817+0x4
+	ldr	r3, .L815
+	ldr	r2, .L815+0x4
 	lsl	r0, r1, #0x2
 	add	r0, r0, r1
 	lsl	r0, r0, #0x3
@@ -6299,9 +6304,9 @@ Task_PressStopReelButton:
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L818:
+.L816:
 	.align	2, 0
-.L817:
+.L815:
 	.word	sReelStopButtonFuncs
 	.word	gTasks
 .Lfe115:
@@ -6313,7 +6318,7 @@ StopReelButton_Press:
 	push	{r4, lr}
 	add	sp, sp, #-0x4
 	add	r4, r0, #0
-	ldr	r1, .L820
+	ldr	r1, .L818
 	mov	r2, #0x26
 	ldrsh	r0, [r4, r2]
 	lsl	r0, r0, #0x1
@@ -6333,9 +6338,9 @@ StopReelButton_Press:
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L821:
+.L819:
 	.align	2, 0
-.L820:
+.L818:
 	.word	sReelButtonOffsets
 .Lfe116:
 	.size	 StopReelButton_Press,.Lfe116-StopReelButton_Press
@@ -6351,11 +6356,11 @@ StopReelButton_Wait:
 	lsl	r0, r0, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, #0xb
-	ble	.L823	@cond_branch
+	ble	.L821	@cond_branch
 	ldrh	r0, [r1, #0x8]
 	add	r0, r0, #0x1
 	strh	r0, [r1, #0x8]
-.L823:
+.L821:
 	pop	{r0}
 	bx	r0
 .Lfe117:
@@ -6368,7 +6373,7 @@ StopReelButton_Unpress:
 	add	sp, sp, #-0x4
 	lsl	r4, r1, #0x18
 	lsr	r4, r4, #0x18
-	ldr	r1, .L825
+	ldr	r1, .L823
 	mov	r2, #0x26
 	ldrsh	r0, [r0, r2]
 	lsl	r0, r0, #0x1
@@ -6387,9 +6392,9 @@ StopReelButton_Unpress:
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L826:
+.L824:
 	.align	2, 0
-.L825:
+.L823:
 	.word	sReelButtonOffsets
 .Lfe118:
 	.size	 StopReelButton_Unpress,.Lfe118-StopReelButton_Unpress
@@ -6400,11 +6405,11 @@ LightenMatchLine:
 	push	{lr}
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
-	ldr	r2, .L828
+	ldr	r2, .L826
 	lsl	r1, r0, #0x2
 	add	r1, r1, r2
 	ldr	r2, [r1]
-	ldr	r1, .L828+0x4
+	ldr	r1, .L826+0x4
 	add	r0, r0, r1
 	ldrb	r1, [r0]
 	add	r0, r2, #0
@@ -6412,9 +6417,9 @@ LightenMatchLine:
 	bl	LoadPalette
 	pop	{r0}
 	bx	r0
-.L829:
+.L827:
 	.align	2, 0
-.L828:
+.L826:
 	.word	sLitMatchLinePalTable
 	.word	sMatchLinePalOffsets
 .Lfe119:
@@ -6426,11 +6431,11 @@ DarkenMatchLine:
 	push	{lr}
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
-	ldr	r2, .L831
+	ldr	r2, .L829
 	lsl	r1, r0, #0x2
 	add	r1, r1, r2
 	ldr	r2, [r1]
-	ldr	r1, .L831+0x4
+	ldr	r1, .L829+0x4
 	add	r0, r0, r1
 	ldrb	r1, [r0]
 	add	r0, r2, #0
@@ -6438,9 +6443,9 @@ DarkenMatchLine:
 	bl	LoadPalette
 	pop	{r0}
 	bx	r0
-.L832:
+.L830:
 	.align	2, 0
-.L831:
+.L829:
 	.word	sDarkMatchLinePalTable
 	.word	sMatchLinePalOffsets
 .Lfe120:
@@ -6453,15 +6458,15 @@ LightenBetTiles:
 	lsl	r0, r0, #0x18
 	lsr	r1, r0, #0x18
 	mov	r4, #0x0
-	ldr	r0, .L839
+	ldr	r0, .L837
 	add	r0, r1, r0
 	ldrb	r0, [r0]
 	cmp	r4, r0
-	bcs	.L835	@cond_branch
-	ldr	r7, .L839+0x4
+	bcs	.L833	@cond_branch
+	ldr	r7, .L837+0x4
 	add	r6, r0, #0
 	lsl	r5, r1, #0x1
-.L837:
+.L835:
 	add	r0, r4, r5
 	add	r0, r0, r7
 	ldrb	r0, [r0]
@@ -6470,14 +6475,14 @@ LightenBetTiles:
 	lsl	r0, r0, #0x18
 	lsr	r4, r0, #0x18
 	cmp	r4, r6
-	bcc	.L837	@cond_branch
-.L835:
+	bcc	.L835	@cond_branch
+.L833:
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L840:
+.L838:
 	.align	2, 0
-.L839:
+.L837:
 	.word	sMatchLinesPerBet
 	.word	sBetToMatchLineIds
 .Lfe121:
@@ -6490,15 +6495,15 @@ DarkenBetTiles:
 	lsl	r0, r0, #0x18
 	lsr	r1, r0, #0x18
 	mov	r4, #0x0
-	ldr	r0, .L847
+	ldr	r0, .L845
 	add	r0, r1, r0
 	ldrb	r0, [r0]
 	cmp	r4, r0
-	bcs	.L843	@cond_branch
-	ldr	r7, .L847+0x4
+	bcs	.L841	@cond_branch
+	ldr	r7, .L845+0x4
 	add	r6, r0, #0
 	lsl	r5, r1, #0x1
-.L845:
+.L843:
 	add	r0, r4, r5
 	add	r0, r0, r7
 	ldrb	r0, [r0]
@@ -6507,14 +6512,14 @@ DarkenBetTiles:
 	lsl	r0, r0, #0x18
 	lsr	r4, r0, #0x18
 	cmp	r4, r6
-	bcc	.L845	@cond_branch
-.L843:
+	bcc	.L843	@cond_branch
+.L841:
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L848:
+.L846:
 	.align	2, 0
-.L847:
+.L845:
 	.word	sMatchLinesPerBet
 	.word	sBetToMatchLineIds
 .Lfe122:
@@ -6525,9 +6530,9 @@ DarkenBetTiles:
 CreateInvisibleFlashMatchLineSprites:
 	push	{r4, r5, lr}
 	mov	r4, #0x0
-	ldr	r5, .L855
-.L853:
-	ldr	r0, .L855+0x4
+	ldr	r5, .L853
+.L851:
+	ldr	r0, .L853+0x4
 	bl	CreateInvisibleSprite
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
@@ -6536,7 +6541,7 @@ CreateInvisibleFlashMatchLineSprites:
 	lsl	r1, r1, #0x2
 	add	r1, r1, r5
 	strh	r4, [r1, #0x2e]
-	ldr	r1, .L855+0x8
+	ldr	r1, .L853+0x8
 	ldr	r1, [r1]
 	add	r1, r1, #0x44
 	add	r1, r1, r4
@@ -6545,13 +6550,13 @@ CreateInvisibleFlashMatchLineSprites:
 	lsl	r0, r0, #0x18
 	lsr	r4, r0, #0x18
 	cmp	r4, #0x4
-	bls	.L853	@cond_branch
+	bls	.L851	@cond_branch
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.L856:
+.L854:
 	.align	2, 0
-.L855:
+.L853:
 	.word	gSprites
 	.word	SpriteCB_FlashMatchingLines
 	.word	sSlotMachine
@@ -6563,7 +6568,7 @@ CreateInvisibleFlashMatchLineSprites:
 FlashMatchLine:
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
-	ldr	r1, .L858
+	ldr	r1, .L856
 	ldr	r1, [r1]
 	add	r1, r1, #0x44
 	add	r1, r1, r0
@@ -6571,7 +6576,7 @@ FlashMatchLine:
 	lsl	r0, r1, #0x4
 	add	r0, r0, r1
 	lsl	r0, r0, #0x2
-	ldr	r1, .L858+0x4
+	ldr	r1, .L856+0x4
 	add	r0, r0, r1
 	mov	r2, #0x0
 	mov	r1, #0x1
@@ -6584,9 +6589,9 @@ FlashMatchLine:
 	strh	r1, [r0, #0x38]
 	strh	r2, [r0, #0x3c]
 	bx	lr
-.L859:
+.L857:
 	.align	2, 0
-.L858:
+.L856:
 	.word	sSlotMachine
 	.word	gSprites
 .Lfe124:
@@ -6597,12 +6602,12 @@ FlashMatchLine:
 IsMatchLineDoneFlashingBeforePayout:
 	push	{r4, r5, lr}
 	mov	r2, #0x0
-	ldr	r0, .L868
+	ldr	r0, .L866
 	ldr	r0, [r0]
 	add	r3, r0, #0
 	add	r3, r3, #0x44
-	ldr	r4, .L868+0x4
-.L864:
+	ldr	r4, .L866+0x4
+.L862:
 	add	r0, r3, r2
 	ldrb	r1, [r0]
 	lsl	r0, r1, #0x4
@@ -6612,26 +6617,26 @@ IsMatchLineDoneFlashingBeforePayout:
 	mov	r5, #0x30
 	ldrsh	r0, [r1, r5]
 	cmp	r0, #0
-	beq	.L863	@cond_branch
+	beq	.L861	@cond_branch
 	mov	r5, #0x32
 	ldrsh	r0, [r1, r5]
 	cmp	r0, #0
-	beq	.L863	@cond_branch
+	beq	.L861	@cond_branch
 	mov	r0, #0x0
-	b	.L867
-.L869:
+	b	.L865
+.L867:
 	.align	2, 0
-.L868:
+.L866:
 	.word	sSlotMachine
 	.word	gSprites
-.L863:
+.L861:
 	add	r0, r2, #0x1
 	lsl	r0, r0, #0x18
 	lsr	r2, r0, #0x18
 	cmp	r2, #0x4
-	bls	.L864	@cond_branch
+	bls	.L862	@cond_branch
 	mov	r0, #0x1
-.L867:
+.L865:
 	pop	{r4, r5}
 	pop	{r1}
 	bx	r1
@@ -6643,8 +6648,8 @@ IsMatchLineDoneFlashingBeforePayout:
 TryStopMatchLinesFlashing:
 	push	{r4, lr}
 	mov	r4, #0x0
-.L874:
-	ldr	r0, .L878
+.L872:
+	ldr	r0, .L876
 	ldr	r0, [r0]
 	add	r0, r0, #0x44
 	add	r0, r0, r4
@@ -6652,21 +6657,21 @@ TryStopMatchLinesFlashing:
 	bl	TryStopMatchLineFlashing
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	bne	.L873	@cond_branch
+	bne	.L871	@cond_branch
 	mov	r0, #0x0
-	b	.L877
-.L879:
+	b	.L875
+.L877:
 	.align	2, 0
-.L878:
+.L876:
 	.word	sSlotMachine
-.L873:
+.L871:
 	add	r0, r4, #0x1
 	lsl	r0, r0, #0x18
 	lsr	r4, r0, #0x18
 	cmp	r4, #0x4
-	bls	.L874	@cond_branch
+	bls	.L872	@cond_branch
 	mov	r0, #0x1
-.L877:
+.L875:
 	pop	{r4}
 	pop	{r1}
 	bx	r1
@@ -6682,30 +6687,30 @@ TryStopMatchLineFlashing:
 	lsl	r1, r0, #0x4
 	add	r1, r1, r0
 	lsl	r1, r1, #0x2
-	ldr	r0, .L884
+	ldr	r0, .L882
 	add	r1, r1, r0
 	mov	r2, #0x30
 	ldrsh	r0, [r1, r2]
 	cmp	r0, #0
-	bne	.L881	@cond_branch
+	bne	.L879	@cond_branch
 	mov	r0, #0x1
-	b	.L883
-.L885:
+	b	.L881
+.L883:
 	.align	2, 0
-.L884:
+.L882:
 	.word	gSprites
-.L881:
+.L879:
 	ldrh	r2, [r1, #0x3c]
 	mov	r3, #0x3c
 	ldrsh	r0, [r1, r3]
 	cmp	r0, #0
-	beq	.L882	@cond_branch
+	beq	.L880	@cond_branch
 	mov	r0, #0x0
 	strh	r0, [r1, #0x30]
-.L882:
+.L880:
 	lsl	r0, r2, #0x18
 	lsr	r0, r0, #0x18
-.L883:
+.L881:
 	pop	{r1}
 	bx	r1
 .Lfe127:
@@ -6719,7 +6724,7 @@ SpriteCB_FlashMatchingLines:
 	mov	r1, #0x30
 	ldrsh	r0, [r2, r1]
 	cmp	r0, #0
-	beq	.L887	@cond_branch
+	beq	.L885	@cond_branch
 	ldrh	r0, [r2, #0x34]
 	sub	r0, r0, #0x1
 	strh	r0, [r2, #0x34]
@@ -6728,7 +6733,7 @@ SpriteCB_FlashMatchingLines:
 	mov	r1, #0x1
 	neg	r1, r1
 	cmp	r0, r1
-	bne	.L888	@cond_branch
+	bne	.L886	@cond_branch
 	mov	r0, #0x0
 	strh	r0, [r2, #0x3c]
 	mov	r6, #0x1
@@ -6742,36 +6747,36 @@ SpriteCB_FlashMatchingLines:
 	mov	r7, #0x32
 	ldrsh	r3, [r2, r7]
 	cmp	r3, #0
-	beq	.L889	@cond_branch
+	beq	.L887	@cond_branch
 	mov	r4, #0x8
-.L889:
+.L887:
 	lsl	r0, r0, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, #0
-	bgt	.L890	@cond_branch
+	bgt	.L888	@cond_branch
 	strh	r6, [r2, #0x3c]
 	neg	r0, r1
 	strh	r0, [r2, #0x38]
 	cmp	r3, #0
-	beq	.L888	@cond_branch
+	beq	.L886	@cond_branch
 	sub	r0, r5, #0x1
 	strh	r0, [r2, #0x32]
-	b	.L892
-.L890:
+	b	.L890
+.L888:
 	cmp	r0, r4
-	blt	.L892	@cond_branch
+	blt	.L890	@cond_branch
 	neg	r0, r1
 	strh	r0, [r2, #0x38]
-.L892:
+.L890:
 	mov	r1, #0x32
 	ldrsh	r0, [r2, r1]
 	cmp	r0, #0
-	beq	.L888	@cond_branch
+	beq	.L886	@cond_branch
 	ldrh	r0, [r2, #0x34]
 	lsl	r0, r0, #0x1
 	strh	r0, [r2, #0x34]
-.L888:
-	ldr	r1, .L895
+.L886:
+	ldr	r1, .L893
 	mov	r3, #0x2e
 	ldrsh	r0, [r2, r3]
 	add	r0, r0, r1
@@ -6782,13 +6787,13 @@ SpriteCB_FlashMatchingLines:
 	add	r1, r3, #0
 	add	r2, r3, #0
 	bl	MultiplyPaletteRGBComponents
-.L887:
+.L885:
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L896:
+.L894:
 	.align	2, 0
-.L895:
+.L893:
 	.word	sMatchLinePalOffsets
 .Lfe128:
 	.size	 SpriteCB_FlashMatchingLines,.Lfe128-SpriteCB_FlashMatchingLines
@@ -6797,13 +6802,13 @@ SpriteCB_FlashMatchingLines:
 	.thumb_func
 FlashSlotMachineLights:
 	push	{r4, lr}
-	ldr	r4, .L898
+	ldr	r4, .L896
 	add	r0, r4, #0
 	mov	r1, #0x6
 	bl	CreateTask
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
-	ldr	r2, .L898+0x4
+	ldr	r2, .L896+0x4
 	lsl	r1, r0, #0x2
 	add	r1, r1, r0
 	lsl	r1, r1, #0x3
@@ -6814,9 +6819,9 @@ FlashSlotMachineLights:
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L899:
+.L897:
 	.align	2, 0
-.L898:
+.L896:
 	.word	Task_FlashSlotMachineLights
 	.word	gTasks
 .Lfe129:
@@ -6826,11 +6831,11 @@ FlashSlotMachineLights:
 	.thumb_func
 TryStopSlotMachineLights:
 	push	{lr}
-	ldr	r0, .L903
+	ldr	r0, .L901
 	bl	FindTaskIdByFunc
 	lsl	r0, r0, #0x18
 	lsr	r2, r0, #0x18
-	ldr	r1, .L903+0x4
+	ldr	r1, .L901+0x4
 	lsl	r0, r2, #0x2
 	add	r0, r0, r2
 	lsl	r0, r0, #0x3
@@ -6838,29 +6843,29 @@ TryStopSlotMachineLights:
 	mov	r1, #0xc
 	ldrsh	r0, [r0, r1]
 	cmp	r0, #0
-	beq	.L901	@cond_branch
+	beq	.L899	@cond_branch
 	mov	r0, #0x0
-	b	.L902
-.L904:
+	b	.L900
+.L902:
 	.align	2, 0
-.L903:
+.L901:
 	.word	Task_FlashSlotMachineLights
 	.word	gTasks
-.L901:
+.L899:
 	add	r0, r2, #0
 	bl	DestroyTask
-	ldr	r0, .L905
+	ldr	r0, .L903
 	ldr	r0, [r0]
 	mov	r1, #0x10
 	mov	r2, #0x20
 	bl	LoadPalette
 	mov	r0, #0x1
-.L902:
+.L900:
 	pop	{r1}
 	bx	r1
-.L906:
+.L904:
 	.align	2, 0
-.L905:
+.L903:
 	.word	sSlotMachineMenu_Pal
 .Lfe130:
 	.size	 TryStopSlotMachineLights,.Lfe130-TryStopSlotMachineLights
@@ -6874,7 +6879,7 @@ Task_FlashSlotMachineLights:
 	lsl	r1, r0, #0x2
 	add	r1, r1, r0
 	lsl	r1, r1, #0x3
-	ldr	r0, .L911
+	ldr	r0, .L909
 	add	r2, r1, r0
 	ldrh	r0, [r2, #0xa]
 	sub	r0, r0, #0x1
@@ -6884,7 +6889,7 @@ Task_FlashSlotMachineLights:
 	mov	r1, #0x1
 	neg	r1, r1
 	cmp	r0, r1
-	bne	.L908	@cond_branch
+	bne	.L906	@cond_branch
 	mov	r0, #0x4
 	strh	r0, [r2, #0xa]
 	ldrh	r1, [r2, #0xe]
@@ -6894,14 +6899,14 @@ Task_FlashSlotMachineLights:
 	lsl	r0, r0, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, #0
-	beq	.L910	@cond_branch
+	beq	.L908	@cond_branch
 	cmp	r0, #0x2
-	bne	.L908	@cond_branch
-.L910:
+	bne	.L906	@cond_branch
+.L908:
 	neg	r0, r1
 	strh	r0, [r2, #0xe]
-.L908:
-	ldr	r0, .L911+0x4
+.L906:
+	ldr	r0, .L909+0x4
 	mov	r3, #0xc
 	ldrsh	r1, [r2, r3]
 	lsl	r1, r1, #0x2
@@ -6912,9 +6917,9 @@ Task_FlashSlotMachineLights:
 	bl	LoadPalette
 	pop	{r0}
 	bx	r0
-.L912:
+.L910:
 	.align	2, 0
-.L911:
+.L909:
 	.word	gTasks
 	.word	sFlashingLightsPalTable
 .Lfe131:
@@ -6924,18 +6929,18 @@ Task_FlashSlotMachineLights:
 	.thumb_func
 CreatePikaPowerBoltTask:
 	push	{lr}
-	ldr	r0, .L914
+	ldr	r0, .L912
 	mov	r1, #0x8
 	bl	CreateTask
-	ldr	r1, .L914+0x4
+	ldr	r1, .L912+0x4
 	ldr	r1, [r1]
 	add	r1, r1, #0x3e
 	strb	r0, [r1]
 	pop	{r0}
 	bx	r0
-.L915:
+.L913:
 	.align	2, 0
-.L914:
+.L912:
 	.word	Task_CreatePikaPowerBolt
 	.word	sSlotMachine
 .Lfe132:
@@ -6945,14 +6950,14 @@ CreatePikaPowerBoltTask:
 	.thumb_func
 AddPikaPowerBolt:
 	push	{r4, lr}
-	ldr	r0, .L917
+	ldr	r0, .L915
 	ldr	r0, [r0]
 	add	r0, r0, #0x3e
 	ldrb	r0, [r0]
 	lsl	r4, r0, #0x2
 	add	r4, r4, r0
 	lsl	r4, r4, #0x3
-	ldr	r0, .L917+0x4
+	ldr	r0, .L915+0x4
 	add	r4, r4, r0
 	add	r0, r4, #0
 	bl	ResetPikaPowerBoltTask
@@ -6965,9 +6970,9 @@ AddPikaPowerBolt:
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L918:
+.L916:
 	.align	2, 0
-.L917:
+.L915:
 	.word	sSlotMachine
 	.word	gTasks
 .Lfe133:
@@ -6977,14 +6982,14 @@ AddPikaPowerBolt:
 	.thumb_func
 ResetPikaPowerBolts:
 	push	{r4, lr}
-	ldr	r0, .L920
+	ldr	r0, .L918
 	ldr	r0, [r0]
 	add	r0, r0, #0x3e
 	ldrb	r0, [r0]
 	lsl	r4, r0, #0x2
 	add	r4, r4, r0
 	lsl	r4, r4, #0x3
-	ldr	r0, .L920+0x4
+	ldr	r0, .L918+0x4
 	add	r4, r4, r0
 	add	r0, r4, #0
 	bl	ResetPikaPowerBoltTask
@@ -6995,9 +7000,9 @@ ResetPikaPowerBolts:
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L921:
+.L919:
 	.align	2, 0
-.L920:
+.L918:
 	.word	sSlotMachine
 	.word	gTasks
 .Lfe134:
@@ -7006,8 +7011,8 @@ ResetPikaPowerBolts:
 	.type	 IsPikaPowerBoltAnimating,function
 	.thumb_func
 IsPikaPowerBoltAnimating:
-	ldr	r2, .L923
-	ldr	r0, .L923+0x4
+	ldr	r2, .L921
+	ldr	r0, .L921+0x4
 	ldr	r0, [r0]
 	add	r0, r0, #0x3e
 	ldrb	r1, [r0]
@@ -7019,9 +7024,9 @@ IsPikaPowerBoltAnimating:
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	bx	lr
-.L924:
+.L922:
 	.align	2, 0
-.L923:
+.L921:
 	.word	gTasks
 	.word	sSlotMachine
 .Lfe135:
@@ -7034,8 +7039,8 @@ Task_CreatePikaPowerBolt:
 	add	r1, r0, #0
 	lsl	r1, r1, #0x18
 	lsr	r1, r1, #0x18
-	ldr	r3, .L926
-	ldr	r2, .L926+0x4
+	ldr	r3, .L924
+	ldr	r2, .L924+0x4
 	lsl	r0, r1, #0x2
 	add	r0, r0, r1
 	lsl	r0, r0, #0x3
@@ -7048,9 +7053,9 @@ Task_CreatePikaPowerBolt:
 	bl	_call_via_r1
 	pop	{r0}
 	bx	r0
-.L927:
+.L925:
 	.align	2, 0
-.L926:
+.L924:
 	.word	sPikaPowerBoltFuncs
 	.word	gTasks
 .Lfe136:
@@ -7093,7 +7098,7 @@ PikaPowerBolt_AddBolt:
 PikaPowerBolt_WaitAnim:
 	push	{r4, r5, lr}
 	add	r4, r0, #0
-	ldr	r2, .L935
+	ldr	r2, .L933
 	mov	r0, #0xc
 	ldrsh	r1, [r4, r0]
 	lsl	r0, r1, #0x4
@@ -7103,7 +7108,7 @@ PikaPowerBolt_WaitAnim:
 	mov	r1, #0x3c
 	ldrsh	r0, [r0, r1]
 	cmp	r0, #0
-	beq	.L931	@cond_branch
+	beq	.L929	@cond_branch
 	ldrh	r1, [r4, #0xa]
 	add	r0, r1, #0x2
 	lsl	r0, r0, #0x10
@@ -7113,25 +7118,25 @@ PikaPowerBolt_WaitAnim:
 	lsl	r1, r1, #0x10
 	asr	r1, r1, #0x10
 	cmp	r1, #0x1
-	bne	.L932	@cond_branch
+	bne	.L930	@cond_branch
 	mov	r3, #0x1
 	mov	r2, #0x1
-	b	.L933
-.L936:
+	b	.L931
+.L934:
 	.align	2, 0
-.L935:
+.L933:
 	.word	gSprites
-.L932:
+.L930:
 	cmp	r1, #0x10
-	bne	.L933	@cond_branch
+	bne	.L931	@cond_branch
 	mov	r3, #0x2
 	mov	r2, #0x2
-.L933:
-	ldr	r0, .L937
+.L931:
+	ldr	r0, .L935
 	ldr	r0, [r0]
 	lsl	r1, r2, #0x1
 	add	r1, r1, r0
-	ldr	r2, .L937+0x4
+	ldr	r2, .L935+0x4
 	lsl	r0, r3, #0x2
 	add	r0, r0, r2
 	ldrh	r0, [r0]
@@ -7149,13 +7154,13 @@ PikaPowerBolt_WaitAnim:
 	mov	r0, #0x0
 	strh	r0, [r4, #0x8]
 	strh	r0, [r4, #0x26]
-.L931:
+.L929:
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.L938:
+.L936:
 	.align	2, 0
-.L937:
+.L935:
 	.word	sSelectedPikaPowerTile
 	.word	sPikaPowerTileTable
 .Lfe139:
@@ -7175,25 +7180,25 @@ PikaPowerBolt_ClearAll:
 	lsl	r1, r1, #0x10
 	asr	r1, r1, #0x10
 	cmp	r1, #0x1
-	bne	.L940	@cond_branch
+	bne	.L938	@cond_branch
 	mov	r3, #0x1
 	mov	r2, #0x1
-	b	.L941
-.L940:
+	b	.L939
+.L938:
 	cmp	r1, #0x10
-	bne	.L941	@cond_branch
+	bne	.L939	@cond_branch
 	mov	r3, #0x2
 	mov	r2, #0x2
-.L941:
+.L939:
 	mov	r1, #0xc
 	ldrsh	r0, [r4, r1]
 	cmp	r0, #0
-	bne	.L943	@cond_branch
-	ldr	r0, .L946
+	bne	.L941	@cond_branch
+	ldr	r0, .L944
 	ldr	r0, [r0]
 	lsl	r1, r2, #0x1
 	add	r1, r1, r0
-	ldr	r0, .L946+0x4
+	ldr	r0, .L944+0x4
 	lsl	r2, r3, #0x2
 	add	r0, r0, #0x2
 	add	r2, r2, r0
@@ -7210,30 +7215,30 @@ PikaPowerBolt_ClearAll:
 	ldrh	r0, [r4, #0xa]
 	sub	r0, r0, #0x1
 	strh	r0, [r4, #0xa]
-.L943:
+.L941:
 	ldrh	r0, [r4, #0xc]
 	add	r0, r0, #0x1
 	strh	r0, [r4, #0xc]
 	lsl	r0, r0, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, #0x13
-	ble	.L944	@cond_branch
+	ble	.L942	@cond_branch
 	mov	r0, #0x0
 	strh	r0, [r4, #0xc]
-.L944:
+.L942:
 	mov	r1, #0xa
 	ldrsh	r0, [r4, r1]
 	cmp	r0, #0
-	bne	.L945	@cond_branch
+	bne	.L943	@cond_branch
 	strh	r0, [r4, #0x8]
 	strh	r0, [r4, #0x26]
-.L945:
+.L943:
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.L947:
+.L945:
 	.align	2, 0
-.L946:
+.L944:
 	.word	sSelectedPikaPowerTile
 	.word	sPikaPowerTileTable
 .Lfe140:
@@ -7247,7 +7252,7 @@ ResetPikaPowerBoltTask:
 	add	r2, r0, #0
 	add	r2, r2, #0x8
 	mov	r3, #0x0
-.L952:
+.L950:
 	lsl	r0, r1, #0x1
 	add	r0, r2, r0
 	strh	r3, [r0]
@@ -7255,7 +7260,7 @@ ResetPikaPowerBoltTask:
 	lsl	r0, r0, #0x18
 	lsr	r1, r0, #0x18
 	cmp	r1, #0xf
-	bls	.L952	@cond_branch
+	bls	.L950	@cond_branch
 	pop	{r0}
 	bx	r0
 .Lfe141:
@@ -7270,29 +7275,29 @@ LoadPikaPowerMeter:
 	mov	r4, #0x3
 	mov	r5, #0x0
 	cmp	r5, r6
-	bge	.L956	@cond_branch
-	ldr	r7, .L972
-.L958:
+	bge	.L954	@cond_branch
+	ldr	r7, .L970
+.L956:
 	mov	r3, #0x0
 	mov	r1, #0x0
 	lsl	r0, r5, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, #0
-	bne	.L959	@cond_branch
+	bne	.L957	@cond_branch
 	mov	r3, #0x1
 	mov	r1, #0x1
-	b	.L960
-.L973:
+	b	.L958
+.L971:
 	.align	2, 0
-.L972:
+.L970:
 	.word	sPikaPowerTileTable
-.L959:
+.L957:
 	cmp	r0, #0xf
-	bne	.L960	@cond_branch
+	bne	.L958	@cond_branch
 	mov	r3, #0x2
 	mov	r1, #0x2
-.L960:
-	ldr	r0, .L974
+.L958:
+	ldr	r0, .L972
 	ldr	r0, [r0]
 	lsl	r1, r1, #0x1
 	add	r1, r1, r0
@@ -7319,34 +7324,34 @@ LoadPikaPowerMeter:
 	lsr	r5, r0, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, r6
-	blt	.L958	@cond_branch
-.L956:
+	blt	.L956	@cond_branch
+.L954:
 	lsl	r2, r5, #0x10
 	asr	r0, r2, #0x10
 	cmp	r0, #0xf
-	bgt	.L971	@cond_branch
-	ldr	r7, .L974+0x4
-.L966:
+	bgt	.L969	@cond_branch
+	ldr	r7, .L972+0x4
+.L964:
 	mov	r3, #0x0
 	mov	r1, #0x3
 	asr	r0, r2, #0x10
 	cmp	r0, #0
-	bne	.L967	@cond_branch
+	bne	.L965	@cond_branch
 	mov	r3, #0x1
 	mov	r1, #0x1
-	b	.L968
-.L975:
+	b	.L966
+.L973:
 	.align	2, 0
-.L974:
+.L972:
 	.word	sSelectedPikaPowerTile
 	.word	sPikaPowerTileTable+0x2
-.L967:
+.L965:
 	cmp	r0, #0xf
-	bne	.L968	@cond_branch
+	bne	.L966	@cond_branch
 	mov	r3, #0x2
 	mov	r1, #0x2
-.L968:
-	ldr	r0, .L976
+.L966:
+	ldr	r0, .L974
 	ldr	r0, [r0]
 	lsl	r1, r1, #0x1
 	add	r1, r1, r0
@@ -7374,10 +7379,10 @@ LoadPikaPowerMeter:
 	lsl	r2, r5, #0x10
 	asr	r0, r2, #0x10
 	cmp	r0, #0xf
-	ble	.L966	@cond_branch
-.L971:
-	ldr	r2, .L976+0x4
-	ldr	r0, .L976+0x8
+	ble	.L964	@cond_branch
+.L969:
+	ldr	r2, .L974+0x4
+	ldr	r0, .L974+0x8
 	ldr	r0, [r0]
 	add	r0, r0, #0x3e
 	ldrb	r1, [r0]
@@ -7389,9 +7394,9 @@ LoadPikaPowerMeter:
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L977:
+.L975:
 	.align	2, 0
-.L976:
+.L974:
 	.word	sSelectedPikaPowerTile
 	.word	gTasks
 	.word	sSlotMachine
@@ -7402,7 +7407,7 @@ LoadPikaPowerMeter:
 	.thumb_func
 BeginReelTime:
 	push	{r4, lr}
-	ldr	r4, .L979
+	ldr	r4, .L977
 	add	r0, r4, #0
 	mov	r1, #0x7
 	bl	CreateTask
@@ -7412,9 +7417,9 @@ BeginReelTime:
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L980:
+.L978:
 	.align	2, 0
-.L979:
+.L977:
 	.word	Task_ReelTime
 .Lfe143:
 	.size	 BeginReelTime,.Lfe143-BeginReelTime
@@ -7423,21 +7428,21 @@ BeginReelTime:
 	.thumb_func
 IsReelTimeTaskDone:
 	push	{lr}
-	ldr	r0, .L984
+	ldr	r0, .L982
 	bl	FindTaskIdByFunc
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	cmp	r0, #0xff
-	beq	.L982	@cond_branch
+	beq	.L980	@cond_branch
 	mov	r0, #0x0
-	b	.L983
-.L985:
-	.align	2, 0
-.L984:
-	.word	Task_ReelTime
-.L982:
-	mov	r0, #0x1
+	b	.L981
 .L983:
+	.align	2, 0
+.L982:
+	.word	Task_ReelTime
+.L980:
+	mov	r0, #0x1
+.L981:
 	pop	{r1}
 	bx	r1
 .Lfe144:
@@ -7450,8 +7455,8 @@ Task_ReelTime:
 	add	r1, r0, #0
 	lsl	r1, r1, #0x18
 	lsr	r1, r1, #0x18
-	ldr	r3, .L987
-	ldr	r2, .L987+0x4
+	ldr	r3, .L985
+	ldr	r2, .L985+0x4
 	lsl	r0, r1, #0x2
 	add	r0, r0, r1
 	lsl	r0, r0, #0x3
@@ -7464,9 +7469,9 @@ Task_ReelTime:
 	bl	_call_via_r1
 	pop	{r0}
 	bx	r0
-.L988:
+.L986:
 	.align	2, 0
-.L987:
+.L985:
 	.word	sReelTimeActions
 	.word	gTasks
 .Lfe145:
@@ -7476,7 +7481,7 @@ Task_ReelTime:
 	.thumb_func
 ReelTime_Init:
 	push	{lr}
-	ldr	r3, .L990
+	ldr	r3, .L988
 	ldr	r1, [r3]
 	mov	r2, #0x0
 	strb	r2, [r1, #0xa]
@@ -7492,9 +7497,9 @@ ReelTime_Init:
 	mov	r1, #0xa0
 	lsl	r1, r1, #0x3
 	strh	r1, [r0, #0x10]
-	ldr	r0, .L990+0x4
+	ldr	r0, .L988+0x4
 	strh	r2, [r0]
-	ldr	r0, .L990+0x8
+	ldr	r0, .L988+0x8
 	strh	r2, [r0]
 	mov	r0, #0x14
 	mov	r1, #0x0
@@ -7512,17 +7517,17 @@ ReelTime_Init:
 	bl	CreateReelTimeNumberGapSprite
 	bl	GetReeltimeDraw
 	bl	StopMapMusic
-	mov	r0, #0xc4
-	lsl	r0, r0, #0x1
+	ldr	r0, .L988+0xc
 	bl	PlayNewMapMusic
 	pop	{r0}
 	bx	r0
-.L991:
+.L989:
 	.align	2, 0
-.L990:
+.L988:
 	.word	sSlotMachine
 	.word	gSpriteCoordOffsetX
 	.word	gSpriteCoordOffsetY
+	.word	0x16b
 .Lfe146:
 	.size	 ReelTime_Init,.Lfe146-ReelTime_Init
 	.align	2, 0
@@ -7531,7 +7536,7 @@ ReelTime_Init:
 ReelTime_WindowEnter:
 	push	{r4, r5, lr}
 	add	r4, r0, #0
-	ldr	r1, .L995
+	ldr	r1, .L993
 	ldrh	r0, [r1]
 	sub	r0, r0, #0x8
 	strh	r0, [r1]
@@ -7544,7 +7549,7 @@ ReelTime_WindowEnter:
 	mov	r2, #0xff
 	and	r0, r0, r2
 	lsr	r5, r0, #0x3
-	ldr	r0, .L995+0x4
+	ldr	r0, .L993+0x4
 	and	r1, r1, r0
 	mov	r0, #0x14
 	bl	SetGpuReg
@@ -7552,11 +7557,11 @@ ReelTime_WindowEnter:
 	mov	r1, #0xc
 	ldrsh	r0, [r4, r1]
 	cmp	r2, r0
-	beq	.L993	@cond_branch
+	beq	.L991	@cond_branch
 	mov	r1, #0xe
 	ldrsh	r0, [r4, r1]
 	cmp	r0, #0x12
-	bgt	.L993	@cond_branch
+	bgt	.L991	@cond_branch
 	strh	r5, [r4, #0xc]
 	ldrh	r0, [r4, #0xa]
 	lsl	r0, r0, #0x10
@@ -7566,17 +7571,17 @@ ReelTime_WindowEnter:
 	ldrsh	r1, [r4, r0]
 	add	r0, r2, #0
 	bl	LoadReelTimeWindowTilemap
-.L993:
+.L991:
 	mov	r1, #0xa
 	ldrsh	r0, [r4, r1]
 	cmp	r0, #0xc7
-	ble	.L994	@cond_branch
+	ble	.L992	@cond_branch
 	ldrh	r0, [r4, #0x8]
 	add	r0, r0, #0x1
 	mov	r1, #0x0
 	strh	r0, [r4, #0x8]
 	strh	r1, [r4, #0xe]
-.L994:
+.L992:
 	ldrh	r0, [r4, #0x10]
 	lsl	r0, r0, #0x10
 	asr	r0, r0, #0x18
@@ -7584,9 +7589,9 @@ ReelTime_WindowEnter:
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.L996:
+.L994:
 	.align	2, 0
-.L995:
+.L993:
 	.word	gSpriteCoordOffsetX
 	.word	0x1ff
 .Lfe147:
@@ -7607,13 +7612,13 @@ ReelTime_WaitStartPikachu:
 	lsl	r0, r0, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, #0x3b
-	ble	.L998	@cond_branch
+	ble	.L996	@cond_branch
 	ldrh	r0, [r4, #0x8]
 	add	r0, r0, #0x1
 	strh	r0, [r4, #0x8]
 	bl	CreateReelTimeBoltSprites
 	bl	CreateReelTimePikachuAuraSprites
-.L998:
+.L996:
 	pop	{r4}
 	pop	{r0}
 	bx	r0
@@ -7628,17 +7633,17 @@ ReelTime_PikachuSpeedUp1:
 	push	{r7}
 	add	sp, sp, #-0x14
 	add	r7, r0, #0
-	ldr	r1, .L1001
+	ldr	r1, .L999
 	mov	r0, sp
 	mov	r2, #0x4
 	bl	memcpy
 	add	r0, sp, #0x4
 	mov	r8, r0
-	ldr	r1, .L1001+0x4
+	ldr	r1, .L999+0x4
 	mov	r2, #0x8
 	bl	memcpy
 	add	r6, sp, #0xc
-	ldr	r1, .L1001+0x8
+	ldr	r1, .L999+0x8
 	add	r0, r6, #0
 	mov	r2, #0x8
 	bl	memcpy
@@ -7663,14 +7668,14 @@ ReelTime_PikachuSpeedUp1:
 	mov	r1, #0x0
 	ldrsh	r0, [r6, r1]
 	bl	SetReelTimePikachuAuraFlashDelay
-	ldr	r0, .L1001+0xc
+	ldr	r0, .L999+0xc
 	ldr	r0, [r0]
 	add	r0, r0, #0x3f
 	ldrb	r1, [r0]
 	lsl	r0, r1, #0x4
 	add	r0, r0, r1
 	lsl	r0, r0, #0x2
-	ldr	r1, .L1001+0x10
+	ldr	r1, .L999+0x10
 	add	r0, r0, r1
 	mov	r2, sp
 	add	r1, r2, r5
@@ -7681,23 +7686,23 @@ ReelTime_PikachuSpeedUp1:
 	mov	r1, #0x80
 	lsl	r1, r1, #0x1
 	cmp	r0, r1
-	bgt	.L1000	@cond_branch
+	bgt	.L998	@cond_branch
 	ldrh	r0, [r7, #0x8]
 	add	r0, r0, #0x1
 	strh	r0, [r7, #0x8]
 	strh	r1, [r7, #0x10]
 	mov	r0, #0x0
 	strh	r0, [r7, #0x12]
-.L1000:
+.L998:
 	add	sp, sp, #0x14
 	pop	{r3}
 	mov	r8, r3
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L1002:
+.L1000:
 	.align	2, 0
-.L1001:
+.L999:
 	.word	sReelTimePikachuAnimIds
 	.word	sReelTimeBoltDelays
 	.word	sPikachuAuraFlashDelays
@@ -7721,7 +7726,7 @@ ReelTime_PikachuSpeedUp2:
 	lsl	r0, r0, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, #0x4f
-	ble	.L1004	@cond_branch
+	ble	.L1002	@cond_branch
 	ldrh	r0, [r4, #0x8]
 	add	r0, r0, #0x1
 	strh	r0, [r4, #0x8]
@@ -7729,24 +7734,24 @@ ReelTime_PikachuSpeedUp2:
 	strh	r0, [r4, #0x12]
 	mov	r0, #0x2
 	bl	SetReelTimePikachuAuraFlashDelay
-	ldr	r0, .L1005
+	ldr	r0, .L1003
 	ldr	r0, [r0]
 	add	r0, r0, #0x3f
 	ldrb	r1, [r0]
 	lsl	r0, r1, #0x4
 	add	r0, r0, r1
 	lsl	r0, r0, #0x2
-	ldr	r1, .L1005+0x4
+	ldr	r1, .L1003+0x4
 	add	r0, r0, r1
 	mov	r1, #0x3
 	bl	StartSpriteAnimIfDifferent
-.L1004:
+.L1002:
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L1006:
+.L1004:
 	.align	2, 0
-.L1005:
+.L1003:
 	.word	sSlotMachine
 	.word	gSprites
 .Lfe150:
@@ -7770,13 +7775,13 @@ ReelTime_WaitReel:
 	lsl	r0, r0, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, #0x4f
-	ble	.L1008	@cond_branch
+	ble	.L1006	@cond_branch
 	ldrh	r0, [r4, #0x8]
 	add	r0, r0, #0x1
 	strh	r0, [r4, #0x8]
 	mov	r0, #0x0
 	strh	r0, [r4, #0x12]
-.L1008:
+.L1006:
 	pop	{r4}
 	pop	{r0}
 	bx	r0
@@ -7801,48 +7806,48 @@ ReelTime_CheckExplode:
 	lsl	r0, r0, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, #0x27
-	ble	.L1010	@cond_branch
+	ble	.L1008	@cond_branch
 	mov	r0, #0x0
 	strh	r0, [r4, #0x12]
-	ldr	r0, .L1018
+	ldr	r0, .L1016
 	ldr	r1, [r0]
 	ldrb	r0, [r1, #0x5]
 	cmp	r0, #0
-	beq	.L1011	@cond_branch
+	beq	.L1009	@cond_branch
 	ldrb	r1, [r1, #0xa]
 	mov	r2, #0x14
 	ldrsh	r0, [r4, r2]
 	cmp	r1, r0
-	bgt	.L1013	@cond_branch
+	bgt	.L1011	@cond_branch
 	ldrh	r0, [r4, #0x8]
 	add	r0, r0, #0x1
-	b	.L1017
-.L1019:
+	b	.L1015
+.L1017:
 	.align	2, 0
-.L1018:
+.L1016:
 	.word	sSlotMachine
-.L1011:
+.L1009:
 	mov	r1, #0x14
 	ldrsh	r0, [r4, r1]
 	cmp	r0, #0x3
-	ble	.L1014	@cond_branch
+	ble	.L1012	@cond_branch
 	ldrh	r0, [r4, #0x8]
 	add	r0, r0, #0x1
-	b	.L1017
-.L1014:
+	b	.L1015
+.L1012:
 	ldrh	r0, [r4, #0x14]
 	bl	ShouldReelTimeMachineExplode
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.L1013	@cond_branch
+	beq	.L1011	@cond_branch
 	mov	r0, #0xe
-.L1017:
+.L1015:
 	strh	r0, [r4, #0x8]
-.L1013:
+.L1011:
 	ldrh	r0, [r4, #0x14]
 	add	r0, r0, #0x1
 	strh	r0, [r4, #0x14]
-.L1010:
+.L1008:
 	pop	{r4}
 	pop	{r0}
 	bx	r0
@@ -7854,7 +7859,7 @@ ReelTime_CheckExplode:
 ReelTime_LandOnOutcome:
 	push	{r4, r5, r6, lr}
 	add	r4, r0, #0
-	ldr	r6, .L1026
+	ldr	r6, .L1024
 	ldr	r0, [r6]
 	mov	r1, #0x14
 	ldrsh	r0, [r0, r1]
@@ -7863,17 +7868,17 @@ ReelTime_LandOnOutcome:
 	lsl	r0, r0, #0x10
 	lsr	r5, r0, #0x10
 	cmp	r0, #0
-	beq	.L1021	@cond_branch
+	beq	.L1019	@cond_branch
 	ldrh	r0, [r4, #0x10]
 	lsl	r0, r0, #0x10
 	asr	r0, r0, #0x18
 	bl	AdvanceReeltimeReelToNextTag
-	b	.L1025
-.L1027:
+	b	.L1023
+.L1025:
 	.align	2, 0
-.L1026:
+.L1024:
 	.word	sSlotMachine
-.L1021:
+.L1019:
 	mov	r0, #0x1
 	bl	GetNearbyReelTimeTag
 	ldr	r1, [r6]
@@ -7881,7 +7886,7 @@ ReelTime_LandOnOutcome:
 	lsr	r0, r0, #0x18
 	ldrb	r1, [r1, #0x5]
 	cmp	r0, r1
-	beq	.L1022	@cond_branch
+	beq	.L1020	@cond_branch
 	ldrh	r0, [r4, #0x10]
 	lsl	r0, r0, #0x10
 	asr	r0, r0, #0x18
@@ -7891,37 +7896,37 @@ ReelTime_LandOnOutcome:
 	ldrsh	r0, [r0, r1]
 	mov	r1, #0x14
 	bl	__modsi3
-.L1025:
+.L1023:
 	lsl	r0, r0, #0x10
 	lsr	r5, r0, #0x10
 	ldrb	r0, [r4, #0x10]
 	add	r0, r0, #0x40
 	strh	r0, [r4, #0x10]
-.L1022:
+.L1020:
 	lsl	r0, r5, #0x10
 	asr	r5, r0, #0x10
 	cmp	r5, #0
-	bne	.L1024	@cond_branch
+	bne	.L1022	@cond_branch
 	mov	r0, #0x1
 	bl	GetNearbyReelTimeTag
-	ldr	r1, .L1028
+	ldr	r1, .L1026
 	ldr	r1, [r1]
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	ldrb	r1, [r1, #0x5]
 	cmp	r0, r1
-	bne	.L1024	@cond_branch
+	bne	.L1022	@cond_branch
 	strh	r5, [r4, #0x10]
 	ldrh	r0, [r4, #0x8]
 	add	r0, r0, #0x1
 	strh	r0, [r4, #0x8]
-.L1024:
+.L1022:
 	pop	{r4, r5, r6}
 	pop	{r0}
 	bx	r0
-.L1029:
+.L1027:
 	.align	2, 0
-.L1028:
+.L1026:
 	.word	sSlotMachine
 .Lfe153:
 	.size	 ReelTime_LandOnOutcome,.Lfe153-ReelTime_LandOnOutcome
@@ -7938,18 +7943,18 @@ ReelTime_PikachuReact:
 	lsl	r0, r0, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, #0x3b
-	ble	.L1031	@cond_branch
+	ble	.L1029	@cond_branch
 	bl	StopMapMusic
 	bl	DestroyReelTimeBoltSprites
 	bl	DestroyReelTimePikachuAuraSprites
 	ldrh	r0, [r4, #0x8]
 	add	r0, r0, #0x1
 	strh	r0, [r4, #0x8]
-	ldr	r5, .L1035
+	ldr	r5, .L1033
 	ldr	r1, [r5]
 	ldrb	r0, [r1, #0x5]
 	cmp	r0, #0
-	bne	.L1032	@cond_branch
+	bne	.L1030	@cond_branch
 	mov	r0, #0xa0
 	strh	r0, [r4, #0x10]
 	add	r0, r1, #0
@@ -7958,20 +7963,20 @@ ReelTime_PikachuReact:
 	lsl	r0, r1, #0x4
 	add	r0, r0, r1
 	lsl	r0, r0, #0x2
-	ldr	r1, .L1035+0x4
+	ldr	r1, .L1033+0x4
 	add	r0, r0, r1
 	mov	r1, #0x5
 	bl	StartSpriteAnimIfDifferent
-	ldr	r0, .L1035+0x8
+	mov	r0, #0xb5
+	lsl	r0, r0, #0x1
 	bl	PlayFanfare
-	b	.L1031
-.L1036:
+	b	.L1029
+.L1034:
 	.align	2, 0
-.L1035:
+.L1033:
 	.word	sSlotMachine
 	.word	gSprites
-	.word	0x187
-.L1032:
+.L1030:
 	mov	r0, #0xc0
 	strh	r0, [r4, #0x10]
 	add	r0, r1, #0
@@ -7980,7 +7985,7 @@ ReelTime_PikachuReact:
 	lsl	r0, r1, #0x4
 	add	r0, r0, r1
 	lsl	r0, r0, #0x2
-	ldr	r4, .L1037
+	ldr	r4, .L1035
 	add	r0, r0, r4
 	mov	r1, #0x4
 	bl	StartSpriteAnimIfDifferent
@@ -7996,22 +8001,22 @@ ReelTime_PikachuReact:
 	ldr	r0, [r5]
 	ldrb	r0, [r0, #0x2]
 	cmp	r0, #0
-	beq	.L1034	@cond_branch
+	beq	.L1032	@cond_branch
 	bl	ResetPikaPowerBolts
 	ldr	r0, [r5]
 	strb	r6, [r0, #0x2]
-.L1034:
-	mov	r0, #0xc3
-	lsl	r0, r0, #0x1
+.L1032:
+	ldr	r0, .L1035+0x4
 	bl	PlayFanfare
-.L1031:
+.L1029:
 	pop	{r4, r5, r6}
 	pop	{r0}
 	bx	r0
-.L1038:
+.L1036:
 	.align	2, 0
-.L1037:
+.L1035:
 	.word	gSprites
+	.word	0x169
 .Lfe154:
 	.size	 ReelTime_PikachuReact,.Lfe154-ReelTime_PikachuReact
 	.align	2, 0
@@ -8024,21 +8029,21 @@ ReelTime_WaitClearPikaPower:
 	mov	r2, #0x10
 	ldrsh	r0, [r4, r2]
 	cmp	r0, #0
-	beq	.L1041	@cond_branch
+	beq	.L1039	@cond_branch
 	sub	r0, r1, #0x1
 	strh	r0, [r4, #0x10]
 	lsl	r0, r0, #0x10
 	cmp	r0, #0
-	bne	.L1040	@cond_branch
-.L1041:
+	bne	.L1038	@cond_branch
+.L1039:
 	bl	IsPikaPowerBoltAnimating
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	bne	.L1040	@cond_branch
+	bne	.L1038	@cond_branch
 	ldrh	r0, [r4, #0x8]
 	add	r0, r0, #0x1
 	strh	r0, [r4, #0x8]
-.L1040:
+.L1038:
 	pop	{r4}
 	pop	{r0}
 	bx	r0
@@ -8050,7 +8055,7 @@ ReelTime_WaitClearPikaPower:
 ReelTime_CloseWindow:
 	push	{r4, r5, lr}
 	add	r4, r0, #0
-	ldr	r1, .L1045
+	ldr	r1, .L1043
 	ldrh	r0, [r1]
 	sub	r0, r0, #0x8
 	strh	r0, [r1]
@@ -8066,7 +8071,7 @@ ReelTime_CloseWindow:
 	mov	r2, #0xff
 	and	r0, r0, r2
 	lsr	r5, r0, #0x3
-	ldr	r0, .L1045+0x4
+	ldr	r0, .L1043+0x4
 	and	r1, r1, r0
 	mov	r0, #0x14
 	bl	SetGpuReg
@@ -8074,20 +8079,20 @@ ReelTime_CloseWindow:
 	lsl	r0, r0, #0x10
 	asr	r0, r0, #0x13
 	cmp	r0, #0x19
-	bgt	.L1043	@cond_branch
+	bgt	.L1041	@cond_branch
 	add	r0, r5, #0
 	bl	ClearReelTimeWindowTilemap
-	b	.L1044
-.L1046:
+	b	.L1042
+.L1044:
 	.align	2, 0
-.L1045:
+.L1043:
 	.word	gSpriteCoordOffsetX
 	.word	0x1ff
-.L1043:
+.L1041:
 	ldrh	r0, [r4, #0x8]
 	add	r0, r0, #0x1
 	strh	r0, [r4, #0x8]
-.L1044:
+.L1042:
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
@@ -8099,14 +8104,14 @@ ReelTime_CloseWindow:
 ReelTime_DestroySprites:
 	push	{r4, r5, r6, lr}
 	add	r5, r0, #0
-	ldr	r4, .L1050
+	ldr	r4, .L1048
 	ldr	r0, [r4]
 	mov	r6, #0x0
 	strb	r6, [r0, #0xb]
 	ldr	r1, [r4]
 	ldrb	r0, [r1, #0x5]
 	strb	r0, [r1, #0xa]
-	ldr	r0, .L1050+0x4
+	ldr	r0, .L1048+0x4
 	strh	r6, [r0]
 	mov	r0, #0x14
 	mov	r1, #0x0
@@ -8124,20 +8129,20 @@ ReelTime_DestroySprites:
 	ldr	r0, [r4]
 	ldrb	r0, [r0, #0xa]
 	cmp	r0, #0
-	bne	.L1048	@cond_branch
-	ldr	r0, .L1050+0x8
+	bne	.L1046	@cond_branch
+	ldr	r0, .L1048+0x8
 	bl	FindTaskIdByFunc
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	bl	DestroyTask
-	b	.L1049
-.L1051:
+	b	.L1047
+.L1049:
 	.align	2, 0
-.L1050:
+.L1048:
 	.word	sSlotMachine
 	.word	gSpriteCoordOffsetX
 	.word	Task_ReelTime
-.L1048:
+.L1046:
 	mov	r0, #0x4
 	bl	CreateDigitalDisplayScene
 	bl	SlowReelSpeed
@@ -8147,7 +8152,7 @@ ReelTime_DestroySprites:
 	ldrh	r0, [r5, #0x8]
 	add	r0, r0, #0x1
 	strh	r0, [r5, #0x8]
-.L1049:
+.L1047:
 	pop	{r4, r5, r6}
 	pop	{r0}
 	bx	r0
@@ -8159,42 +8164,42 @@ ReelTime_DestroySprites:
 ReelTime_SetReelIncrement:
 	push	{r4, r5, lr}
 	add	r4, r0, #0
-	ldr	r0, .L1056
+	ldr	r0, .L1054
 	ldr	r5, [r0]
 	mov	r0, #0x1a
 	ldrsh	r1, [r5, r0]
 	mov	r2, #0xa
 	ldrsh	r0, [r4, r2]
 	cmp	r1, r0
-	bne	.L1053	@cond_branch
+	bne	.L1051	@cond_branch
 	ldrh	r0, [r4, #0x8]
 	add	r0, r0, #0x1
 	strh	r0, [r4, #0x8]
-	b	.L1054
-.L1057:
+	b	.L1052
+.L1055:
 	.align	2, 0
-.L1056:
+.L1054:
 	.word	sSlotMachine
-.L1053:
+.L1051:
 	mov	r1, #0x1c
 	ldrsh	r0, [r5, r1]
 	mov	r1, #0x18
 	bl	__modsi3
 	lsl	r0, r0, #0x10
 	cmp	r0, #0
-	bne	.L1054	@cond_branch
+	bne	.L1052	@cond_branch
 	ldrh	r0, [r4, #0xc]
 	add	r0, r0, #0x1
 	strh	r0, [r4, #0xc]
 	mov	r1, #0x7
 	and	r0, r0, r1
 	cmp	r0, #0
-	bne	.L1054	@cond_branch
+	bne	.L1052	@cond_branch
 	ldrh	r0, [r5, #0x1a]
 	lsl	r0, r0, #0x10
 	asr	r0, r0, #0x11
 	strh	r0, [r5, #0x1a]
-.L1054:
+.L1052:
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
@@ -8208,18 +8213,18 @@ ReelTime_EndSuccess:
 	bl	IsDigitalDisplayAnimFinished
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.L1059	@cond_branch
-	ldr	r0, .L1060
+	beq	.L1057	@cond_branch
+	ldr	r0, .L1058
 	bl	FindTaskIdByFunc
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	bl	DestroyTask
-.L1059:
+.L1057:
 	pop	{r0}
 	bx	r0
-.L1061:
+.L1059:
 	.align	2, 0
-.L1060:
+.L1058:
 	.word	Task_ReelTime
 .Lfe159:
 	.size	 ReelTime_EndSuccess,.Lfe159-ReelTime_EndSuccess
@@ -8233,8 +8238,8 @@ ReelTime_ExplodeMachine:
 	bl	DestroyReelTimeBoltSprites
 	bl	DestroyReelTimePikachuAuraSprites
 	bl	CreateReelTimeExplosionSprite
-	ldr	r5, .L1063
-	ldr	r3, .L1063+0x4
+	ldr	r5, .L1061
+	ldr	r3, .L1061+0x4
 	ldr	r0, [r3]
 	add	r0, r0, #0x4e
 	ldrb	r1, [r0]
@@ -8264,19 +8269,19 @@ ReelTime_ExplodeMachine:
 	strh	r0, [r4, #0x10]
 	strh	r1, [r4, #0x12]
 	bl	StopMapMusic
-	ldr	r0, .L1063+0x8
+	mov	r0, #0xb5
+	lsl	r0, r0, #0x1
 	bl	PlayFanfare
 	mov	r0, #0xb2
 	bl	PlaySE
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.L1064:
+.L1062:
 	.align	2, 0
-.L1063:
+.L1061:
 	.word	gSprites
 	.word	sSlotMachine
-	.word	0x187
 .Lfe160:
 	.size	 ReelTime_ExplodeMachine,.Lfe160-ReelTime_ExplodeMachine
 	.align	2, 0
@@ -8285,7 +8290,7 @@ ReelTime_ExplodeMachine:
 ReelTime_WaitExplode:
 	push	{r4, r5, lr}
 	add	r4, r0, #0
-	ldr	r1, .L1069
+	ldr	r1, .L1067
 	ldrh	r0, [r4, #0x10]
 	strh	r0, [r1]
 	ldrh	r1, [r4, #0x10]
@@ -8295,33 +8300,33 @@ ReelTime_WaitExplode:
 	mov	r0, #0x1
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L1066	@cond_branch
+	beq	.L1064	@cond_branch
 	ldrh	r0, [r4, #0x10]
 	neg	r0, r0
 	strh	r0, [r4, #0x10]
-.L1066:
+.L1064:
 	ldrh	r0, [r4, #0x12]
 	add	r0, r0, #0x1
 	strh	r0, [r4, #0x12]
 	mov	r1, #0x1f
 	and	r0, r0, r1
 	cmp	r0, #0
-	bne	.L1067	@cond_branch
+	bne	.L1065	@cond_branch
 	ldrh	r0, [r4, #0x10]
 	lsl	r0, r0, #0x10
 	asr	r0, r0, #0x11
 	strh	r0, [r4, #0x10]
-.L1067:
+.L1065:
 	mov	r0, #0x10
 	ldrsh	r5, [r4, r0]
 	cmp	r5, #0
-	bne	.L1068	@cond_branch
+	bne	.L1066	@cond_branch
 	bl	DestroyReelTimeExplosionSprite
 	bl	CreateReelTimeDuckSprites
 	bl	CreateBrokenReelTimeMachineSprite
 	bl	CreateReelTimeSmokeSprite
-	ldr	r2, .L1069+0x4
-	ldr	r0, .L1069+0x8
+	ldr	r2, .L1067+0x4
+	ldr	r0, .L1067+0x8
 	ldr	r0, [r0]
 	add	r0, r0, #0x4e
 	ldrb	r1, [r0]
@@ -8339,13 +8344,13 @@ ReelTime_WaitExplode:
 	add	r0, r0, #0x1
 	strh	r0, [r4, #0x8]
 	strh	r5, [r4, #0x12]
-.L1068:
+.L1066:
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.L1070:
+.L1068:
 	.align	2, 0
-.L1069:
+.L1067:
 	.word	gSpriteCoordOffsetY
 	.word	gSprites
 	.word	sSlotMachine
@@ -8357,7 +8362,7 @@ ReelTime_WaitExplode:
 ReelTime_WaitSmoke:
 	push	{r4, lr}
 	add	r4, r0, #0
-	ldr	r1, .L1073
+	ldr	r1, .L1071
 	mov	r0, #0x0
 	strh	r0, [r1]
 	mov	r0, #0x16
@@ -8366,18 +8371,18 @@ ReelTime_WaitSmoke:
 	bl	IsReelTimeSmokeAnimFinished
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.L1072	@cond_branch
+	beq	.L1070	@cond_branch
 	ldrh	r0, [r4, #0x8]
 	add	r0, r0, #0x1
 	strh	r0, [r4, #0x8]
 	bl	DestroyReelTimeSmokeSprite
-.L1072:
+.L1070:
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L1074:
+.L1072:
 	.align	2, 0
-.L1073:
+.L1071:
 	.word	gSpriteCoordOffsetY
 .Lfe162:
 	.size	 ReelTime_WaitSmoke,.Lfe162-ReelTime_WaitSmoke
@@ -8386,13 +8391,13 @@ ReelTime_WaitSmoke:
 	.thumb_func
 ReelTime_EndFailure:
 	push	{lr}
-	ldr	r1, .L1076
+	ldr	r1, .L1074
 	mov	r0, #0x0
 	strh	r0, [r1]
 	mov	r0, #0x14
 	mov	r1, #0x0
 	bl	SetGpuReg
-	ldr	r0, .L1076+0x4
+	ldr	r0, .L1074+0x4
 	ldr	r0, [r0]
 	add	r0, r0, #0x60
 	ldrh	r0, [r0]
@@ -8401,16 +8406,16 @@ ReelTime_EndFailure:
 	bl	DestroyBrokenReelTimeMachineSprite
 	bl	DestroyReelTimeShadowSprites
 	bl	DestroyReelTimeDuckSprites
-	ldr	r0, .L1076+0x8
+	ldr	r0, .L1074+0x8
 	bl	FindTaskIdByFunc
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	bl	DestroyTask
 	pop	{r0}
 	bx	r0
-.L1077:
+.L1075:
 	.align	2, 0
-.L1076:
+.L1074:
 	.word	gSpriteCoordOffsetX
 	.word	sSlotMachine
 	.word	Task_ReelTime
@@ -8426,7 +8431,7 @@ LoadReelTimeWindowTilemap:
 	asr	r6, r1, #0x10
 	lsl	r0, r0, #0x10
 	asr	r5, r0, #0x10
-.L1082:
+.L1080:
 	lsl	r4, r2, #0x10
 	asr	r4, r4, #0x10
 	sub	r0, r4, #0x4
@@ -8435,7 +8440,7 @@ LoadReelTimeWindowTilemap:
 	lsl	r1, r1, #0x2
 	add	r1, r6, r1
 	lsl	r1, r1, #0x1
-	ldr	r0, .L1084
+	ldr	r0, .L1082
 	add	r1, r1, r0
 	lsl	r3, r4, #0x5
 	add	r3, r5, r3
@@ -8449,13 +8454,13 @@ LoadReelTimeWindowTilemap:
 	lsr	r2, r4, #0x10
 	asr	r4, r4, #0x10
 	cmp	r4, #0xe
-	ble	.L1082	@cond_branch
+	ble	.L1080	@cond_branch
 	pop	{r4, r5, r6}
 	pop	{r0}
 	bx	r0
-.L1085:
+.L1083:
 	.align	2, 0
-.L1084:
+.L1082:
 	.word	sReelTimeWindow_Tilemap
 .Lfe164:
 	.size	 LoadReelTimeWindowTilemap,.Lfe164-LoadReelTimeWindowTilemap
@@ -8467,26 +8472,26 @@ ClearReelTimeWindowTilemap:
 	mov	r4, #0x4
 	lsl	r0, r0, #0x10
 	asr	r5, r0, #0x10
-.L1090:
+.L1088:
 	lsl	r3, r4, #0x5
 	add	r3, r5, r3
 	lsl	r3, r3, #0x10
 	lsr	r3, r3, #0x10
 	mov	r0, #0x1
-	ldr	r1, .L1092
+	ldr	r1, .L1090
 	mov	r2, #0x2
 	bl	LoadBgTilemap
 	add	r0, r4, #0x1
 	lsl	r0, r0, #0x18
 	lsr	r4, r0, #0x18
 	cmp	r4, #0xe
-	bls	.L1090	@cond_branch
+	bls	.L1088	@cond_branch
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.L1093:
+.L1091:
 	.align	2, 0
-.L1092:
+.L1090:
 	.word	sEmptyTilemap
 .Lfe165:
 	.size	 ClearReelTimeWindowTilemap,.Lfe165-ClearReelTimeWindowTilemap
@@ -8498,13 +8503,13 @@ OpenInfoBox:
 	add	r4, r0, #0
 	lsl	r4, r4, #0x18
 	lsr	r4, r4, #0x18
-	ldr	r5, .L1095
+	ldr	r5, .L1093
 	add	r0, r5, #0
 	mov	r1, #0x1
 	bl	CreateTask
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
-	ldr	r2, .L1095+0x4
+	ldr	r2, .L1093+0x4
 	lsl	r1, r0, #0x2
 	add	r1, r1, r0
 	lsl	r1, r1, #0x3
@@ -8514,9 +8519,9 @@ OpenInfoBox:
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.L1096:
+.L1094:
 	.align	2, 0
-.L1095:
+.L1093:
 	.word	RunInfoBoxActions
 	.word	gTasks
 .Lfe166:
@@ -8526,21 +8531,21 @@ OpenInfoBox:
 	.thumb_func
 IsInfoBoxClosed:
 	push	{lr}
-	ldr	r0, .L1101
+	ldr	r0, .L1099
 	bl	FindTaskIdByFunc
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	cmp	r0, #0xff
-	beq	.L1098	@cond_branch
+	beq	.L1096	@cond_branch
 	mov	r0, #0x0
-	b	.L1100
-.L1102:
-	.align	2, 0
-.L1101:
-	.word	RunInfoBoxActions
-.L1098:
-	mov	r0, #0x1
+	b	.L1098
 .L1100:
+	.align	2, 0
+.L1099:
+	.word	RunInfoBoxActions
+.L1096:
+	mov	r0, #0x1
+.L1098:
 	pop	{r1}
 	bx	r1
 .Lfe167:
@@ -8553,8 +8558,8 @@ RunInfoBoxActions:
 	add	r1, r0, #0
 	lsl	r1, r1, #0x18
 	lsr	r1, r1, #0x18
-	ldr	r3, .L1104
-	ldr	r2, .L1104+0x4
+	ldr	r3, .L1102
+	ldr	r2, .L1102+0x4
 	lsl	r0, r1, #0x2
 	add	r0, r0, r1
 	lsl	r0, r0, #0x3
@@ -8567,9 +8572,9 @@ RunInfoBoxActions:
 	bl	_call_via_r1
 	pop	{r0}
 	bx	r0
-.L1105:
+.L1103:
 	.align	2, 0
-.L1104:
+.L1102:
 	.word	sInfoBoxActions
 	.word	gTasks
 .Lfe168:
@@ -8603,21 +8608,21 @@ InfoBox_FadeIn:
 InfoBox_WaitForFade:
 	push	{lr}
 	add	r2, r0, #0
-	ldr	r0, .L1109
+	ldr	r0, .L1107
 	ldrb	r1, [r0, #0x7]
 	mov	r0, #0x80
 	and	r0, r0, r1
 	cmp	r0, #0
-	bne	.L1108	@cond_branch
+	bne	.L1106	@cond_branch
 	ldrh	r0, [r2, #0x8]
 	add	r0, r0, #0x1
 	strh	r0, [r2, #0x8]
-.L1108:
+.L1106:
 	pop	{r0}
 	bx	r0
-.L1110:
+.L1108:
 	.align	2, 0
-.L1109:
+.L1107:
 	.word	gPaletteFade
 .Lfe170:
 	.size	 InfoBox_WaitForFade,.Lfe170-InfoBox_WaitForFade
@@ -8629,7 +8634,7 @@ InfoBox_DrawWindow:
 	add	r4, r0, #0
 	bl	DestroyDigitalDisplayScene
 	bl	LoadInfoBoxTilemap
-	ldr	r0, .L1112
+	ldr	r0, .L1110
 	bl	AddWindow
 	mov	r0, #0x1
 	bl	PutWindowTilemap
@@ -8642,9 +8647,9 @@ InfoBox_DrawWindow:
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L1113:
+.L1111:
 	.align	2, 0
-.L1112:
+.L1110:
 	.word	sWindowTemplate_InfoBox
 .Lfe171:
 	.size	 InfoBox_DrawWindow,.Lfe171-InfoBox_DrawWindow
@@ -8655,11 +8660,11 @@ InfoBox_AddText:
 	push	{r4, r5, lr}
 	add	sp, sp, #-0xc
 	add	r5, r0, #0
-	ldr	r0, .L1115
+	ldr	r0, .L1113
 	str	r0, [sp]
 	mov	r4, #0x0
 	str	r4, [sp, #0x4]
-	ldr	r0, .L1115+0x4
+	ldr	r0, .L1113+0x4
 	str	r0, [sp, #0x8]
 	mov	r0, #0x1
 	mov	r1, #0x1
@@ -8683,9 +8688,9 @@ InfoBox_AddText:
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.L1116:
+.L1114:
 	.align	2, 0
-.L1115:
+.L1113:
 	.word	sColors_ReeltimeHelp
 	.word	gText_ReelTimeHelp
 .Lfe172:
@@ -8697,12 +8702,12 @@ InfoBox_AwaitPlayerInput:
 	push	{r4, lr}
 	add	sp, sp, #-0x4
 	add	r4, r0, #0
-	ldr	r0, .L1119
+	ldr	r0, .L1117
 	ldrh	r1, [r0, #0x2e]
 	mov	r0, #0x6
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L1118	@cond_branch
+	beq	.L1116	@cond_branch
 	mov	r0, #0x1
 	mov	r1, #0x0
 	bl	FillWindowPixelBuffer
@@ -8723,14 +8728,14 @@ InfoBox_AwaitPlayerInput:
 	ldrh	r0, [r4, #0x8]
 	add	r0, r0, #0x1
 	strh	r0, [r4, #0x8]
-.L1118:
+.L1116:
 	add	sp, sp, #0x4
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L1120:
+.L1118:
 	.align	2, 0
-.L1119:
+.L1117:
 	.word	gMain
 .Lfe173:
 	.size	 InfoBox_AwaitPlayerInput,.Lfe173-InfoBox_AwaitPlayerInput
@@ -8774,7 +8779,7 @@ InfoBox_LoadPikaPowerMeter:
 	push	{r4, lr}
 	add	sp, sp, #-0x4
 	add	r4, r0, #0
-	ldr	r0, .L1124
+	ldr	r0, .L1122
 	ldr	r0, [r0]
 	ldrb	r0, [r0, #0x2]
 	bl	LoadPikaPowerMeter
@@ -8792,9 +8797,9 @@ InfoBox_LoadPikaPowerMeter:
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L1125:
+.L1123:
 	.align	2, 0
-.L1124:
+.L1122:
 	.word	sSlotMachine
 .Lfe176:
 	.size	 InfoBox_LoadPikaPowerMeter,.Lfe176-InfoBox_LoadPikaPowerMeter
@@ -8803,16 +8808,16 @@ InfoBox_LoadPikaPowerMeter:
 	.thumb_func
 InfoBox_FreeTask:
 	push	{lr}
-	ldr	r0, .L1127
+	ldr	r0, .L1125
 	bl	FindTaskIdByFunc
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	bl	DestroyTask
 	pop	{r0}
 	bx	r0
-.L1128:
+.L1126:
 	.align	2, 0
-.L1127:
+.L1125:
 	.word	RunInfoBoxActions
 .Lfe177:
 	.size	 InfoBox_FreeTask,.Lfe177-InfoBox_FreeTask
@@ -8821,27 +8826,27 @@ InfoBox_FreeTask:
 	.thumb_func
 CreateDigitalDisplayTask:
 	push	{lr}
-	ldr	r0, .L1135
+	ldr	r0, .L1133
 	mov	r1, #0x3
 	bl	CreateTask
 	lsl	r0, r0, #0x18
 	lsr	r1, r0, #0x18
-	ldr	r0, .L1135+0x4
+	ldr	r0, .L1133+0x4
 	ldr	r0, [r0]
 	add	r0, r0, #0x3d
 	strb	r1, [r0]
 	lsl	r0, r1, #0x2
 	add	r0, r0, r1
 	lsl	r0, r0, #0x3
-	ldr	r1, .L1135+0x8
+	ldr	r1, .L1133+0x8
 	add	r0, r0, r1
-	ldr	r1, .L1135+0xc
+	ldr	r1, .L1133+0xc
 	strh	r1, [r0, #0xa]
 	mov	r1, #0x4
 	add	r2, r0, #0
 	add	r2, r2, #0x8
 	mov	r3, #0x40
-.L1133:
+.L1131:
 	lsl	r0, r1, #0x1
 	add	r0, r2, r0
 	strh	r3, [r0]
@@ -8849,12 +8854,12 @@ CreateDigitalDisplayTask:
 	lsl	r0, r0, #0x18
 	lsr	r1, r0, #0x18
 	cmp	r1, #0xf
-	bls	.L1133	@cond_branch
+	bls	.L1131	@cond_branch
 	pop	{r0}
 	bx	r0
-.L1136:
+.L1134:
 	.align	2, 0
-.L1135:
+.L1133:
 	.word	Task_DigitalDisplay
 	.word	sSlotMachine
 	.word	gTasks
@@ -8872,26 +8877,26 @@ CreateDigitalDisplayScene:
 	lsl	r4, r4, #0x18
 	lsr	r4, r4, #0x18
 	bl	DestroyDigitalDisplayScene
-	ldr	r0, .L1143
+	ldr	r0, .L1141
 	ldr	r0, [r0]
 	add	r0, r0, #0x3d
 	ldrb	r1, [r0]
 	lsl	r0, r1, #0x2
 	add	r0, r0, r1
 	lsl	r0, r0, #0x3
-	ldr	r1, .L1143+0x4
+	ldr	r1, .L1141+0x4
 	add	r7, r0, r1
 	strh	r4, [r7, #0xa]
 	mov	r6, #0x0
-	ldr	r1, .L1143+0x8
+	ldr	r1, .L1141+0x8
 	lsl	r5, r4, #0x2
 	add	r0, r5, r1
 	ldr	r0, [r0]
 	ldrb	r0, [r0]
 	cmp	r0, #0xff
-	beq	.L1139	@cond_branch
+	beq	.L1137	@cond_branch
 	mov	r8, r1
-.L1141:
+.L1139:
 	mov	r0, r8
 	add	r4, r5, r0
 	ldr	r0, [r4]
@@ -8918,16 +8923,16 @@ CreateDigitalDisplayScene:
 	add	r0, r0, r1
 	ldrb	r0, [r0]
 	cmp	r0, #0xff
-	bne	.L1141	@cond_branch
-.L1139:
+	bne	.L1139	@cond_branch
+.L1137:
 	pop	{r3}
 	mov	r8, r3
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L1144:
+.L1142:
 	.align	2, 0
-.L1143:
+.L1141:
 	.word	sSlotMachine
 	.word	gTasks
 	.word	sDigitalDisplayScenes
@@ -8945,14 +8950,14 @@ AddDigitalDisplaySprite:
 	ldr	r4, [sp, #0x1c]
 	lsl	r0, r0, #0x18
 	lsr	r7, r0, #0x18
-	ldr	r0, .L1152
+	ldr	r0, .L1150
 	ldr	r0, [r0]
 	add	r0, r0, #0x3d
 	ldrb	r1, [r0]
 	lsl	r0, r1, #0x2
 	add	r0, r0, r1
 	lsl	r0, r0, #0x3
-	ldr	r1, .L1152+0x4
+	ldr	r1, .L1150+0x4
 	add	r0, r0, r1
 	mov	ip, r0
 	mov	r5, #0x4
@@ -8960,7 +8965,7 @@ AddDigitalDisplaySprite:
 	asr	r6, r4, #0x10
 	lsl	r2, r2, #0x10
 	lsl	r3, r3, #0x10
-.L1149:
+.L1147:
 	lsl	r0, r5, #0x1
 	mov	r1, ip
 	add	r1, r1, #0x8
@@ -8968,7 +8973,7 @@ AddDigitalDisplaySprite:
 	mov	r1, #0x0
 	ldrsh	r0, [r4, r1]
 	cmp	r0, #0x40
-	bne	.L1148	@cond_branch
+	bne	.L1146	@cond_branch
 	str	r6, [sp]
 	add	r0, r7, #0
 	mov	r1, r8
@@ -8978,19 +8983,19 @@ AddDigitalDisplaySprite:
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	strh	r0, [r4]
-	b	.L1147
-.L1153:
+	b	.L1145
+.L1151:
 	.align	2, 0
-.L1152:
+.L1150:
 	.word	sSlotMachine
 	.word	gTasks
-.L1148:
+.L1146:
 	add	r0, r5, #0x1
 	lsl	r0, r0, #0x18
 	lsr	r5, r0, #0x18
 	cmp	r5, #0xf
-	bls	.L1149	@cond_branch
-.L1147:
+	bls	.L1147	@cond_branch
+.L1145:
 	add	sp, sp, #0x4
 	pop	{r3}
 	mov	r8, r3
@@ -9004,58 +9009,58 @@ AddDigitalDisplaySprite:
 	.thumb_func
 DestroyDigitalDisplayScene:
 	push	{r4, r5, r6, lr}
-	ldr	r0, .L1162
+	ldr	r0, .L1160
 	ldr	r0, [r0]
 	add	r0, r0, #0x3d
 	ldrb	r1, [r0]
 	lsl	r0, r1, #0x2
 	add	r0, r0, r1
 	lsl	r0, r0, #0x3
-	ldr	r1, .L1162+0x4
+	ldr	r1, .L1160+0x4
 	add	r4, r0, r1
 	ldrh	r1, [r4, #0xa]
-	ldr	r0, .L1162+0x8
+	ldr	r0, .L1160+0x8
 	cmp	r1, r0
-	beq	.L1155	@cond_branch
-	ldr	r0, .L1162+0xc
+	beq	.L1153	@cond_branch
+	ldr	r0, .L1160+0xc
 	mov	r2, #0xa
 	ldrsh	r1, [r4, r2]
 	lsl	r1, r1, #0x2
 	add	r1, r1, r0
 	ldr	r0, [r1]
 	bl	_call_via_r0
-.L1155:
+.L1153:
 	mov	r5, #0x4
 	add	r6, r4, #0
 	add	r6, r6, #0x8
-.L1159:
+.L1157:
 	lsl	r0, r5, #0x1
 	add	r4, r6, r0
 	mov	r1, #0x0
 	ldrsh	r0, [r4, r1]
 	cmp	r0, #0x40
-	beq	.L1158	@cond_branch
+	beq	.L1156	@cond_branch
 	add	r1, r0, #0
 	lsl	r0, r1, #0x4
 	add	r0, r0, r1
 	lsl	r0, r0, #0x2
-	ldr	r1, .L1162+0x10
+	ldr	r1, .L1160+0x10
 	add	r0, r0, r1
 	bl	DestroySprite
 	mov	r0, #0x40
 	strh	r0, [r4]
-.L1158:
+.L1156:
 	add	r0, r5, #0x1
 	lsl	r0, r0, #0x18
 	lsr	r5, r0, #0x18
 	cmp	r5, #0xf
-	bls	.L1159	@cond_branch
+	bls	.L1157	@cond_branch
 	pop	{r4, r5, r6}
 	pop	{r0}
 	bx	r0
-.L1163:
+.L1161:
 	.align	2, 0
-.L1162:
+.L1160:
 	.word	sSlotMachine
 	.word	gTasks
 	.word	0xffff
@@ -9068,26 +9073,26 @@ DestroyDigitalDisplayScene:
 	.thumb_func
 IsDigitalDisplayAnimFinished:
 	push	{r4, r5, lr}
-	ldr	r0, .L1173
+	ldr	r0, .L1171
 	ldr	r0, [r0]
 	add	r0, r0, #0x3d
 	ldrb	r1, [r0]
 	lsl	r0, r1, #0x2
 	add	r0, r0, r1
 	lsl	r0, r0, #0x3
-	ldr	r1, .L1173+0x4
+	ldr	r1, .L1171+0x4
 	add	r0, r0, r1
 	mov	r2, #0x4
 	add	r3, r0, #0
 	add	r3, r3, #0x8
-	ldr	r4, .L1173+0x8
-.L1168:
+	ldr	r4, .L1171+0x8
+.L1166:
 	lsl	r0, r2, #0x1
 	add	r1, r3, r0
 	mov	r5, #0x0
 	ldrsh	r0, [r1, r5]
 	cmp	r0, #0x40
-	beq	.L1167	@cond_branch
+	beq	.L1165	@cond_branch
 	lsl	r1, r0, #0x4
 	add	r1, r1, r0
 	lsl	r1, r1, #0x2
@@ -9095,23 +9100,23 @@ IsDigitalDisplayAnimFinished:
 	mov	r5, #0x3c
 	ldrsh	r0, [r1, r5]
 	cmp	r0, #0
-	beq	.L1167	@cond_branch
+	beq	.L1165	@cond_branch
 	mov	r0, #0x0
-	b	.L1172
-.L1174:
+	b	.L1170
+.L1172:
 	.align	2, 0
-.L1173:
+.L1171:
 	.word	sSlotMachine
 	.word	gTasks
 	.word	gSprites
-.L1167:
+.L1165:
 	add	r0, r2, #0x1
 	lsl	r0, r0, #0x18
 	lsr	r2, r0, #0x18
 	cmp	r2, #0xf
-	bls	.L1168	@cond_branch
+	bls	.L1166	@cond_branch
 	mov	r0, #0x1
-.L1172:
+.L1170:
 	pop	{r4, r5}
 	pop	{r1}
 	bx	r1
@@ -9125,8 +9130,8 @@ Task_DigitalDisplay:
 	add	r1, r0, #0
 	lsl	r1, r1, #0x18
 	lsr	r1, r1, #0x18
-	ldr	r3, .L1176
-	ldr	r2, .L1176+0x4
+	ldr	r3, .L1174
+	ldr	r2, .L1174+0x4
 	lsl	r0, r1, #0x2
 	add	r0, r0, r1
 	lsl	r0, r0, #0x3
@@ -9139,9 +9144,9 @@ Task_DigitalDisplay:
 	bl	_call_via_r1
 	pop	{r0}
 	bx	r0
-.L1177:
+.L1175:
 	.align	2, 0
-.L1176:
+.L1174:
 	.word	sDigitalDisplayActions
 	.word	gTasks
 .Lfe183:
@@ -9160,12 +9165,12 @@ CreateReelSymbolSprites:
 	push	{r4, r5, r6, r7, lr}
 	mov	r6, #0x0
 	mov	r0, #0x30
-.L1183:
+.L1181:
 	mov	r4, #0x0
 	lsl	r5, r0, #0x10
 	lsl	r7, r6, #0x10
-.L1187:
-	ldr	r0, .L1190
+.L1185:
+	ldr	r0, .L1188
 	asr	r1, r5, #0x10
 	mov	r2, #0x0
 	mov	r3, #0xe
@@ -9175,7 +9180,7 @@ CreateReelSymbolSprites:
 	lsl	r1, r0, #0x4
 	add	r1, r1, r0
 	lsl	r1, r1, #0x2
-	ldr	r0, .L1190+0x4
+	ldr	r0, .L1188+0x4
 	add	r1, r1, r0
 	ldrb	r0, [r1, #0x5]
 	mov	r2, #0xc
@@ -9183,7 +9188,7 @@ CreateReelSymbolSprites:
 	strb	r0, [r1, #0x5]
 	strh	r6, [r1, #0x2e]
 	strh	r4, [r1, #0x30]
-	ldr	r0, .L1190+0x8
+	ldr	r0, .L1188+0x8
 	strh	r0, [r1, #0x34]
 	lsl	r0, r4, #0x10
 	mov	r1, #0xc0
@@ -9192,7 +9197,7 @@ CreateReelSymbolSprites:
 	lsr	r4, r0, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, #0x77
-	ble	.L1187	@cond_branch
+	ble	.L1185	@cond_branch
 	mov	r2, #0x80
 	lsl	r2, r2, #0x9
 	add	r1, r7, r2
@@ -9203,13 +9208,13 @@ CreateReelSymbolSprites:
 	lsr	r6, r1, #0x10
 	asr	r1, r1, #0x10
 	cmp	r1, #0x2
-	ble	.L1183	@cond_branch
+	ble	.L1181	@cond_branch
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L1191:
+.L1189:
 	.align	2, 0
-.L1190:
+.L1188:
 	.word	sSpriteTemplate_ReelSymbol
 	.word	gSprites
 	.word	0xffff
@@ -9221,7 +9226,7 @@ CreateReelSymbolSprites:
 SpriteCB_ReelSymbol:
 	push	{r4, r5, lr}
 	add	r5, r0, #0
-	ldr	r0, .L1193
+	ldr	r0, .L1191
 	ldr	r4, [r0]
 	mov	r1, #0x2e
 	ldrsh	r0, [r5, r1]
@@ -9270,9 +9275,9 @@ SpriteCB_ReelSymbol:
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.L1194:
+.L1192:
 	.align	2, 0
-.L1193:
+.L1191:
 	.word	sSlotMachine
 .Lfe186:
 	.size	 SpriteCB_ReelSymbol,.Lfe186-SpriteCB_ReelSymbol
@@ -9283,8 +9288,8 @@ CreateCreditPayoutNumberSprites:
 	push	{r4, r5, r6, lr}
 	mov	r4, #0xcb
 	mov	r5, #0x1
-	ldr	r6, .L1206
-.L1199:
+	ldr	r6, .L1204
+.L1197:
 	lsl	r4, r4, #0x10
 	asr	r4, r4, #0x10
 	lsl	r5, r5, #0x10
@@ -9303,11 +9308,11 @@ CreateCreditPayoutNumberSprites:
 	lsr	r5, r0, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, r6
-	ble	.L1199	@cond_branch
+	ble	.L1197	@cond_branch
 	mov	r4, #0xeb
 	mov	r5, #0x1
-	ldr	r6, .L1206
-.L1204:
+	ldr	r6, .L1204
+.L1202:
 	lsl	r4, r4, #0x10
 	asr	r4, r4, #0x10
 	lsl	r5, r5, #0x10
@@ -9326,13 +9331,13 @@ CreateCreditPayoutNumberSprites:
 	lsr	r5, r0, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, r6
-	ble	.L1204	@cond_branch
+	ble	.L1202	@cond_branch
 	pop	{r4, r5, r6}
 	pop	{r0}
 	bx	r0
-.L1207:
+.L1205:
 	.align	2, 0
-.L1206:
+.L1204:
 	.word	0x270f
 .Lfe187:
 	.size	 CreateCreditPayoutNumberSprites,.Lfe187-CreateCreditPayoutNumberSprites
@@ -9353,7 +9358,7 @@ CreateCoinNumberSprite:
 	mov	r8, r0
 	lsl	r4, r4, #0x10
 	lsr	r4, r4, #0x10
-	ldr	r0, .L1209
+	ldr	r0, .L1207
 	lsl	r5, r5, #0x10
 	asr	r5, r5, #0x10
 	lsl	r6, r6, #0x10
@@ -9367,7 +9372,7 @@ CreateCoinNumberSprite:
 	lsl	r2, r0, #0x4
 	add	r2, r2, r0
 	lsl	r2, r2, #0x2
-	ldr	r0, .L1209+0x4
+	ldr	r0, .L1207+0x4
 	add	r2, r2, r0
 	ldrb	r1, [r2, #0x5]
 	mov	r0, #0xd
@@ -9385,16 +9390,16 @@ CreateCoinNumberSprite:
 	add	r0, r0, r4
 	lsl	r0, r0, #0x1
 	strh	r0, [r2, #0x32]
-	ldr	r0, .L1209+0x8
+	ldr	r0, .L1207+0x8
 	strh	r0, [r2, #0x34]
 	pop	{r3}
 	mov	r8, r3
 	pop	{r4, r5, r6}
 	pop	{r0}
 	bx	r0
-.L1210:
+.L1208:
 	.align	2, 0
-.L1209:
+.L1207:
 	.word	sSpriteTemplate_CoinNumber
 	.word	gSprites
 	.word	0xffff
@@ -9406,19 +9411,19 @@ CreateCoinNumberSprite:
 SpriteCB_CoinNumber:
 	push	{r4, lr}
 	add	r4, r0, #0
-	ldr	r0, .L1214
+	ldr	r0, .L1212
 	ldr	r1, [r0]
 	ldrh	r2, [r1, #0xc]
 	mov	r3, #0x2e
 	ldrsh	r0, [r4, r3]
 	cmp	r0, #0
-	beq	.L1212	@cond_branch
+	beq	.L1210	@cond_branch
 	ldrh	r2, [r1, #0xe]
-.L1212:
+.L1210:
 	mov	r1, #0x34
 	ldrsh	r0, [r4, r1]
 	cmp	r0, r2
-	beq	.L1213	@cond_branch
+	beq	.L1211	@cond_branch
 	strh	r2, [r4, #0x34]
 	ldrh	r1, [r4, #0x32]
 	add	r0, r2, #0
@@ -9440,13 +9445,13 @@ SpriteCB_CoinNumber:
 	strh	r0, [r1]
 	add	r0, r4, #0
 	bl	SetSpriteSheetFrameTileNum
-.L1213:
+.L1211:
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L1215:
+.L1213:
 	.align	2, 0
-.L1214:
+.L1212:
 	.word	sSlotMachine
 .Lfe189:
 	.size	 SpriteCB_CoinNumber,.Lfe189-SpriteCB_CoinNumber
@@ -9455,7 +9460,7 @@ SpriteCB_CoinNumber:
 	.thumb_func
 CreateReelBackgroundSprite:
 	push	{lr}
-	ldr	r0, .L1217
+	ldr	r0, .L1215
 	mov	r1, #0x58
 	mov	r2, #0x48
 	mov	r3, #0xf
@@ -9463,7 +9468,7 @@ CreateReelBackgroundSprite:
 	add	r1, r0, #0
 	lsl	r1, r1, #0x18
 	lsr	r1, r1, #0x18
-	ldr	r2, .L1217+0x4
+	ldr	r2, .L1215+0x4
 	lsl	r0, r1, #0x4
 	add	r0, r0, r1
 	lsl	r0, r0, #0x2
@@ -9472,13 +9477,13 @@ CreateReelBackgroundSprite:
 	mov	r2, #0xc
 	orr	r1, r1, r2
 	strb	r1, [r0, #0x5]
-	ldr	r1, .L1217+0x8
+	ldr	r1, .L1215+0x8
 	bl	SetSubspriteTables
 	pop	{r0}
 	bx	r0
-.L1218:
+.L1216:
 	.align	2, 0
-.L1217:
+.L1215:
 	.word	sSpriteTemplate_ReelBackground
 	.word	gSprites
 	.word	sSubspriteTable_ReelBackground
@@ -9490,16 +9495,16 @@ CreateReelBackgroundSprite:
 CreateReelTimePikachuSprite:
 	push	{r4, r5, lr}
 	add	sp, sp, #-0x18
-	ldr	r4, .L1221
+	ldr	r4, .L1219
 	ldr	r0, [r4]
 	cmp	r0, #0
-	bne	.L1220	@cond_branch
+	bne	.L1218	@cond_branch
 	mov	r0, #0x28
 	bl	AllocZeroed
 	str	r0, [r4]
-.L1220:
+.L1218:
 	ldr	r2, [r4]
-	ldr	r0, .L1221+0x4
+	ldr	r0, .L1219+0x4
 	ldr	r1, [r0]
 	str	r1, [r2]
 	mov	r3, #0x80
@@ -9524,7 +9529,7 @@ CreateReelTimePikachuSprite:
 	str	r1, [r2, #0x20]
 	strh	r3, [r2, #0x24]
 	mov	r1, sp
-	ldr	r0, .L1221+0x8
+	ldr	r0, .L1219+0x8
 	ldmia	r0!, {r3, r4, r5}
 	stmia	r1!, {r3, r4, r5}
 	ldmia	r0!, {r3, r4, r5}
@@ -9538,7 +9543,7 @@ CreateReelTimePikachuSprite:
 	bl	CreateSprite
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
-	ldr	r1, .L1221+0xc
+	ldr	r1, .L1219+0xc
 	lsl	r2, r0, #0x4
 	add	r2, r2, r0
 	lsl	r2, r2, #0x2
@@ -9555,7 +9560,7 @@ CreateReelTimePikachuSprite:
 	mov	r3, #0x2
 	orr	r1, r1, r3
 	strb	r1, [r2]
-	ldr	r1, .L1221+0x10
+	ldr	r1, .L1219+0x10
 	ldr	r1, [r1]
 	add	r1, r1, #0x3f
 	strb	r0, [r1]
@@ -9563,9 +9568,9 @@ CreateReelTimePikachuSprite:
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.L1222:
+.L1220:
 	.align	2, 0
-.L1221:
+.L1219:
 	.word	sImageTable_ReelTimePikachu
 	.word	sReelTimeGfxPtr
 	.word	sSpriteTemplate_ReelTimePikachu
@@ -9578,30 +9583,30 @@ CreateReelTimePikachuSprite:
 	.thumb_func
 DestroyReelTimePikachuSprite:
 	push	{r4, lr}
-	ldr	r0, .L1225
+	ldr	r0, .L1223
 	ldr	r0, [r0]
 	add	r0, r0, #0x3f
 	ldrb	r1, [r0]
 	lsl	r0, r1, #0x4
 	add	r0, r0, r1
 	lsl	r0, r0, #0x2
-	ldr	r1, .L1225+0x4
+	ldr	r1, .L1223+0x4
 	add	r0, r0, r1
 	bl	DestroySprite
-	ldr	r4, .L1225+0x8
+	ldr	r4, .L1223+0x8
 	ldr	r0, [r4]
 	cmp	r0, #0
-	beq	.L1224	@cond_branch
+	beq	.L1222	@cond_branch
 	bl	Free
 	mov	r0, #0x0
 	str	r0, [r4]
-.L1224:
+.L1222:
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L1226:
+.L1224:
 	.align	2, 0
-.L1225:
+.L1223:
 	.word	sSlotMachine
 	.word	gSprites
 	.word	sImageTable_ReelTimePikachu
@@ -9620,7 +9625,7 @@ SpriteCB_ReelTimePikachu:
 	add	r0, r0, #0x2a
 	ldrb	r0, [r0]
 	cmp	r0, #0x4
-	bne	.L1228	@cond_branch
+	bne	.L1226	@cond_branch
 	mov	r0, #0x8
 	strh	r0, [r2, #0x24]
 	strh	r0, [r2, #0x26]
@@ -9628,16 +9633,7 @@ SpriteCB_ReelTimePikachu:
 	add	r0, r0, #0x2b
 	ldrb	r0, [r0]
 	cmp	r0, #0
-	beq	.L1232	@cond_branch
-	add	r0, r2, #0
-	add	r0, r0, #0x2c
-	ldrb	r1, [r0]
-	mov	r0, #0x3f
-	and	r0, r0, r1
-	cmp	r0, #0
-	bne	.L1230	@cond_branch
-	b	.L1228
-.L1232:
+	beq	.L1230	@cond_branch
 	add	r0, r2, #0
 	add	r0, r0, #0x2c
 	ldrb	r1, [r0]
@@ -9645,15 +9641,24 @@ SpriteCB_ReelTimePikachu:
 	and	r0, r0, r1
 	cmp	r0, #0
 	bne	.L1228	@cond_branch
+	b	.L1226
 .L1230:
-	ldr	r0, .L1233
-	strh	r0, [r2, #0x26]
+	add	r0, r2, #0
+	add	r0, r0, #0x2c
+	ldrb	r1, [r0]
+	mov	r0, #0x3f
+	and	r0, r0, r1
+	cmp	r0, #0
+	bne	.L1226	@cond_branch
 .L1228:
+	ldr	r0, .L1231
+	strh	r0, [r2, #0x26]
+.L1226:
 	pop	{r0}
 	bx	r0
-.L1234:
+.L1232:
 	.align	2, 0
-.L1233:
+.L1231:
 	.word	0xfff8
 .Lfe193:
 	.size	 SpriteCB_ReelTimePikachu,.Lfe193-SpriteCB_ReelTimePikachu
@@ -9667,16 +9672,16 @@ CreateReelTimeMachineSprites:
 	mov	r5, r8
 	push	{r5, r6, r7}
 	add	sp, sp, #-0x18
-	ldr	r4, .L1238
+	ldr	r4, .L1236
 	ldr	r0, [r4]
 	cmp	r0, #0
-	bne	.L1236	@cond_branch
+	bne	.L1234	@cond_branch
 	mov	r0, #0x8
 	bl	AllocZeroed
 	str	r0, [r4]
-.L1236:
+.L1234:
 	ldr	r2, [r4]
-	ldr	r0, .L1238+0x4
+	ldr	r0, .L1236+0x4
 	mov	sl, r0
 	ldr	r0, [r0]
 	mov	r1, #0xa0
@@ -9687,7 +9692,7 @@ CreateReelTimeMachineSprites:
 	lsl	r0, r0, #0x2
 	strh	r0, [r2, #0x4]
 	mov	r1, sp
-	ldr	r0, .L1238+0x8
+	ldr	r0, .L1236+0x8
 	ldmia	r0!, {r3, r4, r5}
 	stmia	r1!, {r3, r4, r5}
 	ldmia	r0!, {r3, r4, r7}
@@ -9704,7 +9709,7 @@ CreateReelTimeMachineSprites:
 	lsl	r0, r4, #0x4
 	add	r0, r0, r4
 	lsl	r0, r0, #0x2
-	ldr	r5, .L1238+0xc
+	ldr	r5, .L1236+0xc
 	mov	r9, r5
 	add	r2, r0, r5
 	ldrb	r1, [r2, #0x5]
@@ -9722,21 +9727,21 @@ CreateReelTimeMachineSprites:
 	mov	r6, #0x2
 	orr	r0, r0, r6
 	strb	r0, [r1]
-	ldr	r1, .L1238+0x10
+	ldr	r1, .L1236+0x10
 	add	r0, r2, #0
 	bl	SetSubspriteTables
-	ldr	r5, .L1238+0x14
+	ldr	r5, .L1236+0x14
 	ldr	r0, [r5]
 	add	r0, r0, #0x49
 	strb	r4, [r0]
-	ldr	r4, .L1238+0x18
+	ldr	r4, .L1236+0x18
 	ldr	r0, [r4]
 	cmp	r0, #0
-	bne	.L1237	@cond_branch
+	bne	.L1235	@cond_branch
 	mov	r0, #0x8
 	bl	AllocZeroed
 	str	r0, [r4]
-.L1237:
+.L1235:
 	ldr	r2, [r4]
 	mov	r3, sl
 	ldr	r0, [r3]
@@ -9748,7 +9753,7 @@ CreateReelTimeMachineSprites:
 	lsl	r0, r0, #0x3
 	strh	r0, [r2, #0x4]
 	mov	r1, sp
-	ldr	r0, .L1238+0x1c
+	ldr	r0, .L1236+0x1c
 	ldmia	r0!, {r3, r4, r7}
 	stmia	r1!, {r3, r4, r7}
 	ldmia	r0!, {r3, r4, r7}
@@ -9778,7 +9783,7 @@ CreateReelTimeMachineSprites:
 	ldrb	r0, [r1]
 	orr	r0, r0, r6
 	strb	r0, [r1]
-	ldr	r1, .L1238+0x20
+	ldr	r1, .L1236+0x20
 	add	r0, r2, #0
 	bl	SetSubspriteTables
 	ldr	r0, [r5]
@@ -9792,9 +9797,9 @@ CreateReelTimeMachineSprites:
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L1239:
+.L1237:
 	.align	2, 0
-.L1238:
+.L1236:
 	.word	sImageTable_ReelTimeMachineAntennae
 	.word	sReelTimeGfxPtr
 	.word	sSpriteTemplate_ReelTimeMachineAntennae
@@ -9812,16 +9817,16 @@ CreateReelTimeMachineSprites:
 CreateBrokenReelTimeMachineSprite:
 	push	{r4, r5, lr}
 	add	sp, sp, #-0x18
-	ldr	r4, .L1242
+	ldr	r4, .L1240
 	ldr	r0, [r4]
 	cmp	r0, #0
-	bne	.L1241	@cond_branch
+	bne	.L1239	@cond_branch
 	mov	r0, #0x8
 	bl	AllocZeroed
 	str	r0, [r4]
-.L1241:
+.L1239:
 	ldr	r2, [r4]
-	ldr	r0, .L1242+0x4
+	ldr	r0, .L1240+0x4
 	ldr	r0, [r0]
 	mov	r1, #0xc0
 	lsl	r1, r1, #0x6
@@ -9831,13 +9836,13 @@ CreateBrokenReelTimeMachineSprite:
 	lsl	r0, r0, #0x3
 	strh	r0, [r2, #0x4]
 	mov	r1, sp
-	ldr	r0, .L1242+0x8
+	ldr	r0, .L1240+0x8
 	ldmia	r0!, {r3, r4, r5}
 	stmia	r1!, {r3, r4, r5}
 	ldmia	r0!, {r3, r4, r5}
 	stmia	r1!, {r3, r4, r5}
 	str	r2, [sp, #0xc]
-	ldr	r0, .L1242+0xc
+	ldr	r0, .L1240+0xc
 	ldrh	r0, [r0]
 	mov	r1, #0xa8
 	sub	r1, r1, r0
@@ -9853,7 +9858,7 @@ CreateBrokenReelTimeMachineSprite:
 	lsl	r0, r4, #0x4
 	add	r0, r0, r4
 	lsl	r0, r0, #0x2
-	ldr	r1, .L1242+0x10
+	ldr	r1, .L1240+0x10
 	add	r0, r0, r1
 	ldrb	r2, [r0, #0x5]
 	mov	r1, #0xd
@@ -9868,9 +9873,9 @@ CreateBrokenReelTimeMachineSprite:
 	mov	r2, #0x2
 	orr	r1, r1, r2
 	strb	r1, [r3]
-	ldr	r1, .L1242+0x14
+	ldr	r1, .L1240+0x14
 	bl	SetSubspriteTables
-	ldr	r0, .L1242+0x18
+	ldr	r0, .L1240+0x18
 	ldr	r0, [r0]
 	add	r0, r0, #0x42
 	strb	r4, [r0]
@@ -9878,9 +9883,9 @@ CreateBrokenReelTimeMachineSprite:
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.L1243:
+.L1241:
 	.align	2, 0
-.L1242:
+.L1240:
 	.word	sImageTable_BrokenReelTimeMachine
 	.word	sReelTimeGfxPtr
 	.word	sSpriteTemplate_BrokenReelTimeMachine
@@ -9897,8 +9902,8 @@ CreateReelTimeNumberSprites:
 	push	{r4, r5, r6, lr}
 	mov	r4, #0x0
 	mov	r5, #0x0
-.L1248:
-	ldr	r0, .L1250
+.L1246:
+	ldr	r0, .L1248
 	mov	r1, #0xb8
 	lsl	r1, r1, #0x1
 	mov	r2, #0x0
@@ -9909,7 +9914,7 @@ CreateReelTimeNumberSprites:
 	lsl	r3, r0, #0x4
 	add	r3, r3, r0
 	lsl	r3, r3, #0x2
-	ldr	r1, .L1250+0x4
+	ldr	r1, .L1248+0x4
 	add	r3, r3, r1
 	ldrb	r2, [r3, #0x5]
 	mov	r6, #0xd
@@ -9928,7 +9933,7 @@ CreateReelTimeNumberSprites:
 	mov	r2, ip
 	strb	r1, [r2]
 	strh	r5, [r3, #0x3c]
-	ldr	r1, .L1250+0x8
+	ldr	r1, .L1248+0x8
 	ldr	r1, [r1]
 	add	r1, r1, #0x4b
 	add	r1, r1, r4
@@ -9942,13 +9947,13 @@ CreateReelTimeNumberSprites:
 	add	r0, r0, r6
 	lsr	r5, r0, #0x10
 	cmp	r4, #0x2
-	bls	.L1248	@cond_branch
+	bls	.L1246	@cond_branch
 	pop	{r4, r5, r6}
 	pop	{r0}
 	bx	r0
-.L1251:
+.L1249:
 	.align	2, 0
-.L1250:
+.L1248:
 	.word	sSpriteTemplate_ReelTimeNumbers
 	.word	gSprites
 	.word	sSlotMachine
@@ -9960,7 +9965,7 @@ CreateReelTimeNumberSprites:
 SpriteCB_ReelTimeNumbers:
 	push	{r4, lr}
 	add	r4, r0, #0
-	ldr	r0, .L1253
+	ldr	r0, .L1251
 	ldr	r1, [r0]
 	ldrh	r0, [r4, #0x3c]
 	ldrh	r1, [r1, #0x14]
@@ -9987,9 +9992,9 @@ SpriteCB_ReelTimeNumbers:
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L1254:
+.L1252:
 	.align	2, 0
-.L1253:
+.L1251:
 	.word	sSlotMachine
 .Lfe197:
 	.size	 SpriteCB_ReelTimeNumbers,.Lfe197-SpriteCB_ReelTimeNumbers
@@ -10004,7 +10009,7 @@ CreateReelTimeShadowSprites:
 	push	{r5, r6, r7}
 	mov	r1, #0xb8
 	lsl	r1, r1, #0x1
-	ldr	r0, .L1256
+	ldr	r0, .L1254
 	mov	r2, #0x64
 	mov	r3, #0x9
 	bl	CreateSprite
@@ -10014,7 +10019,7 @@ CreateReelTimeShadowSprites:
 	lsl	r0, r4, #0x4
 	add	r0, r0, r4
 	lsl	r0, r0, #0x2
-	ldr	r7, .L1256+0x4
+	ldr	r7, .L1254+0x4
 	add	r2, r0, r7
 	add	r1, r2, #0
 	add	r1, r1, #0x3e
@@ -10034,18 +10039,18 @@ CreateReelTimeShadowSprites:
 	mov	r3, r8
 	orr	r0, r0, r3
 	strb	r0, [r2, #0x5]
-	ldr	r0, .L1256+0x8
+	ldr	r0, .L1254+0x8
 	mov	r9, r0
 	add	r0, r2, #0
 	mov	r1, r9
 	bl	SetSubspriteTables
-	ldr	r6, .L1256+0xc
+	ldr	r6, .L1254+0xc
 	ldr	r0, [r6]
 	add	r0, r0, #0x4e
 	strb	r4, [r0]
 	mov	r1, #0x90
 	lsl	r1, r1, #0x1
-	ldr	r0, .L1256
+	ldr	r0, .L1254
 	mov	r2, #0x68
 	mov	r3, #0x4
 	bl	CreateSprite
@@ -10080,9 +10085,9 @@ CreateReelTimeShadowSprites:
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L1257:
+.L1255:
 	.align	2, 0
-.L1256:
+.L1254:
 	.word	sSpriteTemplate_ReelTimeShadow
 	.word	gSprites
 	.word	sSubspriteTable_ReelTimeShadow
@@ -10094,7 +10099,7 @@ CreateReelTimeShadowSprites:
 	.thumb_func
 CreateReelTimeNumberGapSprite:
 	push	{r4, lr}
-	ldr	r0, .L1259
+	ldr	r0, .L1257
 	mov	r1, #0xb8
 	lsl	r1, r1, #0x1
 	mov	r2, #0x4c
@@ -10106,7 +10111,7 @@ CreateReelTimeNumberGapSprite:
 	lsl	r0, r4, #0x4
 	add	r0, r0, r4
 	lsl	r0, r0, #0x2
-	ldr	r1, .L1259+0x4
+	ldr	r1, .L1257+0x4
 	add	r0, r0, r1
 	add	r3, r0, #0
 	add	r3, r3, #0x3e
@@ -10121,18 +10126,18 @@ CreateReelTimeNumberGapSprite:
 	mov	r2, #0x4
 	orr	r1, r1, r2
 	strb	r1, [r0, #0x5]
-	ldr	r1, .L1259+0x8
+	ldr	r1, .L1257+0x8
 	bl	SetSubspriteTables
-	ldr	r0, .L1259+0xc
+	ldr	r0, .L1257+0xc
 	ldr	r0, [r0]
 	add	r0, r0, #0x40
 	strb	r4, [r0]
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L1260:
+.L1258:
 	.align	2, 0
-.L1259:
+.L1257:
 	.word	sSpriteTemplate_ReelTimeNumberGap
 	.word	gSprites
 	.word	sSubspriteTable_ReelTimeNumberGap
@@ -10144,19 +10149,19 @@ CreateReelTimeNumberGapSprite:
 	.thumb_func
 DestroyReelTimeMachineSprites:
 	push	{r4, lr}
-	ldr	r0, .L1274
+	ldr	r0, .L1272
 	ldr	r0, [r0]
 	add	r0, r0, #0x40
 	ldrb	r1, [r0]
 	lsl	r0, r1, #0x4
 	add	r0, r0, r1
 	lsl	r0, r0, #0x2
-	ldr	r1, .L1274+0x4
+	ldr	r1, .L1272+0x4
 	add	r0, r0, r1
 	bl	DestroySprite
 	mov	r4, #0x0
-.L1265:
-	ldr	r0, .L1274
+.L1263:
+	ldr	r0, .L1272
 	ldr	r0, [r0]
 	add	r0, r0, #0x49
 	add	r0, r0, r4
@@ -10164,33 +10169,33 @@ DestroyReelTimeMachineSprites:
 	lsl	r0, r1, #0x4
 	add	r0, r0, r1
 	lsl	r0, r0, #0x2
-	ldr	r1, .L1274+0x4
+	ldr	r1, .L1272+0x4
 	add	r0, r0, r1
 	bl	DestroySprite
 	add	r0, r4, #0x1
 	lsl	r0, r0, #0x18
 	lsr	r4, r0, #0x18
 	cmp	r4, #0x1
-	bls	.L1265	@cond_branch
-	ldr	r4, .L1274+0x8
+	bls	.L1263	@cond_branch
+	ldr	r4, .L1272+0x8
 	ldr	r0, [r4]
 	cmp	r0, #0
-	beq	.L1267	@cond_branch
+	beq	.L1265	@cond_branch
 	bl	Free
 	mov	r0, #0x0
 	str	r0, [r4]
-.L1267:
-	ldr	r4, .L1274+0xc
+.L1265:
+	ldr	r4, .L1272+0xc
 	ldr	r0, [r4]
 	cmp	r0, #0
-	beq	.L1268	@cond_branch
+	beq	.L1266	@cond_branch
 	bl	Free
 	mov	r0, #0x0
 	str	r0, [r4]
-.L1268:
+.L1266:
 	mov	r4, #0x0
-.L1272:
-	ldr	r0, .L1274
+.L1270:
+	ldr	r0, .L1272
 	ldr	r0, [r0]
 	add	r0, r0, #0x4b
 	add	r0, r0, r4
@@ -10198,20 +10203,20 @@ DestroyReelTimeMachineSprites:
 	lsl	r0, r1, #0x4
 	add	r0, r0, r1
 	lsl	r0, r0, #0x2
-	ldr	r1, .L1274+0x4
+	ldr	r1, .L1272+0x4
 	add	r0, r0, r1
 	bl	DestroySprite
 	add	r0, r4, #0x1
 	lsl	r0, r0, #0x18
 	lsr	r4, r0, #0x18
 	cmp	r4, #0x2
-	bls	.L1272	@cond_branch
+	bls	.L1270	@cond_branch
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L1275:
+.L1273:
 	.align	2, 0
-.L1274:
+.L1272:
 	.word	sSlotMachine
 	.word	gSprites
 	.word	sImageTable_ReelTimeMachineAntennae
@@ -10224,8 +10229,8 @@ DestroyReelTimeMachineSprites:
 DestroyReelTimeShadowSprites:
 	push	{r4, lr}
 	mov	r4, #0x0
-.L1280:
-	ldr	r0, .L1282
+.L1278:
+	ldr	r0, .L1280
 	ldr	r0, [r0]
 	add	r0, r0, #0x4e
 	add	r0, r0, r4
@@ -10233,20 +10238,20 @@ DestroyReelTimeShadowSprites:
 	lsl	r0, r1, #0x4
 	add	r0, r0, r1
 	lsl	r0, r0, #0x2
-	ldr	r1, .L1282+0x4
+	ldr	r1, .L1280+0x4
 	add	r0, r0, r1
 	bl	DestroySprite
 	add	r0, r4, #0x1
 	lsl	r0, r0, #0x18
 	lsr	r4, r0, #0x18
 	cmp	r4, #0x1
-	bls	.L1280	@cond_branch
+	bls	.L1278	@cond_branch
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L1283:
+.L1281:
 	.align	2, 0
-.L1282:
+.L1280:
 	.word	sSlotMachine
 	.word	gSprites
 .Lfe201:
@@ -10256,30 +10261,30 @@ DestroyReelTimeShadowSprites:
 	.thumb_func
 DestroyBrokenReelTimeMachineSprite:
 	push	{r4, lr}
-	ldr	r0, .L1286
+	ldr	r0, .L1284
 	ldr	r0, [r0]
 	add	r0, r0, #0x42
 	ldrb	r1, [r0]
 	lsl	r0, r1, #0x4
 	add	r0, r0, r1
 	lsl	r0, r0, #0x2
-	ldr	r1, .L1286+0x4
+	ldr	r1, .L1284+0x4
 	add	r0, r0, r1
 	bl	DestroySprite
-	ldr	r4, .L1286+0x8
+	ldr	r4, .L1284+0x8
 	ldr	r0, [r4]
 	cmp	r0, #0
-	beq	.L1285	@cond_branch
+	beq	.L1283	@cond_branch
 	bl	Free
 	mov	r0, #0x0
 	str	r0, [r4]
-.L1285:
+.L1283:
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L1287:
+.L1285:
 	.align	2, 0
-.L1286:
+.L1284:
 	.word	sSlotMachine
 	.word	gSprites
 	.word	sImageTable_BrokenReelTimeMachine
@@ -10294,7 +10299,7 @@ CreateReelTimeBoltSprites:
 	mov	r5, r9
 	mov	r4, r8
 	push	{r4, r5, r6}
-	ldr	r0, .L1289
+	ldr	r0, .L1287
 	mov	sl, r0
 	mov	r1, #0x98
 	mov	r2, #0x20
@@ -10305,7 +10310,7 @@ CreateReelTimeBoltSprites:
 	lsl	r1, r0, #0x4
 	add	r1, r1, r0
 	lsl	r1, r1, #0x2
-	ldr	r2, .L1289+0x4
+	ldr	r2, .L1287+0x4
 	mov	r9, r2
 	add	r3, r1, r2
 	ldrb	r2, [r3, #0x5]
@@ -10324,13 +10329,13 @@ CreateReelTimeBoltSprites:
 	mov	r2, #0x1
 	orr	r1, r1, r2
 	strb	r1, [r5]
-	ldr	r6, .L1289+0x8
+	ldr	r6, .L1287+0x8
 	ldr	r1, [r6]
 	add	r1, r1, #0x50
 	strb	r0, [r1]
 	mov	r0, #0x8
 	strh	r0, [r3, #0x2e]
-	ldr	r0, .L1289+0xc
+	ldr	r0, .L1287+0xc
 	strh	r0, [r3, #0x30]
 	mov	r0, #0x1
 	neg	r0, r0
@@ -10369,9 +10374,9 @@ CreateReelTimeBoltSprites:
 	pop	{r4, r5, r6}
 	pop	{r0}
 	bx	r0
-.L1290:
+.L1288:
 	.align	2, 0
-.L1289:
+.L1287:
 	.word	sSpriteTemplate_ReelTimeBolt
 	.word	gSprites
 	.word	sSlotMachine
@@ -10388,7 +10393,7 @@ SpriteCB_ReelTimeBolt:
 	mov	r1, #0x2e
 	ldrsh	r4, [r2, r1]
 	cmp	r4, #0
-	beq	.L1292	@cond_branch
+	beq	.L1290	@cond_branch
 	sub	r0, r0, #0x1
 	mov	r1, #0x0
 	strh	r0, [r2, #0x2e]
@@ -10399,8 +10404,8 @@ SpriteCB_ReelTimeBolt:
 	mov	r1, #0x4
 	orr	r0, r0, r1
 	strb	r0, [r2]
-	b	.L1293
-.L1292:
+	b	.L1291
+.L1290:
 	add	r3, r2, #0
 	add	r3, r3, #0x3e
 	ldrb	r1, [r3]
@@ -10422,11 +10427,11 @@ SpriteCB_ReelTimeBolt:
 	lsl	r0, r0, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, #0x7
-	ble	.L1293	@cond_branch
+	ble	.L1291	@cond_branch
 	ldrh	r0, [r2, #0x3c]
 	strh	r0, [r2, #0x2e]
 	strh	r4, [r2, #0x34]
-.L1293:
+.L1291:
 	pop	{r4}
 	pop	{r0}
 	bx	r0
@@ -10439,8 +10444,8 @@ SetReelTimeBoltDelay:
 	push	{r4, lr}
 	lsl	r0, r0, #0x10
 	lsr	r0, r0, #0x10
-	ldr	r4, .L1296
-	ldr	r1, .L1296+0x4
+	ldr	r4, .L1294
+	ldr	r1, .L1294+0x4
 	ldr	r3, [r1]
 	add	r1, r3, #0
 	add	r1, r1, #0x50
@@ -10460,9 +10465,9 @@ SetReelTimeBoltDelay:
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L1297:
+.L1295:
 	.align	2, 0
-.L1296:
+.L1294:
 	.word	gSprites
 	.word	sSlotMachine
 .Lfe205:
@@ -10473,8 +10478,8 @@ SetReelTimeBoltDelay:
 DestroyReelTimeBoltSprites:
 	push	{r4, lr}
 	mov	r4, #0x0
-.L1302:
-	ldr	r0, .L1304
+.L1300:
+	ldr	r0, .L1302
 	ldr	r0, [r0]
 	add	r0, r0, #0x50
 	add	r0, r0, r4
@@ -10482,20 +10487,20 @@ DestroyReelTimeBoltSprites:
 	lsl	r0, r1, #0x4
 	add	r0, r0, r1
 	lsl	r0, r0, #0x2
-	ldr	r1, .L1304+0x4
+	ldr	r1, .L1302+0x4
 	add	r0, r0, r1
 	bl	DestroySprite
 	add	r0, r4, #0x1
 	lsl	r0, r0, #0x18
 	lsr	r4, r0, #0x18
 	cmp	r4, #0x1
-	bls	.L1302	@cond_branch
+	bls	.L1300	@cond_branch
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L1305:
+.L1303:
 	.align	2, 0
-.L1304:
+.L1302:
 	.word	sSlotMachine
 	.word	gSprites
 .Lfe206:
@@ -10508,7 +10513,7 @@ CreateReelTimePikachuAuraSprites:
 	mov	r6, r9
 	mov	r5, r8
 	push	{r5, r6}
-	ldr	r0, .L1307
+	ldr	r0, .L1305
 	mov	r8, r0
 	mov	r1, #0x48
 	mov	r2, #0x50
@@ -10516,7 +10521,7 @@ CreateReelTimePikachuAuraSprites:
 	bl	CreateSprite
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
-	ldr	r1, .L1307+0x4
+	ldr	r1, .L1305+0x4
 	mov	r9, r1
 	lsl	r2, r0, #0x4
 	add	r2, r2, r0
@@ -10538,7 +10543,7 @@ CreateReelTimePikachuAuraSprites:
 	strh	r1, [r2, #0x3a]
 	mov	r1, #0x8
 	strh	r1, [r2, #0x3c]
-	ldr	r5, .L1307+0x8
+	ldr	r5, .L1305+0x8
 	ldr	r1, [r5]
 	add	r1, r1, #0x52
 	strb	r0, [r1]
@@ -10571,9 +10576,9 @@ CreateReelTimePikachuAuraSprites:
 	pop	{r4, r5, r6}
 	pop	{r0}
 	bx	r0
-.L1308:
+.L1306:
 	.align	2, 0
-.L1307:
+.L1305:
 	.word	sSpriteTemplate_ReelTimePikachuAura
 	.word	gSprites
 	.word	sSlotMachine
@@ -10591,25 +10596,25 @@ SpriteCB_ReelTimePikachuAura:
 	push	{r4, lr}
 	add	sp, sp, #-0x4
 	add	r4, r0, #0
-	ldr	r1, .L1311
+	ldr	r1, .L1309
 	mov	r0, sp
 	mov	r2, #0x2
 	bl	memcpy
 	mov	r1, #0x2e
 	ldrsh	r0, [r4, r1]
 	cmp	r0, #0
-	beq	.L1310	@cond_branch
+	beq	.L1308	@cond_branch
 	ldrh	r0, [r4, #0x3a]
 	sub	r0, r0, #0x1
 	strh	r0, [r4, #0x3a]
 	lsl	r0, r0, #0x10
 	cmp	r0, #0
-	bgt	.L1310	@cond_branch
+	bgt	.L1308	@cond_branch
 	mov	r0, #0x7
 	bl	IndexOfSpritePaletteTag
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x4
-	ldr	r2, .L1311+0x4
+	ldr	r2, .L1309+0x4
 	add	r0, r0, r2
 	lsr	r0, r0, #0x10
 	mov	r2, #0x38
@@ -10626,14 +10631,14 @@ SpriteCB_ReelTimePikachuAura:
 	strh	r0, [r4, #0x38]
 	ldrh	r0, [r4, #0x3c]
 	strh	r0, [r4, #0x3a]
-.L1310:
+.L1308:
 	add	sp, sp, #0x4
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L1312:
+.L1310:
 	.align	2, 0
-.L1311:
+.L1309:
 	.word	.LC388
 	.word	0x1030000
 .Lfe208:
@@ -10642,8 +10647,8 @@ SpriteCB_ReelTimePikachuAura:
 	.type	 SetReelTimePikachuAuraFlashDelay,function
 	.thumb_func
 SetReelTimePikachuAuraFlashDelay:
-	ldr	r3, .L1314
-	ldr	r1, .L1314+0x4
+	ldr	r3, .L1312
+	ldr	r1, .L1312+0x4
 	ldr	r1, [r1]
 	add	r1, r1, #0x52
 	ldrb	r2, [r1]
@@ -10653,9 +10658,9 @@ SetReelTimePikachuAuraFlashDelay:
 	add	r1, r1, r3
 	strh	r0, [r1, #0x3c]
 	bx	lr
-.L1315:
+.L1313:
 	.align	2, 0
-.L1314:
+.L1312:
 	.word	gSprites
 	.word	sSlotMachine
 .Lfe209:
@@ -10669,7 +10674,7 @@ DestroyReelTimePikachuAuraSprites:
 	bl	IndexOfSpritePaletteTag
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x4
-	ldr	r1, .L1322
+	ldr	r1, .L1320
 	add	r0, r0, r1
 	lsr	r0, r0, #0x10
 	mov	r1, #0x0
@@ -10677,8 +10682,8 @@ DestroyReelTimePikachuAuraSprites:
 	mov	r3, #0x0
 	bl	MultiplyInvertedPaletteRGBComponents
 	mov	r4, #0x0
-.L1320:
-	ldr	r0, .L1322+0x4
+.L1318:
+	ldr	r0, .L1320+0x4
 	ldr	r0, [r0]
 	add	r0, r0, #0x52
 	add	r0, r0, r4
@@ -10686,20 +10691,20 @@ DestroyReelTimePikachuAuraSprites:
 	lsl	r0, r1, #0x4
 	add	r0, r0, r1
 	lsl	r0, r0, #0x2
-	ldr	r1, .L1322+0x8
+	ldr	r1, .L1320+0x8
 	add	r0, r0, r1
 	bl	DestroySprite
 	add	r0, r4, #0x1
 	lsl	r0, r0, #0x18
 	lsr	r4, r0, #0x18
 	cmp	r4, #0x1
-	bls	.L1320	@cond_branch
+	bls	.L1318	@cond_branch
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L1323:
+.L1321:
 	.align	2, 0
-.L1322:
+.L1320:
 	.word	0x1030000
 	.word	sSlotMachine
 	.word	gSprites
@@ -10710,14 +10715,14 @@ DestroyReelTimePikachuAuraSprites:
 	.thumb_func
 CreateReelTimeExplosionSprite:
 	push	{lr}
-	ldr	r0, .L1325
+	ldr	r0, .L1323
 	mov	r1, #0xa8
 	mov	r2, #0x50
 	mov	r3, #0x6
 	bl	CreateSprite
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
-	ldr	r2, .L1325+0x4
+	ldr	r2, .L1323+0x4
 	lsl	r1, r0, #0x4
 	add	r1, r1, r0
 	lsl	r1, r1, #0x2
@@ -10729,15 +10734,15 @@ CreateReelTimeExplosionSprite:
 	mov	r3, #0x4
 	orr	r2, r2, r3
 	strb	r2, [r1, #0x5]
-	ldr	r1, .L1325+0x8
+	ldr	r1, .L1323+0x8
 	ldr	r1, [r1]
 	add	r1, r1, #0x41
 	strb	r0, [r1]
 	pop	{r0}
 	bx	r0
-.L1326:
+.L1324:
 	.align	2, 0
-.L1325:
+.L1323:
 	.word	sSpriteTemplate_ReelTimeExplosion
 	.word	gSprites
 	.word	sSlotMachine
@@ -10747,13 +10752,13 @@ CreateReelTimeExplosionSprite:
 	.type	 SpriteCB_ReelTimeExplosion,function
 	.thumb_func
 SpriteCB_ReelTimeExplosion:
-	ldr	r1, .L1328
+	ldr	r1, .L1326
 	ldrh	r1, [r1]
 	strh	r1, [r0, #0x26]
 	bx	lr
-.L1329:
+.L1327:
 	.align	2, 0
-.L1328:
+.L1326:
 	.word	gSpriteCoordOffsetY
 .Lfe212:
 	.size	 SpriteCB_ReelTimeExplosion,.Lfe212-SpriteCB_ReelTimeExplosion
@@ -10762,21 +10767,21 @@ SpriteCB_ReelTimeExplosion:
 	.thumb_func
 DestroyReelTimeExplosionSprite:
 	push	{lr}
-	ldr	r0, .L1331
+	ldr	r0, .L1329
 	ldr	r0, [r0]
 	add	r0, r0, #0x41
 	ldrb	r1, [r0]
 	lsl	r0, r1, #0x4
 	add	r0, r0, r1
 	lsl	r0, r0, #0x2
-	ldr	r1, .L1331+0x4
+	ldr	r1, .L1329+0x4
 	add	r0, r0, r1
 	bl	DestroySprite
 	pop	{r0}
 	bx	r0
-.L1332:
+.L1330:
 	.align	2, 0
-.L1331:
+.L1329:
 	.word	sSlotMachine
 	.word	gSprites
 .Lfe213:
@@ -10795,19 +10800,19 @@ DestroyReelTimeExplosionSprite:
 CreateReelTimeDuckSprites:
 	push	{r4, r5, lr}
 	add	sp, sp, #-0x8
-	ldr	r1, .L1339
+	ldr	r1, .L1337
 	mov	r0, sp
 	mov	r2, #0x8
 	bl	memcpy
 	mov	r4, #0x0
-.L1337:
-	ldr	r0, .L1339+0x4
+.L1335:
+	ldr	r0, .L1337+0x4
 	ldrh	r0, [r0]
 	mov	r1, #0x50
 	sub	r1, r1, r0
 	lsl	r1, r1, #0x10
 	asr	r1, r1, #0x10
-	ldr	r0, .L1339+0x8
+	ldr	r0, .L1337+0x8
 	mov	r2, #0x44
 	mov	r3, #0x0
 	bl	CreateSprite
@@ -10816,7 +10821,7 @@ CreateReelTimeDuckSprites:
 	lsl	r3, r0, #0x4
 	add	r3, r3, r0
 	lsl	r3, r3, #0x2
-	ldr	r1, .L1339+0xc
+	ldr	r1, .L1337+0xc
 	add	r3, r3, r1
 	ldrb	r2, [r3, #0x5]
 	mov	r5, #0xd
@@ -10838,7 +10843,7 @@ CreateReelTimeDuckSprites:
 	add	r1, r1, sp
 	ldrh	r1, [r1]
 	strh	r1, [r3, #0x2e]
-	ldr	r1, .L1339+0x10
+	ldr	r1, .L1337+0x10
 	ldr	r1, [r1]
 	add	r1, r1, #0x54
 	add	r1, r1, r4
@@ -10847,14 +10852,14 @@ CreateReelTimeDuckSprites:
 	lsl	r0, r0, #0x18
 	lsr	r4, r0, #0x18
 	cmp	r4, #0x3
-	bls	.L1337	@cond_branch
+	bls	.L1335	@cond_branch
 	add	sp, sp, #0x8
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.L1340:
+.L1338:
 	.align	2, 0
-.L1339:
+.L1337:
 	.word	.LC400
 	.word	gSpriteCoordOffsetX
 	.word	sSpriteTemplate_ReelTimeDuck
@@ -10890,17 +10895,17 @@ SpriteCB_ReelTimeDuck:
 	mov	r2, #0x2e
 	ldrsh	r0, [r5, r2]
 	cmp	r0, #0x7f
-	ble	.L1342	@cond_branch
+	ble	.L1340	@cond_branch
 	mov	r0, #0x2
 	strb	r0, [r1]
-.L1342:
+.L1340:
 	ldrh	r0, [r5, #0x30]
 	add	r0, r0, #0x1
 	strh	r0, [r5, #0x30]
 	lsl	r0, r0, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, #0xf
-	ble	.L1343	@cond_branch
+	ble	.L1341	@cond_branch
 	add	r3, r5, #0
 	add	r3, r3, #0x3f
 	ldrb	r2, [r3]
@@ -10915,7 +10920,7 @@ SpriteCB_ReelTimeDuck:
 	strb	r0, [r3]
 	mov	r0, #0x0
 	strh	r0, [r5, #0x30]
-.L1343:
+.L1341:
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
@@ -10927,8 +10932,8 @@ SpriteCB_ReelTimeDuck:
 DestroyReelTimeDuckSprites:
 	push	{r4, lr}
 	mov	r4, #0x0
-.L1348:
-	ldr	r0, .L1350
+.L1346:
+	ldr	r0, .L1348
 	ldr	r0, [r0]
 	add	r0, r0, #0x54
 	add	r0, r0, r4
@@ -10936,20 +10941,20 @@ DestroyReelTimeDuckSprites:
 	lsl	r0, r1, #0x4
 	add	r0, r0, r1
 	lsl	r0, r0, #0x2
-	ldr	r1, .L1350+0x4
+	ldr	r1, .L1348+0x4
 	add	r0, r0, r1
 	bl	DestroySprite
 	add	r0, r4, #0x1
 	lsl	r0, r0, #0x18
 	lsr	r4, r0, #0x18
 	cmp	r4, #0x3
-	bls	.L1348	@cond_branch
+	bls	.L1346	@cond_branch
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L1351:
+.L1349:
 	.align	2, 0
-.L1350:
+.L1348:
 	.word	sSlotMachine
 	.word	gSprites
 .Lfe216:
@@ -10959,7 +10964,7 @@ DestroyReelTimeDuckSprites:
 	.thumb_func
 CreateReelTimeSmokeSprite:
 	push	{r4, lr}
-	ldr	r0, .L1353
+	ldr	r0, .L1351
 	mov	r1, #0xa8
 	mov	r2, #0x3c
 	mov	r3, #0x8
@@ -10970,7 +10975,7 @@ CreateReelTimeSmokeSprite:
 	lsl	r0, r4, #0x4
 	add	r0, r0, r4
 	lsl	r0, r0, #0x2
-	ldr	r1, .L1353+0x4
+	ldr	r1, .L1351+0x4
 	add	r0, r0, r1
 	ldrb	r2, [r0, #0x5]
 	mov	r1, #0xd
@@ -10984,16 +10989,16 @@ CreateReelTimeSmokeSprite:
 	orr	r1, r1, r2
 	strb	r1, [r0, #0x1]
 	bl	InitSpriteAffineAnim
-	ldr	r0, .L1353+0x8
+	ldr	r0, .L1351+0x8
 	ldr	r0, [r0]
 	add	r0, r0, #0x43
 	strb	r4, [r0]
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L1354:
+.L1352:
 	.align	2, 0
-.L1353:
+.L1351:
 	.word	sSpriteTemplate_ReelTimeSmoke
 	.word	gSprites
 	.word	sSlotMachine
@@ -11009,20 +11014,20 @@ SpriteCB_ReelTimeSmoke:
 	mov	r1, #0x2e
 	ldrsh	r0, [r3, r1]
 	cmp	r0, #0
-	bne	.L1356	@cond_branch
+	bne	.L1354	@cond_branch
 	add	r0, r3, #0
 	add	r0, r0, #0x3f
 	ldrb	r1, [r0]
 	mov	r0, #0x20
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L1358	@cond_branch
+	beq	.L1356	@cond_branch
 	add	r0, r2, #0x1
 	strh	r0, [r3, #0x2e]
-	b	.L1358
-.L1356:
+	b	.L1356
+.L1354:
 	cmp	r0, #0x1
-	bne	.L1359	@cond_branch
+	bne	.L1357	@cond_branch
 	mov	r0, #0x3e
 	add	r0, r0, r3
 	mov	ip, r0
@@ -11044,14 +11049,14 @@ SpriteCB_ReelTimeSmoke:
 	lsl	r0, r0, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, #0x17
-	ble	.L1358	@cond_branch
+	ble	.L1356	@cond_branch
 	ldrh	r0, [r3, #0x2e]
 	add	r0, r0, #0x1
 	strh	r0, [r3, #0x2e]
 	mov	r0, #0x0
 	strh	r0, [r3, #0x32]
-	b	.L1358
-.L1359:
+	b	.L1356
+.L1357:
 	add	r2, r3, #0
 	add	r2, r2, #0x3e
 	ldrb	r0, [r2]
@@ -11064,10 +11069,10 @@ SpriteCB_ReelTimeSmoke:
 	lsl	r0, r0, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, #0xf
-	ble	.L1358	@cond_branch
+	ble	.L1356	@cond_branch
 	mov	r0, #0x1
 	strh	r0, [r3, #0x3c]
-.L1358:
+.L1356:
 	ldrh	r0, [r3, #0x30]
 	mov	r1, #0xff
 	and	r1, r1, r0
@@ -11085,8 +11090,8 @@ SpriteCB_ReelTimeSmoke:
 	.type	 IsReelTimeSmokeAnimFinished,function
 	.thumb_func
 IsReelTimeSmokeAnimFinished:
-	ldr	r2, .L1364
-	ldr	r0, .L1364+0x4
+	ldr	r2, .L1362
+	ldr	r0, .L1362+0x4
 	ldr	r0, [r0]
 	add	r0, r0, #0x43
 	ldrb	r1, [r0]
@@ -11098,9 +11103,9 @@ IsReelTimeSmokeAnimFinished:
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	bx	lr
-.L1365:
+.L1363:
 	.align	2, 0
-.L1364:
+.L1362:
 	.word	gSprites
 	.word	sSlotMachine
 .Lfe219:
@@ -11110,14 +11115,14 @@ IsReelTimeSmokeAnimFinished:
 	.thumb_func
 DestroyReelTimeSmokeSprite:
 	push	{r4, lr}
-	ldr	r0, .L1367
+	ldr	r0, .L1365
 	ldr	r0, [r0]
 	add	r0, r0, #0x43
 	ldrb	r0, [r0]
 	lsl	r4, r0, #0x4
 	add	r4, r4, r0
 	lsl	r4, r4, #0x2
-	ldr	r0, .L1367+0x4
+	ldr	r0, .L1365+0x4
 	add	r4, r4, r0
 	ldrb	r0, [r4, #0x3]
 	lsl	r0, r0, #0x1a
@@ -11128,9 +11133,9 @@ DestroyReelTimeSmokeSprite:
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L1368:
+.L1366:
 	.align	2, 0
-.L1367:
+.L1365:
 	.word	sSlotMachine
 	.word	gSprites
 .Lfe220:
@@ -11142,7 +11147,7 @@ CreatePikaPowerBoltSprite:
 	push	{r4, lr}
 	add	r3, r0, #0
 	add	r2, r1, #0
-	ldr	r0, .L1370
+	ldr	r0, .L1368
 	lsl	r3, r3, #0x10
 	asr	r3, r3, #0x10
 	lsl	r2, r2, #0x10
@@ -11156,7 +11161,7 @@ CreatePikaPowerBoltSprite:
 	lsl	r0, r4, #0x4
 	add	r0, r0, r4
 	lsl	r0, r0, #0x2
-	ldr	r1, .L1370+0x4
+	ldr	r1, .L1368+0x4
 	add	r0, r0, r1
 	ldrb	r2, [r0, #0x5]
 	mov	r1, #0xd
@@ -11174,9 +11179,9 @@ CreatePikaPowerBoltSprite:
 	pop	{r4}
 	pop	{r1}
 	bx	r1
-.L1371:
+.L1369:
 	.align	2, 0
-.L1370:
+.L1368:
 	.word	sSpriteTemplate_PikaPowerBolt
 	.word	gSprites
 .Lfe221:
@@ -11192,10 +11197,10 @@ SpriteCB_PikaPowerBolt:
 	mov	r0, #0x20
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L1373	@cond_branch
+	beq	.L1371	@cond_branch
 	mov	r0, #0x1
 	strh	r0, [r2, #0x3c]
-.L1373:
+.L1371:
 	pop	{r0}
 	bx	r0
 .Lfe222:
@@ -11210,7 +11215,7 @@ DestroyPikaPowerBoltSprite:
 	lsl	r4, r0, #0x4
 	add	r4, r4, r0
 	lsl	r4, r4, #0x2
-	ldr	r0, .L1375
+	ldr	r0, .L1373
 	add	r4, r4, r0
 	ldrb	r0, [r4, #0x3]
 	lsl	r0, r0, #0x1a
@@ -11221,9 +11226,9 @@ DestroyPikaPowerBoltSprite:
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L1376:
+.L1374:
 	.align	2, 0
-.L1375:
+.L1373:
 	.word	gSprites
 .Lfe223:
 	.size	 DestroyPikaPowerBoltSprite,.Lfe223-DestroyPikaPowerBoltSprite
@@ -11236,11 +11241,11 @@ CreateStdDigitalDisplaySprite:
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	lsl	r1, r1, #0x18
-	ldr	r3, .L1378
+	ldr	r3, .L1376
 	lsr	r1, r1, #0x16
 	add	r3, r1, r3
 	ldr	r5, [r3]
-	ldr	r3, .L1378+0x4
+	ldr	r3, .L1376+0x4
 	add	r4, r1, r3
 	mov	r6, #0x0
 	ldrsh	r4, [r4, r6]
@@ -11260,9 +11265,9 @@ CreateStdDigitalDisplaySprite:
 	pop	{r4, r5, r6}
 	pop	{r1}
 	bx	r1
-.L1379:
+.L1377:
 	.align	2, 0
-.L1378:
+.L1376:
 	.word	sDigitalDisplay_SpriteCallbacks
 	.word	sDigitalDisplay_SpriteCoords
 .Lfe224:
@@ -11285,7 +11290,7 @@ CreateDigitalDisplaySprite:
 	lsl	r5, r5, #0x10
 	lsr	r5, r5, #0x10
 	mov	r9, r5
-	ldr	r0, .L1382
+	ldr	r0, .L1380
 	lsr	r4, r4, #0x16
 	add	r0, r4, r0
 	mov	r3, sp
@@ -11294,7 +11299,7 @@ CreateDigitalDisplaySprite:
 	stmia	r3!, {r5, r6, r7}
 	ldmia	r0!, {r5, r6, r7}
 	stmia	r3!, {r5, r6, r7}
-	ldr	r0, .L1382+0x4
+	ldr	r0, .L1380+0x4
 	add	r0, r4, r0
 	ldr	r0, [r0]
 	str	r0, [sp, #0xc]
@@ -11311,7 +11316,7 @@ CreateDigitalDisplaySprite:
 	lsl	r0, r7, #0x4
 	add	r0, r0, r7
 	lsl	r0, r0, #0x2
-	ldr	r1, .L1382+0x8
+	ldr	r1, .L1380+0x8
 	add	r2, r0, r1
 	ldrb	r0, [r2, #0x5]
 	mov	r1, #0xc
@@ -11323,14 +11328,14 @@ CreateDigitalDisplaySprite:
 	strh	r5, [r2, #0x3a]
 	mov	r0, #0x1
 	strh	r0, [r2, #0x3c]
-	ldr	r0, .L1382+0xc
+	ldr	r0, .L1380+0xc
 	add	r4, r4, r0
 	ldr	r1, [r4]
 	cmp	r1, #0
-	beq	.L1381	@cond_branch
+	beq	.L1379	@cond_branch
 	add	r0, r2, #0
 	bl	SetSubspriteTables
-.L1381:
+.L1379:
 	add	r0, r7, #0
 	add	sp, sp, #0x18
 	pop	{r3, r4}
@@ -11339,9 +11344,9 @@ CreateDigitalDisplaySprite:
 	pop	{r4, r5, r6, r7}
 	pop	{r1}
 	bx	r1
-.L1383:
+.L1381:
 	.align	2, 0
-.L1382:
+.L1380:
 	.word	sSpriteTemplates_DigitalDisplay
 	.word	sImageTables_DigitalDisplay
 	.word	gSprites
@@ -11378,12 +11383,12 @@ SpriteCB_DigitalDisplay_Smoke:
 	push	{r4, r5, lr}
 	add	sp, sp, #-0x10
 	add	r4, r0, #0
-	ldr	r1, .L1388
+	ldr	r1, .L1386
 	mov	r0, sp
 	mov	r2, #0x8
 	bl	memcpy
 	add	r5, sp, #0x8
-	ldr	r1, .L1388+0x4
+	ldr	r1, .L1386+0x4
 	add	r0, r5, #0
 	mov	r2, #0x8
 	bl	memcpy
@@ -11393,7 +11398,7 @@ SpriteCB_DigitalDisplay_Smoke:
 	lsl	r0, r0, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, #0xf
-	ble	.L1386	@cond_branch
+	ble	.L1384	@cond_branch
 	add	r3, r4, #0
 	add	r3, r3, #0x42
 	ldrb	r2, [r3]
@@ -11408,7 +11413,7 @@ SpriteCB_DigitalDisplay_Smoke:
 	strb	r0, [r3]
 	mov	r0, #0x0
 	strh	r0, [r4, #0x30]
-.L1386:
+.L1384:
 	mov	r0, #0x0
 	strh	r0, [r4, #0x24]
 	strh	r0, [r4, #0x26]
@@ -11418,7 +11423,7 @@ SpriteCB_DigitalDisplay_Smoke:
 	mov	r0, #0x3f
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L1387	@cond_branch
+	beq	.L1385	@cond_branch
 	mov	r1, #0x3a
 	ldrsh	r0, [r4, r1]
 	lsl	r0, r0, #0x1
@@ -11431,14 +11436,14 @@ SpriteCB_DigitalDisplay_Smoke:
 	add	r0, r5, r0
 	ldrh	r0, [r0]
 	strh	r0, [r4, #0x26]
-.L1387:
+.L1385:
 	add	sp, sp, #0x10
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.L1389:
+.L1387:
 	.align	2, 0
-.L1388:
+.L1386:
 	.word	.LC425
 	.word	.LC427
 .Lfe227:
@@ -11502,59 +11507,59 @@ SpriteCB_DigitalDisplay_Reel:
 	mov	r1, #0x2e
 	ldrsh	r0, [r2, r1]
 	cmp	r0, #0x1
-	beq	.L1397	@cond_branch
-	cmp	r0, #0x1
-	bgt	.L1404	@cond_branch
-	cmp	r0, #0
 	beq	.L1395	@cond_branch
-	b	.L1394
-.L1404:
+	cmp	r0, #0x1
+	bgt	.L1402	@cond_branch
+	cmp	r0, #0
+	beq	.L1393	@cond_branch
+	b	.L1392
+.L1402:
 	cmp	r0, #0x2
-	beq	.L1399	@cond_branch
+	beq	.L1397	@cond_branch
 	cmp	r0, #0x3
-	beq	.L1401	@cond_branch
-	b	.L1394
-.L1395:
+	beq	.L1399	@cond_branch
+	b	.L1392
+.L1393:
 	ldrh	r0, [r2, #0x20]
 	add	r0, r0, #0x4
 	strh	r0, [r2, #0x20]
 	lsl	r0, r0, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, #0xcf
-	ble	.L1394	@cond_branch
+	ble	.L1392	@cond_branch
 	mov	r0, #0xd0
 	strh	r0, [r2, #0x20]
-	b	.L1405
-.L1397:
+	b	.L1403
+.L1395:
 	ldrh	r0, [r2, #0x30]
 	add	r0, r0, #0x1
 	strh	r0, [r2, #0x30]
 	lsl	r0, r0, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, #0x5a
-	ble	.L1394	@cond_branch
-	b	.L1405
-.L1399:
+	ble	.L1392	@cond_branch
+	b	.L1403
+.L1397:
 	ldrh	r0, [r2, #0x20]
 	add	r0, r0, #0x4
 	strh	r0, [r2, #0x20]
 	lsl	r0, r0, #0x10
-	ldr	r1, .L1406
+	ldr	r1, .L1404
 	cmp	r0, r1
-	ble	.L1394	@cond_branch
-.L1405:
+	ble	.L1392	@cond_branch
+.L1403:
 	ldrh	r0, [r2, #0x2e]
 	add	r0, r0, #0x1
 	strh	r0, [r2, #0x2e]
-	b	.L1394
-.L1407:
+	b	.L1392
+.L1405:
 	.align	2, 0
-.L1406:
+.L1404:
 	.word	0x10f0000
-.L1401:
+.L1399:
 	mov	r0, #0x0
 	strh	r0, [r2, #0x3c]
-.L1394:
+.L1392:
 	pop	{r0}
 	bx	r0
 .Lfe231:
@@ -11568,55 +11573,55 @@ SpriteCB_DigitalDisplay_Time:
 	mov	r2, #0x2e
 	ldrsh	r0, [r1, r2]
 	cmp	r0, #0x1
-	beq	.L1412	@cond_branch
-	cmp	r0, #0x1
-	bgt	.L1419	@cond_branch
-	cmp	r0, #0
 	beq	.L1410	@cond_branch
-	b	.L1409
-.L1419:
+	cmp	r0, #0x1
+	bgt	.L1417	@cond_branch
+	cmp	r0, #0
+	beq	.L1408	@cond_branch
+	b	.L1407
+.L1417:
 	cmp	r0, #0x2
-	beq	.L1414	@cond_branch
+	beq	.L1412	@cond_branch
 	cmp	r0, #0x3
-	beq	.L1416	@cond_branch
-	b	.L1409
-.L1410:
+	beq	.L1414	@cond_branch
+	b	.L1407
+.L1408:
 	ldrh	r0, [r1, #0x20]
 	sub	r0, r0, #0x4
 	strh	r0, [r1, #0x20]
 	lsl	r0, r0, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, #0xd0
-	bgt	.L1409	@cond_branch
+	bgt	.L1407	@cond_branch
 	mov	r0, #0xd0
 	strh	r0, [r1, #0x20]
-	b	.L1420
-.L1412:
+	b	.L1418
+.L1410:
 	ldrh	r0, [r1, #0x30]
 	add	r0, r0, #0x1
 	strh	r0, [r1, #0x30]
 	lsl	r0, r0, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, #0x5a
-	ble	.L1409	@cond_branch
-	b	.L1420
-.L1414:
+	ble	.L1407	@cond_branch
+	b	.L1418
+.L1412:
 	ldrh	r0, [r1, #0x20]
 	sub	r0, r0, #0x4
 	strh	r0, [r1, #0x20]
 	lsl	r0, r0, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, #0x90
-	bgt	.L1409	@cond_branch
-.L1420:
+	bgt	.L1407	@cond_branch
+.L1418:
 	ldrh	r0, [r1, #0x2e]
 	add	r0, r0, #0x1
 	strh	r0, [r1, #0x2e]
-	b	.L1409
-.L1416:
+	b	.L1407
+.L1414:
 	mov	r0, #0x0
 	strh	r0, [r1, #0x3c]
-.L1409:
+.L1407:
 	pop	{r0}
 	bx	r0
 .Lfe232:
@@ -11630,27 +11635,27 @@ SpriteCB_DigitalDisplay_ReelTimeNumber:
 	mov	r1, #0x2e
 	ldrsh	r0, [r4, r1]
 	cmp	r0, #0x5
-	bhi	.L1422	@cond_branch
+	bhi	.L1420	@cond_branch
 	lsl	r0, r0, #0x2
-	ldr	r1, .L1436
+	ldr	r1, .L1434
 	add	r0, r0, r1
 	ldr	r0, [r0]
 	mov	pc, r0
-.L1437:
+.L1435:
 	.align	2, 0
-.L1436:
-	.word	.L1433
+.L1434:
+	.word	.L1431
 	.align	2, 0
 	.align	2, 0
-.L1433:
-	.word	.L1423
+.L1431:
+	.word	.L1421
+	.word	.L1422
 	.word	.L1424
 	.word	.L1426
 	.word	.L1428
 	.word	.L1430
-	.word	.L1432
-.L1423:
-	ldr	r0, .L1438
+.L1421:
+	ldr	r0, .L1436
 	ldr	r0, [r0]
 	ldrb	r1, [r0, #0xa]
 	sub	r1, r1, #0x1
@@ -11661,61 +11666,61 @@ SpriteCB_DigitalDisplay_ReelTimeNumber:
 	ldrh	r0, [r4, #0x2e]
 	add	r0, r0, #0x1
 	strh	r0, [r4, #0x2e]
-.L1424:
+.L1422:
 	ldrh	r0, [r4, #0x30]
 	add	r0, r0, #0x1
 	strh	r0, [r4, #0x30]
 	lsl	r0, r0, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, #0x3
-	ble	.L1422	@cond_branch
+	ble	.L1420	@cond_branch
 	ldrh	r0, [r4, #0x2e]
 	add	r0, r0, #0x1
 	strh	r0, [r4, #0x2e]
 	mov	r0, #0x0
 	strh	r0, [r4, #0x30]
-	b	.L1422
-.L1439:
+	b	.L1420
+.L1437:
 	.align	2, 0
-.L1438:
+.L1436:
 	.word	sSlotMachine
-.L1426:
+.L1424:
 	ldrh	r0, [r4, #0x20]
 	add	r0, r0, #0x4
 	strh	r0, [r4, #0x20]
 	lsl	r0, r0, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, #0xcf
-	ble	.L1422	@cond_branch
+	ble	.L1420	@cond_branch
 	mov	r0, #0xd0
 	strh	r0, [r4, #0x20]
-	b	.L1435
-.L1428:
+	b	.L1433
+.L1426:
 	ldrh	r0, [r4, #0x30]
 	add	r0, r0, #0x1
 	strh	r0, [r4, #0x30]
 	lsl	r0, r0, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, #0x5a
-	ble	.L1422	@cond_branch
-	b	.L1435
-.L1430:
+	ble	.L1420	@cond_branch
+	b	.L1433
+.L1428:
 	ldrh	r0, [r4, #0x20]
 	add	r0, r0, #0x4
 	strh	r0, [r4, #0x20]
 	lsl	r0, r0, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, #0xf7
-	ble	.L1422	@cond_branch
-.L1435:
+	ble	.L1420	@cond_branch
+.L1433:
 	ldrh	r0, [r4, #0x2e]
 	add	r0, r0, #0x1
 	strh	r0, [r4, #0x2e]
-	b	.L1422
-.L1432:
+	b	.L1420
+.L1430:
 	mov	r0, #0x0
 	strh	r0, [r4, #0x3c]
-.L1422:
+.L1420:
 	pop	{r4}
 	pop	{r0}
 	bx	r0
@@ -11730,17 +11735,17 @@ SpriteCB_DigitalDisplay_PokeballRocking:
 	mov	r1, #0x2e
 	ldrsh	r0, [r3, r1]
 	cmp	r0, #0x1
-	beq	.L1443	@cond_branch
+	beq	.L1441	@cond_branch
 	cmp	r0, #0x1
-	bgt	.L1451	@cond_branch
+	bgt	.L1449	@cond_branch
 	cmp	r0, #0
-	beq	.L1442	@cond_branch
-	b	.L1441
-.L1451:
+	beq	.L1440	@cond_branch
+	b	.L1439
+.L1449:
 	cmp	r0, #0x2
-	beq	.L1445	@cond_branch
-	b	.L1441
-.L1442:
+	beq	.L1443	@cond_branch
+	b	.L1439
+.L1440:
 	add	r2, r3, #0
 	add	r2, r2, #0x2c
 	ldrb	r0, [r2]
@@ -11750,14 +11755,14 @@ SpriteCB_DigitalDisplay_PokeballRocking:
 	ldrh	r0, [r3, #0x2e]
 	add	r0, r0, #0x1
 	strh	r0, [r3, #0x2e]
-.L1443:
+.L1441:
 	ldrh	r0, [r3, #0x22]
 	add	r0, r0, #0x8
 	strh	r0, [r3, #0x22]
 	lsl	r0, r0, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, #0x6f
-	ble	.L1441	@cond_branch
+	ble	.L1439	@cond_branch
 	mov	r0, #0x70
 	strh	r0, [r3, #0x22]
 	mov	r0, #0x10
@@ -11765,12 +11770,12 @@ SpriteCB_DigitalDisplay_PokeballRocking:
 	ldrh	r0, [r3, #0x2e]
 	add	r0, r0, #0x1
 	strh	r0, [r3, #0x2e]
-	b	.L1441
-.L1445:
+	b	.L1439
+.L1443:
 	mov	r0, #0x32
 	ldrsh	r2, [r3, r0]
 	cmp	r2, #0
-	bne	.L1446	@cond_branch
+	bne	.L1444	@cond_branch
 	ldrh	r0, [r3, #0x22]
 	ldrh	r1, [r3, #0x30]
 	sub	r0, r0, r1
@@ -11783,14 +11788,14 @@ SpriteCB_DigitalDisplay_PokeballRocking:
 	lsl	r0, r0, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, #0x1
-	ble	.L1446	@cond_branch
+	ble	.L1444	@cond_branch
 	lsl	r0, r1, #0x10
 	asr	r0, r0, #0x12
 	strh	r0, [r3, #0x30]
 	strh	r2, [r3, #0x34]
 	add	r1, r0, #0
 	cmp	r1, #0
-	bne	.L1446	@cond_branch
+	bne	.L1444	@cond_branch
 	ldrh	r0, [r3, #0x2e]
 	add	r0, r0, #0x1
 	strh	r0, [r3, #0x2e]
@@ -11802,13 +11807,13 @@ SpriteCB_DigitalDisplay_PokeballRocking:
 	neg	r0, r0
 	and	r0, r0, r1
 	strb	r0, [r2]
-.L1446:
+.L1444:
 	ldrh	r0, [r3, #0x32]
 	add	r0, r0, #0x1
 	mov	r1, #0x7
 	and	r0, r0, r1
 	strh	r0, [r3, #0x32]
-.L1441:
+.L1439:
 	pop	{r0}
 	bx	r0
 .Lfe234:
@@ -11822,30 +11827,30 @@ SpriteCB_DigitalDisplay_Stop:
 	mov	r2, #0x2e
 	ldrsh	r0, [r1, r2]
 	cmp	r0, #0
-	beq	.L1454	@cond_branch
+	beq	.L1452	@cond_branch
 	cmp	r0, #0x1
-	beq	.L1456	@cond_branch
-	b	.L1453
-.L1454:
+	beq	.L1454	@cond_branch
+	b	.L1451
+.L1452:
 	ldrh	r0, [r1, #0x30]
 	add	r0, r0, #0x1
 	strh	r0, [r1, #0x30]
 	lsl	r0, r0, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, #0x8
-	ble	.L1453	@cond_branch
+	ble	.L1451	@cond_branch
 	ldrh	r0, [r1, #0x2e]
 	add	r0, r0, #0x1
 	strh	r0, [r1, #0x2e]
-	b	.L1453
-.L1456:
+	b	.L1451
+.L1454:
 	ldrh	r0, [r1, #0x22]
 	add	r0, r0, #0x2
 	strh	r0, [r1, #0x22]
 	lsl	r0, r0, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, #0x2f
-	ble	.L1453	@cond_branch
+	ble	.L1451	@cond_branch
 	mov	r0, #0x30
 	strh	r0, [r1, #0x22]
 	ldrh	r0, [r1, #0x2e]
@@ -11853,7 +11858,7 @@ SpriteCB_DigitalDisplay_Stop:
 	strh	r0, [r1, #0x2e]
 	mov	r0, #0x0
 	strh	r0, [r1, #0x3c]
-.L1453:
+.L1451:
 	pop	{r0}
 	bx	r0
 .Lfe235:
@@ -11867,11 +11872,11 @@ SpriteCB_DigitalDisplay_AButtonStop:
 	mov	r1, #0x2e
 	ldrsh	r0, [r4, r1]
 	cmp	r0, #0
-	beq	.L1462	@cond_branch
+	beq	.L1460	@cond_branch
 	cmp	r0, #0x1
-	beq	.L1464	@cond_branch
-	b	.L1461
-.L1462:
+	beq	.L1462	@cond_branch
+	b	.L1459
+.L1460:
 	add	r2, r4, #0
 	add	r2, r2, #0x3e
 	ldrb	r0, [r2]
@@ -11884,7 +11889,7 @@ SpriteCB_DigitalDisplay_AButtonStop:
 	lsl	r0, r0, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, #0x20
-	ble	.L1461	@cond_branch
+	ble	.L1459	@cond_branch
 	ldrh	r0, [r4, #0x2e]
 	add	r0, r0, #0x1
 	strh	r0, [r4, #0x2e]
@@ -11909,8 +11914,8 @@ SpriteCB_DigitalDisplay_AButtonStop:
 	lsr	r1, r1, #0x10
 	mov	r0, #0x4c
 	bl	SetGpuReg
-	b	.L1461
-.L1464:
+	b	.L1459
+.L1462:
 	ldrh	r1, [r4, #0x32]
 	lsl	r1, r1, #0x10
 	asr	r1, r1, #0x18
@@ -11919,10 +11924,10 @@ SpriteCB_DigitalDisplay_AButtonStop:
 	strh	r0, [r4, #0x30]
 	lsl	r0, r0, #0x10
 	cmp	r0, #0
-	bge	.L1465	@cond_branch
+	bge	.L1463	@cond_branch
 	mov	r0, #0x0
 	strh	r0, [r4, #0x30]
-.L1465:
+.L1463:
 	ldrh	r0, [r4, #0x30]
 	lsl	r1, r0, #0x4
 	orr	r1, r1, r0
@@ -11938,7 +11943,7 @@ SpriteCB_DigitalDisplay_AButtonStop:
 	mov	r0, #0x30
 	ldrsh	r1, [r4, r0]
 	cmp	r1, #0
-	bne	.L1461	@cond_branch
+	bne	.L1459	@cond_branch
 	ldrh	r0, [r4, #0x2e]
 	add	r0, r0, #0x1
 	strh	r0, [r4, #0x2e]
@@ -11951,7 +11956,7 @@ SpriteCB_DigitalDisplay_AButtonStop:
 	add	r0, r4, #0
 	mov	r1, #0x0
 	bl	StartSpriteAnim
-.L1461:
+.L1459:
 	pop	{r4}
 	pop	{r0}
 	bx	r0
@@ -11966,8 +11971,8 @@ SpriteCB_DigitalDisplay_PokeballShining:
 	mov	r1, #0x30
 	ldrsh	r0, [r5, r1]
 	cmp	r0, #0x2
-	bgt	.L1470	@cond_branch
-	ldr	r1, .L1474
+	bgt	.L1468	@cond_branch
+	ldr	r1, .L1472
 	lsl	r0, r0, #0x2
 	add	r0, r0, r1
 	ldr	r4, [r0]
@@ -11989,19 +11994,19 @@ SpriteCB_DigitalDisplay_PokeballShining:
 	lsl	r0, r0, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, #0x3
-	ble	.L1472	@cond_branch
+	ble	.L1470	@cond_branch
 	ldrh	r0, [r5, #0x30]
 	add	r0, r0, #0x1
 	strh	r0, [r5, #0x30]
 	mov	r0, #0x0
 	strh	r0, [r5, #0x32]
-	b	.L1472
-.L1475:
+	b	.L1470
+.L1473:
 	.align	2, 0
-.L1474:
+.L1472:
 	.word	sPokeballShiningPalTable
-.L1470:
-	ldr	r1, .L1476
+.L1468:
+	ldr	r1, .L1474
 	mov	r2, #0x30
 	ldrsh	r0, [r5, r2]
 	lsl	r0, r0, #0x2
@@ -12026,10 +12031,10 @@ SpriteCB_DigitalDisplay_PokeballShining:
 	lsl	r0, r0, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, #0x18
-	ble	.L1472	@cond_branch
+	ble	.L1470	@cond_branch
 	strh	r1, [r5, #0x30]
 	strh	r1, [r5, #0x32]
-.L1472:
+.L1470:
 	add	r0, r5, #0
 	mov	r1, #0x1
 	bl	StartSpriteAnimIfDifferent
@@ -12038,9 +12043,9 @@ SpriteCB_DigitalDisplay_PokeballShining:
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.L1477:
+.L1475:
 	.align	2, 0
-.L1476:
+.L1474:
 	.word	sPokeballShiningPalTable
 .Lfe237:
 	.size	 SpriteCB_DigitalDisplay_PokeballShining,.Lfe237-SpriteCB_DigitalDisplay_PokeballShining
@@ -12083,40 +12088,40 @@ SpriteCB_DigitalDisplay_RegBonus:
 	push	{r4, r5, r6, lr}
 	add	sp, sp, #-0x30
 	add	r4, r0, #0
-	ldr	r1, .L1497
+	ldr	r1, .L1495
 	mov	r0, sp
 	mov	r2, #0x10
 	bl	memcpy
 	add	r6, sp, #0x10
-	ldr	r1, .L1497+0x4
+	ldr	r1, .L1495+0x4
 	add	r0, r6, #0
 	mov	r2, #0x10
 	bl	memcpy
 	add	r5, sp, #0x20
-	ldr	r1, .L1497+0x8
+	ldr	r1, .L1495+0x8
 	add	r0, r5, #0
 	mov	r2, #0x10
 	bl	memcpy
 	mov	r1, #0x2e
 	ldrsh	r0, [r4, r1]
 	cmp	r0, #0x1
-	beq	.L1481	@cond_branch
+	beq	.L1479	@cond_branch
 	cmp	r0, #0x1
-	bgt	.L1493	@cond_branch
+	bgt	.L1491	@cond_branch
 	cmp	r0, #0
-	beq	.L1480	@cond_branch
-	b	.L1479
-.L1498:
+	beq	.L1478	@cond_branch
+	b	.L1477
+.L1496:
 	.align	2, 0
-.L1497:
+.L1495:
 	.word	.LC432
 	.word	.LC434
 	.word	.LC436
-.L1493:
+.L1491:
 	cmp	r0, #0x2
-	beq	.L1483	@cond_branch
-	b	.L1479
-.L1480:
+	beq	.L1481	@cond_branch
+	b	.L1477
+.L1478:
 	mov	r2, #0x3a
 	ldrsh	r0, [r4, r2]
 	lsl	r0, r0, #0x1
@@ -12138,7 +12143,7 @@ SpriteCB_DigitalDisplay_RegBonus:
 	ldrh	r0, [r4, #0x2e]
 	add	r0, r0, #0x1
 	strh	r0, [r4, #0x2e]
-.L1481:
+.L1479:
 	ldrh	r0, [r4, #0x30]
 	sub	r0, r0, #0x1
 	strh	r0, [r4, #0x30]
@@ -12147,45 +12152,45 @@ SpriteCB_DigitalDisplay_RegBonus:
 	mov	r1, #0x1
 	neg	r1, r1
 	cmp	r0, r1
-	bne	.L1479	@cond_branch
-	b	.L1494
-.L1483:
+	bne	.L1477	@cond_branch
+	b	.L1492
+.L1481:
 	ldrh	r0, [r4, #0x24]
 	mov	r2, #0x24
 	ldrsh	r1, [r4, r2]
 	cmp	r1, #0
-	ble	.L1484	@cond_branch
+	ble	.L1482	@cond_branch
 	sub	r0, r0, #0x4
-	b	.L1495
-.L1484:
+	b	.L1493
+.L1482:
 	cmp	r1, #0
-	bge	.L1485	@cond_branch
+	bge	.L1483	@cond_branch
 	add	r0, r0, #0x4
-.L1495:
+.L1493:
 	strh	r0, [r4, #0x24]
-.L1485:
+.L1483:
 	ldrh	r0, [r4, #0x26]
 	mov	r2, #0x26
 	ldrsh	r1, [r4, r2]
 	cmp	r1, #0
-	ble	.L1487	@cond_branch
+	ble	.L1485	@cond_branch
 	sub	r0, r0, #0x4
-	b	.L1496
-.L1487:
+	b	.L1494
+.L1485:
 	cmp	r1, #0
-	bge	.L1488	@cond_branch
+	bge	.L1486	@cond_branch
 	add	r0, r0, #0x4
-.L1496:
+.L1494:
 	strh	r0, [r4, #0x26]
-.L1488:
+.L1486:
 	ldr	r0, [r4, #0x24]
 	cmp	r0, #0
-	bne	.L1479	@cond_branch
-.L1494:
+	bne	.L1477	@cond_branch
+.L1492:
 	ldrh	r0, [r4, #0x2e]
 	add	r0, r0, #0x1
 	strh	r0, [r4, #0x2e]
-.L1479:
+.L1477:
 	add	sp, sp, #0x30
 	pop	{r4, r5, r6}
 	pop	{r0}
@@ -12211,7 +12216,7 @@ SpriteCB_DigitalDisplay_BigBonus:
 	push	{r4, lr}
 	add	sp, sp, #-0x10
 	add	r4, r0, #0
-	ldr	r1, .L1502
+	ldr	r1, .L1500
 	mov	r0, sp
 	mov	r2, #0x10
 	bl	memcpy
@@ -12219,12 +12224,12 @@ SpriteCB_DigitalDisplay_BigBonus:
 	mov	r2, #0x2e
 	ldrsh	r0, [r4, r2]
 	cmp	r0, #0
-	bne	.L1500	@cond_branch
+	bne	.L1498	@cond_branch
 	add	r0, r1, #0x1
 	strh	r0, [r4, #0x2e]
 	mov	r0, #0xc
 	strh	r0, [r4, #0x30]
-.L1500:
+.L1498:
 	mov	r1, #0x3a
 	ldrsh	r0, [r4, r1]
 	lsl	r0, r0, #0x1
@@ -12249,17 +12254,17 @@ SpriteCB_DigitalDisplay_BigBonus:
 	mov	r2, #0x30
 	ldrsh	r0, [r4, r2]
 	cmp	r0, #0
-	beq	.L1501	@cond_branch
+	beq	.L1499	@cond_branch
 	sub	r0, r1, #0x1
 	strh	r0, [r4, #0x30]
-.L1501:
+.L1499:
 	add	sp, sp, #0x10
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L1503:
+.L1501:
 	.align	2, 0
-.L1502:
+.L1500:
 	.word	.LC438
 .Lfe239:
 	.size	 SpriteCB_DigitalDisplay_BigBonus,.Lfe239-SpriteCB_DigitalDisplay_BigBonus
@@ -12273,20 +12278,20 @@ SpriteCB_DigitalDisplay_AButtonStart:
 	mov	r1, #0x2e
 	ldrsh	r0, [r5, r1]
 	cmp	r0, #0x1
-	beq	.L1507	@cond_branch
+	beq	.L1505	@cond_branch
 	cmp	r0, #0x1
-	bgt	.L1519	@cond_branch
+	bgt	.L1517	@cond_branch
 	cmp	r0, #0
-	beq	.L1506	@cond_branch
-	b	.L1505
-.L1519:
+	beq	.L1504	@cond_branch
+	b	.L1503
+.L1517:
 	cmp	r0, #0x2
-	beq	.L1511	@cond_branch
+	beq	.L1509	@cond_branch
 	cmp	r0, #0x3
-	beq	.L1513	@cond_branch
-	b	.L1505
-.L1506:
-	ldr	r0, .L1521
+	beq	.L1511	@cond_branch
+	b	.L1503
+.L1504:
+	ldr	r0, .L1519
 	ldr	r2, [r0]
 	add	r1, r2, #0
 	add	r1, r1, #0x5c
@@ -12296,7 +12301,7 @@ SpriteCB_DigitalDisplay_AButtonStart:
 	mov	r0, #0x3f
 	strh	r0, [r1]
 	sub	r1, r1, #0x4
-	ldr	r0, .L1521+0x4
+	ldr	r0, .L1519+0x4
 	strh	r0, [r1]
 	add	r2, r5, #0
 	add	r2, r2, #0x3e
@@ -12307,7 +12312,7 @@ SpriteCB_DigitalDisplay_AButtonStart:
 	ldrh	r0, [r5, #0x2e]
 	add	r0, r0, #0x1
 	strh	r0, [r5, #0x2e]
-.L1507:
+.L1505:
 	ldrh	r0, [r5, #0x30]
 	add	r2, r0, #0x2
 	strh	r2, [r5, #0x30]
@@ -12319,18 +12324,18 @@ SpriteCB_DigitalDisplay_AButtonStart:
 	lsl	r0, r0, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, #0xd0
-	ble	.L1508	@cond_branch
+	ble	.L1506	@cond_branch
 	mov	r0, #0xd0
 	strh	r0, [r5, #0x32]
-.L1508:
+.L1506:
 	mov	r1, #0x34
 	ldrsh	r0, [r5, r1]
 	cmp	r0, #0xcf
-	bgt	.L1509	@cond_branch
+	bgt	.L1507	@cond_branch
 	mov	r0, #0xd0
 	strh	r0, [r5, #0x34]
-.L1509:
-	ldr	r0, .L1521
+.L1507:
+	ldr	r0, .L1519
 	ldr	r2, [r0]
 	ldrh	r0, [r5, #0x32]
 	lsl	r0, r0, #0x8
@@ -12342,21 +12347,21 @@ SpriteCB_DigitalDisplay_AButtonStart:
 	mov	r1, #0x30
 	ldrsh	r0, [r5, r1]
 	cmp	r0, #0x33
-	ble	.L1505	@cond_branch
-	b	.L1520
-.L1522:
+	ble	.L1503	@cond_branch
+	b	.L1518
+.L1520:
 	.align	2, 0
-.L1521:
+.L1519:
 	.word	sSlotMachine
 	.word	0x2088
-.L1511:
-	ldr	r6, .L1523
+.L1509:
+	ldr	r6, .L1521
 	ldr	r0, [r6]
 	mov	r1, #0x12
 	ldrsh	r0, [r0, r1]
 	cmp	r0, #0
-	beq	.L1505	@cond_branch
-	ldr	r1, .L1523+0x4
+	beq	.L1503	@cond_branch
+	ldr	r1, .L1521+0x4
 	mov	r4, #0x0
 	str	r4, [sp]
 	mov	r0, #0x5
@@ -12366,7 +12371,7 @@ SpriteCB_DigitalDisplay_AButtonStart:
 	ldr	r2, [r6]
 	add	r1, r2, #0
 	add	r1, r1, #0x58
-	ldr	r0, .L1523+0x8
+	ldr	r0, .L1521+0x8
 	strh	r0, [r1]
 	add	r1, r1, #0x2
 	mov	r0, #0xd1
@@ -12379,7 +12384,7 @@ SpriteCB_DigitalDisplay_AButtonStart:
 	add	r0, r0, #0x1
 	strh	r0, [r5, #0x2e]
 	strh	r4, [r5, #0x30]
-.L1513:
+.L1511:
 	ldrh	r0, [r5, #0x30]
 	add	r2, r0, #0x2
 	strh	r2, [r5, #0x30]
@@ -12391,18 +12396,18 @@ SpriteCB_DigitalDisplay_AButtonStart:
 	lsl	r0, r0, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, #0xd0
-	ble	.L1514	@cond_branch
+	ble	.L1512	@cond_branch
 	mov	r0, #0xd0
 	strh	r0, [r5, #0x32]
-.L1514:
+.L1512:
 	mov	r1, #0x34
 	ldrsh	r0, [r5, r1]
 	cmp	r0, #0xcf
-	bgt	.L1515	@cond_branch
+	bgt	.L1513	@cond_branch
 	mov	r0, #0xd0
 	strh	r0, [r5, #0x34]
-.L1515:
-	ldr	r0, .L1523
+.L1513:
+	ldr	r0, .L1521
 	ldr	r2, [r0]
 	ldrh	r0, [r5, #0x32]
 	lsl	r0, r0, #0x8
@@ -12414,8 +12419,8 @@ SpriteCB_DigitalDisplay_AButtonStart:
 	mov	r1, #0x30
 	ldrsh	r0, [r5, r1]
 	cmp	r0, #0xf
-	ble	.L1505	@cond_branch
-.L1520:
+	ble	.L1503	@cond_branch
+.L1518:
 	ldrh	r0, [r5, #0x2e]
 	add	r0, r0, #0x1
 	strh	r0, [r5, #0x2e]
@@ -12423,14 +12428,14 @@ SpriteCB_DigitalDisplay_AButtonStart:
 	add	r1, r1, #0x5c
 	mov	r0, #0x3f
 	strh	r0, [r1]
-.L1505:
+.L1503:
 	add	sp, sp, #0x4
 	pop	{r4, r5, r6}
 	pop	{r0}
 	bx	r0
-.L1524:
+.L1522:
 	.align	2, 0
-.L1523:
+.L1521:
 	.word	sSlotMachine
 	.word	SpriteCallbackDummy
 	.word	0xc0e0
@@ -12460,7 +12465,7 @@ EndDigitalDisplayScene_StopReel:
 	.thumb_func
 EndDigitalDisplayScene_Win:
 	push	{r4, lr}
-	ldr	r0, .L1528
+	ldr	r0, .L1526
 	ldr	r4, [r0]
 	mov	r0, #0x6
 	bl	IndexOfSpritePaletteTag
@@ -12477,9 +12482,9 @@ EndDigitalDisplayScene_Win:
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L1529:
+.L1527:
 	.align	2, 0
-.L1528:
+.L1526:
 	.word	sDigitalDisplay_Pal
 .Lfe243:
 	.size	 EndDigitalDisplayScene_Win,.Lfe243-EndDigitalDisplayScene_Win
@@ -12487,7 +12492,7 @@ EndDigitalDisplayScene_Win:
 	.type	 EndDigitalDisplayScene_InsertBet,function
 	.thumb_func
 EndDigitalDisplayScene_InsertBet:
-	ldr	r0, .L1531
+	ldr	r0, .L1529
 	ldr	r2, [r0]
 	add	r1, r2, #0
 	add	r1, r1, #0x58
@@ -12503,9 +12508,9 @@ EndDigitalDisplayScene_InsertBet:
 	add	r0, r0, #0x2
 	strh	r1, [r0]
 	bx	lr
-.L1532:
+.L1530:
 	.align	2, 0
-.L1531:
+.L1529:
 	.word	sSlotMachine
 .Lfe244:
 	.size	 EndDigitalDisplayScene_InsertBet,.Lfe244-EndDigitalDisplayScene_InsertBet
@@ -12515,30 +12520,30 @@ EndDigitalDisplayScene_InsertBet:
 LoadSlotMachineGfx:
 	push	{r4, r5, r6, lr}
 	bl	LoadReelBackground
-	ldr	r4, .L1539
+	ldr	r4, .L1537
 	mov	r0, #0xc8
 	lsl	r0, r0, #0x6
 	bl	Alloc
 	add	r1, r0, #0
 	str	r1, [r4]
-	ldr	r0, .L1539+0x4
+	ldr	r0, .L1537+0x4
 	bl	LZDecompressWram
-	ldr	r4, .L1539+0x8
+	ldr	r4, .L1537+0x8
 	mov	r0, #0xd8
 	lsl	r0, r0, #0x6
 	bl	Alloc
 	add	r1, r0, #0
 	str	r1, [r4]
-	ldr	r0, .L1539+0xc
+	ldr	r0, .L1537+0xc
 	bl	LZDecompressWram
-	ldr	r4, .L1539+0x10
+	ldr	r4, .L1537+0x10
 	mov	r0, #0xb0
 	bl	AllocZeroed
 	str	r0, [r4]
 	mov	r3, #0x0
-	ldr	r5, .L1539+0x14
+	ldr	r5, .L1537+0x14
 	add	r6, r4, #0
-.L1537:
+.L1535:
 	ldr	r2, [r4]
 	lsl	r1, r3, #0x3
 	add	r2, r1, r2
@@ -12553,11 +12558,11 @@ LoadSlotMachineGfx:
 	lsl	r0, r0, #0x18
 	lsr	r3, r0, #0x18
 	cmp	r3, #0x15
-	bls	.L1537	@cond_branch
+	bls	.L1535	@cond_branch
 	ldr	r3, [r6]
 	add	r2, r3, #0
 	add	r2, r2, #0x88
-	ldr	r0, .L1539
+	ldr	r0, .L1537
 	ldr	r1, [r0]
 	mov	r4, #0xa0
 	lsl	r4, r4, #0x4
@@ -12581,14 +12586,14 @@ LoadSlotMachineGfx:
 	str	r1, [r0]
 	add	r0, r3, #0
 	bl	LoadSpriteSheets
-	ldr	r0, .L1539+0x18
+	ldr	r0, .L1537+0x18
 	bl	LoadSpritePalettes
 	pop	{r4, r5, r6}
 	pop	{r0}
 	bx	r0
-.L1540:
+.L1538:
 	.align	2, 0
-.L1539:
+.L1537:
 	.word	sDigitalDisplayGfxPtr
 	.word	gSlotMachineDigitalDisplay_Gfx
 	.word	sReelTimeGfxPtr
@@ -12603,11 +12608,11 @@ LoadSlotMachineGfx:
 	.thumb_func
 LoadReelBackground:
 	push	{r4, r5, r6, lr}
-	ldr	r5, .L1552
+	ldr	r5, .L1550
 	mov	r0, #0x8
 	bl	AllocZeroed
 	str	r0, [r5]
-	ldr	r4, .L1552+0x4
+	ldr	r4, .L1550+0x4
 	mov	r0, #0x80
 	lsl	r0, r0, #0x6
 	bl	AllocZeroed
@@ -12615,12 +12620,12 @@ LoadReelBackground:
 	add	r3, r0, #0
 	mov	r1, #0x0
 	add	r6, r4, #0
-	ldr	r0, .L1552+0x8
+	ldr	r0, .L1550+0x8
 	ldr	r4, [r0]
-.L1545:
+.L1543:
 	mov	r2, #0x0
 	add	r1, r1, #0x1
-.L1549:
+.L1547:
 	add	r0, r4, r2
 	ldrb	r0, [r0]
 	strb	r0, [r3]
@@ -12629,11 +12634,11 @@ LoadReelBackground:
 	lsr	r2, r0, #0x18
 	add	r3, r3, #0x1
 	cmp	r2, #0x1f
-	bls	.L1549	@cond_branch
+	bls	.L1547	@cond_branch
 	lsl	r0, r1, #0x18
 	lsr	r1, r0, #0x18
 	cmp	r1, #0x3f
-	bls	.L1545	@cond_branch
+	bls	.L1543	@cond_branch
 	ldr	r0, [r5]
 	ldr	r1, [r6]
 	str	r1, [r0]
@@ -12646,9 +12651,9 @@ LoadReelBackground:
 	pop	{r4, r5, r6}
 	pop	{r0}
 	bx	r0
-.L1553:
+.L1551:
 	.align	2, 0
-.L1552:
+.L1550:
 	.word	sReelBackgroundSpriteSheet
 	.word	sReelBackground_Gfx
 	.word	sReelBackground_Tilemap
@@ -12659,34 +12664,34 @@ LoadReelBackground:
 	.thumb_func
 LoadMenuGfx:
 	push	{r4, r5, lr}
-	ldr	r4, .L1555
+	ldr	r4, .L1553
 	mov	r5, #0x88
 	lsl	r5, r5, #0x6
 	add	r0, r5, #0
 	bl	Alloc
 	add	r1, r0, #0
 	str	r1, [r4]
-	ldr	r0, .L1555+0x4
+	ldr	r0, .L1553+0x4
 	bl	LZDecompressWram
 	ldr	r1, [r4]
 	mov	r0, #0x2
 	add	r2, r5, #0
 	mov	r3, #0x0
 	bl	LoadBgTiles
-	ldr	r0, .L1555+0x8
+	ldr	r0, .L1553+0x8
 	mov	r1, #0x0
 	mov	r2, #0xa0
 	bl	LoadPalette
-	ldr	r0, .L1555+0xc
+	ldr	r0, .L1553+0xc
 	mov	r1, #0xd0
 	mov	r2, #0x20
 	bl	LoadPalette
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.L1556:
+.L1554:
 	.align	2, 0
-.L1555:
+.L1553:
 	.word	sMenuGfx
 	.word	gSlotMachineMenu_Gfx
 	.word	gSlotMachineMenu_Pal
@@ -12709,7 +12714,7 @@ LoadMenuAndReelOverlayTilemaps:
 	.thumb_func
 LoadSlotMachineMenuTilemap:
 	push	{lr}
-	ldr	r1, .L1559
+	ldr	r1, .L1557
 	mov	r2, #0xa0
 	lsl	r2, r2, #0x3
 	mov	r0, #0x2
@@ -12717,9 +12722,9 @@ LoadSlotMachineMenuTilemap:
 	bl	LoadBgTilemap
 	pop	{r0}
 	bx	r0
-.L1560:
+.L1558:
 	.align	2, 0
-.L1559:
+.L1557:
 	.word	gSlotMachineMenu_Tilemap
 .Lfe249:
 	.size	 LoadSlotMachineMenuTilemap,.Lfe249-LoadSlotMachineMenuTilemap
@@ -12732,13 +12737,13 @@ LoadSlotMachineReelOverlay:
 	mov	r6, r8
 	push	{r6, r7}
 	mov	r1, #0x4
-	ldr	r0, .L1577
+	ldr	r0, .L1575
 	mov	r8, r0
-.L1565:
+.L1563:
 	mov	r0, #0x0
 	lsl	r1, r1, #0x10
 	mov	r9, r1
-.L1569:
+.L1567:
 	mov	r2, r8
 	ldr	r1, [r2]
 	mov	r2, r9
@@ -12791,7 +12796,7 @@ LoadSlotMachineReelOverlay:
 	lsr	r0, r4, #0x10
 	asr	r4, r4, #0x10
 	cmp	r4, #0x3
-	ble	.L1569	@cond_branch
+	ble	.L1567	@cond_branch
 	mov	r2, r8
 	ldr	r1, [r2]
 	add	r1, r1, #0x8
@@ -12812,7 +12817,7 @@ LoadSlotMachineReelOverlay:
 	mov	r2, #0x2
 	bl	LoadBgTilemap
 	mov	r0, #0x7
-.L1574:
+.L1572:
 	mov	r2, r8
 	ldr	r1, [r2]
 	add	r1, r1, #0xc
@@ -12832,22 +12837,22 @@ LoadSlotMachineReelOverlay:
 	lsr	r0, r4, #0x10
 	asr	r4, r4, #0x10
 	cmp	r4, #0xb
-	ble	.L1574	@cond_branch
+	ble	.L1572	@cond_branch
 	add	r0, r5, #0x5
 	lsl	r0, r0, #0x10
 	lsr	r1, r0, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, #0x11
-	ble	.L1565	@cond_branch
+	ble	.L1563	@cond_branch
 	pop	{r3, r4}
 	mov	r8, r3
 	mov	r9, r4
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L1578:
+.L1576:
 	.align	2, 0
-.L1577:
+.L1575:
 	.word	sReelOverlay_Tilemap
 .Lfe250:
 	.size	 LoadSlotMachineReelOverlay,.Lfe250-LoadSlotMachineReelOverlay
@@ -12858,7 +12863,7 @@ SetReelButtonTilemap:
 	push	{r4, r5, r6, lr}
 	add	r4, r0, #0
 	ldr	r5, [sp, #0x10]
-	ldr	r6, .L1580
+	ldr	r6, .L1578
 	ldr	r0, [r6]
 	strh	r1, [r0]
 	ldr	r1, [r6]
@@ -12877,7 +12882,7 @@ SetReelButtonTilemap:
 	bl	LoadBgTilemap
 	ldr	r1, [r6]
 	add	r1, r1, #0x2
-	ldr	r0, .L1580+0x4
+	ldr	r0, .L1578+0x4
 	add	r3, r5, r0
 	lsl	r3, r3, #0x10
 	lsr	r3, r3, #0x10
@@ -12896,7 +12901,7 @@ SetReelButtonTilemap:
 	bl	LoadBgTilemap
 	ldr	r1, [r6]
 	add	r1, r1, #0x6
-	ldr	r0, .L1580+0x8
+	ldr	r0, .L1578+0x8
 	add	r5, r5, r0
 	lsl	r5, r5, #0x10
 	lsr	r5, r5, #0x10
@@ -12907,9 +12912,9 @@ SetReelButtonTilemap:
 	pop	{r4, r5, r6}
 	pop	{r0}
 	bx	r0
-.L1581:
+.L1579:
 	.align	2, 0
-.L1580:
+.L1578:
 	.word	sReelButtonPress_Tilemap
 	.word	0x1e1
 	.word	0x201
@@ -12920,7 +12925,7 @@ SetReelButtonTilemap:
 	.thumb_func
 LoadInfoBoxTilemap:
 	push	{lr}
-	ldr	r1, .L1583
+	ldr	r1, .L1581
 	mov	r2, #0xa0
 	lsl	r2, r2, #0x3
 	mov	r0, #0x2
@@ -12930,9 +12935,9 @@ LoadInfoBoxTilemap:
 	bl	HideBg
 	pop	{r0}
 	bx	r0
-.L1584:
+.L1582:
 	.align	2, 0
-.L1583:
+.L1581:
 	.word	gSlotMachineInfoBox_Tilemap
 .Lfe252:
 	.size	 LoadInfoBoxTilemap,.Lfe252-LoadInfoBoxTilemap
@@ -12940,56 +12945,56 @@ LoadInfoBoxTilemap:
 	.type	 SetDigitalDisplayImagePtrs,function
 	.thumb_func
 SetDigitalDisplayImagePtrs:
-	ldr	r1, .L1586
-	ldr	r0, .L1586+0x4
+	ldr	r1, .L1584
+	ldr	r0, .L1584+0x4
 	ldr	r0, [r0]
 	str	r0, [r1]
-	ldr	r0, .L1586+0x8
+	ldr	r0, .L1584+0x8
 	ldr	r0, [r0]
 	str	r0, [r1, #0x4]
-	ldr	r0, .L1586+0xc
+	ldr	r0, .L1584+0xc
 	ldr	r0, [r0]
 	str	r0, [r1, #0x8]
-	ldr	r0, .L1586+0x10
+	ldr	r0, .L1584+0x10
 	ldr	r0, [r0]
 	str	r0, [r1, #0xc]
-	ldr	r0, .L1586+0x14
+	ldr	r0, .L1584+0x14
 	ldr	r0, [r0]
 	str	r0, [r1, #0x10]
-	ldr	r0, .L1586+0x18
+	ldr	r0, .L1584+0x18
 	ldr	r0, [r0]
 	str	r0, [r1, #0x14]
-	ldr	r0, .L1586+0x1c
+	ldr	r0, .L1584+0x1c
 	ldr	r0, [r0]
 	str	r0, [r1, #0x18]
-	ldr	r0, .L1586+0x20
+	ldr	r0, .L1584+0x20
 	ldr	r0, [r0]
 	str	r0, [r1, #0x1c]
-	ldr	r0, .L1586+0x24
+	ldr	r0, .L1584+0x24
 	ldr	r0, [r0]
 	str	r0, [r1, #0x20]
-	ldr	r0, .L1586+0x28
+	ldr	r0, .L1584+0x28
 	ldr	r0, [r0]
 	str	r0, [r1, #0x24]
-	ldr	r0, .L1586+0x2c
+	ldr	r0, .L1584+0x2c
 	ldr	r0, [r0]
 	str	r0, [r1, #0x28]
 	str	r0, [r1, #0x2c]
 	str	r0, [r1, #0x30]
 	str	r0, [r1, #0x34]
-	ldr	r0, .L1586+0x30
+	ldr	r0, .L1584+0x30
 	ldr	r0, [r0]
 	str	r0, [r1, #0x38]
 	str	r0, [r1, #0x3c]
 	str	r0, [r1, #0x40]
 	str	r0, [r1, #0x44]
 	str	r0, [r1, #0x48]
-	ldr	r0, .L1586+0x34
+	ldr	r0, .L1584+0x34
 	ldr	r0, [r0]
 	str	r0, [r1, #0x4c]
 	str	r0, [r1, #0x50]
 	str	r0, [r1, #0x54]
-	ldr	r0, .L1586+0x38
+	ldr	r0, .L1584+0x38
 	ldr	r0, [r0]
 	str	r0, [r1, #0x58]
 	str	r0, [r1, #0x5c]
@@ -12997,9 +13002,9 @@ SetDigitalDisplayImagePtrs:
 	mov	r0, #0x0
 	str	r0, [r1, #0x64]
 	bx	lr
-.L1587:
+.L1585:
 	.align	2, 0
-.L1586:
+.L1584:
 	.word	sImageTables_DigitalDisplay
 	.word	sImageTable_DigitalDisplay_Reel
 	.word	sImageTable_DigitalDisplay_Time
@@ -13024,17 +13029,17 @@ AllocDigitalDisplayGfx:
 	push	{r4, r5, r6, lr}
 	mov	r6, r8
 	push	{r6}
-	ldr	r4, .L1589
+	ldr	r4, .L1587
 	mov	r0, #0x8
 	bl	AllocZeroed
 	str	r0, [r4]
-	ldr	r6, .L1589+0x4
+	ldr	r6, .L1587+0x4
 	ldr	r1, [r6]
 	str	r1, [r0]
 	mov	r5, #0xc0
 	lsl	r5, r5, #0x3
 	strh	r5, [r0, #0x4]
-	ldr	r4, .L1589+0x8
+	ldr	r4, .L1587+0x8
 	mov	r0, #0x8
 	bl	AllocZeroed
 	str	r0, [r4]
@@ -13046,7 +13051,7 @@ AllocDigitalDisplayGfx:
 	mov	r8, r1
 	mov	r2, r8
 	strh	r2, [r0, #0x4]
-	ldr	r4, .L1589+0xc
+	ldr	r4, .L1587+0xc
 	mov	r0, #0x8
 	bl	AllocZeroed
 	str	r0, [r4]
@@ -13057,7 +13062,7 @@ AllocDigitalDisplayGfx:
 	str	r1, [r0]
 	mov	r4, r8
 	strh	r4, [r0, #0x4]
-	ldr	r4, .L1589+0x10
+	ldr	r4, .L1587+0x10
 	mov	r0, #0x8
 	bl	AllocZeroed
 	str	r0, [r4]
@@ -13068,7 +13073,7 @@ AllocDigitalDisplayGfx:
 	str	r1, [r0]
 	mov	r3, r8
 	strh	r3, [r0, #0x4]
-	ldr	r4, .L1589+0x14
+	ldr	r4, .L1587+0x14
 	mov	r0, #0x8
 	bl	AllocZeroed
 	str	r0, [r4]
@@ -13080,7 +13085,7 @@ AllocDigitalDisplayGfx:
 	mov	r5, #0xc0
 	lsl	r5, r5, #0x2
 	strh	r5, [r0, #0x4]
-	ldr	r4, .L1589+0x18
+	ldr	r4, .L1587+0x18
 	mov	r0, #0x8
 	bl	AllocZeroed
 	str	r0, [r4]
@@ -13092,7 +13097,7 @@ AllocDigitalDisplayGfx:
 	mov	r1, #0x80
 	lsl	r1, r1, #0x3
 	strh	r1, [r0, #0x4]
-	ldr	r4, .L1589+0x1c
+	ldr	r4, .L1587+0x1c
 	mov	r0, #0x8
 	bl	AllocZeroed
 	str	r0, [r4]
@@ -13103,7 +13108,7 @@ AllocDigitalDisplayGfx:
 	str	r1, [r0]
 	mov	r4, r8
 	strh	r4, [r0, #0x4]
-	ldr	r4, .L1589+0x20
+	ldr	r4, .L1587+0x20
 	mov	r0, #0x8
 	bl	AllocZeroed
 	str	r0, [r4]
@@ -13113,7 +13118,7 @@ AllocDigitalDisplayGfx:
 	add	r1, r1, r2
 	str	r1, [r0]
 	strh	r5, [r0, #0x4]
-	ldr	r4, .L1589+0x24
+	ldr	r4, .L1587+0x24
 	mov	r0, #0x8
 	bl	AllocZeroed
 	str	r0, [r4]
@@ -13123,7 +13128,7 @@ AllocDigitalDisplayGfx:
 	add	r1, r1, r3
 	str	r1, [r0]
 	strh	r5, [r0, #0x4]
-	ldr	r4, .L1589+0x28
+	ldr	r4, .L1587+0x28
 	mov	r0, #0x10
 	bl	AllocZeroed
 	str	r0, [r4]
@@ -13139,7 +13144,7 @@ AllocDigitalDisplayGfx:
 	add	r1, r1, r3
 	str	r1, [r0, #0x8]
 	strh	r2, [r0, #0xc]
-	ldr	r4, .L1589+0x2c
+	ldr	r4, .L1587+0x2c
 	mov	r0, #0x8
 	bl	AllocZeroed
 	str	r0, [r4]
@@ -13151,7 +13156,7 @@ AllocDigitalDisplayGfx:
 	mov	r1, #0xa0
 	lsl	r1, r1, #0x2
 	strh	r1, [r0, #0x4]
-	ldr	r4, .L1589+0x30
+	ldr	r4, .L1587+0x30
 	mov	r0, #0x28
 	bl	AllocZeroed
 	str	r0, [r4]
@@ -13180,7 +13185,7 @@ AllocDigitalDisplayGfx:
 	add	r2, r2, r1
 	str	r2, [r0, #0x20]
 	strh	r3, [r0, #0x24]
-	ldr	r4, .L1589+0x34
+	ldr	r4, .L1587+0x34
 	mov	r0, #0x10
 	bl	AllocZeroed
 	str	r0, [r4]
@@ -13197,7 +13202,7 @@ AllocDigitalDisplayGfx:
 	add	r2, r2, r4
 	str	r2, [r0, #0x8]
 	strh	r1, [r0, #0xc]
-	ldr	r4, .L1589+0x38
+	ldr	r4, .L1587+0x38
 	mov	r0, #0x10
 	bl	AllocZeroed
 	str	r0, [r4]
@@ -13219,9 +13224,9 @@ AllocDigitalDisplayGfx:
 	pop	{r4, r5, r6}
 	pop	{r0}
 	bx	r0
-.L1590:
+.L1588:
 	.align	2, 0
-.L1589:
+.L1587:
 	.word	sImageTable_DigitalDisplay_Reel
 	.word	sDigitalDisplayGfxPtr
 	.word	sImageTable_DigitalDisplay_Time

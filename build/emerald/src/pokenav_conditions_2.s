@@ -2304,9 +2304,9 @@ CreateConditionMonPic:
 	str	r0, [r1]
 	ldrh	r0, [r4]
 	lsl	r0, r0, #0x4
-	mov	r1, #0x80
-	lsl	r1, r1, #0x1
-	add	r0, r0, r1
+	mov	r3, #0x80
+	lsl	r3, r3, #0x1
+	add	r0, r0, r3
 	strh	r0, [r4]
 	b	.L327
 .L331:
@@ -2321,13 +2321,11 @@ CreateConditionMonPic:
 	bl	GetConditionMonPicGfx
 	ldr	r1, .L332
 	add	r1, r1, r8
-	ldr	r2, [r1]
-	ldr	r1, .L332+0x4
-	str	r0, [r1]
-	str	r2, [r1, #0x4]
-	ldr	r0, .L332+0x8
-	str	r0, [r1, #0x8]
-	ldr	r0, [r1, #0x8]
+	ldr	r1, [r1]
+	ldr	r2, .L332+0x4
+	ldr	r3, .L332+0x8
+	stmia r3!, {r0, r1, r2}
+	.code	16
 	add	r0, r6, #0
 	bl	GetConditionMonPal
 	ldr	r1, .L332+0xc
@@ -2346,8 +2344,8 @@ CreateConditionMonPic:
 	.align	2, 0
 .L332:
 	.word	0x181c
-	.word	0x40000d4
 	.word	-0x7ffffc00
+	.word	0x40000d4
 	.word	0x1818
 .Lfe22:
 	.size	 CreateConditionMonPic,.Lfe22-CreateConditionMonPic

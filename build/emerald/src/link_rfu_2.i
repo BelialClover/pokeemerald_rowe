@@ -6015,8 +6015,8 @@ struct RfuDebug
     u8 filler4[88];
 };
 
-u32 gf_rfu_REQ_api[0x0e64 / 4];
-struct GFRfuManager Rfu;
+__attribute__((section("ewram_data"))) u32 gf_rfu_REQ_api[0x0e64 / 4] = {};
+__attribute__((section("ewram_data"))) struct GFRfuManager Rfu = {};
 
 static u8 sHeldKeyCount;
 static u8 sResendBlock8[16];

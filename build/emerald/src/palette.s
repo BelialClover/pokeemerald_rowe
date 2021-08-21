@@ -213,7 +213,7 @@ FillPalette:
 	.type	 TransferPlttBuffer,function
 	.thumb_func
 TransferPlttBuffer:
-	push	{r4, r5, lr}
+	push	{r4, r5, r6, lr}
 	ldr	r4, .L14
 	ldrb	r1, [r4, #0x8]
 	mov	r5, #0x80
@@ -223,15 +223,13 @@ TransferPlttBuffer:
 	lsr	r3, r0, #0x18
 	cmp	r3, #0
 	bne	.L12	@cond_branch
-	ldr	r1, .L14+0x4
-	mov	r2, #0xa0
-	lsl	r2, r2, #0x13
-	ldr	r0, .L14+0x8
-	str	r1, [r0]
-	str	r2, [r0, #0x4]
-	ldr	r1, .L14+0xc
-	str	r1, [r0, #0x8]
-	ldr	r0, [r0, #0x8]
+	ldr	r0, .L14+0x4
+	mov	r1, #0xa0
+	lsl	r1, r1, #0x13
+	ldr	r2, .L14+0x8
+	ldr	r6, .L14+0xc
+	stmia r6!, {r0, r1, r2}
+	.code	16
 	ldr	r0, .L14+0x10
 	str	r3, [r0]
 	ldrb	r1, [r4, #0x9]
@@ -246,7 +244,7 @@ TransferPlttBuffer:
 	beq	.L12	@cond_branch
 	bl	UpdateBlendRegisters
 .L12:
-	pop	{r4, r5}
+	pop	{r4, r5, r6}
 	pop	{r0}
 	bx	r0
 .L15:
@@ -254,8 +252,8 @@ TransferPlttBuffer:
 .L14:
 	.word	gPaletteFade
 	.word	gPlttBufferFaded
-	.word	0x40000d4
 	.word	-0x7ffffe00
+	.word	0x40000d4
 	.word	sPlttBufferTransferPending
 .Lfe4:
 	.size	 TransferPlttBuffer,.Lfe4-TransferPlttBuffer
@@ -1827,20 +1825,20 @@ UpdateFastPaletteFade:
 	.word	gPaletteFade
 .L264:
 	cmp	r0, #0x2
-	bne	.LCB2291
+	bne	.LCB2292
 	b	.L244	@long jump
-.LCB2291:
+.LCB2292:
 	cmp	r0, #0x3
-	bne	.LCB2293
+	bne	.LCB2294
 	b	.L253	@long jump
-.LCB2293:
+.LCB2294:
 	b	.L225
 .L226:
 	add	r7, r2, #0
 	cmp	r7, sl
-	bcc	.LCB2301
+	bcc	.LCB2302
 	b	.L225	@long jump
-.LCB2301:
+.LCB2302:
 .L230:
 	lsl	r2, r7, #0x1
 	ldr	r0, .L285
@@ -1920,9 +1918,9 @@ UpdateFastPaletteFade:
 .L235:
 	add	r7, r2, #0
 	cmp	r7, sl
-	bcc	.LCB2406
+	bcc	.LCB2407
 	b	.L225	@long jump
-.LCB2406:
+.LCB2407:
 .L239:
 	lsl	r1, r7, #0x1
 	ldr	r0, .L287
@@ -2655,21 +2653,25 @@ BlendPalettes:
 	.type	 BlendPalettesUnfaded,function
 	.thumb_func
 BlendPalettesUnfaded:
-	push	{r4, r5, lr}
-	lsl	r1, r1, #0x18
-	lsr	r1, r1, #0x18
-	lsl	r2, r2, #0x10
-	lsr	r2, r2, #0x10
-	ldr	r4, .L348
-	ldr	r5, .L348+0x4
-	ldr	r3, .L348+0x8
-	str	r4, [r3]
-	str	r5, [r3, #0x4]
-	ldr	r4, .L348+0xc
-	str	r4, [r3, #0x8]
-	ldr	r3, [r3, #0x8]
+	push	{r4, r5, r6, lr}
+	add	r5, r0, #0
+	add	r3, r1, #0
+	add	r4, r2, #0
+	lsl	r3, r3, #0x18
+	lsr	r3, r3, #0x18
+	lsl	r4, r4, #0x10
+	lsr	r4, r4, #0x10
+	ldr	r0, .L348
+	ldr	r1, .L348+0x4
+	ldr	r2, .L348+0x8
+	ldr	r6, .L348+0xc
+	stmia r6!, {r0, r1, r2}
+	.code	16
+	add	r0, r5, #0
+	add	r1, r3, #0
+	add	r2, r4, #0
 	bl	BlendPalettes
-	pop	{r4, r5}
+	pop	{r4, r5, r6}
 	pop	{r0}
 	bx	r0
 .L349:
@@ -2677,8 +2679,8 @@ BlendPalettesUnfaded:
 .L348:
 	.word	gPlttBufferUnfaded
 	.word	gPlttBufferFaded
-	.word	0x40000d4
 	.word	-0x7bffff00
+	.word	0x40000d4
 .Lfe32:
 	.size	 BlendPalettesUnfaded,.Lfe32-BlendPalettesUnfaded
 	.align	2, 0

@@ -17361,8 +17361,8 @@ struct SoundInfo
     u32 plynote;
     u32 ExtVolPit;
     u8 gap2[16];
-    struct SoundChannel chans[12];
-    s8 pcmBuffer[1584 * 2];
+    struct SoundChannel chans[15];
+    s8 pcmBuffer[0x620 * 2];
 };
 
 struct SongHeader
@@ -27041,9 +27041,9 @@ static void HandleEndTurn_BattleWon(void)
         gBattlescriptCurrInstr = BattleScript_FrontierTrainerBattleWon;
 
         if (gTrainerBattleOpponent_A == 1022)
-            PlayBGM(354);
+            PlayBGM(325);
         else
-            PlayBGM(412);
+            PlayBGM(383);
     }
     else if (gBattleTypeFlags & (1 << 3) && !(gBattleTypeFlags & (1 << 1)))
     {
@@ -27054,7 +27054,7 @@ static void HandleEndTurn_BattleWon(void)
         {
         case 0x1f:
         case 0x26:
-            PlayBGM(355);
+            PlayBGM(326);
             break;
         case 0x3:
         case 0x9:
@@ -27062,13 +27062,13 @@ static void HandleEndTurn_BattleWon(void)
         case 0xd:
         case 0x31:
         case 0x35:
-            PlayBGM(424);
+            PlayBGM(395);
             break;
         case 0x20:
-            PlayBGM(354);
+            PlayBGM(325);
             break;
         default:
-            PlayBGM(412);
+            PlayBGM(383);
             break;
         }
     }

@@ -13226,7 +13226,7 @@ void TransferTilesetAnimsBuffer(void)
     int i;
 
     for (i = 0; i < sTilesetDMA3TransferBufferSize; i ++)
-        { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); dmaRegs[0] = (vu32)(sTilesetDMA3TransferBuffer[i].src); dmaRegs[1] = (vu32)(sTilesetDMA3TransferBuffer[i].dest); dmaRegs[2] = (vu32)((0x8000 | 0x0000 | 0x0000 | 0x0000 | 0x0000) << 16 | ((sTilesetDMA3TransferBuffer[i].size)/(16/8))); dmaRegs[2]; };
+        { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); u32 eval_src = (u32)(sTilesetDMA3TransferBuffer[i].src); u32 eval_dst = (u32)(sTilesetDMA3TransferBuffer[i].dest); u32 eval_ctl = (u32)((0x8000 | 0x0000 | 0x0000 | 0x0000 | 0x0000) << 16 | ((sTilesetDMA3TransferBuffer[i].size)/(16/8))); register u32 r_src asm("r0") = eval_src; register u32 r_dst asm("r1") = eval_dst; register u32 r_ctl asm("r2") = eval_ctl; asm volatile("stmia %0!, {%1, %2, %3}" : "+l" (dmaRegs) : "l" (r_src), "l" (r_dst), "l" (r_ctl) : "memory"); };
 
     sTilesetDMA3TransferBufferSize = 0;
 }

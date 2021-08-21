@@ -3408,8 +3408,8 @@ struct SoundInfo
     u32 plynote;
     u32 ExtVolPit;
     u8 gap2[16];
-    struct SoundChannel chans[12];
-    s8 pcmBuffer[1584 * 2];
+    struct SoundChannel chans[15];
+    s8 pcmBuffer[0x620 * 2];
 };
 
 struct SongHeader
@@ -20004,11 +20004,11 @@ static void CB2_StartBlenderLink(void)
         sBerryBlender->speed = 0x80;
         sBerryBlender->gameFrameTime = 0;
         SetMainCallback2(CB2_PlayBlender);
-        if (GetCurrentMapMusic() != 403)
+        if (GetCurrentMapMusic() != 374)
         {
             sBerryBlender->savedMusic = GetCurrentMapMusic();
         }
-        PlayBGM(403);
+        PlayBGM(374);
         break;
     }
 
@@ -20312,10 +20312,10 @@ static void CB2_StartBlenderLocal(void)
                 sBerryBlender->opponentTaskIds[i] = CreateTask(sLocalOpponentTasks[i], 10 + i);
         }
 
-        if (GetCurrentMapMusic() != 403)
+        if (GetCurrentMapMusic() != 374)
             sBerryBlender->savedMusic = GetCurrentMapMusic();
 
-        PlayBGM(403);
+        PlayBGM(374);
         PlaySE(53);
         UpdateHitPitch();
         break;
@@ -22320,7 +22320,7 @@ static void Task_PlayPokeblockFanfare(u8 taskId)
 {
     if (gTasks[taskId].data[0] == 0)
     {
-        PlayFanfare(367);
+        PlayFanfare(338);
         gTasks[taskId].data[0]++;
     }
     if (IsFanfareTaskInactive())

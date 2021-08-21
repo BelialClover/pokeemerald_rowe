@@ -9366,13 +9366,13 @@ static void DoMoveRelearnerMain(void)
         {
             FormatAndPrintText(gText_MoveRelearnerPkmnForgotMoveAndLearnedNew);
             sMoveRelearnerStruct->state = 31;
-            PlayFanfare(367);
+            PlayFanfare(338);
         }
         break;
     case 31:
         if (!MoveRelearnerRunTextPrinters())
         {
-            PlayFanfare(367);
+            PlayFanfare(338);
             sMoveRelearnerStruct->state = 32;
         }
         break;

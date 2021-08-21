@@ -10831,25 +10831,25 @@ void BattleSetup_StartLegendaryBattle(void)
     default:
     case 383:
         gBattleTypeFlags |= (1 << 28);
-        CreateBattleStartTask(23, 480);
+        CreateBattleStartTask(23, 434);
         break;
     case 382:
         gBattleTypeFlags |= (1 << 29);
-        CreateBattleStartTask(22, 480);
+        CreateBattleStartTask(22, 434);
         break;
     case 384:
         gBattleTypeFlags |= (1 << 30);
-        CreateBattleStartTask(24, 470);
+        CreateBattleStartTask(24, 434);
         break;
     case 386:
-        CreateBattleStartTask(0, 551);
+        CreateBattleStartTask(0, 498);
         break;
     case 249:
     case 250:
-        CreateBattleStartTask(0, 553);
+        CreateBattleStartTask(0, 500);
         break;
     case 151:
-        CreateBattleStartTask(10, 472);
+        CreateBattleStartTask(10, 521);
         break;
     }
 
@@ -10866,9 +10866,9 @@ void StartGroudonKyogreBattle(void)
     gBattleTypeFlags = (1 << 13) | (1 << 12);
 
     if (gGameVersion == 2)
-        CreateBattleStartTask(11, 480);
+        CreateBattleStartTask(11, 434);
     else
-        CreateBattleStartTask(6, 480);
+        CreateBattleStartTask(6, 434);
 
     IncrementGameStat(7);
     IncrementGameStat(8);
@@ -10901,7 +10901,7 @@ void StartRegiBattle(void)
         transitionId = 10;
         break;
     }
-    CreateBattleStartTask(transitionId, 479);
+    CreateBattleStartTask(transitionId, 433);
 
     IncrementGameStat(7);
     IncrementGameStat(8);
@@ -11769,46 +11769,46 @@ void SetUpTrainerEncounterMusic(void)
         switch (GetTrainerEncounterMusicId(trainerId))
         {
         case 0:
-            music = 380;
+            music = 351;
             break;
         case 1:
-            music = 407;
+            music = 378;
             break;
         case 2:
-            music = 379;
+            music = 350;
             break;
         case 4:
-            music = 416;
+            music = 387;
             break;
         case 5:
-            music = 417;
+            music = 388;
             break;
         case 6:
-            music = 419;
+            music = 390;
             break;
         case 7:
-            music = 441;
+            music = 412;
             break;
         case 8:
-            music = 385;
+            music = 356;
             break;
         case 9:
-            music = 449;
+            music = 420;
             break;
         case 10:
-            music = 450;
+            music = 421;
             break;
         case 11:
-            music = 451;
+            music = 422;
             break;
         case 12:
-            music = 453;
+            music = 424;
             break;
         case 13:
-            music = 397;
+            music = 368;
             break;
         default:
-            music = 423;
+            music = 394;
         }
         PlayNewMapMusic(music);
     }

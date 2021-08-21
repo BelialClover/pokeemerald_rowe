@@ -23085,15 +23085,14 @@ VBlankCB_Phase2_Swirl:
 	cmp	r0, #0
 	beq	.L100	@cond_branch
 	ldr	r1, .L101+0x4
-	ldr	r0, .L101+0x8
-	str	r0, [r1]
+	add	r0, r1, #0
 	mov	r2, #0xf0
 	lsl	r2, r2, #0x3
-	add	r0, r0, r2
-	str	r0, [r1, #0x4]
-	ldr	r0, .L101+0xc
-	str	r0, [r1, #0x8]
-	ldr	r0, [r1, #0x8]
+	add	r1, r1, r2
+	ldr	r2, .L101+0x8
+	ldr	r3, .L101+0xc
+	stmia r3!, {r0, r1, r2}
+	.code	16
 .L100:
 	pop	{r0}
 	bx	r0
@@ -23101,9 +23100,9 @@ VBlankCB_Phase2_Swirl:
 	.align	2, 0
 .L101:
 	.word	sTransitionStructPtr
-	.word	0x40000d4
 	.word	gScanlineEffectRegBuffers
 	.word	-0x7fffff60
+	.word	0x40000d4
 .Lfe20:
 	.size	 VBlankCB_Phase2_Swirl,.Lfe20-VBlankCB_Phase2_Swirl
 	.align	2, 0
@@ -23304,15 +23303,14 @@ VBlankCB_Phase2_Shuffle:
 	cmp	r0, #0
 	beq	.L126	@cond_branch
 	ldr	r1, .L127+0x4
-	ldr	r0, .L127+0x8
-	str	r0, [r1]
+	add	r0, r1, #0
 	mov	r2, #0xf0
 	lsl	r2, r2, #0x3
-	add	r0, r0, r2
-	str	r0, [r1, #0x4]
-	ldr	r0, .L127+0xc
-	str	r0, [r1, #0x8]
-	ldr	r0, [r1, #0x8]
+	add	r1, r1, r2
+	ldr	r2, .L127+0x8
+	ldr	r3, .L127+0xc
+	stmia r3!, {r0, r1, r2}
+	.code	16
 .L126:
 	pop	{r0}
 	bx	r0
@@ -23320,9 +23318,9 @@ VBlankCB_Phase2_Shuffle:
 	.align	2, 0
 .L127:
 	.word	sTransitionStructPtr
-	.word	0x40000d4
 	.word	gScanlineEffectRegBuffers
 	.word	-0x7fffff60
+	.word	0x40000d4
 .Lfe25:
 	.size	 VBlankCB_Phase2_Shuffle,.Lfe25-VBlankCB_Phase2_Shuffle
 	.align	2, 0
@@ -24729,7 +24727,7 @@ Phase2_BigPokeball_Func6:
 	.type	 Transition_BigPokeball_Vblank,function
 	.thumb_func
 Transition_BigPokeball_Vblank:
-	push	{lr}
+	push	{r4, lr}
 	ldr	r1, .L287
 	ldrh	r2, [r1, #0xa]
 	ldr	r0, .L287+0x4
@@ -24741,24 +24739,23 @@ Transition_BigPokeball_Vblank:
 	strh	r0, [r1, #0xa]
 	ldrh	r0, [r1, #0xa]
 	bl	VBlankCB_BattleTransition
-	ldr	r2, .L287+0xc
-	ldr	r0, [r2]
+	ldr	r3, .L287+0xc
+	ldr	r0, [r3]
 	ldrb	r0, [r0]
 	cmp	r0, #0
 	beq	.L286	@cond_branch
 	ldr	r1, .L287+0x10
-	ldr	r0, .L287+0x14
-	str	r0, [r1]
-	mov	r3, #0xf0
-	lsl	r3, r3, #0x3
-	add	r0, r0, r3
-	str	r0, [r1, #0x4]
-	ldr	r0, .L287+0x18
-	str	r0, [r1, #0x8]
-	ldr	r0, [r1, #0x8]
+	add	r0, r1, #0
+	mov	r2, #0xf0
+	lsl	r2, r2, #0x3
+	add	r1, r1, r2
+	ldr	r2, .L287+0x14
+	ldr	r4, .L287+0x18
+	stmia r4!, {r0, r1, r2}
+	.code	16
 .L286:
 	ldr	r1, .L287+0x1c
-	ldr	r2, [r2]
+	ldr	r2, [r3]
 	ldrh	r0, [r2, #0x2]
 	strh	r0, [r1]
 	add	r1, r1, #0x2
@@ -24773,6 +24770,7 @@ Transition_BigPokeball_Vblank:
 	add	r1, r1, #0x2
 	ldrh	r0, [r2, #0x10]
 	strh	r0, [r1]
+	pop	{r4}
 	pop	{r0}
 	bx	r0
 .L288:
@@ -24782,9 +24780,9 @@ Transition_BigPokeball_Vblank:
 	.word	0xc5ff
 	.word	0x7fff
 	.word	sTransitionStructPtr
-	.word	0x40000d4
 	.word	gScanlineEffectRegBuffers
 	.word	-0x7fffff60
+	.word	0x40000d4
 	.word	0x4000048
 .Lfe57:
 	.size	 Transition_BigPokeball_Vblank,.Lfe57-Transition_BigPokeball_Vblank
@@ -24794,23 +24792,21 @@ Transition_BigPokeball_Vblank:
 VBlankCB0_Phase2_BigPokeball:
 	push	{lr}
 	bl	Transition_BigPokeball_Vblank
-	ldr	r1, .L290
-	ldr	r0, .L290+0x4
-	str	r0, [r1]
-	ldr	r0, .L290+0x8
-	str	r0, [r1, #0x4]
-	ldr	r0, .L290+0xc
-	str	r0, [r1, #0x8]
-	ldr	r0, [r1, #0x8]
+	ldr	r0, .L290
+	ldr	r1, .L290+0x4
+	ldr	r2, .L290+0x8
+	ldr	r3, .L290+0xc
+	stmia r3!, {r0, r1, r2}
+	.code	16
 	pop	{r0}
 	bx	r0
 .L291:
 	.align	2, 0
 .L290:
-	.word	0x40000b0
 	.word	gScanlineEffectRegBuffers+0x780
 	.word	0x4000010
 	.word	-0x5dbfffff
+	.word	0x40000b0
 .Lfe58:
 	.size	 VBlankCB0_Phase2_BigPokeball,.Lfe58-VBlankCB0_Phase2_BigPokeball
 	.align	2, 0
@@ -24819,23 +24815,21 @@ VBlankCB0_Phase2_BigPokeball:
 VBlankCB1_Phase2_BigPokeball:
 	push	{lr}
 	bl	Transition_BigPokeball_Vblank
-	ldr	r1, .L293
-	ldr	r0, .L293+0x4
-	str	r0, [r1]
-	ldr	r0, .L293+0x8
-	str	r0, [r1, #0x4]
-	ldr	r0, .L293+0xc
-	str	r0, [r1, #0x8]
-	ldr	r0, [r1, #0x8]
+	ldr	r0, .L293
+	ldr	r1, .L293+0x4
+	ldr	r2, .L293+0x8
+	ldr	r3, .L293+0xc
+	stmia r3!, {r0, r1, r2}
+	.code	16
 	pop	{r0}
 	bx	r0
 .L294:
 	.align	2, 0
 .L293:
-	.word	0x40000b0
 	.word	gScanlineEffectRegBuffers+0x780
 	.word	0x4000040
 	.word	-0x5dbfffff
+	.word	0x40000b0
 .Lfe59:
 	.size	 VBlankCB1_Phase2_BigPokeball,.Lfe59-VBlankCB1_Phase2_BigPokeball
 	.align	2, 0
@@ -25810,7 +25804,7 @@ Phase2_Clockwise_BlackFade_Func7:
 	.type	 VBlankCB_Phase2_Clockwise_BlackFade,function
 	.thumb_func
 VBlankCB_Phase2_Clockwise_BlackFade:
-	push	{r4, lr}
+	push	{r4, r5, lr}
 	ldr	r4, .L412
 	ldrh	r1, [r4, #0xa]
 	ldr	r0, .L412+0x4
@@ -25828,15 +25822,14 @@ VBlankCB_Phase2_Clockwise_BlackFade:
 	cmp	r0, #0
 	beq	.L411	@cond_branch
 	ldr	r1, .L412+0x10
-	ldr	r0, .L412+0x14
-	str	r0, [r1]
+	add	r0, r1, #0
 	mov	r2, #0xf0
 	lsl	r2, r2, #0x3
-	add	r0, r0, r2
-	str	r0, [r1, #0x4]
-	ldr	r0, .L412+0x18
-	str	r0, [r1, #0x8]
-	ldr	r0, [r1, #0x8]
+	add	r1, r1, r2
+	ldr	r2, .L412+0x14
+	ldr	r5, .L412+0x18
+	stmia r5!, {r0, r1, r2}
+	.code	16
 .L411:
 	ldr	r2, .L412+0x1c
 	ldr	r1, [r3]
@@ -25848,19 +25841,18 @@ VBlankCB_Phase2_Clockwise_BlackFade:
 	sub	r2, r2, #0x6
 	ldrh	r0, [r1, #0x8]
 	strh	r0, [r2]
-	sub	r2, r2, #0x4
-	ldr	r0, .L412+0x14
-	mov	r1, #0xf0
-	lsl	r1, r1, #0x3
-	add	r0, r0, r1
-	ldrh	r1, [r0]
-	strh	r1, [r2]
-	str	r0, [r4]
-	str	r2, [r4, #0x4]
-	ldr	r0, .L412+0x20
-	str	r0, [r4, #0x8]
-	ldr	r0, [r4, #0x8]
-	pop	{r4}
+	ldr	r1, .L412+0x20
+	ldr	r0, .L412+0x10
+	mov	r2, #0xf0
+	lsl	r2, r2, #0x3
+	add	r0, r0, r2
+	ldrh	r2, [r0]
+	strh	r2, [r1]
+	ldr	r2, .L412+0x24
+	add	r3, r4, #0
+	stmia r3!, {r0, r1, r2}
+	.code	16
+	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
 .L413:
@@ -25870,10 +25862,11 @@ VBlankCB_Phase2_Clockwise_BlackFade:
 	.word	0xc5ff
 	.word	0x7fff
 	.word	sTransitionStructPtr
-	.word	0x40000d4
 	.word	gScanlineEffectRegBuffers
 	.word	-0x7fffff60
+	.word	0x40000d4
 	.word	0x4000048
+	.word	0x4000040
 	.word	-0x5dbfffff
 .Lfe74:
 	.size	 VBlankCB_Phase2_Clockwise_BlackFade,.Lfe74-VBlankCB_Phase2_Clockwise_BlackFade
@@ -26083,15 +26076,14 @@ VBlankCB_Phase2_Ripple:
 	cmp	r0, #0
 	beq	.L441	@cond_branch
 	ldr	r1, .L442+0x4
-	ldr	r0, .L442+0x8
-	str	r0, [r1]
+	add	r0, r1, #0
 	mov	r2, #0xf0
 	lsl	r2, r2, #0x3
-	add	r0, r0, r2
-	str	r0, [r1, #0x4]
-	ldr	r0, .L442+0xc
-	str	r0, [r1, #0x8]
-	ldr	r0, [r1, #0x8]
+	add	r1, r1, r2
+	ldr	r2, .L442+0x8
+	ldr	r3, .L442+0xc
+	stmia r3!, {r0, r1, r2}
+	.code	16
 .L441:
 	pop	{r0}
 	bx	r0
@@ -26099,9 +26091,9 @@ VBlankCB_Phase2_Ripple:
 	.align	2, 0
 .L442:
 	.word	sTransitionStructPtr
-	.word	0x40000d4
 	.word	gScanlineEffectRegBuffers
 	.word	-0x7fffff60
+	.word	0x40000d4
 .Lfe78:
 	.size	 VBlankCB_Phase2_Ripple,.Lfe78-VBlankCB_Phase2_Ripple
 	.align	2, 0
@@ -26338,7 +26330,7 @@ Phase2_Wave_Func3:
 	.type	 VBlankCB_Phase2_Wave,function
 	.thumb_func
 VBlankCB_Phase2_Wave:
-	push	{r4, lr}
+	push	{r4, r5, lr}
 	ldr	r4, .L479
 	ldrh	r1, [r4, #0xa]
 	ldr	r0, .L479+0x4
@@ -26356,15 +26348,14 @@ VBlankCB_Phase2_Wave:
 	cmp	r0, #0
 	beq	.L478	@cond_branch
 	ldr	r1, .L479+0x10
-	ldr	r0, .L479+0x14
-	str	r0, [r1]
+	add	r0, r1, #0
 	mov	r2, #0xf0
 	lsl	r2, r2, #0x3
-	add	r0, r0, r2
-	str	r0, [r1, #0x4]
-	ldr	r0, .L479+0x18
-	str	r0, [r1, #0x8]
-	ldr	r0, [r1, #0x8]
+	add	r1, r1, r2
+	ldr	r2, .L479+0x14
+	ldr	r5, .L479+0x18
+	stmia r5!, {r0, r1, r2}
+	.code	16
 .L478:
 	ldr	r2, .L479+0x1c
 	ldr	r1, [r3]
@@ -26377,13 +26368,12 @@ VBlankCB_Phase2_Wave:
 	ldrh	r0, [r1, #0x8]
 	strh	r0, [r2]
 	ldr	r0, .L479+0x20
-	str	r0, [r4]
-	ldr	r0, .L479+0x24
-	str	r0, [r4, #0x4]
-	ldr	r0, .L479+0x28
-	str	r0, [r4, #0x8]
-	ldr	r0, [r4, #0x8]
-	pop	{r4}
+	ldr	r1, .L479+0x24
+	ldr	r2, .L479+0x28
+	add	r3, r4, #0
+	stmia r3!, {r0, r1, r2}
+	.code	16
+	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
 .L480:
@@ -26393,9 +26383,9 @@ VBlankCB_Phase2_Wave:
 	.word	0xc5ff
 	.word	0x7fff
 	.word	sTransitionStructPtr
-	.word	0x40000d4
 	.word	gScanlineEffectRegBuffers
 	.word	-0x7fffff60
+	.word	0x40000d4
 	.word	0x4000048
 	.word	gScanlineEffectRegBuffers+0x780
 	.word	0x4000040
@@ -27252,7 +27242,7 @@ Phase2_Mugshot_Func10:
 	.type	 VBlankCB0_Phase2_Mugshots,function
 	.thumb_func
 VBlankCB0_Phase2_Mugshots:
-	push	{r4, lr}
+	push	{r4, r5, lr}
 	ldr	r4, .L587
 	ldrh	r1, [r4, #0xa]
 	ldr	r0, .L587+0x4
@@ -27270,15 +27260,14 @@ VBlankCB0_Phase2_Mugshots:
 	cmp	r0, #0
 	beq	.L586	@cond_branch
 	ldr	r1, .L587+0x10
-	ldr	r0, .L587+0x14
-	str	r0, [r1]
+	add	r0, r1, #0
 	mov	r2, #0xf0
 	lsl	r2, r2, #0x3
-	add	r0, r0, r2
-	str	r0, [r1, #0x4]
-	ldr	r0, .L587+0x18
-	str	r0, [r1, #0x8]
-	ldr	r0, [r1, #0x8]
+	add	r1, r1, r2
+	ldr	r2, .L587+0x14
+	ldr	r5, .L587+0x18
+	stmia r5!, {r0, r1, r2}
+	.code	16
 .L586:
 	ldr	r2, .L587+0x1c
 	ldr	r1, [r3]
@@ -27294,13 +27283,12 @@ VBlankCB0_Phase2_Mugshots:
 	ldrh	r0, [r1, #0x8]
 	strh	r0, [r2]
 	ldr	r0, .L587+0x20
-	str	r0, [r4]
-	ldr	r0, .L587+0x24
-	str	r0, [r4, #0x4]
-	ldr	r0, .L587+0x28
-	str	r0, [r4, #0x8]
-	ldr	r0, [r4, #0x8]
-	pop	{r4}
+	ldr	r1, .L587+0x24
+	ldr	r2, .L587+0x28
+	add	r3, r4, #0
+	stmia r3!, {r0, r1, r2}
+	.code	16
+	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
 .L588:
@@ -27310,9 +27298,9 @@ VBlankCB0_Phase2_Mugshots:
 	.word	0xc5ff
 	.word	0x7fff
 	.word	sTransitionStructPtr
-	.word	0x40000d4
 	.word	gScanlineEffectRegBuffers
 	.word	-0x7fffff60
+	.word	0x40000d4
 	.word	0x4000012
 	.word	gScanlineEffectRegBuffers+0x780
 	.word	0x4000040
@@ -27323,7 +27311,7 @@ VBlankCB0_Phase2_Mugshots:
 	.type	 VBlankCB1_Phase2_Mugshots,function
 	.thumb_func
 VBlankCB1_Phase2_Mugshots:
-	push	{r4, lr}
+	push	{r4, r5, lr}
 	ldr	r4, .L591
 	ldrh	r1, [r4, #0xa]
 	ldr	r0, .L591+0x4
@@ -27335,34 +27323,32 @@ VBlankCB1_Phase2_Mugshots:
 	strh	r0, [r4, #0xa]
 	ldrh	r0, [r4, #0xa]
 	bl	VBlankCB_BattleTransition
-	ldr	r2, .L591+0xc
-	ldr	r0, [r2]
+	ldr	r3, .L591+0xc
+	ldr	r0, [r3]
 	ldrb	r0, [r0]
 	cmp	r0, #0
 	beq	.L590	@cond_branch
 	ldr	r1, .L591+0x10
-	ldr	r0, .L591+0x14
-	str	r0, [r1]
-	mov	r3, #0xf0
-	lsl	r3, r3, #0x3
-	add	r0, r0, r3
-	str	r0, [r1, #0x4]
-	ldr	r0, .L591+0x18
-	str	r0, [r1, #0x8]
-	ldr	r0, [r1, #0x8]
+	add	r0, r1, #0
+	mov	r2, #0xf0
+	lsl	r2, r2, #0x3
+	add	r1, r1, r2
+	ldr	r2, .L591+0x14
+	ldr	r5, .L591+0x18
+	stmia r5!, {r0, r1, r2}
+	.code	16
 .L590:
 	ldr	r1, .L591+0x1c
-	ldr	r0, [r2]
+	ldr	r0, [r3]
 	ldrh	r0, [r0, #0xe]
 	strh	r0, [r1]
 	ldr	r0, .L591+0x20
-	str	r0, [r4]
-	ldr	r0, .L591+0x24
-	str	r0, [r4, #0x4]
-	ldr	r0, .L591+0x28
-	str	r0, [r4, #0x8]
-	ldr	r0, [r4, #0x8]
-	pop	{r4}
+	add	r1, r1, #0x4
+	ldr	r2, .L591+0x24
+	add	r3, r4, #0
+	stmia r3!, {r0, r1, r2}
+	.code	16
+	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
 .L592:
@@ -27372,12 +27358,11 @@ VBlankCB1_Phase2_Mugshots:
 	.word	0xc5ff
 	.word	0x7fff
 	.word	sTransitionStructPtr
-	.word	0x40000d4
 	.word	gScanlineEffectRegBuffers
 	.word	-0x7fffff60
+	.word	0x40000d4
 	.word	0x4000050
 	.word	gScanlineEffectRegBuffers+0x780
-	.word	0x4000054
 	.word	-0x5dbfffff
 .Lfe102:
 	.size	 VBlankCB1_Phase2_Mugshots,.Lfe102-VBlankCB1_Phase2_Mugshots
@@ -28097,23 +28082,21 @@ VBlankCB_Phase2_Slice:
 	cmp	r0, #0
 	beq	.L668	@cond_branch
 	ldr	r1, .L669+0x14
-	ldr	r0, .L669+0x18
-	str	r0, [r1]
+	add	r0, r1, #0
 	mov	r2, #0xf0
 	lsl	r2, r2, #0x3
-	add	r0, r0, r2
-	str	r0, [r1, #0x4]
-	ldr	r0, .L669+0x1c
-	str	r0, [r1, #0x8]
-	ldr	r0, [r1, #0x8]
+	add	r1, r1, r2
+	ldr	r2, .L669+0x18
+	ldr	r3, .L669+0x1c
+	stmia r3!, {r0, r1, r2}
+	.code	16
 .L668:
 	ldr	r0, .L669+0x20
-	str	r0, [r4]
-	ldr	r0, .L669+0x24
-	str	r0, [r4, #0x4]
-	ldr	r0, .L669+0x28
-	str	r0, [r4, #0x8]
-	ldr	r0, [r4, #0x8]
+	ldr	r1, .L669+0x24
+	ldr	r2, .L669+0x28
+	add	r3, r4, #0
+	stmia r3!, {r0, r1, r2}
+	.code	16
 	pop	{r4}
 	pop	{r0}
 	bx	r0
@@ -28125,9 +28108,9 @@ VBlankCB_Phase2_Slice:
 	.word	0x7fff
 	.word	0x4000048
 	.word	sTransitionStructPtr
-	.word	0x40000d4
 	.word	gScanlineEffectRegBuffers
 	.word	-0x7ffffec0
+	.word	0x40000d4
 	.word	gScanlineEffectRegBuffers+0x8c0
 	.word	0x4000040
 	.word	-0x5dbfffff
@@ -28336,9 +28319,9 @@ Phase2_ShredSplit_Func2:
 	ldrsh	r0, [r1, r3]
 	ldr	r1, [sp, #0x8]
 	cmp	r1, r0
-	ble	.LCB7347
+	ble	.LCB7363
 	b	.L692	@long jump
-.LCB7347:
+.LCB7363:
 .L694:
 	mov	r7, #0x0
 	mov	r2, sl
@@ -28573,9 +28556,9 @@ Phase2_ShredSplit_Func2:
 	mov	r3, #0x12
 	ldrsh	r0, [r2, r3]
 	cmp	sl, r0
-	bgt	.LCB7666
+	bgt	.LCB7682
 	b	.L694	@long jump
-.LCB7666:
+.LCB7682:
 .L692:
 	mov	r1, r9
 	ldrh	r0, [r1, #0x10]
@@ -30093,11 +30076,11 @@ VBlankCB_Phase2_Rayquaza:
 	bl	VBlankCB_BattleTransition
 	ldr	r0, .L930+0xc
 	ldr	r0, [r0]
-	mov	r1, #0x20
-	ldrsh	r0, [r0, r1]
-	cmp	r0, #0
+	mov	r2, #0x20
+	ldrsh	r1, [r0, r2]
+	cmp	r1, #0
 	bne	.L926	@cond_branch
-	ldr	r2, .L930+0x10
+	ldr	r0, .L930+0x10
 	b	.L927
 .L931:
 	.align	2, 0
@@ -30108,29 +30091,27 @@ VBlankCB_Phase2_Rayquaza:
 	.word	sTransitionStructPtr
 	.word	gScanlineEffectRegBuffers
 .L926:
-	ldr	r2, .L932
-	cmp	r0, #0x1
+	ldr	r0, .L932
+	cmp	r1, #0x1
 	bne	.L927	@cond_branch
-	mov	r0, #0xf0
-	lsl	r0, r0, #0x3
-	add	r2, r2, r0
+	mov	r3, #0xf0
+	lsl	r3, r3, #0x3
+	add	r0, r0, r3
 .L927:
 	ldr	r1, .L932+0x4
-	str	r2, [r1]
-	ldr	r0, .L932+0x8
-	str	r0, [r1, #0x4]
-	ldr	r0, .L932+0xc
-	str	r0, [r1, #0x8]
-	ldr	r0, [r1, #0x8]
+	ldr	r2, .L932+0x8
+	ldr	r3, .L932+0xc
+	stmia r3!, {r0, r1, r2}
+	.code	16
 	pop	{r0}
 	bx	r0
 .L933:
 	.align	2, 0
 .L932:
 	.word	gScanlineEffectRegBuffers
-	.word	0x40000b0
 	.word	0x4000012
 	.word	-0x5dbfffff
+	.word	0x40000b0
 .Lfe148:
 	.size	 VBlankCB_Phase2_Rayquaza,.Lfe148-VBlankCB_Phase2_Rayquaza
 	.align	2, 0
@@ -30442,23 +30423,21 @@ VBlankCB0_Phase2_WhiteFade:
 	cmp	r0, #0
 	beq	.L969	@cond_branch
 	ldr	r1, .L970+0x14
-	ldr	r0, .L970+0x18
-	str	r0, [r1]
+	add	r0, r1, #0
 	mov	r2, #0xf0
 	lsl	r2, r2, #0x3
-	add	r0, r0, r2
-	str	r0, [r1, #0x4]
-	ldr	r0, .L970+0x1c
-	str	r0, [r1, #0x8]
-	ldr	r0, [r1, #0x8]
+	add	r1, r1, r2
+	ldr	r2, .L970+0x18
+	ldr	r3, .L970+0x1c
+	stmia r3!, {r0, r1, r2}
+	.code	16
 .L969:
 	ldr	r0, .L970+0x20
-	str	r0, [r4]
-	ldr	r0, .L970+0x24
-	str	r0, [r4, #0x4]
-	ldr	r0, .L970+0x28
-	str	r0, [r4, #0x8]
-	ldr	r0, [r4, #0x8]
+	ldr	r1, .L970+0x24
+	ldr	r2, .L970+0x28
+	add	r3, r4, #0
+	stmia r3!, {r0, r1, r2}
+	.code	16
 	pop	{r4}
 	pop	{r0}
 	bx	r0
@@ -30470,9 +30449,9 @@ VBlankCB0_Phase2_WhiteFade:
 	.word	0x7fff
 	.word	0x4000050
 	.word	sTransitionStructPtr
-	.word	0x40000d4
 	.word	gScanlineEffectRegBuffers
 	.word	-0x7ffffec0
+	.word	0x40000d4
 	.word	gScanlineEffectRegBuffers+0x8c0
 	.word	0x4000040
 	.word	-0x5dbfffff
@@ -31194,7 +31173,7 @@ Phase2_Shards_Func5:
 	.type	 VBlankCB_Phase2_Shards,function
 	.thumb_func
 VBlankCB_Phase2_Shards:
-	push	{r4, lr}
+	push	{r4, r5, lr}
 	ldr	r4, .L1068
 	ldrh	r1, [r4, #0xa]
 	ldr	r0, .L1068+0x4
@@ -31212,15 +31191,14 @@ VBlankCB_Phase2_Shards:
 	cmp	r0, #0
 	beq	.L1067	@cond_branch
 	ldr	r1, .L1068+0x10
-	ldr	r0, .L1068+0x14
-	str	r0, [r1]
+	add	r0, r1, #0
 	mov	r2, #0xf0
 	lsl	r2, r2, #0x3
-	add	r0, r0, r2
-	str	r0, [r1, #0x4]
-	ldr	r0, .L1068+0x18
-	str	r0, [r1, #0x8]
-	ldr	r0, [r1, #0x8]
+	add	r1, r1, r2
+	ldr	r2, .L1068+0x14
+	ldr	r5, .L1068+0x18
+	stmia r5!, {r0, r1, r2}
+	.code	16
 .L1067:
 	ldr	r2, .L1068+0x1c
 	ldr	r1, [r3]
@@ -31232,19 +31210,18 @@ VBlankCB_Phase2_Shards:
 	sub	r2, r2, #0x6
 	ldrh	r0, [r1, #0x8]
 	strh	r0, [r2]
-	sub	r2, r2, #0x4
-	ldr	r0, .L1068+0x14
-	mov	r1, #0xf0
-	lsl	r1, r1, #0x3
-	add	r0, r0, r1
-	ldrh	r1, [r0]
-	strh	r1, [r2]
-	str	r0, [r4]
-	str	r2, [r4, #0x4]
-	ldr	r0, .L1068+0x20
-	str	r0, [r4, #0x8]
-	ldr	r0, [r4, #0x8]
-	pop	{r4}
+	ldr	r1, .L1068+0x20
+	ldr	r0, .L1068+0x10
+	mov	r2, #0xf0
+	lsl	r2, r2, #0x3
+	add	r0, r0, r2
+	ldrh	r2, [r0]
+	strh	r2, [r1]
+	ldr	r2, .L1068+0x24
+	add	r3, r4, #0
+	stmia r3!, {r0, r1, r2}
+	.code	16
+	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
 .L1069:
@@ -31254,10 +31231,11 @@ VBlankCB_Phase2_Shards:
 	.word	0xc5ff
 	.word	0x7fff
 	.word	sTransitionStructPtr
-	.word	0x40000d4
 	.word	gScanlineEffectRegBuffers
 	.word	-0x7fffff60
+	.word	0x40000d4
 	.word	0x4000048
+	.word	0x4000040
 	.word	-0x5dbfffff
 .Lfe169:
 	.size	 VBlankCB_Phase2_Shards,.Lfe169-VBlankCB_Phase2_Shards
@@ -31875,9 +31853,9 @@ sub_814A014:
 	lsr	r1, r0, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, #0x3f
-	bgt	.LCB11800
+	bgt	.LCB11822
 	b	.L1125	@long jump
-.LCB11800:
+.LCB11822:
 	add	sp, sp, #0x14
 	pop	{r3, r4, r5}
 	mov	r8, r3
@@ -32580,15 +32558,14 @@ VBlankCB_Phase2_30:
 	cmp	r0, #0
 	beq	.L1228	@cond_branch
 	ldr	r1, .L1229+0x8
-	ldr	r0, .L1229+0xc
-	str	r0, [r1]
+	add	r0, r1, #0
 	mov	r2, #0xf0
 	lsl	r2, r2, #0x3
-	add	r0, r0, r2
-	str	r0, [r1, #0x4]
-	ldr	r0, .L1229+0x10
-	str	r0, [r1, #0x8]
-	ldr	r0, [r1, #0x8]
+	add	r1, r1, r2
+	ldr	r2, .L1229+0xc
+	ldr	r3, .L1229+0x10
+	stmia r3!, {r0, r1, r2}
+	.code	16
 .L1228:
 	pop	{r0}
 	bx	r0
@@ -32597,9 +32574,9 @@ VBlankCB_Phase2_30:
 .L1229:
 	.word	0x4000050
 	.word	sTransitionStructPtr
-	.word	0x40000d4
 	.word	gScanlineEffectRegBuffers
 	.word	-0x7fffff60
+	.word	0x40000d4
 .Lfe192:
 	.size	 VBlankCB_Phase2_30,.Lfe192-VBlankCB_Phase2_30
 	.align	2, 0

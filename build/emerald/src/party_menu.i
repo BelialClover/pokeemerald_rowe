@@ -44625,7 +44625,7 @@ static void Task_DoLearnedMoveFanfareAfterText(u8 taskId)
 {
     if (IsPartyMenuTextPrinterActive() != 1)
     {
-        PlayFanfare(367);
+        PlayFanfare(338);
         gTasks[taskId].func = Task_LearnNextMoveOrClosePartyMenu;
     }
 }

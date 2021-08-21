@@ -511,33 +511,29 @@ CB2_DoChangeMap:
 	mov	r1, sp
 	mov	r0, #0x0
 	strh	r0, [r1]
-	ldr	r1, .L22
 	mov	r0, sp
-	str	r0, [r1]
-	mov	r0, #0xc0
-	lsl	r0, r0, #0x13
-	str	r0, [r1, #0x4]
-	ldr	r0, .L22+0x4
-	str	r0, [r1, #0x8]
-	ldr	r0, [r1, #0x8]
+	mov	r1, #0xc0
+	lsl	r1, r1, #0x13
+	ldr	r2, .L22
+	ldr	r3, .L22+0x4
+	stmia r3!, {r0, r1, r2}
+	.code	16
 	mov	r4, #0x0
 	str	r4, [sp, #0x4]
 	add	r0, sp, #0x4
-	str	r0, [r1]
-	mov	r0, #0xe0
-	lsl	r0, r0, #0x13
-	str	r0, [r1, #0x4]
-	ldr	r0, .L22+0x8
-	str	r0, [r1, #0x8]
-	ldr	r0, [r1, #0x8]
+	mov	r1, #0xe0
+	lsl	r1, r1, #0x13
+	ldr	r2, .L22+0x8
+	ldr	r3, .L22+0x4
+	stmia r3!, {r0, r1, r2}
+	.code	16
 	mov	r0, sp
 	strh	r4, [r0]
-	str	r0, [r1]
-	ldr	r0, .L22+0xc
-	str	r0, [r1, #0x4]
-	ldr	r0, .L22+0x10
-	str	r0, [r1, #0x8]
-	ldr	r0, [r1, #0x8]
+	ldr	r1, .L22+0xc
+	ldr	r2, .L22+0x10
+	ldr	r3, .L22+0x4
+	stmia r3!, {r0, r1, r2}
+	.code	16
 	bl	ResetPaletteFade
 	bl	ResetTasks
 	bl	ResetSpriteData
@@ -569,8 +565,8 @@ CB2_DoChangeMap:
 .L23:
 	.align	2, 0
 .L22:
-	.word	0x40000d4
 	.word	-0x7eff4000
+	.word	0x40000d4
 	.word	-0x7affff00
 	.word	0x5000002
 	.word	-0x7efffe01

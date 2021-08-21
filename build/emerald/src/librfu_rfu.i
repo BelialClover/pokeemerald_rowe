@@ -3444,8 +3444,8 @@ u16 rfu_initializeAPI(u32 *APIBuffer, u16 buffByteSize, IntrFunc *sioIntrTable_p
     u16 buffByteSizeMax;
 
 
-    if (((uintptr_t)APIBuffer & 0xF000000) == 0x2000000 && copyInterruptToRam)
-        return 0x0002;
+
+
 
     if ((u32)APIBuffer & 3)
         return 0x0002;

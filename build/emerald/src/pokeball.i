@@ -14420,8 +14420,8 @@ struct SoundInfo
     u32 plynote;
     u32 ExtVolPit;
     u8 gap2[16];
-    struct SoundChannel chans[12];
-    s8 pcmBuffer[1584 * 2];
+    struct SoundChannel chans[15];
+    s8 pcmBuffer[0x620 * 2];
 };
 
 struct SongHeader
@@ -15788,7 +15788,7 @@ static void sub_80760F8(struct Sprite *sprite)
     {
         gDoingBattleAnim = 0;
         m4aMPlayAllStop();
-        PlaySE(371);
+        PlaySE(342);
     }
     else if (sprite->data[4] == 315)
     {

@@ -330,8 +330,10 @@ DrawChoices:
 	.thumb_func
 CB2_InitOptionMenu:
 	push	{r4, r5, r6, r7, lr}
-	mov	r7, r8
-	push	{r7}
+	mov	r7, sl
+	mov	r6, r9
+	mov	r5, r8
+	push	{r5, r6, r7}
 	add	sp, sp, #-0xc
 	ldr	r1, .L36
 	mov	r2, #0x87
@@ -369,90 +371,83 @@ CB2_InitOptionMenu:
 .L11:
 	mov	r0, #0x0
 	bl	SetVBlankCallback
-	ldr	r1, .L38
-	mov	r0, #0x87
-	lsl	r0, r0, #0x3
-	add	r1, r1, r0
 	b	.L34
-.L39:
-	.align	2, 0
-.L38:
-	.word	gMain
 .L12:
+	mov	r6, #0xc0
+	lsl	r6, r6, #0x13
 	mov	r3, #0xc0
-	lsl	r3, r3, #0x13
-	mov	r4, #0xc0
-	lsl	r4, r4, #0x9
-	add	r1, sp, #0x8
-	mov	r8, r1
-	add	r2, sp, #0x4
-	mov	r6, #0x0
-	ldr	r1, .L40
+	lsl	r3, r3, #0x9
+	add	r4, sp, #0x8
+	mov	r9, r4
+	add	r4, sp, #0x4
+	mov	r7, #0x0
+	mov	sl, r7
+	ldr	r0, .L38
+	mov	ip, r0
 	mov	r5, #0x80
 	lsl	r5, r5, #0x5
-	ldr	r7, .L40+0x4
-	mov	r0, #0x81
-	lsl	r0, r0, #0x18
-	mov	ip, r0
+	mov	r2, #0x81
+	lsl	r2, r2, #0x18
+	mov	r8, r2
 .L15:
-	strh	r6, [r2]
+	mov	r7, sl
+	strh	r7, [r4]
 	add	r0, sp, #0x4
-	str	r0, [r1]
-	str	r3, [r1, #0x4]
-	str	r7, [r1, #0x8]
-	ldr	r0, [r1, #0x8]
-	add	r3, r3, r5
-	sub	r4, r4, r5
-	cmp	r4, r5
-	bhi	.L15	@cond_branch
-	strh	r6, [r2]
-	add	r2, sp, #0x4
-	str	r2, [r1]
-	str	r3, [r1, #0x4]
-	lsr	r0, r4, #0x1
+	add	r1, r6, #0
 	mov	r2, ip
-	orr	r0, r0, r2
-	str	r0, [r1, #0x8]
-	ldr	r0, [r1, #0x8]
-	mov	r0, #0xe0
-	lsl	r0, r0, #0x13
+	ldr	r7, .L38+0x4
+	stmia r7!, {r0, r1, r2}
+	.code	16
+	add	r6, r6, r5
+	sub	r3, r3, r5
+	cmp	r3, r5
+	bhi	.L15	@cond_branch
+	mov	r0, sl
+	strh	r0, [r4]
+	lsr	r2, r3, #0x1
+	add	r0, sp, #0x4
+	add	r1, r6, #0
+	mov	r3, r8
+	orr	r2, r2, r3
+	ldr	r4, .L38+0x4
+	stmia r4!, {r0, r1, r2}
+	.code	16
 	mov	r3, #0x80
 	lsl	r3, r3, #0x3
-	mov	r4, #0x0
-	str	r4, [sp, #0x8]
-	ldr	r2, .L40
-	mov	r1, r8
-	str	r1, [r2]
-	str	r0, [r2, #0x4]
-	lsr	r0, r3, #0x2
-	mov	r1, #0x85
-	lsl	r1, r1, #0x18
-	orr	r0, r0, r1
-	str	r0, [r2, #0x8]
-	ldr	r0, [r2, #0x8]
+	mov	r5, #0x0
+	str	r5, [sp, #0x8]
+	lsr	r2, r3, #0x2
+	mov	r4, #0x85
+	lsl	r4, r4, #0x18
+	mov	r0, r9
+	mov	r1, #0xe0
+	lsl	r1, r1, #0x13
+	orr	r2, r2, r4
+	ldr	r7, .L38+0x4
+	stmia r7!, {r0, r1, r2}
+	.code	16
+	add	r0, sp, #0x4
+	strh	r5, [r0]
+	lsr	r3, r3, #0x1
+	mov	r2, #0x81
+	lsl	r2, r2, #0x18
 	mov	r1, #0xa0
 	lsl	r1, r1, #0x13
-	add	r0, sp, #0x4
-	strh	r4, [r0]
-	str	r0, [r2]
-	str	r1, [r2, #0x4]
-	lsr	r3, r3, #0x1
-	mov	r0, #0x81
-	lsl	r0, r0, #0x18
-	orr	r3, r3, r0
-	str	r3, [r2, #0x8]
-	ldr	r0, [r2, #0x8]
+	orr	r2, r2, r3
+	ldr	r3, .L38+0x4
+	stmia r3!, {r0, r1, r2}
+	.code	16
 	mov	r0, #0x0
 	mov	r1, #0x0
 	bl	SetGpuReg
 	mov	r0, #0x0
 	bl	ResetBgsAndClearDma3BusyFlags
-	ldr	r1, .L40+0x8
+	ldr	r1, .L38+0x8
 	mov	r0, #0x0
 	mov	r2, #0x2
 	bl	InitBgsFromTemplates
 	bl	ResetBgPositions
-	ldr	r0, .L40+0xc
+	ldr	r0, .L38+0xc
 	bl	InitWindows
 	bl	DeactivateAllTextPrinters
 	mov	r0, #0x40
@@ -484,30 +479,35 @@ CB2_InitOptionMenu:
 	bl	ShowBg
 	mov	r0, #0x1
 	bl	ShowBg
+	ldr	r1, .L38+0x10
+	mov	r4, #0x87
+	lsl	r4, r4, #0x3
+	add	r1, r1, r4
 	b	.L35
-.L41:
+.L39:
 	.align	2, 0
-.L40:
-	.word	0x40000d4
+.L38:
 	.word	-0x7efff800
+	.word	0x40000d4
 	.word	sOptionMenuBgTemplates
 	.word	sOptionMenuWinTemplates
+	.word	gMain
 .L18:
 	bl	ResetPaletteFade
 	bl	ScanlineEffect_Stop
 	bl	ResetTasks
 	bl	ResetSpriteData
-	ldr	r1, .L42
-	mov	r0, #0x87
-	lsl	r0, r0, #0x3
-	add	r1, r1, r0
-	b	.L34
-.L43:
+	ldr	r1, .L40
+	mov	r7, #0x87
+	lsl	r7, r7, #0x3
+	add	r1, r1, r7
+	b	.L35
+.L41:
 	.align	2, 0
-.L42:
+.L40:
 	.word	gMain
 .L19:
-	ldr	r0, .L44
+	ldr	r0, .L42
 	ldr	r0, [r0]
 	ldrb	r0, [r0, #0x14]
 	lsr	r0, r0, #0x3
@@ -519,17 +519,22 @@ CB2_InitOptionMenu:
 	lsl	r3, r3, #0x1
 	mov	r0, #0x1
 	bl	LoadBgTiles
+	ldr	r1, .L42+0x4
+	mov	r0, #0x87
+	lsl	r0, r0, #0x3
+	add	r1, r1, r0
 	b	.L35
-.L45:
+.L43:
 	.align	2, 0
-.L44:
+.L42:
 	.word	gSaveBlock2Ptr
+	.word	gMain
 .L20:
-	ldr	r0, .L46
+	ldr	r0, .L44
 	mov	r1, #0x0
 	mov	r2, #0x2
 	bl	LoadPalette
-	ldr	r0, .L46+0x4
+	ldr	r0, .L44+0x4
 	ldr	r0, [r0]
 	ldrb	r0, [r0, #0x14]
 	lsr	r0, r0, #0x3
@@ -538,76 +543,76 @@ CB2_InitOptionMenu:
 	mov	r1, #0x70
 	mov	r2, #0x20
 	bl	LoadPalette
-	ldr	r1, .L46+0x8
-	mov	r0, #0x87
-	lsl	r0, r0, #0x3
-	add	r1, r1, r0
-	b	.L34
-.L47:
+	ldr	r1, .L44+0x8
+	mov	r2, #0x87
+	lsl	r2, r2, #0x3
+	add	r1, r1, r2
+	b	.L35
+.L45:
 	.align	2, 0
-.L46:
+.L44:
 	.word	sUnknown_0855C6A0
 	.word	gSaveBlock2Ptr
 	.word	gMain
 .L21:
-	ldr	r0, .L48
+	ldr	r0, .L46
 	mov	r1, #0x10
 	mov	r2, #0x20
 	bl	LoadPalette
-	b	.L35
-.L49:
+	b	.L34
+.L47:
 	.align	2, 0
-.L48:
+.L46:
 	.word	sUnknown_0855C604
 .L22:
 	mov	r0, #0x0
 	bl	PutWindowTilemap
 	bl	DrawTextOption
-	ldr	r1, .L50
-	mov	r0, #0x87
-	lsl	r0, r0, #0x3
-	add	r1, r1, r0
-	b	.L34
-.L51:
+	ldr	r1, .L48
+	mov	r4, #0x87
+	lsl	r4, r4, #0x3
+	add	r1, r1, r4
+	b	.L35
+.L49:
 	.align	2, 0
-.L50:
+.L48:
 	.word	gMain
 .L23:
-	mov	r0, #0x87
-	lsl	r0, r0, #0x3
-	add	r1, r2, r0
-	b	.L34
+	mov	r7, #0x87
+	lsl	r7, r7, #0x3
+	add	r1, r2, r7
+	b	.L35
 .L24:
 	mov	r0, #0x1
 	bl	PutWindowTilemap
 	bl	DrawOptionMenuTexts
-	ldr	r1, .L52
-	mov	r2, #0x87
-	lsl	r2, r2, #0x3
-	add	r1, r1, r2
+	ldr	r1, .L50
+	mov	r0, #0x87
+	lsl	r0, r0, #0x3
+	add	r1, r1, r0
 	ldrb	r0, [r1]
 	add	r0, r0, #0x1
 	strb	r0, [r1]
 .L25:
 	bl	sub_80BB154
-	ldr	r1, .L52
-	mov	r0, #0x87
-	lsl	r0, r0, #0x3
-	add	r1, r1, r0
-	b	.L34
-.L53:
+	ldr	r1, .L50
+	mov	r2, #0x87
+	lsl	r2, r2, #0x3
+	add	r1, r1, r2
+	b	.L35
+.L51:
 	.align	2, 0
-.L52:
+.L50:
 	.word	gMain
 .L26:
-	ldr	r0, .L54
+	ldr	r0, .L52
 	mov	r1, #0x0
 	bl	CreateTask
-	ldr	r4, .L54+0x4
+	ldr	r4, .L52+0x4
 	mov	r0, #0x14
 	bl	AllocZeroed
 	str	r0, [r4]
-	ldr	r2, .L54+0x8
+	ldr	r2, .L52+0x8
 	ldr	r1, [r2]
 	ldrb	r1, [r1, #0x14]
 	lsl	r1, r1, #0x1d
@@ -672,26 +677,26 @@ CB2_InitOptionMenu:
 	add	r4, r4, #0x1
 	cmp	r4, #0x6
 	bls	.L30	@cond_branch
-	ldr	r0, .L54+0x4
+	ldr	r0, .L52+0x4
 	ldr	r0, [r0]
 	ldr	r0, [r0, #0xc]
 	bl	HighlightOptionMenuItem
 	mov	r0, #0x1
 	mov	r1, #0x3
 	bl	CopyWindowToVram
-.L35:
-	ldr	r1, .L54+0xc
-	mov	r2, #0x87
-	lsl	r2, r2, #0x3
-	add	r1, r1, r2
 .L34:
+	ldr	r1, .L52+0xc
+	mov	r3, #0x87
+	lsl	r3, r3, #0x3
+	add	r1, r1, r3
+.L35:
 	ldrb	r0, [r1]
 	add	r0, r0, #0x1
 	strb	r0, [r1]
 	b	.L9
-.L55:
+.L53:
 	.align	2, 0
-.L54:
+.L52:
 	.word	Task_OptionMenuFadeIn
 	.word	sOptions
 	.word	gSaveBlock2Ptr
@@ -704,20 +709,22 @@ CB2_InitOptionMenu:
 	mov	r2, #0x10
 	mov	r3, #0x0
 	bl	BeginNormalPaletteFade
-	ldr	r0, .L56
+	ldr	r0, .L54
 	bl	SetVBlankCallback
-	ldr	r0, .L56+0x4
+	ldr	r0, .L54+0x4
 	bl	SetMainCallback2
 .L9:
 	add	sp, sp, #0xc
-	pop	{r3}
+	pop	{r3, r4, r5}
 	mov	r8, r3
+	mov	r9, r4
+	mov	sl, r5
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L57:
+.L55:
 	.align	2, 0
-.L56:
+.L54:
 	.word	VBlankCB
 	.word	MainCB2
 .Lfe4:
@@ -729,25 +736,25 @@ Task_OptionMenuFadeIn:
 	push	{lr}
 	lsl	r0, r0, #0x18
 	lsr	r2, r0, #0x18
-	ldr	r0, .L60
+	ldr	r0, .L58
 	ldrb	r1, [r0, #0x7]
 	mov	r0, #0x80
 	and	r0, r0, r1
 	cmp	r0, #0
-	bne	.L59	@cond_branch
-	ldr	r0, .L60+0x4
+	bne	.L57	@cond_branch
+	ldr	r0, .L58+0x4
 	lsl	r1, r2, #0x2
 	add	r1, r1, r2
 	lsl	r1, r1, #0x3
 	add	r1, r1, r0
-	ldr	r0, .L60+0x8
+	ldr	r0, .L58+0x8
 	str	r0, [r1]
-.L59:
+.L57:
 	pop	{r0}
 	bx	r0
-.L61:
+.L59:
 	.align	2, 0
-.L60:
+.L58:
 	.word	gPaletteFade
 	.word	gTasks
 	.word	Task_OptionMenuProcessInput
@@ -761,24 +768,24 @@ ScrollMenu:
 	add	sp, sp, #-0xc
 	add	r1, r0, #0
 	cmp	r1, #0
-	bne	.L63	@cond_branch
-	ldr	r0, .L65
+	bne	.L61	@cond_branch
+	ldr	r0, .L63
 	ldr	r0, [r0]
 	ldr	r0, [r0, #0xc]
 	add	r6, r0, #0x3
 	mov	r5, #0x6
-	b	.L64
-.L66:
+	b	.L62
+.L64:
 	.align	2, 0
-.L65:
-	.word	sOptions
 .L63:
-	ldr	r0, .L67
+	.word	sOptions
+.L61:
+	ldr	r0, .L65
 	ldr	r0, [r0]
 	ldr	r0, [r0, #0xc]
 	sub	r6, r0, #0x3
 	mov	r5, #0x0
-.L64:
+.L62:
 	lsl	r1, r1, #0x18
 	lsr	r1, r1, #0x18
 	mov	r0, #0x1
@@ -799,7 +806,7 @@ ScrollMenu:
 	add	r1, r4, #0
 	mov	r2, #0xff
 	bl	DrawChoices
-	ldr	r1, .L67+0x4
+	ldr	r1, .L65+0x4
 	lsl	r0, r6, #0x2
 	add	r0, r0, r1
 	ldr	r2, [r0]
@@ -820,9 +827,9 @@ ScrollMenu:
 	pop	{r4, r5, r6}
 	pop	{r0}
 	bx	r0
-.L68:
+.L66:
 	.align	2, 0
-.L67:
+.L65:
 	.word	sOptions
 	.word	sOptionMenuItemsNames
 .Lfe6:
@@ -845,12 +852,12 @@ ScrollAll:
 	mov	r3, #0x0
 	bl	ScrollWindow
 	cmp	r7, #0
-	bne	.L70	@cond_branch
+	bne	.L68	@cond_branch
 	mov	r3, #0x30
-	b	.L72
-.L70:
+	b	.L70
+.L68:
 	mov	r3, #0x0
-.L72:
+.L70:
 	mov	r0, #0xd0
 	str	r0, [sp]
 	mov	r1, r8
@@ -862,25 +869,25 @@ ScrollAll:
 	bl	FillWindowPixelRect
 	mov	r6, #0x0
 	cmp	r6, r8
-	bge	.L74	@cond_branch
-.L76:
+	bge	.L72	@cond_branch
+.L74:
 	cmp	r7, #0
-	bne	.L77	@cond_branch
+	bne	.L75	@cond_branch
 	mov	r0, #0xa
 	sub	r5, r0, r6
 	mov	r0, #0x6
 	sub	r0, r0, r6
-	b	.L78
-.L77:
+	b	.L76
+.L75:
 	add	r5, r6, #0
 	add	r0, r6, #0
-.L78:
+.L76:
 	lsl	r4, r0, #0x4
 	add	r0, r5, #0
 	add	r1, r4, #0
 	mov	r2, #0xff
 	bl	DrawChoices
-	ldr	r1, .L80
+	ldr	r1, .L78
 	lsl	r0, r5, #0x2
 	add	r0, r0, r1
 	ldr	r2, [r0]
@@ -898,8 +905,8 @@ ScrollAll:
 	bl	AddTextPrinterParameterized
 	add	r6, r6, #0x1
 	cmp	r6, r8
-	blt	.L76	@cond_branch
-.L74:
+	blt	.L74	@cond_branch
+.L72:
 	mov	r0, #0x1
 	mov	r1, #0x2
 	bl	CopyWindowToVram
@@ -909,9 +916,9 @@ ScrollAll:
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L81:
+.L79:
 	.align	2, 0
-.L80:
+.L78:
 	.word	sOptionMenuItemsNames
 .Lfe7:
 	.size	 ScrollAll,.Lfe7-ScrollAll
@@ -923,78 +930,78 @@ Task_OptionMenuProcessInput:
 	lsl	r0, r0, #0x18
 	lsr	r2, r0, #0x18
 	add	r3, r2, #0
-	ldr	r0, .L110
+	ldr	r0, .L108
 	ldrh	r1, [r0, #0x2e]
 	mov	r0, #0x1
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L83	@cond_branch
-	ldr	r0, .L110+0x4
+	beq	.L81	@cond_branch
+	ldr	r0, .L108+0x4
 	ldr	r0, [r0]
 	ldr	r0, [r0, #0xc]
 	cmp	r0, #0xa
-	beq	.LCB812
-	b	.L85	@long jump
-.LCB812:
-	ldr	r0, .L110+0x8
+	beq	.LCB819
+	b	.L83	@long jump
+.LCB819:
+	ldr	r0, .L108+0x8
 	lsl	r1, r2, #0x2
 	add	r1, r1, r2
-	b	.L107
-.L111:
+	b	.L105
+.L109:
 	.align	2, 0
-.L110:
+.L108:
 	.word	gMain
 	.word	sOptions
 	.word	gTasks
-.L83:
+.L81:
 	mov	r0, #0x2
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L86	@cond_branch
-	ldr	r0, .L112
+	beq	.L84	@cond_branch
+	ldr	r0, .L110
 	lsl	r1, r3, #0x2
 	add	r1, r1, r3
-.L107:
+.L105:
 	lsl	r1, r1, #0x3
 	add	r1, r1, r0
-	ldr	r0, .L112+0x4
+	ldr	r0, .L110+0x4
 	str	r0, [r1]
-	b	.L85
-.L113:
+	b	.L83
+.L111:
 	.align	2, 0
-.L112:
+.L110:
 	.word	gTasks
 	.word	Task_OptionMenuSave
-.L86:
+.L84:
 	mov	r0, #0x40
 	and	r0, r0, r1
 	lsl	r0, r0, #0x10
 	lsr	r4, r0, #0x10
 	cmp	r4, #0
-	beq	.L88	@cond_branch
-	ldr	r4, .L114
+	beq	.L86	@cond_branch
+	ldr	r4, .L112
 	ldr	r1, [r4]
 	ldr	r2, [r1, #0x10]
 	cmp	r2, #0x3
-	bne	.L89	@cond_branch
+	bne	.L87	@cond_branch
 	ldr	r0, [r1, #0xc]
 	sub	r0, r0, #0x1
 	str	r0, [r1, #0xc]
 	cmp	r0, #0x2
-	beq	.L109	@cond_branch
+	beq	.L107	@cond_branch
 	mov	r0, #0x1
 	bl	ScrollMenu
-	b	.L100
-.L115:
+	b	.L98
+.L113:
 	.align	2, 0
-.L114:
+.L112:
 	.word	sOptions
-.L89:
+.L87:
 	ldr	r0, [r1, #0xc]
 	sub	r0, r0, #0x1
 	str	r0, [r1, #0xc]
 	cmp	r0, #0
-	bge	.L93	@cond_branch
+	bge	.L91	@cond_branch
 	mov	r0, #0x3
 	str	r0, [r1, #0xc]
 	str	r0, [r1, #0x10]
@@ -1005,41 +1012,41 @@ Task_OptionMenuProcessInput:
 	str	r0, [r1, #0x10]
 	mov	r0, #0xa
 	str	r0, [r1, #0xc]
-	b	.L100
-.L93:
+	b	.L98
+.L91:
 	sub	r0, r2, #0x1
-	b	.L109
-.L88:
+	b	.L107
+.L86:
 	mov	r0, #0x80
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L96	@cond_branch
-	ldr	r5, .L116
+	beq	.L94	@cond_branch
+	ldr	r5, .L114
 	ldr	r1, [r5]
 	ldr	r2, [r1, #0x10]
 	cmp	r2, #0x3
-	bne	.L97	@cond_branch
+	bne	.L95	@cond_branch
 	ldr	r0, [r1, #0xc]
 	add	r0, r0, #0x1
 	str	r0, [r1, #0xc]
 	cmp	r0, #0x8
-	bne	.L98	@cond_branch
+	bne	.L96	@cond_branch
 	mov	r0, #0x4
-	b	.L109
-.L117:
+	b	.L107
+.L115:
 	.align	2, 0
-.L116:
+.L114:
 	.word	sOptions
-.L98:
+.L96:
 	mov	r0, #0x0
 	bl	ScrollMenu
-	b	.L100
-.L97:
+	b	.L98
+.L95:
 	ldr	r0, [r1, #0xc]
 	add	r0, r0, #0x1
 	str	r0, [r1, #0xc]
 	cmp	r0, #0xa
-	ble	.L101	@cond_branch
+	ble	.L99	@cond_branch
 	mov	r0, #0x3
 	str	r0, [r1, #0x10]
 	mov	r0, #0x7
@@ -1049,61 +1056,61 @@ Task_OptionMenuProcessInput:
 	ldr	r0, [r5]
 	str	r4, [r0, #0xc]
 	str	r4, [r0, #0x10]
-	b	.L100
-.L101:
+	b	.L98
+.L99:
 	add	r0, r2, #0x1
-.L109:
+.L107:
 	str	r0, [r1, #0x10]
-.L100:
-	ldr	r0, .L118
+.L98:
+	ldr	r0, .L116
 	ldr	r0, [r0]
 	ldr	r0, [r0, #0x10]
 	bl	HighlightOptionMenuItem
-	b	.L85
-.L119:
+	b	.L83
+.L117:
 	.align	2, 0
-.L118:
+.L116:
 	.word	sOptions
-.L96:
+.L94:
 	mov	r0, #0x30
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L85	@cond_branch
-	ldr	r5, .L120
+	beq	.L83	@cond_branch
+	ldr	r5, .L118
 	ldr	r0, [r5]
 	ldr	r4, [r0, #0xc]
 	add	r0, r0, r4
 	ldrb	r6, [r0]
-	ldr	r0, .L120+0x4
+	ldr	r0, .L118+0x4
 	lsl	r1, r4, #0x3
 	add	r0, r0, #0x4
 	add	r1, r1, r0
 	ldr	r1, [r1]
 	cmp	r1, #0
-	beq	.L105	@cond_branch
+	beq	.L103	@cond_branch
 	add	r0, r6, #0
 	bl	_call_via_r1
 	ldr	r1, [r5]
 	add	r1, r1, r4
 	strb	r0, [r1]
-.L105:
+.L103:
 	ldr	r1, [r5]
 	add	r0, r1, r4
 	ldrb	r0, [r0]
 	cmp	r6, r0
-	beq	.L85	@cond_branch
+	beq	.L83	@cond_branch
 	ldr	r1, [r1, #0x10]
 	lsl	r1, r1, #0x4
 	add	r0, r4, #0
 	mov	r2, #0x0
 	bl	DrawChoices
-.L85:
+.L83:
 	pop	{r4, r5, r6}
 	pop	{r0}
 	bx	r0
-.L121:
+.L119:
 	.align	2, 0
-.L120:
+.L118:
 	.word	sOptions
 	.word	sItemFunctions
 .Lfe8:
@@ -1121,9 +1128,9 @@ Task_OptionMenuSave:
 	add	r6, r0, #0
 	lsl	r6, r6, #0x18
 	lsr	r6, r6, #0x18
-	ldr	r4, .L123
+	ldr	r4, .L121
 	ldr	r5, [r4]
-	ldr	r3, .L123+0x4
+	ldr	r3, .L121+0x4
 	ldr	r0, [r3]
 	mov	r2, #0x7
 	ldrb	r1, [r0]
@@ -1240,12 +1247,12 @@ Task_OptionMenuSave:
 	mov	r2, #0x0
 	mov	r3, #0x10
 	bl	BeginNormalPaletteFade
-	ldr	r1, .L123+0x8
+	ldr	r1, .L121+0x8
 	lsl	r0, r6, #0x2
 	add	r0, r0, r6
 	lsl	r0, r0, #0x3
 	add	r0, r0, r1
-	ldr	r1, .L123+0xc
+	ldr	r1, .L121+0xc
 	str	r1, [r0]
 	add	sp, sp, #0x4
 	pop	{r3, r4, r5}
@@ -1255,9 +1262,9 @@ Task_OptionMenuSave:
 	pop	{r4, r5, r6}
 	pop	{r0}
 	bx	r0
-.L124:
+.L122:
 	.align	2, 0
-.L123:
+.L121:
 	.word	gSaveBlock2Ptr
 	.word	sOptions
 	.word	gTasks
@@ -1271,31 +1278,31 @@ Task_OptionMenuFadeOut:
 	push	{r4, r5, lr}
 	lsl	r0, r0, #0x18
 	lsr	r2, r0, #0x18
-	ldr	r0, .L127
+	ldr	r0, .L125
 	ldrb	r1, [r0, #0x7]
 	mov	r0, #0x80
 	and	r0, r0, r1
 	lsl	r0, r0, #0x18
 	lsr	r5, r0, #0x18
 	cmp	r5, #0
-	bne	.L126	@cond_branch
+	bne	.L124	@cond_branch
 	add	r0, r2, #0
 	bl	DestroyTask
 	bl	FreeAllWindowBuffers
-	ldr	r4, .L127+0x4
+	ldr	r4, .L125+0x4
 	ldr	r0, [r4]
 	bl	Free
 	str	r5, [r4]
-	ldr	r0, .L127+0x8
+	ldr	r0, .L125+0x8
 	ldr	r0, [r0, #0x8]
 	bl	SetMainCallback2
-.L126:
+.L124:
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.L128:
+.L126:
 	.align	2, 0
-.L127:
+.L125:
 	.word	gPaletteFade
 	.word	sOptions
 	.word	gMain
@@ -1333,35 +1340,35 @@ XOptions_ProcessInput:
 	push	{r4, lr}
 	add	r4, r0, #0
 	add	r3, r1, #0
-	ldr	r2, .L135
+	ldr	r2, .L133
 	ldrh	r1, [r2, #0x2e]
 	mov	r0, #0x10
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L131	@cond_branch
+	beq	.L129	@cond_branch
 	add	r3, r3, #0x1
 	sub	r0, r4, #0x1
 	cmp	r3, r0
-	ble	.L131	@cond_branch
+	ble	.L129	@cond_branch
 	mov	r3, #0x0
-.L131:
+.L129:
 	ldrh	r1, [r2, #0x2e]
 	mov	r0, #0x20
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L133	@cond_branch
+	beq	.L131	@cond_branch
 	sub	r3, r3, #0x1
 	cmp	r3, #0
-	bge	.L133	@cond_branch
+	bge	.L131	@cond_branch
 	sub	r3, r4, #0x1
-.L133:
+.L131:
 	add	r0, r3, #0
 	pop	{r4}
 	pop	{r1}
 	bx	r1
-.L136:
+.L134:
 	.align	2, 0
-.L135:
+.L133:
 	.word	gMain
 .Lfe12:
 	.size	 XOptions_ProcessInput,.Lfe12-XOptions_ProcessInput
@@ -1407,21 +1414,21 @@ ElevenOptions_ProcessInput:
 TwoOptions_ProcessInput:
 	push	{lr}
 	add	r2, r0, #0
-	ldr	r0, .L142
+	ldr	r0, .L140
 	ldrh	r1, [r0, #0x2e]
 	mov	r0, #0x30
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L141	@cond_branch
+	beq	.L139	@cond_branch
 	mov	r0, #0x1
 	eor	r2, r2, r0
-.L141:
+.L139:
 	add	r0, r2, #0
 	pop	{r1}
 	bx	r1
-.L143:
+.L141:
 	.align	2, 0
-.L142:
+.L140:
 	.word	gMain
 .Lfe16:
 	.size	 TwoOptions_ProcessInput,.Lfe16-TwoOptions_ProcessInput
@@ -1431,21 +1438,21 @@ TwoOptions_ProcessInput:
 BattleStyle_ProcessInput:
 	push	{lr}
 	add	r2, r0, #0
-	ldr	r0, .L146
+	ldr	r0, .L144
 	ldrh	r1, [r0, #0x2e]
 	mov	r0, #0x30
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L145	@cond_branch
+	beq	.L143	@cond_branch
 	mov	r0, #0x1
 	eor	r2, r2, r0
-.L145:
+.L143:
 	add	r0, r2, #0
 	pop	{r1}
 	bx	r1
-.L147:
+.L145:
 	.align	2, 0
-.L146:
+.L144:
 	.word	gMain
 .Lfe17:
 	.size	 BattleStyle_ProcessInput,.Lfe17-BattleStyle_ProcessInput
@@ -1460,37 +1467,37 @@ Sound_ProcessInput:
 	bl	ThreeOptions_ProcessInput
 	add	r4, r0, #0
 	cmp	r4, #0x1
-	bhi	.L149	@cond_branch
-	ldr	r1, .L152
+	bhi	.L147	@cond_branch
+	ldr	r1, .L150
 	mov	r0, #0x0
 	strb	r0, [r1]
 	add	r0, r4, #0
 	bl	SetPokemonCryStereo
 	cmp	r5, #0x2
-	bne	.L151	@cond_branch
+	bne	.L149	@cond_branch
 	bl	GetCurrentMapMusic
 	lsl	r0, r0, #0x10
 	lsr	r0, r0, #0x10
 	bl	PlayNewMapMusic
-	b	.L151
-.L153:
+	b	.L149
+.L151:
 	.align	2, 0
-.L152:
+.L150:
 	.word	gDisableMusic
-.L149:
+.L147:
 	mov	r0, #0x0
 	bl	PlayBGM
-	ldr	r1, .L154
+	ldr	r1, .L152
 	mov	r0, #0x1
 	strb	r0, [r1]
-.L151:
+.L149:
 	add	r0, r4, #0
 	pop	{r4, r5}
 	pop	{r1}
 	bx	r1
-.L155:
+.L153:
 	.align	2, 0
-.L154:
+.L152:
 	.word	gDisableMusic
 .Lfe18:
 	.size	 Sound_ProcessInput,.Lfe18-Sound_ProcessInput
@@ -1500,23 +1507,23 @@ Sound_ProcessInput:
 FrameType_ProcessInput:
 	push	{r4, r5, lr}
 	add	r5, r0, #0
-	ldr	r0, .L163
+	ldr	r0, .L161
 	ldrh	r1, [r0, #0x2e]
 	mov	r0, #0x10
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L157	@cond_branch
+	beq	.L155	@cond_branch
 	cmp	r5, #0x12
-	bgt	.L158	@cond_branch
+	bgt	.L156	@cond_branch
 	add	r5, r5, #0x1
-	b	.L159
-.L164:
+	b	.L157
+.L162:
 	.align	2, 0
-.L163:
+.L161:
 	.word	gMain
-.L158:
+.L156:
 	mov	r5, #0x0
-.L159:
+.L157:
 	lsl	r4, r5, #0x18
 	lsr	r4, r4, #0x18
 	add	r0, r4, #0
@@ -1534,24 +1541,24 @@ FrameType_ProcessInput:
 	mov	r1, #0x70
 	mov	r2, #0x20
 	bl	LoadPalette
-.L157:
-	ldr	r0, .L165
+.L155:
+	ldr	r0, .L163
 	ldrh	r1, [r0, #0x2e]
 	mov	r0, #0x20
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L160	@cond_branch
+	beq	.L158	@cond_branch
 	cmp	r5, #0
-	beq	.L161	@cond_branch
+	beq	.L159	@cond_branch
 	sub	r5, r5, #0x1
-	b	.L162
-.L166:
+	b	.L160
+.L164:
 	.align	2, 0
-.L165:
+.L163:
 	.word	gMain
-.L161:
+.L159:
 	mov	r5, #0x13
-.L162:
+.L160:
 	lsl	r4, r5, #0x18
 	lsr	r4, r4, #0x18
 	add	r0, r4, #0
@@ -1569,7 +1576,7 @@ FrameType_ProcessInput:
 	mov	r1, #0x70
 	mov	r2, #0x20
 	bl	LoadPalette
-.L160:
+.L158:
 	add	r0, r5, #0
 	pop	{r4, r5}
 	pop	{r1}
@@ -1631,8 +1638,8 @@ DrawOptionMenuChoice:
 	ldrb	r1, [r4]
 	add	r0, r1, #0
 	cmp	r0, #0xff
-	beq	.L170	@cond_branch
-.L172:
+	beq	.L168	@cond_branch
+.L170:
 	mov	r0, sp
 	add	r0, r0, r2
 	add	r0, r0, #0xc
@@ -1642,18 +1649,18 @@ DrawOptionMenuChoice:
 	ldrb	r1, [r4]
 	add	r0, r1, #0
 	cmp	r0, #0xff
-	beq	.L170	@cond_branch
+	beq	.L168	@cond_branch
 	cmp	r2, #0xe
-	bls	.L172	@cond_branch
-.L170:
+	bls	.L170	@cond_branch
+.L168:
 	cmp	r3, #0
-	beq	.L175	@cond_branch
+	beq	.L173	@cond_branch
 	add	r1, sp, #0xc
 	mov	r0, #0x4
 	strb	r0, [r1, #0x2]
 	mov	r0, #0x5
 	strb	r0, [r1, #0x5]
-.L175:
+.L173:
 	mov	r1, sp
 	add	r1, r1, r2
 	add	r1, r1, #0xc
@@ -1705,8 +1712,8 @@ HpBar_DrawChoices:
 	lsl	r2, r2, #0x18
 	lsr	r6, r2, #0x18
 	cmp	r4, #0x9
-	bgt	.L177	@cond_branch
-	ldr	r1, .L179
+	bgt	.L175	@cond_branch
+	ldr	r1, .L177
 	add	r0, sp, #0x4
 	mov	r2, #0xe
 	bl	memcpy
@@ -1721,27 +1728,27 @@ HpBar_DrawChoices:
 	mov	r1, #0x68
 	mov	r3, #0x1
 	bl	DrawOptionMenuChoice
-	b	.L178
-.L180:
+	b	.L176
+.L178:
 	.align	2, 0
-.L179:
-	.word	.LC46
 .L177:
-	ldr	r0, .L181
+	.word	.LC46
+.L175:
+	ldr	r0, .L179
 	lsl	r2, r5, #0x18
 	lsr	r2, r2, #0x18
 	str	r6, [sp]
 	mov	r1, #0x68
 	mov	r3, #0x1
 	bl	DrawOptionMenuChoice
-.L178:
+.L176:
 	add	sp, sp, #0x14
 	pop	{r4, r5, r6}
 	pop	{r0}
 	bx	r0
-.L182:
+.L180:
 	.align	2, 0
-.L181:
+.L179:
 	.word	sText_Instant
 .Lfe22:
 	.size	 HpBar_DrawChoices,.Lfe22-HpBar_DrawChoices
@@ -1764,7 +1771,7 @@ BattleScene_DrawChoices:
 	add	r1, r1, #0x4
 	mov	r0, #0x1
 	strb	r0, [r1]
-	ldr	r0, .L184
+	ldr	r0, .L182
 	lsl	r4, r4, #0x18
 	lsr	r4, r4, #0x18
 	add	r1, sp, #0x4
@@ -1773,7 +1780,7 @@ BattleScene_DrawChoices:
 	mov	r1, #0x68
 	add	r2, r4, #0
 	bl	DrawOptionMenuChoice
-	ldr	r6, .L184+0x4
+	ldr	r6, .L182+0x4
 	mov	r0, #0x1
 	add	r1, r6, #0
 	mov	r2, #0xc6
@@ -1791,9 +1798,9 @@ BattleScene_DrawChoices:
 	pop	{r4, r5, r6}
 	pop	{r0}
 	bx	r0
-.L185:
+.L183:
 	.align	2, 0
-.L184:
+.L182:
 	.word	gText_BattleSceneOn
 	.word	gText_BattleSceneOff
 .Lfe23:
@@ -1817,7 +1824,7 @@ BattleStyle_DrawChoices:
 	add	r1, r1, #0x4
 	mov	r0, #0x1
 	strb	r0, [r1]
-	ldr	r0, .L187
+	ldr	r0, .L185
 	lsl	r4, r4, #0x18
 	lsr	r4, r4, #0x18
 	add	r1, sp, #0x4
@@ -1826,7 +1833,7 @@ BattleStyle_DrawChoices:
 	mov	r1, #0x68
 	add	r2, r4, #0
 	bl	DrawOptionMenuChoice
-	ldr	r6, .L187+0x4
+	ldr	r6, .L185+0x4
 	mov	r0, #0x1
 	add	r1, r6, #0
 	mov	r2, #0xc6
@@ -1844,9 +1851,9 @@ BattleStyle_DrawChoices:
 	pop	{r4, r5, r6}
 	pop	{r0}
 	bx	r0
-.L188:
+.L186:
 	.align	2, 0
-.L187:
+.L185:
 	.word	gText_BattleStyleShift
 	.word	gText_BattleStyleSet
 .Lfe24:
@@ -1870,7 +1877,7 @@ Transition_DrawChoices:
 	add	r1, r1, #0x4
 	mov	r0, #0x1
 	strb	r0, [r1]
-	ldr	r0, .L190
+	ldr	r0, .L188
 	lsl	r4, r4, #0x18
 	lsr	r4, r4, #0x18
 	add	r1, sp, #0x4
@@ -1879,7 +1886,7 @@ Transition_DrawChoices:
 	mov	r1, #0x68
 	add	r2, r4, #0
 	bl	DrawOptionMenuChoice
-	ldr	r6, .L190+0x4
+	ldr	r6, .L188+0x4
 	mov	r0, #0x1
 	add	r1, r6, #0
 	mov	r2, #0xc6
@@ -1897,9 +1904,9 @@ Transition_DrawChoices:
 	pop	{r4, r5, r6}
 	pop	{r0}
 	bx	r0
-.L191:
+.L189:
 	.align	2, 0
-.L190:
+.L188:
 	.word	gText_TransitionStyleNormal
 	.word	gText_TransitionStyleInstant
 .Lfe25:
@@ -1923,7 +1930,7 @@ UnitSystem_DrawChoices:
 	add	r1, r1, #0x4
 	mov	r0, #0x1
 	strb	r0, [r1]
-	ldr	r0, .L193
+	ldr	r0, .L191
 	lsl	r4, r4, #0x18
 	lsr	r4, r4, #0x18
 	add	r1, sp, #0x4
@@ -1932,14 +1939,14 @@ UnitSystem_DrawChoices:
 	mov	r1, #0x68
 	add	r2, r4, #0
 	bl	DrawOptionMenuChoice
-	ldr	r1, .L193+0x4
+	ldr	r1, .L191+0x4
 	mov	r0, #0x1
 	mov	r2, #0xc6
 	bl	GetStringRightAlignXOffset
 	add	r1, r0, #0
 	lsl	r1, r1, #0x18
 	lsr	r1, r1, #0x18
-	ldr	r0, .L193+0x8
+	ldr	r0, .L191+0x8
 	add	r2, sp, #0x4
 	ldrb	r3, [r2, #0x1]
 	str	r5, [sp]
@@ -1949,9 +1956,9 @@ UnitSystem_DrawChoices:
 	pop	{r4, r5, r6}
 	pop	{r0}
 	bx	r0
-.L194:
+.L192:
 	.align	2, 0
-.L193:
+.L191:
 	.word	gText_UnitSystemMetric
 	.word	gText_TransitionStyleInstant
 	.word	gText_UnitSystemImperial
@@ -1996,7 +2003,7 @@ FourOptions_DrawChoices:
 	bl	memset
 	lsl	r5, r4, #0x1
 	add	r5, r5, r4
-	ldr	r0, .L196
+	ldr	r0, .L194
 	add	r5, r5, r0
 	mov	r1, sp
 	add	r1, r1, r4
@@ -2086,9 +2093,9 @@ FourOptions_DrawChoices:
 	pop	{r4, r5, r6}
 	pop	{r0}
 	bx	r0
-.L197:
+.L195:
 	.align	2, 0
-.L196:
+.L194:
 	.word	choiceOrders.81
 .Lfe27:
 	.size	 FourOptions_DrawChoices,.Lfe27-FourOptions_DrawChoices
@@ -2101,16 +2108,16 @@ TextSpeed_DrawChoices:
 	add	r5, r1, #0
 	lsl	r3, r2, #0x18
 	lsr	r3, r3, #0x18
-	ldr	r0, .L199
+	ldr	r0, .L197
 	add	r1, r4, #0
 	add	r2, r5, #0
 	bl	FourOptions_DrawChoices
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.L200:
+.L198:
 	.align	2, 0
-.L199:
+.L197:
 	.word	sTextSpeedStrings
 .Lfe28:
 	.size	 TextSpeed_DrawChoices,.Lfe28-TextSpeed_DrawChoices
@@ -2132,10 +2139,10 @@ Sound_DrawChoices:
 	mov	r1, #0x0
 	mov	r2, #0x3
 	bl	memset
-	ldr	r0, .L202
+	ldr	r0, .L200
 	mov	r9, r0
-	ldr	r7, .L202+0x4
-	ldr	r0, .L202+0x8
+	ldr	r7, .L200+0x4
+	ldr	r0, .L200+0x8
 	mov	r8, r0
 	mov	r0, r9
 	add	r1, r7, #0
@@ -2186,9 +2193,9 @@ Sound_DrawChoices:
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L203:
+.L201:
 	.align	2, 0
-.L202:
+.L200:
 	.word	gText_SoundMono
 	.word	gText_SoundStereo
 	.word	gText_BattleSceneOff
@@ -2208,14 +2215,14 @@ FrameType_DrawChoices:
 	lsr	r7, r2, #0x18
 	add	r6, r0, #0x1
 	mov	r5, #0x0
-	ldr	r1, .L214
+	ldr	r1, .L212
 	ldrb	r0, [r1]
-	ldr	r2, .L214+0x4
+	ldr	r2, .L212+0x4
 	mov	r9, r2
 	cmp	r0, #0xff
-	beq	.L206	@cond_branch
+	beq	.L204	@cond_branch
 	add	r2, r1, #0
-.L208:
+.L206:
 	mov	r0, sp
 	add	r0, r0, r5
 	add	r0, r0, #0x4
@@ -2225,15 +2232,15 @@ FrameType_DrawChoices:
 	add	r5, r5, #0x1
 	ldrb	r0, [r2]
 	cmp	r0, #0xff
-	beq	.L206	@cond_branch
+	beq	.L204	@cond_branch
 	cmp	r5, #0x5
-	bls	.L208	@cond_branch
-.L206:
+	bls	.L206	@cond_branch
+.L204:
 	add	r0, r6, #0
 	mov	r1, #0xa
 	bl	__udivsi3
 	cmp	r0, #0
-	beq	.L211	@cond_branch
+	beq	.L209	@cond_branch
 	mov	r1, sp
 	add	r1, r1, r5
 	add	r1, r1, #0x4
@@ -2248,13 +2255,13 @@ FrameType_DrawChoices:
 	bl	__umodsi3
 	add	r0, r0, #0xa1
 	strb	r0, [r4]
-	b	.L213
-.L215:
+	b	.L211
+.L213:
 	.align	2, 0
-.L214:
+.L212:
 	.word	gText_FrameTypeNumber
 	.word	gText_FrameType
-.L211:
+.L209:
 	mov	r4, sp
 	add	r4, r4, r5
 	add	r4, r4, #0x4
@@ -2269,7 +2276,7 @@ FrameType_DrawChoices:
 	add	r1, r1, #0x4
 	mov	r0, #0x77
 	strb	r0, [r1]
-.L213:
+.L211:
 	add	r5, r5, #0x1
 	mov	r0, sp
 	add	r0, r0, r5
@@ -2318,10 +2325,10 @@ ButtonMode_DrawChoices:
 	mov	r1, #0x0
 	mov	r2, #0x3
 	bl	memset
-	ldr	r0, .L217
+	ldr	r0, .L215
 	mov	r9, r0
-	ldr	r7, .L217+0x4
-	ldr	r0, .L217+0x8
+	ldr	r7, .L215+0x4
+	ldr	r0, .L215+0x8
 	mov	r8, r0
 	mov	r0, r9
 	add	r1, r7, #0
@@ -2372,9 +2379,9 @@ ButtonMode_DrawChoices:
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L218:
+.L216:
 	.align	2, 0
-.L217:
+.L215:
 	.word	gText_ButtonTypeNormal
 	.word	gText_ButtonTypeLR
 	.word	gText_ButtonTypeLEqualsA
@@ -2389,7 +2396,7 @@ DrawTextOption:
 	mov	r0, #0x0
 	mov	r1, #0x11
 	bl	FillWindowPixelBuffer
-	ldr	r2, .L220
+	ldr	r2, .L218
 	mov	r0, #0x1
 	str	r0, [sp]
 	mov	r0, #0x0
@@ -2404,9 +2411,9 @@ DrawTextOption:
 	add	sp, sp, #0xc
 	pop	{r0}
 	bx	r0
-.L221:
+.L219:
 	.align	2, 0
-.L220:
+.L218:
 	.word	gText_Option
 .Lfe32:
 	.size	 DrawTextOption,.Lfe32-DrawTextOption
@@ -2423,8 +2430,8 @@ DrawOptionMenuTexts:
 	mov	r6, #0x0
 	mov	r4, #0x80
 	lsl	r4, r4, #0x11
-	ldr	r7, .L228
-.L226:
+	ldr	r7, .L226
+.L224:
 	ldmia	r7!, {r2}
 	lsr	r0, r4, #0x18
 	str	r0, [sp]
@@ -2439,7 +2446,7 @@ DrawOptionMenuTexts:
 	add	r4, r4, r0
 	add	r5, r5, #0x1
 	cmp	r5, #0x6
-	bls	.L226	@cond_branch
+	bls	.L224	@cond_branch
 	mov	r0, #0x1
 	mov	r1, #0x3
 	bl	CopyWindowToVram
@@ -2447,9 +2454,9 @@ DrawOptionMenuTexts:
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L229:
+.L227:
 	.align	2, 0
-.L228:
+.L226:
 	.word	sOptionMenuItemsNames
 .Lfe33:
 	.size	 DrawOptionMenuTexts,.Lfe33-DrawOptionMenuTexts
@@ -2480,7 +2487,7 @@ sub_80BB154:
 	str	r4, [sp, #0x4]
 	str	r5, [sp, #0x8]
 	mov	r0, #0x1
-	ldr	r1, .L231
+	ldr	r1, .L229
 	mov	r2, #0x2
 	mov	r3, #0x0
 	bl	FillBgTilemapBufferRect
@@ -2498,7 +2505,7 @@ sub_80BB154:
 	str	r6, [sp, #0x4]
 	str	r5, [sp, #0x8]
 	mov	r0, #0x1
-	ldr	r1, .L231+0x4
+	ldr	r1, .L229+0x4
 	mov	r2, #0x1
 	mov	r3, #0x1
 	bl	FillBgTilemapBufferRect
@@ -2506,7 +2513,7 @@ sub_80BB154:
 	str	r6, [sp, #0x4]
 	str	r5, [sp, #0x8]
 	mov	r0, #0x1
-	ldr	r1, .L231+0x8
+	ldr	r1, .L229+0x8
 	mov	r2, #0x1c
 	mov	r3, #0x1
 	bl	FillBgTilemapBufferRect
@@ -2520,7 +2527,7 @@ sub_80BB154:
 	mov	r2, #0x1
 	mov	r3, #0x3
 	bl	FillBgTilemapBufferRect
-	ldr	r0, .L231+0xc
+	ldr	r0, .L229+0xc
 	mov	sl, r0
 	mov	r0, r8
 	str	r0, [sp]
@@ -2557,7 +2564,7 @@ sub_80BB154:
 	str	r4, [sp, #0x4]
 	str	r5, [sp, #0x8]
 	mov	r0, #0x1
-	ldr	r1, .L231
+	ldr	r1, .L229
 	mov	r2, #0x2
 	mov	r3, #0x4
 	bl	FillBgTilemapBufferRect
@@ -2575,7 +2582,7 @@ sub_80BB154:
 	str	r6, [sp, #0x4]
 	str	r5, [sp, #0x8]
 	mov	r0, #0x1
-	ldr	r1, .L231+0x4
+	ldr	r1, .L229+0x4
 	mov	r2, #0x1
 	mov	r3, #0x5
 	bl	FillBgTilemapBufferRect
@@ -2583,7 +2590,7 @@ sub_80BB154:
 	str	r6, [sp, #0x4]
 	str	r5, [sp, #0x8]
 	mov	r0, #0x1
-	ldr	r1, .L231+0x8
+	ldr	r1, .L229+0x8
 	mov	r2, #0x1c
 	mov	r3, #0x5
 	bl	FillBgTilemapBufferRect
@@ -2622,9 +2629,9 @@ sub_80BB154:
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L232:
+.L230:
 	.align	2, 0
-.L231:
+.L229:
 	.word	0x1a3
 	.word	0x1a5
 	.word	0x1a7

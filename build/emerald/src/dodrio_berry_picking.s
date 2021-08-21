@@ -3915,7 +3915,7 @@ StartDodrioBerryPicking:
 	.word	gPlayerParty
 	.word	sub_8024BC8
 	.word	sub_80261CC
-	.word	0x21e
+	.word	0x1ed
 .L3:
 	add	r0, r5, #0
 	bl	SetMainCallback2
@@ -5039,17 +5039,14 @@ sub_8025198:
 	beq	.L184	@cond_branch
 	mov	r0, #0x6
 	bl	sub_8026240
-	ldr	r0, .L199
+	mov	r0, #0xb9
+	lsl	r0, r0, #0x1
 	mov	r1, #0x4
 	bl	FadeOutAndPlayNewMapMusic
 .L184:
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.L200:
-	.align	2, 0
-.L199:
-	.word	0x20b
 .Lfe16:
 	.size	 sub_8025198,.Lfe16-sub_8025198
 	.align	2, 0
@@ -5057,25 +5054,25 @@ sub_8025198:
 	.thumb_func
 sub_8025230:
 	push	{r4, r5, lr}
-	ldr	r5, .L221
+	ldr	r5, .L219
 	ldr	r2, [r5]
 	ldrb	r4, [r2, #0x10]
 	cmp	r4, #0x1
-	beq	.L205	@cond_branch
-	cmp	r4, #0x1
-	bgt	.L218	@cond_branch
-	cmp	r4, #0
 	beq	.L203	@cond_branch
-	b	.L215
-.L222:
+	cmp	r4, #0x1
+	bgt	.L216	@cond_branch
+	cmp	r4, #0
+	beq	.L201	@cond_branch
+	b	.L213
+.L220:
 	.align	2, 0
-.L221:
+.L219:
 	.word	gUnknown_02022C98
-.L218:
+.L216:
 	cmp	r4, #0x2
-	beq	.L207	@cond_branch
-	b	.L215
-.L203:
+	beq	.L205	@cond_branch
+	b	.L213
+.L201:
 	ldrb	r0, [r2, #0x14]
 	lsl	r1, r0, #0x1
 	add	r1, r1, r0
@@ -5087,28 +5084,28 @@ sub_8025230:
 	bl	SendBlock
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.L202	@cond_branch
+	beq	.L200	@cond_branch
 	ldr	r0, [r5]
 	strb	r4, [r0, #0x8]
 	ldr	r1, [r5]
-	b	.L219
-.L205:
+	b	.L217
+.L203:
 	bl	IsLinkTaskFinished
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.L202	@cond_branch
+	beq	.L200	@cond_branch
 	ldr	r1, [r5]
-	b	.L219
-.L207:
+	b	.L217
+.L205:
 	bl	sub_8025170
 	cmp	r0, #0
-	beq	.L208	@cond_branch
+	beq	.L206	@cond_branch
 	mov	r4, #0x0
-	b	.L220
-.L212:
+	b	.L218
+.L210:
 	ldr	r0, [r5]
 	add	r0, r0, #0x4a
-	ldr	r1, .L223
+	ldr	r1, .L221
 	mov	r2, #0x3c
 	bl	memcpy
 	ldr	r1, [r5]
@@ -5119,42 +5116,42 @@ sub_8025230:
 	add	r0, r4, #0x1
 	lsl	r0, r0, #0x18
 	lsr	r4, r0, #0x18
-.L220:
+.L218:
 	ldr	r0, [r5]
 	add	r0, r0, #0x24
 	ldrb	r0, [r0]
 	cmp	r4, r0
-	bcc	.L212	@cond_branch
-.L208:
-	ldr	r3, .L223+0x4
+	bcc	.L210	@cond_branch
+.L206:
+	ldr	r3, .L221+0x4
 	ldr	r2, [r3]
 	add	r1, r2, #0
 	add	r1, r1, #0x24
 	ldrb	r0, [r2, #0x8]
 	ldrb	r1, [r1]
 	cmp	r0, r1
-	bcc	.L202	@cond_branch
+	bcc	.L200	@cond_branch
 	ldrb	r0, [r2, #0x14]
 	add	r0, r0, #0x1
 	strb	r0, [r2, #0x14]
 	ldr	r1, [r3]
-.L219:
+.L217:
 	ldrb	r0, [r1, #0x10]
 	add	r0, r0, #0x1
 	strb	r0, [r1, #0x10]
-	b	.L202
-.L224:
+	b	.L200
+.L222:
 	.align	2, 0
-.L223:
+.L221:
 	.word	gBlockRecvBuffer
 	.word	gUnknown_02022C98
-.L215:
+.L213:
 	mov	r0, #0x1
 	bl	WaitFanfare
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.L202	@cond_branch
-	ldr	r0, .L225
+	beq	.L200	@cond_branch
+	ldr	r0, .L223
 	ldr	r2, [r0]
 	add	r0, r2, #0
 	add	r0, r0, #0x28
@@ -5172,18 +5169,18 @@ sub_8025230:
 	strh	r1, [r0]
 	mov	r0, #0x6
 	bl	sub_8026240
-	ldr	r0, .L225+0x4
+	mov	r0, #0xb9
+	lsl	r0, r0, #0x1
 	mov	r1, #0x4
 	bl	FadeOutAndPlayNewMapMusic
-.L202:
+.L200:
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.L226:
+.L224:
 	.align	2, 0
-.L225:
+.L223:
 	.word	gUnknown_02022C98
-	.word	0x20b
 .Lfe17:
 	.size	 sub_8025230,.Lfe17-sub_8025230
 	.align	2, 0
@@ -5195,32 +5192,32 @@ sub_8025324:
 	mov	r1, #0x1
 	mov	r0, sp
 	strb	r1, [r0]
-	ldr	r0, .L249
+	ldr	r0, .L247
 	ldr	r0, [r0]
 	ldrb	r0, [r0, #0x10]
 	cmp	r0, #0x4
-	bls	.LCB1785
-	b	.L245	@long jump
-.LCB1785:
+	bls	.LCB1780
+	b	.L243	@long jump
+.LCB1780:
 	lsl	r0, r0, #0x2
-	ldr	r1, .L249+0x4
+	ldr	r1, .L247+0x4
 	add	r0, r0, r1
 	ldr	r0, [r0]
 	mov	pc, r0
-.L250:
-	.align	2, 0
-.L249:
-	.word	gUnknown_02022C98
-	.word	.L247
-	.align	2, 0
+.L248:
 	.align	2, 0
 .L247:
-	.word	.L229
+	.word	gUnknown_02022C98
+	.word	.L245
+	.align	2, 0
+	.align	2, 0
+.L245:
+	.word	.L227
+	.word	.L228
 	.word	.L230
 	.word	.L232
 	.word	.L234
-	.word	.L236
-.L229:
+.L227:
 	bl	sub_802749C
 	mov	r0, #0x1
 	bl	sub_80289E8
@@ -5229,27 +5226,27 @@ sub_8025324:
 	bl	sub_8028EC8
 	mov	r0, #0x2
 	bl	sub_80292E0
+	ldr	r0, .L249
+	ldr	r1, [r0]
+	b	.L246
+.L250:
+	.align	2, 0
+.L249:
+	.word	gUnknown_02022C98
+.L228:
+	bl	sub_802A770
+	cmp	r0, #0
+	bne	.L226	@cond_branch
+	mov	r0, #0x5
+	bl	sub_80292E0
 	ldr	r0, .L251
 	ldr	r1, [r0]
-	b	.L248
+	b	.L246
 .L252:
 	.align	2, 0
 .L251:
 	.word	gUnknown_02022C98
 .L230:
-	bl	sub_802A770
-	cmp	r0, #0
-	bne	.L228	@cond_branch
-	mov	r0, #0x5
-	bl	sub_80292E0
-	ldr	r0, .L253
-	ldr	r1, [r0]
-	b	.L248
-.L254:
-	.align	2, 0
-.L253:
-	.word	gUnknown_02022C98
-.L232:
 	bl	sub_802A794
 	mov	r1, sp
 	strb	r0, [r1]
@@ -5258,20 +5255,20 @@ sub_8025324:
 	bl	SendBlock
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.L228	@cond_branch
-	ldr	r0, .L255
+	beq	.L226	@cond_branch
+	ldr	r0, .L253
 	ldr	r1, [r0]
-	b	.L248
-.L256:
+	b	.L246
+.L254:
 	.align	2, 0
-.L255:
+.L253:
 	.word	gUnknown_02022C98
-.L234:
+.L232:
 	bl	IsLinkTaskFinished
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.L228	@cond_branch
-	ldr	r3, .L257
+	beq	.L226	@cond_branch
+	ldr	r3, .L255
 	ldr	r1, [r3]
 	ldrb	r0, [r1, #0x10]
 	add	r0, r0, #0x1
@@ -5279,27 +5276,27 @@ sub_8025324:
 	strb	r0, [r1, #0x10]
 	ldr	r0, [r3]
 	strb	r2, [r0, #0x8]
-	b	.L228
-.L258:
+	b	.L226
+.L256:
 	.align	2, 0
-.L257:
+.L255:
 	.word	gUnknown_02022C98
-.L236:
+.L234:
 	bl	sub_8025170
 	cmp	r0, #0
-	beq	.L237	@cond_branch
+	beq	.L235	@cond_branch
 	mov	r2, #0x0
-	ldr	r1, .L259
+	ldr	r1, .L257
 	ldr	r0, [r1]
 	add	r0, r0, #0x24
 	ldrb	r0, [r0]
 	cmp	r2, r0
-	bcs	.L237	@cond_branch
+	bcs	.L235	@cond_branch
 	add	r3, r1, #0
 	mov	r5, #0x86
 	lsl	r5, r5, #0x1
-	ldr	r4, .L259+0x4
-.L241:
+	ldr	r4, .L257+0x4
+.L239:
 	ldr	r1, [r3]
 	add	r1, r2, r1
 	add	r1, r1, r5
@@ -5319,43 +5316,43 @@ sub_8025324:
 	add	r0, r0, #0x24
 	ldrb	r0, [r0]
 	cmp	r2, r0
-	bcc	.L241	@cond_branch
-.L237:
-	ldr	r4, .L259
+	bcc	.L239	@cond_branch
+.L235:
+	ldr	r4, .L257
 	ldr	r2, [r4]
 	add	r1, r2, #0
 	add	r1, r1, #0x24
 	ldrb	r0, [r2, #0x8]
 	ldrb	r1, [r1]
 	cmp	r0, r1
-	bcc	.L228	@cond_branch
+	bcc	.L226	@cond_branch
 	ldrb	r0, [r2, #0x14]
 	add	r0, r0, #0x1
 	strb	r0, [r2, #0x14]
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	cmp	r0, #0x77
-	bls	.L228	@cond_branch
+	bls	.L226	@cond_branch
 	mov	r0, #0x6
 	bl	sub_80292E0
 	ldr	r1, [r4]
-.L248:
+.L246:
 	ldrb	r0, [r1, #0x10]
 	add	r0, r0, #0x1
 	strb	r0, [r1, #0x10]
-	b	.L228
-.L260:
+	b	.L226
+.L258:
 	.align	2, 0
-.L259:
+.L257:
 	.word	gUnknown_02022C98
 	.word	gBlockRecvBuffer
-.L245:
+.L243:
 	bl	sub_802A770
 	cmp	r0, #0
-	bne	.L228	@cond_branch
+	bne	.L226	@cond_branch
 	mov	r0, #0x7
 	bl	sub_8026240
-.L228:
+.L226:
 	add	sp, sp, #0x4
 	pop	{r4, r5}
 	pop	{r0}
@@ -5368,108 +5365,108 @@ sub_8025324:
 sub_8025470:
 	push	{r4, r5, lr}
 	add	sp, sp, #-0x4
-	ldr	r4, .L297
+	ldr	r4, .L295
 	ldr	r0, [r4]
 	ldrb	r0, [r0, #0x10]
 	cmp	r0, #0x7
-	bls	.LCB2008
-	b	.L286	@long jump
-.LCB2008:
+	bls	.LCB2003
+	b	.L284	@long jump
+.LCB2003:
 	lsl	r0, r0, #0x2
-	ldr	r1, .L297+0x4
+	ldr	r1, .L295+0x4
 	add	r0, r0, r1
 	ldr	r0, [r0]
 	mov	pc, r0
-.L298:
+.L296:
 	.align	2, 0
-.L297:
+.L295:
 	.word	gUnknown_02022C98
-	.word	.L294
+	.word	.L292
 	.align	2, 0
 	.align	2, 0
-.L294:
+.L292:
+	.word	.L261
 	.word	.L263
 	.word	.L265
-	.word	.L267
+	.word	.L266
 	.word	.L268
 	.word	.L270
 	.word	.L272
 	.word	.L274
-	.word	.L276
-.L263:
+.L261:
 	bl	sub_8027748
-	ldr	r1, .L299
+	ldr	r1, .L297
 	cmp	r0, r1
-	bls	.L264	@cond_branch
+	bls	.L262	@cond_branch
 	mov	r0, #0x4
 	bl	sub_80292E0
-.L264:
-	ldr	r0, .L299+0x4
+.L262:
+	ldr	r0, .L297+0x4
 	ldr	r1, [r0]
-	b	.L296
+	b	.L294
+.L298:
+	.align	2, 0
+.L297:
+	.word	0xbb7
+	.word	gUnknown_02022C98
+.L263:
+	bl	sub_802A770
+	cmp	r0, #0
+	beq	.LCB2048
+	b	.L259	@long jump
+.LCB2048:
+	mov	r0, #0x3
+	bl	sub_80292E0
+	ldr	r0, .L299
+	ldr	r1, [r0]
+	b	.L294
 .L300:
 	.align	2, 0
 .L299:
-	.word	0xbb7
 	.word	gUnknown_02022C98
 .L265:
-	bl	sub_802A770
-	cmp	r0, #0
-	beq	.LCB2053
-	b	.L261	@long jump
-.LCB2053:
-	mov	r0, #0x3
-	bl	sub_80292E0
+	bl	sub_8028FCC
+	bl	sub_80272E8
 	ldr	r0, .L301
 	ldr	r1, [r0]
-	b	.L296
+	b	.L294
 .L302:
 	.align	2, 0
 .L301:
 	.word	gUnknown_02022C98
-.L267:
-	bl	sub_8028FCC
-	bl	sub_80272E8
-	ldr	r0, .L303
-	ldr	r1, [r0]
-	b	.L296
-.L304:
-	.align	2, 0
-.L303:
-	.word	gUnknown_02022C98
-.L268:
+.L266:
 	bl	sub_802A794
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	mov	r1, sp
 	strb	r0, [r1]
 	cmp	r0, #0
-	bne	.LCB2088
-	b	.L261	@long jump
-.LCB2088:
+	bne	.LCB2083
+	b	.L259	@long jump
+.LCB2083:
+	ldr	r0, .L303
+	ldr	r1, [r0]
+	b	.L294
+.L304:
+	.align	2, 0
+.L303:
+	.word	gUnknown_02022C98
+.L268:
+	bl	sub_802A770
+	cmp	r0, #0
+	beq	.LCB2099
+	b	.L259	@long jump
+.LCB2099:
+	mov	r0, #0x5
+	bl	sub_80292E0
 	ldr	r0, .L305
 	ldr	r1, [r0]
-	b	.L296
+	b	.L294
 .L306:
 	.align	2, 0
 .L305:
 	.word	gUnknown_02022C98
 .L270:
-	bl	sub_802A770
-	cmp	r0, #0
-	beq	.LCB2104
-	b	.L261	@long jump
-.LCB2104:
-	mov	r0, #0x5
-	bl	sub_80292E0
-	ldr	r0, .L307
-	ldr	r1, [r0]
-	b	.L296
-.L308:
-	.align	2, 0
-.L307:
-	.word	gUnknown_02022C98
-.L272:
 	bl	sub_802A794
 	mov	r1, sp
 	strb	r0, [r1]
@@ -5478,45 +5475,45 @@ sub_8025470:
 	bl	SendBlock
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.L261	@cond_branch
-	ldr	r2, .L309
+	beq	.L259	@cond_branch
+	ldr	r2, .L307
 	ldr	r1, [r2]
 	mov	r0, #0x0
 	strb	r0, [r1, #0x8]
 	ldr	r1, [r2]
-	b	.L296
+	b	.L294
+.L308:
+	.align	2, 0
+.L307:
+	.word	gUnknown_02022C98
+.L272:
+	bl	IsLinkTaskFinished
+	lsl	r0, r0, #0x18
+	cmp	r0, #0
+	beq	.L259	@cond_branch
+	ldr	r0, .L309
+	ldr	r1, [r0]
+	b	.L294
 .L310:
 	.align	2, 0
 .L309:
 	.word	gUnknown_02022C98
 .L274:
-	bl	IsLinkTaskFinished
-	lsl	r0, r0, #0x18
-	cmp	r0, #0
-	beq	.L261	@cond_branch
-	ldr	r0, .L311
-	ldr	r1, [r0]
-	b	.L296
-.L312:
-	.align	2, 0
-.L311:
-	.word	gUnknown_02022C98
-.L276:
 	bl	sub_8025170
 	cmp	r0, #0
-	beq	.L277	@cond_branch
+	beq	.L275	@cond_branch
 	mov	r2, #0x0
-	ldr	r1, .L313
+	ldr	r1, .L311
 	ldr	r0, [r1]
 	add	r0, r0, #0x24
 	ldrb	r0, [r0]
 	cmp	r2, r0
-	bcs	.L277	@cond_branch
+	bcs	.L275	@cond_branch
 	add	r3, r1, #0
 	mov	r5, #0x86
 	lsl	r5, r5, #0x1
-	ldr	r4, .L313+0x4
-.L281:
+	ldr	r4, .L311+0x4
+.L279:
 	ldr	r1, [r3]
 	add	r1, r2, r1
 	add	r1, r1, r5
@@ -5536,73 +5533,73 @@ sub_8025470:
 	add	r0, r0, #0x24
 	ldrb	r0, [r0]
 	cmp	r2, r0
-	bcc	.L281	@cond_branch
-.L277:
-	ldr	r4, .L313
+	bcc	.L279	@cond_branch
+.L275:
+	ldr	r4, .L311
 	ldr	r2, [r4]
 	add	r1, r2, #0
 	add	r1, r1, #0x24
 	ldrb	r0, [r2, #0x8]
 	ldrb	r1, [r1]
 	cmp	r0, r1
-	bcc	.L283	@cond_branch
+	bcc	.L281	@cond_branch
 	ldrb	r0, [r2, #0x14]
 	add	r0, r0, #0x1
 	strb	r0, [r2, #0x14]
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	cmp	r0, #0x77
-	bls	.L261	@cond_branch
+	bls	.L259	@cond_branch
 	bl	sub_8027608
 	mov	r0, #0x6
 	bl	sub_80292E0
 	ldr	r1, [r4]
-.L296:
+.L294:
 	ldrb	r0, [r1, #0x10]
 	add	r0, r0, #0x1
 	strb	r0, [r1, #0x10]
-	b	.L261
-.L314:
+	b	.L259
+.L312:
 	.align	2, 0
-.L313:
+.L311:
 	.word	gUnknown_02022C98
 	.word	gBlockRecvBuffer
-.L283:
+.L281:
 	bl	sub_8027554
-	b	.L261
-.L295:
+	b	.L259
+.L293:
 	mov	r0, #0x8
 	bl	sub_8026240
-	b	.L261
-.L286:
+	b	.L259
+.L284:
 	bl	sub_802A770
 	cmp	r0, #0
-	bne	.L261	@cond_branch
+	bne	.L259	@cond_branch
 	mov	r2, #0x0
 	ldr	r1, [r4]
 	add	r0, r1, #0
 	add	r0, r0, #0x24
 	ldrb	r0, [r0]
 	cmp	r2, r0
-	bcs	.L289	@cond_branch
+	bcs	.L287	@cond_branch
 	mov	r4, #0x86
 	lsl	r4, r4, #0x1
 	add	r3, r1, r4
 	add	r1, r0, #0
-.L291:
+.L289:
 	add	r0, r3, r2
 	ldrb	r0, [r0]
 	cmp	r0, #0x2
-	beq	.L295	@cond_branch
+	beq	.L293	@cond_branch
 	add	r0, r2, #0x1
 	lsl	r0, r0, #0x18
 	lsr	r2, r0, #0x18
 	cmp	r2, r1
-	bcc	.L291	@cond_branch
-.L289:
+	bcc	.L289	@cond_branch
+.L287:
 	mov	r0, #0xa
 	bl	sub_8026240
-.L261:
+.L259:
 	add	sp, sp, #0x4
 	pop	{r4, r5}
 	pop	{r0}
@@ -5614,60 +5611,60 @@ sub_8025470:
 	.thumb_func
 sub_8025644:
 	push	{r4, lr}
-	ldr	r4, .L327
+	ldr	r4, .L325
 	ldr	r0, [r4]
 	ldrb	r0, [r0, #0x10]
 	cmp	r0, #0x1
-	beq	.L318	@cond_branch
+	beq	.L316	@cond_branch
 	cmp	r0, #0x1
-	bgt	.L325	@cond_branch
+	bgt	.L323	@cond_branch
 	cmp	r0, #0
-	beq	.L317	@cond_branch
-	b	.L322
-.L328:
+	beq	.L315	@cond_branch
+	b	.L320
+.L326:
 	.align	2, 0
-.L327:
-	.word	gUnknown_02022C98
 .L325:
+	.word	gUnknown_02022C98
+.L323:
 	cmp	r0, #0x2
-	beq	.L320	@cond_branch
-	b	.L322
-.L317:
+	beq	.L318	@cond_branch
+	b	.L320
+.L315:
 	bl	SetCloseLinkCallback
 	mov	r0, #0x7
 	bl	sub_80292E0
-	b	.L326
-.L318:
+	b	.L324
+.L316:
 	bl	sub_802A770
 	cmp	r0, #0
-	bne	.L316	@cond_branch
-	b	.L326
-.L320:
+	bne	.L314	@cond_branch
+	b	.L324
+.L318:
 	bl	sub_802A794
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	cmp	r0, #0x5
-	bne	.L316	@cond_branch
-.L326:
+	bne	.L314	@cond_branch
+.L324:
 	ldr	r1, [r4]
 	ldrb	r0, [r1, #0x10]
 	add	r0, r0, #0x1
 	strb	r0, [r1, #0x10]
-	b	.L316
-.L322:
-	ldr	r0, .L329
+	b	.L314
+.L320:
+	ldr	r0, .L327
 	ldrb	r0, [r0]
 	cmp	r0, #0
-	bne	.L316	@cond_branch
+	bne	.L314	@cond_branch
 	mov	r0, #0x9
 	bl	sub_8026240
-.L316:
+.L314:
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L330:
+.L328:
 	.align	2, 0
-.L329:
+.L327:
 	.word	gReceivedRemoteLinkPlayers
 .Lfe20:
 	.size	 sub_8025644,.Lfe20-sub_8025644
@@ -5677,25 +5674,25 @@ sub_8025644:
 sub_80256AC:
 	push	{r4, lr}
 	add	sp, sp, #-0x4
-	ldr	r4, .L342
+	ldr	r4, .L340
 	ldr	r0, [r4]
 	ldrb	r1, [r0, #0x10]
 	cmp	r1, #0x1
-	beq	.L334	@cond_branch
+	beq	.L332	@cond_branch
 	cmp	r1, #0x1
-	bgt	.L340	@cond_branch
+	bgt	.L338	@cond_branch
 	cmp	r1, #0
-	beq	.L333	@cond_branch
-	b	.L337
-.L343:
+	beq	.L331	@cond_branch
+	b	.L335
+.L341:
 	.align	2, 0
-.L342:
-	.word	gUnknown_02022C98
 .L340:
+	.word	gUnknown_02022C98
+.L338:
 	cmp	r1, #0x2
-	beq	.L336	@cond_branch
-	b	.L337
-.L333:
+	beq	.L334	@cond_branch
+	b	.L335
+.L331:
 	mov	r0, #0x1
 	neg	r0, r0
 	str	r1, [sp]
@@ -5703,21 +5700,21 @@ sub_80256AC:
 	mov	r2, #0x0
 	mov	r3, #0x10
 	bl	BeginNormalPaletteFade
-	b	.L341
-.L334:
+	b	.L339
+.L332:
 	bl	UpdatePaletteFade
-	ldr	r0, .L344
+	ldr	r0, .L342
 	ldrb	r1, [r0, #0x7]
 	mov	r0, #0x80
 	and	r0, r0, r1
 	cmp	r0, #0
-	bne	.L332	@cond_branch
-	b	.L341
-.L345:
+	bne	.L330	@cond_branch
+	b	.L339
+.L343:
 	.align	2, 0
-.L344:
+.L342:
 	.word	gPaletteFade
-.L336:
+.L334:
 	bl	sub_8028B80
 	bl	sub_80287E4
 	ldr	r0, [r4]
@@ -5725,26 +5722,26 @@ sub_80256AC:
 	ldrb	r0, [r0]
 	bl	sub_8028614
 	bl	sub_8028E84
-	ldr	r1, .L346
+	ldr	r1, .L344
 	mov	r0, #0x1
 	str	r0, [r1]
 	mov	r0, #0x8
 	bl	sub_80292E0
-.L341:
+.L339:
 	ldr	r1, [r4]
 	ldrb	r0, [r1, #0x10]
 	add	r0, r0, #0x1
 	strb	r0, [r1, #0x10]
-	b	.L332
-.L347:
+	b	.L330
+.L345:
 	.align	2, 0
-.L346:
+.L344:
 	.word	gUnknown_03000DB0
-.L337:
+.L335:
 	bl	sub_802A770
 	cmp	r0, #0
-	bne	.L332	@cond_branch
-	ldr	r4, .L348
+	bne	.L330	@cond_branch
+	ldr	r4, .L346
 	ldr	r0, [r4]
 	ldr	r0, [r0]
 	bl	SetMainCallback2
@@ -5754,14 +5751,14 @@ sub_80256AC:
 	ldr	r0, [r4]
 	bl	Free
 	bl	FreeAllWindowBuffers
-.L332:
+.L330:
 	add	sp, sp, #0x4
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L349:
+.L347:
 	.align	2, 0
-.L348:
+.L346:
 	.word	gUnknown_02022C98
 .Lfe21:
 	.size	 sub_80256AC,.Lfe21-sub_80256AC
@@ -5771,34 +5768,34 @@ sub_80256AC:
 sub_8025758:
 	push	{r4, lr}
 	add	sp, sp, #-0x4
-	ldr	r4, .L365
+	ldr	r4, .L363
 	ldr	r1, [r4]
 	ldrb	r0, [r1, #0x10]
 	cmp	r0, #0x6
-	bls	.LCB2531
-	b	.L361	@long jump
-.LCB2531:
+	bls	.LCB2526
+	b	.L359	@long jump
+.LCB2526:
 	lsl	r0, r0, #0x2
-	ldr	r1, .L365+0x4
+	ldr	r1, .L363+0x4
 	add	r0, r0, r1
 	ldr	r0, [r0]
 	mov	pc, r0
-.L366:
-	.align	2, 0
-.L365:
-	.word	gUnknown_02022C98
-	.word	.L363
-	.align	2, 0
+.L364:
 	.align	2, 0
 .L363:
-	.word	.L352
-	.word	.L359
+	.word	gUnknown_02022C98
+	.word	.L361
+	.align	2, 0
+	.align	2, 0
+.L361:
+	.word	.L350
+	.word	.L357
+	.word	.L353
+	.word	.L354
 	.word	.L355
 	.word	.L356
 	.word	.L357
-	.word	.L358
-	.word	.L359
-.L352:
+.L350:
 	mov	r0, #0x9
 	bl	sub_80292E0
 	mov	r0, #0x1
@@ -5808,8 +5805,8 @@ sub_8025758:
 	mov	r2, #0x0
 	mov	r3, #0x10
 	bl	BeginNormalPaletteFade
-	b	.L364
-.L355:
+	b	.L362
+.L353:
 	mov	r0, #0x0
 	mov	r1, #0x0
 	mov	r2, #0x0
@@ -5842,20 +5839,20 @@ sub_8025758:
 	mov	r1, #0x0
 	mov	r2, #0x0
 	bl	ChangeBgY
-	b	.L364
-.L356:
+	b	.L362
+.L354:
 	bl	StopMapMusic
-	b	.L364
-.L357:
-	ldr	r0, .L367
+	b	.L362
+.L355:
+	ldr	r0, .L365
 	bl	PlayNewMapMusic
 	bl	sub_8028E4C
-	b	.L364
-.L368:
+	b	.L362
+.L366:
 	.align	2, 0
-.L367:
-	.word	0x21e
-.L358:
+.L365:
+	.word	0x1ed
+.L356:
 	mov	r4, #0x1
 	neg	r4, r4
 	add	r0, r4, #0
@@ -5869,55 +5866,55 @@ sub_8025758:
 	mov	r2, #0x10
 	mov	r3, #0x0
 	bl	BeginNormalPaletteFade
-	b	.L364
-.L359:
+	b	.L362
+.L357:
 	bl	UpdatePaletteFade
-	ldr	r0, .L369
+	ldr	r0, .L367
 	ldrb	r1, [r0, #0x7]
 	mov	r0, #0x80
 	and	r0, r0, r1
 	cmp	r0, #0
-	bne	.L351	@cond_branch
-.L364:
-	ldr	r0, .L369+0x4
+	bne	.L349	@cond_branch
+.L362:
+	ldr	r0, .L367+0x4
 	ldr	r1, [r0]
 	ldrb	r0, [r1, #0x10]
 	add	r0, r0, #0x1
 	strb	r0, [r1, #0x10]
-	b	.L351
-.L370:
+	b	.L349
+.L368:
 	.align	2, 0
-.L369:
+.L367:
 	.word	gPaletteFade
 	.word	gUnknown_02022C98
-.L361:
+.L359:
 	ldrb	r0, [r1, #0x4]
 	bl	DestroyTask
-	ldr	r0, .L371
+	ldr	r0, .L369
 	bl	sub_802621C
 	bl	sub_802903C
 	ldr	r0, [r4]
 	bl	sub_8024A30
-	ldr	r0, .L371+0x4
+	ldr	r0, .L369+0x4
 	ldrb	r0, [r0]
 	cmp	r0, #0
-	bne	.L362	@cond_branch
+	bne	.L360	@cond_branch
 	ldr	r0, [r4]
 	add	r0, r0, #0x24
 	mov	r1, #0x1
 	strb	r1, [r0]
-.L362:
+.L360:
 	bl	sub_80273F0
 	mov	r0, #0x0
 	bl	sub_8028EC8
-.L351:
+.L349:
 	add	sp, sp, #0x4
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L372:
+.L370:
 	.align	2, 0
-.L371:
+.L369:
 	.word	sub_802589C
 	.word	gReceivedRemoteLinkPlayers
 .Lfe22:
@@ -5929,68 +5926,68 @@ sub_802589C:
 	push	{r4, r5, lr}
 	lsl	r0, r0, #0x18
 	lsr	r5, r0, #0x18
-	ldr	r1, .L387
+	ldr	r1, .L385
 	ldr	r0, [r1]
 	ldrb	r0, [r0, #0x10]
 	add	r4, r1, #0
 	cmp	r0, #0x1
-	beq	.L377	@cond_branch
-	cmp	r0, #0x1
-	bgt	.L384	@cond_branch
-	cmp	r0, #0
 	beq	.L375	@cond_branch
-	b	.L380
-.L388:
-	.align	2, 0
-.L387:
-	.word	gUnknown_02022C98
-.L384:
-	cmp	r0, #0x2
-	beq	.L378	@cond_branch
-	b	.L380
-.L375:
-	bl	sub_8026264
-	b	.L385
-.L377:
-	bl	sub_80286E4
-	b	.L386
-.L378:
-	bl	sub_8028828
-.L385:
 	cmp	r0, #0x1
-	bne	.L374	@cond_branch
+	bgt	.L382	@cond_branch
+	cmp	r0, #0
+	beq	.L373	@cond_branch
+	b	.L378
 .L386:
+	.align	2, 0
+.L385:
+	.word	gUnknown_02022C98
+.L382:
+	cmp	r0, #0x2
+	beq	.L376	@cond_branch
+	b	.L378
+.L373:
+	bl	sub_8026264
+	b	.L383
+.L375:
+	bl	sub_80286E4
+	b	.L384
+.L376:
+	bl	sub_8028828
+.L383:
+	cmp	r0, #0x1
+	bne	.L372	@cond_branch
+.L384:
 	ldr	r1, [r4]
 	ldrb	r0, [r1, #0x10]
 	add	r0, r0, #0x1
 	strb	r0, [r1, #0x10]
-	b	.L374
-.L380:
+	b	.L372
+.L378:
 	ldr	r0, [r4]
 	add	r0, r0, #0x20
 	ldrb	r0, [r0]
 	cmp	r0, #0
-	beq	.L381	@cond_branch
+	beq	.L379	@cond_branch
+	ldr	r0, .L387
+	bl	sub_802621C
+	b	.L380
+.L388:
+	.align	2, 0
+.L387:
+	.word	sub_8024D4C
+.L379:
 	ldr	r0, .L389
 	bl	sub_802621C
-	b	.L382
-.L390:
-	.align	2, 0
-.L389:
-	.word	sub_8024D4C
-.L381:
-	ldr	r0, .L391
-	bl	sub_802621C
-.L382:
+.L380:
 	add	r0, r5, #0
 	bl	DestroyTask
-.L374:
+.L372:
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.L392:
+.L390:
 	.align	2, 0
-.L391:
+.L389:
 	.word	sub_8024D84
 .Lfe23:
 	.size	 sub_802589C,.Lfe23-sub_802589C
@@ -6004,33 +6001,33 @@ sub_8025910:
 	lsl	r0, r6, #0x2
 	add	r0, r0, r6
 	lsl	r0, r0, #0x3
-	ldr	r1, .L411
+	ldr	r1, .L409
 	add	r5, r0, r1
 	mov	r0, #0x0
 	ldrsh	r4, [r5, r0]
 	cmp	r4, #0x1
-	beq	.L397	@cond_branch
-	cmp	r4, #0x1
-	bgt	.L409	@cond_branch
-	cmp	r4, #0
 	beq	.L395	@cond_branch
-	b	.L394
-.L412:
+	cmp	r4, #0x1
+	bgt	.L407	@cond_branch
+	cmp	r4, #0
+	beq	.L393	@cond_branch
+	b	.L392
+.L410:
 	.align	2, 0
-.L411:
-	.word	gTasks+0x8
 .L409:
+	.word	gTasks+0x8
+.L407:
 	cmp	r4, #0x2
-	beq	.L399	@cond_branch
-	b	.L394
-.L395:
-	ldr	r6, .L413
+	beq	.L397	@cond_branch
+	b	.L392
+.L393:
+	ldr	r6, .L411
 	ldr	r1, [r6]
 	add	r0, r1, #0
 	add	r0, r0, #0x28
 	ldrb	r0, [r0]
 	lsl	r0, r0, #0x2
-	ldr	r2, .L413+0x4
+	ldr	r2, .L411+0x4
 	add	r0, r0, r2
 	add	r1, r1, r0
 	mov	r0, #0x0
@@ -6038,40 +6035,40 @@ sub_8025910:
 	bl	SendBlock
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.L394	@cond_branch
+	beq	.L392	@cond_branch
 	ldr	r0, [r6]
 	strb	r4, [r0, #0x8]
-	b	.L410
-.L414:
+	b	.L408
+.L412:
 	.align	2, 0
-.L413:
+.L411:
 	.word	gUnknown_02022C98
 	.word	0x318c
-.L397:
+.L395:
 	bl	IsLinkTaskFinished
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.L394	@cond_branch
-.L410:
+	beq	.L392	@cond_branch
+.L408:
 	ldrh	r0, [r5]
 	add	r0, r0, #0x1
 	strh	r0, [r5]
-	b	.L394
-.L399:
+	b	.L392
+.L397:
 	bl	sub_8025170
 	cmp	r0, #0
-	beq	.L400	@cond_branch
+	beq	.L398	@cond_branch
 	mov	r2, #0x0
-	ldr	r1, .L415
+	ldr	r1, .L413
 	ldr	r0, [r1]
 	add	r0, r0, #0x24
 	ldrb	r0, [r0]
 	cmp	r2, r0
-	bcs	.L400	@cond_branch
+	bcs	.L398	@cond_branch
 	add	r3, r1, #0
-	ldr	r5, .L415+0x4
-	ldr	r4, .L415+0x8
-.L404:
+	ldr	r5, .L413+0x4
+	ldr	r4, .L413+0x8
+.L402:
 	ldr	r0, [r3]
 	lsl	r1, r2, #0x2
 	add	r1, r1, r0
@@ -6092,16 +6089,16 @@ sub_8025910:
 	add	r0, r0, #0x24
 	ldrb	r0, [r0]
 	cmp	r2, r0
-	bcc	.L404	@cond_branch
-.L400:
-	ldr	r4, .L415
+	bcc	.L402	@cond_branch
+.L398:
+	ldr	r4, .L413
 	ldr	r0, [r4]
 	add	r1, r0, #0
 	add	r1, r1, #0x24
 	ldrb	r0, [r0, #0x8]
 	ldrb	r1, [r1]
 	cmp	r0, r1
-	bcc	.L394	@cond_branch
+	bcc	.L392	@cond_branch
 	add	r0, r6, #0
 	bl	DestroyTask
 	mov	r0, #0x6
@@ -6110,13 +6107,13 @@ sub_8025910:
 	ldrb	r0, [r1, #0x10]
 	add	r0, r0, #0x1
 	strb	r0, [r1, #0x10]
-.L394:
+.L392:
 	pop	{r4, r5, r6}
 	pop	{r0}
 	bx	r0
-.L416:
+.L414:
 	.align	2, 0
-.L415:
+.L413:
 	.word	gUnknown_02022C98
 	.word	gBlockRecvBuffer
 	.word	0x318c
@@ -6130,18 +6127,18 @@ sub_80259FC:
 	mov	r7, r8
 	push	{r7}
 	add	sp, sp, #-0x18
-	ldr	r6, .L444
+	ldr	r6, .L442
 	ldr	r0, [r6]
 	add	r1, r0, #0
 	add	r1, r1, #0x24
 	ldrb	r7, [r1]
-	ldr	r2, .L444+0x4
+	ldr	r2, .L442+0x4
 	add	r1, r0, r2
-	ldr	r3, .L444+0x8
+	ldr	r3, .L442+0x8
 	add	r2, r0, r3
-	ldr	r4, .L444+0xc
+	ldr	r4, .L442+0xc
 	add	r3, r0, r4
-	ldr	r5, .L444+0x10
+	ldr	r5, .L442+0x10
 	add	r4, r0, r5
 	str	r4, [sp]
 	add	r5, r5, #0x3c
@@ -6164,7 +6161,7 @@ sub_80259FC:
 	mov	r0, #0x0
 	bl	sub_8028164
 	ldr	r1, [r6]
-	ldr	r5, .L444+0x14
+	ldr	r5, .L442+0x14
 	add	r2, r1, r5
 	str	r0, [r2]
 	mov	r0, #0x94
@@ -6174,29 +6171,29 @@ sub_80259FC:
 	strb	r0, [r1]
 	mov	r5, #0x1
 	cmp	r5, r7
-	bcs	.L419	@cond_branch
-.L421:
+	bcs	.L417	@cond_branch
+.L419:
 	ldr	r1, [r6]
 	add	r0, r1, #0
 	add	r0, r0, #0xa8
 	add	r0, r0, r5
 	ldrb	r0, [r0]
 	cmp	r0, #0
-	bne	.L420	@cond_branch
+	bne	.L418	@cond_branch
 	lsl	r0, r5, #0x4
 	sub	r0, r0, r5
 	lsl	r4, r0, #0x2
 	add	r1, r4, r1
-	ldr	r2, .L444+0x8
+	ldr	r2, .L442+0x8
 	add	r1, r1, r2
 	add	r0, r5, #0
 	bl	sub_8028318
 	add	r1, r0, #0
 	cmp	r1, #0
-	bne	.L420	@cond_branch
+	bne	.L418	@cond_branch
 	ldr	r0, [r6]
 	add	r0, r0, r4
-	ldr	r3, .L444+0x8
+	ldr	r3, .L442+0x8
 	add	r0, r0, r3
 	strb	r1, [r0]
 	ldr	r0, [r6]
@@ -6204,14 +6201,14 @@ sub_80259FC:
 	lsl	r4, r4, #0x1
 	add	r0, r0, r4
 	strb	r1, [r0]
-.L420:
+.L418:
 	add	r0, r5, #0x1
 	lsl	r0, r0, #0x18
 	lsr	r5, r0, #0x18
 	cmp	r5, r7
-	bcc	.L421	@cond_branch
-.L419:
-	ldr	r5, .L444
+	bcc	.L419	@cond_branch
+.L417:
+	ldr	r5, .L442
 	ldr	r1, [r5]
 	mov	r6, #0x92
 	lsl	r6, r6, #0x1
@@ -6222,47 +6219,47 @@ sub_80259FC:
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	cmp	r0, #0x3b
-	bls	.L424	@cond_branch
+	bls	.L422	@cond_branch
 	ldr	r1, [r5]
 	mov	r2, #0x94
 	lsl	r2, r2, #0x1
 	add	r0, r1, r2
 	ldrb	r4, [r0]
 	cmp	r4, #0
-	beq	.L425	@cond_branch
+	beq	.L423	@cond_branch
 	bl	sub_8011AC8
 	ldr	r0, [r5]
 	add	r0, r0, r6
 	mov	r1, #0x0
 	strb	r1, [r0]
-	b	.L424
-.L445:
+	b	.L422
+.L443:
 	.align	2, 0
-.L444:
+.L442:
 	.word	gUnknown_02022C98
 	.word	0x31a0
 	.word	0x31cc
 	.word	0x3208
 	.word	0x3244
 	.word	0x31b0
-.L425:
+.L423:
 	add	r0, r1, r6
 	ldrb	r0, [r0]
 	cmp	r0, #0x46
-	bls	.L424	@cond_branch
+	bls	.L422	@cond_branch
 	bl	sub_8011AC8
 	ldr	r0, [r5]
 	add	r0, r0, r6
 	strb	r4, [r0]
-.L424:
+.L422:
 	mov	r5, #0x0
 	cmp	r5, r7
-	bcs	.L429	@cond_branch
-	ldr	r3, .L446
+	bcs	.L427	@cond_branch
+	ldr	r3, .L444
 	mov	ip, r3
-	ldr	r4, .L446+0x4
+	ldr	r4, .L444+0x4
 	mov	r8, r4
-.L431:
+.L429:
 	mov	r6, r8
 	ldr	r2, [r6]
 	lsl	r0, r5, #0x4
@@ -6273,16 +6270,16 @@ sub_80259FC:
 	ldrb	r1, [r1]
 	add	r6, r0, #0
 	cmp	r1, #0
-	beq	.L432	@cond_branch
+	beq	.L430	@cond_branch
 	add	r0, r2, #0
 	add	r0, r0, #0xa8
 	add	r1, r0, r5
 	ldrb	r0, [r1]
 	cmp	r0, #0
-	bne	.L432	@cond_branch
+	bne	.L430	@cond_branch
 	mov	r0, #0x1
 	strb	r0, [r1]
-.L432:
+.L430:
 	add	r3, r4, #0
 	ldr	r1, [r3]
 	add	r0, r1, #0
@@ -6290,20 +6287,20 @@ sub_80259FC:
 	add	r0, r0, r5
 	ldrb	r0, [r0]
 	cmp	r0, #0x3
-	bgt	.L441	@cond_branch
+	bgt	.L439	@cond_branch
 	cmp	r0, #0x1
-	bge	.L436	@cond_branch
-	b	.L430
-.L447:
+	bge	.L434	@cond_branch
+	b	.L428
+.L445:
 	.align	2, 0
-.L446:
+.L444:
 	.word	0x31cc
 	.word	gUnknown_02022C98
-.L441:
+.L439:
 	cmp	r0, #0x4
-	beq	.L438	@cond_branch
-	b	.L430
-.L436:
+	beq	.L436	@cond_branch
+	b	.L428
+.L434:
 	add	r1, r1, #0xb0
 	add	r1, r1, r5
 	ldrb	r0, [r1]
@@ -6313,7 +6310,7 @@ sub_80259FC:
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	cmp	r0, #0x5
-	bls	.L430	@cond_branch
+	bls	.L428	@cond_branch
 	ldr	r0, [r3]
 	add	r0, r0, #0xb0
 	add	r0, r0, r5
@@ -6330,20 +6327,20 @@ sub_80259FC:
 	strb	r2, [r0]
 	ldr	r0, [r3]
 	add	r0, r0, r1
-	ldr	r6, .L448
+	ldr	r6, .L446
 	add	r0, r0, r6
 	strb	r2, [r0]
 	ldr	r0, [r3]
 	add	r0, r0, r1
-	ldr	r1, .L448+0x4
+	ldr	r1, .L446+0x4
 	add	r0, r0, r1
-	b	.L443
-.L449:
+	b	.L441
+.L447:
 	.align	2, 0
-.L448:
+.L446:
 	.word	0x31d0
 	.word	0x31d4
-.L438:
+.L436:
 	add	r1, r1, #0xb0
 	add	r1, r1, r5
 	ldrb	r0, [r1]
@@ -6353,7 +6350,7 @@ sub_80259FC:
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	cmp	r0, #0x27
-	bls	.L430	@cond_branch
+	bls	.L428	@cond_branch
 	ldr	r0, [r4]
 	add	r0, r0, #0xb0
 	add	r0, r0, r5
@@ -6370,31 +6367,31 @@ sub_80259FC:
 	strb	r2, [r0]
 	ldr	r0, [r4]
 	add	r0, r0, r1
-	ldr	r3, .L450
+	ldr	r3, .L448
 	add	r0, r0, r3
 	strb	r2, [r0]
 	ldr	r0, [r4]
 	add	r0, r0, r1
-	ldr	r6, .L450+0x4
+	ldr	r6, .L448+0x4
 	add	r0, r0, r6
-.L443:
+.L441:
 	strb	r2, [r0]
-.L430:
+.L428:
 	add	r0, r5, #0x1
 	lsl	r0, r0, #0x18
 	lsr	r5, r0, #0x18
 	cmp	r5, r7
-	bcc	.L431	@cond_branch
-.L429:
+	bcc	.L429	@cond_branch
+.L427:
 	add	sp, sp, #0x18
 	pop	{r3}
 	mov	r8, r3
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L451:
+.L449:
 	.align	2, 0
-.L450:
+.L448:
 	.word	0x31d0
 	.word	0x31d4
 .Lfe25:
@@ -6405,18 +6402,18 @@ sub_80259FC:
 sub_8025C0C:
 	push	{r4, r5, r6, r7, lr}
 	add	sp, sp, #-0x18
-	ldr	r5, .L463
+	ldr	r5, .L461
 	ldr	r0, [r5]
 	add	r1, r0, #0
 	add	r1, r1, #0x24
 	ldrb	r6, [r1]
-	ldr	r2, .L463+0x4
+	ldr	r2, .L461+0x4
 	add	r1, r0, r2
-	ldr	r3, .L463+0x8
+	ldr	r3, .L461+0x8
 	add	r2, r0, r3
-	ldr	r4, .L463+0xc
+	ldr	r4, .L461+0xc
 	add	r3, r0, r4
-	ldr	r7, .L463+0x10
+	ldr	r7, .L461+0x10
 	add	r4, r0, r7
 	str	r4, [sp]
 	add	r7, r7, #0x3c
@@ -6439,7 +6436,7 @@ sub_8025C0C:
 	mov	r0, #0x0
 	bl	sub_8028164
 	ldr	r1, [r5]
-	ldr	r7, .L463+0x14
+	ldr	r7, .L461+0x14
 	add	r2, r1, r7
 	str	r0, [r2]
 	mov	r0, #0x94
@@ -6449,13 +6446,13 @@ sub_8025C0C:
 	strb	r0, [r1]
 	mov	r4, #0x1
 	cmp	r4, r6
-	bcs	.L454	@cond_branch
-.L456:
+	bcs	.L452	@cond_branch
+.L454:
 	add	r0, r4, #0
 	bl	sub_8028374
 	cmp	r0, #0
-	beq	.L455	@cond_branch
-	ldr	r0, .L463
+	beq	.L453	@cond_branch
+	ldr	r0, .L461
 	ldr	r2, [r0]
 	lsl	r1, r4, #0x2
 	mov	r3, #0x98
@@ -6469,14 +6466,14 @@ sub_8025C0C:
 	add	r1, r2, r7
 	mov	r0, #0x0
 	strb	r0, [r1]
-.L455:
+.L453:
 	add	r0, r4, #0x1
 	lsl	r0, r0, #0x18
 	lsr	r4, r0, #0x18
 	cmp	r4, r6
-	bcc	.L456	@cond_branch
-.L454:
-	ldr	r5, .L463
+	bcc	.L454	@cond_branch
+.L452:
+	ldr	r5, .L461
 	ldr	r1, [r5]
 	mov	r6, #0x92
 	lsl	r6, r6, #0x1
@@ -6487,39 +6484,39 @@ sub_8025C0C:
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	cmp	r0, #0x3b
-	bls	.L459	@cond_branch
+	bls	.L457	@cond_branch
 	ldr	r1, [r5]
 	mov	r2, #0x94
 	lsl	r2, r2, #0x1
 	add	r0, r1, r2
 	ldrb	r4, [r0]
 	cmp	r4, #0
-	beq	.L460	@cond_branch
+	beq	.L458	@cond_branch
 	bl	sub_8011AC8
 	ldr	r0, [r5]
 	add	r0, r0, r6
 	mov	r1, #0x0
 	strb	r1, [r0]
-	b	.L459
-.L464:
+	b	.L457
+.L462:
 	.align	2, 0
-.L463:
+.L461:
 	.word	gUnknown_02022C98
 	.word	0x31a0
 	.word	0x31cc
 	.word	0x3208
 	.word	0x3244
 	.word	0x31b0
-.L460:
+.L458:
 	add	r0, r1, r6
 	ldrb	r0, [r0]
 	cmp	r0, #0x46
-	bls	.L459	@cond_branch
+	bls	.L457	@cond_branch
 	bl	sub_8011AC8
 	ldr	r0, [r5]
 	add	r0, r0, r6
 	strb	r4, [r0]
-.L459:
+.L457:
 	add	sp, sp, #0x18
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
@@ -6531,42 +6528,42 @@ sub_8025C0C:
 	.thumb_func
 sub_8025D04:
 	push	{r4, r5, lr}
-	ldr	r5, .L474
+	ldr	r5, .L472
 	ldr	r0, [r5]
 	ldrb	r0, [r0, #0x18]
 	cmp	r0, #0x4
-	beq	.L469	@cond_branch
-	cmp	r0, #0x4
-	bgt	.L473	@cond_branch
-	cmp	r0, #0x3
 	beq	.L467	@cond_branch
-	b	.L466
-.L475:
-	.align	2, 0
-.L474:
-	.word	gUnknown_02022C98
+	cmp	r0, #0x4
+	bgt	.L471	@cond_branch
+	cmp	r0, #0x3
+	beq	.L465	@cond_branch
+	b	.L464
 .L473:
+	.align	2, 0
+.L472:
+	.word	gUnknown_02022C98
+.L471:
 	cmp	r0, #0xb
-	beq	.L470	@cond_branch
-	b	.L466
-.L467:
+	beq	.L468	@cond_branch
+	b	.L464
+.L465:
 	bl	sub_8026BB8
 	add	r4, r0, #0
 	cmp	r4, #0x1
-	bne	.L466	@cond_branch
+	bne	.L464	@cond_branch
 	bl	sub_8026C28
 	ldr	r0, [r5]
 	mov	r1, #0x8e
 	lsl	r1, r1, #0x1
 	add	r0, r0, r1
 	str	r4, [r0]
-	b	.L466
-.L469:
+	b	.L464
+.L467:
 	bl	sub_80259FC
-	b	.L466
-.L470:
+	b	.L464
+.L468:
 	bl	sub_8025C0C
-.L466:
+.L464:
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
@@ -6578,19 +6575,57 @@ sub_8025D04:
 sub_8025D50:
 	push	{r4, r5, r6, lr}
 	add	sp, sp, #-0x14
-	ldr	r0, .L482
+	ldr	r0, .L480
 	ldr	r5, [r0]
 	ldrb	r0, [r5, #0x18]
 	cmp	r0, #0x4
-	beq	.L478	@cond_branch
+	beq	.L476	@cond_branch
 	cmp	r0, #0xb
-	beq	.L479	@cond_branch
-	b	.L477
+	beq	.L477	@cond_branch
+	b	.L475
+.L481:
+	.align	2, 0
+.L480:
+	.word	gUnknown_02022C98
+.L476:
+	ldr	r1, .L482
+	add	r0, r5, r1
+	ldr	r2, .L482+0x4
+	add	r1, r5, r2
+	ldr	r3, .L482+0x8
+	add	r2, r5, r3
+	ldr	r4, .L482+0xc
+	add	r3, r5, r4
+	mov	r6, #0xca
+	lsl	r6, r6, #0x6
+	add	r4, r5, r6
+	str	r4, [sp]
+	add	r6, r6, #0x3c
+	add	r4, r5, r6
+	str	r4, [sp, #0x4]
+	add	r4, r5, #0
+	add	r4, r4, #0x40
+	ldrb	r4, [r4]
+	str	r4, [sp, #0x8]
+	mov	r6, #0x90
+	lsl	r6, r6, #0x1
+	add	r4, r5, r6
+	ldr	r4, [r4]
+	str	r4, [sp, #0xc]
+	add	r6, r6, #0xc
+	add	r4, r5, r6
+	ldr	r4, [r4]
+	str	r4, [sp, #0x10]
+	bl	sub_8027E30
+	b	.L475
 .L483:
 	.align	2, 0
 .L482:
-	.word	gUnknown_02022C98
-.L478:
+	.word	0x32cc
+	.word	0x31cc
+	.word	0x3208
+	.word	0x3244
+.L477:
 	ldr	r1, .L484
 	add	r0, r5, r1
 	ldr	r2, .L484+0x4
@@ -6620,52 +6655,14 @@ sub_8025D50:
 	ldr	r4, [r4]
 	str	r4, [sp, #0x10]
 	bl	sub_8027E30
-	b	.L477
-.L485:
-	.align	2, 0
-.L484:
-	.word	0x32cc
-	.word	0x31cc
-	.word	0x3208
-	.word	0x3244
-.L479:
-	ldr	r1, .L486
-	add	r0, r5, r1
-	ldr	r2, .L486+0x4
-	add	r1, r5, r2
-	ldr	r3, .L486+0x8
-	add	r2, r5, r3
-	ldr	r4, .L486+0xc
-	add	r3, r5, r4
-	mov	r6, #0xca
-	lsl	r6, r6, #0x6
-	add	r4, r5, r6
-	str	r4, [sp]
-	add	r6, r6, #0x3c
-	add	r4, r5, r6
-	str	r4, [sp, #0x4]
-	add	r4, r5, #0
-	add	r4, r4, #0x40
-	ldrb	r4, [r4]
-	str	r4, [sp, #0x8]
-	mov	r6, #0x90
-	lsl	r6, r6, #0x1
-	add	r4, r5, r6
-	ldr	r4, [r4]
-	str	r4, [sp, #0xc]
-	add	r6, r6, #0xc
-	add	r4, r5, r6
-	ldr	r4, [r4]
-	str	r4, [sp, #0x10]
-	bl	sub_8027E30
-.L477:
+.L475:
 	add	sp, sp, #0x14
 	pop	{r4, r5, r6}
 	pop	{r0}
 	bx	r0
-.L487:
+.L485:
 	.align	2, 0
-.L486:
+.L484:
 	.word	0x32cc
 	.word	0x31cc
 	.word	0x3208
@@ -6678,19 +6675,61 @@ sub_8025D50:
 sub_8025E0C:
 	push	{r4, r5, r6, lr}
 	add	sp, sp, #-0x18
-	ldr	r0, .L494
+	ldr	r0, .L492
 	ldr	r5, [r0]
 	ldrb	r0, [r5, #0x18]
 	cmp	r0, #0x4
-	beq	.L490	@cond_branch
+	beq	.L488	@cond_branch
 	cmp	r0, #0xb
-	beq	.L491	@cond_branch
-	b	.L489
+	beq	.L489	@cond_branch
+	b	.L487
+.L493:
+	.align	2, 0
+.L492:
+	.word	gUnknown_02022C98
+.L488:
+	add	r0, r5, #0
+	add	r0, r0, #0x28
+	ldrb	r0, [r0]
+	lsl	r1, r0, #0x4
+	sub	r1, r1, r0
+	lsl	r1, r1, #0x2
+	ldr	r2, .L494
+	add	r1, r1, r2
+	add	r1, r5, r1
+	ldr	r3, .L494+0x4
+	add	r2, r5, r3
+	ldr	r4, .L494+0x8
+	add	r3, r5, r4
+	ldr	r6, .L494+0xc
+	add	r4, r5, r6
+	str	r4, [sp]
+	add	r6, r6, #0x3c
+	add	r4, r5, r6
+	str	r4, [sp, #0x4]
+	add	r6, r6, #0x3c
+	add	r4, r5, r6
+	str	r4, [sp, #0x8]
+	add	r4, r5, #0
+	add	r4, r4, #0x40
+	str	r4, [sp, #0xc]
+	mov	r6, #0x90
+	lsl	r6, r6, #0x1
+	add	r4, r5, r6
+	str	r4, [sp, #0x10]
+	add	r6, r6, #0xc
+	add	r4, r5, r6
+	str	r4, [sp, #0x14]
+	bl	sub_8028164
+	b	.L487
 .L495:
 	.align	2, 0
 .L494:
-	.word	gUnknown_02022C98
-.L490:
+	.word	0x31a0
+	.word	0x31cc
+	.word	0x3208
+	.word	0x3244
+.L489:
 	add	r0, r5, #0
 	add	r0, r0, #0x28
 	ldrb	r0, [r0]
@@ -6724,56 +6763,14 @@ sub_8025E0C:
 	add	r4, r5, r6
 	str	r4, [sp, #0x14]
 	bl	sub_8028164
-	b	.L489
-.L497:
-	.align	2, 0
-.L496:
-	.word	0x31a0
-	.word	0x31cc
-	.word	0x3208
-	.word	0x3244
-.L491:
-	add	r0, r5, #0
-	add	r0, r0, #0x28
-	ldrb	r0, [r0]
-	lsl	r1, r0, #0x4
-	sub	r1, r1, r0
-	lsl	r1, r1, #0x2
-	ldr	r2, .L498
-	add	r1, r1, r2
-	add	r1, r5, r1
-	ldr	r3, .L498+0x4
-	add	r2, r5, r3
-	ldr	r4, .L498+0x8
-	add	r3, r5, r4
-	ldr	r6, .L498+0xc
-	add	r4, r5, r6
-	str	r4, [sp]
-	add	r6, r6, #0x3c
-	add	r4, r5, r6
-	str	r4, [sp, #0x4]
-	add	r6, r6, #0x3c
-	add	r4, r5, r6
-	str	r4, [sp, #0x8]
-	add	r4, r5, #0
-	add	r4, r4, #0x40
-	str	r4, [sp, #0xc]
-	mov	r6, #0x90
-	lsl	r6, r6, #0x1
-	add	r4, r5, r6
-	str	r4, [sp, #0x10]
-	add	r6, r6, #0xc
-	add	r4, r5, r6
-	str	r4, [sp, #0x14]
-	bl	sub_8028164
-.L489:
+.L487:
 	add	sp, sp, #0x18
 	pop	{r4, r5, r6}
 	pop	{r0}
 	bx	r0
-.L499:
+.L497:
 	.align	2, 0
-.L498:
+.L496:
 	.word	0x31a0
 	.word	0x31cc
 	.word	0x3208
@@ -6785,25 +6782,25 @@ sub_8025E0C:
 	.thumb_func
 sub_8025ED8:
 	push	{r4, lr}
-	ldr	r4, .L510
+	ldr	r4, .L508
 	ldr	r1, [r4]
 	ldrb	r0, [r1, #0x18]
 	cmp	r0, #0x4
-	beq	.L503	@cond_branch
+	beq	.L501	@cond_branch
 	cmp	r0, #0x4
-	bgt	.L509	@cond_branch
+	bgt	.L507	@cond_branch
 	cmp	r0, #0x3
-	beq	.L502	@cond_branch
-	b	.L501
-.L511:
-	.align	2, 0
-.L510:
-	.word	gUnknown_02022C98
+	beq	.L500	@cond_branch
+	b	.L499
 .L509:
+	.align	2, 0
+.L508:
+	.word	gUnknown_02022C98
+.L507:
 	cmp	r0, #0xb
-	beq	.L505	@cond_branch
-	b	.L501
-.L502:
+	beq	.L503	@cond_branch
+	b	.L499
+.L500:
 	mov	r0, #0x1
 	bl	sub_8027DD0
 	ldr	r0, [r4]
@@ -6812,34 +6809,34 @@ sub_8025ED8:
 	add	r0, r0, r1
 	mov	r1, #0x1
 	str	r1, [r0]
-	b	.L501
-.L503:
-	ldr	r2, .L512
+	b	.L499
+.L501:
+	ldr	r2, .L510
 	add	r1, r1, r2
 	ldrb	r0, [r1]
 	cmp	r0, #0
-	beq	.L501	@cond_branch
+	beq	.L499	@cond_branch
 	bl	sub_80282EC
-	b	.L501
-.L513:
+	b	.L499
+.L511:
 	.align	2, 0
-.L512:
+.L510:
 	.word	0x32f8
-.L505:
+.L503:
 	mov	r2, #0x90
 	lsl	r2, r2, #0x1
 	add	r0, r1, r2
 	ldr	r0, [r0]
 	cmp	r0, #0
-	bne	.L501	@cond_branch
+	bne	.L499	@cond_branch
 	add	r2, r2, #0xc
 	add	r0, r1, r2
 	ldr	r0, [r0]
 	cmp	r0, #0
-	bne	.L501	@cond_branch
+	bne	.L499	@cond_branch
 	mov	r0, #0x1
 	bl	sub_8028350
-.L501:
+.L499:
 	pop	{r4}
 	pop	{r0}
 	bx	r0
@@ -6850,7 +6847,7 @@ sub_8025ED8:
 	.thumb_func
 sub_8025F48:
 	push	{r4, r5, r6, lr}
-	ldr	r6, .L528
+	ldr	r6, .L526
 	ldr	r2, [r6]
 	add	r0, r2, #0
 	add	r0, r0, #0x28
@@ -6859,39 +6856,39 @@ sub_8025F48:
 	sub	r0, r0, r1
 	lsl	r0, r0, #0x2
 	add	r1, r2, r0
-	ldr	r3, .L528+0x4
+	ldr	r3, .L526+0x4
 	add	r0, r1, r3
 	ldrb	r0, [r0]
 	cmp	r0, #0
-	bne	.L515	@cond_branch
+	bne	.L513	@cond_branch
 	bl	IsSEPlaying
 	lsl	r0, r0, #0x18
 	lsr	r1, r0, #0x18
 	cmp	r1, #0
-	bne	.L517	@cond_branch
+	bne	.L515	@cond_branch
 	ldr	r0, [r6]
 	mov	r2, #0xa2
 	lsl	r2, r2, #0x1
 	add	r0, r0, r2
 	strb	r1, [r0]
-	b	.L517
-.L529:
+	b	.L515
+.L527:
 	.align	2, 0
-.L528:
+.L526:
 	.word	gUnknown_02022C98
 	.word	0x31cc
-.L515:
-	ldr	r3, .L530
+.L513:
+	ldr	r3, .L528
 	add	r0, r1, r3
 	ldrb	r4, [r0]
 	cmp	r4, #0x1
-	bne	.L518	@cond_branch
+	bne	.L516	@cond_branch
 	mov	r1, #0xa2
 	lsl	r1, r1, #0x1
 	add	r0, r2, r1
 	ldrb	r0, [r0]
 	cmp	r0, #0
-	bne	.L517	@cond_branch
+	bne	.L515	@cond_branch
 	mov	r0, #0x1f
 	bl	m4aSongNumStop
 	mov	r0, #0x1f
@@ -6900,37 +6897,37 @@ sub_8025F48:
 	mov	r2, #0xa2
 	lsl	r2, r2, #0x1
 	add	r0, r0, r2
-	b	.L526
-.L531:
+	b	.L524
+.L529:
 	.align	2, 0
-.L530:
+.L528:
 	.word	0x31d0
-.L518:
-	ldr	r3, .L532
+.L516:
+	ldr	r3, .L530
 	add	r0, r1, r3
 	ldrb	r4, [r0]
 	cmp	r4, #0x1
-	bne	.L517	@cond_branch
+	bne	.L515	@cond_branch
 	mov	r5, #0xa2
 	lsl	r5, r5, #0x1
 	add	r0, r2, r5
 	ldrb	r0, [r0]
 	cmp	r0, #0
-	bne	.L517	@cond_branch
+	bne	.L515	@cond_branch
 	bl	IsSEPlaying
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	bne	.L517	@cond_branch
+	bne	.L515	@cond_branch
 	mov	r0, #0x16
 	bl	PlaySE
 	mov	r0, #0x1
 	bl	sub_80284CC
 	ldr	r0, [r6]
 	add	r0, r0, r5
-.L526:
+.L524:
 	strb	r4, [r0]
-.L517:
-	ldr	r0, .L532+0x4
+.L515:
+	ldr	r0, .L530+0x4
 	ldr	r2, [r0]
 	mov	r5, #0xaa
 	lsl	r5, r5, #0x1
@@ -6938,30 +6935,30 @@ sub_8025F48:
 	ldrb	r1, [r1]
 	add	r4, r0, #0
 	cmp	r1, #0
-	bne	.L523	@cond_branch
+	bne	.L521	@cond_branch
 	add	r0, r2, #0
 	add	r0, r0, #0x40
 	ldrb	r0, [r0]
 	cmp	r0, #0x9
-	bls	.L523	@cond_branch
+	bls	.L521	@cond_branch
 	bl	StopMapMusic
 	ldr	r0, [r4]
 	add	r0, r0, r5
 	mov	r1, #0x1
-	b	.L527
-.L533:
+	b	.L525
+.L531:
 	.align	2, 0
-.L532:
+.L530:
 	.word	0x31d4
 	.word	gUnknown_02022C98
-.L523:
+.L521:
 	ldr	r0, [r4]
 	mov	r1, #0xaa
 	lsl	r1, r1, #0x1
 	add	r0, r0, r1
 	ldrb	r0, [r0]
 	cmp	r0, #0x1
-	bne	.L524	@cond_branch
+	bne	.L522	@cond_branch
 	mov	r0, #0xb
 	bl	PlayFanfareByFanfareNum
 	ldr	r0, [r4]
@@ -6969,9 +6966,9 @@ sub_8025F48:
 	lsl	r2, r2, #0x1
 	add	r0, r0, r2
 	mov	r1, #0x2
-.L527:
+.L525:
 	strb	r1, [r0]
-.L524:
+.L522:
 	pop	{r4, r5, r6}
 	pop	{r0}
 	bx	r0
@@ -6984,7 +6981,7 @@ sub_8026044:
 	push	{r4, r5, r6, r7, lr}
 	mov	r7, r8
 	push	{r7}
-	ldr	r6, .L557
+	ldr	r6, .L555
 	ldr	r2, [r6]
 	add	r0, r2, #0
 	add	r0, r0, #0x44
@@ -6999,44 +6996,44 @@ sub_8026044:
 	sub	r0, r0, r1
 	lsl	r0, r0, #0x2
 	add	r1, r2, r0
-	ldr	r3, .L557+0x4
+	ldr	r3, .L555+0x4
 	add	r0, r1, r3
 	ldrb	r3, [r0]
 	cmp	r3, #0
-	bne	.L535	@cond_branch
-	ldr	r4, .L557+0x8
+	bne	.L533	@cond_branch
+	ldr	r4, .L555+0x8
 	add	r0, r1, r4
 	ldrb	r0, [r0]
 	cmp	r0, #0x1
-	beq	.L537	@cond_branch
+	beq	.L535	@cond_branch
 	add	r4, r4, #0x4
 	add	r0, r1, r4
 	ldrb	r0, [r0]
 	cmp	r0, #0x1
-	beq	.L537	@cond_branch
+	beq	.L535	@cond_branch
 	mov	r1, #0xa2
 	lsl	r1, r1, #0x1
 	add	r0, r2, r1
 	strb	r3, [r0]
-	b	.L537
-.L558:
+	b	.L535
+.L556:
 	.align	2, 0
-.L557:
+.L555:
 	.word	gUnknown_02022C98
 	.word	0x31cc
 	.word	0x31d0
-.L535:
-	ldr	r3, .L559
+.L533:
+	ldr	r3, .L557
 	add	r0, r1, r3
 	ldrb	r4, [r0]
 	cmp	r4, #0x1
-	bne	.L538	@cond_branch
+	bne	.L536	@cond_branch
 	mov	r1, #0xa2
 	lsl	r1, r1, #0x1
 	add	r0, r2, r1
 	ldrb	r0, [r0]
 	cmp	r0, #0
-	bne	.L537	@cond_branch
+	bne	.L535	@cond_branch
 	mov	r0, #0x1f
 	bl	m4aSongNumStop
 	mov	r0, #0x1f
@@ -7045,41 +7042,41 @@ sub_8026044:
 	mov	r3, #0xa2
 	lsl	r3, r3, #0x1
 	add	r0, r0, r3
-	b	.L554
-.L560:
+	b	.L552
+.L558:
 	.align	2, 0
-.L559:
+.L557:
 	.word	0x31d0
-.L538:
-	ldr	r4, .L561
+.L536:
+	ldr	r4, .L559
 	add	r0, r1, r4
 	ldrb	r4, [r0]
 	cmp	r4, #0x1
-	bne	.L537	@cond_branch
+	bne	.L535	@cond_branch
 	mov	r5, #0xa2
 	lsl	r5, r5, #0x1
 	add	r0, r2, r5
 	ldrb	r0, [r0]
 	cmp	r0, #0
-	bne	.L537	@cond_branch
+	bne	.L535	@cond_branch
 	bl	IsSEPlaying
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	bne	.L537	@cond_branch
+	bne	.L535	@cond_branch
 	mov	r0, #0x16
 	bl	PlaySE
 	mov	r0, #0x1
 	bl	sub_80284CC
 	ldr	r0, [r6]
 	add	r0, r0, r5
-.L554:
+.L552:
 	strb	r4, [r0]
-.L537:
+.L535:
 	mov	r4, r8
 	cmp	r4, r7
-	bcs	.L544	@cond_branch
-	ldr	r5, .L561+0x4
-.L546:
+	bcs	.L542	@cond_branch
+	ldr	r5, .L559+0x4
+.L544:
 	ldr	r2, [r5]
 	add	r0, r2, #0
 	add	r0, r0, #0x28
@@ -7087,7 +7084,7 @@ sub_8026044:
 	lsl	r0, r1, #0x4
 	sub	r0, r0, r1
 	lsl	r0, r0, #0x2
-	ldr	r1, .L561+0x8
+	ldr	r1, .L559+0x8
 	add	r0, r0, r1
 	add	r0, r2, r0
 	add	r1, r0, #0
@@ -7096,14 +7093,14 @@ sub_8026044:
 	add	r0, r0, r4
 	ldrb	r0, [r0]
 	cmp	r0, #0x9
-	bls	.L547	@cond_branch
+	bls	.L545	@cond_branch
 	mov	r3, #0xa4
 	lsl	r3, r3, #0x1
 	add	r0, r2, r3
 	add	r0, r0, r4
 	ldrb	r0, [r0]
 	cmp	r0, #0
-	bne	.L545	@cond_branch
+	bne	.L543	@cond_branch
 	add	r0, r1, r4
 	ldrb	r0, [r0]
 	add	r0, r0, #0x4a
@@ -7114,29 +7111,29 @@ sub_8026044:
 	add	r0, r0, r1
 	add	r0, r0, r4
 	mov	r1, #0x1
-	b	.L555
-.L562:
+	b	.L553
+.L560:
 	.align	2, 0
-.L561:
+.L559:
 	.word	0x31d4
 	.word	gUnknown_02022C98
 	.word	0x31a0
-.L547:
+.L545:
 	mov	r3, #0xa4
 	lsl	r3, r3, #0x1
 	add	r0, r2, r3
 	add	r0, r0, r4
 	mov	r1, #0x0
-.L555:
+.L553:
 	strb	r1, [r0]
-.L545:
+.L543:
 	add	r0, r4, #0x1
 	lsl	r0, r0, #0x18
 	lsr	r4, r0, #0x18
 	cmp	r4, r7
-	bcc	.L546	@cond_branch
-.L544:
-	ldr	r0, .L563
+	bcc	.L544	@cond_branch
+.L542:
+	ldr	r0, .L561
 	ldr	r2, [r0]
 	mov	r5, #0xaa
 	lsl	r5, r5, #0x1
@@ -7144,29 +7141,29 @@ sub_8026044:
 	ldrb	r1, [r1]
 	add	r4, r0, #0
 	cmp	r1, #0
-	bne	.L551	@cond_branch
+	bne	.L549	@cond_branch
 	add	r0, r2, #0
 	add	r0, r0, #0x40
 	ldrb	r0, [r0]
 	cmp	r0, #0x9
-	bls	.L551	@cond_branch
+	bls	.L549	@cond_branch
 	bl	StopMapMusic
 	ldr	r0, [r4]
 	add	r0, r0, r5
 	mov	r1, #0x1
-	b	.L556
-.L564:
+	b	.L554
+.L562:
 	.align	2, 0
-.L563:
+.L561:
 	.word	gUnknown_02022C98
-.L551:
+.L549:
 	ldr	r0, [r4]
 	mov	r1, #0xaa
 	lsl	r1, r1, #0x1
 	add	r0, r0, r1
 	ldrb	r0, [r0]
 	cmp	r0, #0x1
-	bne	.L552	@cond_branch
+	bne	.L550	@cond_branch
 	mov	r0, #0xb
 	bl	PlayFanfareByFanfareNum
 	ldr	r0, [r4]
@@ -7174,9 +7171,9 @@ sub_8026044:
 	lsl	r3, r3, #0x1
 	add	r0, r0, r3
 	mov	r1, #0x2
-.L556:
+.L554:
 	strb	r1, [r0]
-.L552:
+.L550:
 	pop	{r3}
 	mov	r8, r3
 	pop	{r4, r5, r6, r7}
@@ -7242,7 +7239,7 @@ sub_802621C:
 	push	{lr}
 	mov	r1, #0x1
 	bl	CreateTask
-	ldr	r1, .L570
+	ldr	r1, .L568
 	ldr	r3, [r1]
 	mov	r2, #0x0
 	strb	r0, [r3, #0x4]
@@ -7254,9 +7251,9 @@ sub_802621C:
 	strb	r2, [r0, #0x14]
 	pop	{r0}
 	bx	r0
-.L571:
+.L569:
 	.align	2, 0
-.L570:
+.L568:
 	.word	gUnknown_02022C98
 .Lfe37:
 	.size	 sub_802621C,.Lfe37-sub_802621C
@@ -7265,7 +7262,7 @@ sub_802621C:
 	.thumb_func
 sub_8026240:
 	push	{r4, lr}
-	ldr	r2, .L573
+	ldr	r2, .L571
 	ldr	r1, [r2]
 	ldrb	r3, [r1, #0x18]
 	mov	r4, #0x0
@@ -7279,9 +7276,9 @@ sub_8026240:
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L574:
+.L572:
 	.align	2, 0
-.L573:
+.L571:
 	.word	gUnknown_02022C98
 .Lfe38:
 	.size	 sub_8026240,.Lfe38-sub_8026240
@@ -7290,21 +7287,21 @@ sub_8026240:
 	.thumb_func
 sub_8026264:
 	push	{r4, lr}
-	ldr	r3, .L581
+	ldr	r3, .L579
 	ldr	r1, [r3]
 	ldrb	r0, [r1, #0x14]
 	lsr	r2, r0, #0x2
 	add	r0, r0, #0x1
 	strb	r0, [r1, #0x14]
 	cmp	r2, #0
-	beq	.L576	@cond_branch
+	beq	.L574	@cond_branch
 	ldr	r3, [r3]
 	ldrb	r0, [r3, #0x14]
 	mov	r1, #0x3
 	and	r0, r0, r1
 	cmp	r0, #0
-	bne	.L576	@cond_branch
-	ldr	r1, .L581+0x4
+	bne	.L574	@cond_branch
+	ldr	r1, .L579+0x4
 	add	r0, r3, #0
 	add	r0, r0, #0x24
 	ldrb	r0, [r0]
@@ -7312,15 +7309,15 @@ sub_8026264:
 	add	r0, r0, r1
 	ldrb	r0, [r0]
 	cmp	r2, r0
-	bcc	.L577	@cond_branch
+	bcc	.L575	@cond_branch
 	mov	r0, #0x1
-	b	.L580
-.L582:
+	b	.L578
+.L580:
 	.align	2, 0
-.L581:
+.L579:
 	.word	gUnknown_02022C98
 	.word	gUnknown_082F7A94
-.L577:
+.L575:
 	lsl	r4, r2, #0x3
 	add	r1, r4, #0
 	mov	r0, #0x14
@@ -7331,9 +7328,9 @@ sub_8026264:
 	mov	r0, #0x18
 	add	r1, r4, #0
 	bl	SetGpuReg
-.L576:
+.L574:
 	mov	r0, #0x0
-.L580:
+.L578:
 	pop	{r4}
 	pop	{r1}
 	bx	r1
@@ -7346,7 +7343,7 @@ sub_80262C0:
 	push	{r4, r5, r6, r7, lr}
 	mov	r7, r8
 	push	{r7}
-	ldr	r2, .L590
+	ldr	r2, .L588
 	ldr	r0, [r2]
 	add	r1, r0, #0
 	add	r1, r1, #0x44
@@ -7354,27 +7351,27 @@ sub_80262C0:
 	ldrb	r5, [r0]
 	ldrb	r1, [r1]
 	cmp	r1, r5
-	bcs	.L585	@cond_branch
+	bcs	.L583	@cond_branch
 	mov	r8, r2
-	ldr	r0, .L590+0x4
+	ldr	r0, .L588+0x4
 	mov	ip, r0
 	mov	r7, #0x0
 	mov	r6, #0x1
-.L587:
+.L585:
 	mov	r2, r8
 	ldr	r0, [r2]
 	mov	r2, ip
 	add	r4, r0, r2
-	ldr	r2, .L590+0x8
+	ldr	r2, .L588+0x8
 	add	r0, r0, r2
 	add	r2, r0, r1
 	mov	r3, #0x0
 	add	r0, r1, #0
 	and	r0, r0, r6
 	cmp	r0, #0
-	bne	.L588	@cond_branch
+	bne	.L586	@cond_branch
 	mov	r3, #0x1
-.L588:
+.L586:
 	strb	r3, [r2]
 	add	r0, r4, r1
 	strb	r7, [r0]
@@ -7382,16 +7379,16 @@ sub_80262C0:
 	lsl	r0, r0, #0x18
 	lsr	r1, r0, #0x18
 	cmp	r1, r5
-	bcc	.L587	@cond_branch
-.L585:
+	bcc	.L585	@cond_branch
+.L583:
 	pop	{r3}
 	mov	r8, r3
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L591:
+.L589:
 	.align	2, 0
-.L590:
+.L588:
 	.word	gUnknown_02022C98
 	.word	0x32e0
 	.word	0x32eb
@@ -7407,7 +7404,7 @@ sub_8026324:
 	mov	r5, r8
 	push	{r5, r6, r7}
 	add	sp, sp, #-0x10
-	ldr	r0, .L631
+	ldr	r0, .L629
 	ldr	r1, [r0]
 	add	r0, r1, #0
 	add	r0, r0, #0x44
@@ -7425,21 +7422,21 @@ sub_8026324:
 	add	r0, r0, #0x40
 	ldrb	r0, [r0]
 	cmp	r0, #0x9
-	bls	.LCB4631
-	b	.L592	@long jump
-.LCB4631:
+	bls	.LCB4626
+	b	.L590	@long jump
+.LCB4626:
 	mov	r6, #0x0
 	ldr	r0, [sp, #0x8]
 	cmp	r6, r0
-	bcs	.L595	@cond_branch
-.L597:
-	ldr	r3, .L631
+	bcs	.L593	@cond_branch
+.L595:
+	ldr	r3, .L629
 	lsl	r0, r6, #0x4
 	sub	r1, r0, r6
 	lsl	r1, r1, #0x2
 	ldr	r2, [r3]
 	add	r1, r1, r2
-	ldr	r4, .L631+0x4
+	ldr	r4, .L629+0x4
 	add	r4, r4, r1
 	mov	r8, r4
 	ldrb	r1, [r4]
@@ -7447,21 +7444,21 @@ sub_8026324:
 	add	r0, r6, #0x1
 	str	r0, [sp, #0xc]
 	cmp	r1, #0
-	beq	.L596	@cond_branch
+	beq	.L594	@cond_branch
 	add	r0, r2, #0
 	add	r0, r0, #0xa8
 	add	r0, r0, r6
 	ldrb	r0, [r0]
 	cmp	r0, #0x1
-	bne	.L596	@cond_branch
+	bne	.L594	@cond_branch
 	ldr	r1, [sp]
 	mov	sl, r1
 	ldr	r2, [sp, #0x4]
 	cmp	sl, r2
-	bcs	.L596	@cond_branch
+	bcs	.L594	@cond_branch
 	add	r7, r3, #0
-.L602:
-	ldr	r0, .L631+0x8
+.L600:
+	ldr	r0, .L629+0x8
 	add	r0, r0, sl
 	ldrb	r5, [r0]
 	ldr	r1, [r7]
@@ -7471,24 +7468,24 @@ sub_8026324:
 	add	r0, r0, r4
 	ldrb	r0, [r0]
 	cmp	r0, r6
-	beq	.L596	@cond_branch
+	beq	.L594	@cond_branch
 	add	r0, r1, #0
 	add	r0, r0, #0xf5
 	add	r0, r0, r4
 	ldrb	r0, [r0]
 	cmp	r0, r6
-	beq	.L596	@cond_branch
+	beq	.L594	@cond_branch
 	mov	r0, r8
 	ldrb	r1, [r0]
 	add	r0, r6, #0
 	add	r2, r5, #0
 	bl	sub_8026634
 	cmp	r0, #0x1
-	bne	.L605	@cond_branch
+	bne	.L603	@cond_branch
 	mov	r2, #0x0
-	ldr	r3, .L631
+	ldr	r3, .L629
 	mov	r8, r4
-.L609:
+.L607:
 	ldr	r0, [r3]
 	mov	r4, r8
 	add	r1, r2, r4
@@ -7496,7 +7493,7 @@ sub_8026324:
 	add	r1, r0, r1
 	ldrb	r0, [r1]
 	cmp	r0, #0xff
-	bne	.L608	@cond_branch
+	bne	.L606	@cond_branch
 	strb	r6, [r1]
 	ldr	r0, [r3]
 	add	r0, r0, #0xa8
@@ -7508,31 +7505,31 @@ sub_8026324:
 	add	r0, r0, r5
 	mov	r1, #0x1
 	strb	r1, [r0]
-	b	.L596
-.L632:
+	b	.L594
+.L630:
 	.align	2, 0
-.L631:
+.L629:
 	.word	gUnknown_02022C98
 	.word	0x31cc
 	.word	gUnknown_082F449C
-.L608:
+.L606:
 	add	r0, r2, #0x1
 	lsl	r0, r0, #0x18
 	lsr	r2, r0, #0x18
 	cmp	r2, #0x1
-	bls	.L609	@cond_branch
-	b	.L596
-.L605:
+	bls	.L607	@cond_branch
+	b	.L594
+.L603:
 	ldr	r0, [r7]
 	mov	r2, r9
 	sub	r1, r2, r6
 	lsl	r1, r1, #0x2
 	add	r0, r0, r1
-	ldr	r4, .L633
+	ldr	r4, .L631
 	add	r0, r0, r4
 	ldrb	r0, [r0]
 	cmp	r0, #0x1
-	beq	.L596	@cond_branch
+	beq	.L594	@cond_branch
 	mov	r0, sl
 	add	r0, r0, #0x1
 	lsl	r0, r0, #0x18
@@ -7540,27 +7537,27 @@ sub_8026324:
 	mov	sl, r0
 	ldr	r0, [sp, #0x4]
 	cmp	sl, r0
-	bcc	.L602	@cond_branch
-.L596:
+	bcc	.L600	@cond_branch
+.L594:
 	ldr	r1, [sp, #0xc]
 	lsl	r0, r1, #0x18
 	lsr	r6, r0, #0x18
 	ldr	r2, [sp, #0x8]
 	cmp	r6, r2
-	bcc	.L597	@cond_branch
-.L595:
+	bcc	.L595	@cond_branch
+.L593:
 	ldr	r4, [sp]
 	mov	sl, r4
 	ldr	r0, [sp, #0x4]
 	cmp	sl, r0
-	bcc	.LCB4805
-	b	.L592	@long jump
-.LCB4805:
-	ldr	r1, .L633+0x4
+	bcc	.LCB4800
+	b	.L590	@long jump
+.LCB4800:
+	ldr	r1, .L631+0x4
 	mov	r9, r1
-.L618:
+.L616:
 	mov	r6, #0xff
-	ldr	r0, .L633+0x8
+	ldr	r0, .L631+0x8
 	add	r0, r0, sl
 	ldrb	r5, [r0]
 	mov	r2, r9
@@ -7569,9 +7566,9 @@ sub_8026324:
 	add	r0, r0, r5
 	ldrb	r0, [r0]
 	cmp	r0, #0x1
-	beq	.LCB4826
-	b	.L617	@long jump
-.LCB4826:
+	beq	.LCB4821
+	b	.L615	@long jump
+.LCB4821:
 	add	r0, r5, #0
 	bl	sub_8026D8C
 	mov	r1, r9
@@ -7587,11 +7584,11 @@ sub_8026324:
 	lsl	r0, r0, #0x18
 	lsr	r3, r0, #0x18
 	cmp	r3, #0x1
-	bls	.L620	@cond_branch
+	bls	.L618	@cond_branch
 	mov	r3, #0x2
-.L620:
-	ldr	r2, .L633+0xc
-	ldr	r0, .L633+0x10
+.L618:
+	ldr	r2, .L631+0xc
+	ldr	r0, .L631+0x10
 	add	r1, r4, r0
 	add	r1, r1, r5
 	lsl	r0, r3, #0x1
@@ -7606,14 +7603,14 @@ sub_8026324:
 	ldrb	r0, [r0]
 	sub	r2, r1, r0
 	cmp	r2, #0x5
-	bgt	.L621	@cond_branch
+	bgt	.L619	@cond_branch
 	add	r1, r4, #0
 	add	r1, r1, #0x9c
 	add	r1, r1, r5
 	ldrb	r0, [r1]
 	add	r0, r0, r2
 	strb	r0, [r1]
-.L621:
+.L619:
 	mov	r2, r9
 	ldr	r1, [r2]
 	add	r1, r1, #0x9c
@@ -7625,9 +7622,9 @@ sub_8026324:
 	mov	r4, #0xff
 	and	r0, r0, r4
 	cmp	r0, #0x5
-	bhi	.LCB4888
-	b	.L617	@long jump
-.LCB4888:
+	bhi	.LCB4883
+	b	.L615	@long jump
+.LCB4883:
 	mov	r1, r9
 	ldr	r0, [r1]
 	add	r0, r0, #0x9c
@@ -7641,34 +7638,34 @@ sub_8026324:
 	ldrb	r0, [r2]
 	mov	r8, r1
 	cmp	r0, #0xff
-	bne	.L630	@cond_branch
+	bne	.L628	@cond_branch
 	add	r0, r3, #0
 	add	r0, r0, #0xf5
 	add	r0, r0, r8
 	ldrb	r0, [r0]
 	cmp	r0, #0xff
-	bne	.LCB4913
-	b	.L617	@long jump
-.LCB4913:
-	b	.L625
-.L634:
+	bne	.LCB4908
+	b	.L615	@long jump
+.LCB4908:
+	b	.L623
+.L632:
 	.align	2, 0
-.L633:
+.L631:
 	.word	0x31d4
 	.word	gUnknown_02022C98
 	.word	gUnknown_082F449C
 	.word	gUnknown_082F7A88
 	.word	0x31b4
-.L630:
+.L628:
 	add	r0, r3, #0
 	add	r0, r0, #0xf5
 	add	r0, r0, r8
 	ldrb	r0, [r0]
 	cmp	r0, #0xff
-	bne	.L625	@cond_branch
+	bne	.L623	@cond_branch
 	ldrb	r4, [r2]
-	b	.L624
-.L625:
+	b	.L622
+.L623:
 	mov	r2, r9
 	ldr	r1, [r2]
 	add	r0, r1, #0
@@ -7682,16 +7679,16 @@ sub_8026324:
 	mov	r1, #0x1
 	and	r1, r1, r0
 	cmp	r1, #0
-	bne	.L627	@cond_branch
+	bne	.L625	@cond_branch
 	add	r4, r7, #0
-	b	.L624
-.L627:
+	b	.L622
+.L625:
 	add	r4, r6, #0
 	add	r6, r7, #0
-.L624:
+.L622:
 	mov	r1, r9
 	ldr	r0, [r1]
-	ldr	r2, .L635
+	ldr	r2, .L633
 	add	r0, r0, r2
 	add	r0, r0, r5
 	mov	r1, #0x7
@@ -7717,7 +7714,7 @@ sub_8026324:
 	sub	r0, r0, r4
 	lsl	r0, r0, #0x2
 	add	r1, r1, r0
-	ldr	r2, .L635+0x4
+	ldr	r2, .L633+0x4
 	add	r1, r1, r2
 	mov	r0, #0x1
 	strb	r0, [r1]
@@ -7727,7 +7724,7 @@ sub_8026324:
 	sub	r0, r0, r6
 	lsl	r0, r0, #0x2
 	add	r1, r1, r0
-	ldr	r0, .L635+0x8
+	ldr	r0, .L633+0x8
 	add	r1, r1, r0
 	mov	r2, #0x1
 	strb	r2, [r1]
@@ -7752,7 +7749,7 @@ sub_8026324:
 	add	r1, r0, #0
 	add	r1, r1, #0xe8
 	add	r1, r1, r5
-	ldr	r2, .L635+0xc
+	ldr	r2, .L633+0xc
 	add	r0, r0, r2
 	add	r0, r0, r5
 	ldrb	r0, [r0]
@@ -7776,7 +7773,7 @@ sub_8026324:
 	ldrb	r0, [r1]
 	orr	r0, r0, r2
 	strb	r0, [r1]
-.L617:
+.L615:
 	mov	r0, sl
 	add	r0, r0, #0x1
 	lsl	r0, r0, #0x18
@@ -7784,10 +7781,10 @@ sub_8026324:
 	mov	sl, r0
 	ldr	r4, [sp, #0x4]
 	cmp	sl, r4
-	bcs	.LCB5075
-	b	.L618	@long jump
-.LCB5075:
-.L592:
+	bcs	.LCB5070
+	b	.L616	@long jump
+.LCB5070:
+.L590:
 	add	sp, sp, #0x10
 	pop	{r3, r4, r5}
 	mov	r8, r3
@@ -7796,9 +7793,9 @@ sub_8026324:
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L636:
+.L634:
 	.align	2, 0
-.L635:
+.L633:
 	.word	0x32eb
 	.word	0x31d0
 	.word	0x31d4
@@ -7817,7 +7814,7 @@ sub_8026634:
 	lsl	r2, r2, #0x18
 	lsr	r6, r2, #0x18
 	mov	r7, #0x0
-	ldr	r2, .L652
+	ldr	r2, .L650
 	ldr	r1, [r2]
 	add	r0, r1, #0
 	add	r0, r0, #0x24
@@ -7825,27 +7822,27 @@ sub_8026634:
 	sub	r0, r0, #0x1
 	lsl	r0, r0, #0x18
 	lsr	r5, r0, #0x18
-	ldr	r0, .L652+0x4
+	ldr	r0, .L650+0x4
 	add	r1, r1, r0
 	mov	ip, r2
 	cmp	r3, #0x2
-	beq	.L641	@cond_branch
+	beq	.L639	@cond_branch
 	cmp	r3, #0x2
-	bgt	.L638	@cond_branch
+	bgt	.L636	@cond_branch
 	cmp	r3, #0x1
-	beq	.L642	@cond_branch
-	b	.L638
-.L653:
+	beq	.L640	@cond_branch
+	b	.L636
+.L651:
 	.align	2, 0
-.L652:
+.L650:
 	.word	gUnknown_02022C98
 	.word	0x32e0
-.L641:
+.L639:
 	mov	r7, #0x1
-	b	.L638
-.L642:
+	b	.L636
+.L640:
 	mov	r7, #0x2
-.L638:
+.L636:
 	add	r0, r1, #0
 	add	r0, r0, #0xb
 	add	r0, r0, r6
@@ -7854,8 +7851,8 @@ sub_8026634:
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	cmp	r0, #0x1
-	bhi	.L645	@cond_branch
-	ldr	r0, .L654
+	bhi	.L643	@cond_branch
+	ldr	r0, .L652
 	lsl	r1, r4, #0x1
 	add	r1, r1, r4
 	add	r1, r7, r1
@@ -7865,7 +7862,7 @@ sub_8026634:
 	add	r1, r1, r0
 	ldrb	r1, [r1]
 	cmp	r6, r1
-	bne	.L649	@cond_branch
+	bne	.L647	@cond_branch
 	mov	r0, ip
 	ldr	r1, [r0]
 	add	r0, r1, #0
@@ -7876,26 +7873,26 @@ sub_8026634:
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	cmp	r0, #0x1
-	bhi	.L647	@cond_branch
+	bhi	.L645	@cond_branch
 	lsl	r0, r4, #0x4
 	sub	r0, r0, r4
 	lsl	r0, r0, #0x2
 	add	r0, r1, r0
-	ldr	r1, .L654+0x4
+	ldr	r1, .L652+0x4
 	add	r0, r0, r1
 	mov	r1, #0x1
 	strb	r1, [r0]
-	b	.L649
-.L655:
+	b	.L647
+.L653:
 	.align	2, 0
-.L654:
+.L652:
 	.word	gUknnown_082F45AF
 	.word	0x31d4
-.L647:
-	mov	r0, #0x1
-	b	.L651
 .L645:
-	ldr	r0, .L656
+	mov	r0, #0x1
+	b	.L649
+.L643:
+	ldr	r0, .L654
 	lsl	r1, r4, #0x1
 	add	r1, r1, r4
 	add	r1, r7, r1
@@ -7905,7 +7902,7 @@ sub_8026634:
 	add	r1, r1, r0
 	ldrb	r1, [r1]
 	cmp	r6, r1
-	bne	.L649	@cond_branch
+	bne	.L647	@cond_branch
 	mov	r1, ip
 	ldr	r0, [r1]
 	add	r0, r0, #0xa8
@@ -7918,19 +7915,19 @@ sub_8026634:
 	sub	r0, r0, r4
 	lsl	r0, r0, #0x2
 	add	r1, r1, r0
-	ldr	r0, .L656+0x4
+	ldr	r0, .L654+0x4
 	add	r1, r1, r0
 	mov	r0, #0x1
 	strb	r0, [r1]
-.L649:
+.L647:
 	mov	r0, #0x0
-.L651:
+.L649:
 	pop	{r4, r5, r6, r7}
 	pop	{r1}
 	bx	r1
-.L657:
+.L655:
 	.align	2, 0
-.L656:
+.L654:
 	.word	gUknnown_082F45AF
 	.word	0x31d4
 .Lfe42:
@@ -7944,7 +7941,7 @@ sub_802671C:
 	mov	r6, r9
 	mov	r5, r8
 	push	{r5, r6, r7}
-	ldr	r2, .L680
+	ldr	r2, .L678
 	ldr	r4, [r2]
 	add	r0, r4, #0
 	add	r0, r0, #0x44
@@ -7962,11 +7959,11 @@ sub_802671C:
 	mov	r0, r9
 	sub	r0, r0, #0x1
 	cmp	r5, r0
-	blt	.LCB5284
-	b	.L660	@long jump
-.LCB5284:
+	blt	.LCB5279
+	b	.L658	@long jump
+.LCB5279:
 	mov	r8, r2
-.L662:
+.L660:
 	mov	r0, r8
 	ldr	r4, [r0]
 	add	r0, r4, #0
@@ -7974,20 +7971,20 @@ sub_802671C:
 	add	r0, r0, r5
 	ldrb	r0, [r0]
 	cmp	r0, #0x1
-	bls	.LCB5298
-	b	.L663	@long jump
-.LCB5298:
+	bls	.LCB5293
+	b	.L661	@long jump
+.LCB5293:
 	mov	r1, #0x90
 	lsl	r1, r1, #0x1
 	add	r0, r4, r1
 	mov	r2, #0x1
 	str	r2, [r0]
-	ldr	r1, .L680+0x4
+	ldr	r1, .L678+0x4
 	add	r0, r4, r1
 	add	r6, r0, r5
 	ldrb	r0, [r6]
 	cmp	r0, #0x9
-	bls	.L664	@cond_branch
+	bls	.L662	@cond_branch
 	mov	r7, #0x0
 	mov	r0, #0xa
 	strb	r0, [r6]
@@ -8005,28 +8002,28 @@ sub_802671C:
 	add	r1, r0, r5
 	ldrb	r0, [r1]
 	cmp	r0, #0
-	bne	.L665	@cond_branch
+	bne	.L663	@cond_branch
 	strb	r2, [r1]
-	ldr	r2, .L680+0x8
+	ldr	r2, .L678+0x8
 	add	r0, r4, r2
 	add	r0, r0, r5
 	ldrb	r0, [r0]
 	add	r0, r0, #0x4a
 	bl	PlaySE
-.L665:
+.L663:
 	mov	r0, r8
 	ldr	r1, [r0]
 	add	r0, r1, #0
 	add	r0, r0, #0x40
 	ldrb	r0, [r0]
 	cmp	r0, #0x9
-	bls	.L667	@cond_branch
+	bls	.L665	@cond_branch
 	mov	r2, sl
 	cmp	r2, #0x1
-	beq	.LCB5361
-	b	.L661	@long jump
-.LCB5361:
-.L667:
+	beq	.LCB5356
+	b	.L659	@long jump
+.LCB5356:
+.L665:
 	mov	r0, #0x1
 	mov	sl, r0
 	add	r0, r1, r6
@@ -8038,24 +8035,24 @@ sub_802671C:
 	add	r1, r1, #0x40
 	ldrb	r0, [r1]
 	cmp	r0, #0x9
-	bhi	.L668	@cond_branch
+	bhi	.L666	@cond_branch
 	add	r0, r0, #0x1
 	strb	r0, [r1]
-.L668:
+.L666:
 	mov	r0, #0x3
 	add	r1, r5, #0
 	mov	r2, #0x0
 	bl	sub_8026F1C
 	mov	r0, #0x0
 	bl	sub_8027234
-	b	.L661
-.L681:
+	b	.L659
+.L679:
 	.align	2, 0
-.L680:
+.L678:
 	.word	gUnknown_02022C98
 	.word	0x32eb
 	.word	0x32e0
-.L664:
+.L662:
 	add	r0, r5, #0
 	bl	sub_8026D8C
 	mov	r2, r8
@@ -8071,11 +8068,11 @@ sub_802671C:
 	lsl	r0, r0, #0x18
 	lsr	r3, r0, #0x18
 	cmp	r3, #0x1
-	bls	.L670	@cond_branch
+	bls	.L668	@cond_branch
 	mov	r3, #0x2
-.L670:
-	ldr	r2, .L682
-	ldr	r0, .L682+0x4
+.L668:
+	ldr	r2, .L680
+	ldr	r0, .L680+0x4
 	add	r1, r4, r0
 	add	r1, r1, r5
 	lsl	r0, r3, #0x1
@@ -8094,7 +8091,7 @@ sub_802671C:
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	cmp	r0, r2
-	bcc	.L671	@cond_branch
+	bcc	.L669	@cond_branch
 	ldrb	r0, [r6]
 	add	r0, r0, #0x1
 	strb	r0, [r6]
@@ -8103,17 +8100,17 @@ sub_802671C:
 	add	r0, r0, #0xd0
 	add	r0, r0, r5
 	strb	r3, [r0]
-.L671:
+.L669:
 	bl	sub_8026324
-	b	.L661
-.L683:
+	b	.L659
+.L681:
 	.align	2, 0
-.L682:
+.L680:
 	.word	gUnknown_082F7A88
 	.word	0x32e0
-.L663:
+.L661:
 	cmp	r0, #0x2
-	bne	.L673	@cond_branch
+	bne	.L671	@cond_branch
 	mov	r2, #0x90
 	lsl	r2, r2, #0x1
 	add	r0, r4, r2
@@ -8129,7 +8126,7 @@ sub_802671C:
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	cmp	r0, #0x13
-	bls	.L661	@cond_branch
+	bls	.L659	@cond_branch
 	mov	r0, r8
 	ldr	r2, [r0]
 	add	r0, r2, #0
@@ -8140,7 +8137,7 @@ sub_802671C:
 	sub	r0, r0, r1
 	lsl	r0, r0, #0x2
 	add	r2, r2, r0
-	ldr	r1, .L684
+	ldr	r1, .L682
 	add	r2, r2, r1
 	strb	r3, [r2]
 	mov	r2, r8
@@ -8156,7 +8153,7 @@ sub_802671C:
 	add	r0, r0, #0xc4
 	add	r0, r0, r5
 	strb	r3, [r0]
-	ldr	r1, .L684+0x4
+	ldr	r1, .L682+0x4
 	add	r0, r4, r1
 	add	r0, r0, r5
 	strb	r6, [r0]
@@ -8166,20 +8163,20 @@ sub_802671C:
 	lsr	r0, r0, #0x18
 	add	r1, r5, #0
 	bl	sub_8026DB0
-	ldr	r2, .L684+0x8
+	ldr	r2, .L682+0x8
 	add	r1, r4, r2
 	add	r1, r1, r5
 	strb	r0, [r1]
-	b	.L661
-.L685:
+	b	.L659
+.L683:
 	.align	2, 0
-.L684:
+.L682:
 	.word	0x31d0
 	.word	0x32eb
 	.word	0x32e0
-.L673:
+.L671:
 	cmp	r0, #0x3
-	bne	.L661	@cond_branch
+	bne	.L659	@cond_branch
 	add	r1, r4, #0
 	add	r1, r1, #0xdc
 	add	r1, r1, r5
@@ -8190,14 +8187,14 @@ sub_802671C:
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	cmp	r0, #0x13
-	bls	.L661	@cond_branch
+	bls	.L659	@cond_branch
 	mov	r0, r8
 	ldr	r1, [r0]
 	add	r0, r1, #0
 	add	r0, r0, #0x40
 	ldrb	r0, [r0]
 	cmp	r0, #0x9
-	bhi	.L661	@cond_branch
+	bhi	.L659	@cond_branch
 	add	r0, r1, #0
 	add	r0, r0, #0xdc
 	add	r0, r0, r5
@@ -8211,7 +8208,7 @@ sub_802671C:
 	add	r0, r0, #0xc4
 	add	r0, r0, r5
 	strb	r2, [r0]
-	ldr	r2, .L686
+	ldr	r2, .L684
 	add	r0, r4, r2
 	add	r0, r0, r5
 	mov	r1, #0x1
@@ -8232,17 +8229,17 @@ sub_802671C:
 	add	r1, r5, #0
 	bl	sub_8026DB0
 	strb	r0, [r4]
-.L661:
+.L659:
 	add	r0, r5, #0x1
 	lsl	r0, r0, #0x18
 	lsr	r5, r0, #0x18
 	mov	r0, r9
 	sub	r0, r0, #0x1
 	cmp	r5, r0
-	bge	.LCB5623
-	b	.L662	@long jump
-.LCB5623:
-.L660:
+	bge	.LCB5618
+	b	.L660	@long jump
+.LCB5618:
+.L658:
 	pop	{r3, r4, r5}
 	mov	r8, r3
 	mov	r9, r4
@@ -8250,9 +8247,9 @@ sub_802671C:
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L687:
+.L685:
 	.align	2, 0
-.L686:
+.L684:
 	.word	0x32eb
 .Lfe43:
 	.size	 sub_802671C,.Lfe43-sub_802671C
@@ -8264,7 +8261,7 @@ sub_8026988:
 	mov	r7, r9
 	mov	r6, r8
 	push	{r6, r7}
-	ldr	r0, .L701
+	ldr	r0, .L699
 	ldr	r0, [r0]
 	add	r1, r0, #0
 	add	r1, r1, #0x44
@@ -8273,11 +8270,11 @@ sub_8026988:
 	mov	r8, r0
 	ldrb	r6, [r1]
 	cmp	r6, r8
-	bcs	.L690	@cond_branch
-	ldr	r0, .L701+0x4
+	bcs	.L688	@cond_branch
+	ldr	r0, .L699+0x4
 	mov	r9, r0
-.L692:
-	ldr	r0, .L701
+.L690:
+	ldr	r0, .L699
 	ldr	r3, [r0]
 	add	r0, r3, #0
 	add	r0, r0, #0x28
@@ -8285,7 +8282,7 @@ sub_8026988:
 	lsl	r0, r1, #0x4
 	sub	r0, r0, r1
 	lsl	r0, r0, #0x2
-	ldr	r2, .L701+0x8
+	ldr	r2, .L699+0x8
 	add	r0, r0, r2
 	add	r7, r3, r0
 	mov	r0, #0xb
@@ -8307,28 +8304,28 @@ sub_8026988:
 	add	r0, r0, r4
 	ldrb	r0, [r0]
 	cmp	r0, #0
-	beq	.L693	@cond_branch
+	beq	.L691	@cond_branch
 	add	r0, r6, #0
 	mov	r1, #0x0
 	bl	sub_8028BF8
-	b	.L694
-.L702:
+	b	.L692
+.L700:
 	.align	2, 0
-.L701:
+.L699:
 	.word	gUnknown_02022C98
 	.word	gUnknown_082F449C
 	.word	0x31a0
-.L693:
+.L691:
 	add	r0, r6, #0
 	mov	r1, #0x1
 	bl	sub_8028BF8
-.L694:
+.L692:
 	add	r0, r7, #0
 	add	r0, r0, #0x1f
 	add	r5, r0, r4
 	ldrb	r0, [r5]
 	cmp	r0, #0x9
-	bls	.L695	@cond_branch
+	bls	.L693	@cond_branch
 	add	r0, r7, #0
 	add	r0, r0, #0x14
 	add	r0, r0, r4
@@ -8343,14 +8340,14 @@ sub_8026988:
 	mov	r0, #0xff
 	lsl	r0, r0, #0x18
 	add	r1, r1, r0
-	b	.L700
-.L695:
+	b	.L698
+.L693:
 	add	r0, r7, #0
 	add	r0, r0, #0x14
 	add	r3, r0, r4
 	ldrb	r0, [r3]
 	cmp	r0, #0x3
-	bne	.L697	@cond_branch
+	bne	.L695	@cond_branch
 	mov	r0, #0x7
 	strb	r0, [r5]
 	add	r0, r6, #0
@@ -8361,12 +8358,12 @@ sub_8026988:
 	mov	r2, #0xff
 	lsl	r2, r2, #0x18
 	add	r1, r1, r2
-.L700:
+.L698:
 	lsr	r1, r1, #0x18
 	add	r0, r6, #0
 	bl	sub_8028C7C
-	b	.L691
-.L697:
+	b	.L689
+.L695:
 	ldrb	r1, [r3]
 	add	r0, r6, #0
 	bl	sub_8028CA4
@@ -8375,13 +8372,13 @@ sub_8026988:
 	lsr	r1, r1, #0x18
 	add	r0, r6, #0
 	bl	sub_8028C7C
-.L691:
+.L689:
 	add	r0, r6, #0x1
 	lsl	r0, r0, #0x18
 	lsr	r6, r0, #0x18
 	cmp	r6, r8
-	bcc	.L692	@cond_branch
-.L690:
+	bcc	.L690	@cond_branch
+.L688:
 	pop	{r3, r4}
 	mov	r8, r3
 	mov	r9, r4
@@ -8395,21 +8392,21 @@ sub_8026988:
 	.thumb_func
 sub_8026A88:
 	push	{r4, r5, r6, lr}
-	ldr	r1, .L709
+	ldr	r1, .L707
 	ldr	r0, [r1]
 	add	r0, r0, #0x24
 	ldrb	r5, [r0]
 	mov	r4, #0x0
 	cmp	r4, r5
-	bcs	.L705	@cond_branch
+	bcs	.L703	@cond_branch
 	add	r6, r1, #0
-.L707:
+.L705:
 	lsl	r0, r4, #0x4
 	sub	r0, r0, r4
 	lsl	r0, r0, #0x2
 	ldr	r1, [r6]
 	add	r0, r0, r1
-	ldr	r1, .L709+0x4
+	ldr	r1, .L707+0x4
 	add	r0, r0, r1
 	ldrb	r1, [r0]
 	add	r0, r4, #0
@@ -8418,14 +8415,14 @@ sub_8026A88:
 	lsl	r0, r0, #0x18
 	lsr	r4, r0, #0x18
 	cmp	r4, r5
-	bcc	.L707	@cond_branch
-.L705:
+	bcc	.L705	@cond_branch
+.L703:
 	pop	{r4, r5, r6}
 	pop	{r0}
 	bx	r0
-.L710:
+.L708:
 	.align	2, 0
-.L709:
+.L707:
 	.word	gUnknown_02022C98
 	.word	0x31cc
 .Lfe45:
@@ -8435,14 +8432,14 @@ sub_8026A88:
 	.thumb_func
 sub_8026AC8:
 	push	{r4, r5, lr}
-	ldr	r0, .L717
+	ldr	r0, .L715
 	ldr	r0, [r0]
 	add	r0, r0, #0x24
 	ldrb	r5, [r0]
 	mov	r4, #0x0
 	cmp	r4, r5
-	bcs	.L713	@cond_branch
-.L715:
+	bcs	.L711	@cond_branch
+.L713:
 	add	r0, r4, #0
 	mov	r1, #0x4
 	bl	sub_80286B4
@@ -8450,14 +8447,14 @@ sub_8026AC8:
 	lsl	r0, r0, #0x18
 	lsr	r4, r0, #0x18
 	cmp	r4, r5
-	bcc	.L715	@cond_branch
-.L713:
+	bcc	.L713	@cond_branch
+.L711:
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.L718:
+.L716:
 	.align	2, 0
-.L717:
+.L715:
 	.word	gUnknown_02022C98
 .Lfe46:
 	.size	 sub_8026AC8,.Lfe46-sub_8026AC8
@@ -8467,31 +8464,31 @@ sub_8026AC8:
 sub_8026AF4:
 	push	{lr}
 	bl	sub_8026988
-	ldr	r0, .L722
+	ldr	r0, .L720
 	ldr	r0, [r0]
 	add	r0, r0, #0x40
 	ldrb	r0, [r0]
 	cmp	r0, #0x9
-	bls	.L720	@cond_branch
+	bls	.L718	@cond_branch
 	bl	sub_8026AC8
-	b	.L721
-.L723:
-	.align	2, 0
-.L722:
-	.word	gUnknown_02022C98
-.L720:
-	bl	sub_8026A88
+	b	.L719
 .L721:
-	ldr	r0, .L724
+	.align	2, 0
+.L720:
+	.word	gUnknown_02022C98
+.L718:
+	bl	sub_8026A88
+.L719:
+	ldr	r0, .L722
 	ldr	r0, [r0]
 	add	r0, r0, #0x40
 	ldrb	r0, [r0]
 	bl	sub_80288D4
 	pop	{r0}
 	bx	r0
-.L725:
+.L723:
 	.align	2, 0
-.L724:
+.L722:
 	.word	gUnknown_02022C98
 .Lfe47:
 	.size	 sub_8026AF4,.Lfe47-sub_8026AF4
@@ -8501,31 +8498,31 @@ sub_8026AF4:
 sub_8026B28:
 	push	{lr}
 	bl	sub_8026988
-	ldr	r0, .L729
+	ldr	r0, .L727
 	ldr	r0, [r0]
 	add	r0, r0, #0x40
 	ldrb	r0, [r0]
 	cmp	r0, #0x9
-	bls	.L727	@cond_branch
+	bls	.L725	@cond_branch
 	bl	sub_8026AC8
-	b	.L728
-.L730:
-	.align	2, 0
-.L729:
-	.word	gUnknown_02022C98
-.L727:
-	bl	sub_8026A88
+	b	.L726
 .L728:
-	ldr	r0, .L731
+	.align	2, 0
+.L727:
+	.word	gUnknown_02022C98
+.L725:
+	bl	sub_8026A88
+.L726:
+	ldr	r0, .L729
 	ldr	r0, [r0]
 	add	r0, r0, #0x40
 	ldrb	r0, [r0]
 	bl	sub_80288D4
 	pop	{r0}
 	bx	r0
-.L732:
+.L730:
 	.align	2, 0
-.L731:
+.L729:
 	.word	gUnknown_02022C98
 .Lfe48:
 	.size	 sub_8026B28,.Lfe48-sub_8026B28
@@ -8539,51 +8536,51 @@ sub_8026B5C:
 	lsr	r0, r0, #0x18
 	sub	r0, r0, #0x1
 	cmp	r0, #0x4
-	bhi	.L734	@cond_branch
+	bhi	.L732	@cond_branch
 	lsl	r0, r0, #0x2
-	ldr	r1, .L743
+	ldr	r1, .L741
 	add	r0, r0, r1
 	ldr	r0, [r0]
 	mov	pc, r0
-.L744:
+.L742:
 	.align	2, 0
-.L743:
-	.word	.L740
+.L741:
+	.word	.L738
 	.align	2, 0
 	.align	2, 0
-.L740:
+.L738:
+	.word	.L733
+	.word	.L734
 	.word	.L735
 	.word	.L736
 	.word	.L737
-	.word	.L738
-	.word	.L739
-.L735:
+.L733:
 	mov	r0, #0x4
 	strb	r0, [r3]
 	mov	r0, #0x7
-	b	.L742
-.L736:
+	b	.L740
+.L734:
 	mov	r0, #0x3
 	strb	r0, [r3]
 	mov	r0, #0x8
-	b	.L742
-.L737:
+	b	.L740
+.L735:
 	mov	r0, #0x2
 	strb	r0, [r3]
 	mov	r0, #0x9
-	b	.L742
-.L738:
+	b	.L740
+.L736:
 	mov	r0, #0x1
 	strb	r0, [r3]
 	mov	r0, #0xa
-	b	.L742
-.L739:
+	b	.L740
+.L737:
 	mov	r0, #0x0
 	strb	r0, [r3]
 	mov	r0, #0xb
-.L742:
+.L740:
 	strb	r0, [r2]
-.L734:
+.L732:
 	pop	{r0}
 	bx	r0
 .Lfe49:
@@ -8593,15 +8590,15 @@ sub_8026B5C:
 	.thumb_func
 sub_8026BB8:
 	push	{r4, r5, r6, lr}
-	ldr	r1, .L759
+	ldr	r1, .L757
 	ldr	r0, [r1]
 	add	r0, r0, #0x24
 	ldrb	r5, [r0]
 	mov	r4, #0x1
 	cmp	r4, r5
-	bcs	.L753	@cond_branch
+	bcs	.L751	@cond_branch
 	add	r6, r1, #0
-.L749:
+.L747:
 	ldr	r0, [r6]
 	mov	r1, #0xac
 	lsl	r1, r1, #0x1
@@ -8609,7 +8606,7 @@ sub_8026BB8:
 	add	r0, r0, r4
 	ldrb	r0, [r0]
 	cmp	r0, #0
-	bne	.L748	@cond_branch
+	bne	.L746	@cond_branch
 	add	r0, r4, #0
 	bl	sub_8027DFC
 	ldr	r1, [r6]
@@ -8618,39 +8615,39 @@ sub_8026BB8:
 	add	r1, r1, r2
 	add	r1, r1, r4
 	strb	r0, [r1]
-.L748:
+.L746:
 	add	r0, r4, #0x1
 	lsl	r0, r0, #0x18
 	lsr	r4, r0, #0x18
 	cmp	r4, r5
-	bcc	.L749	@cond_branch
+	bcc	.L747	@cond_branch
 	cmp	r4, r5
-	bcs	.L753	@cond_branch
-	ldr	r0, .L759
+	bcs	.L751	@cond_branch
+	ldr	r0, .L757
 	ldr	r0, [r0]
 	mov	r2, #0xac
 	lsl	r2, r2, #0x1
 	add	r1, r0, r2
-.L755:
+.L753:
 	add	r0, r1, r4
 	ldrb	r0, [r0]
 	cmp	r0, #0
-	bne	.L754	@cond_branch
+	bne	.L752	@cond_branch
 	mov	r0, #0x0
-	b	.L758
-.L760:
+	b	.L756
+.L758:
 	.align	2, 0
-.L759:
+.L757:
 	.word	gUnknown_02022C98
-.L754:
+.L752:
 	add	r0, r4, #0x1
 	lsl	r0, r0, #0x18
 	lsr	r4, r0, #0x18
 	cmp	r4, r5
-	bcc	.L755	@cond_branch
-.L753:
+	bcc	.L753	@cond_branch
+.L751:
 	mov	r0, #0x1
-.L758:
+.L756:
 	pop	{r4, r5, r6}
 	pop	{r1}
 	bx	r1
@@ -8662,11 +8659,11 @@ sub_8026BB8:
 sub_8026C28:
 	push	{r4, lr}
 	mov	r1, #0x0
-	ldr	r4, .L767
+	ldr	r4, .L765
 	mov	r3, #0xac
 	lsl	r3, r3, #0x1
 	mov	r2, #0x0
-.L765:
+.L763:
 	ldr	r0, [r4]
 	add	r0, r0, r3
 	add	r0, r0, r1
@@ -8675,13 +8672,13 @@ sub_8026C28:
 	lsl	r0, r0, #0x18
 	lsr	r1, r0, #0x18
 	cmp	r1, #0x4
-	bls	.L765	@cond_branch
+	bls	.L763	@cond_branch
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L768:
+.L766:
 	.align	2, 0
-.L767:
+.L765:
 	.word	gUnknown_02022C98
 .Lfe51:
 	.size	 sub_8026C28,.Lfe51-sub_8026C28
@@ -8690,19 +8687,19 @@ sub_8026C28:
 	.thumb_func
 sub_8026C50:
 	push	{r4, lr}
-	ldr	r3, .L773
+	ldr	r3, .L771
 	ldr	r1, [r3]
 	add	r2, r1, #0
 	add	r2, r2, #0x40
 	ldrb	r0, [r2]
 	cmp	r0, #0x9
-	bls	.L770	@cond_branch
+	bls	.L768	@cond_branch
 	mov	r4, #0x90
 	lsl	r4, r4, #0x1
 	add	r0, r1, r4
 	ldr	r0, [r0]
 	cmp	r0, #0
-	bne	.L770	@cond_branch
+	bne	.L768	@cond_branch
 	mov	r0, #0xa
 	strb	r0, [r2]
 	ldr	r0, [r3]
@@ -8711,16 +8708,16 @@ sub_8026C50:
 	add	r0, r0, r1
 	ldr	r0, [r0]
 	cmp	r0, #0
-	beq	.L770	@cond_branch
+	beq	.L768	@cond_branch
 	mov	r0, #0x1
-	b	.L772
-.L774:
-	.align	2, 0
-.L773:
-	.word	gUnknown_02022C98
-.L770:
-	mov	r0, #0x0
+	b	.L770
 .L772:
+	.align	2, 0
+.L771:
+	.word	gUnknown_02022C98
+.L768:
+	mov	r0, #0x0
+.L770:
 	pop	{r4}
 	pop	{r1}
 	bx	r1
@@ -8731,13 +8728,13 @@ sub_8026C50:
 	.thumb_func
 sub_8026C90:
 	push	{r4, r5, r6, lr}
-	ldr	r4, .L786
+	ldr	r4, .L784
 	ldr	r1, [r4]
 	add	r2, r1, #0
 	add	r2, r2, #0x40
 	ldrb	r0, [r2]
 	cmp	r0, #0x9
-	bls	.L776	@cond_branch
+	bls	.L774	@cond_branch
 	add	r0, r1, #0
 	add	r0, r0, #0x44
 	ldrb	r3, [r0]
@@ -8752,17 +8749,17 @@ sub_8026C90:
 	add	r0, r0, ip
 	ldr	r0, [r0]
 	cmp	r0, #0
-	beq	.L776	@cond_branch
+	beq	.L774	@cond_branch
 	add	r4, r3, #0
 	cmp	r4, r5
-	bcs	.L779	@cond_branch
+	bcs	.L777	@cond_branch
 	mov	r0, ip
 	add	r0, r0, #0x28
 	ldrb	r3, [r0]
 	lsl	r1, r3, #0x4
 	sub	r1, r1, r3
 	lsl	r1, r1, #0x2
-	ldr	r6, .L786+0x4
+	ldr	r6, .L784+0x4
 	sub	r0, r0, #0x4
 	ldrb	r2, [r0]
 	sub	r2, r2, #0x1
@@ -8773,9 +8770,9 @@ sub_8026C90:
 	sub	r0, r0, r2
 	lsl	r0, r0, #0x3
 	sub	r2, r0, r2
-	ldr	r0, .L786+0x8
+	ldr	r0, .L784+0x8
 	add	r1, r1, r0
-.L781:
+.L779:
 	add	r0, r4, r3
 	add	r0, r0, r2
 	add	r0, r0, r6
@@ -8783,25 +8780,25 @@ sub_8026C90:
 	add	r0, r1, r0
 	ldrb	r0, [r0]
 	cmp	r0, #0xa
-	bne	.L785	@cond_branch
+	bne	.L783	@cond_branch
 	add	r0, r4, #0x1
 	lsl	r0, r0, #0x18
 	lsr	r4, r0, #0x18
 	cmp	r4, r5
-	bcc	.L781	@cond_branch
-.L779:
+	bcc	.L779	@cond_branch
+.L777:
 	mov	r0, #0x1
-	b	.L784
-.L787:
+	b	.L782
+.L785:
 	.align	2, 0
-.L786:
+.L784:
 	.word	gUnknown_02022C98
 	.word	gUnknown_082F449C
 	.word	0x31bf
-.L785:
-.L776:
+.L783:
+.L774:
 	mov	r0, #0x0
-.L784:
+.L782:
 	pop	{r4, r5, r6}
 	pop	{r1}
 	bx	r1
@@ -8818,9 +8815,9 @@ sub_8026D1C:
 	add	r5, r0, #0
 	lsl	r5, r5, #0x18
 	lsr	r5, r5, #0x18
-	ldr	r0, .L790
+	ldr	r0, .L788
 	mov	r8, r0
-	ldr	r0, .L790+0x4
+	ldr	r0, .L788+0x4
 	ldr	r6, [r0]
 	add	r0, r6, #0
 	add	r0, r0, #0x90
@@ -8850,20 +8847,20 @@ sub_8026D1C:
 	ldrh	r1, [r6]
 	lsr	r0, r0, #0x18
 	cmp	r1, r0
-	bcc	.L789	@cond_branch
+	bcc	.L787	@cond_branch
 	add	r0, r7, #0x1
 	mov	r1, r9
 	strb	r0, [r1]
-.L789:
+.L787:
 	pop	{r3, r4}
 	mov	r8, r3
 	mov	r9, r4
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L791:
+.L789:
 	.align	2, 0
-.L790:
+.L788:
 	.word	gUnknown_082F7A9C
 	.word	gUnknown_02022C98
 .Lfe54:
@@ -8874,8 +8871,8 @@ sub_8026D1C:
 sub_8026D8C:
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
-	ldr	r3, .L793
-	ldr	r1, .L793+0x4
+	ldr	r3, .L791
+	ldr	r1, .L791+0x4
 	ldr	r1, [r1]
 	add	r1, r1, #0x24
 	ldrb	r1, [r1]
@@ -8886,9 +8883,9 @@ sub_8026D8C:
 	add	r0, r0, r3
 	ldrb	r0, [r0]
 	bx	lr
-.L794:
+.L792:
 	.align	2, 0
-.L793:
+.L791:
 	.word	gUnknown_082F4648
 	.word	gUnknown_02022C98
 .Lfe55:
@@ -8904,14 +8901,14 @@ sub_8026DB0:
 	lsr	r0, r0, #0x18
 	lsl	r1, r1, #0x18
 	lsr	r5, r1, #0x18
-	ldr	r4, .L809
+	ldr	r4, .L807
 	ldr	r1, [r4]
 	add	r1, r1, #0x24
 	ldrb	r2, [r1]
 	sub	r2, r2, #0x1
 	lsl	r2, r2, #0x18
 	lsr	r2, r2, #0x18
-	ldr	r3, .L809+0x4
+	ldr	r3, .L807+0x4
 	lsl	r1, r0, #0x1
 	add	r1, r1, r0
 	lsl	r0, r2, #0x4
@@ -8928,20 +8925,20 @@ sub_8026DB0:
 	ldrb	r1, [r1]
 	mov	r8, r1
 	mov	r3, #0x0
-	ldr	r1, .L809+0x8
+	ldr	r1, .L807+0x8
 	lsl	r0, r2, #0x2
 	add	r2, r0, r2
 	add	r0, r2, r1
 	ldrb	r0, [r0]
 	cmp	r0, #0
-	beq	.L797	@cond_branch
+	beq	.L795	@cond_branch
 	add	r6, r1, #0
-.L799:
+.L797:
 	add	r0, r3, r2
 	add	r0, r0, r6
 	ldrb	r0, [r0]
 	cmp	r5, r0
-	beq	.L806	@cond_branch
+	beq	.L804	@cond_branch
 	add	r0, r3, #0x1
 	lsl	r0, r0, #0x18
 	lsr	r3, r0, #0x18
@@ -8949,8 +8946,8 @@ sub_8026DB0:
 	add	r0, r0, r1
 	ldrb	r0, [r0]
 	cmp	r0, #0
-	bne	.L799	@cond_branch
-.L797:
+	bne	.L797	@cond_branch
+.L795:
 	ldr	r0, [r4]
 	add	r0, r0, #0x90
 	mov	r1, ip
@@ -8959,35 +8956,35 @@ sub_8026DB0:
 	ldrb	r0, [r2]
 	ldrb	r3, [r1]
 	cmp	r0, r3
-	bls	.L802	@cond_branch
+	bls	.L800	@cond_branch
 	add	r1, r0, #0
-	b	.L803
-.L810:
+	b	.L801
+.L808:
 	.align	2, 0
-.L809:
+.L807:
 	.word	gUnknown_02022C98
 	.word	gUnknown_082F45FA
 	.word	gUnknown_082F467F
-.L806:
+.L804:
 	ldr	r0, [r4]
 	add	r0, r0, #0x90
 	add	r0, r0, r7
 	ldrb	r0, [r0]
-	b	.L808
-.L802:
+	b	.L806
+.L800:
 	ldrb	r1, [r1]
-.L803:
+.L801:
 	ldr	r0, [r4]
 	add	r0, r0, #0x90
 	mov	r2, r8
 	add	r4, r0, r2
 	ldrb	r0, [r4]
 	cmp	r0, r1
-	bls	.L804	@cond_branch
+	bls	.L802	@cond_branch
 	add	r1, r0, #0
-.L804:
+.L802:
 	add	r0, r1, #0
-.L808:
+.L806:
 	add	r1, r5, #0
 	bl	sub_8026E70
 	lsl	r0, r0, #0x18
@@ -9008,7 +9005,7 @@ sub_8026E70:
 	lsr	r0, r0, #0x18
 	lsl	r1, r1, #0x18
 	lsr	r1, r1, #0x18
-	ldr	r2, .L835
+	ldr	r2, .L833
 	ldr	r2, [r2]
 	add	r2, r2, #0xe8
 	add	r2, r2, r1
@@ -9018,54 +9015,54 @@ sub_8026E70:
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	cmp	r0, #0x6
-	bhi	.L833	@cond_branch
+	bhi	.L831	@cond_branch
 	lsl	r0, r0, #0x2
-	ldr	r1, .L835+0x4
+	ldr	r1, .L833+0x4
 	add	r0, r0, r1
 	ldr	r0, [r0]
 	mov	pc, r0
-.L836:
-	.align	2, 0
-.L835:
-	.word	gUnknown_02022C98
-	.word	.L831
-	.align	2, 0
-	.align	2, 0
-.L831:
-	.word	.L833
-	.word	.L834
-	.word	.L829
-	.word	.L817
-	.word	.L820
-	.word	.L823
-	.word	.L826
-.L817:
-	cmp	r4, #0
-	beq	.L834	@cond_branch
-	b	.L833
-.L820:
-	cmp	r4, #0
-	beq	.L829	@cond_branch
-	b	.L833
-.L823:
-	cmp	r4, #0x2
-	beq	.L834	@cond_branch
-	b	.L829
-.L826:
-	cmp	r4, #0
-	bne	.L827	@cond_branch
 .L834:
-	mov	r0, #0x1
-	b	.L832
-.L827:
-	cmp	r4, #0x1
-	beq	.L829	@cond_branch
+	.align	2, 0
 .L833:
-	mov	r0, #0x0
-	b	.L832
+	.word	gUnknown_02022C98
+	.word	.L829
+	.align	2, 0
+	.align	2, 0
 .L829:
-	mov	r0, #0x2
+	.word	.L831
+	.word	.L832
+	.word	.L827
+	.word	.L815
+	.word	.L818
+	.word	.L821
+	.word	.L824
+.L815:
+	cmp	r4, #0
+	beq	.L832	@cond_branch
+	b	.L831
+.L818:
+	cmp	r4, #0
+	beq	.L827	@cond_branch
+	b	.L831
+.L821:
+	cmp	r4, #0x2
+	beq	.L832	@cond_branch
+	b	.L827
+.L824:
+	cmp	r4, #0
+	bne	.L825	@cond_branch
 .L832:
+	mov	r0, #0x1
+	b	.L830
+.L825:
+	cmp	r4, #0x1
+	beq	.L827	@cond_branch
+.L831:
+	mov	r0, #0x0
+	b	.L830
+.L827:
+	mov	r0, #0x2
+.L830:
 	pop	{r4}
 	pop	{r1}
 	bx	r1
@@ -9079,25 +9076,25 @@ sub_8026EEC:
 	mov	r6, #0x0
 	mov	r5, #0x0
 	add	r4, r0, #0
-	b	.L838
-.L840:
+	b	.L836
+.L838:
 	ldrh	r0, [r4, #0x6]
 	add	r6, r6, r0
 	add	r4, r4, #0xc
 	add	r5, r5, #0x1
-.L838:
+.L836:
 	bl	GetLinkPlayerCount
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	cmp	r5, r0
-	blt	.L840	@cond_branch
+	blt	.L838	@cond_branch
 	cmp	r6, #0xa
-	bgt	.L843	@cond_branch
+	bgt	.L841	@cond_branch
 	mov	r0, #0x0
-	b	.L845
-.L843:
+	b	.L843
+.L841:
 	mov	r0, #0x1
-.L845:
+.L843:
 	pop	{r4, r5, r6}
 	pop	{r1}
 	bx	r1
@@ -9114,26 +9111,26 @@ sub_8026F1C:
 	lsr	r4, r1, #0x18
 	lsl	r2, r2, #0x18
 	lsr	r2, r2, #0x18
-	ldr	r6, .L907
+	ldr	r6, .L905
 	ldr	r1, [r6]
 	add	r0, r1, #0
 	add	r0, r0, #0x24
 	ldrb	r5, [r0]
 	cmp	r3, #0
-	bge	.LCB6699
-	b	.L847	@long jump
-.LCB6699:
+	bge	.LCB6694
+	b	.L845	@long jump
+.LCB6694:
 	cmp	r3, #0x2
-	ble	.L850	@cond_branch
+	ble	.L848	@cond_branch
 	cmp	r3, #0x3
-	beq	.L851	@cond_branch
-	b	.L847
-.L908:
+	beq	.L849	@cond_branch
+	b	.L845
+.L906:
 	.align	2, 0
-.L907:
+.L905:
 	.word	gUnknown_02022C98
-.L850:
-	ldr	r3, .L909
+.L848:
+	ldr	r3, .L907
 	add	r0, r1, r3
 	add	r0, r0, r4
 	ldrb	r4, [r0]
@@ -9146,61 +9143,63 @@ sub_8026F1C:
 	add	r0, r0, #0x4a
 	add	r0, r0, r4
 	ldrh	r0, [r0]
-	ldr	r1, .L909+0x4
+	ldr	r1, .L907+0x4
 	bl	IncrementWithLimit
 	ldr	r1, [r6]
 	add	r1, r1, #0x4a
 	add	r1, r1, r4
-	b	.L904
-.L910:
+	b	.L902
+.L908:
 	.align	2, 0
-.L909:
+.L907:
 	.word	0x31b4
 	.word	0x4e20
-.L851:
+.L849:
 	add	r0, r1, #0
 	add	r0, r0, #0x4a
 	bl	sub_8026EEC
 	cmp	r0, #0
-	beq	.LCB6753
-	b	.L847	@long jump
-.LCB6753:
+	beq	.LCB6748
+	b	.L845	@long jump
+.LCB6748:
 	cmp	r5, #0x3
-	bne	.LCB6756
-	b	.L880	@long jump
-.LCB6756:
+	bne	.LCB6751
+	b	.L878	@long jump
+.LCB6751:
 	cmp	r5, #0x3
-	bgt	.L901	@cond_branch
+	bgt	.L899	@cond_branch
 	cmp	r5, #0x2
-	bne	.LCB6760
-	b	.L890	@long jump
-.LCB6760:
-	b	.L847
-.L901:
+	bne	.LCB6755
+	b	.L888	@long jump
+.LCB6755:
+	b	.L845
+.L899:
 	cmp	r5, #0x4
-	bne	.LCB6765
-	b	.L868	@long jump
-.LCB6765:
+	bne	.LCB6760
+	b	.L866	@long jump
+.LCB6760:
 	cmp	r5, #0x5
-	beq	.LCB6767
-	b	.L847	@long jump
-.LCB6767:
+	beq	.LCB6762
+	b	.L845	@long jump
+.LCB6762:
 	cmp	r4, #0x9
-	bls	.LCB6772
-	b	.L847	@long jump
-.LCB6772:
+	bls	.LCB6767
+	b	.L845	@long jump
+.LCB6767:
 	lsl	r0, r4, #0x2
-	ldr	r1, .L911
+	ldr	r1, .L909
 	add	r0, r0, r1
 	ldr	r0, [r0]
 	mov	pc, r0
-.L912:
+.L910:
 	.align	2, 0
-.L911:
-	.word	.L866
+.L909:
+	.word	.L864
 	.align	2, 0
 	.align	2, 0
-.L866:
+.L864:
+	.word	.L854
+	.word	.L855
 	.word	.L856
 	.word	.L857
 	.word	.L858
@@ -9209,10 +9208,8 @@ sub_8026F1C:
 	.word	.L861
 	.word	.L862
 	.word	.L863
-	.word	.L864
-	.word	.L865
-.L856:
-	ldr	r0, .L913
+.L854:
+	ldr	r0, .L911
 	ldr	r1, [r0]
 	add	r2, r1, #0
 	add	r2, r2, #0x68
@@ -9220,22 +9217,22 @@ sub_8026F1C:
 	add	r0, r0, #0x1
 	strh	r0, [r2]
 	add	r1, r1, #0x74
-	b	.L905
+	b	.L903
+.L912:
+	.align	2, 0
+.L911:
+	.word	gUnknown_02022C98
+.L855:
+	ldr	r0, .L913
+	ldr	r1, [r0]
+	add	r1, r1, #0x74
+	b	.L903
 .L914:
 	.align	2, 0
 .L913:
 	.word	gUnknown_02022C98
-.L857:
+.L856:
 	ldr	r0, .L915
-	ldr	r1, [r0]
-	add	r1, r1, #0x74
-	b	.L905
-.L916:
-	.align	2, 0
-.L915:
-	.word	gUnknown_02022C98
-.L858:
-	ldr	r0, .L917
 	ldr	r1, [r0]
 	add	r2, r1, #0
 	add	r2, r2, #0x74
@@ -9243,22 +9240,22 @@ sub_8026F1C:
 	add	r0, r0, #0x1
 	strh	r0, [r2]
 	add	r1, r1, #0x80
-	b	.L905
+	b	.L903
+.L916:
+	.align	2, 0
+.L915:
+	.word	gUnknown_02022C98
+.L857:
+	ldr	r0, .L917
+	ldr	r1, [r0]
+	add	r1, r1, #0x80
+	b	.L903
 .L918:
 	.align	2, 0
 .L917:
 	.word	gUnknown_02022C98
-.L859:
+.L858:
 	ldr	r0, .L919
-	ldr	r1, [r0]
-	add	r1, r1, #0x80
-	b	.L905
-.L920:
-	.align	2, 0
-.L919:
-	.word	gUnknown_02022C98
-.L860:
-	ldr	r0, .L921
 	ldr	r1, [r0]
 	add	r2, r1, #0
 	add	r2, r2, #0x80
@@ -9266,43 +9263,43 @@ sub_8026F1C:
 	add	r0, r0, #0x1
 	strh	r0, [r2]
 	add	r1, r1, #0x50
-	b	.L905
+	b	.L903
+.L920:
+	.align	2, 0
+.L919:
+	.word	gUnknown_02022C98
+.L859:
+	ldr	r0, .L921
+	ldr	r1, [r0]
+	add	r1, r1, #0x50
+	b	.L903
 .L922:
 	.align	2, 0
 .L921:
 	.word	gUnknown_02022C98
-.L861:
+.L860:
 	ldr	r0, .L923
-	ldr	r1, [r0]
-	add	r1, r1, #0x50
-	b	.L905
-.L924:
-	.align	2, 0
-.L923:
-	.word	gUnknown_02022C98
-.L862:
-	ldr	r0, .L925
 	ldr	r1, [r0]
 	add	r2, r1, #0
 	add	r2, r2, #0x50
 	ldrh	r0, [r2]
 	add	r0, r0, #0x1
 	strh	r0, [r2]
-	b	.L906
+	b	.L904
+.L924:
+	.align	2, 0
+.L923:
+	.word	gUnknown_02022C98
+.L861:
+	ldr	r0, .L925
+	ldr	r1, [r0]
+	b	.L904
 .L926:
 	.align	2, 0
 .L925:
 	.word	gUnknown_02022C98
-.L863:
+.L862:
 	ldr	r0, .L927
-	ldr	r1, [r0]
-	b	.L906
-.L928:
-	.align	2, 0
-.L927:
-	.word	gUnknown_02022C98
-.L864:
-	ldr	r0, .L929
 	ldr	r1, [r0]
 	add	r2, r1, #0
 	add	r2, r2, #0x5c
@@ -9310,48 +9307,48 @@ sub_8026F1C:
 	add	r0, r0, #0x1
 	strh	r0, [r2]
 	add	r1, r1, #0x68
-	b	.L905
+	b	.L903
+.L928:
+	.align	2, 0
+.L927:
+	.word	gUnknown_02022C98
+.L863:
+	ldr	r0, .L929
+	ldr	r1, [r0]
+	add	r1, r1, #0x68
+	b	.L903
 .L930:
 	.align	2, 0
 .L929:
 	.word	gUnknown_02022C98
-.L865:
-	ldr	r0, .L931
-	ldr	r1, [r0]
-	add	r1, r1, #0x68
-	b	.L905
-.L932:
-	.align	2, 0
-.L931:
-	.word	gUnknown_02022C98
-.L868:
+.L866:
 	sub	r0, r4, #0x1
 	cmp	r0, #0x7
-	bls	.LCB6937
-	b	.L847	@long jump
-.LCB6937:
+	bls	.LCB6932
+	b	.L845	@long jump
+.LCB6932:
 	lsl	r0, r0, #0x2
-	ldr	r1, .L933
+	ldr	r1, .L931
 	add	r0, r0, r1
 	ldr	r0, [r0]
 	mov	pc, r0
-.L934:
+.L932:
 	.align	2, 0
-.L933:
-	.word	.L878
+.L931:
+	.word	.L876
 	.align	2, 0
 	.align	2, 0
-.L878:
+.L876:
+	.word	.L868
+	.word	.L869
 	.word	.L870
 	.word	.L871
 	.word	.L872
 	.word	.L873
 	.word	.L874
 	.word	.L875
-	.word	.L876
-	.word	.L877
-.L870:
-	ldr	r0, .L935
+.L868:
+	ldr	r0, .L933
 	ldr	r1, [r0]
 	add	r2, r1, #0
 	add	r2, r2, #0x68
@@ -9359,22 +9356,22 @@ sub_8026F1C:
 	add	r0, r0, #0x1
 	strh	r0, [r2]
 	add	r1, r1, #0x74
-	b	.L905
+	b	.L903
+.L934:
+	.align	2, 0
+.L933:
+	.word	gUnknown_02022C98
+.L869:
+	ldr	r0, .L935
+	ldr	r1, [r0]
+	add	r1, r1, #0x74
+	b	.L903
 .L936:
 	.align	2, 0
 .L935:
 	.word	gUnknown_02022C98
-.L871:
+.L870:
 	ldr	r0, .L937
-	ldr	r1, [r0]
-	add	r1, r1, #0x74
-	b	.L905
-.L938:
-	.align	2, 0
-.L937:
-	.word	gUnknown_02022C98
-.L872:
-	ldr	r0, .L939
 	ldr	r1, [r0]
 	add	r2, r1, #0
 	add	r2, r2, #0x74
@@ -9382,88 +9379,88 @@ sub_8026F1C:
 	add	r0, r0, #0x1
 	strh	r0, [r2]
 	add	r1, r1, #0x50
-	b	.L905
+	b	.L903
+.L938:
+	.align	2, 0
+.L937:
+	.word	gUnknown_02022C98
+.L871:
+	ldr	r0, .L939
+	ldr	r1, [r0]
+	add	r1, r1, #0x50
+	b	.L903
 .L940:
 	.align	2, 0
 .L939:
 	.word	gUnknown_02022C98
-.L873:
+.L872:
 	ldr	r0, .L941
-	ldr	r1, [r0]
-	add	r1, r1, #0x50
-	b	.L905
-.L942:
-	.align	2, 0
-.L941:
-	.word	gUnknown_02022C98
-.L874:
-	ldr	r0, .L943
 	ldr	r1, [r0]
 	add	r2, r1, #0
 	add	r2, r2, #0x50
 	ldrh	r0, [r2]
 	add	r0, r0, #0x1
 	strh	r0, [r2]
-	b	.L906
+	b	.L904
+.L942:
+	.align	2, 0
+.L941:
+	.word	gUnknown_02022C98
+.L873:
+	ldr	r0, .L943
+	ldr	r1, [r0]
+	b	.L904
 .L944:
 	.align	2, 0
 .L943:
 	.word	gUnknown_02022C98
-.L875:
+.L874:
 	ldr	r0, .L945
 	ldr	r1, [r0]
-	b	.L906
+	add	r2, r1, #0
+	add	r2, r2, #0x5c
+	ldrh	r0, [r2]
+	add	r0, r0, #0x1
+	strh	r0, [r2]
+	add	r1, r1, #0x68
+	b	.L903
 .L946:
 	.align	2, 0
 .L945:
 	.word	gUnknown_02022C98
-.L876:
+.L875:
 	ldr	r0, .L947
 	ldr	r1, [r0]
-	add	r2, r1, #0
-	add	r2, r2, #0x5c
-	ldrh	r0, [r2]
-	add	r0, r0, #0x1
-	strh	r0, [r2]
 	add	r1, r1, #0x68
-	b	.L905
+	b	.L903
 .L948:
 	.align	2, 0
 .L947:
 	.word	gUnknown_02022C98
-.L877:
-	ldr	r0, .L949
-	ldr	r1, [r0]
-	add	r1, r1, #0x68
-	b	.L905
-.L950:
-	.align	2, 0
-.L949:
-	.word	gUnknown_02022C98
-.L880:
+.L878:
 	sub	r0, r4, #0x2
 	cmp	r0, #0x5
-	bhi	.L847	@cond_branch
+	bhi	.L845	@cond_branch
 	lsl	r0, r0, #0x2
-	ldr	r1, .L951
+	ldr	r1, .L949
 	add	r0, r0, r1
 	ldr	r0, [r0]
 	mov	pc, r0
-.L952:
+.L950:
 	.align	2, 0
-.L951:
-	.word	.L888
+.L949:
+	.word	.L886
 	.align	2, 0
 	.align	2, 0
-.L888:
+.L886:
+	.word	.L880
+	.word	.L881
 	.word	.L882
 	.word	.L883
 	.word	.L884
 	.word	.L885
-	.word	.L886
-	.word	.L887
-.L882:
-	ldr	r0, .L953
+.L880:
+	ldr	r0, .L951
 	ldr	r1, [r0]
 	add	r2, r1, #0
 	add	r2, r2, #0x5c
@@ -9471,22 +9468,22 @@ sub_8026F1C:
 	add	r0, r0, #0x1
 	strh	r0, [r2]
 	add	r1, r1, #0x68
-	b	.L905
+	b	.L903
+.L952:
+	.align	2, 0
+.L951:
+	.word	gUnknown_02022C98
+.L881:
+	ldr	r0, .L953
+	ldr	r1, [r0]
+	add	r1, r1, #0x68
+	b	.L903
 .L954:
 	.align	2, 0
 .L953:
 	.word	gUnknown_02022C98
-.L883:
+.L882:
 	ldr	r0, .L955
-	ldr	r1, [r0]
-	add	r1, r1, #0x68
-	b	.L905
-.L956:
-	.align	2, 0
-.L955:
-	.word	gUnknown_02022C98
-.L884:
-	ldr	r0, .L957
 	ldr	r1, [r0]
 	add	r2, r1, #0
 	add	r2, r2, #0x68
@@ -9494,55 +9491,67 @@ sub_8026F1C:
 	add	r0, r0, #0x1
 	strh	r0, [r2]
 	add	r1, r1, #0x50
-	b	.L905
+	b	.L903
+.L956:
+	.align	2, 0
+.L955:
+	.word	gUnknown_02022C98
+.L883:
+	ldr	r0, .L957
+	ldr	r1, [r0]
+	add	r1, r1, #0x50
+	b	.L903
 .L958:
 	.align	2, 0
 .L957:
 	.word	gUnknown_02022C98
-.L885:
+.L884:
 	ldr	r0, .L959
-	ldr	r1, [r0]
-	add	r1, r1, #0x50
-	b	.L905
-.L960:
-	.align	2, 0
-.L959:
-	.word	gUnknown_02022C98
-.L886:
-	ldr	r0, .L961
 	ldr	r1, [r0]
 	add	r2, r1, #0
 	add	r2, r2, #0x50
 	ldrh	r0, [r2]
 	add	r0, r0, #0x1
 	strh	r0, [r2]
-	b	.L906
+	b	.L904
+.L960:
+	.align	2, 0
+.L959:
+	.word	gUnknown_02022C98
+.L885:
+	ldr	r0, .L961
+	ldr	r1, [r0]
+	b	.L904
 .L962:
 	.align	2, 0
 .L961:
 	.word	gUnknown_02022C98
-.L887:
-	ldr	r0, .L963
-	ldr	r1, [r0]
-	b	.L906
-.L964:
-	.align	2, 0
-.L963:
-	.word	gUnknown_02022C98
-.L890:
+.L888:
 	cmp	r4, #0x4
-	beq	.L893	@cond_branch
+	beq	.L891	@cond_branch
 	cmp	r4, #0x4
-	bgt	.L898	@cond_branch
+	bgt	.L896	@cond_branch
 	cmp	r4, #0x3
-	beq	.L892	@cond_branch
-	b	.L847
-.L898:
+	beq	.L890	@cond_branch
+	b	.L845
+.L896:
 	cmp	r4, #0x5
-	beq	.L894	@cond_branch
+	beq	.L892	@cond_branch
 	cmp	r4, #0x6
-	beq	.L895	@cond_branch
-	b	.L847
+	beq	.L893	@cond_branch
+	b	.L845
+.L890:
+	ldr	r1, [r6]
+	add	r2, r1, #0
+	add	r2, r2, #0x50
+	ldrh	r0, [r2]
+	add	r0, r0, #0x1
+	strh	r0, [r2]
+	b	.L904
+.L891:
+	ldr	r1, [r6]
+	add	r1, r1, #0x50
+	b	.L903
 .L892:
 	ldr	r1, [r6]
 	add	r2, r1, #0
@@ -9550,29 +9559,17 @@ sub_8026F1C:
 	ldrh	r0, [r2]
 	add	r0, r0, #0x1
 	strh	r0, [r2]
-	b	.L906
+	b	.L904
 .L893:
 	ldr	r1, [r6]
-	add	r1, r1, #0x50
-	b	.L905
-.L894:
-	ldr	r1, [r6]
-	add	r2, r1, #0
-	add	r2, r2, #0x50
-	ldrh	r0, [r2]
-	add	r0, r0, #0x1
-	strh	r0, [r2]
-	b	.L906
-.L895:
-	ldr	r1, [r6]
-.L906:
+.L904:
 	add	r1, r1, #0x5c
-.L905:
+.L903:
 	ldrh	r0, [r1]
 	add	r0, r0, #0x1
-.L904:
+.L902:
 	strh	r0, [r1]
-.L847:
+.L845:
 	pop	{r4, r5, r6}
 	pop	{r0}
 	bx	r0
@@ -9584,15 +9581,15 @@ sub_8026F1C:
 sub_8027234:
 	push	{r4, r5, lr}
 	add	r1, r0, #0
-	ldr	r4, .L972
+	ldr	r4, .L970
 	ldr	r3, [r4]
 	add	r0, r3, #0
 	add	r0, r0, #0x24
 	ldrb	r0, [r0]
 	cmp	r0, #0x5
-	bne	.L965	@cond_branch
+	bne	.L963	@cond_branch
 	cmp	r1, #0x1
-	bne	.L967	@cond_branch
+	bne	.L965	@cond_branch
 	mov	r5, #0x89
 	lsl	r5, r5, #0x1
 	add	r1, r3, r5
@@ -9606,23 +9603,23 @@ sub_8027234:
 	lsr	r0, r0, #0x10
 	ldrh	r3, [r1]
 	cmp	r0, r3
-	bls	.L968	@cond_branch
+	bls	.L966	@cond_branch
 	strh	r2, [r1]
-.L968:
+.L966:
 	ldr	r0, [r4]
 	add	r2, r0, r5
 	ldrh	r0, [r2]
-	ldr	r1, .L972+0x4
+	ldr	r1, .L970+0x4
 	cmp	r0, r1
-	bls	.L965	@cond_branch
+	bls	.L963	@cond_branch
 	strh	r1, [r2]
-	b	.L965
-.L973:
+	b	.L963
+.L971:
 	.align	2, 0
-.L972:
+.L970:
 	.word	gUnknown_02022C98
 	.word	0x270f
-.L967:
+.L965:
 	mov	r2, #0x89
 	lsl	r2, r2, #0x1
 	add	r0, r3, r2
@@ -9632,14 +9629,14 @@ sub_8027234:
 	ldrh	r0, [r0]
 	ldrh	r3, [r1]
 	cmp	r0, r3
-	bls	.L971	@cond_branch
+	bls	.L969	@cond_branch
 	strh	r0, [r1]
-.L971:
+.L969:
 	ldr	r0, [r4]
 	add	r0, r0, r2
 	mov	r1, #0x0
 	strh	r1, [r0]
-.L965:
+.L963:
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
@@ -9651,16 +9648,16 @@ sub_8027234:
 sub_80272A4:
 	push	{r4, r5, lr}
 	mov	r3, #0x0
-	ldr	r2, .L980
+	ldr	r2, .L978
 	ldr	r0, [r2]
 	add	r0, r0, #0x24
 	ldrb	r0, [r0]
 	cmp	r3, r0
-	bcs	.L976	@cond_branch
+	bcs	.L974	@cond_branch
 	add	r5, r2, #0
 	mov	r4, #0x8a
 	lsl	r4, r4, #0x1
-.L978:
+.L976:
 	ldr	r2, [r5]
 	lsl	r0, r3, #0x1
 	add	r0, r0, r3
@@ -9677,14 +9674,14 @@ sub_80272A4:
 	add	r2, r2, #0x24
 	ldrb	r2, [r2]
 	cmp	r3, r2
-	bcc	.L978	@cond_branch
-.L976:
+	bcc	.L976	@cond_branch
+.L974:
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.L981:
+.L979:
 	.align	2, 0
-.L980:
+.L978:
 	.word	gUnknown_02022C98
 .Lfe61:
 	.size	 sub_80272A4,.Lfe61-sub_80272A4
@@ -9698,11 +9695,11 @@ sub_80272E8:
 	mov	r5, r8
 	push	{r5, r6, r7}
 	mov	r5, #0x0
-	ldr	r7, .L993
+	ldr	r7, .L991
 	mov	r4, #0x0
-	ldr	r0, .L993+0x4
+	ldr	r0, .L991+0x4
 	mov	sl, r0
-.L986:
+.L984:
 	mov	r2, #0x0
 	lsl	r6, r5, #0x4
 	lsl	r1, r5, #0x1
@@ -9713,7 +9710,7 @@ sub_80272E8:
 	mov	r9, r1
 	sub	r0, r6, r5
 	lsl	r3, r0, #0x2
-.L990:
+.L988:
 	ldr	r0, [r7]
 	add	r1, r2, r3
 	add	r0, r0, sl
@@ -9723,17 +9720,17 @@ sub_80272E8:
 	lsl	r0, r0, #0x18
 	lsr	r2, r0, #0x18
 	cmp	r2, #0xa
-	bls	.L990	@cond_branch
+	bls	.L988	@cond_branch
 	ldr	r0, [r7]
 	sub	r1, r6, r5
 	lsl	r1, r1, #0x2
 	add	r0, r0, r1
-	ldr	r2, .L993+0x8
+	ldr	r2, .L991+0x8
 	add	r0, r0, r2
 	strb	r4, [r0]
 	ldr	r0, [r7]
 	add	r0, r0, r1
-	ldr	r1, .L993+0xc
+	ldr	r1, .L991+0xc
 	add	r0, r0, r1
 	strb	r4, [r0]
 	ldr	r0, [r7]
@@ -9746,11 +9743,11 @@ sub_80272E8:
 	add	r0, r0, r8
 	strh	r4, [r0]
 	add	r1, r1, ip
-	ldr	r2, .L993+0x10
+	ldr	r2, .L991+0x10
 	add	r1, r1, r2
 	strb	r4, [r1]
 	ldr	r2, [r7]
-	ldr	r1, .L993+0x14
+	ldr	r1, .L991+0x14
 	add	r0, r2, r1
 	add	r0, r0, ip
 	str	r4, [r0]
@@ -9785,15 +9782,15 @@ sub_80272E8:
 	lsl	r0, r1, #0x18
 	lsr	r5, r0, #0x18
 	cmp	r5, #0x4
-	bls	.L986	@cond_branch
-	ldr	r2, .L993
+	bls	.L984	@cond_branch
+	ldr	r2, .L991
 	ldr	r0, [r2]
 	mov	r1, #0xaa
 	lsl	r1, r1, #0x1
 	add	r0, r0, r1
 	mov	r2, #0x0
 	strb	r2, [r0]
-	ldr	r1, .L993
+	ldr	r1, .L991
 	ldr	r0, [r1]
 	mov	r1, #0x89
 	lsl	r1, r1, #0x1
@@ -9811,9 +9808,9 @@ sub_80272E8:
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L994:
+.L992:
 	.align	2, 0
-.L993:
+.L991:
 	.word	gUnknown_02022C98
 	.word	0x31bf
 	.word	0x31cc
@@ -9838,25 +9835,25 @@ gUnknown_082F7B24:
 sub_80273F0:
 	push	{r4, r5, lr}
 	mov	r4, #0x0
-	ldr	r0, .L1006
+	ldr	r0, .L1004
 	ldr	r0, [r0]
 	add	r0, r0, #0x24
 	ldrb	r0, [r0]
 	cmp	r0, #0x4
-	beq	.L997	@cond_branch
+	beq	.L995	@cond_branch
 	cmp	r0, #0x5
-	beq	.L998	@cond_branch
-	b	.L996
-.L1007:
+	beq	.L996	@cond_branch
+	b	.L994
+.L1005:
 	.align	2, 0
-.L1006:
+.L1004:
 	.word	gUnknown_02022C98
-.L997:
+.L995:
 	mov	r4, #0x1
-	b	.L996
-.L998:
-	mov	r4, #0x2
+	b	.L994
 .L996:
+	mov	r4, #0x2
+.L994:
 	bl	Random
 	lsl	r0, r0, #0x10
 	lsr	r0, r0, #0x10
@@ -9866,14 +9863,14 @@ sub_80273F0:
 	lsr	r0, r0, #0x18
 	mov	r3, #0x0
 	lsl	r1, r4, #0x2
-	ldr	r5, .L1008
-	ldr	r2, .L1008+0x4
+	ldr	r5, .L1006
+	ldr	r2, .L1006+0x4
 	add	r1, r1, r4
 	lsl	r1, r1, #0x1
 	add	r0, r0, r1
 	add	r0, r0, r2
 	ldrb	r2, [r0]
-.L1004:
+.L1002:
 	ldr	r1, [r5]
 	lsl	r0, r3, #0x1
 	add	r0, r0, r3
@@ -9885,13 +9882,13 @@ sub_80273F0:
 	lsl	r0, r0, #0x18
 	lsr	r3, r0, #0x18
 	cmp	r3, #0x4
-	bls	.L1004	@cond_branch
+	bls	.L1002	@cond_branch
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.L1009:
+.L1007:
 	.align	2, 0
-.L1008:
+.L1006:
 	.word	gUnknown_02022C98
 	.word	gUnknown_082F7AA4
 .Lfe63:
@@ -9903,7 +9900,7 @@ sub_802745C:
 	push	{lr}
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
-	ldr	r1, .L1012
+	ldr	r1, .L1010
 	ldr	r2, [r1]
 	lsl	r1, r0, #0x1
 	add	r1, r1, r0
@@ -9921,16 +9918,16 @@ sub_802745C:
 	add	r3, r3, r0
 	ldrh	r2, [r2]
 	add	r0, r3, r2
-	ldr	r1, .L1012+0x4
+	ldr	r1, .L1010+0x4
 	cmp	r0, r1
-	bls	.L1011	@cond_branch
+	bls	.L1009	@cond_branch
 	add	r0, r1, #0
-.L1011:
+.L1009:
 	pop	{r1}
 	bx	r1
-.L1013:
+.L1011:
 	.align	2, 0
-.L1012:
+.L1010:
 	.word	gUnknown_02022C98
 	.word	0x270f
 .Lfe64:
@@ -9940,40 +9937,40 @@ sub_802745C:
 	.thumb_func
 sub_802749C:
 	push	{r4, r5, r6, lr}
-	ldr	r5, .L1018
+	ldr	r5, .L1016
 	ldr	r0, [r5]
 	add	r0, r0, #0x28
 	ldrb	r0, [r0]
 	bl	sub_802745C
-	ldr	r1, .L1018+0x4
+	ldr	r1, .L1016+0x4
 	bl	Min
 	add	r4, r0, #0
 	ldr	r0, [r5]
 	add	r0, r0, #0x28
 	ldrb	r0, [r0]
 	bl	sub_80276C0
-	ldr	r1, .L1018+0x8
+	ldr	r1, .L1016+0x8
 	bl	Min
 	add	r2, r0, #0
-	ldr	r3, .L1018+0xc
+	ldr	r3, .L1016+0xc
 	ldr	r0, [r3]
 	mov	r6, #0xca
 	lsl	r6, r6, #0x1
 	add	r1, r0, r6
 	ldr	r0, [r1]
 	cmp	r0, r2
-	bcs	.L1015	@cond_branch
+	bcs	.L1013	@cond_branch
 	str	r2, [r1]
-.L1015:
+.L1013:
 	ldr	r0, [r3]
 	mov	r2, #0xcc
 	lsl	r2, r2, #0x1
 	add	r1, r0, r2
 	ldrh	r0, [r1]
 	cmp	r0, r4
-	bcs	.L1016	@cond_branch
+	bcs	.L1014	@cond_branch
 	strh	r4, [r1]
-.L1016:
+.L1014:
 	ldr	r0, [r3]
 	mov	r6, #0xcd
 	lsl	r6, r6, #0x1
@@ -9985,15 +9982,15 @@ sub_802749C:
 	ldrh	r1, [r0]
 	ldrh	r0, [r2]
 	cmp	r0, r1
-	bcs	.L1017	@cond_branch
+	bcs	.L1015	@cond_branch
 	strh	r1, [r2]
-.L1017:
+.L1015:
 	pop	{r4, r5, r6}
 	pop	{r0}
 	bx	r0
-.L1019:
+.L1017:
 	.align	2, 0
-.L1018:
+.L1016:
 	.word	gUnknown_02022C98
 	.word	0x270f
 	.word	0xf4236
@@ -10007,14 +10004,14 @@ sub_8027518:
 	push	{r4, r5, r6, r7, lr}
 	lsl	r0, r0, #0x18
 	lsr	r7, r0, #0x18
-	ldr	r1, .L1026
+	ldr	r1, .L1024
 	ldr	r0, [r1]
 	add	r0, r0, #0x9b
 	ldrb	r6, [r0]
 	mov	r3, #0x3
 	add	r5, r1, #0
 	add	r4, r5, #0
-.L1024:
+.L1022:
 	ldr	r0, [r4]
 	add	r0, r0, #0x98
 	add	r2, r0, r3
@@ -10025,7 +10022,7 @@ sub_8027518:
 	lsl	r1, r1, #0x18
 	lsr	r3, r1, #0x18
 	cmp	r3, #0
-	bne	.L1024	@cond_branch
+	bne	.L1022	@cond_branch
 	ldr	r0, [r5]
 	add	r0, r0, #0x98
 	strb	r7, [r0]
@@ -10033,9 +10030,9 @@ sub_8027518:
 	pop	{r4, r5, r6, r7}
 	pop	{r1}
 	bx	r1
-.L1027:
+.L1025:
 	.align	2, 0
-.L1026:
+.L1024:
 	.word	gUnknown_02022C98
 .Lfe66:
 	.size	 sub_8027518,.Lfe66-sub_8027518
@@ -10044,7 +10041,7 @@ sub_8027518:
 	.thumb_func
 sub_8027554:
 	push	{r4, lr}
-	ldr	r4, .L1038
+	ldr	r4, .L1036
 	ldr	r3, [r4]
 	add	r0, r3, #0
 	add	r0, r0, #0x28
@@ -10053,10 +10050,29 @@ sub_8027554:
 	add	r2, r0, r1
 	ldrb	r0, [r2]
 	cmp	r0, #0
-	bne	.L1029	@cond_branch
-	ldr	r0, .L1038+0x4
+	bne	.L1027	@cond_branch
+	ldr	r0, .L1036+0x4
 	ldrh	r2, [r0, #0x2e]
 	mov	r0, #0x40
+	and	r0, r0, r2
+	cmp	r0, #0
+	beq	.L1028	@cond_branch
+	lsl	r0, r1, #0x4
+	sub	r0, r0, r1
+	lsl	r0, r0, #0x2
+	add	r0, r3, r0
+	ldr	r1, .L1036+0x8
+	add	r0, r0, r1
+	mov	r1, #0x2
+	b	.L1035
+.L1037:
+	.align	2, 0
+.L1036:
+	.word	gUnknown_02022C98
+	.word	gMain
+	.word	0x31cc
+.L1028:
+	mov	r0, #0x20
 	and	r0, r0, r2
 	cmp	r0, #0
 	beq	.L1030	@cond_branch
@@ -10064,20 +10080,20 @@ sub_8027554:
 	sub	r0, r0, r1
 	lsl	r0, r0, #0x2
 	add	r0, r3, r0
-	ldr	r1, .L1038+0x8
+	ldr	r1, .L1038
 	add	r0, r0, r1
-	mov	r1, #0x2
-	b	.L1037
+	mov	r1, #0x3
+	b	.L1035
 .L1039:
 	.align	2, 0
 .L1038:
-	.word	gUnknown_02022C98
-	.word	gMain
 	.word	0x31cc
 .L1030:
-	mov	r0, #0x20
+	mov	r0, #0x10
 	and	r0, r0, r2
-	cmp	r0, #0
+	lsl	r0, r0, #0x10
+	lsr	r2, r0, #0x10
+	cmp	r2, #0
 	beq	.L1032	@cond_branch
 	lsl	r0, r1, #0x4
 	sub	r0, r0, r1
@@ -10085,27 +10101,8 @@ sub_8027554:
 	add	r0, r3, r0
 	ldr	r1, .L1040
 	add	r0, r0, r1
-	mov	r1, #0x3
-	b	.L1037
-.L1041:
-	.align	2, 0
-.L1040:
-	.word	0x31cc
-.L1032:
-	mov	r0, #0x10
-	and	r0, r0, r2
-	lsl	r0, r0, #0x10
-	lsr	r2, r0, #0x10
-	cmp	r2, #0
-	beq	.L1034	@cond_branch
-	lsl	r0, r1, #0x4
-	sub	r0, r0, r1
-	lsl	r0, r0, #0x2
-	add	r0, r3, r0
-	ldr	r1, .L1042
-	add	r0, r0, r1
 	mov	r1, #0x1
-.L1037:
+.L1035:
 	strb	r1, [r0]
 	ldr	r0, [r4]
 	add	r1, r0, #0
@@ -10117,28 +10114,28 @@ sub_8027554:
 	strb	r1, [r0]
 	mov	r0, #0xd4
 	bl	PlaySE
-	b	.L1036
-.L1043:
+	b	.L1034
+.L1041:
 	.align	2, 0
-.L1042:
+.L1040:
 	.word	0x31cc
-.L1034:
+.L1032:
 	lsl	r0, r1, #0x4
 	sub	r0, r0, r1
 	lsl	r0, r0, #0x2
 	add	r0, r3, r0
-	ldr	r1, .L1044
+	ldr	r1, .L1042
 	add	r0, r0, r1
 	strb	r2, [r0]
-	b	.L1036
-.L1045:
+	b	.L1034
+.L1043:
 	.align	2, 0
-.L1044:
+.L1042:
 	.word	0x31cc
-.L1029:
+.L1027:
 	sub	r0, r0, #0x1
 	strb	r0, [r2]
-.L1036:
+.L1034:
 	pop	{r4}
 	pop	{r0}
 	bx	r0
@@ -10148,7 +10145,7 @@ sub_8027554:
 	.type	 sub_8027608,function
 	.thumb_func
 sub_8027608:
-	ldr	r0, .L1047
+	ldr	r0, .L1045
 	ldr	r1, [r0]
 	add	r0, r1, #0
 	add	r0, r0, #0x28
@@ -10157,14 +10154,14 @@ sub_8027608:
 	sub	r0, r0, r2
 	lsl	r0, r0, #0x2
 	add	r1, r1, r0
-	ldr	r0, .L1047+0x4
+	ldr	r0, .L1045+0x4
 	add	r1, r1, r0
 	mov	r0, #0x0
 	strb	r0, [r1]
 	bx	lr
-.L1048:
+.L1046:
 	.align	2, 0
-.L1047:
+.L1045:
 	.word	gUnknown_02022C98
 	.word	0x31cc
 .Lfe68:
@@ -10173,7 +10170,7 @@ sub_8027608:
 	.type	 sub_802762C,function
 	.thumb_func
 sub_802762C:
-	ldr	r0, .L1050
+	ldr	r0, .L1048
 	ldr	r1, [r0]
 	add	r0, r1, #0
 	add	r0, r0, #0x28
@@ -10188,9 +10185,9 @@ sub_802762C:
 	lsl	r0, r0, #0x10
 	lsr	r0, r0, #0x10
 	bx	lr
-.L1051:
+.L1049:
 	.align	2, 0
-.L1050:
+.L1048:
 	.word	gUnknown_02022C98
 .Lfe69:
 	.size	 sub_802762C,.Lfe69-sub_802762C
@@ -10198,14 +10195,14 @@ sub_802762C:
 	.type	 sub_8027650,function
 	.thumb_func
 sub_8027650:
-	ldr	r0, .L1053
+	ldr	r0, .L1051
 	ldr	r0, [r0]
 	add	r0, r0, #0x24
 	ldrb	r0, [r0]
 	bx	lr
-.L1054:
+.L1052:
 	.align	2, 0
-.L1053:
+.L1051:
 	.word	gUnknown_02022C98
 .Lfe70:
 	.size	 sub_8027650,.Lfe70-sub_8027650
@@ -10216,36 +10213,36 @@ sub_8027660:
 	push	{lr}
 	lsl	r0, r0, #0x18
 	lsr	r2, r0, #0x18
-	ldr	r0, .L1061
+	ldr	r0, .L1059
 	ldrb	r0, [r0]
 	cmp	r0, #0
-	bne	.L1056	@cond_branch
-	ldr	r0, .L1061+0x4
+	bne	.L1054	@cond_branch
+	ldr	r0, .L1059+0x4
 	lsl	r1, r2, #0x4
 	sub	r1, r1, r2
 	lsl	r1, r1, #0x2
-	ldr	r2, .L1061+0x8
+	ldr	r2, .L1059+0x8
 	add	r1, r1, r2
 	ldr	r0, [r0]
-	b	.L1060
-.L1062:
+	b	.L1058
+.L1060:
 	.align	2, 0
-.L1061:
+.L1059:
 	.word	gReceivedRemoteLinkPlayers
 	.word	gUnknown_02022C98
 	.word	0x31a0
-.L1056:
+.L1054:
 	lsl	r0, r2, #0x3
 	sub	r0, r0, r2
 	lsl	r0, r0, #0x2
-	ldr	r1, .L1063
-.L1060:
+	ldr	r1, .L1061
+.L1058:
 	add	r0, r0, r1
 	pop	{r1}
 	bx	r1
-.L1064:
+.L1062:
 	.align	2, 0
-.L1063:
+.L1061:
 	.word	gLinkPlayers+0x8
 .Lfe71:
 	.size	 sub_8027660,.Lfe71-sub_8027660
@@ -10256,7 +10253,7 @@ sub_80276A0:
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	lsl	r1, r1, #0x18
-	ldr	r2, .L1066
+	ldr	r2, .L1064
 	ldr	r3, [r2]
 	lsr	r1, r1, #0x17
 	lsl	r2, r0, #0x1
@@ -10267,9 +10264,9 @@ sub_80276A0:
 	add	r3, r3, r1
 	ldrh	r0, [r3]
 	bx	lr
-.L1067:
+.L1065:
 	.align	2, 0
-.L1066:
+.L1064:
 	.word	gUnknown_02022C98
 .Lfe72:
 	.size	 sub_80276A0,.Lfe72-sub_80276A0
@@ -10287,9 +10284,9 @@ sub_80276C0:
 	lsr	r4, r0, #0x18
 	mov	r5, #0x0
 	mov	r3, #0x0
-	ldr	r0, .L1077
+	ldr	r0, .L1075
 	mov	r9, r0
-	ldr	r2, .L1077+0x4
+	ldr	r2, .L1075+0x4
 	mov	sl, r2
 	ldr	r2, [r0]
 	lsl	r1, r4, #0x1
@@ -10300,7 +10297,7 @@ sub_80276C0:
 	add	r6, r6, #0x4a
 	mov	ip, r1
 	mov	r8, sl
-.L1072:
+.L1070:
 	lsl	r1, r3, #0x1
 	ldr	r7, [sp]
 	add	r0, r1, r7
@@ -10315,7 +10312,7 @@ sub_80276C0:
 	lsl	r0, r0, #0x18
 	lsr	r3, r0, #0x18
 	cmp	r3, #0x2
-	bls	.L1072	@cond_branch
+	bls	.L1070	@cond_branch
 	mov	r0, r9
 	ldr	r1, [r0]
 	mov	r2, ip
@@ -10329,17 +10326,17 @@ sub_80276C0:
 	ldrsh	r0, [r3, r7]
 	mul	r0, r0, r1
 	cmp	r5, r0
-	bls	.L1074	@cond_branch
+	bls	.L1072	@cond_branch
 	sub	r0, r5, r0
-	b	.L1076
-.L1078:
+	b	.L1074
+.L1076:
 	.align	2, 0
-.L1077:
+.L1075:
 	.word	gUnknown_02022C98
 	.word	gUnknown_082F7B24
-.L1074:
+.L1072:
 	mov	r0, #0x0
-.L1076:
+.L1074:
 	add	sp, sp, #0x4
 	pop	{r3, r4, r5}
 	mov	r8, r3
@@ -10355,7 +10352,7 @@ sub_80276C0:
 	.thumb_func
 sub_8027748:
 	push	{r4, r5, r6, lr}
-	ldr	r0, .L1086
+	ldr	r0, .L1084
 	ldr	r0, [r0]
 	add	r0, r0, #0x24
 	ldrb	r6, [r0]
@@ -10364,29 +10361,29 @@ sub_8027748:
 	add	r5, r0, #0
 	mov	r4, #0x1
 	cmp	r4, r6
-	bcs	.L1081	@cond_branch
-.L1083:
+	bcs	.L1079	@cond_branch
+.L1081:
 	add	r0, r4, #0
 	bl	sub_80276C0
 	cmp	r0, r5
-	bls	.L1082	@cond_branch
+	bls	.L1080	@cond_branch
 	add	r5, r0, #0
-.L1082:
+.L1080:
 	add	r0, r4, #0x1
 	lsl	r0, r0, #0x18
 	lsr	r4, r0, #0x18
 	cmp	r4, r6
-	bcc	.L1083	@cond_branch
-.L1081:
-	ldr	r1, .L1086+0x4
+	bcc	.L1081	@cond_branch
+.L1079:
+	ldr	r1, .L1084+0x4
 	add	r0, r5, #0
 	bl	Min
 	pop	{r4, r5, r6}
 	pop	{r1}
 	bx	r1
-.L1087:
+.L1085:
 	.align	2, 0
-.L1086:
+.L1084:
 	.word	gUnknown_02022C98
 	.word	0xf4236
 .Lfe74:
@@ -10397,7 +10394,7 @@ sub_8027748:
 sub_802778C:
 	push	{r4, r5, lr}
 	lsl	r0, r0, #0x18
-	ldr	r1, .L1095
+	ldr	r1, .L1093
 	ldr	r2, [r1]
 	add	r1, r2, #0
 	add	r1, r1, #0x24
@@ -10408,8 +10405,8 @@ sub_802778C:
 	ldrh	r3, [r0]
 	mov	r1, #0x0
 	cmp	r1, r5
-	bcs	.L1090	@cond_branch
-.L1092:
+	bcs	.L1088	@cond_branch
+.L1090:
 	lsl	r0, r1, #0x1
 	add	r0, r0, r1
 	lsl	r0, r0, #0x2
@@ -10417,22 +10414,22 @@ sub_802778C:
 	add	r0, r2, r0
 	ldrh	r0, [r0]
 	cmp	r0, r3
-	bls	.L1091	@cond_branch
+	bls	.L1089	@cond_branch
 	add	r3, r0, #0
-.L1091:
+.L1089:
 	add	r0, r1, #0x1
 	lsl	r0, r0, #0x18
 	lsr	r1, r0, #0x18
 	cmp	r1, r5
-	bcc	.L1092	@cond_branch
-.L1090:
+	bcc	.L1090	@cond_branch
+.L1088:
 	add	r0, r3, #0
 	pop	{r4, r5}
 	pop	{r1}
 	bx	r1
-.L1096:
+.L1094:
 	.align	2, 0
-.L1095:
+.L1093:
 	.word	gUnknown_02022C98
 .Lfe75:
 	.size	 sub_802778C,.Lfe75-sub_802778C
@@ -10445,14 +10442,14 @@ sub_80277D0:
 	lsl	r0, r0, #0x18
 	lsr	r7, r0, #0x18
 	mov	r6, #0x1
-	ldr	r0, .L1114
+	ldr	r0, .L1112
 	ldr	r0, [r0]
 	add	r0, r0, #0x24
 	ldrb	r5, [r0]
 	mov	r4, #0x0
 	cmp	r4, r5
-	bcs	.L1099	@cond_branch
-.L1101:
+	bcs	.L1097	@cond_branch
+.L1099:
 	add	r0, r4, #0
 	bl	sub_80276C0
 	lsl	r1, r4, #0x2
@@ -10462,20 +10459,20 @@ sub_80277D0:
 	lsl	r0, r0, #0x18
 	lsr	r4, r0, #0x18
 	cmp	r4, r5
-	bcc	.L1101	@cond_branch
-.L1099:
+	bcc	.L1099	@cond_branch
+.L1097:
 	lsl	r7, r7, #0x2
 	mov	ip, r7
 	cmp	r6, #0
-	beq	.L1113	@cond_branch
+	beq	.L1111	@cond_branch
 	sub	r7, r5, #0x1
-.L1105:
+.L1103:
 	mov	r6, #0x0
 	mov	r4, #0x0
 	cmp	r6, r7
-	bge	.L1103	@cond_branch
+	bge	.L1101	@cond_branch
 	add	r5, r7, #0
-.L1109:
+.L1107:
 	lsl	r0, r4, #0x2
 	mov	r2, sp
 	add	r1, r2, r0
@@ -10485,19 +10482,19 @@ sub_80277D0:
 	ldr	r0, [r1]
 	ldr	r2, [r3]
 	cmp	r0, r2
-	bcs	.L1108	@cond_branch
+	bcs	.L1106	@cond_branch
 	str	r2, [r1]
 	str	r0, [r3]
 	mov	r6, #0x1
-.L1108:
+.L1106:
 	lsl	r0, r4, #0x18
 	lsr	r4, r0, #0x18
 	cmp	r4, r5
-	blt	.L1109	@cond_branch
-.L1103:
+	blt	.L1107	@cond_branch
+.L1101:
 	cmp	r6, #0
-	bne	.L1105	@cond_branch
-.L1113:
+	bne	.L1103	@cond_branch
+.L1111:
 	mov	r0, sp
 	add	r0, r0, ip
 	ldr	r0, [r0]
@@ -10505,9 +10502,9 @@ sub_80277D0:
 	pop	{r4, r5, r6, r7}
 	pop	{r1}
 	bx	r1
-.L1115:
+.L1113:
 	.align	2, 0
-.L1114:
+.L1112:
 	.word	gUnknown_02022C98
 .Lfe76:
 	.size	 sub_80277D0,.Lfe76-sub_80277D0
@@ -10524,24 +10521,24 @@ sub_802784C:
 	mov	sl, r0
 	mov	r8, r0
 	mov	r9, r0
-	ldr	r6, .L1139
+	ldr	r6, .L1137
 	ldr	r0, [r6]
 	add	r0, r0, #0x24
 	ldrb	r5, [r0]
 	bl	sub_8027748
 	bl	sub_8027748
 	cmp	r0, #0
-	bne	.L1117	@cond_branch
+	bne	.L1115	@cond_branch
 	mov	r4, #0x0
 	cmp	r9, r5
-	bcs	.L1117	@cond_branch
+	bcs	.L1115	@cond_branch
 	add	r2, r6, #0
-	ldr	r1, .L1139+0x4
+	ldr	r1, .L1137+0x4
 	mov	ip, r1
 	mov	r7, #0x0
 	mov	r6, #0x4
-	ldr	r3, .L1139+0x8
-.L1121:
+	ldr	r3, .L1137+0x8
+.L1119:
 	ldr	r0, [r2]
 	lsl	r1, r4, #0x3
 	add	r0, r0, r1
@@ -10555,20 +10552,20 @@ sub_802784C:
 	lsl	r0, r0, #0x18
 	lsr	r4, r0, #0x18
 	cmp	r4, r5
-	bcc	.L1121	@cond_branch
-.L1117:
+	bcc	.L1119	@cond_branch
+.L1115:
 	mov	r4, #0x0
 	cmp	r4, r5
-	bcs	.L1128	@cond_branch
-.L1126:
+	bcs	.L1126	@cond_branch
+.L1124:
 	add	r0, r4, #0
 	bl	sub_80276C0
-	ldr	r1, .L1139+0xc
+	ldr	r1, .L1137+0xc
 	bl	Min
-	ldr	r1, .L1139
+	ldr	r1, .L1137
 	ldr	r1, [r1]
 	lsl	r2, r4, #0x3
-	ldr	r3, .L1139+0x8
+	ldr	r3, .L1137+0x8
 	add	r1, r1, r3
 	add	r1, r1, r2
 	str	r0, [r1]
@@ -10576,29 +10573,29 @@ sub_802784C:
 	lsl	r0, r0, #0x18
 	lsr	r4, r0, #0x18
 	cmp	r4, r5
-	bcc	.L1126	@cond_branch
-.L1128:
+	bcc	.L1124	@cond_branch
+.L1126:
 	mov	r0, sl
 	bl	sub_80277D0
 	add	r6, r0, #0
 	mov	r3, r8
 	mov	r4, #0x0
 	cmp	r4, r5
-	bcs	.L1132	@cond_branch
-	ldr	r7, .L1139
+	bcs	.L1130	@cond_branch
+	ldr	r7, .L1137
 	mov	sl, r7
-.L1134:
+.L1132:
 	mov	r0, sl
 	ldr	r2, [r0]
 	lsl	r1, r4, #0x3
-	ldr	r7, .L1139+0x8
+	ldr	r7, .L1137+0x8
 	add	r0, r2, r7
 	add	r0, r0, r1
 	ldr	r0, [r0]
 	cmp	r6, r0
-	bne	.L1133	@cond_branch
+	bne	.L1131	@cond_branch
 	add	r0, r2, r1
-	ldr	r1, .L1139+0x4
+	ldr	r1, .L1137+0x4
 	add	r0, r0, r1
 	strb	r3, [r0]
 	mov	r0, r8
@@ -10611,16 +10608,16 @@ sub_802784C:
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	mov	r9, r0
-.L1133:
+.L1131:
 	add	r0, r4, #0x1
 	lsl	r0, r0, #0x18
 	lsr	r4, r0, #0x18
 	cmp	r4, r5
-	bcc	.L1134	@cond_branch
-.L1132:
+	bcc	.L1132	@cond_branch
+.L1130:
 	mov	sl, r8
 	cmp	r9, r5
-	bcc	.L1128	@cond_branch
+	bcc	.L1126	@cond_branch
 	mov	r0, #0x0
 	pop	{r3, r4, r5}
 	mov	r8, r3
@@ -10629,9 +10626,9 @@ sub_802784C:
 	pop	{r4, r5, r6, r7}
 	pop	{r1}
 	bx	r1
-.L1140:
+.L1138:
 	.align	2, 0
-.L1139:
+.L1137:
 	.word	gUnknown_02022C98
 	.word	0x3308
 	.word	0x330c
@@ -10643,10 +10640,10 @@ sub_802784C:
 	.thumb_func
 sub_802793C:
 	lsl	r1, r1, #0x18
-	ldr	r2, .L1142
+	ldr	r2, .L1140
 	ldr	r2, [r2]
 	lsr	r1, r1, #0x15
-	ldr	r3, .L1142+0x4
+	ldr	r3, .L1140+0x4
 	add	r2, r2, r3
 	add	r2, r2, r1
 	ldr	r1, [r2]		@ created by thumb_load_double_from_address
@@ -10654,9 +10651,9 @@ sub_802793C:
 	str	r1, [r0]
 	str	r2, [r0, #0x4]
 	bx	lr
-.L1143:
+.L1141:
 	.align	2, 0
-.L1142:
+.L1140:
 	.word	gUnknown_02022C98
 	.word	0x3308
 .Lfe78:
@@ -10670,7 +10667,7 @@ sub_802795C:
 	lsl	r0, r0, #0x18
 	lsr	r6, r0, #0x18
 	mov	r7, #0x0
-	ldr	r0, .L1156
+	ldr	r0, .L1154
 	ldr	r0, [r0]
 	add	r0, r0, #0x24
 	ldrb	r5, [r0]
@@ -10680,8 +10677,8 @@ sub_802795C:
 	bl	memset
 	mov	r4, #0x0
 	cmp	r7, r5
-	bcs	.L1146	@cond_branch
-.L1148:
+	bcs	.L1144	@cond_branch
+.L1146:
 	add	r0, r4, #0
 	bl	sub_80276C0
 	lsl	r1, r4, #0x2
@@ -10691,37 +10688,37 @@ sub_802795C:
 	lsl	r0, r0, #0x18
 	lsr	r4, r0, #0x18
 	cmp	r4, r5
-	bcc	.L1148	@cond_branch
-.L1146:
+	bcc	.L1146	@cond_branch
+.L1144:
 	lsl	r0, r6, #0x2
 	add	r0, r0, sp
 	ldr	r1, [r0]
 	mov	r4, #0x0
-.L1153:
+.L1151:
 	cmp	r4, r6
-	beq	.L1152	@cond_branch
+	beq	.L1150	@cond_branch
 	lsl	r0, r4, #0x2
 	add	r0, r0, sp
 	ldr	r0, [r0]
 	cmp	r1, r0
-	bcs	.L1152	@cond_branch
+	bcs	.L1150	@cond_branch
 	add	r0, r7, #0x1
 	lsl	r0, r0, #0x18
 	lsr	r7, r0, #0x18
-.L1152:
+.L1150:
 	add	r0, r4, #0x1
 	lsl	r0, r0, #0x18
 	lsr	r4, r0, #0x18
 	cmp	r4, #0x4
-	bls	.L1153	@cond_branch
+	bls	.L1151	@cond_branch
 	add	r0, r7, #0
 	add	sp, sp, #0x14
 	pop	{r4, r5, r6, r7}
 	pop	{r1}
 	bx	r1
-.L1157:
+.L1155:
 	.align	2, 0
-.L1156:
+.L1154:
 	.word	gUnknown_02022C98
 .Lfe79:
 	.size	 sub_802795C,.Lfe79-sub_802795C
@@ -10730,7 +10727,7 @@ sub_802795C:
 	.thumb_func
 sub_80279C8:
 	push	{r4, r5, r6, lr}
-	ldr	r0, .L1163
+	ldr	r0, .L1161
 	ldr	r0, [r0]
 	add	r0, r0, #0x28
 	ldrb	r4, [r0]
@@ -10743,23 +10740,23 @@ sub_80279C8:
 	add	r4, r0, #0
 	bl	sub_8027748
 	cmp	r4, r0
-	beq	.L1159	@cond_branch
+	beq	.L1157	@cond_branch
 	mov	r0, #0x3
-	b	.L1162
-.L1164:
+	b	.L1160
+.L1162:
 	.align	2, 0
-.L1163:
+.L1161:
 	.word	gUnknown_02022C98
-.L1159:
+.L1157:
 	add	r0, r5, #0
 	mov	r1, #0x1
 	bl	CheckBagHasSpace
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	bne	.L1160	@cond_branch
+	bne	.L1158	@cond_branch
 	mov	r0, #0x2
-	b	.L1162
-.L1160:
+	b	.L1160
+.L1158:
 	add	r0, r6, #0
 	mov	r1, #0x1
 	bl	AddBagItem
@@ -10768,12 +10765,12 @@ sub_80279C8:
 	bl	CheckBagHasSpace
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.L1161	@cond_branch
+	beq	.L1159	@cond_branch
 	mov	r0, #0x0
-	b	.L1162
-.L1161:
+	b	.L1160
+.L1159:
 	mov	r0, #0x1
-.L1162:
+.L1160:
 	pop	{r4, r5, r6}
 	pop	{r1}
 	bx	r1
@@ -10787,9 +10784,9 @@ IncrementWithLimit:
 	add	r2, r0, #0
 	add	r0, r1, #0
 	cmp	r2, r0
-	bcs	.L1168	@cond_branch
+	bcs	.L1166	@cond_branch
 	add	r0, r2, #0x1
-.L1168:
+.L1166:
 	pop	{r1}
 	bx	r1
 .Lfe81:
@@ -10802,9 +10799,9 @@ Min:
 	add	r2, r0, #0
 	add	r0, r1, #0
 	cmp	r2, r0
-	bcs	.L1172	@cond_branch
+	bcs	.L1170	@cond_branch
 	add	r0, r2, #0
-.L1172:
+.L1170:
 	pop	{r1}
 	bx	r1
 .Lfe82:
@@ -10815,15 +10812,15 @@ Min:
 sub_8027A48:
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
-	ldr	r1, .L1174
+	ldr	r1, .L1172
 	ldr	r1, [r1]
 	add	r1, r1, #0x34
 	add	r1, r1, r0
 	ldrb	r0, [r1]
 	bx	lr
-.L1175:
+.L1173:
 	.align	2, 0
-.L1174:
+.L1172:
 	.word	gUnknown_02022C98
 .Lfe83:
 	.size	 sub_8027A48,.Lfe83-sub_8027A48
@@ -10834,45 +10831,45 @@ sub_8027A48:
 IsDodrioInParty:
 	push	{r4, r5, r6, lr}
 	mov	r5, #0x0
-	ldr	r6, .L1183
-.L1180:
+	ldr	r6, .L1181
+.L1178:
 	mov	r0, #0x64
 	mov	r1, r5
 	mul	r1, r1, r0
-	ldr	r0, .L1183+0x4
+	ldr	r0, .L1181+0x4
 	add	r4, r1, r0
 	add	r0, r4, #0
 	mov	r1, #0x5
 	bl	GetMonData
 	cmp	r0, #0
-	beq	.L1179	@cond_branch
+	beq	.L1177	@cond_branch
 	add	r0, r4, #0
 	mov	r1, #0x41
 	bl	GetMonData
 	cmp	r0, #0x55
-	bne	.L1179	@cond_branch
+	bne	.L1177	@cond_branch
 	mov	r0, #0x1
 	strh	r0, [r6]
-	b	.L1176
-.L1184:
+	b	.L1174
+.L1182:
 	.align	2, 0
-.L1183:
+.L1181:
 	.word	gSpecialVar_Result
 	.word	gPlayerParty
-.L1179:
+.L1177:
 	add	r5, r5, #0x1
 	cmp	r5, #0x5
-	ble	.L1180	@cond_branch
-	ldr	r1, .L1185
+	ble	.L1178	@cond_branch
+	ldr	r1, .L1183
 	mov	r0, #0x0
 	strh	r0, [r1]
-.L1176:
+.L1174:
 	pop	{r4, r5, r6}
 	pop	{r0}
 	bx	r0
-.L1186:
+.L1184:
 	.align	2, 0
-.L1185:
+.L1183:
 	.word	gSpecialVar_Result
 .Lfe84:
 	.size	 IsDodrioInParty,.Lfe84-IsDodrioInParty
@@ -10882,7 +10879,7 @@ IsDodrioInParty:
 	.thumb_func
 ShowDodrioBerryPickingRecords:
 	push	{r4, lr}
-	ldr	r4, .L1188
+	ldr	r4, .L1186
 	add	r0, r4, #0
 	mov	r1, #0x0
 	bl	CreateTask
@@ -10892,9 +10889,9 @@ ShowDodrioBerryPickingRecords:
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L1189:
+.L1187:
 	.align	2, 0
-.L1188:
+.L1186:
 	.word	Task_ShowDodrioBerryPickingRecords
 .Lfe85:
 	.size	 ShowDodrioBerryPickingRecords,.Lfe85-ShowDodrioBerryPickingRecords
@@ -10954,66 +10951,66 @@ Task_ShowDodrioBerryPickingRecords:
 	lsl	r0, r4, #0x2
 	add	r0, r0, r4
 	lsl	r0, r0, #0x3
-	ldr	r1, .L1212
+	ldr	r1, .L1210
 	add	r7, r0, r1
 	mov	r1, #0x0
 	ldrsh	r0, [r7, r1]
 	cmp	r0, #0x1
-	beq	.L1201	@cond_branch
+	beq	.L1199	@cond_branch
 	cmp	r0, #0x1
-	bgt	.L1209	@cond_branch
+	bgt	.L1207	@cond_branch
 	cmp	r0, #0
-	beq	.L1192	@cond_branch
-	b	.L1191
-.L1213:
+	beq	.L1190	@cond_branch
+	b	.L1189
+.L1211:
 	.align	2, 0
-.L1212:
+.L1210:
 	.word	gTasks+0x8
-.L1209:
+.L1207:
 	cmp	r0, #0x2
-	beq	.L1203	@cond_branch
+	beq	.L1201	@cond_branch
 	cmp	r0, #0x3
-	beq	.L1205	@cond_branch
-	b	.L1191
-.L1192:
-	ldr	r0, .L1214
+	beq	.L1203	@cond_branch
+	b	.L1189
+.L1190:
+	ldr	r0, .L1212
 	ldr	r1, [r0, #0x4]		@ created by thumb_load_double_from_address
 	ldr	r0, [r0]		@ created by thumb_load_double_from_address
 	str	r0, [sp]
 	str	r1, [sp, #0x4]
-	ldr	r1, .L1214+0x4
+	ldr	r1, .L1212+0x4
 	mov	r0, #0x1
 	mov	r2, #0x0
 	bl	GetStringWidth
 	add	r4, r0, #0
 	mov	r6, #0x0
-	ldr	r5, .L1214+0x8
-.L1196:
+	ldr	r5, .L1212+0x8
+.L1194:
 	ldr	r1, [r5]
 	mov	r0, #0x1
 	mov	r2, #0x0
 	bl	GetStringWidth
 	add	r0, r0, #0x32
 	cmp	r0, r4
-	ble	.L1195	@cond_branch
+	ble	.L1193	@cond_branch
 	add	r4, r0, #0
-.L1195:
+.L1193:
 	add	r5, r5, #0x4
 	add	r6, r6, #0x1
 	cmp	r6, #0x2
-	bls	.L1196	@cond_branch
+	bls	.L1194	@cond_branch
 	add	r0, r4, #0x7
 	cmp	r0, #0
-	bge	.L1199	@cond_branch
+	bge	.L1197	@cond_branch
 	add	r0, r0, #0x7
-.L1199:
+.L1197:
 	asr	r4, r0, #0x3
 	mov	r0, #0x1
 	and	r0, r0, r4
 	cmp	r0, #0
-	beq	.L1200	@cond_branch
+	beq	.L1198	@cond_branch
 	add	r4, r4, #0x1
-.L1200:
+.L1198:
 	mov	r1, #0x1e
 	sub	r1, r1, r4
 	lsr	r0, r1, #0x1f
@@ -11021,12 +11018,12 @@ Task_ShowDodrioBerryPickingRecords:
 	asr	r1, r1, #0x1
 	lsl	r1, r1, #0x18
 	lsr	r1, r1, #0x10
-	ldr	r2, .L1214+0xc
+	ldr	r2, .L1212+0xc
 	ldr	r0, [sp]
 	and	r0, r0, r2
 	orr	r0, r0, r1
 	lsl	r2, r4, #0x18
-	ldr	r1, .L1214+0x10
+	ldr	r1, .L1212+0x10
 	and	r0, r0, r1
 	orr	r0, r0, r2
 	str	r0, [sp]
@@ -11039,54 +11036,54 @@ Task_ShowDodrioBerryPickingRecords:
 	bl	sub_8027BEC
 	ldrb	r0, [r7, #0x2]
 	mov	r1, #0x3
-	b	.L1210
-.L1215:
+	b	.L1208
+.L1213:
 	.align	2, 0
-.L1214:
+.L1212:
 	.word	gUnknown_082F7B2C
 	.word	gText_BerryPickingRecords
 	.word	gUnknown_082F7B34
 	.word	-0xff01
 	.word	0xffffff
-.L1201:
+.L1199:
 	bl	IsDma3ManagerBusyWithBgCopy
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	bne	.L1191	@cond_branch
-	b	.L1211
-.L1203:
-	ldr	r0, .L1216
+	bne	.L1189	@cond_branch
+	b	.L1209
+.L1201:
+	ldr	r0, .L1214
 	ldrh	r1, [r0, #0x2e]
 	mov	r0, #0x3
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L1191	@cond_branch
+	beq	.L1189	@cond_branch
 	ldrb	r0, [r7, #0x2]
 	bl	rbox_fill_rectangle
 	ldrb	r0, [r7, #0x2]
 	mov	r1, #0x1
-.L1210:
+.L1208:
 	bl	CopyWindowToVram
-.L1211:
+.L1209:
 	ldrh	r0, [r7]
 	add	r0, r0, #0x1
 	strh	r0, [r7]
-	b	.L1191
-.L1217:
+	b	.L1189
+.L1215:
 	.align	2, 0
-.L1216:
+.L1214:
 	.word	gMain
-.L1205:
+.L1203:
 	bl	IsDma3ManagerBusyWithBgCopy
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	bne	.L1191	@cond_branch
+	bne	.L1189	@cond_branch
 	ldrb	r0, [r7, #0x2]
 	bl	RemoveWindow
 	add	r0, r4, #0
 	bl	DestroyTask
 	bl	EnableBothScriptContexts
-.L1191:
+.L1189:
 	add	sp, sp, #0x8
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
@@ -11106,7 +11103,7 @@ sub_8027BEC:
 	str	r1, [sp, #0x18]
 	lsl	r0, r0, #0x18
 	lsr	r7, r0, #0x18
-	ldr	r0, .L1224
+	ldr	r0, .L1222
 	ldr	r1, [r0]
 	mov	r2, #0xcc
 	lsl	r2, r2, #0x1
@@ -11121,7 +11118,7 @@ sub_8027BEC:
 	add	r0, r1, r2
 	ldrh	r0, [r0]
 	str	r0, [sp, #0x14]
-	ldr	r4, .L1224+0x4
+	ldr	r4, .L1222+0x4
 	add	r0, r7, #0
 	add	r1, r4, #0
 	mov	r2, #0xd0
@@ -11133,7 +11130,7 @@ sub_8027BEC:
 	add	r0, r7, #0
 	mov	r1, #0x11
 	bl	FillWindowPixelBuffer
-	ldr	r4, .L1224+0x8
+	ldr	r4, .L1222+0x8
 	ldr	r0, [sp, #0x18]
 	lsl	r2, r0, #0x3
 	mov	r0, #0x1
@@ -11153,7 +11150,7 @@ sub_8027BEC:
 	add	r2, r4, #0
 	bl	AddTextPrinterParameterized
 	mov	r6, #0x0
-	ldr	r2, .L1224+0xc
+	ldr	r2, .L1222+0xc
 	mov	r8, r2
 	mov	r0, #0xff
 	mov	sl, r0
@@ -11161,12 +11158,12 @@ sub_8027BEC:
 	mov	r2, sp
 	add	r2, r2, #0xc
 	str	r2, [sp, #0x1c]
-.L1222:
+.L1220:
 	lsl	r4, r6, #0x2
 	ldr	r0, [sp, #0x1c]
 	ldmia	r0!, {r1}
 	str	r0, [sp, #0x1c]
-	ldr	r0, .L1224+0x10
+	ldr	r0, .L1222+0x10
 	add	r0, r6, r0
 	ldrb	r3, [r0]
 	mov	r0, r8
@@ -11178,10 +11175,10 @@ sub_8027BEC:
 	neg	r2, r2
 	bl	GetStringWidth
 	add	r5, r0, #0
-	ldr	r0, .L1224+0x14
+	ldr	r0, .L1222+0x14
 	add	r4, r4, r0
 	ldr	r2, [r4]
-	ldr	r0, .L1224+0x18
+	ldr	r0, .L1222+0x18
 	lsl	r4, r6, #0x1
 	add	r0, r4, r0
 	ldrb	r0, [r0]
@@ -11199,7 +11196,7 @@ sub_8027BEC:
 	sub	r3, r3, r5
 	lsl	r3, r3, #0x18
 	lsr	r3, r3, #0x18
-	ldr	r0, .L1224+0x1c
+	ldr	r0, .L1222+0x1c
 	add	r4, r4, r0
 	ldrb	r0, [r4]
 	str	r0, [sp]
@@ -11213,7 +11210,7 @@ sub_8027BEC:
 	bl	AddTextPrinterParameterized
 	add	r6, r6, #0x1
 	cmp	r6, #0x2
-	ble	.L1222	@cond_branch
+	ble	.L1220	@cond_branch
 	add	r0, r7, #0
 	bl	PutWindowTilemap
 	add	sp, sp, #0x20
@@ -11224,9 +11221,9 @@ sub_8027BEC:
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L1225:
+.L1223:
 	.align	2, 0
-.L1224:
+.L1222:
 	.word	gSaveBlock2Ptr
 	.word	0x21d
 	.word	gText_BerryPickingRecords
@@ -11311,15 +11308,15 @@ sPlaceholderPlayerNames:
 sub_8027D20:
 	push	{lr}
 	bl	GetLinkPlayerCount
-	ldr	r1, .L1227
+	ldr	r1, .L1225
 	ldr	r1, [r1]
 	add	r1, r1, #0x24
 	strb	r0, [r1]
 	pop	{r0}
 	bx	r0
-.L1228:
+.L1226:
 	.align	2, 0
-.L1227:
+.L1225:
 	.word	gUnknown_02022C98
 .Lfe88:
 	.size	 sub_8027D20,.Lfe88-sub_8027D20
@@ -11328,18 +11325,18 @@ sub_8027D20:
 	.thumb_func
 sub_8027D38:
 	push	{r4, r5, r6, r7, lr}
-	ldr	r0, .L1245
+	ldr	r0, .L1243
 	ldr	r0, [r0]
 	add	r0, r0, #0x24
 	ldrb	r4, [r0]
 	cmp	r4, #0x4
-	bhi	.L1231	@cond_branch
-	ldr	r5, .L1245+0x4
-.L1233:
+	bhi	.L1229	@cond_branch
+	ldr	r5, .L1243+0x4
+.L1231:
 	lsl	r0, r4, #0x3
 	sub	r0, r0, r4
 	lsl	r0, r0, #0x2
-	ldr	r1, .L1245+0x8
+	ldr	r1, .L1243+0x8
 	add	r0, r0, r1
 	lsl	r1, r4, #0x2
 	add	r1, r1, r5
@@ -11349,16 +11346,16 @@ sub_8027D38:
 	lsl	r0, r0, #0x18
 	lsr	r4, r0, #0x18
 	cmp	r4, #0x4
-	bls	.L1233	@cond_branch
-.L1231:
-	ldr	r0, .L1245
+	bls	.L1231	@cond_branch
+.L1229:
+	ldr	r0, .L1243
 	ldr	r1, [r0]
 	add	r1, r1, #0x24
 	mov	r2, #0x5
 	strb	r2, [r1]
 	mov	r1, #0x0
 	mov	ip, r0
-.L1238:
+.L1236:
 	mov	r4, #0x0
 	mov	r2, ip
 	ldr	r0, [r2]
@@ -11366,11 +11363,11 @@ sub_8027D38:
 	add	r5, r1, #0x1
 	ldrb	r0, [r0]
 	cmp	r4, r0
-	bcs	.L1237	@cond_branch
-	ldr	r7, .L1245
+	bcs	.L1235	@cond_branch
+	ldr	r7, .L1243
 	lsl	r3, r1, #0x1
-	ldr	r6, .L1245+0xc
-.L1242:
+	ldr	r6, .L1243+0xc
+.L1240:
 	ldr	r2, [r7]
 	lsl	r0, r4, #0x1
 	add	r0, r0, r4
@@ -11390,18 +11387,18 @@ sub_8027D38:
 	add	r2, r2, #0x24
 	ldrb	r2, [r2]
 	cmp	r4, r2
-	bcc	.L1242	@cond_branch
-.L1237:
+	bcc	.L1240	@cond_branch
+.L1235:
 	lsl	r0, r5, #0x18
 	lsr	r1, r0, #0x18
 	cmp	r1, #0x3
-	bls	.L1238	@cond_branch
+	bls	.L1236	@cond_branch
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L1246:
+.L1244:
 	.align	2, 0
-.L1245:
+.L1243:
 	.word	gUnknown_02022C98
 	.word	sPlaceholderPlayerNames
 	.word	gLinkPlayers+0x8
@@ -11414,7 +11411,7 @@ sub_8027D38:
 sub_8027DD0:
 	push	{lr}
 	add	sp, sp, #-0x8
-	ldr	r3, .L1248
+	ldr	r3, .L1246
 	ldr	r1, [sp]
 	and	r1, r1, r3
 	mov	r2, #0x1
@@ -11431,9 +11428,9 @@ sub_8027DD0:
 	add	sp, sp, #0x8
 	pop	{r0}
 	bx	r0
-.L1249:
+.L1247:
 	.align	2, 0
-.L1248:
+.L1246:
 	.word	-0x100
 .Lfe90:
 	.size	 sub_8027DD0,.Lfe90-sub_8027DD0
@@ -11443,7 +11440,7 @@ sub_8027DD0:
 sub_8027DFC:
 	push	{lr}
 	add	r2, r0, #0
-	ldr	r3, .L1255
+	ldr	r3, .L1253
 	ldrh	r0, [r3]
 	mov	r1, #0xff
 	lsl	r1, r1, #0x8
@@ -11451,23 +11448,23 @@ sub_8027DFC:
 	mov	r0, #0xbc
 	lsl	r0, r0, #0x6
 	cmp	r1, r0
-	bne	.L1254	@cond_branch
+	bne	.L1252	@cond_branch
 	lsl	r0, r2, #0x4
 	add	r1, r3, #0x2
 	add	r1, r0, r1
 	ldrb	r0, [r1]
 	cmp	r0, #0x1
-	beq	.L1252	@cond_branch
-.L1254:
-	mov	r0, #0x0
-	b	.L1253
-.L1256:
-	.align	2, 0
-.L1255:
-	.word	gRecvCmds
+	beq	.L1250	@cond_branch
 .L1252:
-	ldrb	r0, [r1, #0x4]
+	mov	r0, #0x0
+	b	.L1251
+.L1254:
+	.align	2, 0
 .L1253:
+	.word	gRecvCmds
+.L1250:
+	ldrb	r0, [r1, #0x4]
+.L1251:
 	pop	{r1}
 	bx	r1
 .Lfe91:
@@ -11906,7 +11903,7 @@ sub_8028164:
 	mov	r9, r0
 	add	r2, r7, #0
 	add	r2, r2, #0x14
-	ldr	r4, .L1263
+	ldr	r4, .L1261
 	ldrh	r0, [r4]
 	mov	r1, #0xff
 	lsl	r1, r1, #0x8
@@ -11914,19 +11911,19 @@ sub_8028164:
 	mov	r0, #0xbc
 	lsl	r0, r0, #0x6
 	cmp	r1, r0
-	bne	.L1262	@cond_branch
+	bne	.L1260	@cond_branch
 	add	r3, r4, #0x2
 	ldrb	r0, [r4, #0x2]
 	cmp	r0, #0x2
-	beq	.L1260	@cond_branch
-.L1262:
-	mov	r0, #0x0
-	b	.L1261
-.L1264:
-	.align	2, 0
-.L1263:
-	.word	gRecvCmds
+	beq	.L1258	@cond_branch
 .L1260:
+	mov	r0, #0x0
+	b	.L1259
+.L1262:
+	.align	2, 0
+.L1261:
+	.word	gRecvCmds
+.L1258:
 	ldrb	r0, [r3, #0x1]
 	lsl	r0, r0, #0x1c
 	lsr	r0, r0, #0x1c
@@ -12084,7 +12081,7 @@ sub_8028164:
 	ldr	r1, [sp, #0x30]
 	str	r0, [r1]
 	mov	r0, #0x1
-.L1261:
+.L1259:
 	pop	{r3, r4}
 	mov	r8, r3
 	mov	r9, r4
@@ -12101,7 +12098,7 @@ sub_80282EC:
 	add	sp, sp, #-0x8
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
-	ldr	r3, .L1266
+	ldr	r3, .L1264
 	ldr	r1, [sp]
 	and	r1, r1, r3
 	mov	r2, #0x3
@@ -12116,9 +12113,9 @@ sub_80282EC:
 	add	sp, sp, #0x8
 	pop	{r0}
 	bx	r0
-.L1267:
+.L1265:
 	.align	2, 0
-.L1266:
+.L1264:
 	.word	-0x100
 .Lfe94:
 	.size	 sub_80282EC,.Lfe94-sub_80282EC
@@ -12129,7 +12126,7 @@ sub_8028318:
 	push	{r4, lr}
 	add	r2, r0, #0
 	add	r4, r1, #0
-	ldr	r3, .L1273
+	ldr	r3, .L1271
 	ldrh	r0, [r3]
 	mov	r1, #0xff
 	lsl	r1, r1, #0x8
@@ -12137,25 +12134,25 @@ sub_8028318:
 	mov	r0, #0xbc
 	lsl	r0, r0, #0x6
 	cmp	r1, r0
-	bne	.L1272	@cond_branch
+	bne	.L1270	@cond_branch
 	lsl	r0, r2, #0x4
 	add	r1, r3, #0x2
 	add	r1, r0, r1
 	ldrb	r0, [r1]
 	cmp	r0, #0x3
-	beq	.L1270	@cond_branch
-.L1272:
-	mov	r0, #0x0
-	b	.L1271
-.L1274:
-	.align	2, 0
-.L1273:
-	.word	gRecvCmds
+	beq	.L1268	@cond_branch
 .L1270:
+	mov	r0, #0x0
+	b	.L1269
+.L1272:
+	.align	2, 0
+.L1271:
+	.word	gRecvCmds
+.L1268:
 	ldrb	r0, [r1, #0x4]
 	strb	r0, [r4]
 	mov	r0, #0x1
-.L1271:
+.L1269:
 	pop	{r4}
 	pop	{r1}
 	bx	r1
@@ -12167,7 +12164,7 @@ sub_8028318:
 sub_8028350:
 	push	{lr}
 	add	sp, sp, #-0x8
-	ldr	r2, .L1276
+	ldr	r2, .L1274
 	ldr	r1, [sp]
 	and	r1, r1, r2
 	mov	r2, #0x4
@@ -12179,9 +12176,9 @@ sub_8028350:
 	add	sp, sp, #0x8
 	pop	{r0}
 	bx	r0
-.L1277:
+.L1275:
 	.align	2, 0
-.L1276:
+.L1274:
 	.word	-0x100
 .Lfe96:
 	.size	 sub_8028350,.Lfe96-sub_8028350
@@ -12191,7 +12188,7 @@ sub_8028350:
 sub_8028374:
 	push	{lr}
 	add	r2, r0, #0
-	ldr	r3, .L1283
+	ldr	r3, .L1281
 	ldrh	r0, [r3]
 	mov	r1, #0xff
 	lsl	r1, r1, #0x8
@@ -12199,23 +12196,23 @@ sub_8028374:
 	mov	r0, #0xbc
 	lsl	r0, r0, #0x6
 	cmp	r1, r0
-	bne	.L1282	@cond_branch
+	bne	.L1280	@cond_branch
 	lsl	r0, r2, #0x4
 	add	r1, r3, #0x2
 	add	r1, r0, r1
 	ldrb	r0, [r1]
 	cmp	r0, #0x4
-	beq	.L1280	@cond_branch
-.L1282:
-	mov	r0, #0x0
-	b	.L1281
-.L1284:
-	.align	2, 0
-.L1283:
-	.word	gRecvCmds
+	beq	.L1278	@cond_branch
 .L1280:
-	ldr	r0, [r1, #0x4]
+	mov	r0, #0x0
+	b	.L1279
+.L1282:
+	.align	2, 0
 .L1281:
+	.word	gRecvCmds
+.L1278:
+	ldr	r0, [r1, #0x4]
+.L1279:
 	pop	{r1}
 	bx	r1
 .Lfe97:
@@ -16547,28 +16544,28 @@ sub_80283A8:
 	add	r0, r5, #0
 	bl	AllocZeroed
 	add	r4, r0, #0
-	ldr	r0, .L1287
+	ldr	r0, .L1285
 	ldr	r1, [r0, #0x4]		@ created by thumb_load_double_from_address
 	ldr	r0, [r0]		@ created by thumb_load_double_from_address
 	str	r0, [sp, #0x8]
 	str	r1, [sp, #0xc]
-	ldr	r0, .L1287+0x4
+	ldr	r0, .L1285+0x4
 	ldr	r1, [r0, #0x4]		@ created by thumb_load_double_from_address
 	ldr	r0, [r0]		@ created by thumb_load_double_from_address
 	str	r0, [sp, #0x10]
 	str	r1, [sp, #0x14]
-	ldr	r0, .L1287+0x8
+	ldr	r0, .L1285+0x8
 	add	r1, r4, #0
 	bl	LZ77UnCompWram
 	cmp	r4, #0
-	beq	.L1286	@cond_branch
+	beq	.L1284	@cond_branch
 	str	r4, [sp]
 	str	r5, [sp, #0x4]
 	mov	r0, sp
 	bl	LoadSpriteSheet
 	add	r0, r4, #0
 	bl	Free
-.L1286:
+.L1284:
 	add	r0, sp, #0x8
 	bl	LoadSpritePalette
 	add	r0, sp, #0x10
@@ -16577,9 +16574,9 @@ sub_80283A8:
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.L1288:
+.L1286:
 	.align	2, 0
-.L1287:
+.L1285:
 	.word	.LC165
 	.word	.LC167
 	.word	gDodrioBerryPkmnGfx
@@ -16611,21 +16608,21 @@ sub_8028408:
 	mov	r0, sp
 	add	r0, r0, #0x1a
 	strh	r2, [r0]
-	ldr	r0, .L1290
+	ldr	r0, .L1288
 	str	r0, [sp, #0x1c]
-	ldr	r0, .L1290+0x4
+	ldr	r0, .L1288+0x4
 	str	r0, [sp, #0x20]
 	str	r3, [sp, #0x24]
-	ldr	r0, .L1290+0x8
+	ldr	r0, .L1288+0x8
 	str	r0, [sp, #0x28]
-	ldr	r0, .L1290+0xc
+	ldr	r0, .L1288+0xc
 	str	r0, [sp, #0x2c]
 	mov	r0, sp
 	mov	r2, #0x18
 	bl	memcpy
 	mov	r0, #0x4
 	bl	AllocZeroed
-	ldr	r1, .L1290+0x10
+	ldr	r1, .L1288+0x10
 	mov	r2, r8
 	lsl	r4, r2, #0x2
 	add	r4, r4, r1
@@ -16653,9 +16650,9 @@ sub_8028408:
 	pop	{r4, r5, r6}
 	pop	{r0}
 	bx	r0
-.L1291:
+.L1289:
 	.align	2, 0
-.L1290:
+.L1288:
 	.word	sOamData_82FB1E0
 	.word	sSpriteAnimTable_82FB228
 	.word	gDummySpriteAffineAnimTable
@@ -16671,18 +16668,18 @@ sub_80284A8:
 	mov	r2, #0x2e
 	ldrsh	r1, [r0, r2]
 	cmp	r1, #0x1
-	beq	.L1295	@cond_branch
+	beq	.L1293	@cond_branch
 	cmp	r1, #0x1
-	ble	.L1293	@cond_branch
+	ble	.L1291	@cond_branch
 	cmp	r1, #0x2
-	beq	.L1296	@cond_branch
-	b	.L1293
-.L1295:
-	bl	sub_802853C
-	b	.L1293
-.L1296:
-	bl	sub_80285AC
+	beq	.L1294	@cond_branch
+	b	.L1291
 .L1293:
+	bl	sub_802853C
+	b	.L1291
+.L1294:
+	bl	sub_80285AC
+.L1291:
 	pop	{r0}
 	bx	r0
 .Lfe100:
@@ -16693,7 +16690,7 @@ sub_80284A8:
 sub_80284CC:
 	push	{lr}
 	bl	GetMultiplayerId
-	ldr	r1, .L1301
+	ldr	r1, .L1299
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x16
 	add	r0, r0, r1
@@ -16702,7 +16699,7 @@ sub_80284CC:
 	lsl	r0, r1, #0x4
 	add	r0, r0, r1
 	lsl	r0, r0, #0x2
-	ldr	r1, .L1301+0x4
+	ldr	r1, .L1299+0x4
 	add	r0, r0, r1
 	mov	r2, #0x0
 	mov	r1, #0x1
@@ -16713,9 +16710,9 @@ sub_80284CC:
 	strh	r2, [r0, #0x36]
 	pop	{r0}
 	bx	r0
-.L1302:
+.L1300:
 	.align	2, 0
-.L1301:
+.L1299:
 	.word	gUnknown_02022C9C
 	.word	gSprites
 .Lfe101:
@@ -16726,7 +16723,7 @@ sub_80284CC:
 sub_8028504:
 	push	{lr}
 	bl	GetMultiplayerId
-	ldr	r1, .L1304
+	ldr	r1, .L1302
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x16
 	add	r0, r0, r1
@@ -16735,7 +16732,7 @@ sub_8028504:
 	lsl	r0, r1, #0x4
 	add	r0, r0, r1
 	lsl	r0, r0, #0x2
-	ldr	r1, .L1304+0x4
+	ldr	r1, .L1302+0x4
 	add	r0, r0, r1
 	mov	r2, #0x0
 	mov	r1, #0x2
@@ -16746,9 +16743,9 @@ sub_8028504:
 	strh	r2, [r0, #0x36]
 	pop	{r0}
 	bx	r0
-.L1305:
+.L1303:
 	.align	2, 0
-.L1304:
+.L1302:
 	.word	gUnknown_02022C9C
 	.word	gSprites
 .Lfe102:
@@ -16769,26 +16766,26 @@ sub_802853C:
 	asr	r1, r0, #0x1
 	add	r0, r1, #0
 	cmp	r1, #0
-	bge	.L1307	@cond_branch
+	bge	.L1305	@cond_branch
 	add	r0, r1, #0x3
-.L1307:
+.L1305:
 	asr	r0, r0, #0x2
 	lsl	r0, r0, #0x2
 	sub	r0, r1, r0
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	cmp	r2, #0x2
-	ble	.L1308	@cond_branch
+	ble	.L1306	@cond_branch
 	cmp	r0, #0x2
-	bgt	.L1310	@cond_branch
+	bgt	.L1308	@cond_branch
 	cmp	r0, #0x1
-	bge	.L1312	@cond_branch
-.L1310:
+	bge	.L1310	@cond_branch
+.L1308:
 	mov	r0, #0x1
-	b	.L1309
-.L1312:
+	b	.L1307
+.L1310:
 	mov	r0, #0xff
-.L1309:
+.L1307:
 	lsl	r0, r0, #0x18
 	asr	r0, r0, #0x18
 	ldrh	r1, [r4, #0x20]
@@ -16800,7 +16797,7 @@ sub_802853C:
 	lsl	r0, r0, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, #0x27
-	ble	.L1308	@cond_branch
+	ble	.L1306	@cond_branch
 	mov	r0, #0x0
 	strh	r0, [r4, #0x2e]
 	bl	sub_8027650
@@ -16810,7 +16807,7 @@ sub_802853C:
 	mov	r0, #0x0
 	bl	sub_8028F14
 	strh	r0, [r4, #0x20]
-.L1308:
+.L1306:
 	mov	r0, #0x0
 	pop	{r4}
 	pop	{r1}
@@ -16834,9 +16831,9 @@ sub_80285AC:
 	asr	r1, r0, #0x10
 	add	r0, r1, #0
 	cmp	r1, #0
-	bge	.L1316	@cond_branch
+	bge	.L1314	@cond_branch
 	add	r0, r1, #0x3
-.L1316:
+.L1314:
 	asr	r0, r0, #0x2
 	lsl	r0, r0, #0x2
 	sub	r0, r1, r0
@@ -16848,20 +16845,20 @@ sub_80285AC:
 	bl	__modsi3
 	lsl	r0, r0, #0x10
 	cmp	r0, #0
-	bne	.L1317	@cond_branch
+	bne	.L1315	@cond_branch
 	cmp	r4, #0
-	beq	.L1317	@cond_branch
+	beq	.L1315	@cond_branch
 	mov	r0, #0xd4
 	bl	PlaySE
-.L1317:
+.L1315:
 	mov	r1, #0x30
 	ldrsh	r0, [r5, r1]
 	cmp	r0, #0x67
-	ble	.L1318	@cond_branch
+	ble	.L1316	@cond_branch
 	mov	r0, #0x0
 	strh	r0, [r5, #0x2e]
 	mov	r4, #0x0
-.L1318:
+.L1316:
 	bl	GetMultiplayerId
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
@@ -16882,9 +16879,9 @@ sub_8028614:
 	lsr	r5, r0, #0x18
 	mov	r4, #0x0
 	cmp	r4, r5
-	bcs	.L1321	@cond_branch
-	ldr	r6, .L1326
-.L1323:
+	bcs	.L1319	@cond_branch
+	ldr	r6, .L1324
+.L1321:
 	lsl	r0, r4, #0x2
 	add	r0, r0, r6
 	ldr	r0, [r0]
@@ -16892,24 +16889,24 @@ sub_8028614:
 	lsl	r0, r1, #0x4
 	add	r0, r0, r1
 	lsl	r0, r0, #0x2
-	ldr	r1, .L1326+0x4
+	ldr	r1, .L1324+0x4
 	add	r0, r0, r1
 	cmp	r0, #0
-	beq	.L1322	@cond_branch
+	beq	.L1320	@cond_branch
 	bl	DestroySpriteAndFreeResources
-.L1322:
+.L1320:
 	add	r0, r4, #0x1
 	lsl	r0, r0, #0x18
 	lsr	r4, r0, #0x18
 	cmp	r4, r5
-	bcc	.L1323	@cond_branch
-.L1321:
+	bcc	.L1321	@cond_branch
+.L1319:
 	pop	{r4, r5, r6}
 	pop	{r0}
 	bx	r0
-.L1327:
+.L1325:
 	.align	2, 0
-.L1326:
+.L1324:
 	.word	gUnknown_02022C9C
 	.word	gSprites
 .Lfe105:
@@ -16921,8 +16918,8 @@ sub_8028654:
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	lsl	r1, r1, #0x18
-	ldr	r3, .L1329
-	ldr	r2, .L1329+0x4
+	ldr	r3, .L1327
+	ldr	r2, .L1327+0x4
 	lsr	r1, r1, #0x16
 	add	r1, r1, r2
 	ldr	r1, [r1]
@@ -16942,9 +16939,9 @@ sub_8028654:
 	orr	r1, r1, r0
 	strb	r1, [r2]
 	bx	lr
-.L1330:
+.L1328:
 	.align	2, 0
-.L1329:
+.L1327:
 	.word	gSprites
 	.word	gUnknown_02022C9C
 .Lfe106:
@@ -16960,8 +16957,8 @@ sub_802868C:
 	lsr	r5, r1, #0x18
 	mov	r4, #0x0
 	cmp	r4, r5
-	bcs	.L1333	@cond_branch
-.L1335:
+	bcs	.L1331	@cond_branch
+.L1333:
 	add	r0, r6, #0
 	add	r1, r4, #0
 	bl	sub_8028654
@@ -16969,8 +16966,8 @@ sub_802868C:
 	lsl	r0, r0, #0x18
 	lsr	r4, r0, #0x18
 	cmp	r4, r5
-	bcc	.L1335	@cond_branch
-.L1333:
+	bcc	.L1333	@cond_branch
+.L1331:
 	pop	{r4, r5, r6}
 	pop	{r0}
 	bx	r0
@@ -16984,7 +16981,7 @@ sub_80286B4:
 	lsl	r0, r0, #0x18
 	lsl	r1, r1, #0x18
 	lsr	r1, r1, #0x18
-	ldr	r2, .L1338
+	ldr	r2, .L1336
 	lsr	r0, r0, #0x16
 	add	r0, r0, r2
 	ldr	r0, [r0]
@@ -16992,14 +16989,14 @@ sub_80286B4:
 	lsl	r0, r2, #0x4
 	add	r0, r0, r2
 	lsl	r0, r0, #0x2
-	ldr	r2, .L1338+0x4
+	ldr	r2, .L1336+0x4
 	add	r0, r0, r2
 	bl	StartSpriteAnim
 	pop	{r0}
 	bx	r0
-.L1339:
+.L1337:
 	.align	2, 0
-.L1338:
+.L1336:
 	.word	gUnknown_02022C9C
 	.word	gSprites
 .Lfe108:
@@ -17017,11 +17014,11 @@ nullsub_15:
 sub_80286E4:
 	push	{r4, r5, r6, r7, lr}
 	mov	r4, #0x0
-	ldr	r0, .L1347
+	ldr	r0, .L1345
 	mov	ip, r0
 	mov	r6, #0x0
-	ldr	r5, .L1347+0x4
-.L1345:
+	ldr	r5, .L1345+0x4
+.L1343:
 	ldr	r3, [r5]
 	lsl	r1, r4, #0x1
 	add	r0, r3, #0
@@ -17048,13 +17045,13 @@ sub_80286E4:
 	lsl	r0, r0, #0x18
 	lsr	r4, r0, #0x18
 	cmp	r4, #0x9
-	bls	.L1345	@cond_branch
+	bls	.L1343	@cond_branch
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L1348:
+.L1346:
 	.align	2, 0
-.L1347:
+.L1345:
 	.word	gSprites
 	.word	gUnknown_02022CF4
 .Lfe110:
@@ -17086,16 +17083,16 @@ sub_8028734:
 	add	r0, r4, #0
 	bl	AllocZeroed
 	add	r6, r0, #0
-	ldr	r0, .L1356
+	ldr	r0, .L1354
 	ldr	r1, [r0, #0x4]		@ created by thumb_load_double_from_address
 	ldr	r0, [r0]		@ created by thumb_load_double_from_address
 	str	r0, [sp, #0x20]
 	str	r1, [sp, #0x24]
-	ldr	r0, .L1356+0x4
+	ldr	r0, .L1354+0x4
 	add	r1, r6, #0
 	bl	LZ77UnCompWram
 	cmp	r6, #0
-	beq	.L1350	@cond_branch
+	beq	.L1348	@cond_branch
 	str	r6, [sp, #0x18]
 	add	r5, sp, #0x18
 	mov	r0, #0x80
@@ -17103,12 +17100,12 @@ sub_8028734:
 	orr	r0, r0, r4
 	str	r0, [r5, #0x4]
 	mov	r1, sp
-	ldr	r0, .L1356+0x8
+	ldr	r0, .L1354+0x8
 	ldmia	r0!, {r2, r3, r4}
 	stmia	r1!, {r2, r3, r4}
 	ldmia	r0!, {r2, r3, r4}
 	stmia	r1!, {r2, r3, r4}
-	ldr	r4, .L1356+0xc
+	ldr	r4, .L1354+0xc
 	mov	r0, #0x40
 	bl	AllocZeroed
 	str	r0, [r4]
@@ -17117,7 +17114,7 @@ sub_8028734:
 	add	r0, sp, #0x20
 	bl	LoadSpritePalette
 	mov	r4, #0x0
-.L1354:
+.L1352:
 	lsl	r1, r4, #0x14
 	mov	r0, #0xc0
 	lsl	r0, r0, #0xe
@@ -17133,7 +17130,7 @@ sub_8028734:
 	mov	r0, sp
 	mov	r3, #0x0
 	bl	CreateSprite
-	ldr	r1, .L1356+0xc
+	ldr	r1, .L1354+0xc
 	ldr	r1, [r1]
 	lsl	r2, r4, #0x1
 	add	r1, r1, #0x2a
@@ -17145,17 +17142,17 @@ sub_8028734:
 	lsl	r0, r0, #0x18
 	lsr	r4, r0, #0x18
 	cmp	r4, #0x9
-	bls	.L1354	@cond_branch
-.L1350:
+	bls	.L1352	@cond_branch
+.L1348:
 	add	r0, r6, #0
 	bl	Free
 	add	sp, sp, #0x28
 	pop	{r4, r5, r6}
 	pop	{r0}
 	bx	r0
-.L1357:
+.L1355:
 	.align	2, 0
-.L1356:
+.L1354:
 	.word	.LC187
 	.word	gDodrioBerryStatusGfx
 	.word	.LC190
@@ -17168,8 +17165,8 @@ sub_8028734:
 sub_80287E4:
 	push	{r4, r5, lr}
 	mov	r4, #0x0
-.L1362:
-	ldr	r5, .L1365
+.L1360:
+	ldr	r5, .L1363
 	ldr	r0, [r5]
 	lsl	r1, r4, #0x1
 	add	r0, r0, #0x2a
@@ -17178,17 +17175,17 @@ sub_80287E4:
 	lsl	r0, r1, #0x4
 	add	r0, r0, r1
 	lsl	r0, r0, #0x2
-	ldr	r1, .L1365+0x4
+	ldr	r1, .L1363+0x4
 	add	r0, r0, r1
 	cmp	r0, #0
-	beq	.L1361	@cond_branch
+	beq	.L1359	@cond_branch
 	bl	DestroySpriteAndFreeResources
-.L1361:
+.L1359:
 	add	r0, r4, #0x1
 	lsl	r0, r0, #0x18
 	lsr	r4, r0, #0x18
 	cmp	r4, #0x9
-	bls	.L1362	@cond_branch
+	bls	.L1360	@cond_branch
 	ldr	r0, [r5]
 	bl	Free
 	mov	r0, #0x0
@@ -17196,9 +17193,9 @@ sub_80287E4:
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.L1366:
+.L1364:
 	.align	2, 0
-.L1365:
+.L1363:
 	.word	gUnknown_02022CF4
 	.word	gSprites
 .Lfe112:
@@ -17214,9 +17211,9 @@ sub_8028828:
 	add	sp, sp, #-0x4
 	mov	r3, #0x0
 	mov	r6, #0x0
-	ldr	r0, .L1379
+	ldr	r0, .L1377
 	mov	r9, r0
-.L1371:
+.L1369:
 	mov	r7, r9
 	ldr	r2, [r7]
 	lsl	r5, r6, #0x1
@@ -17227,7 +17224,7 @@ sub_8028828:
 	lsl	r0, r1, #0x4
 	add	r0, r0, r1
 	lsl	r0, r0, #0x2
-	ldr	r1, .L1379+0x4
+	ldr	r1, .L1377+0x4
 	add	r4, r0, r1
 	add	r0, r2, #0
 	add	r0, r0, #0x16
@@ -17239,31 +17236,31 @@ sub_8028828:
 	add	r2, r0, r6
 	ldrb	r1, [r2]
 	cmp	r1, #0
-	beq	.L1372	@cond_branch
+	beq	.L1370	@cond_branch
 	mov	r7, #0x22
 	ldrsh	r0, [r4, r7]
 	cmp	r0, #0x8
-	beq	.L1370	@cond_branch
-.L1372:
+	beq	.L1368	@cond_branch
+.L1370:
 	mov	r3, #0x1
 	mov	r7, #0x22
 	ldrsh	r0, [r4, r7]
 	cmp	r0, #0x8
-	bne	.L1373	@cond_branch
+	bne	.L1371	@cond_branch
 	cmp	r1, #0
-	bne	.L1370	@cond_branch
+	bne	.L1368	@cond_branch
 	strb	r3, [r2]
 	mov	r1, r9
 	ldr	r0, [r1]
 	add	r0, r0, #0x16
 	add	r0, r0, r5
-	ldr	r1, .L1379+0x8
+	ldr	r1, .L1377+0x8
 	strh	r1, [r0]
 	mov	r0, #0x24
 	str	r3, [sp]
 	bl	PlaySE
 	ldr	r3, [sp]
-.L1373:
+.L1371:
 	mov	r7, r9
 	ldr	r0, [r7]
 	add	r0, r0, #0x16
@@ -17272,25 +17269,25 @@ sub_8028828:
 	ldrh	r1, [r4, #0x22]
 	add	r0, r0, r1
 	strh	r0, [r4, #0x22]
-.L1370:
+.L1368:
 	add	r0, r6, #0x1
 	lsl	r0, r0, #0x18
 	lsr	r6, r0, #0x18
 	cmp	r6, #0x9
-	bls	.L1371	@cond_branch
+	bls	.L1369	@cond_branch
 	cmp	r3, #0
-	bne	.L1376	@cond_branch
+	bne	.L1374	@cond_branch
 	mov	r0, #0x1
-	b	.L1378
-.L1380:
+	b	.L1376
+.L1378:
 	.align	2, 0
-.L1379:
+.L1377:
 	.word	gUnknown_02022CF4
 	.word	gSprites
 	.word	0xfff0
-.L1376:
+.L1374:
 	mov	r0, #0x0
-.L1378:
+.L1376:
 	add	sp, sp, #0x4
 	pop	{r3, r4}
 	mov	r8, r3
@@ -17308,10 +17305,10 @@ sub_80288D4:
 	lsl	r0, r0, #0x18
 	lsr	r5, r0, #0x18
 	cmp	r5, #0xa
-	bls	.L1382	@cond_branch
+	bls	.L1380	@cond_branch
 	mov	r4, #0x0
-.L1386:
-	ldr	r0, .L1406
+.L1384:
+	ldr	r0, .L1404
 	ldr	r0, [r0]
 	lsl	r1, r4, #0x1
 	add	r0, r0, #0x2a
@@ -17320,7 +17317,7 @@ sub_80288D4:
 	lsl	r0, r1, #0x4
 	add	r0, r0, r1
 	lsl	r0, r0, #0x2
-	ldr	r1, .L1406+0x4
+	ldr	r1, .L1404+0x4
 	add	r0, r0, r1
 	mov	r1, #0x1
 	bl	StartSpriteAnim
@@ -17328,26 +17325,26 @@ sub_80288D4:
 	lsl	r0, r0, #0x18
 	lsr	r4, r0, #0x18
 	cmp	r4, #0x9
-	bls	.L1386	@cond_branch
-	b	.L1388
-.L1407:
+	bls	.L1384	@cond_branch
+	b	.L1386
+.L1405:
 	.align	2, 0
-.L1406:
+.L1404:
 	.word	gUnknown_02022CF4
 	.word	gSprites
-.L1382:
+.L1380:
 	mov	r4, #0x0
 	mov	r0, #0xa
 	sub	r0, r0, r5
 	cmp	r4, r0
-	bge	.L1405	@cond_branch
-	ldr	r6, .L1408
-.L1392:
+	bge	.L1403	@cond_branch
+	ldr	r6, .L1406
+.L1390:
 	cmp	r5, #0x6
-	bls	.L1393	@cond_branch
-	ldr	r0, .L1408+0x4
+	bls	.L1391	@cond_branch
+	ldr	r0, .L1406+0x4
 	ldr	r2, [r0]
-	ldr	r1, .L1408+0x8
+	ldr	r1, .L1406+0x8
 	add	r0, r1, #0
 	ldrh	r1, [r2, #0x3e]
 	add	r0, r0, r1
@@ -17357,18 +17354,18 @@ sub_80288D4:
 	lsl	r0, r0, #0x10
 	lsr	r0, r0, #0x10
 	cmp	r0, #0x1e
-	bls	.L1394	@cond_branch
+	bls	.L1392	@cond_branch
 	strh	r1, [r2, #0x3e]
-	b	.L1391
-.L1409:
+	b	.L1389
+.L1407:
 	.align	2, 0
-.L1408:
+.L1406:
 	.word	gSprites
 	.word	gUnknown_02022CF4
 	.word	0xfffa
-.L1394:
+.L1392:
 	cmp	r0, #0xa
-	bls	.L1396	@cond_branch
+	bls	.L1394	@cond_branch
 	lsl	r1, r4, #0x1
 	add	r0, r2, #0
 	add	r0, r0, #0x2a
@@ -17380,8 +17377,8 @@ sub_80288D4:
 	add	r0, r0, r6
 	mov	r1, #0x2
 	bl	StartSpriteAnim
-	b	.L1391
-.L1396:
+	b	.L1389
+.L1394:
 	lsl	r1, r4, #0x1
 	add	r0, r2, #0
 	add	r0, r0, #0x2a
@@ -17393,9 +17390,9 @@ sub_80288D4:
 	add	r0, r0, r6
 	mov	r1, #0x0
 	bl	StartSpriteAnim
-	b	.L1391
-.L1393:
-	ldr	r0, .L1410
+	b	.L1389
+.L1391:
+	ldr	r0, .L1408
 	ldr	r0, [r0]
 	lsl	r1, r4, #0x1
 	add	r0, r0, #0x2a
@@ -17407,21 +17404,21 @@ sub_80288D4:
 	add	r0, r0, r6
 	mov	r1, #0x0
 	bl	StartSpriteAnim
-.L1391:
+.L1389:
 	add	r0, r4, #0x1
 	lsl	r0, r0, #0x18
 	lsr	r4, r0, #0x18
 	mov	r0, #0xa
 	sub	r0, r0, r5
 	cmp	r4, r0
-	blt	.L1392	@cond_branch
-	b	.L1405
-.L1411:
+	blt	.L1390	@cond_branch
+	b	.L1403
+.L1409:
 	.align	2, 0
-.L1410:
+.L1408:
 	.word	gUnknown_02022CF4
-.L1403:
-	ldr	r0, .L1412
+.L1401:
+	ldr	r0, .L1410
 	ldr	r0, [r0]
 	lsl	r1, r4, #0x1
 	add	r0, r0, #0x2a
@@ -17430,23 +17427,23 @@ sub_80288D4:
 	lsl	r0, r1, #0x4
 	add	r0, r0, r1
 	lsl	r0, r0, #0x2
-	ldr	r1, .L1412+0x4
+	ldr	r1, .L1410+0x4
 	add	r0, r0, r1
 	mov	r1, #0x1
 	bl	StartSpriteAnim
 	add	r0, r4, #0x1
 	lsl	r0, r0, #0x18
 	lsr	r4, r0, #0x18
-.L1405:
+.L1403:
 	cmp	r4, #0x9
-	bls	.L1403	@cond_branch
-.L1388:
+	bls	.L1401	@cond_branch
+.L1386:
 	pop	{r4, r5, r6}
 	pop	{r0}
 	bx	r0
-.L1413:
+.L1411:
 	.align	2, 0
-.L1412:
+.L1410:
 	.word	gUnknown_02022CF4
 	.word	gSprites
 .Lfe114:
@@ -17459,14 +17456,14 @@ sub_80289E8:
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	mov	r3, #0x0
-	ldr	r7, .L1420
+	ldr	r7, .L1418
 	mov	r1, #0x1
 	and	r0, r0, r1
 	lsl	r4, r0, #0x2
 	mov	r6, #0x5
 	neg	r6, r6
-	ldr	r5, .L1420+0x4
-.L1418:
+	ldr	r5, .L1418+0x4
+.L1416:
 	ldr	r0, [r5]
 	lsl	r1, r3, #0x1
 	add	r0, r0, #0x2a
@@ -17486,13 +17483,13 @@ sub_80289E8:
 	lsl	r0, r0, #0x18
 	lsr	r3, r0, #0x18
 	cmp	r3, #0x9
-	bls	.L1418	@cond_branch
+	bls	.L1416	@cond_branch
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L1421:
+.L1419:
 	.align	2, 0
-.L1420:
+.L1418:
 	.word	gSprites
 	.word	gUnknown_02022CF4
 .Lfe115:
@@ -17530,16 +17527,16 @@ sub_8028A34:
 	add	r0, r5, #0
 	bl	AllocZeroed
 	add	r4, r0, #0
-	ldr	r0, .L1424
+	ldr	r0, .L1422
 	ldr	r1, [r0, #0x4]		@ created by thumb_load_double_from_address
 	ldr	r0, [r0]		@ created by thumb_load_double_from_address
 	str	r0, [sp, #0x8]
 	str	r1, [sp, #0xc]
-	ldr	r0, .L1424+0x4
+	ldr	r0, .L1422+0x4
 	add	r1, r4, #0
 	bl	LZ77UnCompWram
 	cmp	r4, #0
-	beq	.L1423	@cond_branch
+	beq	.L1421	@cond_branch
 	str	r4, [sp]
 	mov	r0, #0x80
 	lsl	r0, r0, #0xa
@@ -17547,7 +17544,7 @@ sub_8028A34:
 	str	r0, [sp, #0x4]
 	mov	r0, sp
 	bl	LoadSpriteSheet
-.L1423:
+.L1421:
 	add	r0, sp, #0x8
 	bl	LoadSpritePalette
 	add	r0, r4, #0
@@ -17556,9 +17553,9 @@ sub_8028A34:
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.L1425:
+.L1423:
 	.align	2, 0
-.L1424:
+.L1422:
 	.word	.LC203
 	.word	gDodrioBerrySpritesGfx
 .Lfe116:
@@ -17601,24 +17598,24 @@ sub_8028A88:
 	push	{r6, r7}
 	add	sp, sp, #-0x30
 	mov	r1, sp
-	ldr	r0, .L1440
+	ldr	r0, .L1438
 	ldmia	r0!, {r2, r3, r4}
 	stmia	r1!, {r2, r3, r4}
 	ldmia	r0!, {r2, r3, r5}
 	stmia	r1!, {r2, r3, r5}
 	add	r2, sp, #0x18
 	add	r1, r2, #0
-	ldr	r0, .L1440+0x4
+	ldr	r0, .L1438+0x4
 	ldmia	r0!, {r3, r4, r5}
 	stmia	r1!, {r3, r4, r5}
 	ldmia	r0!, {r3, r4, r5}
 	stmia	r1!, {r3, r4, r5}
 	mov	r5, #0x0
 	mov	r9, r2
-.L1430:
+.L1428:
 	mov	r0, #0x4
 	bl	AllocZeroed
-	ldr	r1, .L1440+0x8
+	ldr	r1, .L1438+0x8
 	lsl	r4, r5, #0x2
 	add	r4, r4, r1
 	str	r0, [r4]
@@ -17640,12 +17637,12 @@ sub_8028A88:
 	lsl	r0, r0, #0x18
 	lsr	r5, r0, #0x18
 	cmp	r5, #0xa
-	bls	.L1430	@cond_branch
+	bls	.L1428	@cond_branch
 	mov	r5, #0x0
-	ldr	r7, .L1440+0xc
-	ldr	r4, .L1440+0x10
+	ldr	r7, .L1438+0xc
+	ldr	r4, .L1438+0x10
 	mov	r8, r4
-.L1435:
+.L1433:
 	mov	r0, #0x4
 	bl	AllocZeroed
 	lsl	r1, r5, #0x2
@@ -17653,7 +17650,7 @@ sub_8028A88:
 	str	r0, [r4]
 	add	r6, r1, #0
 	cmp	r5, #0x3
-	bne	.L1436	@cond_branch
+	bne	.L1434	@cond_branch
 	mov	r0, r8
 	mov	r2, #0x6
 	ldrsh	r1, [r0, r2]
@@ -17662,16 +17659,16 @@ sub_8028A88:
 	mov	r3, #0x0
 	bl	CreateSprite
 	ldr	r1, [r7, #0xc]
-	b	.L1439
-.L1441:
+	b	.L1437
+.L1439:
 	.align	2, 0
-.L1440:
+.L1438:
 	.word	.LC206
 	.word	.LC208
 	.word	gUnknown_02022CB8
 	.word	gUnknown_02022CE4
 	.word	gUnknown_082FB31C
-.L1436:
+.L1434:
 	lsl	r0, r5, #0x1
 	add	r0, r0, r8
 	mov	r3, #0x0
@@ -17681,7 +17678,7 @@ sub_8028A88:
 	mov	r3, #0x0
 	bl	CreateSprite
 	ldr	r1, [r4]
-.L1439:
+.L1437:
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	strh	r0, [r1]
@@ -17691,7 +17688,7 @@ sub_8028A88:
 	lsl	r0, r1, #0x4
 	add	r0, r0, r1
 	lsl	r0, r0, #0x2
-	ldr	r1, .L1442
+	ldr	r1, .L1440
 	add	r0, r0, r1
 	add	r1, r5, #0
 	bl	StartSpriteAnim
@@ -17699,7 +17696,7 @@ sub_8028A88:
 	lsl	r0, r0, #0x18
 	lsr	r5, r0, #0x18
 	cmp	r5, #0x3
-	bls	.L1435	@cond_branch
+	bls	.L1433	@cond_branch
 	mov	r0, #0x1
 	bl	sub_8028C30
 	add	sp, sp, #0x30
@@ -17709,9 +17706,9 @@ sub_8028A88:
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L1443:
+.L1441:
 	.align	2, 0
-.L1442:
+.L1440:
 	.word	gSprites
 .Lfe117:
 	.size	 sub_8028A88,.Lfe117-sub_8028A88
@@ -17721,8 +17718,8 @@ sub_8028A88:
 sub_8028B80:
 	push	{r4, r5, r6, lr}
 	mov	r5, #0x0
-	ldr	r6, .L1457
-.L1448:
+	ldr	r6, .L1455
+.L1446:
 	lsl	r0, r5, #0x2
 	add	r4, r0, r6
 	ldr	r0, [r4]
@@ -17730,12 +17727,12 @@ sub_8028B80:
 	lsl	r0, r1, #0x4
 	add	r0, r0, r1
 	lsl	r0, r0, #0x2
-	ldr	r1, .L1457+0x4
+	ldr	r1, .L1455+0x4
 	add	r0, r0, r1
 	cmp	r0, #0
-	beq	.L1449	@cond_branch
+	beq	.L1447	@cond_branch
 	bl	DestroySprite
-.L1449:
+.L1447:
 	ldr	r0, [r4]
 	bl	Free
 	mov	r0, #0x0
@@ -17744,10 +17741,10 @@ sub_8028B80:
 	lsl	r0, r0, #0x18
 	lsr	r5, r0, #0x18
 	cmp	r5, #0xa
-	bls	.L1448	@cond_branch
+	bls	.L1446	@cond_branch
 	mov	r5, #0x0
-	ldr	r6, .L1457+0x8
-.L1454:
+	ldr	r6, .L1455+0x8
+.L1452:
 	lsl	r0, r5, #0x2
 	add	r4, r0, r6
 	ldr	r0, [r4]
@@ -17755,12 +17752,12 @@ sub_8028B80:
 	lsl	r0, r1, #0x4
 	add	r0, r0, r1
 	lsl	r0, r0, #0x2
-	ldr	r1, .L1457+0x4
+	ldr	r1, .L1455+0x4
 	add	r0, r0, r1
 	cmp	r0, #0
-	beq	.L1455	@cond_branch
+	beq	.L1453	@cond_branch
 	bl	DestroySprite
-.L1455:
+.L1453:
 	ldr	r0, [r4]
 	bl	Free
 	mov	r0, #0x0
@@ -17769,13 +17766,13 @@ sub_8028B80:
 	lsl	r0, r0, #0x18
 	lsr	r5, r0, #0x18
 	cmp	r5, #0x3
-	bls	.L1454	@cond_branch
+	bls	.L1452	@cond_branch
 	pop	{r4, r5, r6}
 	pop	{r0}
 	bx	r0
-.L1458:
+.L1456:
 	.align	2, 0
-.L1457:
+.L1455:
 	.word	gUnknown_02022CB8
 	.word	gSprites
 	.word	gUnknown_02022CE4
@@ -17788,8 +17785,8 @@ sub_8028BF8:
 	lsl	r0, r0, #0x18
 	lsl	r1, r1, #0x18
 	lsr	r1, r1, #0x18
-	ldr	r3, .L1460
-	ldr	r2, .L1460+0x4
+	ldr	r3, .L1458
+	ldr	r2, .L1458+0x4
 	lsr	r0, r0, #0x16
 	add	r0, r0, r2
 	ldr	r0, [r0]
@@ -17809,9 +17806,9 @@ sub_8028BF8:
 	orr	r0, r0, r1
 	strb	r0, [r2]
 	bx	lr
-.L1461:
+.L1459:
 	.align	2, 0
-.L1460:
+.L1458:
 	.word	gSprites
 	.word	gUnknown_02022CB8
 .Lfe119:
@@ -17824,14 +17821,14 @@ sub_8028C30:
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	mov	r3, #0x0
-	ldr	r7, .L1468
-	ldr	r6, .L1468+0x4
+	ldr	r7, .L1466
+	ldr	r6, .L1466+0x4
 	mov	r1, #0x1
 	and	r0, r0, r1
 	lsl	r4, r0, #0x2
 	mov	r5, #0x5
 	neg	r5, r5
-.L1466:
+.L1464:
 	lsl	r0, r3, #0x2
 	add	r0, r0, r6
 	ldr	r0, [r0]
@@ -17850,13 +17847,13 @@ sub_8028C30:
 	lsl	r0, r0, #0x18
 	lsr	r3, r0, #0x18
 	cmp	r3, #0x3
-	bls	.L1466	@cond_branch
+	bls	.L1464	@cond_branch
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L1469:
+.L1467:
 	.align	2, 0
-.L1468:
+.L1466:
 	.word	gSprites
 	.word	gUnknown_02022CE4
 .Lfe120:
@@ -17867,8 +17864,8 @@ sub_8028C30:
 sub_8028C7C:
 	lsl	r0, r0, #0x18
 	lsl	r1, r1, #0x18
-	ldr	r3, .L1471
-	ldr	r2, .L1471+0x4
+	ldr	r3, .L1469
+	ldr	r2, .L1469+0x4
 	lsr	r0, r0, #0x16
 	add	r0, r0, r2
 	ldr	r0, [r0]
@@ -17880,9 +17877,9 @@ sub_8028C7C:
 	lsr	r1, r1, #0x15
 	strh	r1, [r0, #0x22]
 	bx	lr
-.L1472:
+.L1470:
 	.align	2, 0
-.L1471:
+.L1469:
 	.word	gSprites
 	.word	gUnknown_02022CB8
 .Lfe121:
@@ -17895,7 +17892,7 @@ sub_8028CA4:
 	lsl	r0, r0, #0x10
 	lsl	r1, r1, #0x18
 	lsr	r1, r1, #0x18
-	ldr	r2, .L1474
+	ldr	r2, .L1472
 	lsr	r0, r0, #0xe
 	add	r0, r0, r2
 	ldr	r0, [r0]
@@ -17903,14 +17900,14 @@ sub_8028CA4:
 	lsl	r0, r2, #0x4
 	add	r0, r0, r2
 	lsl	r0, r0, #0x2
-	ldr	r2, .L1474+0x4
+	ldr	r2, .L1472+0x4
 	add	r0, r0, r2
 	bl	StartSpriteAnim
 	pop	{r0}
 	bx	r0
-.L1475:
+.L1473:
 	.align	2, 0
-.L1474:
+.L1472:
 	.word	gUnknown_02022CB8
 	.word	gSprites
 .Lfe122:
@@ -17921,7 +17918,7 @@ sub_8028CA4:
 sub_8028CD0:
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
-	ldr	r1, .L1477
+	ldr	r1, .L1475
 	lsl	r2, r0, #0x4
 	add	r2, r2, r0
 	lsl	r2, r2, #0x2
@@ -17934,9 +17931,9 @@ sub_8028CD0:
 	mov	r0, #0x32
 	strh	r0, [r2, #0x22]
 	bx	lr
-.L1478:
+.L1476:
 	.align	2, 0
-.L1477:
+.L1475:
 	.word	gSprites
 .Lfe123:
 	.size	 sub_8028CD0,.Lfe123-sub_8028CD0
@@ -17956,12 +17953,12 @@ sub_8028CF4:
 	mov	r1, #0x0
 	ldrsh	r0, [r0, r1]
 	cmp	r0, #0x1
-	beq	.L1480	@cond_branch
+	beq	.L1478	@cond_branch
 	mov	r3, #0x0
-	ldr	r7, .L1487
-	ldr	r6, .L1487+0x4
+	ldr	r7, .L1485
+	ldr	r6, .L1485+0x4
 	mov	r5, #0x0
-.L1484:
+.L1482:
 	lsl	r0, r3, #0x2
 	add	r2, r0, r6
 	ldr	r1, [r2]
@@ -17973,25 +17970,25 @@ sub_8028CF4:
 	lsr	r0, r0, #0x10
 	ldrb	r1, [r1]
 	cmp	r0, r1
-	bls	.L1483	@cond_branch
+	bls	.L1481	@cond_branch
 	ldrh	r0, [r4, #0x20]
 	sub	r0, r0, #0x1
 	strh	r0, [r4, #0x20]
 	ldr	r0, [r2]
 	strh	r5, [r0, #0x2]
-.L1483:
+.L1481:
 	add	r0, r3, #0x1
 	lsl	r0, r0, #0x18
 	lsr	r3, r0, #0x18
 	cmp	r3, #0x1
-	bls	.L1484	@cond_branch
-.L1480:
+	bls	.L1482	@cond_branch
+.L1478:
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L1488:
+.L1486:
 	.align	2, 0
-.L1487:
+.L1485:
 	.word	array.372
 	.word	gUnknown_02022CB0
 .Lfe124:
@@ -18034,16 +18031,16 @@ sub_8028D44:
 	add	r0, r4, #0
 	bl	AllocZeroed
 	add	r6, r0, #0
-	ldr	r0, .L1496
+	ldr	r0, .L1494
 	ldr	r1, [r0, #0x4]		@ created by thumb_load_double_from_address
 	ldr	r0, [r0]		@ created by thumb_load_double_from_address
 	str	r0, [sp, #0x20]
 	str	r1, [sp, #0x24]
-	ldr	r0, .L1496+0x4
+	ldr	r0, .L1494+0x4
 	add	r1, r6, #0
 	bl	LZ77UnCompWram
 	cmp	r6, #0
-	beq	.L1490	@cond_branch
+	beq	.L1488	@cond_branch
 	str	r6, [sp, #0x18]
 	add	r0, sp, #0x18
 	mov	r1, #0xa0
@@ -18051,7 +18048,7 @@ sub_8028D44:
 	orr	r1, r1, r4
 	str	r1, [r0, #0x4]
 	mov	r2, sp
-	ldr	r1, .L1496+0x8
+	ldr	r1, .L1494+0x8
 	ldmia	r1!, {r3, r4, r5}
 	stmia	r2!, {r3, r4, r5}
 	ldmia	r1!, {r3, r4, r5}
@@ -18060,12 +18057,12 @@ sub_8028D44:
 	add	r0, sp, #0x20
 	bl	LoadSpritePalette
 	mov	r5, #0x0
-	ldr	r7, .L1496+0xc
+	ldr	r7, .L1494+0xc
 	add	r0, r7, #0x2
 	mov	r9, r0
-	ldr	r1, .L1496+0x10
+	ldr	r1, .L1494+0x10
 	mov	r8, r1
-.L1494:
+.L1492:
 	mov	r0, #0x4
 	bl	AllocZeroed
 	lsl	r2, r5, #0x2
@@ -18089,8 +18086,8 @@ sub_8028D44:
 	lsl	r0, r0, #0x18
 	lsr	r5, r0, #0x18
 	cmp	r5, #0x1
-	bls	.L1494	@cond_branch
-.L1490:
+	bls	.L1492	@cond_branch
+.L1488:
 	add	r0, r6, #0
 	bl	Free
 	add	sp, sp, #0x28
@@ -18100,9 +18097,9 @@ sub_8028D44:
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L1497:
+.L1495:
 	.align	2, 0
-.L1496:
+.L1494:
 	.word	.LC232
 	.word	gDodrioBerryPlatformGfx
 	.word	.LC235
@@ -18116,13 +18113,13 @@ sub_8028D44:
 sub_8028DFC:
 	push	{r4, r5, r6, r7, lr}
 	mov	r3, #0x0
-	ldr	r0, .L1504
+	ldr	r0, .L1502
 	mov	ip, r0
-	ldr	r4, .L1504+0x4
+	ldr	r4, .L1502+0x4
 	add	r7, r4, #0x2
-	ldr	r6, .L1504+0x8
+	ldr	r6, .L1502+0x8
 	mov	r5, #0x1
-.L1502:
+.L1500:
 	lsl	r2, r3, #0x2
 	mov	r1, ip
 	add	r0, r2, r1
@@ -18145,13 +18142,13 @@ sub_8028DFC:
 	lsl	r0, r0, #0x18
 	lsr	r3, r0, #0x18
 	cmp	r3, #0x1
-	bls	.L1502	@cond_branch
+	bls	.L1500	@cond_branch
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L1505:
+.L1503:
 	.align	2, 0
-.L1504:
+.L1502:
 	.word	gUnknown_02022CB0
 	.word	gUnknown_082FB356
 	.word	gSprites
@@ -18163,10 +18160,10 @@ sub_8028DFC:
 sub_8028E4C:
 	push	{r4, r5, lr}
 	mov	r2, #0x0
-	ldr	r5, .L1512
-	ldr	r4, .L1512+0x4
+	ldr	r5, .L1510
+	ldr	r4, .L1510+0x4
 	mov	r3, #0x0
-.L1510:
+.L1508:
 	lsl	r0, r2, #0x2
 	add	r0, r0, r5
 	ldr	r0, [r0]
@@ -18181,13 +18178,13 @@ sub_8028E4C:
 	lsl	r0, r0, #0x18
 	lsr	r2, r0, #0x18
 	cmp	r2, #0x1
-	bls	.L1510	@cond_branch
+	bls	.L1508	@cond_branch
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.L1513:
+.L1511:
 	.align	2, 0
-.L1512:
+.L1510:
 	.word	gUnknown_02022CB0
 	.word	gSprites
 .Lfe127:
@@ -18198,8 +18195,8 @@ sub_8028E4C:
 sub_8028E84:
 	push	{r4, r5, r6, lr}
 	mov	r5, #0x0
-	ldr	r6, .L1521
-.L1518:
+	ldr	r6, .L1519
+.L1516:
 	lsl	r0, r5, #0x2
 	add	r4, r0, r6
 	ldr	r0, [r4]
@@ -18207,12 +18204,12 @@ sub_8028E84:
 	lsl	r0, r1, #0x4
 	add	r0, r0, r1
 	lsl	r0, r0, #0x2
-	ldr	r1, .L1521+0x4
+	ldr	r1, .L1519+0x4
 	add	r0, r0, r1
 	cmp	r0, #0
-	beq	.L1519	@cond_branch
+	beq	.L1517	@cond_branch
 	bl	DestroySprite
-.L1519:
+.L1517:
 	ldr	r0, [r4]
 	bl	Free
 	mov	r0, #0x0
@@ -18221,13 +18218,13 @@ sub_8028E84:
 	lsl	r0, r0, #0x18
 	lsr	r5, r0, #0x18
 	cmp	r5, #0x1
-	bls	.L1518	@cond_branch
+	bls	.L1516	@cond_branch
 	pop	{r4, r5, r6}
 	pop	{r0}
 	bx	r0
-.L1522:
+.L1520:
 	.align	2, 0
-.L1521:
+.L1519:
 	.word	gUnknown_02022CB0
 	.word	gSprites
 .Lfe128:
@@ -18240,14 +18237,14 @@ sub_8028EC8:
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	mov	r3, #0x0
-	ldr	r7, .L1529
-	ldr	r6, .L1529+0x4
+	ldr	r7, .L1527
+	ldr	r6, .L1527+0x4
 	mov	r1, #0x1
 	and	r0, r0, r1
 	lsl	r4, r0, #0x2
 	mov	r5, #0x5
 	neg	r5, r5
-.L1527:
+.L1525:
 	lsl	r0, r3, #0x2
 	add	r0, r0, r6
 	ldr	r0, [r0]
@@ -18266,13 +18263,13 @@ sub_8028EC8:
 	lsl	r0, r0, #0x18
 	lsr	r3, r0, #0x18
 	cmp	r3, #0x1
-	bls	.L1527	@cond_branch
+	bls	.L1525	@cond_branch
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L1530:
+.L1528:
 	.align	2, 0
-.L1529:
+.L1527:
 	.word	gSprites
 	.word	gUnknown_02022CB0
 .Lfe129:
@@ -18289,8 +18286,72 @@ sub_8028F14:
 	mov	r3, #0x0
 	sub	r0, r1, #0x1
 	cmp	r0, #0x4
-	bhi	.L1532	@cond_branch
+	bhi	.L1530	@cond_branch
 	lsl	r0, r0, #0x2
+	ldr	r1, .L1566
+	add	r0, r0, r1
+	ldr	r0, [r0]
+	mov	pc, r0
+.L1567:
+	.align	2, 0
+.L1566:
+	.word	.L1564
+	.align	2, 0
+	.align	2, 0
+.L1564:
+	.word	.L1557
+	.word	.L1532
+	.word	.L1538
+	.word	.L1546
+	.word	.L1555
+.L1532:
+	cmp	r2, #0
+	beq	.L1548	@cond_branch
+	cmp	r2, #0x1
+	bne	.L1530	@cond_branch
+	b	.L1549
+.L1538:
+	cmp	r2, #0x1
+	beq	.L1558	@cond_branch
+	cmp	r2, #0x1
+	bgt	.L1545	@cond_branch
+	cmp	r2, #0
+	beq	.L1557	@cond_branch
+	b	.L1530
+.L1545:
+	cmp	r2, #0x2
+	bne	.L1530	@cond_branch
+	b	.L1561
+.L1546:
+	cmp	r2, #0x1
+	beq	.L1549	@cond_branch
+	cmp	r2, #0x1
+	bgt	.L1554	@cond_branch
+	cmp	r2, #0
+	beq	.L1548	@cond_branch
+	b	.L1530
+.L1554:
+	cmp	r2, #0x2
+	beq	.L1550	@cond_branch
+	cmp	r2, #0x3
+	beq	.L1551	@cond_branch
+	b	.L1530
+.L1548:
+	mov	r3, #0xc
+	b	.L1530
+.L1549:
+	mov	r3, #0x12
+	b	.L1530
+.L1550:
+	mov	r3, #0x18
+	b	.L1530
+.L1551:
+	mov	r3, #0x6
+	b	.L1530
+.L1555:
+	cmp	r2, #0x4
+	bhi	.L1530	@cond_branch
+	lsl	r0, r2, #0x2
 	ldr	r1, .L1568
 	add	r0, r0, r1
 	ldr	r0, [r0]
@@ -18298,94 +18359,30 @@ sub_8028F14:
 .L1569:
 	.align	2, 0
 .L1568:
-	.word	.L1566
+	.word	.L1562
 	.align	2, 0
 	.align	2, 0
-.L1566:
-	.word	.L1559
-	.word	.L1534
-	.word	.L1540
-	.word	.L1548
+.L1562:
 	.word	.L1557
-.L1534:
-	cmp	r2, #0
-	beq	.L1550	@cond_branch
-	cmp	r2, #0x1
-	bne	.L1532	@cond_branch
-	b	.L1551
-.L1540:
-	cmp	r2, #0x1
-	beq	.L1560	@cond_branch
-	cmp	r2, #0x1
-	bgt	.L1547	@cond_branch
-	cmp	r2, #0
-	beq	.L1559	@cond_branch
-	b	.L1532
-.L1547:
-	cmp	r2, #0x2
-	bne	.L1532	@cond_branch
-	b	.L1563
-.L1548:
-	cmp	r2, #0x1
-	beq	.L1551	@cond_branch
-	cmp	r2, #0x1
-	bgt	.L1556	@cond_branch
-	cmp	r2, #0
-	beq	.L1550	@cond_branch
-	b	.L1532
-.L1556:
-	cmp	r2, #0x2
-	beq	.L1552	@cond_branch
-	cmp	r2, #0x3
-	beq	.L1553	@cond_branch
-	b	.L1532
-.L1550:
-	mov	r3, #0xc
-	b	.L1532
-.L1551:
-	mov	r3, #0x12
-	b	.L1532
-.L1552:
-	mov	r3, #0x18
-	b	.L1532
-.L1553:
-	mov	r3, #0x6
-	b	.L1532
-.L1557:
-	cmp	r2, #0x4
-	bhi	.L1532	@cond_branch
-	lsl	r0, r2, #0x2
-	ldr	r1, .L1570
-	add	r0, r0, r1
-	ldr	r0, [r0]
-	mov	pc, r0
-.L1571:
-	.align	2, 0
-.L1570:
-	.word	.L1564
-	.align	2, 0
-	.align	2, 0
-.L1564:
+	.word	.L1558
 	.word	.L1559
 	.word	.L1560
 	.word	.L1561
-	.word	.L1562
-	.word	.L1563
-.L1559:
+.L1557:
 	mov	r3, #0xf
-	b	.L1532
-.L1560:
+	b	.L1530
+.L1558:
 	mov	r3, #0x15
-	b	.L1532
-.L1561:
+	b	.L1530
+.L1559:
 	mov	r3, #0x1b
-	b	.L1532
-.L1562:
+	b	.L1530
+.L1560:
 	mov	r3, #0x3
-	b	.L1532
-.L1563:
+	b	.L1530
+.L1561:
 	mov	r3, #0x9
-.L1532:
+.L1530:
 	lsl	r0, r3, #0x3
 	pop	{r1}
 	bx	r1
@@ -18397,7 +18394,7 @@ sub_8028F14:
 sub_8028FCC:
 	push	{r4, lr}
 	mov	r4, #0x0
-.L1576:
+.L1574:
 	add	r0, r4, #0
 	mov	r1, #0x1
 	bl	sub_8028BF8
@@ -18408,7 +18405,7 @@ sub_8028FCC:
 	lsl	r0, r0, #0x18
 	lsr	r4, r0, #0x18
 	cmp	r4, #0xa
-	bls	.L1576	@cond_branch
+	bls	.L1574	@cond_branch
 	mov	r0, #0x0
 	bl	sub_80289E8
 	pop	{r4}
@@ -18460,14 +18457,14 @@ sub_802902C:
 	.type	 sub_802903C,function
 	.thumb_func
 sub_802903C:
-	ldr	r3, .L1581
+	ldr	r3, .L1579
 	ldr	r0, [r3]
 	mov	r2, #0xc0
 	lsl	r2, r2, #0x6
 	add	r1, r0, r2
 	mov	r2, #0x0
 	str	r2, [r1]
-	ldr	r1, .L1581+0x4
+	ldr	r1, .L1579+0x4
 	add	r0, r0, r1
 	strb	r2, [r0]
 	ldr	r0, [r3]
@@ -18483,9 +18480,9 @@ sub_802903C:
 	add	r0, r0, r1
 	strb	r2, [r0]
 	bx	lr
-.L1582:
+.L1580:
 	.align	2, 0
-.L1581:
+.L1579:
 	.word	gUnknown_02022CF8
 	.word	0x3014
 .Lfe134:
@@ -18745,17 +18742,17 @@ sub_8029174:
 	.thumb_func
 sub_8029274:
 	push	{r4, lr}
-	ldr	r4, .L1586
+	ldr	r4, .L1584
 	str	r0, [r4]
 	mov	r2, #0xc0
 	lsl	r2, r2, #0x6
 	add	r1, r0, r2
 	mov	r2, #0x0
 	str	r2, [r1]
-	ldr	r3, .L1586+0x4
+	ldr	r3, .L1584+0x4
 	add	r1, r0, r3
 	strb	r2, [r1]
-	ldr	r1, .L1586+0x8
+	ldr	r1, .L1584+0x8
 	add	r0, r0, r1
 	strb	r2, [r0]
 	ldr	r0, [r4]
@@ -18766,21 +18763,21 @@ sub_8029274:
 	add	r1, r1, #0xc
 	add	r0, r0, r1
 	strb	r2, [r0]
-	ldr	r0, .L1586+0xc
+	ldr	r0, .L1584+0xc
 	mov	r1, #0x3
 	bl	CreateTask
 	ldr	r1, [r4]
-	ldr	r2, .L1586+0x10
+	ldr	r2, .L1584+0x10
 	add	r1, r1, r2
 	strb	r0, [r1]
-	ldr	r0, .L1586+0x14
+	ldr	r0, .L1584+0x14
 	bl	sub_802A72C
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L1587:
+.L1585:
 	.align	2, 0
-.L1586:
+.L1584:
 	.word	gUnknown_02022CF8
 	.word	0x3014
 	.word	0x3018
@@ -18968,29 +18965,29 @@ sub_80292E0:
 	lsl	r0, r0, #0x18
 	lsr	r6, r0, #0x18
 	mov	r4, #0x0
-	ldr	r5, .L1596
+	ldr	r5, .L1594
 	add	r7, r5, #0x4
-.L1593:
+.L1591:
 	lsl	r1, r4, #0x3
 	add	r0, r1, r5
 	ldrb	r0, [r0]
 	cmp	r0, r6
-	bne	.L1592	@cond_branch
+	bne	.L1590	@cond_branch
 	add	r0, r1, r7
 	ldr	r0, [r0]
 	bl	sub_802A72C
-.L1592:
+.L1590:
 	add	r0, r4, #0x1
 	lsl	r0, r0, #0x18
 	lsr	r4, r0, #0x18
 	cmp	r4, #0x9
-	bls	.L1593	@cond_branch
+	bls	.L1591	@cond_branch
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L1597:
+.L1595:
 	.align	2, 0
-.L1596:
+.L1594:
 	.word	gUnknown_082FB40C
 .Lfe139:
 	.size	 sub_80292E0,.Lfe139-sub_80292E0
@@ -18999,22 +18996,22 @@ sub_80292E0:
 	.thumb_func
 sub_8029314:
 	push	{lr}
-	ldr	r0, .L1600
+	ldr	r0, .L1598
 	ldr	r0, [r0]
 	mov	r1, #0xc0
 	lsl	r1, r1, #0x6
 	add	r0, r0, r1
 	ldr	r0, [r0]
 	cmp	r0, #0
-	bne	.L1599	@cond_branch
+	bne	.L1597	@cond_branch
 	bl	sub_802A75C
 	bl	_call_via_r0
-.L1599:
+.L1597:
 	pop	{r0}
 	bx	r0
-.L1601:
+.L1599:
 	.align	2, 0
-.L1600:
+.L1598:
 	.word	gUnknown_02022CF8
 .Lfe140:
 	.size	 sub_8029314,.Lfe140-sub_8029314
@@ -19023,79 +19020,79 @@ sub_8029314:
 	.thumb_func
 sub_8029338:
 	push	{lr}
-	ldr	r0, .L1614
+	ldr	r0, .L1612
 	ldr	r1, [r0]
-	ldr	r2, .L1614+0x4
+	ldr	r2, .L1612+0x4
 	add	r0, r1, r2
 	ldrb	r0, [r0]
 	cmp	r0, #0x4
-	bhi	.L1610	@cond_branch
+	bhi	.L1608	@cond_branch
 	lsl	r0, r0, #0x2
-	ldr	r1, .L1614+0x8
+	ldr	r1, .L1612+0x8
 	add	r0, r0, r1
 	ldr	r0, [r0]
 	mov	pc, r0
+.L1613:
+	.align	2, 0
+.L1612:
+	.word	gUnknown_02022CF8
+	.word	0x3014
+	.word	.L1609
+	.align	2, 0
+	.align	2, 0
+.L1609:
+	.word	.L1602
+	.word	.L1603
+	.word	.L1605
+	.word	.L1606
+	.word	.L1607
+.L1602:
+	bl	sub_802A7A8
+	b	.L1610
+.L1603:
+	bl	sub_802A8E8
+	cmp	r0, #0x1
+	bne	.L1601	@cond_branch
+	ldr	r0, .L1614
+	ldr	r1, [r0]
+	ldr	r2, .L1614+0x4
+	add	r1, r1, r2
+	b	.L1611
 .L1615:
 	.align	2, 0
 .L1614:
 	.word	gUnknown_02022CF8
 	.word	0x3014
-	.word	.L1611
-	.align	2, 0
-	.align	2, 0
-.L1611:
-	.word	.L1604
-	.word	.L1605
-	.word	.L1607
-	.word	.L1608
-	.word	.L1609
-.L1604:
-	bl	sub_802A7A8
-	b	.L1612
 .L1605:
-	bl	sub_802A8E8
-	cmp	r0, #0x1
-	bne	.L1603	@cond_branch
-	ldr	r0, .L1616
-	ldr	r1, [r0]
-	ldr	r2, .L1616+0x4
-	add	r1, r1, r2
-	b	.L1613
+	ldr	r1, .L1616
+	mov	r0, #0x3
+	mov	r2, #0x0
+	mov	r3, #0x0
+	bl	CopyToBgTilemapBuffer
+	ldr	r1, .L1616+0x4
+	mov	r0, #0x1
+	mov	r2, #0x0
+	mov	r3, #0x0
+	bl	CopyToBgTilemapBuffer
+	ldr	r1, .L1616+0x8
+	mov	r0, #0x2
+	mov	r2, #0x0
+	mov	r3, #0x0
+	bl	CopyToBgTilemapBuffer
+	mov	r0, #0x3
+	bl	CopyBgTilemapBufferToVram
+	mov	r0, #0x1
+	bl	CopyBgTilemapBufferToVram
+	mov	r0, #0x2
+	bl	CopyBgTilemapBufferToVram
+	b	.L1610
 .L1617:
 	.align	2, 0
 .L1616:
-	.word	gUnknown_02022CF8
-	.word	0x3014
-.L1607:
-	ldr	r1, .L1618
-	mov	r0, #0x3
-	mov	r2, #0x0
-	mov	r3, #0x0
-	bl	CopyToBgTilemapBuffer
-	ldr	r1, .L1618+0x4
-	mov	r0, #0x1
-	mov	r2, #0x0
-	mov	r3, #0x0
-	bl	CopyToBgTilemapBuffer
-	ldr	r1, .L1618+0x8
-	mov	r0, #0x2
-	mov	r2, #0x0
-	mov	r3, #0x0
-	bl	CopyToBgTilemapBuffer
-	mov	r0, #0x3
-	bl	CopyBgTilemapBufferToVram
-	mov	r0, #0x1
-	bl	CopyBgTilemapBufferToVram
-	mov	r0, #0x2
-	bl	CopyBgTilemapBufferToVram
-	b	.L1612
-.L1619:
-	.align	2, 0
-.L1618:
 	.word	gDodrioBerryBgTilemap1
 	.word	gDodrioBerryBgTilemap2Left
 	.word	gDodrioBerryBgTilemap2Right
-.L1608:
+.L1606:
 	mov	r0, #0x0
 	bl	ShowBg
 	mov	r0, #0x3
@@ -19104,46 +19101,46 @@ sub_8029338:
 	bl	ShowBg
 	mov	r0, #0x2
 	bl	ShowBg
-	ldr	r0, .L1620
+	ldr	r0, .L1618
 	ldr	r1, [r0]
-	ldr	r2, .L1620+0x4
+	ldr	r2, .L1618+0x4
 	add	r1, r1, r2
-	b	.L1613
-.L1621:
+	b	.L1611
+.L1619:
 	.align	2, 0
-.L1620:
+.L1618:
 	.word	gUnknown_02022CF8
 	.word	0x3014
-.L1609:
-	ldr	r0, .L1622
+.L1607:
+	ldr	r0, .L1620
 	ldr	r0, [r0]
 	ldrb	r0, [r0, #0x14]
 	lsr	r0, r0, #0x3
 	bl	sub_8028FF8
 	bl	sub_802902C
-.L1612:
-	ldr	r0, .L1622+0x4
+.L1610:
+	ldr	r0, .L1620+0x4
 	ldr	r1, [r0]
-	ldr	r0, .L1622+0x8
+	ldr	r0, .L1620+0x8
 	add	r1, r1, r0
-.L1613:
+.L1611:
 	ldrb	r0, [r1]
 	add	r0, r0, #0x1
 	strb	r0, [r1]
-	b	.L1603
-.L1623:
+	b	.L1601
+.L1621:
 	.align	2, 0
-.L1622:
+.L1620:
 	.word	gSaveBlock2Ptr
 	.word	gUnknown_02022CF8
 	.word	0x3014
-.L1610:
+.L1608:
 	mov	r2, #0xc0
 	lsl	r2, r2, #0x6
 	add	r1, r1, r2
 	mov	r0, #0x1
 	str	r0, [r1]
-.L1603:
+.L1601:
 	pop	{r0}
 	bx	r0
 .Lfe141:
@@ -19158,52 +19155,52 @@ sub_8029440:
 	mov	r5, r8
 	push	{r5, r6, r7}
 	add	sp, sp, #-0x1c
-	ldr	r4, .L1650
+	ldr	r4, .L1648
 	ldr	r0, [r4]
-	ldr	r2, .L1650+0x4
+	ldr	r2, .L1648+0x4
 	add	r1, r0, r2
 	ldrb	r0, [r1]
 	cmp	r0, #0
-	beq	.L1626	@cond_branch
+	beq	.L1624	@cond_branch
 	cmp	r0, #0x1
-	bne	.LCB13298
-	b	.L1633	@long jump
-.LCB13298:
+	bne	.LCB13293
+	b	.L1631	@long jump
+.LCB13293:
 	add	r0, r0, #0x1
 	strb	r0, [r1]
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	cmp	r0, #0xb4
-	bhi	.LCB13306
-	b	.L1625	@long jump
-.LCB13306:
+	bhi	.LCB13301
+	b	.L1623	@long jump
+.LCB13301:
 	bl	sub_8027650
 	lsl	r0, r0, #0x18
 	lsr	r7, r0, #0x18
 	mov	r6, #0x0
 	cmp	r6, r7
-	bcc	.LCB13313
-	b	.L1643	@long jump
-.LCB13313:
-	b	.L1645
-.L1651:
+	bcc	.LCB13308
+	b	.L1641	@long jump
+.LCB13308:
+	b	.L1643
+.L1649:
 	.align	2, 0
-.L1650:
+.L1648:
 	.word	gUnknown_02022CF8
 	.word	0x3014
-.L1626:
+.L1624:
 	bl	sub_8027650
 	lsl	r0, r0, #0x18
 	lsr	r7, r0, #0x18
-	ldr	r1, .L1652
+	ldr	r1, .L1650
 	sub	r0, r7, #0x1
 	lsl	r0, r0, #0x2
 	add	r0, r0, r1
 	ldr	r5, [r0]
-	ldr	r2, .L1652+0x4
+	ldr	r2, .L1650+0x4
 	ldr	r0, [sp, #0xc]
 	and	r0, r0, r2
-	ldr	r1, .L1652+0x8
+	ldr	r1, .L1650+0x8
 	and	r0, r0, r1
 	mov	r1, #0xe0
 	lsl	r1, r1, #0x13
@@ -19213,12 +19210,12 @@ sub_8029440:
 	and	r0, r0, r2
 	mov	r1, #0x2
 	orr	r0, r0, r1
-	ldr	r1, .L1652+0xc
+	ldr	r1, .L1650+0xc
 	and	r0, r0, r1
 	mov	r1, #0xd0
 	lsl	r1, r1, #0x4
 	orr	r0, r0, r1
-	ldr	r1, .L1652+0x10
+	ldr	r1, .L1650+0x10
 	and	r0, r0, r1
 	mov	r1, #0x98
 	lsl	r1, r1, #0xd
@@ -19226,14 +19223,14 @@ sub_8029440:
 	str	r0, [sp, #0x10]
 	mov	r6, #0x0
 	cmp	r6, r7
-	bcs	.L1628	@cond_branch
+	bcs	.L1626	@cond_branch
 	mov	r3, sp
 	add	r3, r3, #0xc
 	str	r3, [sp, #0x18]
 	mov	sl, r4
-	ldr	r0, .L1652+0x14
+	ldr	r0, .L1650+0x14
 	mov	r9, r0
-.L1630:
+.L1628:
 	mov	r1, #0x0
 	mov	r8, r1
 	add	r0, r6, #0
@@ -19253,14 +19250,14 @@ sub_8029440:
 	str	r1, [sp, #0x14]
 	ldrb	r0, [r5]
 	lsl	r0, r0, #0x8
-	ldr	r2, .L1652+0xc
+	ldr	r2, .L1650+0xc
 	ldr	r1, [sp, #0xc]
 	and	r1, r1, r2
 	orr	r1, r1, r0
 	str	r1, [sp, #0xc]
 	ldrb	r2, [r5, #0x1]
 	lsl	r2, r2, #0x10
-	ldr	r0, .L1652+0x18
+	ldr	r0, .L1650+0x18
 	and	r0, r0, r1
 	orr	r0, r0, r2
 	str	r0, [sp, #0xc]
@@ -19287,10 +19284,10 @@ sub_8029440:
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	cmp	r4, r0
-	bne	.L1631	@cond_branch
+	bne	.L1629	@cond_branch
 	mov	r0, #0x2
 	mov	r8, r0
-.L1631:
+.L1629:
 	add	r0, r4, #0
 	bl	sub_8027660
 	add	r4, r0, #0
@@ -19305,7 +19302,7 @@ sub_8029440:
 	mov	r3, r8
 	lsl	r1, r3, #0x1
 	add	r1, r1, r8
-	ldr	r3, .L1652+0x1c
+	ldr	r3, .L1650+0x1c
 	add	r1, r1, r3
 	str	r1, [sp]
 	mov	r1, #0x1
@@ -19333,16 +19330,16 @@ sub_8029440:
 	lsl	r0, r0, #0x18
 	lsr	r6, r0, #0x18
 	cmp	r6, r7
-	bcc	.L1630	@cond_branch
-.L1628:
-	ldr	r0, .L1652+0x20
+	bcc	.L1628	@cond_branch
+.L1626:
+	ldr	r0, .L1650+0x20
 	ldr	r1, [r0]
-	ldr	r0, .L1652+0x24
+	ldr	r0, .L1650+0x24
 	add	r1, r1, r0
-	b	.L1649
-.L1653:
+	b	.L1647
+.L1651:
 	.align	2, 0
-.L1652:
+.L1650:
 	.word	gUnknown_082FB3C8
 	.word	-0x100
 	.word	0xffffff
@@ -19353,20 +19350,20 @@ sub_8029440:
 	.word	sTextColorTable
 	.word	gUnknown_02022CF8
 	.word	0x3014
-.L1633:
+.L1631:
 	bl	IsDma3ManagerBusyWithBgCopy
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	bne	.L1625	@cond_branch
+	bne	.L1623	@cond_branch
 	bl	sub_8027650
 	lsl	r0, r0, #0x18
 	lsr	r7, r0, #0x18
 	mov	r6, #0x0
 	cmp	r6, r7
-	bcs	.L1636	@cond_branch
-.L1638:
+	bcs	.L1634	@cond_branch
+.L1636:
 	ldr	r0, [r4]
-	ldr	r1, .L1654
+	ldr	r1, .L1652
 	add	r0, r0, r1
 	add	r0, r0, r6
 	ldrb	r0, [r0]
@@ -19375,29 +19372,29 @@ sub_8029440:
 	lsl	r0, r0, #0x18
 	lsr	r6, r0, #0x18
 	cmp	r6, r7
-	bcc	.L1638	@cond_branch
-.L1636:
+	bcc	.L1636	@cond_branch
+.L1634:
 	mov	r0, #0x0
 	bl	CopyBgTilemapBufferToVram
-	ldr	r0, .L1654+0x4
+	ldr	r0, .L1652+0x4
 	ldr	r1, [r0]
-	ldr	r2, .L1654+0x8
+	ldr	r2, .L1652+0x8
 	add	r1, r1, r2
-.L1649:
+.L1647:
 	ldrb	r0, [r1]
 	add	r0, r0, #0x1
 	strb	r0, [r1]
-	b	.L1625
-.L1655:
+	b	.L1623
+.L1653:
 	.align	2, 0
-.L1654:
+.L1652:
 	.word	0x3008
 	.word	gUnknown_02022CF8
 	.word	0x3014
-.L1645:
-	ldr	r5, .L1656
+.L1643:
+	ldr	r5, .L1654
 	ldr	r0, [r5]
-	ldr	r4, .L1656+0x4
+	ldr	r4, .L1654+0x4
 	add	r0, r0, r4
 	add	r0, r0, r6
 	ldrb	r0, [r0]
@@ -19411,8 +19408,8 @@ sub_8029440:
 	lsl	r0, r0, #0x18
 	lsr	r6, r0, #0x18
 	cmp	r6, r7
-	bcc	.L1645	@cond_branch
-.L1643:
+	bcc	.L1643	@cond_branch
+.L1641:
 	mov	r0, #0x1e
 	str	r0, [sp]
 	mov	r0, #0x14
@@ -19424,14 +19421,14 @@ sub_8029440:
 	bl	FillBgTilemapBufferRect_Palette0
 	mov	r0, #0x0
 	bl	CopyBgTilemapBufferToVram
-	ldr	r0, .L1656
+	ldr	r0, .L1654
 	ldr	r0, [r0]
 	mov	r3, #0xc0
 	lsl	r3, r3, #0x6
 	add	r0, r0, r3
 	mov	r1, #0x1
 	str	r1, [r0]
-.L1625:
+.L1623:
 	add	sp, sp, #0x1c
 	pop	{r3, r4, r5}
 	mov	r8, r3
@@ -19440,9 +19437,9 @@ sub_8029440:
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L1657:
+.L1655:
 	.align	2, 0
-.L1656:
+.L1654:
 	.word	gUnknown_02022CF8
 	.word	0x3008
 .Lfe142:
@@ -19471,15 +19468,15 @@ sub_80296A8:
 	mov	r6, #0x0
 	lsr	r7, r0, #0x18
 	add	r4, sp, #0x2c
-	ldr	r1, .L1688
+	ldr	r1, .L1686
 	add	r0, r4, #0
 	mov	r2, #0x5
 	bl	memcpy
 	mov	r5, #0x0
 	cmp	r5, r7
-	bcs	.L1660	@cond_branch
+	bcs	.L1658	@cond_branch
 	add	r4, sp, #0x34
-.L1662:
+.L1660:
 	mov	r0, sp
 	add	r0, r0, r5
 	add	r0, r0, #0x2c
@@ -19497,61 +19494,61 @@ sub_80296A8:
 	lsl	r0, r0, #0x18
 	lsr	r5, r0, #0x18
 	cmp	r5, r7
-	bcc	.L1662	@cond_branch
-.L1660:
+	bcc	.L1660	@cond_branch
+.L1658:
 	bl	sub_8027748
 	cmp	r0, #0
-	beq	.L1664	@cond_branch
-.L1665:
+	beq	.L1662	@cond_branch
+.L1663:
 	mov	r5, #0x0
 	cmp	r5, r7
-	bcs	.L1669	@cond_branch
+	bcs	.L1667	@cond_branch
 	add	r2, sp, #0x34
 	add	r1, sp, #0x2c
-.L1671:
+.L1669:
 	lsl	r0, r5, #0x3
 	add	r0, r2, r0
 	ldrb	r0, [r0]
 	cmp	r0, r8
-	bne	.L1670	@cond_branch
+	bne	.L1668	@cond_branch
 	add	r0, r1, r6
 	strb	r5, [r0]
 	add	r0, r6, #0x1
 	lsl	r0, r0, #0x18
 	lsr	r6, r0, #0x18
-.L1670:
+.L1668:
 	add	r0, r5, #0x1
 	lsl	r0, r0, #0x18
 	lsr	r5, r0, #0x18
 	cmp	r5, r7
-	bcc	.L1671	@cond_branch
-.L1669:
+	bcc	.L1669	@cond_branch
+.L1667:
 	mov	r8, r6
 	cmp	r6, r7
-	bcc	.L1665	@cond_branch
-.L1664:
+	bcc	.L1663	@cond_branch
+.L1662:
 	mov	r5, #0x0
-	ldr	r4, .L1688+0x4
+	ldr	r4, .L1686+0x4
 	cmp	r5, r7
-	bcs	.L1677	@cond_branch
+	bcs	.L1675	@cond_branch
 	add	r1, sp, #0x34
 	add	r6, sp, #0x38
 	sub	r3, r7, #0x1
-.L1679:
+.L1677:
 	lsl	r2, r5, #0x3
 	add	r0, r6, r2
 	ldr	r0, [r0]
 	cmp	r0, #0
-	bne	.L1678	@cond_branch
+	bne	.L1676	@cond_branch
 	add	r0, r1, r2
 	strb	r3, [r0]
-.L1678:
+.L1676:
 	add	r0, r5, #0x1
 	lsl	r0, r0, #0x18
 	lsr	r5, r0, #0x18
 	cmp	r5, r7
-	bcc	.L1679	@cond_branch
-.L1677:
+	bcc	.L1677	@cond_branch
+.L1675:
 	mov	r0, #0x1
 	add	r1, r4, #0
 	mov	r2, #0x0
@@ -19561,13 +19558,13 @@ sub_80296A8:
 	str	r1, [sp, #0x64]
 	mov	r5, #0x0
 	cmp	r5, r7
-	bcs	.L1683	@cond_branch
+	bcs	.L1681	@cond_branch
 	mov	r2, sp
 	add	r2, r2, #0x34
 	str	r2, [sp, #0x68]
-	ldr	r3, .L1688+0x8
+	ldr	r3, .L1686+0x8
 	mov	sl, r3
-.L1685:
+.L1683:
 	mov	r0, #0x0
 	mov	r8, r0
 	mov	r0, sp
@@ -19580,18 +19577,18 @@ sub_80296A8:
 	add	r0, r0, r1
 	ldr	r0, [r0]
 	mov	r9, r0
-	ldr	r2, .L1688+0xc
+	ldr	r2, .L1686+0xc
 	ldr	r0, [r2]
 	add	r0, r0, sl
 	ldrb	r0, [r0]
-	ldr	r2, .L1688+0x10
+	ldr	r2, .L1686+0x10
 	ldr	r3, [sp, #0x68]
 	add	r1, r3, r1
 	ldrb	r1, [r1]
 	lsl	r1, r1, #0x2
 	add	r1, r1, r2
 	ldr	r2, [r1]
-	ldr	r3, .L1688+0x14
+	ldr	r3, .L1686+0x14
 	lsl	r1, r5, #0x1
 	add	r1, r1, r3
 	ldrb	r6, [r1]
@@ -19607,21 +19604,21 @@ sub_80296A8:
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	cmp	r4, r0
-	bne	.L1686	@cond_branch
+	bne	.L1684	@cond_branch
 	mov	r0, #0x2
 	mov	r8, r0
-.L1686:
+.L1684:
 	add	r0, r4, #0
 	bl	sub_8027660
 	add	r3, r0, #0
-	ldr	r1, .L1688+0xc
+	ldr	r1, .L1686+0xc
 	ldr	r0, [r1]
 	add	r0, r0, sl
 	ldrb	r0, [r0]
 	mov	r2, r8
 	lsl	r1, r2, #0x1
 	add	r1, r1, r8
-	ldr	r2, .L1688+0x18
+	ldr	r2, .L1686+0x18
 	add	r1, r1, r2
 	str	r1, [sp]
 	mov	r1, #0x1
@@ -19643,7 +19640,7 @@ sub_80296A8:
 	neg	r2, r2
 	bl	GetStringWidth
 	add	r3, r0, #0
-	ldr	r2, .L1688+0xc
+	ldr	r2, .L1686+0xc
 	ldr	r0, [r2]
 	add	r0, r0, sl
 	ldrb	r0, [r0]
@@ -19659,7 +19656,7 @@ sub_80296A8:
 	mov	r1, #0x1
 	add	r2, sp, #0xc
 	bl	AddTextPrinterParameterized
-	ldr	r2, .L1688+0xc
+	ldr	r2, .L1686+0xc
 	ldr	r0, [r2]
 	add	r0, r0, sl
 	ldrb	r0, [r0]
@@ -19671,15 +19668,15 @@ sub_80296A8:
 	mov	r1, #0x0
 	str	r1, [sp, #0x8]
 	mov	r1, #0x1
-	ldr	r2, .L1688+0x4
+	ldr	r2, .L1686+0x4
 	lsr	r3, r3, #0x18
 	bl	AddTextPrinterParameterized
 	add	r0, r5, #0x1
 	lsl	r0, r0, #0x18
 	lsr	r5, r0, #0x18
 	cmp	r5, r7
-	bcc	.L1685	@cond_branch
-.L1683:
+	bcc	.L1683	@cond_branch
+.L1681:
 	add	sp, sp, #0x6c
 	pop	{r3, r4, r5}
 	mov	r8, r3
@@ -19688,9 +19685,9 @@ sub_80296A8:
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L1689:
+.L1687:
 	.align	2, 0
-.L1688:
+.L1686:
 	.word	.LC270
 	.word	gText_SpacePoints
 	.word	0x3009
@@ -19714,62 +19711,62 @@ sub_802988C:
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	str	r0, [sp, #0xc]
-	ldr	r6, .L1734
+	ldr	r6, .L1732
 	ldr	r1, [r6]
-	ldr	r2, .L1734+0x4
+	ldr	r2, .L1732+0x4
 	add	r0, r1, r2
 	ldrb	r0, [r0]
 	cmp	r0, #0xb
-	bls	.LCB13950
-	b	.L1729	@long jump
-.LCB13950:
+	bls	.LCB13945
+	b	.L1727	@long jump
+.LCB13945:
 	lsl	r0, r0, #0x2
-	ldr	r1, .L1734+0x8
+	ldr	r1, .L1732+0x8
 	add	r0, r0, r1
 	ldr	r0, [r0]
 	mov	pc, r0
+.L1733:
+	.align	2, 0
+.L1732:
+	.word	gUnknown_02022CF8
+	.word	0x3014
+	.word	.L1728
+	.align	2, 0
+	.align	2, 0
+.L1728:
+	.word	.L1690
+	.word	.L1691
+	.word	.L1692
+	.word	.L1706
+	.word	.L1708
+	.word	.L1710
+	.word	.L1711
+	.word	.L1712
+	.word	.L1714
+	.word	.L1718
+	.word	.L1723
+	.word	.L1725
+.L1690:
+	bl	sub_802784C
+	ldr	r0, .L1734
+	ldr	r1, [r0]
+	ldr	r0, .L1734+0x4
+	add	r2, r1, r0
+	mov	r0, #0x0
+	strh	r0, [r2]
+	b	.L1729
 .L1735:
 	.align	2, 0
 .L1734:
 	.word	gUnknown_02022CF8
-	.word	0x3014
-	.word	.L1730
-	.align	2, 0
-	.align	2, 0
-.L1730:
-	.word	.L1692
-	.word	.L1693
-	.word	.L1694
-	.word	.L1708
-	.word	.L1710
-	.word	.L1712
-	.word	.L1713
-	.word	.L1714
-	.word	.L1716
-	.word	.L1720
-	.word	.L1725
-	.word	.L1727
-.L1692:
-	bl	sub_802784C
-	ldr	r0, .L1736
-	ldr	r1, [r0]
-	ldr	r0, .L1736+0x4
-	add	r2, r1, r0
-	mov	r0, #0x0
-	strh	r0, [r2]
-	b	.L1731
-.L1737:
-	.align	2, 0
-.L1736:
-	.word	gUnknown_02022CF8
 	.word	0x301c
-.L1693:
-	ldr	r6, .L1738
+.L1691:
+	ldr	r6, .L1736
 	add	r0, r6, #0
 	bl	AddWindow
-	ldr	r4, .L1738+0x4
+	ldr	r4, .L1736+0x4
 	ldr	r1, [r4]
-	ldr	r2, .L1738+0x8
+	ldr	r2, .L1736+0x8
 	mov	r8, r2
 	add	r1, r1, r8
 	strb	r0, [r1]
@@ -19778,7 +19775,7 @@ sub_802988C:
 	mov	r9, r0
 	bl	AddWindow
 	ldr	r1, [r4]
-	ldr	r5, .L1738+0xc
+	ldr	r5, .L1736+0xc
 	add	r1, r1, r5
 	strb	r0, [r1]
 	ldr	r0, [r4]
@@ -19793,30 +19790,30 @@ sub_802988C:
 	bl	sub_8029174
 	mov	r0, r9
 	bl	sub_8029174
-	b	.L1732
-.L1739:
+	b	.L1730
+.L1737:
 	.align	2, 0
-.L1738:
+.L1736:
 	.word	gUnknown_082F7BBC
 	.word	gUnknown_02022CF8
 	.word	0x3008
 	.word	0x3009
-.L1694:
-	ldr	r4, .L1740
+.L1692:
+	ldr	r4, .L1738
 	ldr	r0, [r4]
-	ldr	r5, .L1740+0x4
+	ldr	r5, .L1738+0x4
 	add	r0, r0, r5
 	ldrb	r0, [r0]
 	mov	r1, #0x11
 	bl	FillWindowPixelBuffer
 	ldr	r0, [r4]
-	ldr	r1, .L1740+0x8
+	ldr	r1, .L1738+0x8
 	mov	r9, r1
 	add	r0, r0, r9
 	ldrb	r0, [r0]
 	mov	r1, #0x11
 	bl	FillWindowPixelBuffer
-	ldr	r2, .L1740+0xc
+	ldr	r2, .L1738+0xc
 	mov	r8, r2
 	mov	r2, #0x1
 	neg	r2, r2
@@ -19843,7 +19840,7 @@ sub_802988C:
 	ldr	r0, [r4]
 	add	r0, r0, r9
 	ldrb	r0, [r0]
-	ldr	r2, .L1740+0x10
+	ldr	r2, .L1738+0x10
 	mov	r1, #0x11
 	str	r1, [sp]
 	str	r6, [sp, #0x4]
@@ -19854,34 +19851,34 @@ sub_802988C:
 	mov	r9, r5
 	ldr	r0, [sp, #0xc]
 	cmp	r9, r0
-	bcc	.LCB14096
-	b	.L1696	@long jump
-.LCB14096:
-.L1698:
+	bcc	.LCB14091
+	b	.L1694	@long jump
+.LCB14091:
+.L1696:
 	mov	r4, #0x0
 	bl	GetMultiplayerId
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	cmp	r9, r0
-	bne	.L1699	@cond_branch
+	bne	.L1697	@cond_branch
 	mov	r4, #0x2
-.L1699:
+.L1697:
 	mov	r0, r9
 	bl	sub_8027660
 	add	r6, r0, #0
-	ldr	r0, .L1740
+	ldr	r0, .L1738
 	ldr	r0, [r0]
-	ldr	r1, .L1740+0x8
+	ldr	r1, .L1738+0x8
 	add	r0, r0, r1
 	ldrb	r0, [r0]
 	mov	r2, r9
 	lsl	r5, r2, #0x1
-	ldr	r2, .L1740+0x14
+	ldr	r2, .L1738+0x14
 	add	r1, r5, r2
 	ldrb	r3, [r1]
 	lsl	r1, r4, #0x1
 	add	r1, r1, r4
-	ldr	r2, .L1740+0x18
+	ldr	r2, .L1738+0x18
 	add	r1, r1, r2
 	str	r1, [sp]
 	mov	r4, #0x1
@@ -19896,22 +19893,22 @@ sub_802988C:
 	mov	r0, r9
 	add	r0, r0, #0x1
 	str	r0, [sp, #0x10]
-	ldr	r1, .L1740+0x1c
+	ldr	r1, .L1738+0x1c
 	mov	sl, r1
-.L1703:
+.L1701:
 	mov	r0, r9
 	add	r1, r7, #0
 	bl	sub_80276A0
 	lsl	r0, r0, #0x10
 	lsr	r0, r0, #0x10
-	ldr	r1, .L1740+0x20
+	ldr	r1, .L1738+0x20
 	bl	Min
 	add	r4, r0, #0
 	lsl	r4, r4, #0x10
 	lsr	r4, r4, #0x10
 	add	r0, r7, #0
 	bl	sub_802778C
-	ldr	r1, .L1740+0x20
+	ldr	r1, .L1738+0x20
 	bl	Min
 	lsl	r0, r0, #0x10
 	lsr	r6, r0, #0x10
@@ -19927,25 +19924,25 @@ sub_802988C:
 	bl	GetStringWidth
 	add	r5, r0, #0
 	cmp	r6, r4
-	bne	.L1704	@cond_branch
+	bne	.L1702	@cond_branch
 	cmp	r6, #0
-	beq	.L1704	@cond_branch
-	ldr	r0, .L1740
+	beq	.L1702	@cond_branch
+	ldr	r0, .L1738
 	ldr	r0, [r0]
-	ldr	r2, .L1740+0x8
+	ldr	r2, .L1738+0x8
 	add	r0, r0, r2
 	ldrb	r0, [r0]
 	lsl	r1, r7, #0x1
-	ldr	r2, .L1740+0x24
+	ldr	r2, .L1738+0x24
 	add	r1, r1, r2
 	ldrb	r2, [r1]
 	sub	r2, r2, r5
 	lsl	r2, r2, #0x18
 	lsr	r2, r2, #0x18
-	ldr	r1, .L1740+0x14
+	ldr	r1, .L1738+0x14
 	add	r1, r1, r8
 	ldrb	r3, [r1]
-	ldr	r1, .L1740+0x28
+	ldr	r1, .L1738+0x28
 	str	r1, [sp]
 	mov	r1, #0x1
 	neg	r1, r1
@@ -19954,10 +19951,10 @@ sub_802988C:
 	str	r1, [sp, #0x8]
 	mov	r1, #0x1
 	bl	AddTextPrinterParameterized3
-	b	.L1702
-.L1741:
+	b	.L1700
+.L1739:
 	.align	2, 0
-.L1740:
+.L1738:
 	.word	gUnknown_02022CF8
 	.word	0x3008
 	.word	0x3009
@@ -19969,20 +19966,20 @@ sub_802988C:
 	.word	0x270f
 	.word	gUnknown_082FB3F0
 	.word	sTextColorTable+0x3
-.L1704:
-	ldr	r0, .L1742
+.L1702:
+	ldr	r0, .L1740
 	ldr	r0, [r0]
-	ldr	r2, .L1742+0x4
+	ldr	r2, .L1740+0x4
 	add	r0, r0, r2
 	ldrb	r0, [r0]
 	lsl	r1, r7, #0x1
-	ldr	r2, .L1742+0x8
+	ldr	r2, .L1740+0x8
 	add	r1, r1, r2
 	ldrb	r3, [r1]
 	sub	r3, r3, r5
 	lsl	r3, r3, #0x18
 	lsr	r3, r3, #0x18
-	ldr	r1, .L1742+0xc
+	ldr	r1, .L1740+0xc
 	add	r1, r1, r8
 	ldrb	r1, [r1]
 	str	r1, [sp]
@@ -19991,44 +19988,44 @@ sub_802988C:
 	mov	r1, #0x0
 	str	r1, [sp, #0x8]
 	mov	r1, #0x1
-	ldr	r2, .L1742+0x10
+	ldr	r2, .L1740+0x10
 	bl	AddTextPrinterParameterized
-.L1702:
+.L1700:
 	add	r0, r7, #0x1
 	lsl	r0, r0, #0x18
 	lsr	r7, r0, #0x18
 	cmp	r7, #0x3
-	bls	.L1703	@cond_branch
+	bls	.L1701	@cond_branch
 	ldr	r1, [sp, #0x10]
 	lsl	r0, r1, #0x18
 	lsr	r0, r0, #0x18
 	mov	r9, r0
 	ldr	r2, [sp, #0xc]
 	cmp	r9, r2
-	bcs	.LCB14297
-	b	.L1698	@long jump
-.LCB14297:
-.L1696:
-	ldr	r4, .L1742
+	bcs	.LCB14292
+	b	.L1696	@long jump
+.LCB14292:
+.L1694:
+	ldr	r4, .L1740
 	ldr	r0, [r4]
-	ldr	r1, .L1742+0x14
+	ldr	r1, .L1740+0x14
 	add	r0, r0, r1
 	ldrb	r0, [r0]
 	mov	r1, #0x2
 	bl	CopyWindowToVram
 	ldr	r0, [r4]
-	ldr	r2, .L1742+0x4
+	ldr	r2, .L1740+0x4
 	add	r0, r0, r2
 	ldrb	r0, [r0]
 	mov	r1, #0x2
 	bl	CopyWindowToVram
 	ldr	r1, [r4]
-	ldr	r0, .L1742+0x18
+	ldr	r0, .L1740+0x18
 	add	r1, r1, r0
-	b	.L1733
-.L1743:
+	b	.L1731
+.L1741:
 	.align	2, 0
-.L1742:
+.L1740:
 	.word	gUnknown_02022CF8
 	.word	0x3009
 	.word	gUnknown_082FB3F0
@@ -20036,43 +20033,43 @@ sub_802988C:
 	.word	gStringVar4
 	.word	0x3008
 	.word	0x3014
-.L1708:
+.L1706:
 	bl	IsDma3ManagerBusyWithBgCopy
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	bne	.L1709	@cond_branch
-	ldr	r4, .L1744
+	bne	.L1707	@cond_branch
+	ldr	r4, .L1742
 	ldr	r0, [r4]
-	ldr	r1, .L1744+0x4
+	ldr	r1, .L1742+0x4
 	add	r0, r0, r1
 	ldrb	r0, [r0]
 	bl	PutWindowTilemap
 	ldr	r0, [r4]
-	ldr	r2, .L1744+0x8
+	ldr	r2, .L1742+0x8
 	add	r0, r0, r2
 	ldrb	r0, [r0]
 	bl	PutWindowTilemap
-.L1709:
+.L1707:
 	mov	r0, #0x0
 	bl	CopyBgTilemapBufferToVram
 	mov	r0, #0x0
 	bl	sub_8028C30
-	ldr	r0, .L1744
+	ldr	r0, .L1742
 	ldr	r1, [r0]
-	ldr	r0, .L1744+0xc
+	ldr	r0, .L1742+0xc
 	add	r1, r1, r0
-	b	.L1733
-.L1745:
+	b	.L1731
+.L1743:
 	.align	2, 0
-.L1744:
+.L1742:
 	.word	gUnknown_02022CF8
 	.word	0x3008
 	.word	0x3009
 	.word	0x3014
-.L1710:
-	ldr	r4, .L1746
+.L1708:
+	ldr	r4, .L1744
 	ldr	r0, [r4]
-	ldr	r1, .L1746+0x4
+	ldr	r1, .L1744+0x4
 	add	r2, r0, r1
 	ldrh	r0, [r2]
 	add	r0, r0, #0x1
@@ -20080,45 +20077,45 @@ sub_802988C:
 	lsl	r0, r0, #0x10
 	lsr	r0, r0, #0x10
 	cmp	r0, #0x1d
-	bhi	.LCB14395
-	b	.L1691	@long jump
-.LCB14395:
-	ldr	r0, .L1746+0x8
+	bhi	.LCB14390
+	b	.L1689	@long jump
+.LCB14390:
+	ldr	r0, .L1744+0x8
 	ldrh	r1, [r0, #0x2e]
 	mov	r0, #0x1
 	and	r0, r0, r1
 	cmp	r0, #0
-	bne	.LCB14406
-	b	.L1691	@long jump
-.LCB14406:
+	bne	.LCB14401
+	b	.L1689	@long jump
+.LCB14401:
 	mov	r0, #0x0
 	strh	r0, [r2]
 	mov	r0, #0x5
 	bl	PlaySE
 	mov	r0, #0x1
 	bl	sub_8028C30
-	b	.L1732
-.L1747:
+	b	.L1730
+.L1745:
 	.align	2, 0
-.L1746:
+.L1744:
 	.word	gUnknown_02022CF8
 	.word	0x301c
 	.word	gMain
-.L1712:
-	ldr	r4, .L1748
+.L1710:
+	ldr	r4, .L1746
 	ldr	r0, [r4]
-	ldr	r5, .L1748+0x4
+	ldr	r5, .L1746+0x4
 	add	r0, r0, r5
 	ldrb	r0, [r0]
 	mov	r1, #0x11
 	bl	FillWindowPixelBuffer
 	ldr	r0, [r4]
-	ldr	r1, .L1748+0x8
+	ldr	r1, .L1746+0x8
 	add	r0, r0, r1
 	ldrb	r0, [r0]
 	mov	r1, #0x11
 	bl	FillWindowPixelBuffer
-	ldr	r6, .L1748+0xc
+	ldr	r6, .L1746+0xc
 	mov	r2, #0x1
 	neg	r2, r2
 	mov	r0, #0x1
@@ -20142,34 +20139,65 @@ sub_802988C:
 	mov	r1, #0x1
 	add	r2, r6, #0
 	bl	AddTextPrinterParameterized
-	b	.L1732
+	b	.L1730
+.L1747:
+	.align	2, 0
+.L1746:
+	.word	gUnknown_02022CF8
+	.word	0x3008
+	.word	0x3009
+	.word	gText_AnnouncingRankings
+.L1711:
+	ldr	r0, [sp, #0xc]
+	bl	sub_80296A8
+	ldr	r4, .L1748
+	ldr	r0, [r4]
+	ldr	r1, .L1748+0x4
+	add	r0, r0, r1
+	ldrb	r0, [r0]
+	mov	r1, #0x2
+	bl	CopyWindowToVram
+	ldr	r0, [r4]
+	ldr	r2, .L1748+0x8
+	add	r0, r0, r2
+	ldrb	r0, [r0]
+	mov	r1, #0x2
+	bl	CopyWindowToVram
+	ldr	r1, [r4]
+	ldr	r0, .L1748+0xc
+	add	r1, r1, r0
+	b	.L1731
 .L1749:
 	.align	2, 0
 .L1748:
 	.word	gUnknown_02022CF8
 	.word	0x3008
 	.word	0x3009
-	.word	gText_AnnouncingRankings
-.L1713:
-	ldr	r0, [sp, #0xc]
-	bl	sub_80296A8
+	.word	0x3014
+.L1712:
+	bl	IsDma3ManagerBusyWithBgCopy
+	lsl	r0, r0, #0x18
+	cmp	r0, #0
+	bne	.L1713	@cond_branch
 	ldr	r4, .L1750
 	ldr	r0, [r4]
 	ldr	r1, .L1750+0x4
 	add	r0, r0, r1
 	ldrb	r0, [r0]
-	mov	r1, #0x2
-	bl	CopyWindowToVram
+	bl	PutWindowTilemap
 	ldr	r0, [r4]
 	ldr	r2, .L1750+0x8
 	add	r0, r0, r2
 	ldrb	r0, [r0]
-	mov	r1, #0x2
-	bl	CopyWindowToVram
-	ldr	r1, [r4]
+	bl	PutWindowTilemap
+.L1713:
+	mov	r0, #0x0
+	bl	CopyBgTilemapBufferToVram
+	ldr	r0, .L1750
+	ldr	r1, [r0]
 	ldr	r0, .L1750+0xc
 	add	r1, r1, r0
-	b	.L1733
+	b	.L1731
 .L1751:
 	.align	2, 0
 .L1750:
@@ -20178,40 +20206,9 @@ sub_802988C:
 	.word	0x3009
 	.word	0x3014
 .L1714:
-	bl	IsDma3ManagerBusyWithBgCopy
-	lsl	r0, r0, #0x18
-	cmp	r0, #0
-	bne	.L1715	@cond_branch
 	ldr	r4, .L1752
 	ldr	r0, [r4]
 	ldr	r1, .L1752+0x4
-	add	r0, r0, r1
-	ldrb	r0, [r0]
-	bl	PutWindowTilemap
-	ldr	r0, [r4]
-	ldr	r2, .L1752+0x8
-	add	r0, r0, r2
-	ldrb	r0, [r0]
-	bl	PutWindowTilemap
-.L1715:
-	mov	r0, #0x0
-	bl	CopyBgTilemapBufferToVram
-	ldr	r0, .L1752
-	ldr	r1, [r0]
-	ldr	r0, .L1752+0xc
-	add	r1, r1, r0
-	b	.L1733
-.L1753:
-	.align	2, 0
-.L1752:
-	.word	gUnknown_02022CF8
-	.word	0x3008
-	.word	0x3009
-	.word	0x3014
-.L1716:
-	ldr	r4, .L1754
-	ldr	r0, [r4]
-	ldr	r1, .L1754+0x4
 	add	r2, r0, r1
 	ldrh	r0, [r2]
 	add	r0, r0, #0x1
@@ -20219,48 +20216,48 @@ sub_802988C:
 	lsl	r0, r0, #0x10
 	lsr	r0, r0, #0x10
 	cmp	r0, #0x1d
-	bhi	.LCB14574
-	b	.L1691	@long jump
-.LCB14574:
-	ldr	r0, .L1754+0x8
+	bhi	.LCB14569
+	b	.L1689	@long jump
+.LCB14569:
+	ldr	r0, .L1752+0x8
 	ldrh	r1, [r0, #0x2e]
 	mov	r0, #0x1
 	and	r0, r0, r1
 	cmp	r0, #0
-	bne	.LCB14585
-	b	.L1691	@long jump
-.LCB14585:
+	bne	.LCB14580
+	b	.L1689	@long jump
+.LCB14580:
 	mov	r0, #0x0
 	strh	r0, [r2]
 	mov	r0, #0x5
 	bl	PlaySE
 	bl	sub_8027748
-	ldr	r1, .L1754+0xc
+	ldr	r1, .L1752+0xc
 	cmp	r0, r1
-	bhi	.L1718	@cond_branch
+	bhi	.L1716	@cond_branch
 	ldr	r0, [r4]
-	ldr	r2, .L1754+0x10
+	ldr	r2, .L1752+0x10
 	add	r0, r0, r2
 	mov	r1, #0x7f
 	strb	r1, [r0]
-	b	.L1719
-.L1755:
+	b	.L1717
+.L1753:
 	.align	2, 0
-.L1754:
+.L1752:
 	.word	gUnknown_02022CF8
 	.word	0x301c
 	.word	gMain
 	.word	0xbb7
 	.word	0x3014
-.L1718:
+.L1716:
 	bl	StopMapMusic
 	ldr	r1, [r4]
-	ldr	r0, .L1756
+	ldr	r0, .L1754
 	add	r1, r1, r0
 	ldrb	r0, [r1]
 	add	r0, r0, #0x1
 	strb	r0, [r1]
-.L1719:
+.L1717:
 	mov	r0, #0x1e
 	str	r0, [sp]
 	mov	r0, #0xf
@@ -20270,13 +20267,13 @@ sub_802988C:
 	mov	r2, #0x0
 	mov	r3, #0x5
 	bl	FillBgTilemapBufferRect_Palette0
-	ldr	r5, .L1756+0x4
+	ldr	r5, .L1754+0x4
 	ldr	r0, [r5]
-	ldr	r4, .L1756+0x8
+	ldr	r4, .L1754+0x8
 	add	r0, r0, r4
 	ldrb	r0, [r0]
 	bl	RemoveWindow
-	ldr	r6, .L1756+0xc
+	ldr	r6, .L1754+0xc
 	add	r0, r6, #0
 	bl	AddWindow
 	ldr	r1, [r5]
@@ -20288,32 +20285,33 @@ sub_802988C:
 	bl	ClearWindowTilemap
 	add	r0, r6, #0
 	bl	sub_8029174
-	b	.L1691
-.L1757:
+	b	.L1689
+.L1755:
 	.align	2, 0
-.L1756:
+.L1754:
 	.word	0x3014
 	.word	gUnknown_02022CF8
 	.word	0x3009
 	.word	gUnknown_082F7BCC
-.L1720:
-	ldr	r0, .L1758
+.L1718:
+	mov	r0, #0xa9
+	lsl	r0, r0, #0x1
 	bl	PlayNewMapMusic
-	ldr	r4, .L1758+0x4
+	ldr	r4, .L1756
 	ldr	r0, [r4]
-	ldr	r6, .L1758+0x8
+	ldr	r6, .L1756+0x4
 	add	r0, r0, r6
 	ldrb	r0, [r0]
 	mov	r1, #0x11
 	bl	FillWindowPixelBuffer
 	ldr	r0, [r4]
-	ldr	r1, .L1758+0xc
+	ldr	r1, .L1756+0x8
 	mov	sl, r1
 	add	r0, r0, sl
 	ldrb	r0, [r0]
 	mov	r1, #0x11
 	bl	FillWindowPixelBuffer
-	ldr	r5, .L1758+0x10
+	ldr	r5, .L1756+0xc
 	mov	r2, #0x1
 	neg	r2, r2
 	mov	r0, #0x1
@@ -20343,14 +20341,14 @@ sub_802988C:
 	bl	sub_802762C
 	lsl	r0, r0, #0x10
 	lsr	r0, r0, #0x10
-	ldr	r5, .L1758+0x14
+	ldr	r5, .L1756+0x10
 	add	r1, r5, #0
 	bl	CopyItemName
 	mov	r0, #0x0
 	add	r1, r5, #0
 	bl	DynamicPlaceholderTextUtil_SetPlaceholderPtr
-	ldr	r7, .L1758+0x18
-	ldr	r1, .L1758+0x1c
+	ldr	r7, .L1756+0x14
+	ldr	r1, .L1756+0x18
 	add	r0, r7, #0
 	bl	DynamicPlaceholderTextUtil_ExpandPlaceholders
 	ldr	r0, [r4]
@@ -20370,9 +20368,9 @@ sub_802988C:
 	lsr	r4, r0, #0x18
 	add	r6, r4, #0
 	cmp	r4, #0
-	beq	.L1721	@cond_branch
+	beq	.L1719	@cond_branch
 	cmp	r4, #0x3
-	beq	.L1721	@cond_branch
+	beq	.L1719	@cond_branch
 	bl	DynamicPlaceholderTextUtil_Reset
 	bl	sub_802762C
 	lsl	r0, r0, #0x10
@@ -20383,15 +20381,14 @@ sub_802988C:
 	add	r1, r5, #0
 	bl	DynamicPlaceholderTextUtil_SetPlaceholderPtr
 	cmp	r4, #0x2
-	bne	.L1722	@cond_branch
-	ldr	r1, .L1758+0x20
+	bne	.L1720	@cond_branch
+	ldr	r1, .L1756+0x1c
 	add	r0, r7, #0
 	bl	DynamicPlaceholderTextUtil_ExpandPlaceholders
-	b	.L1723
-.L1759:
+	b	.L1721
+.L1757:
 	.align	2, 0
-.L1758:
-	.word	0x16f
+.L1756:
 	.word	gUnknown_02022CF8
 	.word	0x3008
 	.word	0x3009
@@ -20400,19 +20397,19 @@ sub_802988C:
 	.word	gStringVar4
 	.word	gText_FirstPlacePrize
 	.word	gText_CantHoldAnyMore
-.L1722:
+.L1720:
 	cmp	r6, #0x1
-	bne	.L1723	@cond_branch
-	ldr	r1, .L1760
+	bne	.L1721	@cond_branch
+	ldr	r1, .L1758
 	add	r0, r7, #0
 	bl	DynamicPlaceholderTextUtil_ExpandPlaceholders
-.L1723:
-	ldr	r0, .L1760+0x4
+.L1721:
+	ldr	r0, .L1758+0x4
 	ldr	r0, [r0]
-	ldr	r2, .L1760+0x8
+	ldr	r2, .L1758+0x8
 	add	r0, r0, r2
 	ldrb	r0, [r0]
-	ldr	r2, .L1760+0xc
+	ldr	r2, .L1758+0xc
 	mov	r1, #0x29
 	str	r1, [sp]
 	mov	r1, #0xff
@@ -20422,73 +20419,73 @@ sub_802988C:
 	mov	r1, #0x1
 	mov	r3, #0x0
 	bl	AddTextPrinterParameterized
-.L1721:
-	ldr	r4, .L1760+0x4
+.L1719:
+	ldr	r4, .L1758+0x4
 	ldr	r0, [r4]
-	ldr	r1, .L1760+0x10
+	ldr	r1, .L1758+0x10
 	add	r0, r0, r1
 	ldrb	r0, [r0]
 	mov	r1, #0x2
 	bl	CopyWindowToVram
 	ldr	r0, [r4]
-	ldr	r2, .L1760+0x8
+	ldr	r2, .L1758+0x8
 	add	r0, r0, r2
 	ldrb	r0, [r0]
 	mov	r1, #0x2
 	bl	CopyWindowToVram
 	ldr	r1, [r4]
-	ldr	r0, .L1760+0x14
+	ldr	r0, .L1758+0x14
 	add	r1, r1, r0
-	b	.L1733
-.L1761:
+	b	.L1731
+.L1759:
 	.align	2, 0
-.L1760:
+.L1758:
 	.word	gText_FilledStorageSpace
 	.word	gUnknown_02022CF8
 	.word	0x3009
 	.word	gStringVar4
 	.word	0x3008
 	.word	0x3014
-.L1725:
+.L1723:
 	bl	IsDma3ManagerBusyWithBgCopy
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	bne	.L1726	@cond_branch
-	ldr	r4, .L1762
+	bne	.L1724	@cond_branch
+	ldr	r4, .L1760
 	ldr	r0, [r4]
-	ldr	r1, .L1762+0x4
+	ldr	r1, .L1760+0x4
 	add	r0, r0, r1
 	ldrb	r0, [r0]
 	bl	PutWindowTilemap
 	ldr	r0, [r4]
-	ldr	r2, .L1762+0x8
+	ldr	r2, .L1760+0x8
 	add	r0, r0, r2
 	ldrb	r0, [r0]
 	bl	PutWindowTilemap
-.L1726:
+.L1724:
 	mov	r0, #0x0
 	bl	CopyBgTilemapBufferToVram
-	ldr	r0, .L1762+0xc
+	mov	r0, #0xb9
+	lsl	r0, r0, #0x1
 	mov	r1, #0x14
 	mov	r2, #0xa
 	bl	FadeOutAndFadeInNewMapMusic
-	ldr	r0, .L1762
+	ldr	r0, .L1760
 	ldr	r1, [r0]
-	ldr	r0, .L1762+0x10
+	ldr	r0, .L1760+0xc
 	add	r1, r1, r0
-	b	.L1733
-.L1763:
+	b	.L1731
+.L1761:
 	.align	2, 0
-.L1762:
+.L1760:
 	.word	gUnknown_02022CF8
 	.word	0x3008
 	.word	0x3009
-	.word	0x20b
 	.word	0x3014
-.L1727:
-	ldr	r4, .L1764
+.L1725:
+	ldr	r4, .L1762
 	ldr	r0, [r4]
-	ldr	r1, .L1764+0x4
+	ldr	r1, .L1762+0x4
 	add	r2, r0, r1
 	ldrh	r0, [r2]
 	add	r0, r0, #0x1
@@ -20496,41 +20493,41 @@ sub_802988C:
 	lsl	r0, r0, #0x10
 	lsr	r0, r0, #0x10
 	cmp	r0, #0x1d
-	bls	.L1691	@cond_branch
-	ldr	r0, .L1764+0x8
+	bls	.L1689	@cond_branch
+	ldr	r0, .L1762+0x8
 	ldrh	r1, [r0, #0x2e]
 	mov	r0, #0x1
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L1691	@cond_branch
+	beq	.L1689	@cond_branch
 	mov	r0, #0x0
 	strh	r0, [r2]
 	mov	r0, #0x5
 	bl	PlaySE
-.L1732:
+.L1730:
 	ldr	r1, [r4]
-.L1731:
-	ldr	r2, .L1764+0xc
+.L1729:
+	ldr	r2, .L1762+0xc
 	add	r1, r1, r2
-.L1733:
+.L1731:
 	ldrb	r0, [r1]
 	add	r0, r0, #0x1
 	strb	r0, [r1]
-	b	.L1691
-.L1765:
+	b	.L1689
+.L1763:
 	.align	2, 0
-.L1764:
+.L1762:
 	.word	gUnknown_02022CF8
 	.word	0x301c
 	.word	gMain
 	.word	0x3014
-.L1729:
-	ldr	r5, .L1766
+.L1727:
+	ldr	r5, .L1764
 	add	r0, r1, r5
 	ldrb	r0, [r0]
 	bl	ClearWindowTilemap
 	ldr	r0, [r6]
-	ldr	r4, .L1766+0x4
+	ldr	r4, .L1764+0x4
 	add	r0, r0, r4
 	ldrb	r0, [r0]
 	bl	ClearWindowTilemap
@@ -20559,7 +20556,7 @@ sub_802988C:
 	add	r0, r0, r1
 	mov	r1, #0x1
 	str	r1, [r0]
-.L1691:
+.L1689:
 	add	sp, sp, #0x14
 	pop	{r3, r4, r5}
 	mov	r8, r3
@@ -20568,9 +20565,9 @@ sub_802988C:
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L1767:
+.L1765:
 	.align	2, 0
-.L1766:
+.L1764:
 	.word	0x3008
 	.word	0x3009
 .Lfe144:
@@ -20585,40 +20582,40 @@ sub_802A010:
 	mov	r5, r8
 	push	{r5, r6, r7}
 	add	sp, sp, #-0x10
-	ldr	r1, .L1794
+	ldr	r1, .L1792
 	ldr	r2, [r1]
-	ldr	r3, .L1794+0x4
+	ldr	r3, .L1792+0x4
 	add	r0, r2, r3
 	ldrb	r6, [r0]
 	add	r7, r1, #0
 	cmp	r6, #0x1
-	beq	.L1771	@cond_branch
+	beq	.L1769	@cond_branch
 	cmp	r6, #0x1
-	bgt	.L1791	@cond_branch
+	bgt	.L1789	@cond_branch
 	cmp	r6, #0
-	beq	.L1770	@cond_branch
-	b	.L1789
-.L1795:
+	beq	.L1768	@cond_branch
+	b	.L1787
+.L1793:
 	.align	2, 0
-.L1794:
+.L1792:
 	.word	gUnknown_02022CF8
 	.word	0x3014
-.L1791:
+.L1789:
 	cmp	r6, #0x2
-	bne	.LCB15039
-	b	.L1772	@long jump
-.LCB15039:
+	bne	.LCB15034
+	b	.L1770	@long jump
+.LCB15034:
 	cmp	r6, #0x3
-	bne	.LCB15041
-	b	.L1774	@long jump
-.LCB15041:
-	b	.L1789
-.L1770:
-	ldr	r0, .L1796
+	bne	.LCB15036
+	b	.L1772	@long jump
+.LCB15036:
+	b	.L1787
+.L1768:
+	ldr	r0, .L1794
 	mov	r9, r0
 	bl	AddWindow
 	ldr	r1, [r7]
-	ldr	r4, .L1796+0x4
+	ldr	r4, .L1794+0x4
 	add	r1, r1, r4
 	strb	r0, [r1]
 	mov	r1, #0x8
@@ -20627,7 +20624,7 @@ sub_802A010:
 	mov	r0, r8
 	bl	AddWindow
 	ldr	r1, [r7]
-	ldr	r2, .L1796+0x8
+	ldr	r2, .L1794+0x8
 	add	r1, r1, r2
 	strb	r0, [r1]
 	ldr	r0, [r7]
@@ -20635,7 +20632,7 @@ sub_802A010:
 	ldrb	r0, [r0]
 	bl	ClearWindowTilemap
 	ldr	r0, [r7]
-	ldr	r3, .L1796+0x8
+	ldr	r3, .L1794+0x8
 	add	r0, r0, r3
 	ldrb	r0, [r0]
 	bl	ClearWindowTilemap
@@ -20644,38 +20641,38 @@ sub_802A010:
 	mov	r0, r8
 	bl	sub_8029074
 	ldr	r1, [r7]
-	ldr	r0, .L1796+0xc
+	ldr	r0, .L1794+0xc
 	add	r1, r1, r0
 	ldrb	r0, [r1]
 	add	r0, r0, #0x1
 	strb	r0, [r1]
 	ldr	r0, [r7]
-	ldr	r1, .L1796+0x10
+	ldr	r1, .L1794+0x10
 	add	r0, r0, r1
 	strb	r6, [r0]
 	ldr	r0, [r7]
-	ldr	r2, .L1796+0x14
+	ldr	r2, .L1794+0x14
 	add	r0, r0, r2
 	strb	r6, [r0]
-	b	.L1769
-.L1797:
+	b	.L1767
+.L1795:
 	.align	2, 0
-.L1796:
+.L1794:
 	.word	gUnknown_082F7BD4
 	.word	0x3008
 	.word	0x3009
 	.word	0x3014
 	.word	0x3020
 	.word	0x3024
-.L1771:
-	ldr	r3, .L1798
+.L1769:
+	ldr	r3, .L1796
 	mov	r8, r3
 	add	r0, r2, r3
 	ldrb	r0, [r0]
 	mov	r1, #0x11
 	bl	FillWindowPixelBuffer
 	ldr	r0, [r7]
-	ldr	r1, .L1798+0x4
+	ldr	r1, .L1796+0x4
 	mov	sl, r1
 	add	r0, r0, sl
 	ldrb	r0, [r0]
@@ -20684,7 +20681,7 @@ sub_802A010:
 	ldr	r0, [r7]
 	add	r0, r0, r8
 	ldrb	r0, [r0]
-	ldr	r2, .L1798+0x8
+	ldr	r2, .L1796+0x8
 	mov	r1, #0x5
 	str	r1, [sp]
 	mov	r3, #0xff
@@ -20698,7 +20695,7 @@ sub_802A010:
 	ldr	r0, [r7]
 	add	r0, r0, sl
 	ldrb	r0, [r0]
-	ldr	r2, .L1798+0xc
+	ldr	r2, .L1796+0xc
 	str	r6, [sp]
 	mov	r3, r9
 	str	r3, [sp, #0x4]
@@ -20710,7 +20707,7 @@ sub_802A010:
 	ldr	r0, [r7]
 	add	r0, r0, sl
 	ldrb	r0, [r0]
-	ldr	r2, .L1798+0x10
+	ldr	r2, .L1796+0x10
 	mov	r1, #0x11
 	str	r1, [sp]
 	mov	r3, r9
@@ -20723,7 +20720,7 @@ sub_802A010:
 	ldr	r0, [r7]
 	add	r0, r0, sl
 	ldrb	r0, [r0]
-	ldr	r2, .L1798+0x14
+	ldr	r2, .L1796+0x14
 	str	r6, [sp]
 	mov	r3, r9
 	str	r3, [sp, #0x4]
@@ -20743,12 +20740,12 @@ sub_802A010:
 	mov	r1, #0x2
 	bl	CopyWindowToVram
 	ldr	r1, [r7]
-	ldr	r2, .L1798+0x18
+	ldr	r2, .L1796+0x18
 	add	r1, r1, r2
-	b	.L1792
-.L1799:
+	b	.L1790
+.L1797:
 	.align	2, 0
-.L1798:
+.L1796:
 	.word	0x3008
 	.word	0x3009
 	.word	gText_WantToPlayAgain
@@ -20756,43 +20753,43 @@ sub_802A010:
 	.word	gText_No
 	.word	gText_SelectorArrow2
 	.word	0x3014
-.L1772:
+.L1770:
 	bl	IsDma3ManagerBusyWithBgCopy
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	bne	.L1773	@cond_branch
+	bne	.L1771	@cond_branch
 	ldr	r0, [r7]
-	ldr	r3, .L1800
+	ldr	r3, .L1798
 	add	r0, r0, r3
 	ldrb	r0, [r0]
 	bl	PutWindowTilemap
 	ldr	r0, [r7]
-	ldr	r1, .L1800+0x4
+	ldr	r1, .L1798+0x4
 	add	r0, r0, r1
 	ldrb	r0, [r0]
 	bl	PutWindowTilemap
-.L1773:
+.L1771:
 	mov	r0, #0x0
 	bl	CopyBgTilemapBufferToVram
 	ldr	r1, [r7]
-	ldr	r2, .L1800+0x8
+	ldr	r2, .L1798+0x8
 	add	r1, r1, r2
-	b	.L1792
-.L1801:
+	b	.L1790
+.L1799:
 	.align	2, 0
-.L1800:
+.L1798:
 	.word	0x3008
 	.word	0x3009
 	.word	0x3014
-.L1774:
-	ldr	r3, .L1802
+.L1772:
+	ldr	r3, .L1800
 	add	r0, r2, r3
 	ldrb	r5, [r0]
 	cmp	r5, #0
-	bne	.L1775	@cond_branch
+	bne	.L1773	@cond_branch
 	mov	r5, #0x1
-.L1775:
-	ldr	r0, .L1802+0x4
+.L1773:
+	ldr	r0, .L1800+0x4
 	mov	r8, r0
 	add	r0, r2, r0
 	ldrb	r0, [r0]
@@ -20801,7 +20798,7 @@ sub_802A010:
 	ldr	r0, [r7]
 	add	r0, r0, r8
 	ldrb	r0, [r0]
-	ldr	r2, .L1802+0x8
+	ldr	r2, .L1800+0x8
 	mov	r1, #0x1
 	str	r1, [sp]
 	mov	r3, #0xff
@@ -20816,7 +20813,7 @@ sub_802A010:
 	ldr	r0, [r7]
 	add	r0, r0, r8
 	ldrb	r0, [r0]
-	ldr	r2, .L1802+0xc
+	ldr	r2, .L1800+0xc
 	mov	r1, #0x11
 	str	r1, [sp]
 	mov	r3, sl
@@ -20829,7 +20826,7 @@ sub_802A010:
 	ldr	r0, [r7]
 	add	r0, r0, r8
 	ldrb	r0, [r0]
-	ldr	r2, .L1802+0x10
+	ldr	r2, .L1800+0x10
 	sub	r1, r5, #0x1
 	lsl	r1, r1, #0x4
 	add	r1, r1, #0x1
@@ -20848,107 +20845,107 @@ sub_802A010:
 	ldrb	r0, [r0]
 	mov	r1, #0x3
 	bl	CopyWindowToVram
-	ldr	r0, .L1802+0x14
+	ldr	r0, .L1800+0x14
 	ldrh	r1, [r0, #0x2e]
 	mov	r5, #0x1
 	mov	r2, #0x1
 	and	r2, r2, r1
 	cmp	r2, #0
-	beq	.L1776	@cond_branch
+	beq	.L1774	@cond_branch
 	mov	r0, #0x5
 	bl	PlaySE
 	ldr	r0, [r7]
-	ldr	r3, .L1802
+	ldr	r3, .L1800
 	add	r1, r0, r3
 	ldrb	r0, [r1]
 	cmp	r0, #0
-	bne	.L1793	@cond_branch
+	bne	.L1791	@cond_branch
 	strb	r5, [r1]
-	b	.L1793
-.L1803:
+	b	.L1791
+.L1801:
 	.align	2, 0
-.L1802:
+.L1800:
 	.word	0x3020
 	.word	0x3009
 	.word	gText_Yes
 	.word	gText_No
 	.word	gText_SelectorArrow2
 	.word	gMain
-.L1776:
+.L1774:
 	mov	r0, #0xc0
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L1779	@cond_branch
+	beq	.L1777	@cond_branch
 	mov	r0, #0x5
 	bl	PlaySE
 	ldr	r0, [r7]
-	ldr	r2, .L1804
+	ldr	r2, .L1802
 	add	r1, r0, r2
 	ldrb	r0, [r1]
 	cmp	r0, #0x1
-	beq	.L1782	@cond_branch
+	beq	.L1780	@cond_branch
 	cmp	r0, #0x1
-	bgt	.L1786	@cond_branch
+	bgt	.L1784	@cond_branch
 	cmp	r0, #0
+	beq	.L1779	@cond_branch
+	b	.L1767
+.L1803:
+	.align	2, 0
+.L1802:
+	.word	0x3020
+.L1784:
+	cmp	r0, #0x2
 	beq	.L1781	@cond_branch
-	b	.L1769
+	b	.L1767
+.L1779:
+.L1780:
+	mov	r0, #0x2
+	strb	r0, [r1]
+	b	.L1767
+.L1781:
+	strb	r5, [r1]
+	b	.L1767
+.L1777:
+	mov	r0, #0x2
+	and	r0, r0, r1
+	cmp	r0, #0
+	beq	.L1767	@cond_branch
+	mov	r0, #0x5
+	bl	PlaySE
+	ldr	r0, [r7]
+	ldr	r3, .L1804
+	add	r0, r0, r3
+	mov	r1, #0x2
+	strb	r1, [r0]
+.L1791:
+	ldr	r1, [r7]
+	ldr	r0, .L1804+0x4
+	add	r1, r1, r0
+.L1790:
+	ldrb	r0, [r1]
+	add	r0, r0, #0x1
+	strb	r0, [r1]
+	b	.L1767
 .L1805:
 	.align	2, 0
 .L1804:
 	.word	0x3020
-.L1786:
-	cmp	r0, #0x2
-	beq	.L1783	@cond_branch
-	b	.L1769
-.L1781:
-.L1782:
-	mov	r0, #0x2
-	strb	r0, [r1]
-	b	.L1769
-.L1783:
-	strb	r5, [r1]
-	b	.L1769
-.L1779:
-	mov	r0, #0x2
-	and	r0, r0, r1
-	cmp	r0, #0
-	beq	.L1769	@cond_branch
-	mov	r0, #0x5
-	bl	PlaySE
-	ldr	r0, [r7]
-	ldr	r3, .L1806
-	add	r0, r0, r3
-	mov	r1, #0x2
-	strb	r1, [r0]
-.L1793:
-	ldr	r1, [r7]
-	ldr	r0, .L1806+0x4
-	add	r1, r1, r0
-.L1792:
-	ldrb	r0, [r1]
-	add	r0, r0, #0x1
-	strb	r0, [r1]
-	b	.L1769
-.L1807:
-	.align	2, 0
-.L1806:
-	.word	0x3020
 	.word	0x3014
-.L1789:
+.L1787:
 	ldr	r0, [r7]
-	ldr	r2, .L1808
+	ldr	r2, .L1806
 	add	r1, r0, r2
 	ldrb	r1, [r1]
-	ldr	r3, .L1808+0x4
+	ldr	r3, .L1806+0x4
 	add	r0, r0, r3
 	strb	r1, [r0]
 	ldr	r0, [r7]
-	ldr	r6, .L1808+0x8
+	ldr	r6, .L1806+0x8
 	add	r0, r0, r6
 	ldrb	r0, [r0]
 	bl	ClearWindowTilemap
 	ldr	r0, [r7]
-	ldr	r1, .L1808+0xc
+	ldr	r1, .L1806+0xc
 	add	r0, r0, r1
 	ldrb	r0, [r0]
 	bl	ClearWindowTilemap
@@ -20957,7 +20954,7 @@ sub_802A010:
 	ldrb	r0, [r0]
 	bl	RemoveWindow
 	ldr	r0, [r7]
-	ldr	r2, .L1808+0xc
+	ldr	r2, .L1806+0xc
 	add	r0, r0, r2
 	ldrb	r0, [r0]
 	bl	RemoveWindow
@@ -20978,7 +20975,7 @@ sub_802A010:
 	add	r0, r0, r3
 	mov	r1, #0x1
 	str	r1, [r0]
-.L1769:
+.L1767:
 	add	sp, sp, #0x10
 	pop	{r3, r4, r5}
 	mov	r8, r3
@@ -20987,9 +20984,9 @@ sub_802A010:
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L1809:
+.L1807:
 	.align	2, 0
-.L1808:
+.L1806:
 	.word	0x3020
 	.word	0x3024
 	.word	0x3008
@@ -21002,34 +20999,34 @@ sub_802A010:
 sub_802A380:
 	push	{r4, r5, r6, lr}
 	add	sp, sp, #-0x10
-	ldr	r5, .L1823
+	ldr	r5, .L1821
 	ldr	r0, [r5]
-	ldr	r6, .L1823+0x4
+	ldr	r6, .L1821+0x4
 	add	r0, r0, r6
 	ldrb	r4, [r0]
 	cmp	r4, #0x1
-	beq	.L1813	@cond_branch
+	beq	.L1811	@cond_branch
 	cmp	r4, #0x1
-	bgt	.L1820	@cond_branch
+	bgt	.L1818	@cond_branch
 	cmp	r4, #0
-	beq	.L1812	@cond_branch
-	b	.L1818
-.L1824:
+	beq	.L1810	@cond_branch
+	b	.L1816
+.L1822:
 	.align	2, 0
-.L1823:
+.L1821:
 	.word	gUnknown_02022CF8
 	.word	0x3014
-.L1820:
+.L1818:
 	cmp	r4, #0x2
-	beq	.L1814	@cond_branch
+	beq	.L1812	@cond_branch
 	cmp	r4, #0x3
-	beq	.L1816	@cond_branch
-	b	.L1818
-.L1812:
+	beq	.L1814	@cond_branch
+	b	.L1816
+.L1810:
 	mov	r0, #0x0
 	mov	r1, #0x0
 	bl	DrawDialogueFrame
-	ldr	r2, .L1825
+	ldr	r2, .L1823
 	str	r4, [sp]
 	mov	r0, #0x2
 	str	r0, [sp, #0x4]
@@ -21041,55 +21038,55 @@ sub_802A380:
 	mov	r1, #0x1
 	mov	r3, #0x0
 	bl	AddTextPrinterParameterized2
-	b	.L1821
-.L1826:
+	b	.L1819
+.L1824:
 	.align	2, 0
-.L1825:
+.L1823:
 	.word	gText_SavingDontTurnOffPower
-.L1813:
+.L1811:
 	mov	r0, #0x0
 	mov	r1, #0x3
 	bl	CopyWindowToVram
 	ldr	r1, [r5]
-	ldr	r0, .L1827
+	ldr	r0, .L1825
 	add	r1, r1, r0
-	b	.L1822
-.L1828:
+	b	.L1820
+.L1826:
 	.align	2, 0
-.L1827:
+.L1825:
 	.word	0x3014
-.L1814:
+.L1812:
 	bl	IsDma3ManagerBusyWithBgCopy
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	bne	.L1811	@cond_branch
-	ldr	r0, .L1829
+	bne	.L1809	@cond_branch
+	ldr	r0, .L1827
 	mov	r1, #0x0
 	bl	CreateTask
-	b	.L1821
+	b	.L1819
+.L1828:
+	.align	2, 0
+.L1827:
+	.word	Task_LinkSave
+.L1814:
+	ldr	r0, .L1829
+	bl	FuncIsActiveTask
+	lsl	r0, r0, #0x18
+	cmp	r0, #0
+	bne	.L1809	@cond_branch
+.L1819:
+	ldr	r1, [r5]
+	add	r1, r1, r6
+.L1820:
+	ldrb	r0, [r1]
+	add	r0, r0, #0x1
+	strb	r0, [r1]
+	b	.L1809
 .L1830:
 	.align	2, 0
 .L1829:
 	.word	Task_LinkSave
 .L1816:
-	ldr	r0, .L1831
-	bl	FuncIsActiveTask
-	lsl	r0, r0, #0x18
-	cmp	r0, #0
-	bne	.L1811	@cond_branch
-.L1821:
-	ldr	r1, [r5]
-	add	r1, r1, r6
-.L1822:
-	ldrb	r0, [r1]
-	add	r0, r0, #0x1
-	strb	r0, [r1]
-	b	.L1811
-.L1832:
-	.align	2, 0
-.L1831:
-	.word	Task_LinkSave
-.L1818:
 	mov	r0, #0x1e
 	str	r0, [sp]
 	mov	r0, #0x14
@@ -21101,21 +21098,21 @@ sub_802A380:
 	bl	FillBgTilemapBufferRect_Palette0
 	mov	r0, #0x0
 	bl	CopyBgTilemapBufferToVram
-	ldr	r0, .L1833
+	ldr	r0, .L1831
 	ldr	r0, [r0]
 	mov	r1, #0xc0
 	lsl	r1, r1, #0x6
 	add	r0, r0, r1
 	mov	r1, #0x1
 	str	r1, [r0]
-.L1811:
+.L1809:
 	add	sp, sp, #0x10
 	pop	{r4, r5, r6}
 	pop	{r0}
 	bx	r0
-.L1834:
+.L1832:
 	.align	2, 0
-.L1833:
+.L1831:
 	.word	gUnknown_02022CF8
 .Lfe146:
 	.size	 sub_802A380,.Lfe146-sub_802A380
@@ -21125,34 +21122,34 @@ sub_802A380:
 sub_802A454:
 	push	{r4, r5, r6, lr}
 	add	sp, sp, #-0xc
-	ldr	r1, .L1846
+	ldr	r1, .L1844
 	ldr	r2, [r1]
-	ldr	r6, .L1846+0x4
+	ldr	r6, .L1844+0x4
 	add	r0, r2, r6
 	ldrb	r0, [r0]
 	add	r5, r1, #0
 	cmp	r0, #0x1
-	beq	.L1838	@cond_branch
+	beq	.L1836	@cond_branch
 	cmp	r0, #0x1
-	bgt	.L1843	@cond_branch
+	bgt	.L1841	@cond_branch
 	cmp	r0, #0
-	beq	.L1837	@cond_branch
-	b	.L1841
-.L1847:
+	beq	.L1835	@cond_branch
+	b	.L1839
+.L1845:
 	.align	2, 0
-.L1846:
+.L1844:
 	.word	gUnknown_02022CF8
 	.word	0x3014
-.L1843:
+.L1841:
 	cmp	r0, #0x2
-	beq	.L1839	@cond_branch
-	b	.L1841
-.L1837:
-	ldr	r4, .L1848
+	beq	.L1837	@cond_branch
+	b	.L1839
+.L1835:
+	ldr	r4, .L1846
 	add	r0, r4, #0
 	bl	AddWindow
 	ldr	r1, [r5]
-	ldr	r2, .L1848+0x4
+	ldr	r2, .L1846+0x4
 	add	r1, r1, r2
 	strb	r0, [r1]
 	ldr	r0, [r5]
@@ -21161,14 +21158,14 @@ sub_802A454:
 	bl	ClearWindowTilemap
 	add	r0, r4, #0
 	bl	sub_8029174
-	b	.L1844
-.L1849:
+	b	.L1842
+.L1847:
 	.align	2, 0
-.L1848:
+.L1846:
 	.word	gUnknown_082F7BEC
 	.word	0x3008
-.L1838:
-	ldr	r4, .L1850
+.L1836:
+	ldr	r4, .L1848
 	add	r0, r2, r4
 	ldrb	r0, [r0]
 	mov	r1, #0x11
@@ -21176,7 +21173,7 @@ sub_802A454:
 	ldr	r0, [r5]
 	add	r0, r0, r4
 	ldrb	r0, [r0]
-	ldr	r2, .L1850+0x4
+	ldr	r2, .L1848+0x4
 	mov	r1, #0x5
 	str	r1, [sp]
 	mov	r1, #0xff
@@ -21192,48 +21189,48 @@ sub_802A454:
 	mov	r1, #0x2
 	bl	CopyWindowToVram
 	ldr	r1, [r5]
-	ldr	r0, .L1850+0x8
+	ldr	r0, .L1848+0x8
 	add	r1, r1, r0
-	b	.L1845
+	b	.L1843
+.L1849:
+	.align	2, 0
+.L1848:
+	.word	0x3008
+	.word	gText_CommunicationStandby3
+	.word	0x3014
+.L1837:
+	bl	IsDma3ManagerBusyWithBgCopy
+	lsl	r0, r0, #0x18
+	cmp	r0, #0
+	bne	.L1838	@cond_branch
+	ldr	r0, [r5]
+	ldr	r1, .L1850
+	add	r0, r0, r1
+	ldrb	r0, [r0]
+	bl	PutWindowTilemap
+.L1838:
+	mov	r0, #0x0
+	bl	CopyBgTilemapBufferToVram
+.L1842:
+	ldr	r1, [r5]
+	add	r1, r1, r6
+.L1843:
+	ldrb	r0, [r1]
+	add	r0, r0, #0x1
+	strb	r0, [r1]
+	b	.L1834
 .L1851:
 	.align	2, 0
 .L1850:
 	.word	0x3008
-	.word	gText_CommunicationStandby3
-	.word	0x3014
 .L1839:
-	bl	IsDma3ManagerBusyWithBgCopy
-	lsl	r0, r0, #0x18
-	cmp	r0, #0
-	bne	.L1840	@cond_branch
-	ldr	r0, [r5]
-	ldr	r1, .L1852
-	add	r0, r0, r1
-	ldrb	r0, [r0]
-	bl	PutWindowTilemap
-.L1840:
-	mov	r0, #0x0
-	bl	CopyBgTilemapBufferToVram
-.L1844:
-	ldr	r1, [r5]
-	add	r1, r1, r6
-.L1845:
-	ldrb	r0, [r1]
-	add	r0, r0, #0x1
-	strb	r0, [r1]
-	b	.L1836
-.L1853:
-	.align	2, 0
-.L1852:
-	.word	0x3008
-.L1841:
 	ldr	r0, [r5]
 	mov	r1, #0xc0
 	lsl	r1, r1, #0x6
 	add	r0, r0, r1
 	mov	r1, #0x1
 	str	r1, [r0]
-.L1836:
+.L1834:
 	add	sp, sp, #0xc
 	pop	{r4, r5, r6}
 	pop	{r0}
@@ -21246,9 +21243,9 @@ sub_802A454:
 sub_802A534:
 	push	{r4, r5, lr}
 	add	sp, sp, #-0x8
-	ldr	r5, .L1855
+	ldr	r5, .L1853
 	ldr	r0, [r5]
-	ldr	r4, .L1855+0x4
+	ldr	r4, .L1853+0x4
 	add	r0, r0, r4
 	ldrb	r0, [r0]
 	bl	ClearWindowTilemap
@@ -21277,9 +21274,9 @@ sub_802A534:
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.L1856:
+.L1854:
 	.align	2, 0
-.L1855:
+.L1853:
 	.word	gUnknown_02022CF8
 	.word	0x3008
 .Lfe148:
@@ -21290,36 +21287,36 @@ sub_802A534:
 sub_802A588:
 	push	{r4, r5, r6, r7, lr}
 	add	sp, sp, #-0xc
-	ldr	r0, .L1869
+	ldr	r0, .L1867
 	ldr	r1, [r0]
-	ldr	r7, .L1869+0x4
+	ldr	r7, .L1867+0x4
 	add	r2, r1, r7
 	ldrb	r5, [r2]
 	add	r6, r0, #0
 	cmp	r5, #0x1
-	beq	.L1860	@cond_branch
+	beq	.L1858	@cond_branch
 	cmp	r5, #0x1
-	bgt	.L1867	@cond_branch
+	bgt	.L1865	@cond_branch
 	cmp	r5, #0
-	beq	.L1859	@cond_branch
-	b	.L1865
-.L1870:
+	beq	.L1857	@cond_branch
+	b	.L1863
+.L1868:
 	.align	2, 0
-.L1869:
+.L1867:
 	.word	gUnknown_02022CF8
 	.word	0x3014
-.L1867:
+.L1865:
 	cmp	r5, #0x2
-	beq	.L1861	@cond_branch
+	beq	.L1859	@cond_branch
 	cmp	r5, #0x3
-	beq	.L1863	@cond_branch
-	b	.L1865
-.L1859:
-	ldr	r4, .L1871
+	beq	.L1861	@cond_branch
+	b	.L1863
+.L1857:
+	ldr	r4, .L1869
 	add	r0, r4, #0
 	bl	AddWindow
 	ldr	r1, [r6]
-	ldr	r2, .L1871+0x4
+	ldr	r2, .L1869+0x4
 	add	r1, r1, r2
 	strb	r0, [r1]
 	ldr	r0, [r6]
@@ -21334,27 +21331,27 @@ sub_802A588:
 	add	r0, r0, #0x1
 	strb	r0, [r1]
 	ldr	r0, [r6]
-	ldr	r2, .L1871+0x8
+	ldr	r2, .L1869+0x8
 	add	r1, r0, r2
 	mov	r2, #0x0
 	strh	r5, [r1]
-	ldr	r1, .L1871+0xc
+	ldr	r1, .L1869+0xc
 	add	r0, r0, r1
 	strb	r2, [r0]
 	ldr	r0, [r6]
 	add	r1, r1, #0x4
 	add	r0, r0, r1
 	strb	r2, [r0]
-	b	.L1858
-.L1872:
+	b	.L1856
+.L1870:
 	.align	2, 0
-.L1871:
+.L1869:
 	.word	gUnknown_082F7BE4
 	.word	0x3008
 	.word	0x301c
 	.word	0x3020
-.L1860:
-	ldr	r4, .L1873
+.L1858:
+	ldr	r4, .L1871
 	add	r0, r1, r4
 	ldrb	r0, [r0]
 	mov	r1, #0x11
@@ -21362,7 +21359,7 @@ sub_802A588:
 	ldr	r0, [r6]
 	add	r0, r0, r4
 	ldrb	r0, [r0]
-	ldr	r2, .L1873+0x4
+	ldr	r2, .L1871+0x4
 	mov	r1, #0x5
 	str	r1, [sp]
 	mov	r1, #0xff
@@ -21378,41 +21375,41 @@ sub_802A588:
 	mov	r1, #0x2
 	bl	CopyWindowToVram
 	ldr	r1, [r6]
-	ldr	r2, .L1873+0x8
+	ldr	r2, .L1871+0x8
 	add	r1, r1, r2
-	b	.L1868
-.L1874:
+	b	.L1866
+.L1872:
 	.align	2, 0
-.L1873:
+.L1871:
 	.word	0x3008
 	.word	gText_SomeoneDroppedOut
 	.word	0x3014
-.L1861:
+.L1859:
 	bl	IsDma3ManagerBusyWithBgCopy
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	bne	.L1862	@cond_branch
+	bne	.L1860	@cond_branch
 	ldr	r0, [r6]
-	ldr	r1, .L1875
+	ldr	r1, .L1873
 	add	r0, r0, r1
 	ldrb	r0, [r0]
 	bl	PutWindowTilemap
-.L1862:
+.L1860:
 	mov	r0, #0x0
 	bl	CopyBgTilemapBufferToVram
 	ldr	r1, [r6]
 	add	r1, r1, r7
-.L1868:
+.L1866:
 	ldrb	r0, [r1]
 	add	r0, r0, #0x1
 	strb	r0, [r1]
-	b	.L1858
-.L1876:
+	b	.L1856
+.L1874:
 	.align	2, 0
-.L1875:
+.L1873:
 	.word	0x3008
-.L1863:
-	ldr	r0, .L1877
+.L1861:
+	ldr	r0, .L1875
 	add	r1, r1, r0
 	ldrh	r0, [r1]
 	add	r0, r0, #0x1
@@ -21420,23 +21417,23 @@ sub_802A588:
 	lsl	r0, r0, #0x10
 	lsr	r0, r0, #0x10
 	cmp	r0, #0x77
-	bls	.L1858	@cond_branch
+	bls	.L1856	@cond_branch
 	ldrb	r0, [r2]
 	add	r0, r0, #0x1
 	strb	r0, [r2]
-	b	.L1858
-.L1878:
+	b	.L1856
+.L1876:
 	.align	2, 0
-.L1877:
+.L1875:
 	.word	0x301c
-.L1865:
+.L1863:
 	ldr	r0, [r6]
-	ldr	r1, .L1879
+	ldr	r1, .L1877
 	add	r0, r0, r1
 	mov	r1, #0x5
 	strb	r1, [r0]
 	ldr	r0, [r6]
-	ldr	r4, .L1879+0x4
+	ldr	r4, .L1877+0x4
 	add	r0, r0, r4
 	ldrb	r0, [r0]
 	bl	ClearWindowTilemap
@@ -21461,14 +21458,14 @@ sub_802A588:
 	add	r0, r0, r2
 	mov	r1, #0x1
 	str	r1, [r0]
-.L1858:
+.L1856:
 	add	sp, sp, #0xc
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L1880:
+.L1878:
 	.align	2, 0
-.L1879:
+.L1877:
 	.word	0x3024
 	.word	0x3008
 .Lfe149:
@@ -21478,9 +21475,9 @@ sub_802A588:
 	.thumb_func
 sub_802A6FC:
 	push	{r4, lr}
-	ldr	r4, .L1882
+	ldr	r4, .L1880
 	ldr	r0, [r4]
-	ldr	r1, .L1882+0x4
+	ldr	r1, .L1880+0x4
 	add	r0, r0, r1
 	ldrb	r0, [r0]
 	bl	DestroyTask
@@ -21493,9 +21490,9 @@ sub_802A6FC:
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L1883:
+.L1881:
 	.align	2, 0
-.L1882:
+.L1880:
 	.word	gUnknown_02022CF8
 	.word	0x3004
 .Lfe150:
@@ -21512,9 +21509,9 @@ nullsub_16:
 	.thumb_func
 sub_802A72C:
 	push	{r4, lr}
-	ldr	r2, .L1886
+	ldr	r2, .L1884
 	ldr	r1, [r2]
-	ldr	r3, .L1886+0x4
+	ldr	r3, .L1884+0x4
 	add	r1, r1, r3
 	mov	r3, #0x0
 	strb	r3, [r1]
@@ -21523,15 +21520,15 @@ sub_802A72C:
 	lsl	r4, r4, #0x6
 	add	r2, r1, r4
 	str	r3, [r2]
-	ldr	r2, .L1886+0x8
+	ldr	r2, .L1884+0x8
 	add	r1, r1, r2
 	str	r0, [r1]
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L1887:
+.L1885:
 	.align	2, 0
-.L1886:
+.L1884:
 	.word	gUnknown_02022CF8
 	.word	0x3014
 	.word	0x3028
@@ -21541,15 +21538,15 @@ sub_802A72C:
 	.type	 sub_802A75C,function
 	.thumb_func
 sub_802A75C:
-	ldr	r0, .L1889
+	ldr	r0, .L1887
 	ldr	r0, [r0]
-	ldr	r1, .L1889+0x4
+	ldr	r1, .L1887+0x4
 	add	r0, r0, r1
 	ldr	r0, [r0]
 	bx	lr
-.L1890:
+.L1888:
 	.align	2, 0
-.L1889:
+.L1887:
 	.word	gUnknown_02022CF8
 	.word	0x3028
 .Lfe153:
@@ -21559,23 +21556,23 @@ sub_802A75C:
 	.thumb_func
 sub_802A770:
 	push	{lr}
-	ldr	r0, .L1895
+	ldr	r0, .L1893
 	ldr	r0, [r0]
 	mov	r1, #0xc0
 	lsl	r1, r1, #0x6
 	add	r0, r0, r1
 	ldr	r0, [r0]
 	cmp	r0, #0x1
-	beq	.L1892	@cond_branch
+	beq	.L1890	@cond_branch
 	mov	r0, #0x1
-	b	.L1894
-.L1896:
-	.align	2, 0
-.L1895:
-	.word	gUnknown_02022CF8
-.L1892:
-	mov	r0, #0x0
+	b	.L1892
 .L1894:
+	.align	2, 0
+.L1893:
+	.word	gUnknown_02022CF8
+.L1890:
+	mov	r0, #0x0
+.L1892:
 	pop	{r1}
 	bx	r1
 .Lfe154:
@@ -21584,15 +21581,15 @@ sub_802A770:
 	.type	 sub_802A794,function
 	.thumb_func
 sub_802A794:
-	ldr	r0, .L1898
+	ldr	r0, .L1896
 	ldr	r0, [r0]
-	ldr	r1, .L1898+0x4
+	ldr	r1, .L1896+0x4
 	add	r0, r0, r1
 	ldrb	r0, [r0]
 	bx	lr
-.L1899:
+.L1897:
 	.align	2, 0
-.L1898:
+.L1896:
 	.word	gUnknown_02022CF8
 	.word	0x3024
 .Lfe155:
@@ -21602,78 +21599,81 @@ sub_802A794:
 	.thumb_func
 sub_802A7A8:
 	push	{r4, r5, r6, r7, lr}
-	mov	r7, r8
-	push	{r7}
+	mov	r7, sl
+	mov	r6, r9
+	mov	r5, r8
+	push	{r5, r6, r7}
 	add	sp, sp, #-0x8
+	mov	r6, #0xc0
+	lsl	r6, r6, #0x13
 	mov	r3, #0xc0
-	lsl	r3, r3, #0x13
-	mov	r4, #0xc0
-	lsl	r4, r4, #0x9
+	lsl	r3, r3, #0x9
 	add	r0, sp, #0x4
-	mov	r8, r0
-	mov	r2, sp
-	mov	r6, #0x0
-	ldr	r1, .L1906
+	mov	r9, r0
+	mov	r4, sp
+	mov	r7, #0x0
+	mov	sl, r7
+	ldr	r0, .L1904
+	mov	ip, r0
 	mov	r5, #0x80
 	lsl	r5, r5, #0x5
-	ldr	r7, .L1906+0x4
-	mov	r0, #0x81
-	lsl	r0, r0, #0x18
-	mov	ip, r0
-.L1903:
-	strh	r6, [r2]
+	mov	r7, #0x81
+	lsl	r7, r7, #0x18
+	mov	r8, r7
+.L1901:
+	mov	r0, sl
+	strh	r0, [r4]
 	mov	r0, sp
-	str	r0, [r1]
-	str	r3, [r1, #0x4]
-	str	r7, [r1, #0x8]
-	ldr	r0, [r1, #0x8]
-	add	r3, r3, r5
-	sub	r4, r4, r5
-	cmp	r4, r5
-	bhi	.L1903	@cond_branch
-	strh	r6, [r2]
-	mov	r2, sp
-	str	r2, [r1]
-	str	r3, [r1, #0x4]
-	lsr	r0, r4, #0x1
+	add	r1, r6, #0
 	mov	r2, ip
-	orr	r0, r0, r2
-	str	r0, [r1, #0x8]
-	ldr	r0, [r1, #0x8]
-	mov	r0, #0xe0
-	lsl	r0, r0, #0x13
+	ldr	r7, .L1904+0x4
+	stmia r7!, {r0, r1, r2}
+	.code	16
+	add	r6, r6, r5
+	sub	r3, r3, r5
+	cmp	r3, r5
+	bhi	.L1901	@cond_branch
+	mov	r0, sl
+	strh	r0, [r4]
+	lsr	r2, r3, #0x1
+	mov	r0, sp
+	add	r1, r6, #0
+	mov	r3, r8
+	orr	r2, r2, r3
+	ldr	r4, .L1904+0x4
+	stmia r4!, {r0, r1, r2}
+	.code	16
 	mov	r3, #0x80
 	lsl	r3, r3, #0x3
-	mov	r4, #0x0
-	str	r4, [sp, #0x4]
-	ldr	r2, .L1906
-	mov	r1, r8
-	str	r1, [r2]
-	str	r0, [r2, #0x4]
-	lsr	r0, r3, #0x2
-	mov	r1, #0x85
-	lsl	r1, r1, #0x18
-	orr	r0, r0, r1
-	str	r0, [r2, #0x8]
-	ldr	r0, [r2, #0x8]
+	mov	r5, #0x0
+	str	r5, [sp, #0x4]
+	lsr	r2, r3, #0x2
+	mov	r4, #0x85
+	lsl	r4, r4, #0x18
+	mov	r0, r9
+	mov	r1, #0xe0
+	lsl	r1, r1, #0x13
+	orr	r2, r2, r4
+	ldr	r7, .L1904+0x4
+	stmia r7!, {r0, r1, r2}
+	.code	16
+	mov	r0, sp
+	strh	r5, [r0]
+	lsr	r3, r3, #0x1
+	mov	r2, #0x81
+	lsl	r2, r2, #0x18
 	mov	r1, #0xa0
 	lsl	r1, r1, #0x13
-	mov	r0, sp
-	strh	r4, [r0]
-	str	r0, [r2]
-	str	r1, [r2, #0x4]
-	lsr	r3, r3, #0x1
-	mov	r0, #0x81
-	lsl	r0, r0, #0x18
-	orr	r3, r3, r0
-	str	r3, [r2, #0x8]
-	ldr	r0, [r2, #0x8]
+	orr	r2, r2, r3
+	ldr	r3, .L1904+0x4
+	stmia r3!, {r0, r1, r2}
+	.code	16
 	mov	r0, #0x0
 	mov	r1, #0x0
 	bl	SetGpuReg
 	mov	r0, #0x0
 	bl	ResetBgsAndClearDma3BusyFlags
-	ldr	r1, .L1906+0x8
+	ldr	r1, .L1904+0x8
 	mov	r0, #0x0
 	mov	r2, #0x4
 	bl	InitBgsFromTemplates
@@ -21715,14 +21715,14 @@ sub_802A7A8:
 	lsl	r1, r1, #0x5
 	mov	r0, #0x0
 	bl	SetGpuReg
-	ldr	r4, .L1906+0xc
+	ldr	r4, .L1904+0xc
 	ldr	r1, [r4]
 	mov	r0, #0x3
 	bl	SetBgTilemapBuffer
 	ldr	r1, [r4]
-	mov	r2, #0x80
-	lsl	r2, r2, #0x5
-	add	r1, r1, r2
+	mov	r7, #0x80
+	lsl	r7, r7, #0x5
+	add	r1, r1, r7
 	mov	r0, #0x1
 	bl	SetBgTilemapBuffer
 	ldr	r1, [r4]
@@ -21732,16 +21732,18 @@ sub_802A7A8:
 	mov	r0, #0x2
 	bl	SetBgTilemapBuffer
 	add	sp, sp, #0x8
-	pop	{r3}
+	pop	{r3, r4, r5}
 	mov	r8, r3
+	mov	r9, r4
+	mov	sl, r5
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L1907:
+.L1905:
 	.align	2, 0
-.L1906:
-	.word	0x40000d4
+.L1904:
 	.word	-0x7efff800
+	.word	0x40000d4
 	.word	gUnknown_082F7BA4
 	.word	gUnknown_02022CF8
 .Lfe156:
@@ -21752,106 +21754,106 @@ sub_802A7A8:
 sub_802A8E8:
 	push	{lr}
 	add	sp, sp, #-0x4
-	ldr	r0, .L1922
+	ldr	r0, .L1920
 	ldr	r0, [r0]
-	ldr	r2, .L1922+0x4
+	ldr	r2, .L1920+0x4
 	add	r1, r0, r2
 	ldrb	r0, [r1]
 	cmp	r0, #0x5
-	bhi	.L1917	@cond_branch
+	bhi	.L1915	@cond_branch
 	lsl	r0, r0, #0x2
-	ldr	r1, .L1922+0x8
+	ldr	r1, .L1920+0x8
 	add	r0, r0, r1
 	ldr	r0, [r0]
 	mov	pc, r0
-.L1923:
+.L1921:
 	.align	2, 0
-.L1922:
+.L1920:
 	.word	gUnknown_02022CF8
 	.word	0x3018
-	.word	.L1918
+	.word	.L1916
 	.align	2, 0
 	.align	2, 0
-.L1918:
+.L1916:
+	.word	.L1908
+	.word	.L1909
 	.word	.L1910
 	.word	.L1911
 	.word	.L1912
-	.word	.L1913
 	.word	.L1914
-	.word	.L1916
-.L1910:
-	ldr	r0, .L1924
+.L1908:
+	ldr	r0, .L1922
 	mov	r1, #0x0
 	mov	r2, #0x40
 	bl	LoadPalette
-	b	.L1909
-.L1925:
+	b	.L1907
+.L1923:
 	.align	2, 0
-.L1924:
+.L1922:
 	.word	gDodrioBerryBgPal1
-.L1911:
+.L1909:
 	bl	ResetTempTileDataBuffers
-	b	.L1909
-.L1912:
-	ldr	r1, .L1926
+	b	.L1907
+.L1910:
+	ldr	r1, .L1924
 	mov	r0, #0x0
 	str	r0, [sp]
 	mov	r0, #0x3
-	b	.L1920
-.L1927:
+	b	.L1918
+.L1925:
 	.align	2, 0
-.L1926:
+.L1924:
 	.word	gDodrioBerryBgGfx1
-.L1913:
-	ldr	r1, .L1928
+.L1911:
+	ldr	r1, .L1926
 	mov	r0, #0x0
 	str	r0, [sp]
 	mov	r0, #0x1
-.L1920:
+.L1918:
 	mov	r2, #0x0
 	mov	r3, #0x0
 	bl	DecompressAndCopyTileDataToVram
-	b	.L1909
-.L1929:
+	b	.L1907
+.L1927:
 	.align	2, 0
-.L1928:
+.L1926:
 	.word	gDodrioBerryBgGfx2
-.L1914:
+.L1912:
 	bl	FreeTempTileDataBuffersIfPossible
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	cmp	r0, #0x1
-	bne	.L1909	@cond_branch
-	b	.L1921
-.L1916:
+	bne	.L1907	@cond_branch
+	b	.L1919
+.L1914:
 	mov	r0, #0x3
 	bl	GetTextWindowPalette
 	mov	r1, #0xd0
 	mov	r2, #0x20
 	bl	LoadPalette
-	b	.L1909
-.L1917:
+	b	.L1907
+.L1915:
 	mov	r0, #0x0
 	strb	r0, [r1]
 	mov	r0, #0x1
-	b	.L1919
-.L1909:
-	ldr	r0, .L1930
+	b	.L1917
+.L1907:
+	ldr	r0, .L1928
 	ldr	r1, [r0]
-	ldr	r0, .L1930+0x4
+	ldr	r0, .L1928+0x4
 	add	r1, r1, r0
 	ldrb	r0, [r1]
 	add	r0, r0, #0x1
 	strb	r0, [r1]
-.L1921:
-	mov	r0, #0x0
 .L1919:
+	mov	r0, #0x0
+.L1917:
 	add	sp, sp, #0x4
 	pop	{r1}
 	bx	r1
-.L1931:
+.L1929:
 	.align	2, 0
-.L1930:
+.L1928:
 	.word	gUnknown_02022CF8
 	.word	0x3018
 .Lfe157:

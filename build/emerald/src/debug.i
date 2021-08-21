@@ -10,6 +10,9 @@
 
 
 void Debug_ShowMainMenu(void);
+
+
+void CB2_StartSoundCheckMenu(void);
 # 2 "src/debug.c" 2
 # 11 "src/debug.c"
 # 1 "include/global.h" 1
@@ -10493,7 +10496,7 @@ static void DebugAction_Give_Item_SelectQuantity(u8 taskId)
         FreeSpriteOamMatrix(&gSprites[gTasks[taskId].data[6]]);
         DestroySprite(&gSprites[gTasks[taskId].data[6]]);
 
-        PlaySE(370);
+        PlaySE(341);
         AddBagItem(gTasks[taskId].data[5], gTasks[taskId].data[3]);
         DebugAction_DestroyExtraWindow(taskId);
     }
@@ -10513,7 +10516,7 @@ static void DebugAction_Give_Item_SelectQuantity(u8 taskId)
 static void DebugAction_Give_AllTMs(u8 taskId)
 {
     u16 i;
-    PlayFanfare(372);
+    PlayFanfare(343);
     for (i = 482; i <= 531; i++)
         if(!CheckBagHasItem(i, 1))
             AddBagItem(i, 1);
@@ -10730,7 +10733,7 @@ static void DebugAction_Give_Pokemon_SelectLevel(u8 taskId)
         FreeAndDestroyMonIconSprite(&gSprites[gTasks[taskId].data[6]]);
         if (gTasks[taskId].data[5] == 0)
         {
-            PlaySE(367);
+            PlaySE(338);
             ScriptGiveMon(sDebugMonData->mon_speciesId, gTasks[taskId].data[3], 0, 0,0,0);
             Free(sDebugMonData);
             DebugAction_DestroyExtraWindow(taskId);
@@ -11167,7 +11170,7 @@ static void DebugAction_Give_Pokemon_Move(u8 taskId)
             gTasks[taskId].data[3] = 0;
             gTasks[taskId].data[4] = 0;
 
-            PlaySE(367);
+            PlaySE(338);
             gTasks[taskId].func = DebugAction_Give_Pokemon_ComplexCreateMon;
         }
     }
@@ -11301,7 +11304,7 @@ static void DebugAction_Give_CHEAT(u8 taskId)
 static void DebugAction_GiveAllTMs(u8 taskId)
 {
     u16 i;
-    PlayFanfare(372);
+    PlayFanfare(343);
     for (i = 482; i <= 531; i++)
         AddBagItem(i, 1);
     AddBagItem(545, 1);

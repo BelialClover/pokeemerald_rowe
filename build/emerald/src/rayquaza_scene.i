@@ -15168,7 +15168,7 @@ static void LoadTakesFlightSceneGfx(void)
 static void Task_RayTakesFlightAnim(u8 taskId)
 {
     s16 *data = gTasks[taskId].data;
-    PlayNewMapMusic(464);
+    PlayNewMapMusic(514);
     InitTakesFlightSceneBgs();
     LoadTakesFlightSceneGfx();
     SetGpuReg(0x50, (1 << 4) | (1 << 9) | (1 << 6));

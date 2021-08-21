@@ -2926,12 +2926,11 @@ HandleSpeciesGfxDataChange:
 	.word	0x4000008
 .L416:
 	ldr	r0, .L433
-	ldr	r0, [r0]
-	mov	r2, sl
-	lsl	r1, r2, #0x2
-	add	r0, r0, #0x4
-	add	r0, r0, r1
-	ldr	r2, [r0]
+	ldr	r3, [r0]
+	mov	r1, sl
+	lsl	r0, r1, #0x2
+	add	r3, r3, #0x4
+	add	r3, r3, r0
 	ldr	r0, .L433+0x4
 	add	r0, r0, r7
 	mov	sl, r0
@@ -2939,19 +2938,18 @@ HandleSpeciesGfxDataChange:
 	lsl	r0, r1, #0x4
 	add	r0, r0, r1
 	lsl	r0, r0, #0x2
-	ldr	r3, .L433+0x8
-	add	r0, r0, r3
-	ldrh	r0, [r0, #0x4]
-	lsl	r0, r0, #0x16
-	lsr	r0, r0, #0x11
-	ldr	r1, .L433+0xc
-	add	r0, r0, r1
-	ldr	r1, .L433+0x10
-	str	r2, [r1]
-	str	r0, [r1, #0x4]
-	ldr	r0, .L433+0x14
-	str	r0, [r1, #0x8]
-	ldr	r0, [r1, #0x8]
+	ldr	r2, .L433+0x8
+	add	r0, r0, r2
+	ldrh	r1, [r0, #0x4]
+	lsl	r1, r1, #0x16
+	lsr	r1, r1, #0x11
+	ldr	r2, .L433+0xc
+	ldr	r0, [r3]
+	orr	r1, r1, r2
+	ldr	r2, .L433+0x10
+	ldr	r3, .L433+0x14
+	stmia r3!, {r0, r1, r2}
+	.code	16
 	lsl	r0, r7, #0x4
 	mov	r1, #0x80
 	lsl	r1, r1, #0x1
@@ -3084,8 +3082,8 @@ HandleSpeciesGfxDataChange:
 	.word	gBattlerSpriteIds
 	.word	gSprites
 	.word	0x6010000
-	.word	0x40000d4
 	.word	-0x7bfffe00
+	.word	0x40000d4
 	.word	gDecompressionBuffer
 	.word	0x15f
 	.word	gMonFrontAnimsPtrTable
@@ -3104,6 +3102,9 @@ HandleSpeciesGfxDataChange:
 	.thumb_func
 BattleLoadSubstituteOrMonSpriteGfx:
 	push	{r4, r5, r6, r7, lr}
+	mov	r7, r9
+	mov	r6, r8
+	push	{r6, r7}
 	lsl	r0, r0, #0x18
 	lsr	r4, r0, #0x18
 	add	r5, r4, #0
@@ -3164,29 +3165,31 @@ BattleLoadSubstituteOrMonSpriteGfx:
 	bl	LZDecompressVram
 .L440:
 	mov	r3, #0x1
-	lsl	r6, r5, #0x4
-	ldr	r7, .L457+0x8
-	ldr	r0, .L457+0x4
-	ldr	r0, [r0]
-	add	r0, r0, #0x4
-	add	r4, r0, r4
-	ldr	r2, .L457+0xc
-	ldr	r5, .L457+0x10
+	lsl	r5, r5, #0x4
+	mov	r9, r5
+	ldr	r0, .L457+0x8
+	mov	ip, r0
+	ldr	r7, .L457+0x4
+	ldr	r5, .L457+0xc
 .L446:
-	ldr	r0, [r4]
-	lsl	r1, r3, #0xb
-	add	r1, r0, r1
-	str	r0, [r2]
-	str	r1, [r2, #0x4]
-	str	r5, [r2, #0x8]
-	ldr	r0, [r2, #0x8]
+	ldr	r0, [r7]
+	add	r0, r0, #0x4
+	add	r0, r0, r4
+	ldr	r1, [r0]
+	lsl	r2, r3, #0xb
+	add	r0, r1, #0
+	add	r1, r1, r2
+	add	r2, r5, #0
+	ldr	r6, .L457+0x10
+	stmia r6!, {r0, r1, r2}
+	.code	16
 	add	r3, r3, #0x1
 	cmp	r3, #0x3
 	ble	.L446	@cond_branch
-	mov	r0, #0x80
-	lsl	r0, r0, #0x1
-	add	r1, r6, r0
-	add	r0, r7, #0
+	mov	r1, #0x80
+	lsl	r1, r1, #0x1
+	add	r1, r1, r9
+	mov	r0, ip
 	mov	r2, #0x20
 	bl	LoadCompressedPalette
 	b	.L448
@@ -3196,8 +3199,8 @@ BattleLoadSubstituteOrMonSpriteGfx:
 	.word	gSubstituteDollTilemap
 	.word	gMonSpritesGfxPtr
 	.word	gSubstituteDollPal
-	.word	0x40000d4
 	.word	-0x7bfffe00
+	.word	0x40000d4
 .L436:
 	bl	IsContest
 	lsl	r0, r0, #0x18
@@ -3236,6 +3239,9 @@ BattleLoadSubstituteOrMonSpriteGfx:
 	add	r1, r5, #0
 	bl	BattleLoadPlayerMonSpriteGfx
 .L448:
+	pop	{r3, r4}
+	mov	r8, r3
+	mov	r9, r4
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0

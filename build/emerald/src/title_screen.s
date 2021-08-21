@@ -2052,38 +2052,34 @@ CB2_InitTitleScreen:
 	add	r1, sp, #0xc
 	mov	r0, #0x0
 	strh	r0, [r1]
-	ldr	r1, .L94+0x4
-	add	r0, sp, #0xc
-	str	r0, [r1]
-	mov	r0, #0xc0
-	lsl	r0, r0, #0x13
-	str	r0, [r1, #0x4]
-	ldr	r0, .L94+0x8
-	str	r0, [r1, #0x8]
-	ldr	r0, [r1, #0x8]
-	mov	r2, #0x0
-	str	r2, [sp, #0x10]
+	add	r0, r1, #0
+	mov	r1, #0xc0
+	lsl	r1, r1, #0x13
+	ldr	r2, .L94+0x4
+	ldr	r3, .L94+0x8
+	stmia r3!, {r0, r1, r2}
+	.code	16
+	mov	r3, #0x0
+	str	r3, [sp, #0x10]
 	add	r0, sp, #0x10
-	str	r0, [r1]
-	mov	r0, #0xe0
-	lsl	r0, r0, #0x13
-	str	r0, [r1, #0x4]
-	ldr	r0, .L94+0xc
-	str	r0, [r1, #0x8]
-	ldr	r0, [r1, #0x8]
+	mov	r1, #0xe0
+	lsl	r1, r1, #0x13
+	ldr	r2, .L94+0xc
+	ldr	r4, .L94+0x8
+	stmia r4!, {r0, r1, r2}
+	.code	16
 	add	r0, sp, #0xc
-	strh	r2, [r0]
-	str	r0, [r1]
-	ldr	r0, .L94+0x10
-	str	r0, [r1, #0x4]
-	ldr	r0, .L94+0x14
-	str	r0, [r1, #0x8]
-	ldr	r0, [r1, #0x8]
+	strh	r3, [r0]
+	ldr	r1, .L94+0x10
+	ldr	r2, .L94+0x14
+	ldr	r3, .L94+0x8
+	stmia r3!, {r0, r1, r2}
+	.code	16
 	bl	ResetPaletteFade
 	ldr	r0, .L94+0x18
-	mov	r1, #0x87
-	lsl	r1, r1, #0x3
-	add	r0, r0, r1
+	mov	r4, #0x87
+	lsl	r4, r4, #0x3
+	add	r0, r0, r4
 	mov	r1, #0x1
 	strb	r1, [r0]
 	b	.L82
@@ -2091,8 +2087,8 @@ CB2_InitTitleScreen:
 	.align	2, 0
 .L94:
 	.word	0x7fff
-	.word	0x40000d4
 	.word	-0x7eff4000
+	.word	0x40000d4
 	.word	-0x7affff00
 	.word	0x5000002
 	.word	-0x7efffe01
@@ -2143,9 +2139,9 @@ CB2_InitTitleScreen:
 	ldr	r0, .L96+0x44
 	bl	LoadSpritePalette
 	ldr	r0, .L96+0x48
-	mov	r2, #0x87
-	lsl	r2, r2, #0x3
-	add	r0, r0, r2
+	mov	r1, #0x87
+	lsl	r1, r1, #0x3
+	add	r0, r0, r1
 	mov	r1, #0x2
 	strb	r1, [r0]
 	b	.L82
@@ -2192,9 +2188,9 @@ CB2_InitTitleScreen:
 	sub	r0, r0, #0x10
 	strh	r0, [r1, #0xe]
 	ldr	r0, .L98+0xc
-	mov	r1, #0x87
-	lsl	r1, r1, #0x3
-	add	r0, r0, r1
+	mov	r2, #0x87
+	lsl	r2, r2, #0x3
+	add	r0, r0, r2
 	mov	r1, #0x3
 	strb	r1, [r0]
 	b	.L82
@@ -2217,9 +2213,9 @@ CB2_InitTitleScreen:
 	ldr	r0, .L100+0x4
 	bl	SetVBlankCallback
 	ldr	r0, .L100+0x8
-	mov	r2, #0x87
-	lsl	r2, r2, #0x3
-	add	r0, r0, r2
+	mov	r3, #0x87
+	lsl	r3, r3, #0x3
+	add	r0, r0, r3
 	mov	r1, #0x4
 	strb	r1, [r0]
 	b	.L82
@@ -2292,12 +2288,13 @@ CB2_InitTitleScreen:
 	ldr	r1, .L102+0x18
 	mov	r0, #0x0
 	bl	SetGpuReg
-	ldr	r0, .L102+0x1c
+	mov	r0, #0xc0
+	lsl	r0, r0, #0x1
 	bl	m4aSongNumStart
-	ldr	r0, .L102+0x20
-	mov	r1, #0x87
-	lsl	r1, r1, #0x3
-	add	r0, r0, r1
+	ldr	r0, .L102+0x1c
+	mov	r4, #0x87
+	lsl	r4, r4, #0x3
+	add	r0, r0, r4
 	mov	r1, #0x5
 	strb	r1, [r0]
 	b	.L82
@@ -2311,7 +2308,6 @@ CB2_InitTitleScreen:
 	.word	0x1b0e
 	.word	0x4981
 	.word	0xb441
-	.word	0x19d
 	.word	gMain
 .L89:
 	bl	UpdatePaletteFade
@@ -2640,7 +2636,7 @@ Task_TitleScreenPhase3:
 	add	sp, sp, #-0x4
 	lsl	r0, r0, #0x18
 	lsr	r5, r0, #0x18
-	ldr	r2, .L144
+	ldr	r2, .L146
 	ldrh	r1, [r2, #0x2e]
 	mov	r0, #0x1
 	and	r0, r0, r1
@@ -2657,18 +2653,18 @@ Task_TitleScreenPhase3:
 	bl	FadeOutBGM
 	mov	r0, #0x1
 	neg	r0, r0
-	ldr	r1, .L144+0x4
+	ldr	r1, .L146+0x4
 	str	r1, [sp]
 	mov	r1, #0x0
 	mov	r2, #0x0
 	mov	r3, #0x10
 	bl	BeginNormalPaletteFade
-	ldr	r0, .L144+0x8
+	ldr	r0, .L146+0x8
 	bl	SetMainCallback2
 	b	.L135
-.L145:
+.L147:
 	.align	2, 0
-.L144:
+.L146:
 	.word	gMain
 	.word	0xffff
 	.word	CB2_GoToMainMenu
@@ -2678,12 +2674,12 @@ Task_TitleScreenPhase3:
 	and	r0, r0, r1
 	cmp	r0, #0x46
 	bne	.L136	@cond_branch
-	ldr	r0, .L146
+	ldr	r0, .L148
 	bl	SetMainCallback2
 	b	.L135
-.L147:
+.L149:
 	.align	2, 0
-.L146:
+.L148:
 	.word	CB2_GoToClearSaveDataScreen
 .L136:
 	mov	r0, #0x26
@@ -2702,19 +2698,19 @@ Task_TitleScreenPhase3:
 	mov	r2, #0x0
 	mov	r3, #0x10
 	bl	BeginNormalPaletteFade
-	ldr	r0, .L148
+	ldr	r0, .L150
 	bl	SetMainCallback2
 	b	.L135
-.L149:
+.L151:
 	.align	2, 0
-.L148:
+.L150:
 	.word	CB2_GoToResetRtcScreen
 .L138:
-	ldr	r0, .L150
+	ldr	r0, .L152
 	ldrh	r1, [r0, #0x2c]
-	mov	r0, #0x6
+	mov	r0, #0x16
 	and	r0, r0, r1
-	cmp	r0, #0x6
+	cmp	r0, #0x16
 	bne	.L140	@cond_branch
 	mov	r0, #0x4
 	bl	FadeOutBGM
@@ -2725,22 +2721,43 @@ Task_TitleScreenPhase3:
 	mov	r2, #0x0
 	mov	r3, #0x10
 	bl	BeginNormalPaletteFade
-	ldr	r0, .L150+0x4
+	ldr	r0, .L152+0x4
 	bl	SetMainCallback2
 	b	.L135
-.L151:
+.L153:
 	.align	2, 0
-.L150:
+.L152:
 	.word	gMain
-	.word	CB2_GoToBerryFixScreen
+	.word	CB2_GoToSoundCheckScreen
 .L140:
+	mov	r0, #0x6
+	and	r0, r0, r1
+	cmp	r0, #0x6
+	bne	.L142	@cond_branch
+	mov	r0, #0x4
+	bl	FadeOutBGM
+	mov	r0, #0x1
+	neg	r0, r0
+	mov	r1, #0x0
+	str	r1, [sp]
+	mov	r2, #0x0
+	mov	r3, #0x10
+	bl	BeginNormalPaletteFade
+	ldr	r0, .L154
+	bl	SetMainCallback2
+	b	.L135
+.L155:
+	.align	2, 0
+.L154:
+	.word	CB2_GoToBerryFixScreen
+.L142:
 	mov	r0, #0x2c
 	mov	r1, #0x0
 	bl	SetGpuReg
 	mov	r0, #0x2e
 	mov	r1, #0x0
 	bl	SetGpuReg
-	ldr	r1, .L152
+	ldr	r1, .L156
 	lsl	r0, r5, #0x2
 	add	r0, r0, r5
 	lsl	r0, r0, #0x3
@@ -2751,25 +2768,25 @@ Task_TitleScreenPhase3:
 	mov	r1, #0x1
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L142	@cond_branch
+	beq	.L144	@cond_branch
 	ldrh	r0, [r3, #0x10]
 	add	r0, r0, #0x1
 	strh	r0, [r3, #0x10]
-	ldr	r2, .L152+0x4
+	ldr	r2, .L156+0x4
 	mov	r1, #0x10
 	ldrsh	r0, [r3, r1]
 	lsr	r1, r0, #0x1f
 	add	r0, r0, r1
 	asr	r0, r0, #0x1
 	strh	r0, [r2]
-	ldr	r1, .L152+0x8
+	ldr	r1, .L156+0x8
 	mov	r0, #0x0
 	strh	r0, [r1]
-.L142:
+.L144:
 	ldrb	r0, [r3, #0x8]
 	bl	UpdateLegendaryMarkingColor
-	ldr	r0, .L152+0xc
-	ldr	r1, .L152+0x10
+	ldr	r0, .L156+0xc
+	ldr	r1, .L156+0x10
 	ldrh	r0, [r0, #0x4]
 	cmp	r0, #0
 	bne	.L135	@cond_branch
@@ -2780,16 +2797,16 @@ Task_TitleScreenPhase3:
 	mov	r2, #0x0
 	mov	r3, #0x10
 	bl	BeginNormalPaletteFade
-	ldr	r0, .L152+0x14
+	ldr	r0, .L156+0x14
 	bl	SetMainCallback2
 .L135:
 	add	sp, sp, #0x4
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.L153:
+.L157:
 	.align	2, 0
-.L152:
+.L156:
 	.word	gTasks
 	.word	gBattle_BG1_Y
 	.word	gBattle_BG1_X
@@ -2806,26 +2823,6 @@ CB2_GoToMainMenu:
 	bl	UpdatePaletteFade
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	bne	.L155	@cond_branch
-	ldr	r0, .L156
-	bl	SetMainCallback2
-.L155:
-	pop	{r0}
-	bx	r0
-.L157:
-	.align	2, 0
-.L156:
-	.word	CB2_InitMainMenu
-.Lfe15:
-	.size	 CB2_GoToMainMenu,.Lfe15-CB2_GoToMainMenu
-	.align	2, 0
-	.type	 CB2_GoToCopyrightScreen,function
-	.thumb_func
-CB2_GoToCopyrightScreen:
-	push	{lr}
-	bl	UpdatePaletteFade
-	lsl	r0, r0, #0x18
-	cmp	r0, #0
 	bne	.L159	@cond_branch
 	ldr	r0, .L160
 	bl	SetMainCallback2
@@ -2835,13 +2832,13 @@ CB2_GoToCopyrightScreen:
 .L161:
 	.align	2, 0
 .L160:
-	.word	CB2_InitCopyrightScreenAfterTitleScreen
-.Lfe16:
-	.size	 CB2_GoToCopyrightScreen,.Lfe16-CB2_GoToCopyrightScreen
+	.word	CB2_InitMainMenu
+.Lfe15:
+	.size	 CB2_GoToMainMenu,.Lfe15-CB2_GoToMainMenu
 	.align	2, 0
-	.type	 CB2_GoToClearSaveDataScreen,function
+	.type	 CB2_GoToCopyrightScreen,function
 	.thumb_func
-CB2_GoToClearSaveDataScreen:
+CB2_GoToCopyrightScreen:
 	push	{lr}
 	bl	UpdatePaletteFade
 	lsl	r0, r0, #0x18
@@ -2855,13 +2852,13 @@ CB2_GoToClearSaveDataScreen:
 .L165:
 	.align	2, 0
 .L164:
-	.word	CB2_InitClearSaveDataScreen
-.Lfe17:
-	.size	 CB2_GoToClearSaveDataScreen,.Lfe17-CB2_GoToClearSaveDataScreen
+	.word	CB2_InitCopyrightScreenAfterTitleScreen
+.Lfe16:
+	.size	 CB2_GoToCopyrightScreen,.Lfe16-CB2_GoToCopyrightScreen
 	.align	2, 0
-	.type	 CB2_GoToResetRtcScreen,function
+	.type	 CB2_GoToClearSaveDataScreen,function
 	.thumb_func
-CB2_GoToResetRtcScreen:
+CB2_GoToClearSaveDataScreen:
 	push	{lr}
 	bl	UpdatePaletteFade
 	lsl	r0, r0, #0x18
@@ -2875,19 +2872,18 @@ CB2_GoToResetRtcScreen:
 .L169:
 	.align	2, 0
 .L168:
-	.word	CB2_InitResetRtcScreen
-.Lfe18:
-	.size	 CB2_GoToResetRtcScreen,.Lfe18-CB2_GoToResetRtcScreen
+	.word	CB2_InitClearSaveDataScreen
+.Lfe17:
+	.size	 CB2_GoToClearSaveDataScreen,.Lfe17-CB2_GoToClearSaveDataScreen
 	.align	2, 0
-	.type	 CB2_GoToBerryFixScreen,function
+	.type	 CB2_GoToResetRtcScreen,function
 	.thumb_func
-CB2_GoToBerryFixScreen:
+CB2_GoToResetRtcScreen:
 	push	{lr}
 	bl	UpdatePaletteFade
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
 	bne	.L171	@cond_branch
-	bl	m4aMPlayAllStop
 	ldr	r0, .L172
 	bl	SetMainCallback2
 .L171:
@@ -2896,9 +2892,52 @@ CB2_GoToBerryFixScreen:
 .L173:
 	.align	2, 0
 .L172:
-	.word	CB2_InitBerryFixProgram
+	.word	CB2_InitResetRtcScreen
+.Lfe18:
+	.size	 CB2_GoToResetRtcScreen,.Lfe18-CB2_GoToResetRtcScreen
+	.align	2, 0
+	.type	 CB2_GoToSoundCheckScreen,function
+	.thumb_func
+CB2_GoToSoundCheckScreen:
+	push	{lr}
+	bl	UpdatePaletteFade
+	lsl	r0, r0, #0x18
+	cmp	r0, #0
+	bne	.L175	@cond_branch
+	ldr	r0, .L176
+	bl	SetMainCallback2
+.L175:
+	bl	AnimateSprites
+	bl	BuildOamBuffer
+	pop	{r0}
+	bx	r0
+.L177:
+	.align	2, 0
+.L176:
+	.word	CB2_StartSoundCheckMenu
 .Lfe19:
-	.size	 CB2_GoToBerryFixScreen,.Lfe19-CB2_GoToBerryFixScreen
+	.size	 CB2_GoToSoundCheckScreen,.Lfe19-CB2_GoToSoundCheckScreen
+	.align	2, 0
+	.type	 CB2_GoToBerryFixScreen,function
+	.thumb_func
+CB2_GoToBerryFixScreen:
+	push	{lr}
+	bl	UpdatePaletteFade
+	lsl	r0, r0, #0x18
+	cmp	r0, #0
+	bne	.L179	@cond_branch
+	bl	m4aMPlayAllStop
+	ldr	r0, .L180
+	bl	SetMainCallback2
+.L179:
+	pop	{r0}
+	bx	r0
+.L181:
+	.align	2, 0
+.L180:
+	.word	CB2_InitBerryFixProgram
+.Lfe20:
+	.size	 CB2_GoToBerryFixScreen,.Lfe20-CB2_GoToBerryFixScreen
 	.align	2, 0
 	.type	 UpdateLegendaryMarkingColor,function
 	.thumb_func
@@ -2910,7 +2949,7 @@ UpdateLegendaryMarkingColor:
 	mov	r0, #0x3
 	and	r0, r0, r1
 	cmp	r0, #0
-	bne	.L175	@cond_branch
+	bne	.L183	@cond_branch
 	add	r0, r1, #0
 	mov	r1, #0x80
 	bl	Cos
@@ -2921,18 +2960,18 @@ UpdateLegendaryMarkingColor:
 	lsl	r0, r2, #0x5
 	sub	r0, r0, r2
 	cmp	r0, #0
-	bge	.L176	@cond_branch
+	bge	.L184	@cond_branch
 	add	r0, r0, #0xff
-.L176:
+.L184:
 	asr	r0, r0, #0x8
 	mov	r3, #0x1f
 	sub	r1, r3, r0
 	mov	r0, #0x16
 	mul	r0, r0, r2
 	cmp	r0, #0
-	bge	.L177	@cond_branch
+	bge	.L185	@cond_branch
 	add	r0, r0, #0xff
-.L177:
+.L185:
 	asr	r0, r0, #0x8
 	sub	r0, r3, r0
 	lsl	r0, r0, #0x5
@@ -2945,12 +2984,12 @@ UpdateLegendaryMarkingColor:
 	mov	r1, #0xef
 	mov	r2, #0x2
 	bl	LoadPalette
-.L175:
+.L183:
 	add	sp, sp, #0x4
 	pop	{r0}
 	bx	r0
-.Lfe20:
-	.size	 UpdateLegendaryMarkingColor,.Lfe20-UpdateLegendaryMarkingColor
+.Lfe21:
+	.size	 UpdateLegendaryMarkingColor,.Lfe21-UpdateLegendaryMarkingColor
 .text
 	.align	2, 0
 

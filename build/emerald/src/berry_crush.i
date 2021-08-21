@@ -20666,7 +20666,7 @@ u32 sub_8020C0C(MainCallback callback)
     if (callback == CB2_ReturnToField)
     {
         gTextFlags.autoScroll = 1;
-        PlayNewMapMusic(400);
+        PlayNewMapMusic(371);
         SetMainCallback1(CB1_Overworld);
     }
 
@@ -21949,7 +21949,7 @@ static u32 sub_8022E5C(struct BerryCrushGame *r4, __attribute__((unused)) u8 *r1
     case 1:
         if (IsLinkTaskFinished())
         {
-            PlayNewMapMusic(485);
+            PlayNewMapMusic(439);
             sub_8022BEC(7, 1, ((void *)0));
             r4->unk12 = 3;
             r4->unkC = 0;

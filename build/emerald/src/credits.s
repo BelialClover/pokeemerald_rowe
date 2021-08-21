@@ -5561,15 +5561,16 @@ CB2_StartCreditsSequence:
 	bl	EnableInterrupts
 	ldr	r0, .L22+0x14
 	bl	SetVBlankCallback
-	ldr	r0, .L22+0x18
+	mov	r0, #0xd5
+	lsl	r0, r0, #0x1
 	bl	m4aSongNumStart
-	ldr	r0, .L22+0x1c
+	ldr	r0, .L22+0x18
 	bl	SetMainCallback2
-	ldr	r0, .L22+0x20
+	ldr	r0, .L22+0x1c
 	mov	r1, r8
 	strb	r1, [r0]
-	ldr	r4, .L22+0x24
-	ldr	r0, .L22+0x28
+	ldr	r4, .L22+0x20
+	ldr	r0, .L22+0x24
 	bl	AllocZeroed
 	str	r0, [r4]
 	bl	DeterminePokemonToShow
@@ -5581,7 +5582,7 @@ CB2_StartCreditsSequence:
 	strh	r6, [r0]
 	add	r0, r0, #0x2
 	strh	r6, [r0]
-	ldr	r0, .L22+0x2c
+	ldr	r0, .L22+0x28
 	strh	r7, [r0]
 	add	sp, sp, #0x4
 	pop	{r3}
@@ -5598,7 +5599,6 @@ CB2_StartCreditsSequence:
 	.word	0xfffc
 	.word	sub_8175DA0
 	.word	CreditsVBlankCallback
-	.word	0x1c7
 	.word	CB2_RunCreditsSequence
 	.word	gUnknown_0203BCE5
 	.word	sCreditsData
@@ -6339,8 +6339,7 @@ Task_CreditsTheEnd6:
 	ldr	r0, .L108+0x4
 	cmp	r1, r0
 	bne	.L105	@cond_branch
-	mov	r0, #0xe4
-	lsl	r0, r0, #0x1
+	ldr	r0, .L108+0x8
 	bl	m4aSongNumStart
 .L105:
 	ldrh	r0, [r4, #0x8]
@@ -6356,6 +6355,7 @@ Task_CreditsTheEnd6:
 .L108:
 	.word	0x1be8
 	.word	0x1ab8
+	.word	0x1ab
 .Lfe18:
 	.size	 Task_CreditsTheEnd6,.Lfe18-Task_CreditsTheEnd6
 	.align	2, 0
@@ -6384,7 +6384,7 @@ Task_CreditsSoftReset:
 	.type	 ResetGpuAndVram,function
 	.thumb_func
 ResetGpuAndVram:
-	push	{lr}
+	push	{r4, lr}
 	add	sp, sp, #-0x8
 	mov	r0, #0x0
 	mov	r1, #0x0
@@ -6425,41 +6425,38 @@ ResetGpuAndVram:
 	mov	r1, sp
 	mov	r0, #0x0
 	strh	r0, [r1]
-	ldr	r1, .L115
 	mov	r0, sp
-	str	r0, [r1]
-	mov	r0, #0xc0
-	lsl	r0, r0, #0x13
-	str	r0, [r1, #0x4]
-	ldr	r0, .L115+0x4
-	str	r0, [r1, #0x8]
-	ldr	r0, [r1, #0x8]
-	mov	r2, #0x0
-	str	r2, [sp, #0x4]
+	mov	r1, #0xc0
+	lsl	r1, r1, #0x13
+	ldr	r2, .L115
+	ldr	r3, .L115+0x4
+	stmia r3!, {r0, r1, r2}
+	.code	16
+	mov	r3, #0x0
+	str	r3, [sp, #0x4]
 	add	r0, sp, #0x4
-	str	r0, [r1]
-	mov	r0, #0xe0
-	lsl	r0, r0, #0x13
-	str	r0, [r1, #0x4]
-	ldr	r0, .L115+0x8
-	str	r0, [r1, #0x8]
-	ldr	r0, [r1, #0x8]
+	mov	r1, #0xe0
+	lsl	r1, r1, #0x13
+	ldr	r2, .L115+0x8
+	ldr	r4, .L115+0x4
+	stmia r4!, {r0, r1, r2}
+	.code	16
 	mov	r0, sp
-	strh	r2, [r0]
-	str	r0, [r1]
-	ldr	r0, .L115+0xc
-	str	r0, [r1, #0x4]
-	ldr	r0, .L115+0x10
-	str	r0, [r1, #0x8]
-	ldr	r0, [r1, #0x8]
+	strh	r3, [r0]
+	ldr	r1, .L115+0xc
+	ldr	r2, .L115+0x10
+	ldr	r3, .L115+0x4
+	stmia r3!, {r0, r1, r2}
+	.code	16
 	add	sp, sp, #0x8
+	pop	{r4}
 	pop	{r0}
 	bx	r0
 .L116:
 	.align	2, 0
 .L115:
-	.word	0x40000d4
 	.word	-0x7eff4000
+	.word	0x40000d4
 	.word	-0x7affff00
 	.word	0x5000002
 	.word	-0x7efffe01
@@ -6518,9 +6515,9 @@ sub_8175DA0:
 	lsl	r0, r0, #0x18
 	lsr	r2, r0, #0x18
 	cmp	r2, #0
-	beq	.LCB1416
+	beq	.LCB1419
 	b	.L117	@long jump
-.LCB1416:
+.LCB1419:
 	lsl	r0, r4, #0x2
 	add	r0, r0, r4
 	lsl	r0, r0, #0x3
@@ -6946,15 +6943,15 @@ sub_81760FC:
 	cmp	r0, #0x1
 	beq	.L185	@cond_branch
 	cmp	r0, #0x1
-	bgt	.LCB1943
+	bgt	.LCB1946
 	b	.L183	@long jump
-.LCB1943:
+.LCB1946:
 	cmp	r0, #0x2
 	beq	.L187	@cond_branch
 	cmp	r0, #0x3
-	bne	.LCB1947
+	bne	.LCB1950
 	b	.L194	@long jump
-.LCB1947:
+.LCB1950:
 	b	.L183
 .L204:
 	.align	2, 0
@@ -6976,9 +6973,9 @@ sub_81760FC:
 	mov	r3, #0x24
 	ldrsh	r0, [r1, r3]
 	cmp	r0, #0
-	bne	.LCB1976
+	bne	.LCB1979
 	b	.L183	@long jump
-.LCB1976:
+.LCB1979:
 .L186:
 	ldrh	r0, [r2, #0x8]
 	add	r0, r0, #0x1
@@ -7133,9 +7130,9 @@ sub_817624C:
 	ldrsh	r0, [r0, r2]
 	add	r6, r1, #0
 	cmp	r0, #0x32
-	bls	.LCB2155
+	bls	.LCB2158
 	b	.L214	@long jump
-.LCB2155:
+.LCB2158:
 	lsl	r0, r0, #0x2
 	ldr	r1, .L241+0x4
 	add	r0, r0, r1
@@ -7645,9 +7642,9 @@ sub_817664C:
 	lsl	r1, r1, #0x18
 	lsr	r7, r1, #0x18
 	cmp	r0, #0x4
-	bls	.LCB2710
+	bls	.LCB2713
 	b	.L286	@long jump
-.LCB2710:
+.LCB2713:
 	lsl	r0, r0, #0x2
 	ldr	r1, .L296
 	add	r0, r0, r1
@@ -8226,9 +8223,9 @@ sub_8176AB0:
 	cmp	r0, #0x2
 	beq	.L313	@cond_branch
 	cmp	r0, #0x3
-	bne	.LCB3283
+	bne	.LCB3286
 	b	.L316	@long jump
-.LCB3283:
+.LCB3286:
 .L311:
 	mov	r0, #0x0
 	mov	r1, #0x0

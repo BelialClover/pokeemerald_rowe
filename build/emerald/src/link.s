@@ -1031,19 +1031,17 @@ InitLinkTestBG:
 	lsl	r1, r5, #0x4
 	mov	r2, #0x20
 	bl	LoadPalette
-	ldr	r3, .L16+0x4
-	ldr	r0, .L16+0x8
-	str	r0, [r3]
 	lsl	r2, r7, #0xe
-	lsl	r0, r4, #0x5
-	mov	r1, #0xc0
-	lsl	r1, r1, #0x13
-	add	r0, r0, r1
-	add	r2, r2, r0
-	str	r2, [r3, #0x4]
-	ldr	r0, .L16+0xc
-	str	r0, [r3, #0x8]
-	ldr	r0, [r3, #0x8]
+	lsl	r1, r4, #0x5
+	mov	r0, #0xc0
+	lsl	r0, r0, #0x13
+	add	r1, r1, r0
+	ldr	r0, .L16+0x4
+	add	r1, r2, r1
+	ldr	r2, .L16+0x8
+	ldr	r3, .L16+0xc
+	stmia r3!, {r0, r1, r2}
+	.code	16
 	ldr	r0, .L16+0x10
 	str	r6, [r0]
 	str	r5, [r0, #0x4]
@@ -1060,13 +1058,13 @@ InitLinkTestBG:
 	.align	2, 0
 .L16:
 	.word	sLinkTestDigitsPal
-	.word	0x40000d4
 	.word	sLinkTestDigitsGfx
 	.word	-0x7ffffef0
+	.word	0x40000d4
 	.word	gLinkTestBGInfo
 .L15:
-	mov	r0, r8
-	cmp	r0, #0x3
+	mov	r3, r8
+	cmp	r3, #0x3
 	beq	.L12	@cond_branch
 	b	.L9
 .L10:
@@ -1143,17 +1141,15 @@ sub_80094EC:
 	lsl	r1, r2, #0x4
 	mov	r2, #0x20
 	bl	LoadPalette
-	ldr	r2, .L19+0x4
-	ldr	r0, .L19+0x8
-	str	r0, [r2]
-	lsl	r0, r5, #0xe
-	mov	r1, #0xc0
-	lsl	r1, r1, #0x13
-	add	r0, r0, r1
-	str	r0, [r2, #0x4]
-	ldr	r0, .L19+0xc
-	str	r0, [r2, #0x8]
-	ldr	r0, [r2, #0x8]
+	lsl	r1, r5, #0xe
+	mov	r2, #0xc0
+	lsl	r2, r2, #0x13
+	ldr	r0, .L19+0x4
+	orr	r1, r1, r2
+	ldr	r2, .L19+0x8
+	ldr	r3, .L19+0xc
+	stmia r3!, {r0, r1, r2}
+	.code	16
 	ldr	r0, .L19+0x10
 	str	r4, [r0]
 	mov	r1, r8
@@ -1177,9 +1173,9 @@ sub_80094EC:
 	.align	2, 0
 .L19:
 	.word	sLinkTestDigitsPal
-	.word	0x40000d4
 	.word	sLinkTestDigitsGfx
 	.word	-0x7ffffef0
+	.word	0x40000d4
 	.word	gLinkTestBGInfo
 	.word	sBGControlRegs
 .Lfe4:
@@ -1891,22 +1887,22 @@ ProcessRecvCmds:
 	add	r7, r6, #0x1
 	str	r7, [sp]
 	cmp	r0, #0
-	bne	.LCB1187
+	bne	.LCB1189
 	b	.L122	@long jump
-.LCB1187:
+.LCB1189:
 	ldrh	r1, [r2]
 	ldr	r0, .L163+0x8
 	cmp	r1, r0
-	bne	.LCB1193
+	bne	.LCB1195
 	b	.L151	@long jump
-.LCB1193:
+.LCB1195:
 	cmp	r1, r0
 	bgt	.L158	@cond_branch
 	ldr	r0, .L163+0xc
 	cmp	r1, r0
-	bne	.LCB1198
+	bne	.LCB1200
 	b	.L155	@long jump
-.LCB1198:
+.LCB1200:
 	cmp	r1, r0
 	bgt	.L159	@cond_branch
 	ldr	r0, .L163+0x10
@@ -1914,9 +1910,9 @@ ProcessRecvCmds:
 	beq	.L126	@cond_branch
 	ldr	r0, .L163+0x14
 	cmp	r1, r0
-	bne	.LCB1206
+	bne	.LCB1208
 	b	.L152	@long jump
-.LCB1206:
+.LCB1208:
 	b	.L122
 .L164:
 	.align	2, 0
@@ -1950,9 +1946,9 @@ ProcessRecvCmds:
 	beq	.L131	@cond_branch
 	ldr	r0, .L167+0x8
 	cmp	r1, r0
-	bne	.LCB1248
+	bne	.LCB1250
 	b	.L153	@long jump
-.LCB1248:
+.LCB1250:
 	b	.L122
 .L168:
 	.align	2, 0
@@ -1963,14 +1959,14 @@ ProcessRecvCmds:
 .L160:
 	ldr	r0, .L169
 	cmp	r1, r0
-	bne	.LCB1263
+	bne	.LCB1265
 	b	.L155	@long jump
-.LCB1263:
+.LCB1265:
 	ldr	r0, .L169+0x4
 	cmp	r1, r0
-	bne	.LCB1266
+	bne	.LCB1268
 	b	.L154	@long jump
-.LCB1266:
+.LCB1268:
 	b	.L122
 .L170:
 	.align	2, 0
@@ -2253,9 +2249,9 @@ ProcessRecvCmds:
 	lsl	r0, r5, #0x10
 	lsr	r6, r0, #0x10
 	cmp	r6, #0x3
-	bhi	.LCB1660
+	bhi	.LCB1662
 	b	.L123	@long jump
-.LCB1660:
+.LCB1662:
 	add	sp, sp, #0x4
 	pop	{r3, r4, r5}
 	mov	r8, r3
@@ -2293,9 +2289,9 @@ BuildSendCmd:
 	ldr	r0, .L221+0xc
 .L220:
 	cmp	r2, r0
-	bne	.LCB1700
+	bne	.LCB1702
 	b	.L207	@long jump
-.LCB1700:
+.LCB1702:
 	b	.L190
 .L222:
 	.align	2, 0
@@ -2307,9 +2303,9 @@ BuildSendCmd:
 .L214:
 	ldr	r0, .L223
 	cmp	r2, r0
-	bne	.LCB1715
+	bne	.LCB1717
 	b	.L207	@long jump
-.LCB1715:
+.LCB1717:
 	cmp	r2, r0
 	bgt	.L215	@cond_branch
 	sub	r0, r0, #0x11
@@ -2321,9 +2317,9 @@ BuildSendCmd:
 .L215:
 	ldr	r0, .L225
 	cmp	r2, r0
-	bne	.LCB1730
+	bne	.LCB1732
 	b	.L206	@long jump
-.LCB1730:
+.LCB1732:
 	b	.L190
 .L226:
 	.align	2, 0
@@ -2833,9 +2829,9 @@ GetLinkPlayerDataExchangeStatusTimed:
 	ldr	r0, .L347
 	ldrb	r4, [r0]
 	cmp	r4, #0x1
-	beq	.LCB2382
+	beq	.LCB2384
 	b	.L317	@long jump
-.LCB2382:
+.LCB2384:
 	bl	GetLinkPlayerCount_2
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18

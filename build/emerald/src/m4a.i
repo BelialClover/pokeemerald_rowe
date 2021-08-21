@@ -477,8 +477,8 @@ struct SoundInfo
     u32 plynote;
     u32 ExtVolPit;
     u8 gap2[16];
-    struct SoundChannel chans[12];
-    s8 pcmBuffer[1584 * 2];
+    struct SoundChannel chans[15];
+    s8 pcmBuffer[0x620 * 2];
 };
 
 struct SongHeader
@@ -745,7 +745,8 @@ extern const u8 gCgb3Vol[];
 
 
 
-__attribute__((section(".bss.code"))) __attribute__((aligned(4))) char SoundMainRAM_Buffer[0x800] = {0};
+__attribute__((section(".bss.code"))) __attribute__((aligned(4))) char SoundMainRAM_Buffer[0xB40] = {0};
+__attribute__((section(".bss.code"))) __attribute__((aligned(4))) u32 hq_buffer_ptr[0xE0] = {0};
 
 struct SoundInfo gSoundInfo;
 struct PokemonCrySong gPokemonCrySongs[2];
@@ -818,7 +819,7 @@ void m4aSoundInit(void)
     m4aSoundMode(0x00900000
                | 0x00040000
                | (12 << 12)
-               | (5 << 8));
+               | (15 << 8));
 
     for (i = 0; i < ((u16)gNumMusicPlayers); i++)
     {
@@ -1094,7 +1095,7 @@ void SoundInit(struct SoundInfo *soundInfo)
 
     (*(vu32 *)(0x4000000 + 0xbc)) = (s32)soundInfo->pcmBuffer;
     (*(vu32 *)(0x4000000 + 0xc0)) = (s32)&(*(vu32 *)(0x4000000 + 0xa0));
-    (*(vu32 *)(0x4000000 + 0xc8)) = (s32)soundInfo->pcmBuffer + 1584;
+    (*(vu32 *)(0x4000000 + 0xc8)) = (s32)soundInfo->pcmBuffer + 0x620;
     (*(vu32 *)(0x4000000 + 0xcc)) = (s32)&(*(vu32 *)(0x4000000 + 0xa4));
 
     (*(struct SoundInfo **)0x3007FF0) = soundInfo;
@@ -1124,7 +1125,7 @@ void SampleFreqSet(u32 freq)
     freq = (freq & 0xF0000) >> 16;
     soundInfo->freq = freq;
     soundInfo->pcmSamplesPerVBlank = gPcmSamplesPerVBlankTable[freq - 1];
-    soundInfo->pcmDmaPeriod = 1584 / soundInfo->pcmSamplesPerVBlank;
+    soundInfo->pcmDmaPeriod = 0x620 / soundInfo->pcmSamplesPerVBlank;
 
 
     soundInfo->pcmFreq = (597275 * soundInfo->pcmSamplesPerVBlank + 5000) / 10000;
@@ -1172,7 +1173,7 @@ void m4aSoundMode(u32 mode)
 
         soundInfo->maxChans = temp >> 8;
 
-        temp = 12;
+        temp = 15;
         chan = &soundInfo->chans[0];
 
         while (temp != 0)
@@ -1218,7 +1219,7 @@ void SoundClear(void)
 
     soundInfo->ident++;
 
-    i = 12;
+    i = 15;
     chan = &soundInfo->chans[0];
 
     while (i > 0)
@@ -2266,7 +2267,7 @@ void ply_xxx(struct MusicPlayerInfo *mplayInfo, struct MusicPlayerTrack *track)
     void (*func)(struct MusicPlayerInfo *, struct MusicPlayerTrack *) = *(&gMPlayJumpTable[0]);
     func(mplayInfo, track);
 }
-# 1538 "src/m4a.c"
+# 1539 "src/m4a.c"
 void ply_xwave(struct MusicPlayerInfo *mplayInfo, struct MusicPlayerTrack *track)
 {
     u32 wav;

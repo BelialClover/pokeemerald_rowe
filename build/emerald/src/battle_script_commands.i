@@ -6406,8 +6406,8 @@ struct SoundInfo
     u32 plynote;
     u32 ExtVolPit;
     u8 gap2[16];
-    struct SoundChannel chans[12];
-    s8 pcmBuffer[1584 * 2];
+    struct SoundChannel chans[15];
+    s8 pcmBuffer[0x620 * 2];
 };
 
 struct SongHeader
@@ -12219,7 +12219,7 @@ static void Cmd_getexp(void)
                     && !gBattleStruct->wildVictorySong)
                 {
                     BattleStopLowHpSound();
-                    PlayBGM(353);
+                    PlayBGM(324);
                     gBattleStruct->wildVictorySong++;
                 }
 
@@ -16031,7 +16031,7 @@ static void Cmd_various(void)
         }
         break;
     case 26:
-        BtlController_EmitPlayFanfareOrBGM(0, 412, 1);
+        BtlController_EmitPlayFanfareOrBGM(0, 383, 1);
         MarkBattlerForControllerExec(gActiveBattler);
         break;
     case 27:

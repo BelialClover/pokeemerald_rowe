@@ -876,7 +876,7 @@ static void sub_8025198(void)
         if (WaitFanfare(TRUE))
         {
             sub_8026240(6);
-            FadeOutAndPlayNewMapMusic(MUS_RG_VICTORY_WILD, 4);
+            FadeOutAndPlayNewMapMusic(MUS_RUSTBORO, 4);
         }
         break;
     }
@@ -915,7 +915,7 @@ static void sub_8025230(void)
         if (WaitFanfare(TRUE)) {
             gUnknown_02022C98->unk114 = gUnknown_02022C98->unk4A[gUnknown_02022C98->multiplayerId][5];
             sub_8026240(6);
-            FadeOutAndPlayNewMapMusic(MUS_RG_VICTORY_WILD, 4);
+            FadeOutAndPlayNewMapMusic(MUS_RUSTBORO, 4);
         }
         break;
     }
@@ -4353,7 +4353,7 @@ static void sub_802988C(void)
             PutWindowTilemap(gUnknown_02022CF8->unk3008[1]);
         }
         CopyBgTilemapBufferToVram(0);
-        FadeOutAndFadeInNewMapMusic(MUS_RG_VICTORY_WILD, 20, 10);
+        FadeOutAndFadeInNewMapMusic(MUS_RUSTBORO, 20, 10);
         gUnknown_02022CF8->state++;
         break;
     case 11:

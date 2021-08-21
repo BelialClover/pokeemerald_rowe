@@ -6490,8 +6490,8 @@ struct SoundInfo
     u32 plynote;
     u32 ExtVolPit;
     u8 gap2[16];
-    struct SoundChannel chans[12];
-    s8 pcmBuffer[1584 * 2];
+    struct SoundChannel chans[15];
+    s8 pcmBuffer[0x620 * 2];
 };
 
 struct SongHeader
@@ -11536,9 +11536,9 @@ static void Task_StartWiredCableClubBattle(u8 taskId)
         break;
     case 5:
         if (gLinkPlayers[0].trainerId & 1)
-            PlayMapChosenOrBattleBGM(477);
+            PlayMapChosenOrBattleBGM(431);
         else
-            PlayMapChosenOrBattleBGM(476);
+            PlayMapChosenOrBattleBGM(430);
 
         SetLinkBattleTypeFlags(gSpecialVar_0x8004);
         CleanupOverworldWindowsAndTilemaps();
@@ -11601,9 +11601,9 @@ static void Task_StartWirelessCableClubBattle(u8 taskId)
         break;
     case 7:
         if (gLinkPlayers[0].trainerId & 1)
-            PlayMapChosenOrBattleBGM(477);
+            PlayMapChosenOrBattleBGM(431);
         else
-            PlayMapChosenOrBattleBGM(476);
+            PlayMapChosenOrBattleBGM(430);
 
         gLinkPlayers[0].linkType = 0x2211;
         SetLinkBattleTypeFlags(gSpecialVar_0x8004);

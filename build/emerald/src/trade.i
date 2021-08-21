@@ -23120,7 +23120,7 @@ static void CB2_CreateTradeMenu(void)
         sTradeMenuData->bg3hofs = 0;
         SetTradePartyMonsVisible();
         gMain.state++;
-        PlayBGM(435);
+        PlayBGM(406);
         break;
     case 15:
         SetTradePartyLiveStatuses(1);
@@ -25702,8 +25702,8 @@ static void SetTradeSequenceBgGpuRegs(u8 state)
                                      ((18) << 8) |
                                      0x4000);
         LoadPalette(gTradeGba2_Pal, 16, 0x60);
-        { const void *_src = gTradeGba_Gfx; void *_dest = (void *) (0x6000000 + (0x4000 * (1))); u32 _size = 0x1420; while (1) { { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); dmaRegs[0] = (vu32)(_src); dmaRegs[1] = (vu32)(_dest); dmaRegs[2] = (vu32)((0x8000 | 0x0000 | 0x0000 | 0x0000 | 0x0000) << 16 | (((0x1000))/(16/8))); dmaRegs[2]; }; _src += (0x1000); _dest += (0x1000); _size -= (0x1000); if (_size <= (0x1000)) { { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); dmaRegs[0] = (vu32)(_src); dmaRegs[1] = (vu32)(_dest); dmaRegs[2] = (vu32)((0x8000 | 0x0000 | 0x0000 | 0x0000 | 0x0000) << 16 | ((_size)/(16/8))); dmaRegs[2]; }; break; } } };
-        { const void *_src = gUnknown_08331F60; void *_dest = (void *) (0x6000000 + (0x800 * (18))); u32 _size = 0x1000; { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); dmaRegs[0] = (vu32)(_src); dmaRegs[1] = (vu32)(_dest); dmaRegs[2] = (vu32)((0x8000 | 0x0000 | 0x0000 | 0x0000 | 0x0000) << 16 | ((_size)/(16/8))); dmaRegs[2]; }; };
+        { const void *_src = gTradeGba_Gfx; void *_dest = (void *) (0x6000000 + (0x4000 * (1))); u32 _size = 0x1420; while (1) { { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); u32 eval_src = (u32)(_src); u32 eval_dst = (u32)(_dest); u32 eval_ctl = (u32)((0x8000 | 0x0000 | 0x0000 | 0x0000 | 0x0000) << 16 | (((0x1000))/(16/8))); register u32 r_src asm("r0") = eval_src; register u32 r_dst asm("r1") = eval_dst; register u32 r_ctl asm("r2") = eval_ctl; asm volatile("stmia %0!, {%1, %2, %3}" : "+l" (dmaRegs) : "l" (r_src), "l" (r_dst), "l" (r_ctl) : "memory"); }; _src += (0x1000); _dest += (0x1000); _size -= (0x1000); if (_size <= (0x1000)) { { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); u32 eval_src = (u32)(_src); u32 eval_dst = (u32)(_dest); u32 eval_ctl = (u32)((0x8000 | 0x0000 | 0x0000 | 0x0000 | 0x0000) << 16 | ((_size)/(16/8))); register u32 r_src asm("r0") = eval_src; register u32 r_dst asm("r1") = eval_dst; register u32 r_ctl asm("r2") = eval_ctl; asm volatile("stmia %0!, {%1, %2, %3}" : "+l" (dmaRegs) : "l" (r_src), "l" (r_dst), "l" (r_ctl) : "memory"); }; break; } } };
+        { const void *_src = gUnknown_08331F60; void *_dest = (void *) (0x6000000 + (0x800 * (18))); u32 _size = 0x1000; { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); u32 eval_src = (u32)(_src); u32 eval_dst = (u32)(_dest); u32 eval_ctl = (u32)((0x8000 | 0x0000 | 0x0000 | 0x0000 | 0x0000) << 16 | ((_size)/(16/8))); register u32 r_src asm("r0") = eval_src; register u32 r_dst asm("r1") = eval_dst; register u32 r_ctl asm("r2") = eval_ctl; asm volatile("stmia %0!, {%1, %2, %3}" : "+l" (dmaRegs) : "l" (r_src), "l" (r_dst), "l" (r_ctl) : "memory"); }; };
         break;
     case 1:
         sTradeData->bg1hofs = 0;
@@ -25722,14 +25722,14 @@ static void SetTradeSequenceBgGpuRegs(u8 state)
 
         if (sTradeData->isCableTrade)
         {
-            { const void *_src = sTradeTilemap_GbaCable; void *_dest = (void *) (0x6000000 + (0x800 * (5))); u32 _size = 0x1000; { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); dmaRegs[0] = (vu32)(_src); dmaRegs[1] = (vu32)(_dest); dmaRegs[2] = (vu32)((0x8000 | 0x0000 | 0x0000 | 0x0000 | 0x0000) << 16 | ((_size)/(16/8))); dmaRegs[2]; }; };
+            { const void *_src = sTradeTilemap_GbaCable; void *_dest = (void *) (0x6000000 + (0x800 * (5))); u32 _size = 0x1000; { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); u32 eval_src = (u32)(_src); u32 eval_dst = (u32)(_dest); u32 eval_ctl = (u32)((0x8000 | 0x0000 | 0x0000 | 0x0000 | 0x0000) << 16 | ((_size)/(16/8))); register u32 r_src asm("r0") = eval_src; register u32 r_dst asm("r1") = eval_dst; register u32 r_ctl asm("r2") = eval_ctl; asm volatile("stmia %0!, {%1, %2, %3}" : "+l" (dmaRegs) : "l" (r_src), "l" (r_dst), "l" (r_ctl) : "memory"); }; };
         }
         else
         {
-            { const void *_src = sTradeTilemap_GbaWireless; void *_dest = (void *) (0x6000000 + (0x800 * (5))); u32 _size = 0x1000; { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); dmaRegs[0] = (vu32)(_src); dmaRegs[1] = (vu32)(_dest); dmaRegs[2] = (vu32)((0x8000 | 0x0000 | 0x0000 | 0x0000 | 0x0000) << 16 | ((_size)/(16/8))); dmaRegs[2]; }; };
+            { const void *_src = sTradeTilemap_GbaWireless; void *_dest = (void *) (0x6000000 + (0x800 * (5))); u32 _size = 0x1000; { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); u32 eval_src = (u32)(_src); u32 eval_dst = (u32)(_dest); u32 eval_ctl = (u32)((0x8000 | 0x0000 | 0x0000 | 0x0000 | 0x0000) << 16 | ((_size)/(16/8))); register u32 r_src asm("r0") = eval_src; register u32 r_dst asm("r1") = eval_dst; register u32 r_ctl asm("r2") = eval_ctl; asm volatile("stmia %0!, {%1, %2, %3}" : "+l" (dmaRegs) : "l" (r_src), "l" (r_dst), "l" (r_ctl) : "memory"); }; };
         }
 
-        { const void *_src = gTradeGba_Gfx; void *_dest = (void *) (0x6000000 + (0x4000 * (0))); u32 _size = 0x1420; while (1) { { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); dmaRegs[0] = (vu32)(_src); dmaRegs[1] = (vu32)(_dest); dmaRegs[2] = (vu32)((0x8000 | 0x0000 | 0x0000 | 0x0000 | 0x0000) << 16 | (((0x1000))/(16/8))); dmaRegs[2]; }; _src += (0x1000); _dest += (0x1000); _size -= (0x1000); if (_size <= (0x1000)) { { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); dmaRegs[0] = (vu32)(_src); dmaRegs[1] = (vu32)(_dest); dmaRegs[2] = (vu32)((0x8000 | 0x0000 | 0x0000 | 0x0000 | 0x0000) << 16 | ((_size)/(16/8))); dmaRegs[2]; }; break; } } };
+        { const void *_src = gTradeGba_Gfx; void *_dest = (void *) (0x6000000 + (0x4000 * (0))); u32 _size = 0x1420; while (1) { { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); u32 eval_src = (u32)(_src); u32 eval_dst = (u32)(_dest); u32 eval_ctl = (u32)((0x8000 | 0x0000 | 0x0000 | 0x0000 | 0x0000) << 16 | (((0x1000))/(16/8))); register u32 r_src asm("r0") = eval_src; register u32 r_dst asm("r1") = eval_dst; register u32 r_ctl asm("r2") = eval_ctl; asm volatile("stmia %0!, {%1, %2, %3}" : "+l" (dmaRegs) : "l" (r_src), "l" (r_dst), "l" (r_ctl) : "memory"); }; _src += (0x1000); _dest += (0x1000); _size -= (0x1000); if (_size <= (0x1000)) { { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); u32 eval_src = (u32)(_src); u32 eval_dst = (u32)(_dest); u32 eval_ctl = (u32)((0x8000 | 0x0000 | 0x0000 | 0x0000 | 0x0000) << 16 | ((_size)/(16/8))); register u32 r_src asm("r0") = eval_src; register u32 r_dst asm("r1") = eval_dst; register u32 r_ctl asm("r2") = eval_ctl; asm volatile("stmia %0!, {%1, %2, %3}" : "+l" (dmaRegs) : "l" (r_src), "l" (r_dst), "l" (r_ctl) : "memory"); }; break; } } };
         SetGpuReg(0x0, 0x0000 |
                                       0x0040 |
                                       0x0200 |
@@ -25753,7 +25753,7 @@ static void SetTradeSequenceBgGpuRegs(u8 state)
                                           0x0040 |
                                           0x0200 |
                                           0x1000);
-            { const void *_src = sTradeTilemap_Cable; void *_dest = (void *) (0x6000000 + (0x800 * (5))); u32 _size = 0x800; { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); dmaRegs[0] = (vu32)(_src); dmaRegs[1] = (vu32)(_dest); dmaRegs[2] = (vu32)((0x8000 | 0x0000 | 0x0000 | 0x0000 | 0x0000) << 16 | ((_size)/(16/8))); dmaRegs[2]; }; };
+            { const void *_src = sTradeTilemap_Cable; void *_dest = (void *) (0x6000000 + (0x800 * (5))); u32 _size = 0x800; { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); u32 eval_src = (u32)(_src); u32 eval_dst = (u32)(_dest); u32 eval_ctl = (u32)((0x8000 | 0x0000 | 0x0000 | 0x0000 | 0x0000) << 16 | ((_size)/(16/8))); register u32 r_src asm("r0") = eval_src; register u32 r_dst asm("r1") = eval_dst; register u32 r_ctl asm("r2") = eval_ctl; asm volatile("stmia %0!, {%1, %2, %3}" : "+l" (dmaRegs) : "l" (r_src), "l" (r_dst), "l" (r_ctl) : "memory"); }; };
             BlendPalettes(0x1, 16, ((0) | ((0) << 5) | ((0) << 10)));
         }
         break;
@@ -25784,15 +25784,15 @@ static void SetTradeSequenceBgGpuRegs(u8 state)
         sTradeData->unk_EA = 1024;
         sTradeData->alpha = 0;
 
-        { const void *_src = sTradeAffine_Gba; void *_dest = (void *) (0x6000000 + (0x4000 * (1))); u32 _size = 0x2840; while (1) { { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); dmaRegs[0] = (vu32)(_src); dmaRegs[1] = (vu32)(_dest); dmaRegs[2] = (vu32)((0x8000 | 0x0000 | 0x0000 | 0x0000 | 0x0000) << 16 | (((0x1000))/(16/8))); dmaRegs[2]; }; _src += (0x1000); _dest += (0x1000); _size -= (0x1000); if (_size <= (0x1000)) { { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); dmaRegs[0] = (vu32)(_src); dmaRegs[1] = (vu32)(_dest); dmaRegs[2] = (vu32)((0x8000 | 0x0000 | 0x0000 | 0x0000 | 0x0000) << 16 | ((_size)/(16/8))); dmaRegs[2]; }; break; } } };
+        { const void *_src = sTradeAffine_Gba; void *_dest = (void *) (0x6000000 + (0x4000 * (1))); u32 _size = 0x2840; while (1) { { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); u32 eval_src = (u32)(_src); u32 eval_dst = (u32)(_dest); u32 eval_ctl = (u32)((0x8000 | 0x0000 | 0x0000 | 0x0000 | 0x0000) << 16 | (((0x1000))/(16/8))); register u32 r_src asm("r0") = eval_src; register u32 r_dst asm("r1") = eval_dst; register u32 r_ctl asm("r2") = eval_ctl; asm volatile("stmia %0!, {%1, %2, %3}" : "+l" (dmaRegs) : "l" (r_src), "l" (r_dst), "l" (r_ctl) : "memory"); }; _src += (0x1000); _dest += (0x1000); _size -= (0x1000); if (_size <= (0x1000)) { { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); u32 eval_src = (u32)(_src); u32 eval_dst = (u32)(_dest); u32 eval_ctl = (u32)((0x8000 | 0x0000 | 0x0000 | 0x0000 | 0x0000) << 16 | ((_size)/(16/8))); register u32 r_src asm("r0") = eval_src; register u32 r_dst asm("r1") = eval_dst; register u32 r_ctl asm("r2") = eval_ctl; asm volatile("stmia %0!, {%1, %2, %3}" : "+l" (dmaRegs) : "l" (r_src), "l" (r_dst), "l" (r_ctl) : "memory"); }; break; } } };
 
         if (sTradeData->isCableTrade)
         {
-            { const void *_src = sTradeAffineMap_GbaCable; void *_dest = (void *) (0x6000000 + (0x800 * (18))); u32 _size = 0x100; { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); dmaRegs[0] = (vu32)(_src); dmaRegs[1] = (vu32)(_dest); dmaRegs[2] = (vu32)((0x8000 | 0x0000 | 0x0000 | 0x0000 | 0x0000) << 16 | ((_size)/(16/8))); dmaRegs[2]; }; };
+            { const void *_src = sTradeAffineMap_GbaCable; void *_dest = (void *) (0x6000000 + (0x800 * (18))); u32 _size = 0x100; { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); u32 eval_src = (u32)(_src); u32 eval_dst = (u32)(_dest); u32 eval_ctl = (u32)((0x8000 | 0x0000 | 0x0000 | 0x0000 | 0x0000) << 16 | ((_size)/(16/8))); register u32 r_src asm("r0") = eval_src; register u32 r_dst asm("r1") = eval_dst; register u32 r_ctl asm("r2") = eval_ctl; asm volatile("stmia %0!, {%1, %2, %3}" : "+l" (dmaRegs) : "l" (r_src), "l" (r_dst), "l" (r_ctl) : "memory"); }; };
         }
         else
         {
-            { const void *_src = sTradeAffineMap_GbaWireless; void *_dest = (void *) (0x6000000 + (0x800 * (18))); u32 _size = 0x100; { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); dmaRegs[0] = (vu32)(_src); dmaRegs[1] = (vu32)(_dest); dmaRegs[2] = (vu32)((0x8000 | 0x0000 | 0x0000 | 0x0000 | 0x0000) << 16 | ((_size)/(16/8))); dmaRegs[2]; }; };
+            { const void *_src = sTradeAffineMap_GbaWireless; void *_dest = (void *) (0x6000000 + (0x800 * (18))); u32 _size = 0x100; { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); u32 eval_src = (u32)(_src); u32 eval_dst = (u32)(_dest); u32 eval_ctl = (u32)((0x8000 | 0x0000 | 0x0000 | 0x0000 | 0x0000) << 16 | ((_size)/(16/8))); register u32 r_src asm("r0") = eval_src; register u32 r_dst asm("r1") = eval_dst; register u32 r_ctl asm("r2") = eval_ctl; asm volatile("stmia %0!, {%1, %2, %3}" : "+l" (dmaRegs) : "l" (r_src), "l" (r_dst), "l" (r_ctl) : "memory"); }; };
         }
         break;
     case 5:
@@ -25817,15 +25817,15 @@ static void SetTradeSequenceBgGpuRegs(u8 state)
         sTradeData->scrY = 80;
         sTradeData->alpha = 0;
 
-        { const void *_src = sTradeAffine_Gba; void *_dest = (void *) (0x6000000 + (0x4000 * (1))); u32 _size = 0x2840; while (1) { { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); dmaRegs[0] = (vu32)(_src); dmaRegs[1] = (vu32)(_dest); dmaRegs[2] = (vu32)((0x8000 | 0x0000 | 0x0000 | 0x0000 | 0x0000) << 16 | (((0x1000))/(16/8))); dmaRegs[2]; }; _src += (0x1000); _dest += (0x1000); _size -= (0x1000); if (_size <= (0x1000)) { { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); dmaRegs[0] = (vu32)(_src); dmaRegs[1] = (vu32)(_dest); dmaRegs[2] = (vu32)((0x8000 | 0x0000 | 0x0000 | 0x0000 | 0x0000) << 16 | ((_size)/(16/8))); dmaRegs[2]; }; break; } } };
+        { const void *_src = sTradeAffine_Gba; void *_dest = (void *) (0x6000000 + (0x4000 * (1))); u32 _size = 0x2840; while (1) { { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); u32 eval_src = (u32)(_src); u32 eval_dst = (u32)(_dest); u32 eval_ctl = (u32)((0x8000 | 0x0000 | 0x0000 | 0x0000 | 0x0000) << 16 | (((0x1000))/(16/8))); register u32 r_src asm("r0") = eval_src; register u32 r_dst asm("r1") = eval_dst; register u32 r_ctl asm("r2") = eval_ctl; asm volatile("stmia %0!, {%1, %2, %3}" : "+l" (dmaRegs) : "l" (r_src), "l" (r_dst), "l" (r_ctl) : "memory"); }; _src += (0x1000); _dest += (0x1000); _size -= (0x1000); if (_size <= (0x1000)) { { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); u32 eval_src = (u32)(_src); u32 eval_dst = (u32)(_dest); u32 eval_ctl = (u32)((0x8000 | 0x0000 | 0x0000 | 0x0000 | 0x0000) << 16 | ((_size)/(16/8))); register u32 r_src asm("r0") = eval_src; register u32 r_dst asm("r1") = eval_dst; register u32 r_ctl asm("r2") = eval_ctl; asm volatile("stmia %0!, {%1, %2, %3}" : "+l" (dmaRegs) : "l" (r_src), "l" (r_dst), "l" (r_ctl) : "memory"); }; break; } } };
 
         if (sTradeData->isCableTrade)
         {
-            { const void *_src = sTradeAffineMap_GbaCable; void *_dest = (void *) (0x6000000 + (0x800 * (18))); u32 _size = 0x100; { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); dmaRegs[0] = (vu32)(_src); dmaRegs[1] = (vu32)(_dest); dmaRegs[2] = (vu32)((0x8000 | 0x0000 | 0x0000 | 0x0000 | 0x0000) << 16 | ((_size)/(16/8))); dmaRegs[2]; }; };
+            { const void *_src = sTradeAffineMap_GbaCable; void *_dest = (void *) (0x6000000 + (0x800 * (18))); u32 _size = 0x100; { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); u32 eval_src = (u32)(_src); u32 eval_dst = (u32)(_dest); u32 eval_ctl = (u32)((0x8000 | 0x0000 | 0x0000 | 0x0000 | 0x0000) << 16 | ((_size)/(16/8))); register u32 r_src asm("r0") = eval_src; register u32 r_dst asm("r1") = eval_dst; register u32 r_ctl asm("r2") = eval_ctl; asm volatile("stmia %0!, {%1, %2, %3}" : "+l" (dmaRegs) : "l" (r_src), "l" (r_dst), "l" (r_ctl) : "memory"); }; };
         }
         else
         {
-            { const void *_src = sTradeAffineMap_GbaWireless; void *_dest = (void *) (0x6000000 + (0x800 * (18))); u32 _size = 0x100; { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); dmaRegs[0] = (vu32)(_src); dmaRegs[1] = (vu32)(_dest); dmaRegs[2] = (vu32)((0x8000 | 0x0000 | 0x0000 | 0x0000 | 0x0000) << 16 | ((_size)/(16/8))); dmaRegs[2]; }; };
+            { const void *_src = sTradeAffineMap_GbaWireless; void *_dest = (void *) (0x6000000 + (0x800 * (18))); u32 _size = 0x100; { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); u32 eval_src = (u32)(_src); u32 eval_dst = (u32)(_dest); u32 eval_ctl = (u32)((0x8000 | 0x0000 | 0x0000 | 0x0000 | 0x0000) << 16 | ((_size)/(16/8))); register u32 r_src asm("r0") = eval_src; register u32 r_dst asm("r1") = eval_dst; register u32 r_ctl asm("r2") = eval_ctl; asm volatile("stmia %0!, {%1, %2, %3}" : "+l" (dmaRegs) : "l" (r_src), "l" (r_dst), "l" (r_ctl) : "memory"); }; };
         }
         break;
     case 7:
@@ -25838,8 +25838,8 @@ static void SetTradeSequenceBgGpuRegs(u8 state)
                                      ((18) << 8) |
                                      0x4000);
         LoadPalette(gTradeGba2_Pal, 16, 0x60);
-        { const void *_src = gTradeGba_Gfx; void *_dest = (void *) (0x6000000 + (0x4000 * (1))); u32 _size = 0x1420; while (1) { { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); dmaRegs[0] = (vu32)(_src); dmaRegs[1] = (vu32)(_dest); dmaRegs[2] = (vu32)((0x8000 | 0x0000 | 0x0000 | 0x0000 | 0x0000) << 16 | (((0x1000))/(16/8))); dmaRegs[2]; }; _src += (0x1000); _dest += (0x1000); _size -= (0x1000); if (_size <= (0x1000)) { { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); dmaRegs[0] = (vu32)(_src); dmaRegs[1] = (vu32)(_dest); dmaRegs[2] = (vu32)((0x8000 | 0x0000 | 0x0000 | 0x0000 | 0x0000) << 16 | ((_size)/(16/8))); dmaRegs[2]; }; break; } } };
-        { const void *_src = gUnknown_08331F60; void *_dest = (void *) (0x6000000 + (0x800 * (18))); u32 _size = 0x1000; { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); dmaRegs[0] = (vu32)(_src); dmaRegs[1] = (vu32)(_dest); dmaRegs[2] = (vu32)((0x8000 | 0x0000 | 0x0000 | 0x0000 | 0x0000) << 16 | ((_size)/(16/8))); dmaRegs[2]; }; };
+        { const void *_src = gTradeGba_Gfx; void *_dest = (void *) (0x6000000 + (0x4000 * (1))); u32 _size = 0x1420; while (1) { { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); u32 eval_src = (u32)(_src); u32 eval_dst = (u32)(_dest); u32 eval_ctl = (u32)((0x8000 | 0x0000 | 0x0000 | 0x0000 | 0x0000) << 16 | (((0x1000))/(16/8))); register u32 r_src asm("r0") = eval_src; register u32 r_dst asm("r1") = eval_dst; register u32 r_ctl asm("r2") = eval_ctl; asm volatile("stmia %0!, {%1, %2, %3}" : "+l" (dmaRegs) : "l" (r_src), "l" (r_dst), "l" (r_ctl) : "memory"); }; _src += (0x1000); _dest += (0x1000); _size -= (0x1000); if (_size <= (0x1000)) { { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); u32 eval_src = (u32)(_src); u32 eval_dst = (u32)(_dest); u32 eval_ctl = (u32)((0x8000 | 0x0000 | 0x0000 | 0x0000 | 0x0000) << 16 | ((_size)/(16/8))); register u32 r_src asm("r0") = eval_src; register u32 r_dst asm("r1") = eval_dst; register u32 r_ctl asm("r2") = eval_ctl; asm volatile("stmia %0!, {%1, %2, %3}" : "+l" (dmaRegs) : "l" (r_src), "l" (r_dst), "l" (r_ctl) : "memory"); }; break; } } };
+        { const void *_src = gUnknown_08331F60; void *_dest = (void *) (0x6000000 + (0x800 * (18))); u32 _size = 0x1000; { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); u32 eval_src = (u32)(_src); u32 eval_dst = (u32)(_dest); u32 eval_ctl = (u32)((0x8000 | 0x0000 | 0x0000 | 0x0000 | 0x0000) << 16 | ((_size)/(16/8))); register u32 r_src asm("r0") = eval_src; register u32 r_dst asm("r1") = eval_dst; register u32 r_ctl asm("r2") = eval_ctl; asm volatile("stmia %0!, {%1, %2, %3}" : "+l" (dmaRegs) : "l" (r_src), "l" (r_dst), "l" (r_ctl) : "memory"); }; };
         break;
     }
 }
@@ -25902,7 +25902,7 @@ static bool8 AnimateTradeSequenceCable(void)
         gSprites[sTradeData->pokePicSpriteIdxs[0]].pos2.y = gMonFrontPicCoords[GetFormSpeciesId(sTradeData->monSpecies[0], sTradeData->monFormIds[0])].y_offset;
         sTradeData->state++;
         sTradeData->cachedMapMusic = GetCurrentMapMusic();
-        PlayNewMapMusic(377);
+        PlayNewMapMusic(348);
         break;
     case 1:
         if (sTradeData->bg2hofs > 0)
@@ -26317,7 +26317,7 @@ static bool8 AnimateTradeSequenceCable(void)
     case 68:
         if (++sTradeData->timer == 10)
         {
-            PlayFanfare(371);
+            PlayFanfare(342);
         }
         if (sTradeData->timer == 250)
         {
@@ -26395,7 +26395,7 @@ static bool8 AnimateTradeSequenceWireless(void)
         gSprites[sTradeData->pokePicSpriteIdxs[0]].pos2.y = gMonFrontPicCoords[GetFormSpeciesId(sTradeData->monSpecies[0], sTradeData->monFormIds[0])].y_offset;
         sTradeData->state++;
         sTradeData->cachedMapMusic = GetCurrentMapMusic();
-        PlayNewMapMusic(377);
+        PlayNewMapMusic(348);
         break;
     case 1:
         if (sTradeData->bg2hofs > 0)
@@ -26833,7 +26833,7 @@ static bool8 AnimateTradeSequenceWireless(void)
     case 68:
         if (++sTradeData->timer == 10)
         {
-            PlayFanfare(371);
+            PlayFanfare(342);
         }
         if (sTradeData->timer == 250)
         {

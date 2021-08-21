@@ -487,12 +487,12 @@ InitIntrHandlers:
 	sub	r1, r1, #0x1
 	cmp	r1, #0
 	bge	.L60	@cond_branch
-	ldr	r0, .L62+0x10
-	str	r5, [r0]
-	str	r4, [r0, #0x4]
-	ldr	r1, .L62+0x14
-	str	r1, [r0, #0x8]
-	ldr	r0, [r0, #0x8]
+	add	r0, r5, #0
+	add	r1, r4, #0
+	ldr	r2, .L62+0x10
+	ldr	r3, .L62+0x14
+	stmia r3!, {r0, r1, r2}
+	.code	16
 	ldr	r0, .L62+0x18
 	str	r4, [r0]
 	mov	r0, #0x0
@@ -516,8 +516,8 @@ InitIntrHandlers:
 	.word	IntrMain_Buffer
 	.word	gIntrTableTemplate
 	.word	gIntrTable
-	.word	0x40000d4
 	.word	-0x7bfffe00
+	.word	0x40000d4
 	.word	0x3007ffc
 	.word	0x4000208
 .Lfe13:

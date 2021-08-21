@@ -1022,7 +1022,7 @@ VBlankCB_Roulette:
 	bl	ProcessSpriteCopyRequests
 	bl	TransferPlttBuffer
 	bl	UpdateWheelPosition
-	ldr	r4, .L17
+	ldr	r4, .L18
 	ldr	r0, [r4]
 	ldrh	r0, [r0, #0x26]
 	mov	r2, #0x80
@@ -1041,22 +1041,21 @@ VBlankCB_Roulette:
 	mov	r0, #0x52
 	bl	SetGpuReg
 .L7:
-	ldr	r2, [r4]
+	ldr	r1, [r4]
 	mov	r3, #0x2a
-	ldrsh	r0, [r2, r3]
+	ldrsh	r0, [r1, r3]
 	cmp	r0, #0
 	beq	.L8	@cond_branch
-	ldr	r1, .L17+0x4
-	ldr	r3, .L17+0x8
-	add	r0, r2, r3
-	str	r0, [r1]
-	ldr	r0, .L17+0xc
-	str	r0, [r1, #0x4]
-	ldr	r0, .L17+0x10
-	str	r0, [r1, #0x8]
-	ldr	r0, [r1, #0x8]
+	ldr	r2, .L18+0x4
+	add	r0, r1, r2
+	ldr	r1, .L18+0x8
+	ldr	r2, .L18+0xc
+	ldr	r3, .L18+0x10
+	stmia r3!, {r0, r1, r2}
+	.code	16
+	ldr	r1, [r4]
 	mov	r0, #0x0
-	strh	r0, [r2, #0x2a]
+	strh	r0, [r1, #0x2a]
 .L8:
 	ldr	r0, [r4]
 	mov	r2, #0x28
@@ -1070,14 +1069,14 @@ VBlankCB_Roulette:
 	cmp	r1, #0xff
 	beq	.L12	@cond_branch
 	b	.L9
-.L18:
+.L19:
 	.align	2, 0
-.L17:
+.L18:
 	.word	sRoulette
-	.word	0x40000d4
 	.word	0x133c
 	.word	0x60021c0
 	.word	-0x7ffffe60
+	.word	0x40000d4
 .L10:
 	mov	r0, #0x0
 	mov	r1, #0x1
@@ -1085,44 +1084,40 @@ VBlankCB_Roulette:
 	bl	SetBgAttribute
 	mov	r0, #0x0
 	bl	ShowBg
-	ldr	r1, .L19
-	ldr	r2, [r4]
+	ldr	r0, [r4]
 	mov	r3, #0xcf
 	lsl	r3, r3, #0x2
-	add	r0, r2, r3
-	str	r0, [r1]
-	ldr	r0, .L19+0x4
-	str	r0, [r1, #0x4]
-	ldr	r0, .L19+0x8
-	str	r0, [r1, #0x8]
-	ldr	r0, [r1, #0x8]
+	add	r0, r0, r3
+	ldr	r1, .L20
+	ldr	r2, .L20+0x4
+	ldr	r3, .L20+0x8
+	stmia r3!, {r0, r1, r2}
+	.code	16
+	ldr	r1, [r4]
 	mov	r0, #0x2
-	strh	r0, [r2, #0x28]
-	b	.L9
-.L20:
-	.align	2, 0
-.L19:
-	.word	0x40000d4
-	.word	0x600f9c0
-	.word	-0x7ffffe60
-.L11:
-	ldr	r1, .L21
-	mov	r2, #0xcf
-	lsl	r2, r2, #0x2
-	add	r0, r0, r2
-	str	r0, [r1]
-	ldr	r0, .L21+0x4
-	str	r0, [r1, #0x4]
-	ldr	r0, .L21+0x8
-	str	r0, [r1, #0x8]
-	ldr	r0, [r1, #0x8]
-	b	.L9
-.L22:
-	.align	2, 0
+	b	.L17
 .L21:
-	.word	0x40000d4
+	.align	2, 0
+.L20:
 	.word	0x600f9c0
 	.word	-0x7ffffe60
+	.word	0x40000d4
+.L11:
+	mov	r1, #0xcf
+	lsl	r1, r1, #0x2
+	add	r0, r0, r1
+	ldr	r1, .L22
+	ldr	r2, .L22+0x4
+	ldr	r3, .L22+0x8
+	stmia r3!, {r0, r1, r2}
+	.code	16
+	b	.L9
+.L23:
+	.align	2, 0
+.L22:
+	.word	0x600f9c0
+	.word	-0x7ffffe60
+	.word	0x40000d4
 .L12:
 	mov	r0, #0x0
 	mov	r1, #0x1
@@ -1133,28 +1128,27 @@ VBlankCB_Roulette:
 	mov	r1, sp
 	mov	r0, #0x0
 	strh	r0, [r1]
-	ldr	r1, .L23
-	mov	r3, sp
-	str	r3, [r1]
-	ldr	r0, .L23+0x4
-	str	r0, [r1, #0x4]
-	ldr	r0, .L23+0x8
-	str	r0, [r1, #0x8]
-	ldr	r0, [r1, #0x8]
+	mov	r0, sp
+	ldr	r1, .L24
+	ldr	r2, .L24+0x4
+	ldr	r3, .L24+0x8
+	stmia r3!, {r0, r1, r2}
+	.code	16
 	ldr	r1, [r4]
 	mov	r0, #0x0
+.L17:
 	strh	r0, [r1, #0x28]
 .L9:
 	add	sp, sp, #0x4
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L24:
+.L25:
 	.align	2, 0
-.L23:
-	.word	0x40000d4
+.L24:
 	.word	0x600f9c0
 	.word	-0x7efffe60
+	.word	0x40000d4
 .Lfe2:
 	.size	 VBlankCB_Roulette,.Lfe2-VBlankCB_Roulette
 	.align	2, 0
@@ -1165,14 +1159,14 @@ InitRouletteBgAndWindows:
 	add	sp, sp, #-0x4
 	mov	r5, #0x0
 	str	r5, [sp]
-	ldr	r4, .L26
+	ldr	r4, .L27
 	mov	r0, #0xe6
 	lsl	r0, r0, #0x6
 	bl	AllocZeroed
 	str	r0, [r4]
 	mov	r0, #0x0
 	bl	ResetBgsAndClearDma3BusyFlags
-	ldr	r1, .L26+0x4
+	ldr	r1, .L27+0x4
 	mov	r0, #0x1
 	mov	r2, #0x3
 	bl	InitBgsFromTemplates
@@ -1183,34 +1177,34 @@ InitRouletteBgAndWindows:
 	mov	r0, #0x0
 	bl	SetBgTilemapBuffer
 	ldr	r1, [r4]
-	ldr	r2, .L26+0x8
+	ldr	r2, .L27+0x8
 	add	r1, r1, r2
 	mov	r0, #0x1
 	bl	SetBgTilemapBuffer
 	ldr	r1, [r4]
-	ldr	r0, .L26+0xc
+	ldr	r0, .L27+0xc
 	add	r1, r1, r0
 	mov	r0, #0x2
 	bl	SetBgTilemapBuffer
-	ldr	r0, .L26+0x10
+	ldr	r0, .L27+0x10
 	bl	InitWindows
 	bl	InitTextBoxGfxAndPrinters
-	ldr	r0, .L26+0x14
+	ldr	r0, .L27+0x14
 	strb	r5, [r0]
-	ldr	r0, .L26+0x18
+	ldr	r0, .L27+0x18
 	mov	r1, sp
 	bl	malloc_and_decompress
 	ldr	r1, [r4]
-	ldr	r2, .L26+0x1c
+	ldr	r2, .L27+0x1c
 	add	r1, r1, r2
 	str	r0, [r1]
 	add	sp, sp, #0x4
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.L27:
+.L28:
 	.align	2, 0
-.L26:
+.L27:
 	.word	sRoulette
 	.word	sBgTemplates
 	.word	0x117c
@@ -1226,9 +1220,9 @@ InitRouletteBgAndWindows:
 	.thumb_func
 FreeRoulette:
 	push	{r4, r5, lr}
-	ldr	r5, .L29
+	ldr	r5, .L30
 	ldr	r0, [r5]
-	ldr	r4, .L29+0x4
+	ldr	r4, .L30+0x4
 	add	r0, r0, r4
 	ldr	r0, [r0]
 	bl	Free
@@ -1256,9 +1250,9 @@ FreeRoulette:
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.L30:
+.L31:
 	.align	2, 0
-.L29:
+.L30:
 	.word	sRoulette
 	.word	0x397c
 .Lfe4:
@@ -1276,13 +1270,13 @@ FreeRoulette:
 InitRouletteTableData:
 	push	{r4, r5, r6, lr}
 	add	sp, sp, #-0x8
-	ldr	r1, .L52
+	ldr	r1, .L53
 	mov	r0, sp
 	mov	r2, #0x6
 	bl	memcpy
-	ldr	r5, .L52+0x4
+	ldr	r5, .L53+0x4
 	ldr	r3, [r5]
-	ldr	r4, .L52+0x8
+	ldr	r4, .L53+0x8
 	ldrb	r0, [r4]
 	mov	r1, #0x1
 	and	r1, r1, r0
@@ -1296,15 +1290,15 @@ InitRouletteTableData:
 	mov	r0, #0x80
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L32	@cond_branch
+	beq	.L33	@cond_branch
 	ldr	r0, [r5]
 	ldrb	r1, [r0, #0x4]
 	mov	r2, #0x80
 	orr	r1, r1, r2
 	strb	r1, [r0, #0x4]
-.L32:
+.L33:
 	ldr	r1, [r5]
-	ldr	r2, .L52+0xc
+	ldr	r2, .L53+0xc
 	ldrb	r0, [r1, #0x4]
 	lsl	r0, r0, #0x1e
 	lsr	r0, r0, #0x19
@@ -1321,7 +1315,7 @@ InitRouletteTableData:
 	add	r1, r1, #0x23
 	strb	r0, [r1]
 	ldr	r2, [r5]
-	ldr	r3, .L52+0x10
+	ldr	r3, .L53+0x10
 	ldrb	r1, [r2, #0x4]
 	lsl	r0, r1, #0x1e
 	lsr	r0, r0, #0x1e
@@ -1341,15 +1335,15 @@ InitRouletteTableData:
 	ldr	r0, [r5]
 	ldrb	r0, [r0, #0x19]
 	cmp	r0, #0x1
-	bne	.L33	@cond_branch
-	ldr	r4, .L52+0x14
-	ldr	r3, .L52+0x18
+	bne	.L34	@cond_branch
+	ldr	r4, .L53+0x14
+	ldr	r3, .L53+0x18
 	mov	r0, sp
 	ldrh	r2, [r0]
-	b	.L50
-.L53:
+	b	.L51
+.L54:
 	.align	2, 0
-.L52:
+.L53:
 	.word	.LC8
 	.word	sRoulette
 	.word	gSpecialVar_0x8004
@@ -1357,16 +1351,16 @@ InitRouletteTableData:
 	.word	sTableMinBets
 	.word	gPlttBufferUnfaded
 	.word	gPlttBufferFaded
-.L33:
-	ldr	r4, .L54
-	ldr	r3, .L54+0x4
+.L34:
+	ldr	r4, .L55
+	ldr	r3, .L55+0x4
 	mov	r0, sp
 	ldrh	r2, [r0, #0x2]
-.L50:
+.L51:
 	add	r0, r3, #0
 	add	r0, r0, #0xa2
 	strh	r2, [r0]
-	ldr	r1, .L54+0x8
+	ldr	r1, .L55+0x8
 	add	r0, r1, #0
 	and	r0, r0, r2
 	strh	r0, [r3]
@@ -1376,17 +1370,17 @@ InitRouletteTableData:
 	strh	r0, [r2]
 	and	r0, r0, r1
 	strh	r0, [r4]
-	ldr	r0, .L54+0xc
+	ldr	r0, .L55+0xc
 	ldr	r0, [r0]
 	add	r0, r0, #0xb8
 	bl	RouletteFlash_Reset
 	mov	r4, #0x0
-.L38:
-	ldr	r5, .L54+0xc
+.L39:
+	ldr	r5, .L55+0xc
 	ldr	r0, [r5]
 	add	r0, r0, #0xb8
 	lsl	r2, r4, #0x3
-	ldr	r1, .L54+0x10
+	ldr	r1, .L55+0x10
 	add	r2, r2, r1
 	add	r1, r4, #0
 	bl	RouletteFlash_Add
@@ -1394,12 +1388,12 @@ InitRouletteTableData:
 	lsl	r0, r0, #0x18
 	lsr	r4, r0, #0x18
 	cmp	r4, #0xc
-	bls	.L38	@cond_branch
+	bls	.L39	@cond_branch
 	mov	r4, #0x0
-.L43:
+.L44:
 	mov	r0, #0x64
 	mul	r0, r0, r4
-	ldr	r1, .L54+0x14
+	ldr	r1, .L55+0x14
 	add	r0, r0, r1
 	mov	r1, #0x41
 	bl	GetMonData
@@ -1407,36 +1401,36 @@ InitRouletteTableData:
 	mov	r0, #0x8a
 	lsl	r0, r0, #0x1
 	cmp	r1, r0
-	beq	.L46	@cond_branch
+	beq	.L47	@cond_branch
 	add	r0, r0, #0x9
 	cmp	r1, r0
-	bne	.L42	@cond_branch
+	bne	.L43	@cond_branch
 	ldr	r0, [r5]
 	ldrb	r1, [r0, #0x2]
 	mov	r2, #0x1
-	b	.L51
-.L55:
+	b	.L52
+.L56:
 	.align	2, 0
-.L54:
+.L55:
 	.word	gPlttBufferUnfaded
 	.word	gPlttBufferFaded
 	.word	0xffff
 	.word	sRoulette
 	.word	sFlashData_Colors
 	.word	gPlayerParty
-.L46:
+.L47:
 	ldr	r0, [r5]
 	ldrb	r1, [r0, #0x2]
 	mov	r2, #0x2
-.L51:
+.L52:
 	orr	r1, r1, r2
 	strb	r1, [r0, #0x2]
-.L42:
+.L43:
 	add	r0, r4, #0x1
 	lsl	r0, r0, #0x18
 	lsr	r4, r0, #0x18
 	cmp	r4, #0x5
-	bls	.L43	@cond_branch
+	bls	.L44	@cond_branch
 	bl	RtcCalcLocalTime
 	add	sp, sp, #0x8
 	pop	{r4, r5, r6}
@@ -1450,111 +1444,111 @@ InitRouletteTableData:
 CB2_LoadRoulette:
 	push	{r4, r5, lr}
 	add	sp, sp, #-0xc
-	ldr	r0, .L70
+	ldr	r0, .L71
 	mov	r1, #0x87
 	lsl	r1, r1, #0x3
 	add	r0, r0, r1
 	ldrb	r0, [r0]
 	cmp	r0, #0x8
-	bls	.LCB587
-	b	.L57	@long jump
-.LCB587:
+	bls	.LCB590
+	b	.L58	@long jump
+.LCB590:
 	lsl	r0, r0, #0x2
-	ldr	r1, .L70+0x4
+	ldr	r1, .L71+0x4
 	add	r0, r0, r1
 	ldr	r0, [r0]
 	mov	pc, r0
+.L72:
+	.align	2, 0
 .L71:
-	.align	2, 0
-.L70:
 	.word	gMain
-	.word	.L68
+	.word	.L69
 	.align	2, 0
 	.align	2, 0
-.L68:
-	.word	.L58
+.L69:
 	.word	.L59
 	.word	.L60
 	.word	.L61
 	.word	.L62
-	.word	.L64
+	.word	.L63
 	.word	.L65
 	.word	.L66
 	.word	.L67
-.L58:
+	.word	.L68
+.L59:
 	mov	r0, #0x0
 	bl	SetVBlankCallback
 	bl	ScanlineEffect_Stop
 	bl	SetVBlankHBlankCallbacksToNull
 	bl	ResetVramOamAndBgCntRegs
 	bl	ResetAllBgsCoordinates
-	b	.L57
-.L59:
+	b	.L58
+.L60:
 	bl	InitRouletteBgAndWindows
 	bl	DeactivateAllTextPrinters
 	mov	r1, #0x90
 	lsl	r1, r1, #0x6
 	mov	r0, #0x50
 	bl	SetGpuReg
-	ldr	r1, .L72
+	ldr	r1, .L73
 	mov	r0, #0x52
 	bl	SetGpuReg
-	b	.L57
-.L73:
+	b	.L58
+.L74:
 	.align	2, 0
-.L72:
+.L73:
 	.word	0x60a
-.L60:
+.L61:
 	bl	ResetPaletteFade
 	bl	ResetSpriteData
 	bl	ResetTasks
 	bl	ResetTempTileDataBuffers
-	b	.L57
-.L61:
-	ldr	r0, .L74
+	b	.L58
+.L62:
+	ldr	r0, .L75
 	mov	r2, #0xe0
 	lsl	r2, r2, #0x1
 	mov	r1, #0x0
 	bl	LoadPalette
-	ldr	r1, .L74+0x4
+	ldr	r1, .L75+0x4
 	mov	r4, #0x0
 	str	r4, [sp]
 	mov	r0, #0x1
 	mov	r2, #0x0
 	mov	r3, #0x0
 	bl	DecompressAndCopyTileDataToVram
-	ldr	r1, .L74+0x8
+	ldr	r1, .L75+0x8
 	str	r4, [sp]
 	mov	r0, #0x2
 	mov	r2, #0x0
 	mov	r3, #0x0
 	bl	DecompressAndCopyTileDataToVram
-	b	.L57
-.L75:
+	b	.L58
+.L76:
 	.align	2, 0
-.L74:
+.L75:
 	.word	sWheel_Pal
 	.word	gRouletteMenu_Gfx
 	.word	gRouletteWheel_Gfx
-.L62:
+.L63:
 	bl	FreeTempTileDataBuffersIfPossible
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.LCB681
-	b	.L56	@long jump
-.LCB681:
+	beq	.LCB684
+	b	.L57	@long jump
+.LCB684:
 	bl	InitRouletteTableData
-	ldr	r1, .L76
+	ldr	r1, .L77
 	mov	r0, #0x2
 	mov	r2, #0x0
 	mov	r3, #0x0
 	bl	CopyToBgTilemapBuffer
-	b	.L57
-.L77:
+	b	.L58
+.L78:
 	.align	2, 0
-.L76:
+.L77:
 	.word	sWheel_Tilemap
-.L64:
+.L65:
 	mov	r0, #0x0
 	bl	LoadOrFreeMiscSpritePalettesAndSheets
 	bl	CreateWheelBallSprites
@@ -1563,8 +1557,8 @@ CB2_LoadRoulette:
 	bl	CreateGridSprites
 	bl	CreateGridBallSprites
 	bl	CreateWheelIconSprites
-	b	.L57
-.L65:
+	b	.L58
+.L66:
 	bl	AnimateSprites
 	bl	BuildOamBuffer
 	bl	GetCoins
@@ -1577,12 +1571,12 @@ CB2_LoadRoulette:
 	bl	SetMultiplierSprite
 	mov	r0, #0x0
 	bl	DrawGridBackground
-	ldr	r4, .L78
+	ldr	r4, .L79
 	ldrb	r0, [r4]
 	mov	r1, #0x0
 	bl	DrawStdWindowFrame
 	ldrb	r0, [r4]
-	ldr	r2, .L78+0x4
+	ldr	r2, .L79+0x4
 	mov	r1, #0x1
 	str	r1, [sp]
 	mov	r1, #0xff
@@ -1595,22 +1589,22 @@ CB2_LoadRoulette:
 	ldrb	r0, [r4]
 	mov	r1, #0x3
 	bl	CopyWindowToVram
-	ldr	r1, .L78+0x8
+	ldr	r1, .L79+0x8
 	mov	r2, #0x3c
 	neg	r2, r2
 	add	r0, r2, #0
 	strh	r0, [r1]
-	ldr	r0, .L78+0xc
+	ldr	r0, .L79+0xc
 	strh	r5, [r0]
-	b	.L57
-.L79:
+	b	.L58
+.L80:
 	.align	2, 0
-.L78:
+.L79:
 	.word	sTextWindowId
 	.word	Roulette_Text_ControlsInstruction
 	.word	gSpriteCoordOffsetX
 	.word	gSpriteCoordOffsetY
-.L66:
+.L67:
 	mov	r1, #0x82
 	lsl	r1, r1, #0x5
 	mov	r0, #0x0
@@ -1625,11 +1619,11 @@ CB2_LoadRoulette:
 	bl	ShowBg
 	mov	r0, #0x2
 	bl	ShowBg
-	b	.L57
-.L67:
+	b	.L58
+.L68:
 	mov	r0, #0x1
 	bl	EnableInterrupts
-	ldr	r0, .L80
+	ldr	r0, .L81
 	bl	SetVBlankCallback
 	mov	r0, #0x1
 	str	r0, [sp]
@@ -1638,16 +1632,16 @@ CB2_LoadRoulette:
 	mov	r2, #0x10
 	mov	r3, #0x0
 	bl	BeginHardwarePaletteFade
-	ldr	r0, .L80+0x4
+	ldr	r0, .L81+0x4
 	mov	r1, #0x0
 	bl	CreateTask
-	ldr	r5, .L80+0x8
+	ldr	r5, .L81+0x8
 	ldr	r1, [r5]
 	add	r1, r1, #0xa4
 	strb	r0, [r1]
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
-	ldr	r1, .L80+0xc
+	ldr	r1, .L81+0xc
 	lsl	r4, r0, #0x2
 	add	r4, r4, r0
 	lsl	r4, r4, #0x3
@@ -1660,40 +1654,40 @@ CB2_LoadRoulette:
 	lsl	r0, r0, #0x10
 	lsr	r0, r0, #0x10
 	bl	AlertTVThatPlayerPlayedRoulette
-	ldr	r0, .L80+0x10
+	ldr	r0, .L81+0x10
 	mov	r1, #0x1
 	bl	CreateTask
 	ldr	r1, [r5]
 	add	r1, r1, #0xa5
 	strb	r0, [r1]
-	ldr	r0, .L80+0x14
+	ldr	r0, .L81+0x14
 	bl	SetMainCallback2
-	b	.L56
-.L81:
+	b	.L57
+.L82:
 	.align	2, 0
-.L80:
+.L81:
 	.word	VBlankCB_Roulette
 	.word	Task_StartPlaying
 	.word	sRoulette
 	.word	gTasks
 	.word	Task_SpinWheel
 	.word	CB2_Roulette
-.L57:
-	ldr	r1, .L82
+.L58:
+	ldr	r1, .L83
 	mov	r0, #0x87
 	lsl	r0, r0, #0x3
 	add	r1, r1, r0
 	ldrb	r0, [r1]
 	add	r0, r0, #0x1
 	strb	r0, [r1]
-.L56:
+.L57:
 	add	sp, sp, #0xc
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.L83:
+.L84:
 	.align	2, 0
-.L82:
+.L83:
 	.word	gMain
 .Lfe6:
 	.size	 CB2_LoadRoulette,.Lfe6-CB2_LoadRoulette
@@ -1702,7 +1696,7 @@ CB2_LoadRoulette:
 	.thumb_func
 Task_SpinWheel:
 	push	{r4, r5, r6, lr}
-	ldr	r3, .L89
+	ldr	r3, .L90
 	ldr	r0, [r3]
 	add	r0, r0, #0x21
 	ldrb	r2, [r0]
@@ -1716,7 +1710,7 @@ Task_SpinWheel:
 	add	r6, r3, #0
 	ldrb	r0, [r0]
 	cmp	r2, r0
-	bne	.L85	@cond_branch
+	bne	.L86	@cond_branch
 	add	r1, r1, #0x21
 	mov	r0, #0x0
 	strb	r0, [r1]
@@ -1729,14 +1723,14 @@ Task_SpinWheel:
 	strh	r0, [r2, #0x24]
 	lsl	r0, r0, #0x10
 	cmp	r0, #0
-	bge	.L85	@cond_branch
+	bge	.L86	@cond_branch
 	ldrb	r1, [r3]
 	mov	r3, #0xb4
 	lsl	r3, r3, #0x1
 	add	r0, r3, #0
 	sub	r0, r0, r1
 	strh	r0, [r2, #0x24]
-.L85:
+.L86:
 	add	r4, r6, #0
 	ldr	r0, [r4]
 	ldrh	r0, [r0, #0x24]
@@ -1751,18 +1745,18 @@ Task_SpinWheel:
 	lsl	r0, r5, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, #0
-	bge	.L87	@cond_branch
+	bge	.L88	@cond_branch
 	add	r0, r0, #0xf
-.L87:
+.L88:
 	lsl	r0, r0, #0xc
 	lsr	r5, r0, #0x10
 	ldr	r3, [r6]
 	lsl	r0, r1, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, #0
-	bge	.L88	@cond_branch
+	bge	.L89	@cond_branch
 	add	r0, r0, #0xf
-.L88:
+.L89:
 	asr	r0, r0, #0x4
 	strh	r0, [r3, #0x32]
 	strh	r0, [r3, #0x2c]
@@ -1774,9 +1768,9 @@ Task_SpinWheel:
 	pop	{r4, r5, r6}
 	pop	{r0}
 	bx	r0
-.L90:
+.L91:
 	.align	2, 0
-.L89:
+.L90:
 	.word	sRoulette
 .Lfe7:
 	.size	 Task_SpinWheel,.Lfe7-Task_SpinWheel
@@ -1791,15 +1785,15 @@ Task_StartPlaying:
 	lsl	r0, r0, #0x18
 	lsr	r5, r0, #0x18
 	cmp	r5, #0
-	bne	.L92	@cond_branch
+	bne	.L93	@cond_branch
 	mov	r1, #0x90
 	lsl	r1, r1, #0x6
 	mov	r0, #0x50
 	bl	SetGpuReg
-	ldr	r1, .L93
+	ldr	r1, .L94
 	mov	r0, #0x52
 	bl	SetGpuReg
-	ldr	r1, .L93+0x4
+	ldr	r1, .L94+0x4
 	lsl	r0, r4, #0x2
 	add	r0, r0, r4
 	lsl	r0, r0, #0x3
@@ -1813,18 +1807,18 @@ Task_StartPlaying:
 	bl	DrawGridBackground
 	mov	r0, #0x6
 	bl	SetBallCounterNumLeft
-	ldr	r1, .L93+0x8
-	ldr	r2, .L93+0xc
+	ldr	r1, .L94+0x8
+	ldr	r2, .L94+0xc
 	add	r0, r4, #0
 	mov	r3, #0x3
 	bl	StartTaskAfterDelayOrInput
-.L92:
+.L93:
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.L94:
+.L95:
 	.align	2, 0
-.L93:
+.L94:
 	.word	0x808
 	.word	gTasks
 	.word	Task_ContinuePlaying
@@ -1841,12 +1835,12 @@ Task_AskKeepPlaying:
 	lsl	r4, r4, #0x18
 	lsr	r4, r4, #0x18
 	bl	DisplayYesNoMenuDefaultYes
-	ldr	r5, .L96
+	ldr	r5, .L97
 	ldrb	r0, [r5]
 	mov	r1, #0x0
 	bl	DrawStdWindowFrame
 	ldrb	r0, [r5]
-	ldr	r2, .L96+0x4
+	ldr	r2, .L97+0x4
 	mov	r1, #0x1
 	str	r1, [sp]
 	mov	r1, #0xff
@@ -1859,16 +1853,16 @@ Task_AskKeepPlaying:
 	ldrb	r0, [r5]
 	mov	r1, #0x3
 	bl	CopyWindowToVram
-	ldr	r1, .L96+0x8
+	ldr	r1, .L97+0x8
 	add	r0, r4, #0
 	bl	DoYesNoFuncWithChoice
 	add	sp, sp, #0xc
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.L97:
+.L98:
 	.align	2, 0
-.L96:
+.L97:
 	.word	sTextWindowId
 	.word	Roulette_Text_KeepPlaying
 	.word	sYesNoTable_KeepPlaying
@@ -1885,19 +1879,19 @@ Task_ContinuePlaying:
 	mov	r0, #0x0
 	mov	r1, #0x1
 	bl	ClearStdWindowAndFrame
-	ldr	r1, .L99
+	ldr	r1, .L100
 	lsl	r0, r4, #0x2
 	add	r0, r0, r4
 	lsl	r0, r0, #0x3
 	add	r0, r0, r1
-	ldr	r1, .L99+0x4
+	ldr	r1, .L100+0x4
 	str	r1, [r0]
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L100:
+.L101:
 	.align	2, 0
-.L99:
+.L100:
 	.word	gTasks
 	.word	Task_SelectFirstEmptySquare
 .Lfe10:
@@ -1910,7 +1904,7 @@ Task_StopPlaying:
 	add	r4, r0, #0
 	lsl	r4, r4, #0x18
 	lsr	r4, r4, #0x18
-	ldr	r0, .L102
+	ldr	r0, .L103
 	ldr	r0, [r0]
 	add	r0, r0, #0xa5
 	ldrb	r0, [r0]
@@ -1920,9 +1914,9 @@ Task_StopPlaying:
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L103:
+.L104:
 	.align	2, 0
-.L102:
+.L103:
 	.word	sRoulette
 .Lfe11:
 	.size	 Task_StopPlaying,.Lfe11-Task_StopPlaying
@@ -1937,39 +1931,39 @@ UpdateGridSelectionRect:
 	lsl	r0, r0, #0x18
 	lsr	r4, r0, #0x18
 	cmp	r4, #0xf
-	bls	.LCB1143
-	b	.L114	@long jump
-.LCB1143:
+	bls	.LCB1146
+	b	.L115	@long jump
+.LCB1146:
 	lsl	r0, r4, #0x2
-	ldr	r1, .L116
+	ldr	r1, .L117
 	add	r0, r0, r1
 	ldr	r0, [r0]
 	mov	pc, r0
+.L118:
+	.align	2, 0
 .L117:
+	.word	.L116
+	.align	2, 0
 	.align	2, 0
 .L116:
+	.word	.L107
+	.word	.L111
+	.word	.L111
+	.word	.L111
+	.word	.L111
+	.word	.L114
 	.word	.L115
-	.align	2, 0
-	.align	2, 0
-.L115:
-	.word	.L106
-	.word	.L110
-	.word	.L110
-	.word	.L110
-	.word	.L110
-	.word	.L113
+	.word	.L115
+	.word	.L115
+	.word	.L115
 	.word	.L114
+	.word	.L115
+	.word	.L115
+	.word	.L115
+	.word	.L115
 	.word	.L114
-	.word	.L114
-	.word	.L114
-	.word	.L113
-	.word	.L114
-	.word	.L114
-	.word	.L114
-	.word	.L114
-	.word	.L113
-.L106:
-	ldr	r0, .L118
+.L107:
+	ldr	r0, .L119
 	ldr	r0, [r0]
 	mov	r1, #0xbe
 	lsl	r1, r1, #0x1
@@ -1982,19 +1976,19 @@ UpdateGridSelectionRect:
 	mov	r2, #0xe
 	mov	r3, #0x7
 	bl	ClearTilemapRect
-	b	.L105
-.L119:
+	b	.L106
+.L120:
 	.align	2, 0
-.L118:
+.L119:
 	.word	sRoulette
-.L110:
+.L111:
 	lsl	r0, r4, #0x1
 	add	r0, r0, r4
 	add	r0, r0, #0xe
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	mov	r8, r0
-	ldr	r5, .L120
+	ldr	r5, .L121
 	ldr	r0, [r5]
 	mov	r4, #0xbe
 	lsl	r4, r4, #0x1
@@ -2009,10 +2003,10 @@ UpdateGridSelectionRect:
 	bl	ClearTilemapRect
 	ldr	r0, [r5]
 	add	r4, r0, r4
-	ldr	r1, .L120+0x4
+	ldr	r1, .L121+0x4
 	add	r0, r0, r1
 	ldr	r1, [r0]
-	ldr	r0, .L120+0x8
+	ldr	r0, .L121+0x8
 	add	r1, r1, r0
 	mov	r0, #0x3
 	str	r0, [sp]
@@ -2021,14 +2015,14 @@ UpdateGridSelectionRect:
 	mov	r2, r8
 	mov	r3, #0x7
 	bl	SetTilemapRect
-	b	.L105
-.L121:
+	b	.L106
+.L122:
 	.align	2, 0
-.L120:
+.L121:
 	.word	sRoulette
 	.word	0x397c
 	.word	0x232
-.L113:
+.L114:
 	sub	r0, r4, #0x1
 	mov	r1, #0x5
 	bl	__divsi3
@@ -2037,7 +2031,7 @@ UpdateGridSelectionRect:
 	add	r1, r1, #0xa
 	lsl	r1, r1, #0x18
 	lsr	r7, r1, #0x18
-	ldr	r5, .L122
+	ldr	r5, .L123
 	ldr	r0, [r5]
 	mov	r4, #0xbe
 	lsl	r4, r4, #0x1
@@ -2052,7 +2046,7 @@ UpdateGridSelectionRect:
 	bl	ClearTilemapRect
 	ldr	r0, [r5]
 	add	r4, r0, r4
-	ldr	r1, .L122+0x4
+	ldr	r1, .L123+0x4
 	add	r0, r0, r1
 	ldr	r1, [r0]
 	mov	r0, #0xa0
@@ -2065,13 +2059,13 @@ UpdateGridSelectionRect:
 	mov	r2, #0xe
 	add	r3, r7, #0
 	bl	SetTilemapRect
-	b	.L105
-.L123:
+	b	.L106
+.L124:
 	.align	2, 0
-.L122:
+.L123:
 	.word	sRoulette
 	.word	0x397c
-.L114:
+.L115:
 	add	r0, r4, #0
 	mov	r1, #0x5
 	bl	__umodsi3
@@ -2091,7 +2085,7 @@ UpdateGridSelectionRect:
 	add	r1, r1, #0x7
 	lsl	r1, r1, #0x18
 	lsr	r7, r1, #0x18
-	ldr	r5, .L124
+	ldr	r5, .L125
 	ldr	r0, [r5]
 	mov	r4, #0xbe
 	lsl	r4, r4, #0x1
@@ -2106,7 +2100,7 @@ UpdateGridSelectionRect:
 	bl	ClearTilemapRect
 	ldr	r0, [r5]
 	add	r4, r0, r4
-	ldr	r1, .L124+0x4
+	ldr	r1, .L125+0x4
 	add	r0, r0, r1
 	ldr	r1, [r0]
 	mov	r0, #0x88
@@ -2119,16 +2113,16 @@ UpdateGridSelectionRect:
 	mov	r2, r8
 	add	r3, r7, #0
 	bl	SetTilemapRect
-.L105:
+.L106:
 	add	sp, sp, #0x8
 	pop	{r3}
 	mov	r8, r3
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L125:
+.L126:
 	.align	2, 0
-.L124:
+.L125:
 	.word	sRoulette
 	.word	0x397c
 .Lfe12:
@@ -2140,7 +2134,7 @@ UpdateGridSelection:
 	push	{r4, lr}
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
-	ldr	r1, .L127
+	ldr	r1, .L128
 	lsl	r4, r0, #0x2
 	add	r4, r4, r0
 	lsl	r4, r4, #0x3
@@ -2152,9 +2146,9 @@ UpdateGridSelection:
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L128:
+.L129:
 	.align	2, 0
-.L127:
+.L128:
 	.word	gTasks
 .Lfe13:
 	.size	 UpdateGridSelection,.Lfe13-UpdateGridSelection
@@ -2165,12 +2159,12 @@ Task_StartHandleBetGridInput:
 	push	{r4, r5, r6, lr}
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
-	ldr	r5, .L130
+	ldr	r5, .L131
 	ldr	r2, [r5]
 	mov	r6, #0x0
 	mov	r1, #0x1
 	strh	r1, [r2, #0x28]
-	ldr	r1, .L130+0x4
+	ldr	r1, .L131+0x4
 	lsl	r4, r0, #0x2
 	add	r4, r4, r0
 	lsl	r4, r4, #0x3
@@ -2184,14 +2178,14 @@ Task_StartHandleBetGridInput:
 	ldr	r0, [r5]
 	add	r0, r0, #0x21
 	strb	r6, [r0]
-	ldr	r0, .L130+0x8
+	ldr	r0, .L131+0x8
 	str	r0, [r4]
 	pop	{r4, r5, r6}
 	pop	{r0}
 	bx	r0
-.L131:
+.L132:
 	.align	2, 0
-.L130:
+.L131:
 	.word	sRoulette
 	.word	gTasks
 	.word	Task_HandleBetGridInput
@@ -2204,27 +2198,27 @@ Task_SelectFirstEmptySquare:
 	push	{r4, r5, r6, r7, lr}
 	lsl	r0, r0, #0x18
 	lsr	r6, r0, #0x18
-	ldr	r1, .L148
+	ldr	r1, .L149
 	ldr	r0, [r1]
 	ldr	r2, [r0, #0x8]
 	mov	r0, #0x20
 	and	r0, r0, r2
 	cmp	r0, #0
-	beq	.L133	@cond_branch
+	beq	.L134	@cond_branch
 	mov	r3, #0xb
-	ldr	r5, .L148+0x4
+	ldr	r5, .L149+0x4
 	add	r0, r5, #0
 	add	r0, r0, #0xe4
 	ldr	r0, [r0]
 	and	r2, r2, r0
-	ldr	r0, .L148+0x8
+	ldr	r0, .L149+0x8
 	mov	ip, r0
 	lsl	r7, r6, #0x2
 	cmp	r2, #0
-	beq	.L140	@cond_branch
+	beq	.L141	@cond_branch
 	add	r4, r1, #0
 	add	r5, r5, #0x8
-.L136:
+.L137:
 	lsl	r0, r3, #0x10
 	mov	r1, #0x80
 	lsl	r1, r1, #0x9
@@ -2232,7 +2226,7 @@ Task_SelectFirstEmptySquare:
 	lsr	r3, r0, #0x10
 	asr	r2, r0, #0x10
 	cmp	r2, #0xd
-	bgt	.L140	@cond_branch
+	bgt	.L141	@cond_branch
 	ldr	r1, [r4]
 	lsl	r0, r2, #0x2
 	add	r0, r0, r2
@@ -2242,29 +2236,29 @@ Task_SelectFirstEmptySquare:
 	ldr	r0, [r0]
 	and	r1, r1, r0
 	cmp	r1, #0
-	bne	.L136	@cond_branch
-	b	.L140
-.L149:
+	bne	.L137	@cond_branch
+	b	.L141
+.L150:
 	.align	2, 0
-.L148:
+.L149:
 	.word	sRoulette
 	.word	sGridSelections
 	.word	gTasks
-.L133:
+.L134:
 	mov	r3, #0x6
-	ldr	r5, .L150
+	ldr	r5, .L151
 	add	r0, r5, #0
 	add	r0, r0, #0x80
 	ldr	r0, [r0]
 	and	r2, r2, r0
-	ldr	r0, .L150+0x4
+	ldr	r0, .L151+0x4
 	mov	ip, r0
 	lsl	r7, r6, #0x2
 	cmp	r2, #0
-	beq	.L140	@cond_branch
+	beq	.L141	@cond_branch
 	add	r4, r1, #0
 	add	r5, r5, #0x8
-.L143:
+.L144:
 	lsl	r0, r3, #0x10
 	mov	r1, #0x80
 	lsl	r1, r1, #0x9
@@ -2272,7 +2266,7 @@ Task_SelectFirstEmptySquare:
 	lsr	r3, r0, #0x10
 	asr	r2, r0, #0x10
 	cmp	r2, #0x9
-	bgt	.L140	@cond_branch
+	bgt	.L141	@cond_branch
 	ldr	r1, [r4]
 	lsl	r0, r2, #0x2
 	add	r0, r0, r2
@@ -2282,8 +2276,8 @@ Task_SelectFirstEmptySquare:
 	ldr	r0, [r0]
 	and	r1, r1, r0
 	cmp	r1, #0
-	bne	.L143	@cond_branch
-.L140:
+	bne	.L144	@cond_branch
+.L141:
 	add	r4, r7, r6
 	lsl	r4, r4, #0x3
 	add	r4, r4, ip
@@ -2298,14 +2292,14 @@ Task_SelectFirstEmptySquare:
 	ldrb	r0, [r4, #0x10]
 	bl	FlashSelectionOnWheel
 	strh	r5, [r4, #0xa]
-	ldr	r0, .L150+0x8
+	ldr	r0, .L151+0x8
 	str	r0, [r4]
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L151:
+.L152:
 	.align	2, 0
-.L150:
+.L151:
 	.word	sGridSelections
 	.word	gTasks
 	.word	Task_StartHandleBetGridInput
@@ -2331,16 +2325,16 @@ CanMoveSelectionInDir:
 	lsr	r5, r1, #0x18
 	mov	r6, #0x0
 	mov	r7, #0x0
-	ldr	r1, .L166
+	ldr	r1, .L167
 	mov	r0, sp
 	mov	r2, #0x4
 	bl	memcpy
 	ldrb	r0, [r4]
 	mov	r8, r0
 	cmp	r5, #0
-	blt	.L153	@cond_branch
+	blt	.L154	@cond_branch
 	cmp	r5, #0x1
-	bgt	.L155	@cond_branch
+	bgt	.L156	@cond_branch
 	mov	r1, #0x0
 	ldrsh	r0, [r4, r1]
 	mov	r1, #0x5
@@ -2352,16 +2346,16 @@ CanMoveSelectionInDir:
 	add	r1, r0, r2
 	lsr	r7, r1, #0x18
 	cmp	r0, #0
-	bne	.L153	@cond_branch
+	bne	.L154	@cond_branch
 	mov	r6, #0x5
-	b	.L153
-.L167:
+	b	.L154
+.L168:
 	.align	2, 0
-.L166:
+.L167:
 	.word	.LC59
-.L155:
+.L156:
 	cmp	r5, #0x3
-	bgt	.L153	@cond_branch
+	bgt	.L154	@cond_branch
 	mov	r1, #0x0
 	ldrsh	r0, [r4, r1]
 	mov	r1, #0x5
@@ -2377,9 +2371,9 @@ CanMoveSelectionInDir:
 	add	r0, r1, r2
 	lsr	r7, r0, #0x18
 	cmp	r1, #0
-	bne	.L153	@cond_branch
+	bne	.L154	@cond_branch
 	mov	r6, #0x1
-.L153:
+.L154:
 	mov	r1, sp
 	add	r0, r1, r5
 	ldrb	r0, [r0, #0]
@@ -2394,29 +2388,29 @@ CanMoveSelectionInDir:
 	asr	r0, r0, #0x10
 	lsl	r2, r7, #0x18
 	cmp	r0, r3
-	bge	.L162	@cond_branch
+	bge	.L163	@cond_branch
 	asr	r0, r2, #0x18
 	strh	r0, [r4]
-.L162:
+.L163:
 	mov	r0, #0x0
 	ldrsh	r1, [r4, r0]
 	asr	r0, r2, #0x18
 	cmp	r1, r0
-	ble	.L163	@cond_branch
+	ble	.L164	@cond_branch
 	strh	r3, [r4]
-.L163:
+.L164:
 	mov	r1, r8
 	lsl	r0, r1, #0x18
 	mov	r2, #0x0
 	ldrsh	r1, [r4, r2]
 	asr	r0, r0, #0x18
 	cmp	r1, r0
-	bne	.L164	@cond_branch
+	bne	.L165	@cond_branch
 	mov	r0, #0x0
-	b	.L165
-.L164:
-	mov	r0, #0x1
+	b	.L166
 .L165:
+	mov	r0, #0x1
+.L166:
 	add	sp, sp, #0x4
 	pop	{r3}
 	mov	r8, r3
@@ -2439,29 +2433,9 @@ ProcessBetGridInput:
 	mov	r0, #0x0
 	mov	r9, r0
 	mov	r5, #0x0
-	ldr	r4, .L180
+	ldr	r4, .L181
 	ldrh	r1, [r4, #0x2e]
 	mov	r0, #0x40
-	and	r0, r0, r1
-	cmp	r0, #0
-	beq	.L170	@cond_branch
-	mov	r5, #0x1
-	lsl	r0, r7, #0x2
-	add	r0, r0, r7
-	lsl	r0, r0, #0x3
-	ldr	r1, .L180+0x4
-	add	r0, r0, r1
-	add	r0, r0, #0x8
-	mov	r1, #0x0
-	bl	CanMoveSelectionInDir
-	lsl	r0, r0, #0x18
-	cmp	r0, #0
-	bne	.LCB1769
-	b	.L169	@long jump
-.LCB1769:
-.L170:
-	ldrh	r1, [r4, #0x2e]
-	mov	r0, #0x80
 	and	r0, r0, r1
 	cmp	r0, #0
 	beq	.L171	@cond_branch
@@ -2469,19 +2443,19 @@ ProcessBetGridInput:
 	lsl	r0, r7, #0x2
 	add	r0, r0, r7
 	lsl	r0, r0, #0x3
-	ldr	r1, .L180+0x4
+	ldr	r1, .L181+0x4
 	add	r0, r0, r1
 	add	r0, r0, #0x8
-	mov	r1, #0x1
+	mov	r1, #0x0
 	bl	CanMoveSelectionInDir
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	bne	.LCB1795
-	b	.L169	@long jump
-.LCB1795:
+	bne	.LCB1772
+	b	.L170	@long jump
+.LCB1772:
 .L171:
 	ldrh	r1, [r4, #0x2e]
-	mov	r0, #0x20
+	mov	r0, #0x80
 	and	r0, r0, r1
 	cmp	r0, #0
 	beq	.L172	@cond_branch
@@ -2489,19 +2463,19 @@ ProcessBetGridInput:
 	lsl	r0, r7, #0x2
 	add	r0, r0, r7
 	lsl	r0, r0, #0x3
-	ldr	r1, .L180+0x4
+	ldr	r1, .L181+0x4
 	add	r0, r0, r1
 	add	r0, r0, #0x8
-	mov	r1, #0x2
+	mov	r1, #0x1
 	bl	CanMoveSelectionInDir
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	bne	.LCB1821
-	b	.L169	@long jump
-.LCB1821:
+	bne	.LCB1798
+	b	.L170	@long jump
+.LCB1798:
 .L172:
 	ldrh	r1, [r4, #0x2e]
-	mov	r0, #0x10
+	mov	r0, #0x20
 	and	r0, r0, r1
 	cmp	r0, #0
 	beq	.L173	@cond_branch
@@ -2509,22 +2483,42 @@ ProcessBetGridInput:
 	lsl	r0, r7, #0x2
 	add	r0, r0, r7
 	lsl	r0, r0, #0x3
-	ldr	r1, .L180+0x4
+	ldr	r1, .L181+0x4
+	add	r0, r0, r1
+	add	r0, r0, #0x8
+	mov	r1, #0x2
+	bl	CanMoveSelectionInDir
+	lsl	r0, r0, #0x18
+	cmp	r0, #0
+	bne	.LCB1824
+	b	.L170	@long jump
+.LCB1824:
+.L173:
+	ldrh	r1, [r4, #0x2e]
+	mov	r0, #0x10
+	and	r0, r0, r1
+	cmp	r0, #0
+	beq	.L174	@cond_branch
+	mov	r5, #0x1
+	lsl	r0, r7, #0x2
+	add	r0, r0, r7
+	lsl	r0, r0, #0x3
+	ldr	r1, .L181+0x4
 	add	r0, r0, r1
 	add	r0, r0, #0x8
 	mov	r1, #0x3
 	bl	CanMoveSelectionInDir
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	bne	.LCB1847
-	b	.L169	@long jump
-.LCB1847:
-.L173:
-	cmp	r5, #0
 	bne	.LCB1850
-	b	.L169	@long jump
+	b	.L170	@long jump
 .LCB1850:
-	ldr	r0, .L180+0x8
+.L174:
+	cmp	r5, #0
+	bne	.LCB1853
+	b	.L170	@long jump
+.LCB1853:
+	ldr	r0, .L181+0x8
 	lsl	r6, r7, #0x2
 	add	r4, r6, r7
 	lsl	r4, r4, #0x3
@@ -2537,10 +2531,10 @@ ProcessBetGridInput:
 	strh	r1, [r4, #0xa]
 	mov	r0, #0x5
 	bl	PlaySE
-	ldr	r5, .L180+0xc
+	ldr	r5, .L181+0xc
 	ldr	r0, [r5]
 	add	r0, r0, #0xb8
-	ldr	r1, .L180+0x10
+	ldr	r1, .L181+0x10
 	bl	RouletteFlash_Stop
 	ldr	r5, [r5]
 	mov	r2, #0xb8
@@ -2568,13 +2562,13 @@ ProcessBetGridInput:
 	bl	FlashSelectionOnWheel
 	mov	r4, #0x0
 	mov	r9, r6
-	ldr	r1, .L180+0x14
+	ldr	r1, .L181+0x14
 	mov	ip, r1
 	mov	r2, #0x8
 	add	r2, r2, ip
 	mov	sl, r2
-.L177:
-	ldr	r0, .L180+0xc
+.L178:
+	ldr	r0, .L181+0xc
 	ldr	r5, [r0]
 	add	r0, r4, #0
 	add	r0, r0, #0x29
@@ -2595,12 +2589,12 @@ ProcessBetGridInput:
 	ldrh	r1, [r0]
 	ldrh	r2, [r2]
 	add	r1, r1, r2
-	ldr	r2, .L180+0x18
+	ldr	r2, .L181+0x18
 	mov	r8, r2
 	mov	r0, r8
 	and	r1, r1, r0
 	ldrh	r2, [r3, #0x4]
-	ldr	r0, .L180+0x1c
+	ldr	r0, .L181+0x1c
 	and	r0, r0, r2
 	orr	r0, r0, r1
 	strh	r0, [r3, #0x4]
@@ -2608,8 +2602,8 @@ ProcessBetGridInput:
 	lsl	r0, r0, #0x18
 	lsr	r4, r0, #0x18
 	cmp	r4, #0x3
-	bls	.L177	@cond_branch
-	ldr	r0, .L180+0x8
+	bls	.L178	@cond_branch
+	ldr	r0, .L181+0x8
 	mov	r2, r9
 	add	r1, r2, r7
 	lsl	r1, r1, #0x3
@@ -2619,8 +2613,8 @@ ProcessBetGridInput:
 	lsl	r0, r0, #0x10
 	lsr	r0, r0, #0x10
 	cmp	r0, #0x3
-	bhi	.L169	@cond_branch
-	ldr	r2, .L180+0x20
+	bhi	.L170	@cond_branch
+	ldr	r2, .L181+0x20
 	mov	r0, #0x10
 	ldrsh	r1, [r1, r0]
 	lsl	r0, r1, #0x2
@@ -2632,7 +2626,7 @@ ProcessBetGridInput:
 	ldr	r0, [r0]
 	and	r1, r1, r0
 	cmp	r1, #0
-	bne	.L169	@cond_branch
+	bne	.L170	@cond_branch
 	sub	r0, r3, #0x1
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
@@ -2643,7 +2637,7 @@ ProcessBetGridInput:
 	lsl	r0, r1, #0x4
 	add	r0, r0, r1
 	lsl	r0, r0, #0x2
-	ldr	r1, .L180+0x14
+	ldr	r1, .L181+0x14
 	add	r3, r0, r1
 	add	r2, r3, #0
 	add	r2, r2, #0x40
@@ -2657,11 +2651,11 @@ ProcessBetGridInput:
 	mov	r2, r8
 	and	r1, r1, r2
 	ldrh	r2, [r3, #0x4]
-	ldr	r0, .L180+0x1c
+	ldr	r0, .L181+0x1c
 	and	r0, r0, r2
 	orr	r0, r0, r1
 	strh	r0, [r3, #0x4]
-.L169:
+.L170:
 	pop	{r3, r4, r5}
 	mov	r8, r3
 	mov	r9, r4
@@ -2669,9 +2663,9 @@ ProcessBetGridInput:
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L181:
+.L182:
 	.align	2, 0
-.L180:
+.L181:
 	.word	gMain
 	.word	gTasks+0x8
 	.word	gTasks
@@ -2691,46 +2685,46 @@ Task_StartSpin:
 	lsl	r0, r0, #0x18
 	lsr	r4, r0, #0x18
 	bl	IncrementDailyRouletteUses
-	ldr	r0, .L185
+	ldr	r0, .L186
 	ldr	r1, [r0]
 	mov	r0, #0xff
 	strh	r0, [r1, #0x28]
 	ldrb	r2, [r1, #0x19]
 	cmp	r2, #0x1
-	bne	.L183	@cond_branch
+	bne	.L184	@cond_branch
 	add	r0, r1, #0
 	add	r0, r0, #0x23
 	strb	r2, [r0]
-	b	.L184
-.L186:
+	b	.L185
+.L187:
 	.align	2, 0
-.L185:
+.L186:
 	.word	sRoulette
-.L183:
+.L184:
 	add	r1, r1, #0x23
 	mov	r0, #0x0
 	strb	r0, [r1]
-.L184:
-	ldr	r0, .L187
+.L185:
+	ldr	r0, .L188
 	ldr	r0, [r0]
 	add	r0, r0, #0x21
 	mov	r1, #0x0
 	strb	r1, [r0]
-	ldr	r1, .L187+0x4
+	ldr	r1, .L188+0x4
 	lsl	r0, r4, #0x2
 	add	r0, r0, r4
 	lsl	r0, r0, #0x3
 	add	r0, r0, r1
 	mov	r1, #0x20
 	strh	r1, [r0, #0xa]
-	ldr	r1, .L187+0x8
+	ldr	r1, .L188+0x8
 	str	r1, [r0]
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L188:
+.L189:
 	.align	2, 0
-.L187:
+.L188:
 	.word	sRoulette
 	.word	gTasks
 	.word	Task_SlideGridOffscreen
@@ -2743,14 +2737,14 @@ Task_PlaceBet:
 	push	{r4, r5, lr}
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
-	ldr	r4, .L191
+	ldr	r4, .L192
 	ldr	r2, [r4]
 	ldrb	r1, [r2, #0x1a]
 	lsl	r1, r1, #0x1c
 	lsr	r1, r1, #0x1c
 	add	r2, r2, #0x1b
 	add	r2, r2, r1
-	ldr	r3, .L191+0x4
+	ldr	r3, .L192+0x4
 	lsl	r1, r0, #0x2
 	add	r1, r1, r0
 	lsl	r1, r1, #0x3
@@ -2783,20 +2777,20 @@ Task_PlaceBet:
 	strh	r0, [r5, #0x22]
 	lsl	r0, r0, #0x10
 	cmp	r0, #0
-	bge	.L190	@cond_branch
+	bge	.L191	@cond_branch
 	mov	r0, #0x0
 	strh	r0, [r5, #0x22]
-.L190:
+.L191:
 	ldrh	r0, [r5, #0x22]
 	bl	SetCreditDigits
-	ldr	r0, .L191+0x8
+	ldr	r0, .L192+0x8
 	str	r0, [r5]
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.L192:
+.L193:
 	.align	2, 0
-.L191:
+.L192:
 	.word	sRoulette
 	.word	gTasks
 	.word	Task_StartSpin
@@ -2811,7 +2805,7 @@ Task_HandleBetGridInput:
 	lsr	r5, r0, #0x18
 	add	r0, r5, #0
 	bl	ProcessBetGridInput
-	ldr	r1, .L205
+	ldr	r1, .L206
 	lsl	r0, r5, #0x2
 	add	r0, r0, r5
 	lsl	r0, r0, #0x3
@@ -2819,37 +2813,37 @@ Task_HandleBetGridInput:
 	mov	r1, #0xa
 	ldrsh	r0, [r4, r1]
 	cmp	r0, #0x1e
-	beq	.L196	@cond_branch
-	cmp	r0, #0x1e
-	bgt	.L200	@cond_branch
-	cmp	r0, #0
-	beq	.L195	@cond_branch
-	b	.L198
-.L206:
-	.align	2, 0
-.L205:
-	.word	gTasks
-.L200:
-	cmp	r0, #0x3b
 	beq	.L197	@cond_branch
-	b	.L198
-.L195:
-	ldrb	r0, [r4, #0x10]
-	b	.L204
+	cmp	r0, #0x1e
+	bgt	.L201	@cond_branch
+	cmp	r0, #0
+	beq	.L196	@cond_branch
+	b	.L199
+.L207:
+	.align	2, 0
+.L206:
+	.word	gTasks
+.L201:
+	cmp	r0, #0x3b
+	beq	.L198	@cond_branch
+	b	.L199
 .L196:
+	ldrb	r0, [r4, #0x10]
+	b	.L205
+.L197:
 	mov	r0, #0x0
-.L204:
+.L205:
 	bl	UpdateGridSelectionRect
 	ldrh	r0, [r4, #0xa]
 	add	r0, r0, #0x1
 	strh	r0, [r4, #0xa]
-	b	.L194
-.L197:
+	b	.L195
+.L198:
 	mov	r0, #0x0
 	strh	r0, [r4, #0xa]
-	b	.L194
-.L198:
-	ldr	r0, .L207
+	b	.L195
+.L199:
+	ldr	r0, .L208
 	lsl	r1, r5, #0x2
 	add	r1, r1, r5
 	lsl	r1, r1, #0x3
@@ -2857,17 +2851,17 @@ Task_HandleBetGridInput:
 	ldrh	r0, [r1, #0xa]
 	add	r0, r0, #0x1
 	strh	r0, [r1, #0xa]
-.L194:
-	ldr	r0, .L207+0x4
+.L195:
+	ldr	r0, .L208+0x4
 	ldrh	r1, [r0, #0x2e]
 	mov	r0, #0x1
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L201	@cond_branch
-	ldr	r0, .L207+0x8
+	beq	.L202	@cond_branch
+	ldr	r0, .L208+0x8
 	ldr	r3, [r0]
-	ldr	r2, .L207+0xc
-	ldr	r1, .L207
+	ldr	r2, .L208+0xc
+	ldr	r1, .L208
 	lsl	r0, r5, #0x2
 	add	r0, r0, r5
 	lsl	r0, r0, #0x3
@@ -2883,29 +2877,29 @@ Task_HandleBetGridInput:
 	ldr	r0, [r0]
 	and	r1, r1, r0
 	cmp	r1, #0
-	beq	.L202	@cond_branch
+	beq	.L203	@cond_branch
 	mov	r0, #0x16
 	bl	PlaySE
-	b	.L201
-.L208:
+	b	.L202
+.L209:
 	.align	2, 0
-.L207:
+.L208:
 	.word	gTasks
 	.word	gMain
 	.word	sRoulette
 	.word	sGridSelections
-.L202:
+.L203:
 	mov	r0, #0x5f
 	bl	m4aSongNumStart
-	ldr	r0, .L209
+	ldr	r0, .L210
 	str	r0, [r4]
-.L201:
+.L202:
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.L210:
+.L211:
 	.align	2, 0
-.L209:
+.L210:
 	.word	Task_PlaceBet
 .Lfe20:
 	.size	 Task_HandleBetGridInput,.Lfe20-Task_HandleBetGridInput
@@ -2916,7 +2910,7 @@ Task_SlideGridOffscreen:
 	push	{r4, lr}
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
-	ldr	r2, .L216
+	ldr	r2, .L217
 	lsl	r1, r0, #0x2
 	add	r1, r1, r0
 	lsl	r1, r1, #0x3
@@ -2926,17 +2920,17 @@ Task_SlideGridOffscreen:
 	strh	r1, [r4, #0xa]
 	lsl	r0, r0, #0x10
 	cmp	r0, #0
-	ble	.L212	@cond_branch
+	ble	.L213	@cond_branch
 	lsl	r0, r1, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, #0x2
-	ble	.L213	@cond_branch
-	ldr	r1, .L216+0x4
+	ble	.L214	@cond_branch
+	ldr	r1, .L217+0x4
 	ldrh	r0, [r1]
 	add	r0, r0, #0x2
 	strh	r0, [r1]
-.L213:
-	ldr	r0, .L216+0x8
+.L214:
+	ldr	r0, .L217+0x8
 	ldr	r1, [r0]
 	ldrh	r0, [r1, #0x26]
 	add	r0, r0, #0x4
@@ -2944,8 +2938,8 @@ Task_SlideGridOffscreen:
 	lsl	r0, r0, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, #0x68
-	bne	.L215	@cond_branch
-	ldr	r2, .L216+0xc
+	bne	.L216	@cond_branch
+	ldr	r2, .L217+0xc
 	add	r0, r1, #0
 	add	r0, r0, #0x55
 	ldrb	r1, [r0]
@@ -2954,35 +2948,35 @@ Task_SlideGridOffscreen:
 	lsl	r0, r0, #0x2
 	add	r2, r2, #0x1c
 	add	r0, r0, r2
-	ldr	r1, .L216+0x10
+	ldr	r1, .L217+0x10
 	str	r1, [r0]
-	b	.L215
-.L217:
+	b	.L216
+.L218:
 	.align	2, 0
-.L216:
+.L217:
 	.word	gTasks
 	.word	gSpriteCoordOffsetX
 	.word	sRoulette
 	.word	gSprites
 	.word	SpriteCallbackDummy
-.L212:
+.L213:
 	mov	r0, #0x1
 	mov	r1, #0xff
 	bl	ShowHideGridIcons
 	mov	r0, #0x1
 	mov	r1, #0xff
 	bl	ShowHideGridBalls
-	ldr	r0, .L218
+	ldr	r0, .L219
 	str	r0, [r4]
 	mov	r0, #0x0
 	strh	r0, [r4, #0xa]
-.L215:
+.L216:
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L219:
+.L220:
 	.align	2, 0
-.L218:
+.L219:
 	.word	Task_InitBallRoll
 .Lfe21:
 	.size	 Task_SlideGridOffscreen,.Lfe21-Task_SlideGridOffscreen
@@ -2995,129 +2989,129 @@ GetRandomForBallTravelDistance:
 	lsr	r4, r0, #0x10
 	lsl	r1, r1, #0x10
 	lsr	r1, r1, #0x10
-	ldr	r0, .L258
+	ldr	r0, .L259
 	ldr	r3, [r0]
 	ldrb	r2, [r3, #0x2]
 	add	r5, r0, #0
 	cmp	r2, #0x2
-	bgt	.L254	@cond_branch
+	bgt	.L255	@cond_branch
 	cmp	r2, #0x1
-	bge	.L223	@cond_branch
-	b	.L240
-.L259:
+	bge	.L224	@cond_branch
+	b	.L241
+.L260:
 	.align	2, 0
-.L258:
+.L259:
 	.word	sRoulette
-.L254:
+.L255:
 	cmp	r2, #0x3
-	beq	.L231	@cond_branch
-	b	.L240
-.L223:
-	ldr	r0, .L260
+	beq	.L232	@cond_branch
+	b	.L241
+.L224:
+	ldr	r0, .L261
 	ldrb	r0, [r0, #0x2]
 	sub	r0, r0, #0x4
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	cmp	r0, #0x5
-	bhi	.L224	@cond_branch
+	bhi	.L225	@cond_branch
 	cmp	r4, #0xb
-	bls	.L226	@cond_branch
+	bls	.L227	@cond_branch
 	mov	r0, #0x1
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L257	@cond_branch
-.L226:
-	ldr	r0, .L260+0x4
+	beq	.L258	@cond_branch
+.L227:
+	ldr	r0, .L261+0x4
 	ldrb	r1, [r3, #0x4]
 	lsl	r1, r1, #0x1e
 	lsr	r1, r1, #0x19
 	add	r1, r1, r0
 	ldrb	r0, [r1, #0x2]
 	lsr	r0, r0, #0x1
-	b	.L256
-.L261:
+	b	.L257
+.L262:
 	.align	2, 0
-.L260:
+.L261:
 	.word	gLocalTime
 	.word	sRouletteTables
-.L224:
+.L225:
 	mov	r0, #0x3
 	and	r0, r0, r1
 	cmp	r0, #0
-	bne	.L229	@cond_branch
-	ldr	r0, .L262
+	bne	.L230	@cond_branch
+	ldr	r0, .L263
 	ldrb	r1, [r3, #0x4]
 	lsl	r1, r1, #0x1e
 	lsr	r1, r1, #0x19
 	add	r1, r1, r0
 	ldrb	r0, [r1, #0x2]
 	lsr	r0, r0, #0x1
-	b	.L256
-.L263:
+	b	.L257
+.L264:
 	.align	2, 0
-.L262:
+.L263:
 	.word	sRouletteTables
-.L229:
-	ldr	r0, .L264
+.L230:
+	ldr	r0, .L265
 	ldrb	r1, [r3, #0x4]
 	lsl	r1, r1, #0x1e
 	lsr	r1, r1, #0x19
 	add	r1, r1, r0
 	ldrb	r0, [r1, #0x2]
-	b	.L256
-.L265:
+	b	.L257
+.L266:
 	.align	2, 0
-.L264:
+.L265:
 	.word	sRouletteTables
-.L231:
-	ldr	r0, .L266
+.L232:
+	ldr	r0, .L267
 	ldrb	r0, [r0, #0x2]
 	sub	r0, r0, #0x4
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	cmp	r0, #0x6
-	bhi	.L232	@cond_branch
+	bhi	.L233	@cond_branch
 	cmp	r4, #0x5
-	bls	.L234	@cond_branch
+	bls	.L235	@cond_branch
 	mov	r0, #0x1
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L257	@cond_branch
-.L234:
-	ldr	r0, .L266+0x4
+	beq	.L258	@cond_branch
+.L235:
+	ldr	r0, .L267+0x4
 	ldrb	r1, [r3, #0x4]
 	lsl	r1, r1, #0x1e
 	lsr	r1, r1, #0x19
 	add	r1, r1, r0
 	ldrb	r0, [r1, #0x2]
 	lsr	r0, r0, #0x1
-	b	.L256
-.L267:
+	b	.L257
+.L268:
 	.align	2, 0
-.L266:
+.L267:
 	.word	gLocalTime
 	.word	sRouletteTables
-.L232:
+.L233:
 	mov	r0, #0x1
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L237	@cond_branch
+	beq	.L238	@cond_branch
 	cmp	r4, #0x6
-	bls	.L237	@cond_branch
-	ldr	r0, .L268
+	bls	.L238	@cond_branch
+	ldr	r0, .L269
 	ldrb	r1, [r3, #0x4]
 	lsl	r1, r1, #0x1e
 	lsr	r1, r1, #0x19
 	add	r1, r1, r0
 	ldrb	r0, [r1, #0x2]
 	lsr	r0, r0, #0x2
-	b	.L256
-.L269:
+	b	.L257
+.L270:
 	.align	2, 0
-.L268:
+.L269:
 	.word	sRouletteTables
-.L237:
-	ldr	r1, .L270
+.L238:
+	ldr	r1, .L271
 	ldr	r0, [r5]
 	ldrb	r0, [r0, #0x4]
 	lsl	r0, r0, #0x1e
@@ -3125,32 +3119,32 @@ GetRandomForBallTravelDistance:
 	add	r0, r0, r1
 	ldrb	r0, [r0, #0x2]
 	lsr	r0, r0, #0x1
-	b	.L256
-.L271:
+	b	.L257
+.L272:
 	.align	2, 0
-.L270:
+.L271:
 	.word	sRouletteTables
-.L240:
-	ldr	r0, .L272
+.L241:
+	ldr	r0, .L273
 	ldrb	r0, [r0, #0x2]
 	sub	r0, r0, #0x4
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	cmp	r0, #0x5
-	bhi	.L241	@cond_branch
+	bhi	.L242	@cond_branch
 	mov	r0, #0x3
 	and	r0, r0, r1
 	cmp	r0, #0
-	bne	.L242	@cond_branch
-.L257:
+	bne	.L243	@cond_branch
+.L258:
 	mov	r0, #0x1
-	b	.L255
-.L273:
+	b	.L256
+.L274:
 	.align	2, 0
-.L272:
+.L273:
 	.word	gLocalTime
-.L242:
-	ldr	r1, .L274
+.L243:
+	ldr	r1, .L275
 	ldr	r0, [r5]
 	ldrb	r0, [r0, #0x4]
 	lsl	r0, r0, #0x1e
@@ -3158,19 +3152,19 @@ GetRandomForBallTravelDistance:
 	add	r0, r0, r1
 	ldrb	r0, [r0, #0x2]
 	lsr	r0, r0, #0x1
-	b	.L256
-.L275:
+	b	.L257
+.L276:
 	.align	2, 0
-.L274:
+.L275:
 	.word	sRouletteTables
-.L241:
+.L242:
 	mov	r0, #0x3
 	and	r0, r0, r1
 	cmp	r0, #0
-	bne	.L245	@cond_branch
+	bne	.L246	@cond_branch
 	cmp	r4, #0xc
-	bls	.L246	@cond_branch
-	ldr	r1, .L276
+	bls	.L247	@cond_branch
+	ldr	r1, .L277
 	ldr	r0, [r5]
 	ldrb	r0, [r0, #0x4]
 	lsl	r0, r0, #0x1e
@@ -3178,59 +3172,59 @@ GetRandomForBallTravelDistance:
 	add	r0, r0, r1
 	ldrb	r0, [r0, #0x2]
 	lsr	r0, r0, #0x1
-	b	.L256
-.L277:
+	b	.L257
+.L278:
 	.align	2, 0
-.L276:
+.L277:
+	.word	sRouletteTables
+.L247:
+	ldr	r1, .L279
+	ldr	r0, [r5]
+	ldrb	r0, [r0, #0x4]
+	lsl	r0, r0, #0x1e
+	lsr	r0, r0, #0x19
+	add	r0, r0, r1
+	ldrb	r0, [r0, #0x2]
+	b	.L257
+.L280:
+	.align	2, 0
+.L279:
 	.word	sRouletteTables
 .L246:
-	ldr	r1, .L278
-	ldr	r0, [r5]
-	ldrb	r0, [r0, #0x4]
-	lsl	r0, r0, #0x1e
-	lsr	r0, r0, #0x19
-	add	r0, r0, r1
-	ldrb	r0, [r0, #0x2]
-	b	.L256
-.L279:
-	.align	2, 0
-.L278:
-	.word	sRouletteTables
-.L245:
 	mov	r0, #0x80
 	lsl	r0, r0, #0x8
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L249	@cond_branch
+	beq	.L250	@cond_branch
 	cmp	r4, #0xc
-	bls	.L250	@cond_branch
-	ldr	r1, .L280
+	bls	.L251	@cond_branch
+	ldr	r1, .L281
 	ldr	r0, [r5]
 	ldrb	r0, [r0, #0x4]
 	lsl	r0, r0, #0x1e
 	lsr	r0, r0, #0x19
 	add	r0, r0, r1
 	ldrb	r0, [r0, #0x2]
-	b	.L256
-.L281:
+	b	.L257
+.L282:
 	.align	2, 0
-.L280:
+.L281:
 	.word	sRouletteTables
-.L250:
-	ldr	r1, .L282
+.L251:
+	ldr	r1, .L283
 	ldr	r0, [r5]
 	ldrb	r0, [r0, #0x4]
 	lsl	r0, r0, #0x1e
 	lsr	r0, r0, #0x19
 	add	r0, r0, r1
 	ldrb	r0, [r0, #0x1]
-	b	.L256
-.L283:
+	b	.L257
+.L284:
 	.align	2, 0
-.L282:
+.L283:
 	.word	sRouletteTables
-.L249:
-	ldr	r1, .L284
+.L250:
+	ldr	r1, .L285
 	ldr	r0, [r5]
 	ldrb	r0, [r0, #0x4]
 	lsl	r0, r0, #0x1e
@@ -3239,14 +3233,14 @@ GetRandomForBallTravelDistance:
 	ldrb	r0, [r0, #0x1]
 	lsl	r0, r0, #0x19
 	lsr	r0, r0, #0x18
+.L257:
 .L256:
-.L255:
 	pop	{r4, r5}
 	pop	{r1}
 	bx	r1
-.L285:
+.L286:
 	.align	2, 0
-.L284:
+.L285:
 	.word	sRouletteTables
 .Lfe22:
 	.size	 GetRandomForBallTravelDistance,.Lfe22-GetRandomForBallTravelDistance
@@ -3272,7 +3266,7 @@ Task_InitBallRoll:
 	lsr	r0, r0, #0x18
 	mov	sl, r0
 	mov	r4, #0x0
-	ldr	r1, .L297
+	ldr	r1, .L298
 	mov	r0, sp
 	mov	r2, #0x8
 	bl	memcpy
@@ -3284,9 +3278,9 @@ Task_InitBallRoll:
 	bl	__umodsi3
 	lsl	r0, r0, #0x10
 	lsr	r6, r0, #0x10
-	ldr	r3, .L297+0x4
+	ldr	r3, .L298+0x4
 	ldr	r0, [r3]
-	ldr	r2, .L297+0x8
+	ldr	r2, .L298+0x8
 	mov	r5, sl
 	lsl	r1, r5, #0x2
 	add	r1, r1, sl
@@ -3315,40 +3309,40 @@ Task_InitBallRoll:
 	sub	r0, r0, r4
 	lsl	r0, r0, #0x18
 	lsr	r4, r0, #0x18
-	ldr	r0, .L297+0xc
+	ldr	r0, .L298+0xc
 	ldrb	r0, [r0, #0x2]
 	lsl	r0, r0, #24
 	asr	r0, r0, #24
 	mov	r5, #0x1
 	cmp	r0, #0xc
-	bgt	.L287	@cond_branch
+	bgt	.L288	@cond_branch
 	mov	r5, #0x0
-.L287:
+.L288:
 	cmp	r6, #0x4f
-	bhi	.L289	@cond_branch
+	bhi	.L290	@cond_branch
 	lsl	r0, r5, #0x19
-	b	.L296
-.L298:
+	b	.L297
+.L299:
 	.align	2, 0
-.L297:
+.L298:
 	.word	.LC94
 	.word	sRoulette
 	.word	gTasks
 	.word	gLocalTime
-.L289:
+.L290:
 	lsl	r1, r5, #0x18
 	asr	r1, r1, #0x18
 	mov	r0, #0x1
 	sub	r0, r0, r1
 	lsl	r0, r0, #0x19
-.L296:
+.L297:
 	lsr	r5, r0, #0x18
-	ldr	r0, .L299
+	ldr	r0, .L300
 	ldr	r6, [r0]
 	ldrb	r0, [r6, #0x4]
 	lsl	r0, r0, #0x1e
 	lsr	r0, r0, #0x19
-	ldr	r1, .L299+0x4
+	ldr	r1, .L300+0x4
 	add	r0, r0, r1
 	lsl	r4, r4, #0x18
 	asr	r4, r4, #0x18
@@ -3362,11 +3356,11 @@ Task_InitBallRoll:
 	add	r0, r4, #0
 	bl	__floatsisf
 	cmp	r4, #0
-	bge	.L291	@cond_branch
-	ldr	r1, .L299+0x8
+	bge	.L292	@cond_branch
+	ldr	r1, .L300+0x8
 	bl	__addsf3
-.L291:
-	ldr	r1, .L299+0xc
+.L292:
+	ldr	r1, .L300+0xc
 	bl	__divsf3
 	bl	__fixunssfsi
 	lsl	r0, r0, #0x10
@@ -3397,10 +3391,10 @@ Task_InitBallRoll:
 	add	r0, r4, #0
 	bl	__floatsisf
 	cmp	r4, #0
-	bge	.L292	@cond_branch
-	ldr	r1, .L299+0x8
+	bge	.L293	@cond_branch
+	ldr	r1, .L300+0x8
 	bl	__addsf3
-.L292:
+.L293:
 	mov	r2, r9
 	str	r0, [r2]
 	add	r7, r6, #0
@@ -3408,7 +3402,7 @@ Task_InitBallRoll:
 	ldrb	r0, [r6, #0x4]
 	lsl	r0, r0, #0x1e
 	lsr	r0, r0, #0x19
-	ldr	r5, .L299+0x4
+	ldr	r5, .L300+0x4
 	add	r0, r0, r5
 	mov	r1, #0x18
 	ldrsh	r4, [r0, r1]
@@ -3416,15 +3410,15 @@ Task_InitBallRoll:
 	bl	__floatsisf
 	add	r5, r0, #0
 	cmp	r4, #0
-	bge	.L293	@cond_branch
-	ldr	r1, .L299+0x8
+	bge	.L294	@cond_branch
+	ldr	r1, .L300+0x8
 	bl	__addsf3
 	add	r5, r0, #0
-.L293:
+.L294:
 	str	r5, [r7]
 	add	r7, r6, #0
 	add	r7, r7, #0x90
-	ldr	r1, .L299+0x10
+	ldr	r1, .L300+0x10
 	add	r0, r5, #0
 	bl	__mulsf3
 	add	r1, r5, #0
@@ -3437,21 +3431,21 @@ Task_InitBallRoll:
 	bl	__floatsisf
 	add	r2, r0, #0
 	cmp	r4, #0
-	bge	.L294	@cond_branch
-	ldr	r1, .L299+0x8
+	bge	.L295	@cond_branch
+	ldr	r1, .L300+0x8
 	bl	__addsf3
 	add	r2, r0, #0
-.L294:
+.L295:
 	add	r0, r5, #0
 	add	r1, r2, #0
 	bl	__divsf3
 	str	r0, [r7]
 	add	r1, r6, #0
 	add	r1, r1, #0x94
-	ldr	r0, .L299+0x14
+	ldr	r0, .L300+0x14
 	str	r0, [r1]
 	add	r1, r1, #0x8
-	ldr	r0, .L299+0x18
+	ldr	r0, .L300+0x18
 	str	r0, [r1]
 	add	r5, r6, #0
 	add	r5, r5, #0x98
@@ -3462,27 +3456,27 @@ Task_InitBallRoll:
 	bl	__floatsisf
 	add	r2, r0, #0
 	cmp	r4, #0
-	bge	.L295	@cond_branch
-	ldr	r1, .L299+0x8
+	bge	.L296	@cond_branch
+	ldr	r1, .L300+0x8
 	bl	__addsf3
 	add	r2, r0, #0
-.L295:
-	ldr	r0, .L299+0x1c
+.L296:
+	ldr	r0, .L300+0x1c
 	add	r1, r2, #0
 	bl	__divsf3
 	bl	__negsf2
 	str	r0, [r5]
 	add	r1, r6, #0
 	add	r1, r1, #0xa0
-	ldr	r0, .L299+0x20
+	ldr	r0, .L300+0x20
 	str	r0, [r1]
-	ldr	r1, .L299+0x24
+	ldr	r1, .L300+0x24
 	mov	r5, sl
 	lsl	r0, r5, #0x2
 	add	r0, r0, sl
 	lsl	r0, r0, #0x3
 	add	r0, r0, r1
-	ldr	r1, .L299+0x28
+	ldr	r1, .L300+0x28
 	str	r1, [r0]
 	add	sp, sp, #0x8
 	pop	{r3, r4, r5}
@@ -3492,9 +3486,9 @@ Task_InitBallRoll:
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L300:
+.L301:
 	.align	2, 0
-.L299:
+.L300:
 	.word	sRoulette
 	.word	sRouletteTables
 	.word 0x47800000	@ float 6.55360000000000000000e4
@@ -3515,7 +3509,7 @@ Task_RollBall:
 	push	{r4, lr}
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
-	ldr	r4, .L302
+	ldr	r4, .L303
 	ldr	r3, [r4]
 	ldrb	r1, [r3, #0x3]
 	mov	r2, #0x80
@@ -3532,12 +3526,12 @@ Task_RollBall:
 	lsl	r1, r2, #0x4
 	add	r1, r1, r2
 	lsl	r1, r1, #0x2
-	ldr	r2, .L302+0x4
+	ldr	r2, .L303+0x4
 	add	r1, r1, r2
 	str	r1, [r3, #0x38]
-	ldr	r2, .L302+0x8
+	ldr	r2, .L303+0x8
 	str	r2, [r1, #0x1c]
-	ldr	r1, .L302+0xc
+	ldr	r1, .L303+0xc
 	lsl	r4, r0, #0x2
 	add	r4, r4, r0
 	lsl	r4, r4, #0x3
@@ -3555,14 +3549,14 @@ Task_RollBall:
 	bl	SetBallCounterNumLeft
 	mov	r0, #0x5c
 	bl	m4aSongNumStart
-	ldr	r0, .L302+0x10
+	ldr	r0, .L303+0x10
 	str	r0, [r4]
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L303:
+.L304:
 	.align	2, 0
-.L302:
+.L303:
 	.word	sRoulette
 	.word	gSprites
 	.word	SpriteCB_RollBall_Start
@@ -3577,22 +3571,22 @@ Task_RecordBallHit:
 	push	{r4, r5, r6, r7, lr}
 	lsl	r0, r0, #0x18
 	lsr	r4, r0, #0x18
-	ldr	r6, .L314
+	ldr	r6, .L315
 	ldr	r3, [r6]
 	add	r0, r3, #0
 	add	r0, r0, #0x7d
 	ldrb	r0, [r0]
 	cmp	r0, #0
-	beq	.L305	@cond_branch
+	beq	.L306	@cond_branch
 	ldrb	r1, [r3, #0x3]
 	mov	r0, #0x20
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L306	@cond_branch
+	beq	.L307	@cond_branch
 	mov	r0, #0x40
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L305	@cond_branch
+	beq	.L306	@cond_branch
 	mov	r0, #0x41
 	neg	r0, r0
 	and	r0, r0, r1
@@ -3603,13 +3597,13 @@ Task_RecordBallHit:
 	neg	r0, r0
 	and	r0, r0, r1
 	strb	r0, [r2, #0x3]
-	b	.L305
-.L315:
+	b	.L306
+.L316:
 	.align	2, 0
-.L314:
+.L315:
 	.word	sRoulette
-.L306:
-	ldr	r2, .L316
+.L307:
+	ldr	r2, .L317
 	lsl	r1, r4, #0x2
 	add	r0, r1, r4
 	lsl	r0, r0, #0x3
@@ -3618,7 +3612,7 @@ Task_RecordBallHit:
 	ldrsh	r0, [r5, r2]
 	add	r7, r1, #0
 	cmp	r0, #0
-	bne	.L309	@cond_branch
+	bne	.L310	@cond_branch
 	add	r0, r3, #0
 	add	r0, r0, #0x7e
 	ldrb	r1, [r0]
@@ -3638,41 +3632,41 @@ Task_RecordBallHit:
 	lsr	r0, r0, #0x18
 	strh	r0, [r5, #0x12]
 	cmp	r0, #0x1
-	bne	.L309	@cond_branch
+	bne	.L310	@cond_branch
 	ldr	r0, [r6]
 	add	r0, r0, #0xb8
 	mov	r1, #0x80
 	lsl	r1, r1, #0x5
 	bl	RouletteFlash_Enable
-.L309:
-	ldr	r0, .L316
+.L310:
+	ldr	r0, .L317
 	add	r1, r7, r4
 	lsl	r1, r1, #0x3
 	add	r4, r1, r0
 	mov	r1, #0xa
 	ldrsh	r0, [r4, r1]
 	cmp	r0, #0x3c
-	bgt	.L311	@cond_branch
-	ldr	r0, .L316+0x4
+	bgt	.L312	@cond_branch
+	ldr	r0, .L317+0x4
 	ldrh	r1, [r0, #0x2e]
 	mov	r0, #0x1
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L312	@cond_branch
+	beq	.L313	@cond_branch
 	mov	r0, #0x3c
 	strh	r0, [r4, #0xa]
-.L312:
+.L313:
 	ldrh	r0, [r4, #0xa]
 	add	r0, r0, #0x1
 	strh	r0, [r4, #0xa]
-	b	.L305
-.L317:
+	b	.L306
+.L318:
 	.align	2, 0
-.L316:
+.L317:
 	.word	gTasks
 	.word	gMain
-.L311:
-	ldr	r0, .L318
+.L312:
+	ldr	r0, .L319
 	ldr	r1, [r0]
 	ldrb	r0, [r1, #0x1a]
 	lsl	r0, r0, #0x1c
@@ -3694,15 +3688,15 @@ Task_RecordBallHit:
 	bl	ShowHideGridBalls
 	mov	r0, #0x20
 	strh	r0, [r4, #0xa]
-	ldr	r0, .L318+0x4
+	ldr	r0, .L319+0x4
 	str	r0, [r4]
-.L305:
+.L306:
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L319:
+.L320:
 	.align	2, 0
-.L318:
+.L319:
 	.word	sRoulette
 	.word	Task_SlideGridOnscreen
 .Lfe25:
@@ -3714,7 +3708,7 @@ Task_SlideGridOnscreen:
 	push	{r4, r5, lr}
 	lsl	r0, r0, #0x18
 	lsr	r5, r0, #0x18
-	ldr	r1, .L328
+	ldr	r1, .L329
 	lsl	r0, r5, #0x2
 	add	r0, r0, r5
 	lsl	r0, r0, #0x3
@@ -3724,17 +3718,17 @@ Task_SlideGridOnscreen:
 	strh	r1, [r4, #0xa]
 	lsl	r0, r0, #0x10
 	cmp	r0, #0
-	ble	.L321	@cond_branch
+	ble	.L322	@cond_branch
 	lsl	r0, r1, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, #0x2
-	ble	.L322	@cond_branch
-	ldr	r1, .L328+0x4
+	ble	.L323	@cond_branch
+	ldr	r1, .L329+0x4
 	ldrh	r0, [r1]
 	sub	r0, r0, #0x2
 	strh	r0, [r1]
-.L322:
-	ldr	r0, .L328+0x8
+.L323:
+	ldr	r0, .L329+0x8
 	ldr	r1, [r0]
 	ldrh	r0, [r1, #0x26]
 	sub	r0, r0, #0x4
@@ -3742,8 +3736,8 @@ Task_SlideGridOnscreen:
 	lsl	r0, r0, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, #0x68
-	bne	.L324	@cond_branch
-	ldr	r2, .L328+0xc
+	bne	.L325	@cond_branch
+	ldr	r2, .L329+0xc
 	add	r0, r1, #0
 	add	r0, r0, #0x55
 	ldrb	r1, [r0]
@@ -3752,18 +3746,18 @@ Task_SlideGridOnscreen:
 	lsl	r0, r0, #0x2
 	add	r2, r2, #0x1c
 	add	r0, r0, r2
-	ldr	r1, .L328+0x10
+	ldr	r1, .L329+0x10
 	str	r1, [r0]
-	b	.L324
-.L329:
+	b	.L325
+.L330:
 	.align	2, 0
-.L328:
+.L329:
 	.word	gTasks
 	.word	gSpriteCoordOffsetX
 	.word	sRoulette
 	.word	gSprites
 	.word	SpriteCB_GridSquare
-.L321:
+.L322:
 	ldrh	r0, [r4, #0x20]
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
@@ -3771,27 +3765,27 @@ Task_SlideGridOnscreen:
 	mov	r1, #0x12
 	ldrsh	r0, [r4, r1]
 	cmp	r0, #0x1
-	bne	.L325	@cond_branch
+	bne	.L326	@cond_branch
 	mov	r0, #0x79
-	b	.L327
-.L325:
+	b	.L328
+.L326:
 	mov	r0, #0x3d
-.L327:
+.L328:
 	strh	r0, [r4, #0xa]
-	ldr	r0, .L330
+	ldr	r0, .L331
 	lsl	r1, r5, #0x2
 	add	r1, r1, r5
 	lsl	r1, r1, #0x3
 	add	r1, r1, r0
-	ldr	r0, .L330+0x4
+	ldr	r0, .L331+0x4
 	str	r0, [r1]
-.L324:
+.L325:
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.L331:
+.L332:
 	.align	2, 0
-.L330:
+.L331:
 	.word	gTasks
 	.word	Task_FlashBallOnWinningSquare
 .Lfe26:
@@ -3803,7 +3797,7 @@ Task_FlashBallOnWinningSquare:
 	push	{r4, lr}
 	lsl	r0, r0, #0x18
 	lsr	r2, r0, #0x18
-	ldr	r1, .L341
+	ldr	r1, .L342
 	lsl	r0, r2, #0x2
 	add	r0, r0, r2
 	lsl	r0, r0, #0x3
@@ -3814,35 +3808,35 @@ Task_FlashBallOnWinningSquare:
 	lsl	r0, r0, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, #0x1
-	ble	.L333	@cond_branch
+	ble	.L334	@cond_branch
 	mov	r0, #0xa
 	ldrsh	r1, [r4, r0]
 	add	r0, r1, #0
 	cmp	r1, #0
-	bge	.L339	@cond_branch
+	bge	.L340	@cond_branch
 	add	r0, r0, #0xf
-.L339:
+.L340:
 	asr	r0, r0, #0x4
 	lsl	r0, r0, #0x4
 	sub	r0, r1, r0
 	lsl	r0, r0, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, #0
-	beq	.L336	@cond_branch
+	beq	.L337	@cond_branch
 	cmp	r0, #0x8
-	bne	.L340	@cond_branch
+	bne	.L341	@cond_branch
 	mov	r0, #0x0
 	mov	r1, #0xff
 	bl	ShowHideGridIcons
 	mov	r0, #0x0
 	mov	r1, #0xff
 	bl	ShowHideGridBalls
-	b	.L340
-.L342:
+	b	.L341
+.L343:
 	.align	2, 0
-.L341:
+.L342:
 	.word	gTasks
-.L336:
+.L337:
 	ldrh	r1, [r4, #0x20]
 	lsl	r1, r1, #0x18
 	lsr	r1, r1, #0x18
@@ -3854,20 +3848,20 @@ Task_FlashBallOnWinningSquare:
 	lsr	r1, r1, #0x18
 	mov	r0, #0x0
 	bl	ShowHideGridBalls
-	b	.L340
-.L333:
-	ldr	r1, .L343
+	b	.L341
+.L334:
+	ldr	r1, .L344
 	add	r0, r2, #0
 	mov	r2, #0x1e
 	mov	r3, #0x0
 	bl	StartTaskAfterDelayOrInput
-.L340:
+.L341:
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L344:
+.L345:
 	.align	2, 0
-.L343:
+.L344:
 	.word	Task_PrintSpinResult
 .Lfe27:
 	.size	 Task_FlashBallOnWinningSquare,.Lfe27-Task_FlashBallOnWinningSquare
@@ -3878,7 +3872,7 @@ Task_TryIncrementWins:
 	push	{r4, r5, lr}
 	lsl	r0, r0, #0x18
 	lsr	r5, r0, #0x18
-	ldr	r1, .L355
+	ldr	r1, .L356
 	lsl	r0, r5, #0x2
 	add	r0, r0, r5
 	lsl	r0, r0, #0x3
@@ -3886,15 +3880,15 @@ Task_TryIncrementWins:
 	mov	r1, #0x12
 	ldrsh	r0, [r4, r1]
 	cmp	r0, #0
-	beq	.L352	@cond_branch
+	beq	.L353	@cond_branch
 	cmp	r0, #0
-	blt	.L352	@cond_branch
+	blt	.L353	@cond_branch
 	cmp	r0, #0x2
-	bgt	.L352	@cond_branch
+	bgt	.L353	@cond_branch
 	bl	IsFanfareTaskInactive
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.L346	@cond_branch
+	beq	.L347	@cond_branch
 	mov	r0, #0x1d
 	bl	GetGameStat
 	ldrh	r1, [r4, #0x1e]
@@ -3903,48 +3897,48 @@ Task_TryIncrementWins:
 	lsl	r1, r1, #0x10
 	asr	r1, r1, #0x10
 	cmp	r0, r1
-	bcs	.L350	@cond_branch
+	bcs	.L351	@cond_branch
 	mov	r0, #0x1e
 	ldrsh	r1, [r4, r0]
 	mov	r0, #0x1d
 	bl	SetGameStat
-.L350:
-	ldr	r1, .L355+0x4
-	ldr	r2, .L355+0x8
+.L351:
+	ldr	r1, .L356+0x4
+	ldr	r2, .L356+0x8
 	add	r0, r5, #0
 	mov	r3, #0x3
 	bl	StartTaskAfterDelayOrInput
-	b	.L346
-.L356:
+	b	.L347
+.L357:
 	.align	2, 0
-.L355:
+.L356:
 	.word	gTasks
 	.word	Task_PrintPayout
 	.word	0xffff
-.L352:
+.L353:
 	bl	IsSEPlaying
 	lsl	r0, r0, #0x18
 	lsr	r2, r0, #0x18
 	cmp	r2, #0
-	bne	.L346	@cond_branch
-	ldr	r1, .L357
+	bne	.L347	@cond_branch
+	ldr	r1, .L358
 	lsl	r0, r5, #0x2
 	add	r0, r0, r5
 	lsl	r0, r0, #0x3
 	add	r0, r0, r1
 	strh	r2, [r0, #0x1e]
-	ldr	r1, .L357+0x4
-	ldr	r2, .L357+0x8
+	ldr	r1, .L358+0x4
+	ldr	r2, .L358+0x8
 	add	r0, r5, #0
 	mov	r3, #0x3
 	bl	StartTaskAfterDelayOrInput
-.L346:
+.L347:
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.L358:
+.L359:
 	.align	2, 0
-.L357:
+.L358:
 	.word	gTasks
 	.word	Task_EndTurn
 	.word	0xffff
@@ -3958,7 +3952,7 @@ Task_PrintSpinResult:
 	add	sp, sp, #-0xc
 	lsl	r0, r0, #0x18
 	lsr	r5, r0, #0x18
-	ldr	r1, .L369
+	ldr	r1, .L370
 	lsl	r0, r5, #0x2
 	add	r0, r0, r5
 	lsl	r0, r0, #0x3
@@ -3966,42 +3960,41 @@ Task_PrintSpinResult:
 	mov	r2, #0x12
 	ldrsh	r1, [r0, r2]
 	cmp	r1, #0
-	beq	.L366	@cond_branch
+	beq	.L367	@cond_branch
 	cmp	r1, #0
-	blt	.L366	@cond_branch
+	blt	.L367	@cond_branch
 	cmp	r1, #0x2
-	bgt	.L366	@cond_branch
+	bgt	.L367	@cond_branch
 	mov	r1, #0xc
 	ldrsh	r0, [r0, r1]
 	cmp	r0, #0xc
-	bne	.L363	@cond_branch
-	ldr	r0, .L369+0x4
-	bl	PlayFanfare
-	ldr	r4, .L369+0x8
-	ldrb	r0, [r4]
-	mov	r1, #0x0
-	bl	DrawStdWindowFrame
-	ldrb	r0, [r4]
-	ldr	r2, .L369+0xc
-	b	.L368
-.L370:
-	.align	2, 0
-.L369:
-	.word	gTasks
-	.word	0x185
-	.word	sTextWindowId
-	.word	Roulette_Text_Jackpot
-.L363:
-	mov	r0, #0xc3
+	bne	.L364	@cond_branch
+	mov	r0, #0xb4
 	lsl	r0, r0, #0x1
 	bl	PlayFanfare
-	ldr	r4, .L371
+	ldr	r4, .L370+0x4
 	ldrb	r0, [r4]
 	mov	r1, #0x0
 	bl	DrawStdWindowFrame
 	ldrb	r0, [r4]
-	ldr	r2, .L371+0x4
-.L368:
+	ldr	r2, .L370+0x8
+	b	.L369
+.L371:
+	.align	2, 0
+.L370:
+	.word	gTasks
+	.word	sTextWindowId
+	.word	Roulette_Text_Jackpot
+.L364:
+	ldr	r0, .L372
+	bl	PlayFanfare
+	ldr	r4, .L372+0x4
+	ldrb	r0, [r4]
+	mov	r1, #0x0
+	bl	DrawStdWindowFrame
+	ldrb	r0, [r4]
+	ldr	r2, .L372+0x8
+.L369:
 	mov	r1, #0x1
 	str	r1, [sp]
 	mov	r1, #0xff
@@ -4014,21 +4007,22 @@ Task_PrintSpinResult:
 	ldrb	r0, [r4]
 	mov	r1, #0x3
 	bl	CopyWindowToVram
-	b	.L360
-.L372:
+	b	.L361
+.L373:
 	.align	2, 0
-.L371:
+.L372:
+	.word	0x169
 	.word	sTextWindowId
 	.word	Roulette_Text_ItsAHit
-.L366:
+.L367:
 	mov	r0, #0x20
 	bl	m4aSongNumStart
-	ldr	r4, .L373
+	ldr	r4, .L374
 	ldrb	r0, [r4]
 	mov	r1, #0x0
 	bl	DrawStdWindowFrame
 	ldrb	r0, [r4]
-	ldr	r2, .L373+0x4
+	ldr	r2, .L374+0x4
 	mov	r1, #0x1
 	str	r1, [sp]
 	mov	r1, #0xff
@@ -4041,23 +4035,23 @@ Task_PrintSpinResult:
 	ldrb	r0, [r4]
 	mov	r1, #0x3
 	bl	CopyWindowToVram
-.L360:
-	ldr	r1, .L373+0x8
+.L361:
+	ldr	r1, .L374+0x8
 	lsl	r0, r5, #0x2
 	add	r0, r0, r5
 	lsl	r0, r0, #0x3
 	add	r0, r0, r1
 	mov	r1, #0x0
 	strh	r1, [r0, #0xa]
-	ldr	r1, .L373+0xc
+	ldr	r1, .L374+0xc
 	str	r1, [r0]
 	add	sp, sp, #0xc
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.L374:
+.L375:
 	.align	2, 0
-.L373:
+.L374:
 	.word	sTextWindowId
 	.word	Roulette_Text_NothingDoing
 	.word	gTasks
@@ -4071,7 +4065,7 @@ Task_GivePayout:
 	push	{r4, r5, r6, lr}
 	lsl	r0, r0, #0x18
 	lsr	r6, r0, #0x18
-	ldr	r1, .L385
+	ldr	r1, .L386
 	lsl	r0, r6, #0x2
 	add	r0, r0, r6
 	lsl	r0, r0, #0x3
@@ -4079,17 +4073,17 @@ Task_GivePayout:
 	mov	r0, #0x16
 	ldrsh	r5, [r4, r0]
 	cmp	r5, #0
-	beq	.L377	@cond_branch
+	beq	.L378	@cond_branch
 	cmp	r5, #0x3
-	beq	.L380	@cond_branch
+	beq	.L381	@cond_branch
 	ldrh	r0, [r4, #0x16]
 	add	r0, r0, #0x1
-	b	.L384
-.L386:
+	b	.L385
+.L387:
 	.align	2, 0
-.L385:
+.L386:
 	.word	gTasks
-.L377:
+.L378:
 	ldrh	r0, [r4, #0x22]
 	add	r0, r0, #0x1
 	strh	r0, [r4, #0x22]
@@ -4099,30 +4093,30 @@ Task_GivePayout:
 	bl	SetCreditDigits
 	mov	r2, #0x22
 	ldrsh	r1, [r4, r2]
-	ldr	r0, .L387
+	ldr	r0, .L388
 	cmp	r1, r0
-	ble	.L378	@cond_branch
+	ble	.L379	@cond_branch
 	strh	r5, [r4, #0xa]
-	b	.L376
-.L388:
+	b	.L377
+.L389:
 	.align	2, 0
-.L387:
+.L388:
 	.word	0x270e
-.L378:
+.L379:
 	ldrh	r0, [r4, #0xa]
 	sub	r0, r0, #0x1
 	strh	r0, [r4, #0xa]
 	ldrh	r0, [r4, #0x16]
 	add	r0, r0, #0x1
-	b	.L384
-.L380:
+	b	.L385
+.L381:
 	mov	r0, #0x15
 	bl	m4aSongNumStop
 	mov	r0, #0x0
-.L384:
+.L385:
 	strh	r0, [r4, #0x16]
-.L376:
-	ldr	r0, .L389
+.L377:
+	ldr	r0, .L390
 	lsl	r1, r6, #0x2
 	add	r1, r1, r6
 	lsl	r1, r1, #0x3
@@ -4130,19 +4124,19 @@ Task_GivePayout:
 	mov	r2, #0xa
 	ldrsh	r0, [r1, r2]
 	cmp	r0, #0
-	bne	.L383	@cond_branch
-	ldr	r1, .L389+0x4
-	ldr	r2, .L389+0x8
+	bne	.L384	@cond_branch
+	ldr	r1, .L390+0x4
+	ldr	r2, .L390+0x8
 	add	r0, r6, #0
 	mov	r3, #0x3
 	bl	StartTaskAfterDelayOrInput
-.L383:
+.L384:
 	pop	{r4, r5, r6}
 	pop	{r0}
 	bx	r0
-.L390:
+.L391:
 	.align	2, 0
-.L389:
+.L390:
 	.word	gTasks
 	.word	Task_EndTurn
 	.word	0xffff
@@ -4159,12 +4153,12 @@ Task_PrintPayout:
 	add	sp, sp, #-0xc
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
-	ldr	r3, .L392
-	ldr	r1, .L392+0x4
+	ldr	r3, .L393
+	ldr	r1, .L393+0x4
 	mov	r9, r1
 	ldr	r1, [r1]
 	ldrb	r2, [r1, #0x19]
-	ldr	r1, .L392+0x8
+	ldr	r1, .L393+0x8
 	lsl	r4, r0, #0x2
 	add	r4, r4, r0
 	lsl	r4, r4, #0x3
@@ -4177,12 +4171,12 @@ Task_PrintPayout:
 	mov	r2, #0x0
 	mov	r3, #0x2
 	bl	ConvertIntToDecimalStringN
-	ldr	r2, .L392+0xc
+	ldr	r2, .L393+0xc
 	mov	r8, r2
-	ldr	r1, .L392+0x10
+	ldr	r1, .L393+0x10
 	mov	r0, r8
 	bl	StringExpandPlaceholders
-	ldr	r5, .L392+0x14
+	ldr	r5, .L393+0x14
 	ldrb	r0, [r5]
 	mov	r1, #0x0
 	bl	DrawStdWindowFrame
@@ -4208,7 +4202,7 @@ Task_PrintPayout:
 	mul	r0, r0, r1
 	strh	r0, [r4, #0xa]
 	strh	r6, [r4, #0x16]
-	ldr	r0, .L392+0x18
+	ldr	r0, .L393+0x18
 	str	r0, [r4]
 	add	sp, sp, #0xc
 	pop	{r3, r4}
@@ -4217,9 +4211,9 @@ Task_PrintPayout:
 	pop	{r4, r5, r6}
 	pop	{r0}
 	bx	r0
-.L393:
+.L394:
 	.align	2, 0
-.L392:
+.L393:
 	.word	gStringVar1
 	.word	sRoulette
 	.word	gTasks
@@ -4237,10 +4231,10 @@ Task_EndTurn:
 	add	r4, r0, #0
 	lsl	r4, r4, #0x18
 	lsr	r4, r4, #0x18
-	ldr	r5, .L395
+	ldr	r5, .L396
 	ldr	r0, [r5]
 	add	r0, r0, #0xb8
-	ldr	r1, .L395+0x4
+	ldr	r1, .L396+0x4
 	bl	RouletteFlash_Stop
 	ldr	r6, [r5]
 	mov	r0, #0xb8
@@ -4264,10 +4258,10 @@ Task_EndTurn:
 	ldrb	r0, [r2]
 	and	r1, r1, r0
 	strb	r1, [r2]
-	ldr	r6, .L395+0x8
+	ldr	r6, .L396+0x8
 	ldr	r2, [r5]
-	ldr	r5, .L395+0xc
-	ldr	r0, .L395+0x10
+	ldr	r5, .L396+0xc
+	ldr	r0, .L396+0x10
 	lsl	r3, r4, #0x2
 	add	r3, r3, r4
 	lsl	r3, r3, #0x3
@@ -4291,14 +4285,14 @@ Task_EndTurn:
 	mov	r2, #0x4
 	orr	r1, r1, r2
 	strb	r1, [r0]
-	ldr	r0, .L395+0x14
+	ldr	r0, .L396+0x14
 	str	r0, [r3]
 	pop	{r4, r5, r6}
 	pop	{r0}
 	bx	r0
-.L396:
+.L397:
 	.align	2, 0
-.L395:
+.L396:
 	.word	sRoulette
 	.word	0xffff
 	.word	gSprites
@@ -4318,14 +4312,14 @@ Task_TryPrintEndTurnMsg:
 	lsl	r0, r0, #0x18
 	lsr	r6, r0, #0x18
 	mov	r5, #0x0
-	ldr	r1, .L410
+	ldr	r1, .L411
 	lsl	r0, r6, #0x2
 	add	r0, r0, r6
 	lsl	r0, r0, #0x3
 	add	r0, r0, r1
 	mov	r2, #0x0
 	strh	r5, [r0, #0x10]
-	ldr	r4, .L410+0x4
+	ldr	r4, .L411+0x4
 	ldr	r1, [r4]
 	ldrb	r0, [r1, #0x1a]
 	lsl	r0, r0, #0x1c
@@ -4335,7 +4329,7 @@ Task_TryPrintEndTurnMsg:
 	strb	r2, [r1]
 	mov	r0, #0x0
 	bl	DrawGridBackground
-	ldr	r3, .L410+0x8
+	ldr	r3, .L411+0x8
 	ldr	r0, [r4]
 	add	r0, r0, #0x6c
 	ldrb	r1, [r0]
@@ -4352,10 +4346,10 @@ Task_TryPrintEndTurnMsg:
 	mov	r0, #0x8
 	add	r0, r0, r7
 	mov	ip, r0
-	ldr	r1, .L410+0xc
+	ldr	r1, .L411+0xc
 	mov	r8, r1
-.L401:
-	ldr	r0, .L410+0x4
+.L402:
+	ldr	r0, .L411+0x4
 	ldr	r4, [r0]
 	add	r0, r4, r5
 	add	r0, r0, #0x65
@@ -4372,7 +4366,7 @@ Task_TryPrintEndTurnMsg:
 	ldrh	r1, [r0]
 	ldrh	r2, [r2]
 	add	r1, r1, r2
-	ldr	r2, .L410+0x10
+	ldr	r2, .L411+0x10
 	add	r0, r2, #0
 	and	r1, r1, r0
 	ldrh	r2, [r3, #0x4]
@@ -4384,8 +4378,8 @@ Task_TryPrintEndTurnMsg:
 	lsl	r0, r0, #0x18
 	lsr	r5, r0, #0x18
 	cmp	r5, #0x3
-	bls	.L401	@cond_branch
-	ldr	r0, .L410
+	bls	.L402	@cond_branch
+	ldr	r0, .L411
 	lsl	r1, r6, #0x2
 	add	r1, r1, r6
 	lsl	r1, r1, #0x3
@@ -4394,17 +4388,17 @@ Task_TryPrintEndTurnMsg:
 	ldrsh	r0, [r2, r1]
 	ldrb	r4, [r4, #0x19]
 	cmp	r0, r4
-	blt	.L403	@cond_branch
+	blt	.L404	@cond_branch
 	mov	r1, #0x14
 	ldrsh	r0, [r2, r1]
 	cmp	r0, #0x6
-	bne	.L404	@cond_branch
-	ldr	r4, .L410+0x14
+	bne	.L405	@cond_branch
+	ldr	r4, .L411+0x14
 	ldrb	r0, [r4]
 	mov	r1, #0x0
 	bl	DrawStdWindowFrame
 	ldrb	r0, [r4]
-	ldr	r2, .L410+0x18
+	ldr	r2, .L411+0x18
 	mov	r1, #0x1
 	str	r1, [sp]
 	mov	r1, #0xff
@@ -4417,11 +4411,11 @@ Task_TryPrintEndTurnMsg:
 	ldrb	r0, [r4]
 	mov	r1, #0x3
 	bl	CopyWindowToVram
-	ldr	r1, .L410+0x1c
-	b	.L409
-.L411:
+	ldr	r1, .L411+0x1c
+	b	.L410
+.L412:
 	.align	2, 0
-.L410:
+.L411:
 	.word	gTasks
 	.word	sRoulette
 	.word	gSprites
@@ -4430,18 +4424,18 @@ Task_TryPrintEndTurnMsg:
 	.word	sTextWindowId
 	.word	Roulette_Text_BoardWillBeCleared
 	.word	Task_ClearBoard
-.L404:
+.L405:
 	mov	r0, #0x22
 	ldrsh	r1, [r2, r0]
-	ldr	r0, .L412
+	ldr	r0, .L413
 	cmp	r1, r0
-	bne	.L406	@cond_branch
-	ldr	r4, .L412+0x4
+	bne	.L407	@cond_branch
+	ldr	r4, .L413+0x4
 	ldrb	r0, [r4]
 	mov	r1, #0x0
 	bl	DrawStdWindowFrame
 	ldrb	r0, [r4]
-	ldr	r2, .L412+0x8
+	ldr	r2, .L413+0x8
 	mov	r1, #0x1
 	str	r1, [sp]
 	mov	r1, #0xff
@@ -4454,36 +4448,36 @@ Task_TryPrintEndTurnMsg:
 	ldrb	r0, [r4]
 	mov	r1, #0x3
 	bl	CopyWindowToVram
-	ldr	r1, .L412+0xc
-.L409:
-	ldr	r2, .L412+0x10
+	ldr	r1, .L413+0xc
+.L410:
+	ldr	r2, .L413+0x10
 	add	r0, r6, #0
 	mov	r3, #0x3
 	bl	StartTaskAfterDelayOrInput
-	b	.L408
-.L413:
+	b	.L409
+.L414:
 	.align	2, 0
-.L412:
+.L413:
 	.word	0x270f
 	.word	sTextWindowId
 	.word	Roulette_Text_CoinCaseIsFull
 	.word	Task_AskKeepPlaying
 	.word	0xffff
-.L406:
-	ldr	r0, .L414
+.L407:
+	ldr	r0, .L415
 	str	r0, [r2]
-	b	.L408
-.L415:
+	b	.L409
+.L416:
 	.align	2, 0
-.L414:
+.L415:
 	.word	Task_AskKeepPlaying
-.L403:
-	ldr	r4, .L416
+.L404:
+	ldr	r4, .L417
 	ldrb	r0, [r4]
 	mov	r1, #0x0
 	bl	DrawStdWindowFrame
 	ldrb	r0, [r4]
-	ldr	r2, .L416+0x4
+	ldr	r2, .L417+0x4
 	mov	r1, #0x1
 	str	r1, [sp]
 	mov	r1, #0xff
@@ -4496,21 +4490,21 @@ Task_TryPrintEndTurnMsg:
 	ldrb	r0, [r4]
 	mov	r1, #0x3
 	bl	CopyWindowToVram
-	ldr	r1, .L416+0x8
+	ldr	r1, .L417+0x8
 	add	r0, r6, #0
 	mov	r2, #0x3c
 	mov	r3, #0x3
 	bl	StartTaskAfterDelayOrInput
-.L408:
+.L409:
 	add	sp, sp, #0xc
 	pop	{r3}
 	mov	r8, r3
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L417:
+.L418:
 	.align	2, 0
-.L416:
+.L417:
 	.word	sTextWindowId
 	.word	Roulette_Text_NoCoinsLeft
 	.word	Task_StopPlaying
@@ -4525,7 +4519,7 @@ Task_ClearBoard:
 	lsl	r0, r0, #0x18
 	lsr	r5, r0, #0x18
 	mov	r4, #0x0
-	ldr	r1, .L426
+	ldr	r1, .L427
 	lsl	r0, r5, #0x2
 	add	r0, r0, r5
 	lsl	r0, r0, #0x3
@@ -4539,11 +4533,11 @@ Task_ClearBoard:
 	bl	DrawGridBackground
 	mov	r0, #0x6
 	bl	SetBallCounterNumLeft
-	ldr	r7, .L426+0x4
-	ldr	r3, .L426+0x8
+	ldr	r7, .L427+0x4
+	ldr	r3, .L427+0x8
 	mov	r6, #0x5
 	neg	r6, r6
-.L422:
+.L423:
 	ldr	r0, [r3]
 	add	r0, r0, r4
 	add	r0, r0, #0x43
@@ -4561,23 +4555,23 @@ Task_ClearBoard:
 	lsl	r0, r0, #0x18
 	lsr	r4, r0, #0x18
 	cmp	r4, #0xb
-	bls	.L422	@cond_branch
-	ldr	r1, .L426
+	bls	.L423	@cond_branch
+	ldr	r1, .L427
 	lsl	r0, r5, #0x2
 	add	r0, r0, r5
 	lsl	r0, r0, #0x3
 	add	r2, r0, r1
 	mov	r0, #0x22
 	ldrsh	r1, [r2, r0]
-	ldr	r0, .L426+0xc
+	ldr	r0, .L427+0xc
 	cmp	r1, r0
-	bne	.L424	@cond_branch
-	ldr	r4, .L426+0x10
+	bne	.L425	@cond_branch
+	ldr	r4, .L427+0x10
 	ldrb	r0, [r4]
 	mov	r1, #0x0
 	bl	DrawStdWindowFrame
 	ldrb	r0, [r4]
-	ldr	r2, .L426+0x14
+	ldr	r2, .L427+0x14
 	mov	r1, #0x1
 	str	r1, [sp]
 	mov	r1, #0xff
@@ -4590,15 +4584,15 @@ Task_ClearBoard:
 	ldrb	r0, [r4]
 	mov	r1, #0x3
 	bl	CopyWindowToVram
-	ldr	r1, .L426+0x18
-	ldr	r2, .L426+0x1c
+	ldr	r1, .L427+0x18
+	ldr	r2, .L427+0x1c
 	add	r0, r5, #0
 	mov	r3, #0x3
 	bl	StartTaskAfterDelayOrInput
-	b	.L425
-.L427:
+	b	.L426
+.L428:
 	.align	2, 0
-.L426:
+.L427:
 	.word	gTasks
 	.word	gSprites
 	.word	sRoulette
@@ -4607,17 +4601,17 @@ Task_ClearBoard:
 	.word	Roulette_Text_CoinCaseIsFull
 	.word	Task_AskKeepPlaying
 	.word	0xffff
-.L424:
-	ldr	r0, .L428
-	str	r0, [r2]
 .L425:
+	ldr	r0, .L429
+	str	r0, [r2]
+.L426:
 	add	sp, sp, #0xc
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L429:
+.L430:
 	.align	2, 0
-.L428:
+.L429:
 	.word	Task_AskKeepPlaying
 .Lfe34:
 	.size	 Task_ClearBoard,.Lfe34-Task_ClearBoard
@@ -4629,15 +4623,15 @@ ExitRoulette:
 	add	sp, sp, #-0x4
 	lsl	r0, r0, #0x18
 	lsr	r5, r0, #0x18
-	ldr	r4, .L434
+	ldr	r4, .L435
 	ldr	r0, [r4]
 	add	r0, r0, #0xb8
-	ldr	r1, .L434+0x4
+	ldr	r1, .L435+0x4
 	bl	RouletteFlash_Stop
 	ldr	r0, [r4]
 	add	r0, r0, #0xb8
 	bl	RouletteFlash_Reset
-	ldr	r1, .L434+0x8
+	ldr	r1, .L435+0x8
 	lsl	r0, r5, #0x2
 	add	r0, r0, r5
 	lsl	r0, r0, #0x3
@@ -4650,21 +4644,21 @@ ExitRoulette:
 	lsr	r0, r0, #0x10
 	ldrb	r1, [r1, #0x19]
 	cmp	r0, r1
-	bcs	.L431	@cond_branch
-	ldr	r1, .L434+0xc
+	bcs	.L432	@cond_branch
+	ldr	r1, .L435+0xc
 	mov	r0, #0x1
-	b	.L433
-.L435:
+	b	.L434
+.L436:
 	.align	2, 0
-.L434:
+.L435:
 	.word	sRoulette
 	.word	0xffff
 	.word	gTasks
 	.word	gSpecialVar_0x8004
-.L431:
-	ldr	r1, .L436
+.L432:
+	ldr	r1, .L437
 	mov	r0, #0x0
-.L433:
+.L434:
 	strh	r0, [r1]
 	bl	GetCoins
 	lsl	r0, r0, #0x10
@@ -4677,20 +4671,20 @@ ExitRoulette:
 	mov	r2, #0x0
 	mov	r3, #0x10
 	bl	BeginHardwarePaletteFade
-	ldr	r1, .L436+0x4
+	ldr	r1, .L437+0x4
 	lsl	r0, r5, #0x2
 	add	r0, r0, r5
 	lsl	r0, r0, #0x3
 	add	r0, r0, r1
-	ldr	r1, .L436+0x8
+	ldr	r1, .L437+0x8
 	str	r1, [r0]
 	add	sp, sp, #0x4
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.L437:
+.L438:
 	.align	2, 0
-.L436:
+.L437:
 	.word	gSpecialVar_0x8004
 	.word	gTasks
 	.word	Task_ExitRoulette
@@ -4707,11 +4701,11 @@ Task_ExitRoulette:
 	lsl	r0, r0, #0x18
 	lsr	r4, r0, #0x18
 	cmp	r4, #0
-	bne	.L439	@cond_branch
+	bne	.L440	@cond_branch
 	mov	r0, #0x0
 	bl	SetVBlankCallback
-	ldr	r1, .L440
-	ldr	r0, .L440+0x4
+	ldr	r1, .L441
+	ldr	r0, .L441+0x4
 	strh	r4, [r0]
 	strh	r4, [r1]
 	bl	ResetVramOamAndBgCntRegs
@@ -4729,20 +4723,20 @@ Task_ExitRoulette:
 	bl	ResetPaletteFade
 	bl	ResetSpriteData
 	bl	FreeRoulette
-	ldr	r1, .L440+0x8
-	ldr	r0, .L440+0xc
+	ldr	r1, .L441+0x8
+	ldr	r0, .L441+0xc
 	str	r0, [r1]
-	ldr	r0, .L440+0x10
+	ldr	r0, .L441+0x10
 	bl	SetMainCallback2
 	add	r0, r5, #0
 	bl	DestroyTask
-.L439:
+.L440:
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.L441:
+.L442:
 	.align	2, 0
-.L440:
+.L441:
 	.word	gSpriteCoordOffsetX
 	.word	gSpriteCoordOffsetY
 	.word	gFieldCallback
@@ -4757,24 +4751,24 @@ Task_WaitForNextTask:
 	push	{r4, r5, lr}
 	lsl	r0, r0, #0x18
 	lsr	r4, r0, #0x18
-	ldr	r1, .L447
+	ldr	r1, .L448
 	ldr	r3, [r1]
 	add	r0, r3, #0
 	add	r0, r0, #0xa8
 	ldrh	r0, [r0]
 	add	r5, r1, #0
 	cmp	r0, #0
-	beq	.L444	@cond_branch
-	ldr	r0, .L447+0x4
+	beq	.L445	@cond_branch
+	ldr	r0, .L448+0x4
 	add	r2, r3, #0
 	add	r2, r2, #0xaa
 	ldrh	r1, [r0, #0x2e]
 	ldrh	r0, [r2]
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L443	@cond_branch
-.L444:
-	ldr	r1, .L447+0x8
+	beq	.L444	@cond_branch
+.L445:
+	ldr	r1, .L448+0x8
 	lsl	r0, r4, #0x2
 	add	r0, r0, r4
 	lsl	r0, r0, #0x3
@@ -4787,10 +4781,10 @@ Task_WaitForNextTask:
 	add	r0, r0, #0xaa
 	ldrh	r0, [r0]
 	cmp	r0, #0
-	beq	.L445	@cond_branch
+	beq	.L446	@cond_branch
 	mov	r0, #0x5
 	bl	PlaySE
-.L445:
+.L446:
 	ldr	r2, [r5]
 	add	r0, r2, #0
 	add	r0, r0, #0xac
@@ -4800,23 +4794,23 @@ Task_WaitForNextTask:
 	strh	r1, [r0]
 	sub	r0, r0, #0x2
 	strh	r1, [r0]
-.L443:
+.L444:
 	ldr	r0, [r5]
 	add	r1, r0, #0
 	add	r1, r1, #0xa8
 	ldrh	r2, [r1]
-	ldr	r0, .L447+0xc
+	ldr	r0, .L448+0xc
 	cmp	r2, r0
-	beq	.L446	@cond_branch
+	beq	.L447	@cond_branch
 	sub	r0, r2, #0x1
 	strh	r0, [r1]
-.L446:
+.L447:
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.L448:
+.L449:
 	.align	2, 0
-.L447:
+.L448:
 	.word	sRoulette
 	.word	gMain
 	.word	gTasks
@@ -4835,12 +4829,12 @@ StartTaskAfterDelayOrInput:
 	lsr	r4, r2, #0x10
 	lsl	r3, r3, #0x10
 	lsr	r7, r3, #0x10
-	ldr	r2, .L453
+	ldr	r2, .L454
 	ldr	r0, [r2]
 	mov	ip, r0
 	mov	r3, ip
 	add	r3, r3, #0xb4
-	ldr	r1, .L453+0x4
+	ldr	r1, .L454+0x4
 	lsl	r0, r6, #0x2
 	add	r0, r0, r6
 	lsl	r0, r0, #0x3
@@ -4849,48 +4843,48 @@ StartTaskAfterDelayOrInput:
 	str	r0, [r3]
 	add	r3, r1, #0
 	cmp	r5, #0
-	bne	.L450	@cond_branch
+	bne	.L451	@cond_branch
 	add	r5, r0, #0
-.L450:
+.L451:
 	mov	r0, ip
 	add	r0, r0, #0xac
 	str	r5, [r0]
 	sub	r0, r0, #0x4
 	strh	r4, [r0]
-	ldr	r0, .L453+0x8
+	ldr	r0, .L454+0x8
 	cmp	r4, r0
-	bne	.L451	@cond_branch
+	bne	.L452	@cond_branch
 	cmp	r7, #0
-	bne	.L451	@cond_branch
+	bne	.L452	@cond_branch
 	mov	r1, ip
 	add	r1, r1, #0xaa
 	ldrh	r0, [r1]
 	orr	r4, r4, r0
 	strh	r4, [r1]
-	b	.L452
-.L454:
+	b	.L453
+.L455:
 	.align	2, 0
-.L453:
+.L454:
 	.word	sRoulette
 	.word	gTasks
 	.word	0xffff
-.L451:
+.L452:
 	ldr	r0, [r2]
 	add	r0, r0, #0xaa
 	strh	r7, [r0]
-.L452:
+.L453:
 	lsl	r0, r6, #0x2
 	add	r0, r0, r6
 	lsl	r0, r0, #0x3
 	add	r0, r0, r3
-	ldr	r1, .L455
+	ldr	r1, .L456
 	str	r1, [r0]
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L456:
+.L457:
 	.align	2, 0
-.L455:
+.L456:
 	.word	Task_WaitForNextTask
 .Lfe38:
 	.size	 StartTaskAfterDelayOrInput,.Lfe38-StartTaskAfterDelayOrInput
@@ -4902,7 +4896,7 @@ ResetBallDataForNewSpin:
 	lsl	r0, r0, #0x18
 	lsr	r5, r0, #0x18
 	mov	r4, #0x0
-	ldr	r3, .L463
+	ldr	r3, .L464
 	ldr	r0, [r3]
 	strb	r4, [r0]
 	ldr	r2, [r3]
@@ -4928,10 +4922,10 @@ ResetBallDataForNewSpin:
 	neg	r0, r0
 	and	r0, r0, r1
 	strb	r0, [r2, #0x3]
-	ldr	r6, .L463+0x4
+	ldr	r6, .L464+0x4
 	add	r2, r3, #0
 	mov	r1, #0x0
-.L461:
+.L462:
 	ldr	r0, [r2]
 	add	r0, r0, #0x1b
 	add	r0, r0, r4
@@ -4940,7 +4934,7 @@ ResetBallDataForNewSpin:
 	lsl	r0, r0, #0x18
 	lsr	r4, r0, #0x18
 	cmp	r4, #0x5
-	bls	.L461	@cond_branch
+	bls	.L462	@cond_branch
 	ldr	r2, [r3]
 	ldrb	r1, [r2, #0x1a]
 	mov	r0, #0x10
@@ -4956,9 +4950,9 @@ ResetBallDataForNewSpin:
 	pop	{r4, r5, r6}
 	pop	{r0}
 	bx	r0
-.L464:
+.L465:
 	.align	2, 0
-.L463:
+.L464:
 	.word	sRoulette
 	.word	gTasks
 .Lfe39:
@@ -4968,13 +4962,13 @@ ResetBallDataForNewSpin:
 	.thumb_func
 ResetHits:
 	push	{lr}
-	ldr	r2, .L481
+	ldr	r2, .L482
 	ldr	r1, [r2]
 	mov	r0, #0x0
 	str	r0, [r1, #0x8]
 	mov	r1, #0x0
 	mov	r3, #0x0
-.L469:
+.L470:
 	ldr	r0, [r2]
 	add	r0, r0, #0xc
 	add	r0, r0, r1
@@ -4983,11 +4977,11 @@ ResetHits:
 	lsl	r0, r0, #0x18
 	lsr	r1, r0, #0x18
 	cmp	r1, #0x5
-	bls	.L469	@cond_branch
+	bls	.L470	@cond_branch
 	mov	r1, #0x0
-	ldr	r3, .L481
+	ldr	r3, .L482
 	mov	r2, #0x0
-.L474:
+.L475:
 	ldr	r0, [r3]
 	add	r0, r0, #0x12
 	add	r0, r0, r1
@@ -4996,11 +4990,11 @@ ResetHits:
 	lsl	r0, r0, #0x18
 	lsr	r1, r0, #0x18
 	cmp	r1, #0x3
-	bls	.L474	@cond_branch
+	bls	.L475	@cond_branch
 	mov	r1, #0x0
-	ldr	r3, .L481
+	ldr	r3, .L482
 	mov	r2, #0x0
-.L479:
+.L480:
 	ldr	r0, [r3]
 	add	r0, r0, #0x16
 	add	r0, r0, r1
@@ -5009,15 +5003,15 @@ ResetHits:
 	lsl	r0, r0, #0x18
 	lsr	r1, r0, #0x18
 	cmp	r1, #0x2
-	bls	.L479	@cond_branch
+	bls	.L480	@cond_branch
 	mov	r0, #0x1
 	mov	r1, #0xff
 	bl	ShowHideGridBalls
 	pop	{r0}
 	bx	r0
-.L482:
+.L483:
 	.align	2, 0
-.L481:
+.L482:
 	.word	sRoulette
 .Lfe40:
 	.size	 ResetHits,.Lfe40-ResetHits
@@ -5048,30 +5042,30 @@ RecordHit:
 	lsl	r1, r1, #0x18
 	lsr	r5, r1, #0x18
 	mov	r1, sp
-	ldr	r0, .L500
+	ldr	r0, .L501
 	ldmia	r0!, {r2, r3, r6}
 	stmia	r1!, {r2, r3, r6}
 	ldr	r0, [r0]
 	str	r0, [r1]
 	add	r2, sp, #0x10
 	add	r1, r2, #0
-	ldr	r0, .L500+0x4
+	ldr	r0, .L501+0x4
 	ldmia	r0!, {r3, r6, r7}
 	stmia	r1!, {r3, r6, r7}
 	mov	r8, r2
 	cmp	r5, #0xb
-	bls	.L484	@cond_branch
+	bls	.L485	@cond_branch
 	mov	r0, #0x0
-	b	.L499
-.L501:
+	b	.L500
+.L502:
 	.align	2, 0
-.L500:
+.L501:
 	.word	.LC180
 	.word	.LC182
-.L484:
-	ldr	r6, .L502
+.L485:
+	ldr	r6, .L503
 	ldr	r3, [r6]
-	ldr	r1, .L502+0x4
+	ldr	r1, .L503+0x4
 	lsl	r0, r4, #0x2
 	add	r0, r0, r4
 	lsl	r0, r0, #0x3
@@ -5079,7 +5073,7 @@ RecordHit:
 	mov	r7, #0x14
 	ldrsh	r1, [r0, r7]
 	add	r3, r3, r1
-	ldr	r4, .L502+0x8
+	ldr	r4, .L503+0x8
 	lsl	r5, r5, #0x3
 	add	r2, r5, r4
 	ldrb	r1, [r2, #0x2]
@@ -5097,79 +5091,79 @@ RecordHit:
 	mov	r9, r4
 	mov	ip, r5
 	add	r5, r0, #0
-.L488:
+.L489:
 	lsl	r0, r3, #0x2
 	mov	r1, sp
 	add	r4, r1, r0
 	ldr	r0, [r4]
 	and	r0, r0, r5
 	cmp	r0, #0
-	beq	.L489	@cond_branch
+	beq	.L490	@cond_branch
 	ldr	r1, [r6]
 	add	r1, r1, #0x12
 	add	r1, r1, r3
 	ldrb	r0, [r1]
 	add	r0, r0, #0x1
 	strb	r0, [r1]
-.L489:
+.L490:
 	ldr	r2, [r6]
 	add	r0, r2, #0
 	add	r0, r0, #0x12
 	add	r0, r0, r3
 	ldrb	r0, [r0]
 	cmp	r0, #0x2
-	bls	.L487	@cond_branch
+	bls	.L488	@cond_branch
 	ldr	r0, [r2, #0x8]
 	ldr	r1, [r4]
 	orr	r0, r0, r1
 	str	r0, [r2, #0x8]
-.L487:
+.L488:
 	add	r0, r3, #0x1
 	lsl	r0, r0, #0x18
 	lsr	r3, r0, #0x18
 	cmp	r3, #0x3
-	bls	.L488	@cond_branch
+	bls	.L489	@cond_branch
 	mov	r6, #0x0
-	ldr	r0, .L502+0xc
+	ldr	r0, .L503+0xc
 	add	r0, r0, ip
 	ldr	r7, [r0]
-	ldr	r4, .L502
+	ldr	r4, .L503
 	mov	r5, r8
-.L495:
+.L496:
 	lsl	r0, r6, #0x2
 	add	r2, r5, r0
 	ldr	r0, [r2]
 	and	r0, r0, r7
 	cmp	r0, #0
-	beq	.L496	@cond_branch
+	beq	.L497	@cond_branch
 	ldr	r1, [r4]
 	add	r1, r1, #0x16
 	add	r1, r1, r6
 	ldrb	r0, [r1]
 	add	r0, r0, #0x1
 	strb	r0, [r1]
-.L496:
+.L497:
 	ldr	r3, [r4]
 	add	r0, r3, #0
 	add	r0, r0, #0x16
 	add	r0, r0, r6
 	ldrb	r0, [r0]
 	cmp	r0, #0x3
-	bls	.L494	@cond_branch
+	bls	.L495	@cond_branch
 	ldr	r0, [r3, #0x8]
 	ldr	r1, [r2]
 	orr	r0, r0, r1
 	str	r0, [r3, #0x8]
-.L494:
+.L495:
 	add	r0, r6, #0x1
 	lsl	r0, r0, #0x18
 	lsr	r6, r0, #0x18
 	cmp	r6, #0x2
-	bls	.L495	@cond_branch
+	bls	.L496	@cond_branch
 	mov	r0, ip
 	add	r0, r0, r9
 	ldrb	r0, [r0, #0x2]
-.L499:
+.L500:
 	add	sp, sp, #0x1c
 	pop	{r3, r4}
 	mov	r8, r3
@@ -5177,9 +5171,9 @@ RecordHit:
 	pop	{r4, r5, r6, r7}
 	pop	{r1}
 	bx	r1
-.L503:
+.L504:
 	.align	2, 0
-.L502:
+.L503:
 	.word	sRoulette
 	.word	gTasks
 	.word	sRouletteSlots
@@ -5200,67 +5194,67 @@ IsHitInBetSelection:
 	add	r0, r0, r1
 	lsr	r0, r0, #0x18
 	cmp	r0, #0x12
-	bhi	.L505	@cond_branch
+	bhi	.L506	@cond_branch
 	cmp	r2, #0xf
-	bhi	.L518	@cond_branch
+	bhi	.L519	@cond_branch
 	lsl	r0, r2, #0x2
-	ldr	r1, .L524
+	ldr	r1, .L525
 	add	r0, r0, r1
 	ldr	r0, [r0]
 	mov	pc, r0
+.L526:
+	.align	2, 0
 .L525:
-	.align	2, 0
-.L524:
-	.word	.L520
+	.word	.L521
 	.align	2, 0
 	.align	2, 0
-.L520:
-	.word	.L507
-	.word	.L511
-	.word	.L511
-	.word	.L511
-	.word	.L511
-	.word	.L516
-	.word	.L518
-	.word	.L518
-	.word	.L518
-	.word	.L518
-	.word	.L516
-	.word	.L518
-	.word	.L518
-	.word	.L518
-	.word	.L518
-	.word	.L516
-.L507:
+.L521:
+	.word	.L508
+	.word	.L512
+	.word	.L512
+	.word	.L512
+	.word	.L512
+	.word	.L517
+	.word	.L519
+	.word	.L519
+	.word	.L519
+	.word	.L519
+	.word	.L517
+	.word	.L519
+	.word	.L519
+	.word	.L519
+	.word	.L519
+	.word	.L517
+.L508:
 	mov	r0, #0x3
-	b	.L521
-.L511:
+	b	.L522
+.L512:
 	add	r0, r2, #0x5
 	cmp	r3, r0
-	beq	.L523	@cond_branch
+	beq	.L524	@cond_branch
 	add	r0, r0, #0x5
 	cmp	r3, r0
-	beq	.L523	@cond_branch
+	beq	.L524	@cond_branch
 	add	r0, r0, #0x5
 	cmp	r3, r0
-	bne	.L505	@cond_branch
-	b	.L523
-.L516:
+	bne	.L506	@cond_branch
+	b	.L524
+.L517:
 	add	r0, r2, #0x1
 	cmp	r3, r0
-	blt	.L505	@cond_branch
+	blt	.L506	@cond_branch
 	add	r0, r2, #0x4
 	cmp	r3, r0
-	bgt	.L505	@cond_branch
-.L523:
+	bgt	.L506	@cond_branch
+.L524:
 	mov	r0, #0x1
-	b	.L521
-.L518:
+	b	.L522
+.L519:
 	cmp	r3, r2
-	beq	.L523	@cond_branch
-.L505:
+	beq	.L524	@cond_branch
+.L506:
 	mov	r0, #0x0
-.L521:
+.L522:
 	pop	{r1}
 	bx	r1
 .Lfe42:
@@ -5280,30 +5274,30 @@ FlashSelectionOnWheel:
 	mov	r0, #0x0
 	str	r0, [sp, #0x18]
 	cmp	r7, #0xa
-	beq	.L530	@cond_branch
+	beq	.L531	@cond_branch
 	cmp	r7, #0xa
-	bgt	.L561	@cond_branch
+	bgt	.L562	@cond_branch
 	cmp	r7, #0x5
-	beq	.L530	@cond_branch
-	b	.L537
-.L561:
+	beq	.L531	@cond_branch
+	b	.L538
+.L562:
 	cmp	r7, #0xf
-	bne	.L537	@cond_branch
-.L530:
+	bne	.L538	@cond_branch
+.L531:
 	add	r0, r7, #0x1
 	lsl	r0, r0, #0x18
 	lsr	r4, r0, #0x18
 	add	r2, r7, #0x5
-	ldr	r1, .L563
+	ldr	r1, .L564
 	mov	ip, r1
 	cmp	r4, r2
-	bge	.L532	@cond_branch
+	bge	.L533	@cond_branch
 	ldr	r0, [r1]
-	ldr	r3, .L563+0x4
+	ldr	r3, .L564+0x4
 	ldr	r5, [r0, #0x8]
 	add	r6, r3, #0
 	add	r6, r6, #0x8
-.L534:
+.L535:
 	lsl	r0, r4, #0x2
 	add	r0, r0, r4
 	lsl	r1, r0, #0x2
@@ -5311,38 +5305,38 @@ FlashSelectionOnWheel:
 	ldr	r0, [r0]
 	and	r0, r0, r5
 	cmp	r0, #0
-	bne	.L533	@cond_branch
+	bne	.L534	@cond_branch
 	add	r0, r1, r3
 	ldrh	r0, [r0, #0x10]
 	ldr	r1, [sp, #0x18]
 	orr	r1, r1, r0
 	str	r1, [sp, #0x18]
-.L533:
+.L534:
 	add	r0, r4, #0x1
 	lsl	r0, r0, #0x18
 	lsr	r4, r0, #0x18
 	cmp	r4, r2
-	blt	.L534	@cond_branch
-.L532:
+	blt	.L535	@cond_branch
+.L533:
 	mov	r2, ip
 	ldr	r0, [r2]
 	add	r0, r0, #0xb8
-	ldr	r1, .L563+0x8
+	ldr	r1, .L564+0x8
 	ldr	r3, [sp, #0x18]
 	and	r3, r3, r1
 	str	r3, [sp, #0x18]
 	add	r1, r3, #0
 	bl	RouletteFlash_Enable
-	b	.L527
-.L564:
+	b	.L528
+.L565:
 	.align	2, 0
-.L563:
+.L564:
 	.word	sRoulette
 	.word	sGridSelections
 	.word	0xdfff
-.L537:
+.L538:
 	mov	r0, sp
-	ldr	r1, .L565
+	ldr	r1, .L566
 	ldmia	r1!, {r2, r4, r5}
 	stmia	r0!, {r2, r4, r5}
 	ldmia	r1!, {r3, r4, r5}
@@ -5353,16 +5347,16 @@ FlashSelectionOnWheel:
 	mov	r1, #0x1
 	mov	r9, r1
 	cmp	r0, #0x3
-	bhi	.L538	@cond_branch
+	bhi	.L539	@cond_branch
 	mov	r2, #0x3
 	mov	r9, r2
-.L538:
+.L539:
 	add	r0, r7, #0
 	mov	r1, #0x5
 	bl	__udivsi3
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x8
-	ldr	r3, .L565+0x4
+	ldr	r3, .L566+0x4
 	add	r0, r0, r3
 	lsr	r0, r0, #0x10
 	mov	r8, r0
@@ -5372,71 +5366,71 @@ FlashSelectionOnWheel:
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	cmp	r0, #0x2
-	beq	.L542	@cond_branch
+	beq	.L543	@cond_branch
 	cmp	r0, #0x2
-	bgt	.L547	@cond_branch
+	bgt	.L548	@cond_branch
 	cmp	r0, #0x1
-	beq	.L541	@cond_branch
-	ldr	r4, .L565+0x8
+	beq	.L542	@cond_branch
+	ldr	r4, .L566+0x8
 	mov	ip, r4
-	b	.L540
-.L566:
+	b	.L541
+.L567:
 	.align	2, 0
-.L565:
+.L566:
 	.word	sFlashData_PokeIcons
 	.word	-0x10000
 	.word	sRoulette
-.L547:
+.L548:
 	cmp	r0, #0x3
-	beq	.L543	@cond_branch
-	cmp	r0, #0x4
 	beq	.L544	@cond_branch
-	ldr	r5, .L567
+	cmp	r0, #0x4
+	beq	.L545	@cond_branch
+	ldr	r5, .L568
 	mov	ip, r5
-	b	.L540
-.L568:
-	.align	2, 0
-.L567:
-	.word	sRoulette
-.L541:
-	ldr	r3, .L569
-	ldr	r2, .L569+0x4
-	ldr	r0, [r2]
-	add	r0, r0, #0x43
-	b	.L562
-.L570:
-	.align	2, 0
+	b	.L541
 .L569:
-	.word	gSprites
+	.align	2, 0
+.L568:
 	.word	sRoulette
 .L542:
-	ldr	r3, .L571
-	ldr	r2, .L571+0x4
+	ldr	r3, .L570
+	ldr	r2, .L570+0x4
 	ldr	r0, [r2]
-	add	r0, r0, #0x44
-	b	.L562
-.L572:
-	.align	2, 0
+	add	r0, r0, #0x43
+	b	.L563
 .L571:
+	.align	2, 0
+.L570:
 	.word	gSprites
 	.word	sRoulette
 .L543:
-	ldr	r3, .L573
-	ldr	r2, .L573+0x4
+	ldr	r3, .L572
+	ldr	r2, .L572+0x4
 	ldr	r0, [r2]
-	add	r0, r0, #0x45
-	b	.L562
-.L574:
-	.align	2, 0
+	add	r0, r0, #0x44
+	b	.L563
 .L573:
+	.align	2, 0
+.L572:
 	.word	gSprites
 	.word	sRoulette
 .L544:
-	ldr	r3, .L575
-	ldr	r2, .L575+0x4
+	ldr	r3, .L574
+	ldr	r2, .L574+0x4
+	ldr	r0, [r2]
+	add	r0, r0, #0x45
+	b	.L563
+.L575:
+	.align	2, 0
+.L574:
+	.word	gSprites
+	.word	sRoulette
+.L545:
+	ldr	r3, .L576
+	ldr	r2, .L576+0x4
 	ldr	r0, [r2]
 	add	r0, r0, #0x46
-.L562:
+.L563:
 	ldrb	r1, [r0]
 	lsl	r0, r1, #0x4
 	add	r0, r0, r1
@@ -5447,13 +5441,13 @@ FlashSelectionOnWheel:
 	lsl	r0, r0, #0x4
 	mov	r8, r0
 	mov	ip, r2
-.L540:
+.L541:
 	mov	r0, r9
 	cmp	r0, #0x1
-	bne	.L548	@cond_branch
+	bne	.L549	@cond_branch
 	mov	r1, ip
 	ldr	r4, [r1]
-	ldr	r1, .L575+0x8
+	ldr	r1, .L576+0x8
 	lsl	r2, r7, #0x2
 	add	r0, r2, r7
 	lsl	r0, r0, #0x2
@@ -5464,7 +5458,7 @@ FlashSelectionOnWheel:
 	and	r1, r1, r0
 	str	r2, [sp, #0x1c]
 	cmp	r1, #0
-	bne	.L527	@cond_branch
+	bne	.L528	@cond_branch
 	add	r0, r7, #0
 	mov	r1, #0x5
 	bl	__udivsi3
@@ -5485,20 +5479,20 @@ FlashSelectionOnWheel:
 	add	r0, r1, #0
 	mov	r1, #0xd
 	bl	RouletteFlash_Add
-	b	.L551
-.L576:
+	b	.L552
+.L577:
 	.align	2, 0
-.L575:
+.L576:
 	.word	gSprites
 	.word	sRoulette
 	.word	sGridSelections
-.L548:
+.L549:
 	mov	r4, #0x0
 	lsl	r5, r7, #0x2
 	str	r5, [sp, #0x1c]
-	ldr	r0, .L577
+	ldr	r0, .L578
 	mov	sl, r0
-.L555:
+.L556:
 	lsl	r0, r4, #0x2
 	add	r0, r0, r4
 	add	r0, r7, r0
@@ -5517,7 +5511,7 @@ FlashSelectionOnWheel:
 	ldr	r0, [r0]
 	and	r1, r1, r0
 	cmp	r1, #0
-	bne	.L554	@cond_branch
+	bne	.L555	@cond_branch
 	add	r0, r3, #0
 	mov	r1, #0x5
 	bl	__udivsi3
@@ -5544,35 +5538,35 @@ FlashSelectionOnWheel:
 	bl	RouletteFlash_Add
 	mov	r0, r9
 	cmp	r0, #0x3
-	bne	.L557	@cond_branch
+	bne	.L558	@cond_branch
 	mov	r1, sl
 	add	r0, r6, r1
 	ldrh	r0, [r0, #0x10]
 	str	r0, [sp, #0x18]
-.L557:
+.L558:
 	mov	r0, r9
 	sub	r0, r0, #0x1
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	mov	r9, r0
-	ldr	r2, .L577+0x4
+	ldr	r2, .L578+0x4
 	mov	ip, r2
-.L554:
+.L555:
 	add	r0, r4, #0x1
 	lsl	r0, r0, #0x18
 	lsr	r4, r0, #0x18
 	cmp	r4, #0x2
-	bls	.L555	@cond_branch
+	bls	.L556	@cond_branch
 	mov	r3, r9
 	cmp	r3, #0x2
-	beq	.L551	@cond_branch
+	beq	.L552	@cond_branch
 	mov	r4, #0x0
 	str	r4, [sp, #0x18]
-.L551:
-	ldr	r0, .L577+0x4
+.L552:
+	ldr	r0, .L578+0x4
 	ldr	r0, [r0]
 	add	r0, r0, #0xb8
-	ldr	r2, .L577
+	ldr	r2, .L578
 	ldr	r5, [sp, #0x1c]
 	add	r1, r5, r7
 	lsl	r1, r1, #0x2
@@ -5583,7 +5577,7 @@ FlashSelectionOnWheel:
 	str	r2, [sp, #0x18]
 	add	r1, r2, #0
 	bl	RouletteFlash_Enable
-.L527:
+.L528:
 	add	sp, sp, #0x20
 	pop	{r3, r4, r5}
 	mov	r8, r3
@@ -5592,9 +5586,9 @@ FlashSelectionOnWheel:
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L578:
+.L579:
 	.align	2, 0
-.L577:
+.L578:
 	.word	sGridSelections
 	.word	sRoulette
 .Lfe43:
@@ -5611,7 +5605,7 @@ DrawGridBackground:
 	add	sp, sp, #-0x2c
 	lsl	r0, r0, #0x18
 	lsr	r5, r0, #0x18
-	ldr	r4, .L611
+	ldr	r4, .L612
 	ldr	r1, [r4]
 	mov	r0, #0x1
 	strh	r0, [r1, #0x2a]
@@ -5619,9 +5613,9 @@ DrawGridBackground:
 	mov	r1, #0x0
 	bl	ShowHideGridIcons
 	ldr	r1, [r4]
-	ldr	r2, .L611+0x4
+	ldr	r2, .L612+0x4
 	add	r0, r1, r2
-	ldr	r2, .L611+0x8
+	ldr	r2, .L612+0x8
 	add	r1, r1, r2
 	ldr	r1, [r1]
 	mov	r2, #0x10
@@ -5632,39 +5626,39 @@ DrawGridBackground:
 	mov	r3, #0x7
 	bl	SetTilemapRect
 	cmp	r5, #0xf
-	bhi	.L599	@cond_branch
+	bhi	.L600	@cond_branch
 	lsl	r0, r5, #0x2
-	ldr	r1, .L611+0xc
+	ldr	r1, .L612+0xc
 	add	r0, r0, r1
 	ldr	r0, [r0]
 	mov	pc, r0
-.L612:
+.L613:
 	.align	2, 0
-.L611:
+.L612:
 	.word	sRoulette
 	.word	0x117c
 	.word	0x397c
+	.word	.L601
+	.align	2, 0
+	.align	2, 0
+.L601:
+	.word	.L580
+	.word	.L586
+	.word	.L586
+	.word	.L586
+	.word	.L586
+	.word	.L594
 	.word	.L600
-	.align	2, 0
-	.align	2, 0
-.L600:
-	.word	.L579
-	.word	.L585
-	.word	.L585
-	.word	.L585
-	.word	.L585
-	.word	.L593
-	.word	.L599
-	.word	.L599
-	.word	.L599
-	.word	.L599
-	.word	.L593
-	.word	.L599
-	.word	.L599
-	.word	.L599
-	.word	.L599
-	.word	.L593
-.L585:
+	.word	.L600
+	.word	.L600
+	.word	.L600
+	.word	.L594
+	.word	.L600
+	.word	.L600
+	.word	.L600
+	.word	.L600
+	.word	.L594
+.L586:
 	mov	r0, #0x4
 	str	r0, [sp, #0x18]
 	add	r1, sp, #0x8
@@ -5673,10 +5667,10 @@ DrawGridBackground:
 	add	r0, r1, #0
 	ldrb	r0, [r0]
 	cmp	r0, #0x3
-	bhi	.L580	@cond_branch
+	bhi	.L581	@cond_branch
 	add	r4, sp, #0x10
 	add	r3, r1, #0
-.L589:
+.L590:
 	ldrb	r2, [r3]
 	add	r2, r2, r4
 	ldrb	r1, [r3]
@@ -5690,9 +5684,9 @@ DrawGridBackground:
 	ldrb	r0, [r3]
 	ldr	r1, [sp, #0x18]
 	cmp	r0, r1
-	bcc	.L589	@cond_branch
-	b	.L580
-.L593:
+	bcc	.L590	@cond_branch
+	b	.L581
+.L594:
 	mov	r2, #0x5
 	str	r2, [sp, #0x18]
 	add	r1, sp, #0x8
@@ -5701,10 +5695,10 @@ DrawGridBackground:
 	add	r0, r1, #0
 	ldrb	r0, [r0]
 	cmp	r0, #0x4
-	bhi	.L580	@cond_branch
+	bhi	.L581	@cond_branch
 	add	r3, sp, #0x10
 	add	r2, r1, #0
-.L597:
+.L598:
 	ldrb	r1, [r2]
 	add	r1, r1, r3
 	ldrb	r0, [r2]
@@ -5716,14 +5710,14 @@ DrawGridBackground:
 	ldrb	r0, [r2]
 	ldr	r1, [sp, #0x18]
 	cmp	r0, r1
-	bcc	.L597	@cond_branch
-	b	.L580
-.L599:
+	bcc	.L598	@cond_branch
+	b	.L581
+.L600:
 	mov	r2, #0x1
 	str	r2, [sp, #0x18]
 	add	r0, sp, #0x10
 	strb	r5, [r0]
-.L580:
+.L581:
 	add	r1, sp, #0x8
 	mov	r0, #0x0
 	strb	r0, [r1]
@@ -5731,9 +5725,9 @@ DrawGridBackground:
 	ldrb	r0, [r0]
 	ldr	r1, [sp, #0x18]
 	cmp	r0, r1
-	bcc	.LCB5825
-	b	.L579	@long jump
-.LCB5825:
+	bcc	.LCB5828
+	b	.L580	@long jump
+.LCB5828:
 	mov	r2, sp
 	add	r2, r2, #0xe
 	str	r2, [sp, #0x1c]
@@ -5743,7 +5737,7 @@ DrawGridBackground:
 	mov	r9, r1
 	sub	r2, r2, #0x4
 	str	r2, [sp, #0x20]
-.L604:
+.L605:
 	mov	r1, r9
 	ldrb	r0, [r1]
 	add	r0, r0, sl
@@ -5751,7 +5745,7 @@ DrawGridBackground:
 	lsl	r0, r1, #0x2
 	add	r0, r0, r1
 	lsl	r0, r0, #0x2
-	ldr	r2, .L613
+	ldr	r2, .L614
 	add	r0, r0, r2
 	ldrb	r0, [r0, #0x6]
 	ldr	r1, [sp, #0x1c]
@@ -5763,7 +5757,7 @@ DrawGridBackground:
 	lsl	r0, r1, #0x2
 	add	r0, r0, r1
 	lsl	r0, r0, #0x2
-	ldr	r1, .L613
+	ldr	r1, .L614
 	add	r0, r0, r1
 	ldrb	r0, [r0, #0x3]
 	ldr	r2, [sp, #0x20]
@@ -5774,14 +5768,14 @@ DrawGridBackground:
 	strb	r0, [r7]
 	ldrb	r0, [r7]
 	cmp	r0, #0x2
-	bhi	.L603	@cond_branch
+	bhi	.L604	@cond_branch
 	add	r6, sp, #0xc
 	mov	r8, r2
 	ldr	r0, [sp, #0x1c]
 	mov	ip, r0
-	ldr	r1, .L613+0x4
+	ldr	r1, .L614+0x4
 	str	r1, [sp, #0x28]
-.L608:
+.L609:
 	mov	r2, r9
 	ldrb	r0, [r2]
 	add	r0, r0, sl
@@ -5789,7 +5783,7 @@ DrawGridBackground:
 	lsl	r1, r0, #0x2
 	add	r1, r1, r0
 	lsl	r1, r1, #0x2
-	ldr	r0, .L613
+	ldr	r0, .L614
 	add	r1, r1, r0
 	str	r7, [sp, #0x24]
 	ldrb	r0, [r7]
@@ -5804,14 +5798,14 @@ DrawGridBackground:
 	ldrh	r2, [r6]
 	add	r2, r2, r0
 	lsl	r2, r2, #0x1
-	ldr	r0, .L613+0x8
+	ldr	r0, .L614+0x8
 	add	r5, r4, r0
 	add	r2, r5, r2
 	mov	r1, ip
 	ldrb	r0, [r1]
 	ldrb	r1, [r7]
 	add	r1, r1, r0
-	ldr	r0, .L613+0xc
+	ldr	r0, .L614+0xc
 	add	r4, r4, r0
 	ldr	r3, [r4]
 	lsl	r0, r1, #0x1
@@ -5871,8 +5865,8 @@ DrawGridBackground:
 	ldr	r1, [sp, #0x24]
 	ldrb	r0, [r1]
 	cmp	r0, #0x2
-	bls	.L608	@cond_branch
-.L603:
+	bls	.L609	@cond_branch
+.L604:
 	mov	r2, r9
 	ldrb	r0, [r2]
 	add	r0, r0, #0x1
@@ -5880,10 +5874,10 @@ DrawGridBackground:
 	ldrb	r0, [r2]
 	ldr	r1, [sp, #0x18]
 	cmp	r0, r1
-	bcs	.LCB6033
-	b	.L604	@long jump
-.LCB6033:
-.L579:
+	bcs	.LCB6036
+	b	.L605	@long jump
+.LCB6036:
+.L580:
 	add	sp, sp, #0x2c
 	pop	{r3, r4, r5}
 	mov	r8, r3
@@ -5892,9 +5886,9 @@ DrawGridBackground:
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L614:
+.L615:
 	.align	2, 0
-.L613:
+.L614:
 	.word	sGridSelections
 	.word	sRoulette
 	.word	0x117c
@@ -5917,15 +5911,15 @@ GetMultiplier:
 	add	sp, sp, #-0x8
 	lsl	r0, r0, #0x18
 	lsr	r4, r0, #0x18
-	ldr	r1, .L629
+	ldr	r1, .L630
 	mov	r0, sp
 	mov	r2, #0x5
 	bl	memcpy
 	cmp	r4, #0x13
-	bls	.L616	@cond_branch
+	bls	.L617	@cond_branch
 	mov	r4, #0x0
-.L616:
-	ldr	r3, .L629+0x4
+.L617:
+	ldr	r3, .L630+0x4
 	lsl	r0, r4, #0x2
 	add	r0, r0, r4
 	lsl	r2, r0, #0x2
@@ -5934,65 +5928,65 @@ GetMultiplier:
 	lsl	r0, r0, #0x1c
 	lsr	r0, r0, #0x1c
 	cmp	r0, #0x4
-	beq	.L620	@cond_branch
+	beq	.L621	@cond_branch
 	cmp	r0, #0x4
-	bgt	.L626	@cond_branch
+	bgt	.L627	@cond_branch
 	cmp	r0, #0x3
-	beq	.L618	@cond_branch
-	b	.L617
-.L630:
+	beq	.L619	@cond_branch
+	b	.L618
+.L631:
 	.align	2, 0
-.L629:
+.L630:
 	.word	.LC203
 	.word	sGridSelections
-.L626:
+.L627:
 	cmp	r0, #0xc
-	beq	.L622	@cond_branch
-	b	.L617
-.L618:
+	beq	.L623	@cond_branch
+	b	.L618
+.L619:
 	add	r0, r4, #0
 	mov	r1, #0x5
 	bl	__udivsi3
 	sub	r0, r0, #0x1
 	lsl	r0, r0, #0x18
 	lsr	r4, r0, #0x18
-	ldr	r0, .L631
+	ldr	r0, .L632
 	ldr	r0, [r0]
 	add	r0, r0, #0x16
 	add	r1, r0, r4
 	ldrb	r0, [r1]
 	cmp	r0, #0x3
-	bhi	.L617	@cond_branch
+	bhi	.L618	@cond_branch
 	ldrb	r0, [r1]
 	add	r0, r0, #0x1
-	b	.L628
-.L632:
+	b	.L629
+.L633:
 	.align	2, 0
-.L631:
+.L632:
 	.word	sRoulette
-.L620:
+.L621:
 	sub	r0, r4, #0x1
 	lsl	r0, r0, #0x18
 	lsr	r4, r0, #0x18
-	ldr	r0, .L633
+	ldr	r0, .L634
 	ldr	r0, [r0]
 	add	r0, r0, #0x12
 	add	r1, r0, r4
 	ldrb	r0, [r1]
 	cmp	r0, #0x2
-	bhi	.L617	@cond_branch
+	bhi	.L618	@cond_branch
 	ldrb	r0, [r1]
 	add	r0, r0, #0x2
-.L628:
+.L629:
 	add	r0, r0, sp
 	ldrb	r0, [r0]
-	b	.L627
-.L634:
+	b	.L628
+.L635:
 	.align	2, 0
-.L633:
+.L634:
 	.word	sRoulette
-.L622:
-	ldr	r0, .L635
+.L623:
+	ldr	r0, .L636
 	ldr	r1, [r0]
 	add	r0, r3, #0
 	add	r0, r0, #0x8
@@ -6001,17 +5995,17 @@ GetMultiplier:
 	ldr	r0, [r0]
 	and	r1, r1, r0
 	cmp	r1, #0
-	bne	.L617	@cond_branch
+	bne	.L618	@cond_branch
 	mov	r0, sp
 	ldrb	r0, [r0, #0x4]
-	b	.L627
-.L636:
+	b	.L628
+.L637:
 	.align	2, 0
-.L635:
+.L636:
 	.word	sRoulette
-.L617:
+.L618:
 	mov	r0, #0x0
-.L627:
+.L628:
 	add	sp, sp, #0x8
 	pop	{r4}
 	pop	{r1}
@@ -6023,7 +6017,7 @@ GetMultiplier:
 	.thumb_func
 UpdateWheelPosition:
 	push	{r4, r5, r6, lr}
-	ldr	r4, .L638
+	ldr	r4, .L639
 	ldr	r0, [r4]
 	ldrh	r1, [r0, #0x2c]
 	mov	r0, #0x20
@@ -6043,7 +6037,7 @@ UpdateWheelPosition:
 	ldr	r3, [r4]
 	mov	r0, #0x2e
 	ldrsh	r1, [r3, r0]
-	ldr	r0, .L638+0x4
+	ldr	r0, .L639+0x4
 	mov	r4, #0x0
 	ldrsh	r2, [r0, r4]
 	add	r2, r2, #0x50
@@ -6054,7 +6048,7 @@ UpdateWheelPosition:
 	sub	r4, r4, r0
 	mov	r6, #0x2c
 	ldrsh	r5, [r3, r6]
-	ldr	r0, .L638+0x8
+	ldr	r0, .L639+0x8
 	mov	r6, #0x0
 	ldrsh	r1, [r0, r6]
 	add	r1, r1, #0x74
@@ -6075,7 +6069,7 @@ UpdateWheelPosition:
 	lsr	r1, r1, #0x10
 	mov	r0, #0x28
 	bl	SetGpuReg
-	ldr	r6, .L638+0xc
+	ldr	r6, .L639+0xc
 	and	r4, r4, r6
 	lsr	r4, r4, #0x10
 	mov	r0, #0x2a
@@ -6093,9 +6087,9 @@ UpdateWheelPosition:
 	pop	{r4, r5, r6}
 	pop	{r0}
 	bx	r0
-.L639:
+.L640:
 	.align	2, 0
-.L638:
+.L639:
 	.word	sRoulette
 	.word	gSpriteCoordOffsetY
 	.word	gSpriteCoordOffsetX
@@ -8569,15 +8563,15 @@ Task_ShowMinBetYesNo:
 	lsl	r4, r4, #0x18
 	lsr	r4, r4, #0x18
 	bl	DisplayYesNoMenuDefaultYes
-	ldr	r1, .L641
+	ldr	r1, .L642
 	add	r0, r4, #0
 	bl	DoYesNoFuncWithChoice
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L642:
+.L643:
 	.align	2, 0
-.L641:
+.L642:
 	.word	sYesNoTable_AcceptMinBet
 .Lfe47:
 	.size	 Task_ShowMinBetYesNo,.Lfe47-Task_ShowMinBetYesNo
@@ -8588,25 +8582,25 @@ Task_FadeToRouletteGame:
 	push	{r4, lr}
 	lsl	r0, r0, #0x18
 	lsr	r4, r0, #0x18
-	ldr	r0, .L645
+	ldr	r0, .L646
 	ldrb	r1, [r0, #0x7]
 	mov	r0, #0x80
 	and	r0, r0, r1
 	cmp	r0, #0
-	bne	.L644	@cond_branch
+	bne	.L645	@cond_branch
 	mov	r0, #0x0
 	bl	SetVBlankCallback
-	ldr	r0, .L645+0x4
+	ldr	r0, .L646+0x4
 	bl	SetMainCallback2
 	add	r0, r4, #0
 	bl	DestroyTask
-.L644:
+.L645:
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L646:
+.L647:
 	.align	2, 0
-.L645:
+.L646:
 	.word	gPaletteFade
 	.word	CB2_LoadRoulette
 .Lfe48:
@@ -8632,7 +8626,7 @@ Task_AcceptMinBet:
 	mov	r2, #0x0
 	mov	r3, #0x10
 	bl	BeginNormalPaletteFade
-	ldr	r2, .L648
+	ldr	r2, .L649
 	ldrb	r1, [r2, #0x8]
 	lsl	r1, r1, #0x1a
 	lsr	r1, r1, #0x1a
@@ -8643,20 +8637,20 @@ Task_AcceptMinBet:
 	orr	r0, r0, r1
 	strb	r0, [r2, #0x4]
 	bl	UpdatePaletteFade
-	ldr	r1, .L648+0x4
+	ldr	r1, .L649+0x4
 	lsl	r0, r4, #0x2
 	add	r0, r0, r4
 	lsl	r0, r0, #0x3
 	add	r0, r0, r1
-	ldr	r1, .L648+0x8
+	ldr	r1, .L649+0x8
 	str	r1, [r0]
 	add	sp, sp, #0x4
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L649:
+.L650:
 	.align	2, 0
-.L648:
+.L649:
 	.word	gPaletteFade
 	.word	gTasks
 	.word	Task_FadeToRouletteGame
@@ -8689,7 +8683,7 @@ Task_NotEnoughForMinBet:
 	push	{r4, lr}
 	lsl	r0, r0, #0x18
 	lsr	r4, r0, #0x18
-	ldr	r1, .L653
+	ldr	r1, .L654
 	lsl	r0, r4, #0x2
 	add	r0, r0, r4
 	lsl	r0, r0, #0x3
@@ -8697,13 +8691,13 @@ Task_NotEnoughForMinBet:
 	ldrh	r1, [r0, #0x8]
 	add	r1, r1, #0x1
 	strh	r1, [r0, #0x8]
-	ldr	r0, .L653+0x4
+	ldr	r0, .L654+0x4
 	ldrh	r1, [r0, #0x2e]
 	mov	r0, #0x3
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L652	@cond_branch
-	ldr	r1, .L653+0x8
+	beq	.L653	@cond_branch
+	ldr	r1, .L654+0x8
 	mov	r0, #0x1
 	strh	r0, [r1]
 	bl	HideCoinsWindow
@@ -8713,13 +8707,13 @@ Task_NotEnoughForMinBet:
 	bl	ScriptContext2_Disable
 	add	r0, r4, #0
 	bl	DestroyTask
-.L652:
+.L653:
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L654:
+.L655:
 	.align	2, 0
-.L653:
+.L654:
 	.word	gTasks
 	.word	gMain
 	.word	gSpecialVar_0x8004
@@ -8733,14 +8727,14 @@ Task_PrintMinBet:
 	add	sp, sp, #-0xc
 	lsl	r0, r0, #0x18
 	lsr	r6, r0, #0x18
-	ldr	r0, .L657
+	ldr	r0, .L658
 	ldrh	r1, [r0, #0x2e]
 	mov	r0, #0x3
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L656	@cond_branch
-	ldr	r2, .L657+0x4
-	ldr	r0, .L657+0x8
+	beq	.L657	@cond_branch
+	ldr	r2, .L658+0x4
+	ldr	r0, .L658+0x8
 	ldrh	r1, [r0]
 	mov	r5, #0x1
 	add	r0, r5, #0
@@ -8750,12 +8744,12 @@ Task_PrintMinBet:
 	add	r0, r0, r1
 	add	r0, r0, r2
 	ldrb	r1, [r0]
-	ldr	r0, .L657+0xc
+	ldr	r0, .L658+0xc
 	mov	r2, #0x2
 	mov	r3, #0x1
 	bl	ConvertIntToDecimalStringN
-	ldr	r4, .L657+0x10
-	ldr	r1, .L657+0x14
+	ldr	r4, .L658+0x10
+	ldr	r1, .L658+0x14
 	add	r0, r4, #0
 	bl	StringExpandPlaceholders
 	mov	r0, #0x0
@@ -8773,21 +8767,21 @@ Task_PrintMinBet:
 	mov	r0, #0x0
 	mov	r1, #0x3
 	bl	CopyWindowToVram
-	ldr	r1, .L657+0x18
+	ldr	r1, .L658+0x18
 	lsl	r0, r6, #0x2
 	add	r0, r0, r6
 	lsl	r0, r0, #0x3
 	add	r0, r0, r1
-	ldr	r1, .L657+0x1c
+	ldr	r1, .L658+0x1c
 	str	r1, [r0]
-.L656:
+.L657:
 	add	sp, sp, #0xc
 	pop	{r4, r5, r6}
 	pop	{r0}
 	bx	r0
-.L658:
+.L659:
 	.align	2, 0
-.L657:
+.L658:
 	.word	gMain
 	.word	sTableMinBets
 	.word	gSpecialVar_0x8004
@@ -8808,7 +8802,7 @@ Task_PrintRouletteEntryMsg:
 	add	sp, sp, #-0xc
 	lsl	r0, r0, #0x18
 	lsr	r5, r0, #0x18
-	ldr	r1, .L664
+	ldr	r1, .L665
 	lsl	r0, r5, #0x2
 	add	r0, r0, r5
 	lsl	r0, r0, #0x3
@@ -8816,8 +8810,8 @@ Task_PrintRouletteEntryMsg:
 	mov	r1, #0x22
 	ldrsh	r0, [r6, r1]
 	bl	PrintCoinsString
-	ldr	r2, .L664+0x4
-	ldr	r0, .L664+0x8
+	ldr	r2, .L665+0x4
+	ldr	r0, .L665+0x8
 	mov	r8, r0
 	ldrh	r1, [r0]
 	mov	r7, #0x1
@@ -8828,7 +8822,7 @@ Task_PrintRouletteEntryMsg:
 	add	r0, r0, r1
 	add	r0, r0, r2
 	ldrb	r4, [r0]
-	ldr	r0, .L664+0xc
+	ldr	r0, .L665+0xc
 	add	r1, r4, #0
 	mov	r2, #0x2
 	mov	r3, #0x1
@@ -8836,21 +8830,21 @@ Task_PrintRouletteEntryMsg:
 	mov	r1, #0x22
 	ldrsh	r0, [r6, r1]
 	cmp	r0, r4
-	blt	.L660	@cond_branch
+	blt	.L661	@cond_branch
 	mov	r0, r8
 	ldrh	r1, [r0]
 	mov	r0, #0x80
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L661	@cond_branch
+	beq	.L662	@cond_branch
 	add	r0, r7, #0
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L661	@cond_branch
+	beq	.L662	@cond_branch
 	mov	r0, #0x0
 	mov	r1, #0x0
 	bl	DrawStdWindowFrame
-	ldr	r2, .L664+0x10
+	ldr	r2, .L665+0x10
 	str	r7, [sp]
 	mov	r0, #0xff
 	str	r0, [sp, #0x4]
@@ -8862,21 +8856,21 @@ Task_PrintRouletteEntryMsg:
 	mov	r0, #0x0
 	mov	r1, #0x3
 	bl	CopyWindowToVram
-	ldr	r0, .L664+0x14
+	ldr	r0, .L665+0x14
 	str	r0, [r6]
-	b	.L663
-.L665:
+	b	.L664
+.L666:
 	.align	2, 0
-.L664:
+.L665:
 	.word	gTasks
 	.word	sTableMinBets
 	.word	gSpecialVar_0x8004
 	.word	gStringVar1
 	.word	Roulette_Text_SpecialRateTable
 	.word	Task_PrintMinBet
-.L661:
-	ldr	r4, .L666
-	ldr	r1, .L666+0x4
+.L662:
+	ldr	r4, .L667
+	ldr	r1, .L667+0x4
 	add	r0, r4, #0
 	bl	StringExpandPlaceholders
 	mov	r0, #0x0
@@ -8895,24 +8889,24 @@ Task_PrintRouletteEntryMsg:
 	mov	r0, #0x0
 	mov	r1, #0x3
 	bl	CopyWindowToVram
-	ldr	r1, .L666+0x8
+	ldr	r1, .L667+0x8
 	lsl	r0, r5, #0x2
 	add	r0, r0, r5
 	lsl	r0, r0, #0x3
 	add	r0, r0, r1
-	ldr	r1, .L666+0xc
+	ldr	r1, .L667+0xc
 	str	r1, [r0]
-	b	.L663
-.L667:
+	b	.L664
+.L668:
 	.align	2, 0
-.L666:
+.L667:
 	.word	gStringVar4
 	.word	Roulette_Text_PlayMinimumWagerIsX
 	.word	gTasks
 	.word	Task_ShowMinBetYesNo
-.L660:
-	ldr	r5, .L668
-	ldr	r1, .L668+0x4
+.L661:
+	ldr	r5, .L669
+	ldr	r1, .L669+0x4
 	add	r0, r5, #0
 	bl	StringExpandPlaceholders
 	mov	r0, #0x0
@@ -8931,20 +8925,20 @@ Task_PrintRouletteEntryMsg:
 	mov	r0, #0x0
 	mov	r1, #0x3
 	bl	CopyWindowToVram
-	ldr	r0, .L668+0x8
+	ldr	r0, .L669+0x8
 	str	r0, [r6]
 	strh	r4, [r6, #0x22]
 	strh	r4, [r6, #0x8]
-.L663:
+.L664:
 	add	sp, sp, #0xc
 	pop	{r3}
 	mov	r8, r3
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L669:
+.L670:
 	.align	2, 0
-.L668:
+.L669:
 	.word	gStringVar4
 	.word	Roulette_Text_NotEnoughCoins
 	.word	Task_NotEnoughForMinBet
@@ -8963,14 +8957,14 @@ PlayRoulette:
 	mov	r1, #0x1
 	mov	r2, #0x1
 	bl	ShowCoinsWindow
-	ldr	r0, .L671
+	ldr	r0, .L672
 	mov	r1, #0x0
 	bl	CreateTask
 	add	r4, r0, #0
 	lsl	r4, r4, #0x18
 	lsr	r4, r4, #0x18
 	bl	GetCoins
-	ldr	r2, .L671+0x4
+	ldr	r2, .L672+0x4
 	lsl	r1, r4, #0x2
 	add	r1, r1, r4
 	lsl	r1, r1, #0x3
@@ -8979,9 +8973,9 @@ PlayRoulette:
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L672:
+.L673:
 	.align	2, 0
-.L671:
+.L672:
 	.word	Task_PrintRouletteEntryMsg
 	.word	gTasks
 .Lfe54:
@@ -8993,25 +8987,25 @@ LoadOrFreeMiscSpritePalettesAndSheets:
 	push	{lr}
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	bne	.L674	@cond_branch
+	bne	.L675	@cond_branch
 	bl	FreeAllSpritePalettes
-	ldr	r0, .L676
+	ldr	r0, .L677
 	bl	LoadSpritePalettes
-	ldr	r0, .L676+0x4
+	ldr	r0, .L677+0x4
 	bl	LoadCompressedSpriteSheet
-	ldr	r0, .L676+0x8
+	ldr	r0, .L677+0x8
 	bl	LoadCompressedSpriteSheet
-	ldr	r0, .L676+0xc
+	ldr	r0, .L677+0xc
 	bl	LoadCompressedSpriteSheet
-	b	.L675
-.L677:
+	b	.L676
+.L678:
 	.align	2, 0
-.L676:
+.L677:
 	.word	sSpritePalettes
 	.word	sSpriteSheet_Ball
 	.word	sSpriteSheet_ShroomishTaillow
 	.word	sSpriteSheet_Shadow
-.L674:
+.L675:
 	mov	r0, #0xe
 	bl	FreeSpriteTilesByTag
 	mov	r0, #0xd
@@ -9019,7 +9013,7 @@ LoadOrFreeMiscSpritePalettesAndSheets:
 	mov	r0, #0xc
 	bl	FreeSpriteTilesByTag
 	bl	FreeAllSpritePalettes
-.L675:
+.L676:
 	pop	{r0}
 	bx	r0
 .Lfe55:
@@ -9041,7 +9035,7 @@ CreateWheelIconSprite:
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	add	r5, r0, #0
-	ldr	r0, .L680
+	ldr	r0, .L681
 	lsl	r1, r5, #0x4
 	add	r1, r1, r5
 	lsl	r1, r1, #0x2
@@ -9067,20 +9061,20 @@ CreateWheelIconSprite:
 	add	r0, r0, #0x1e
 	strh	r0, [r6]
 	lsl	r0, r0, #0x10
-	ldr	r1, .L680+0x4
+	ldr	r1, .L681+0x4
 	cmp	r0, r1
-	bls	.L679	@cond_branch
-	ldr	r1, .L680+0x8
+	bls	.L680	@cond_branch
+	ldr	r1, .L681+0x8
 	add	r0, r2, r1
 	strh	r0, [r6]
-.L679:
+.L680:
 	add	r0, r5, #0
 	pop	{r4, r5, r6}
 	pop	{r1}
 	bx	r1
-.L681:
+.L682:
 	.align	2, 0
-.L680:
+.L681:
 	.word	gSprites
 	.word	0x1670000
 	.word	-0x14a
@@ -9094,9 +9088,9 @@ CreateGridSprites:
 	mov	r7, r8
 	push	{r7}
 	add	sp, sp, #-0x8
-	ldr	r4, .L704
+	ldr	r4, .L705
 	ldr	r0, [r4]
-	ldr	r5, .L704+0x4
+	ldr	r5, .L705+0x4
 	add	r1, r5, #0
 	bl	LZ77UnCompWram
 	str	r5, [sp]
@@ -9108,7 +9102,7 @@ CreateGridSprites:
 	str	r0, [sp, #0x4]
 	mov	r0, sp
 	bl	LoadSpriteSheet
-	ldr	r4, .L704+0x8
+	ldr	r4, .L705+0x8
 	ldr	r0, [r4]
 	add	r1, r5, #0
 	bl	LZ77UnCompWram
@@ -9120,27 +9114,27 @@ CreateGridSprites:
 	mov	r0, sp
 	bl	LoadSpriteSheet
 	mov	r6, #0x0
-	ldr	r0, .L704+0xc
+	ldr	r0, .L705+0xc
 	mov	r8, r0
-.L686:
+.L687:
 	lsl	r0, r6, #0x1
 	add	r0, r0, r6
 	lsl	r0, r0, #0x1b
 	lsr	r4, r0, #0x18
 	mov	r5, #0x0
 	lsl	r7, r6, #0x2
-.L690:
+.L691:
 	lsl	r1, r5, #0x1
 	add	r1, r1, r5
 	lsl	r1, r1, #0x3
-	ldr	r0, .L704+0x10
+	ldr	r0, .L705+0x10
 	add	r0, r1, r0
 	add	r1, r1, #0x94
 	add	r2, r4, #0
 	add	r2, r2, #0x5c
 	mov	r3, #0x1e
 	bl	CreateSprite
-	ldr	r1, .L704+0x14
+	ldr	r1, .L705+0x14
 	ldr	r1, [r1]
 	add	r2, r5, #0
 	add	r2, r2, #0x1d
@@ -9164,26 +9158,26 @@ CreateGridSprites:
 	lsl	r0, r0, #0x18
 	lsr	r4, r0, #0x18
 	cmp	r4, #0x47
-	bls	.L689	@cond_branch
+	bls	.L690	@cond_branch
 	mov	r4, #0x0
-.L689:
+.L690:
 	add	r0, r5, #0x1
 	lsl	r0, r0, #0x18
 	lsr	r5, r0, #0x18
 	cmp	r5, #0x3
-	bls	.L690	@cond_branch
+	bls	.L691	@cond_branch
 	add	r0, r6, #0x1
 	lsl	r0, r0, #0x18
 	lsr	r6, r0, #0x18
 	cmp	r6, #0x2
-	bls	.L686	@cond_branch
+	bls	.L687	@cond_branch
 	mov	r6, #0x0
-	ldr	r4, .L704+0xc
-.L697:
+	ldr	r4, .L705+0xc
+.L698:
 	lsl	r1, r6, #0x1
 	add	r1, r1, r6
 	lsl	r1, r1, #0x3
-	ldr	r0, .L704+0x18
+	ldr	r0, .L705+0x18
 	add	r0, r1, r0
 	add	r1, r1, #0x94
 	lsl	r1, r1, #0x10
@@ -9191,7 +9185,7 @@ CreateGridSprites:
 	mov	r2, #0x46
 	mov	r3, #0x1e
 	bl	CreateSprite
-	ldr	r1, .L704+0x14
+	ldr	r1, .L705+0x14
 	ldr	r1, [r1]
 	add	r1, r1, r6
 	add	r1, r1, #0x65
@@ -9211,14 +9205,14 @@ CreateGridSprites:
 	lsl	r0, r0, #0x18
 	lsr	r6, r0, #0x18
 	cmp	r6, #0x3
-	bls	.L697	@cond_branch
+	bls	.L698	@cond_branch
 	mov	r6, #0x0
-	ldr	r4, .L704+0xc
-.L702:
+	ldr	r4, .L705+0xc
+.L703:
 	lsl	r2, r6, #0x1
 	add	r2, r2, r6
 	lsl	r2, r2, #0x3
-	ldr	r0, .L704+0x1c
+	ldr	r0, .L705+0x1c
 	add	r0, r2, r0
 	add	r2, r2, #0x5c
 	lsl	r2, r2, #0x10
@@ -9226,7 +9220,7 @@ CreateGridSprites:
 	mov	r1, #0x7e
 	mov	r3, #0x1e
 	bl	CreateSprite
-	ldr	r1, .L704+0x14
+	ldr	r1, .L705+0x14
 	ldr	r1, [r1]
 	add	r1, r1, r6
 	add	r1, r1, #0x69
@@ -9246,16 +9240,16 @@ CreateGridSprites:
 	lsl	r0, r0, #0x18
 	lsr	r6, r0, #0x18
 	cmp	r6, #0x2
-	bls	.L702	@cond_branch
+	bls	.L703	@cond_branch
 	add	sp, sp, #0x8
 	pop	{r3}
 	mov	r8, r3
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L705:
+.L706:
 	.align	2, 0
-.L704:
+.L705:
 	.word	sSpriteSheet_Headers
 	.word	gDecompressionBuffer
 	.word	sSpriteSheet_GridIcons
@@ -9272,8 +9266,8 @@ CreateGridSprites:
 DestroyGridSprites:
 	push	{r4, lr}
 	mov	r4, #0x0
-.L710:
-	ldr	r0, .L712
+.L711:
+	ldr	r0, .L713
 	ldr	r0, [r0]
 	add	r0, r0, r4
 	add	r0, r0, #0x59
@@ -9281,20 +9275,20 @@ DestroyGridSprites:
 	lsl	r0, r1, #0x4
 	add	r0, r0, r1
 	lsl	r0, r0, #0x2
-	ldr	r1, .L712+0x4
+	ldr	r1, .L713+0x4
 	add	r0, r0, r1
 	bl	DestroySprite
 	add	r0, r4, #0x1
 	lsl	r0, r0, #0x18
 	lsr	r4, r0, #0x18
 	cmp	r4, #0xb
-	bls	.L710	@cond_branch
+	bls	.L711	@cond_branch
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L713:
+.L714:
 	.align	2, 0
-.L712:
+.L713:
 	.word	sRoulette
 	.word	gSprites
 .Lfe58:
@@ -9313,14 +9307,14 @@ ShowHideGridIcons:
 	lsr	r1, r1, #0x18
 	mov	ip, r1
 	cmp	r0, #0
-	beq	.L722	@cond_branch
+	beq	.L723	@cond_branch
 	cmp	r0, #0x1
-	bne	.L715	@cond_branch
+	bne	.L716	@cond_branch
 	mov	r4, #0x0
-	ldr	r5, .L739
-	ldr	r3, .L739+0x4
+	ldr	r5, .L740
+	ldr	r3, .L740+0x4
 	mov	r2, #0x4
-.L720:
+.L721:
 	ldr	r0, [r3]
 	add	r0, r0, r4
 	add	r0, r0, #0x59
@@ -9337,24 +9331,24 @@ ShowHideGridIcons:
 	lsl	r0, r0, #0x18
 	lsr	r4, r0, #0x18
 	cmp	r4, #0x12
-	bls	.L720	@cond_branch
-	b	.L715
-.L740:
+	bls	.L721	@cond_branch
+	b	.L716
+.L741:
 	.align	2, 0
-.L739:
+.L740:
 	.word	gSprites
 	.word	sRoulette
-.L722:
+.L723:
 	mov	r4, #0x0
-	ldr	r0, .L741
+	ldr	r0, .L742
 	mov	r9, r0
-	ldr	r7, .L741+0x4
+	ldr	r7, .L742+0x4
 	add	r1, r7, #0x4
 	mov	r8, r1
-	ldr	r5, .L741+0x8
+	ldr	r5, .L742+0x8
 	mov	r6, #0x5
 	neg	r6, r6
-.L726:
+.L727:
 	mov	r0, r9
 	ldr	r2, [r0]
 	lsl	r3, r4, #0x3
@@ -9364,11 +9358,11 @@ ShowHideGridIcons:
 	ldr	r0, [r0]
 	and	r1, r1, r0
 	cmp	r1, #0
-	beq	.L729	@cond_branch
+	beq	.L730	@cond_branch
 	add	r0, r3, r7
 	ldrb	r0, [r0, #0x2]
 	cmp	r0, ip
-	beq	.L729	@cond_branch
+	beq	.L730	@cond_branch
 	add	r0, r2, r4
 	add	r0, r0, #0x59
 	ldrb	r1, [r0]
@@ -9381,14 +9375,14 @@ ShowHideGridIcons:
 	mov	r2, #0x4
 	orr	r1, r1, r2
 	strb	r1, [r0]
-	b	.L725
-.L742:
+	b	.L726
+.L743:
 	.align	2, 0
-.L741:
+.L742:
 	.word	sRoulette
 	.word	sRouletteSlots
 	.word	gSprites
-.L729:
+.L730:
 	add	r0, r2, r4
 	add	r0, r0, #0x59
 	ldrb	r0, [r0]
@@ -9401,19 +9395,19 @@ ShowHideGridIcons:
 	add	r0, r6, #0
 	and	r0, r0, r2
 	strb	r0, [r1]
-.L725:
+.L726:
 	add	r0, r4, #0x1
 	lsl	r0, r0, #0x18
 	lsr	r4, r0, #0x18
 	cmp	r4, #0xb
-	bls	.L726	@cond_branch
+	bls	.L727	@cond_branch
 	cmp	r4, #0x12
-	bhi	.L715	@cond_branch
-	ldr	r6, .L743
-	ldr	r3, .L743+0x4
+	bhi	.L716	@cond_branch
+	ldr	r6, .L744
+	ldr	r3, .L744+0x4
 	mov	r5, #0x5
 	neg	r5, r5
-.L735:
+.L736:
 	ldr	r0, [r3]
 	add	r0, r0, r4
 	add	r0, r0, #0x59
@@ -9431,17 +9425,17 @@ ShowHideGridIcons:
 	lsl	r0, r0, #0x18
 	lsr	r4, r0, #0x18
 	cmp	r4, #0x12
-	bls	.L735	@cond_branch
-.L715:
+	bls	.L736	@cond_branch
+.L716:
 	pop	{r3, r4}
 	mov	r8, r3
 	mov	r9, r4
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L744:
+.L745:
 	.align	2, 0
-.L743:
+.L744:
 	.word	gSprites
 	.word	sRoulette
 .Lfe59:
@@ -9454,12 +9448,12 @@ CreateGridBallSprites:
 	mov	r7, r8
 	push	{r7}
 	mov	r5, #0x0
-	ldr	r6, .L751
-	ldr	r4, .L751+0x4
+	ldr	r6, .L752
+	ldr	r4, .L752+0x4
 	mov	r0, #0x4
 	mov	r8, r0
-.L749:
-	ldr	r0, .L751+0x8
+.L750:
+	ldr	r0, .L752+0x8
 	mov	r1, #0x74
 	mov	r2, #0x14
 	mov	r3, #0xa
@@ -9500,7 +9494,7 @@ CreateGridBallSprites:
 	add	r1, r4, #0
 	add	r1, r1, #0x1c
 	add	r0, r0, r1
-	ldr	r1, .L751+0xc
+	ldr	r1, .L752+0xc
 	str	r1, [r0]
 	ldrb	r1, [r2]
 	lsl	r0, r1, #0x4
@@ -9529,15 +9523,15 @@ CreateGridBallSprites:
 	lsl	r0, r0, #0x18
 	lsr	r5, r0, #0x18
 	cmp	r5, #0x5
-	bls	.L749	@cond_branch
+	bls	.L750	@cond_branch
 	pop	{r3}
 	mov	r8, r3
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L752:
+.L753:
 	.align	2, 0
-.L751:
+.L752:
 	.word	sRoulette
 	.word	gSprites
 	.word	sSpriteTemplate_Ball
@@ -9559,11 +9553,11 @@ ShowHideGridBalls:
 	mov	r9, r1
 	mov	r6, #0x0
 	cmp	r0, #0
-	beq	.L754	@cond_branch
-	ldr	r4, .L769
-	ldr	r3, .L769+0x4
+	beq	.L755	@cond_branch
+	ldr	r4, .L770
+	ldr	r3, .L770+0x4
 	mov	r2, #0x4
-.L758:
+.L759:
 	ldr	r0, [r3]
 	add	r0, r0, r6
 	add	r0, r0, #0x6d
@@ -9580,23 +9574,23 @@ ShowHideGridBalls:
 	lsl	r0, r0, #0x18
 	lsr	r6, r0, #0x18
 	cmp	r6, #0x5
-	bls	.L758	@cond_branch
-	b	.L760
-.L770:
+	bls	.L759	@cond_branch
+	b	.L761
+.L771:
 	.align	2, 0
-.L769:
+.L770:
 	.word	gSprites
 	.word	sRoulette
-.L754:
-	ldr	r0, .L771
+.L755:
+	ldr	r0, .L772
 	mov	r8, r0
-	ldr	r7, .L771+0x4
-	ldr	r0, .L771+0x8
+	ldr	r7, .L772+0x4
+	ldr	r0, .L772+0x8
 	mov	ip, r0
 	mov	r0, #0x5
 	neg	r0, r0
 	mov	sl, r0
-.L764:
+.L765:
 	mov	r0, r8
 	ldr	r1, [r0]
 	add	r0, r1, #0
@@ -9604,10 +9598,10 @@ ShowHideGridBalls:
 	add	r0, r0, r6
 	ldrb	r0, [r0]
 	cmp	r0, #0
-	beq	.L766	@cond_branch
+	beq	.L767	@cond_branch
 	cmp	r6, r9
-	bne	.L765	@cond_branch
-.L766:
+	bne	.L766	@cond_branch
+.L767:
 	add	r0, r1, r6
 	add	r0, r0, #0x6d
 	ldrb	r1, [r0]
@@ -9620,14 +9614,14 @@ ShowHideGridBalls:
 	mov	r2, #0x4
 	orr	r1, r1, r2
 	strb	r1, [r0]
-	b	.L763
-.L772:
+	b	.L764
+.L773:
 	.align	2, 0
-.L771:
+.L772:
 	.word	sRoulette
 	.word	gSprites
 	.word	sGridSelections
-.L765:
+.L766:
 	add	r5, r6, #0
 	add	r5, r5, #0x31
 	add	r0, r1, #0
@@ -9680,13 +9674,13 @@ ShowHideGridBalls:
 	lsl	r0, r0, #0x3
 	add	r0, r0, #0x3
 	strh	r0, [r2, #0x22]
-.L763:
+.L764:
 	add	r0, r6, #0x1
 	lsl	r0, r0, #0x18
 	lsr	r6, r0, #0x18
 	cmp	r6, #0x5
-	bls	.L764	@cond_branch
-.L760:
+	bls	.L765	@cond_branch
+.L761:
 	pop	{r3, r4, r5}
 	mov	r8, r3
 	mov	r9, r4
@@ -9704,9 +9698,9 @@ ShowHideWinSlotCursor:
 	lsl	r0, r0, #0x18
 	lsr	r5, r0, #0x18
 	cmp	r5, #0
-	bne	.L774	@cond_branch
-	ldr	r2, .L776
-	ldr	r0, .L776+0x4
+	bne	.L775	@cond_branch
+	ldr	r2, .L777
+	ldr	r0, .L777+0x4
 	ldr	r0, [r0]
 	add	r0, r0, #0x6c
 	ldrb	r1, [r0]
@@ -9719,15 +9713,15 @@ ShowHideWinSlotCursor:
 	mov	r2, #0x4
 	orr	r1, r1, r2
 	strb	r1, [r0]
-	b	.L775
-.L777:
+	b	.L776
+.L778:
 	.align	2, 0
-.L776:
+.L777:
 	.word	gSprites
 	.word	sRoulette
-.L774:
-	ldr	r4, .L778
-	ldr	r3, .L778+0x4
+.L775:
+	ldr	r4, .L779
+	ldr	r3, .L779+0x4
 	ldr	r0, [r3]
 	add	r0, r0, #0x6c
 	ldrb	r1, [r0]
@@ -9748,7 +9742,7 @@ ShowHideWinSlotCursor:
 	add	r1, r1, r0
 	lsl	r1, r1, #0x2
 	add	r1, r1, r4
-	ldr	r0, .L778+0x8
+	ldr	r0, .L779+0x8
 	lsl	r2, r5, #0x2
 	add	r2, r2, r5
 	lsl	r2, r2, #0x2
@@ -9766,13 +9760,13 @@ ShowHideWinSlotCursor:
 	add	r0, r0, #0x2
 	lsl	r0, r0, #0x3
 	strh	r0, [r1, #0x22]
-.L775:
+.L776:
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.L779:
+.L780:
 	.align	2, 0
-.L778:
+.L779:
 	.word	gSprites
 	.word	sRoulette
 	.word	sGridSelections
@@ -9784,9 +9778,9 @@ ShowHideWinSlotCursor:
 CreateWheelIconSprites:
 	push	{r4, r5, r6, r7, lr}
 	add	sp, sp, #-0xc
-	ldr	r4, .L791
+	ldr	r4, .L792
 	ldr	r0, [r4]
-	ldr	r5, .L791+0x4
+	ldr	r5, .L792+0x4
 	add	r1, r5, #0
 	bl	LZ77UnCompWram
 	str	r5, [sp, #0x4]
@@ -9801,22 +9795,22 @@ CreateWheelIconSprites:
 	mov	r0, sp
 	strh	r1, [r0]
 	mov	r0, #0x0
-	ldr	r7, .L791+0x8
-.L784:
+	ldr	r7, .L792+0x8
+.L785:
 	mov	r4, #0x0
 	add	r6, r0, #0x1
 	lsl	r5, r0, #0x2
-.L788:
+.L789:
 	add	r1, r5, r4
 	lsl	r0, r1, #0x1
 	add	r0, r0, r1
 	lsl	r0, r0, #0x3
-	ldr	r1, .L791+0xc
+	ldr	r1, .L792+0xc
 	add	r0, r0, r1
 	mov	r1, #0x28
 	mov	r2, sp
 	bl	CreateWheelIconSprite
-	ldr	r1, .L791+0x10
+	ldr	r1, .L792+0x10
 	ldr	r1, [r1]
 	add	r2, r4, #0x7
 	add	r2, r5, r2
@@ -9840,18 +9834,18 @@ CreateWheelIconSprites:
 	lsl	r0, r0, #0x18
 	lsr	r4, r0, #0x18
 	cmp	r4, #0x3
-	bls	.L788	@cond_branch
+	bls	.L789	@cond_branch
 	lsl	r0, r6, #0x18
 	lsr	r0, r0, #0x18
 	cmp	r0, #0x2
-	bls	.L784	@cond_branch
+	bls	.L785	@cond_branch
 	add	sp, sp, #0xc
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L792:
+.L793:
 	.align	2, 0
-.L791:
+.L792:
 	.word	sSpriteSheet_WheelIcons
 	.word	gDecompressionBuffer
 	.word	gSprites
@@ -9865,7 +9859,7 @@ CreateWheelIconSprites:
 SpriteCB_WheelIcon:
 	push	{r4, r5, r6, lr}
 	add	r6, r0, #0
-	ldr	r0, .L797
+	ldr	r0, .L798
 	ldr	r1, [r0]
 	ldrh	r0, [r6, #0x2e]
 	ldrh	r1, [r1, #0x24]
@@ -9873,14 +9867,14 @@ SpriteCB_WheelIcon:
 	lsl	r0, r0, #0x10
 	lsr	r4, r0, #0x10
 	asr	r1, r0, #0x10
-	ldr	r0, .L797+0x4
+	ldr	r0, .L798+0x4
 	cmp	r1, r0
-	ble	.L794	@cond_branch
-	ldr	r2, .L797+0x8
+	ble	.L795	@cond_branch
+	ldr	r2, .L798+0x8
 	add	r0, r1, r2
 	lsl	r0, r0, #0x10
 	lsr	r4, r0, #0x10
-.L794:
+.L795:
 	add	r0, r4, #0
 	bl	Sin2
 	lsl	r0, r0, #0x10
@@ -9906,19 +9900,19 @@ SpriteCB_WheelIcon:
 	lsl	r0, r0, #0x1a
 	lsr	r3, r0, #0x1b
 	cmp	r2, #0
-	bge	.L795	@cond_branch
+	bge	.L796	@cond_branch
 	add	r2, r2, #0xf
-.L795:
+.L796:
 	lsl	r0, r2, #0xc
 	lsr	r5, r0, #0x10
-	ldr	r1, .L797+0xc
+	ldr	r1, .L798+0xc
 	lsl	r0, r3, #0x3
 	add	r1, r0, r1
 	add	r0, r4, #0
 	cmp	r0, #0
-	bge	.L796	@cond_branch
+	bge	.L797	@cond_branch
 	add	r0, r0, #0xf
-.L796:
+.L797:
 	asr	r0, r0, #0x4
 	strh	r0, [r1, #0x6]
 	strh	r0, [r1]
@@ -9930,9 +9924,9 @@ SpriteCB_WheelIcon:
 	pop	{r4, r5, r6}
 	pop	{r0}
 	bx	r0
-.L798:
+.L799:
 	.align	2, 0
-.L797:
+.L798:
 	.word	sRoulette
 	.word	0x167
 	.word	-0x168
@@ -9948,10 +9942,10 @@ CreateInterfaceSprites:
 	push	{r7}
 	add	sp, sp, #-0x8
 	mov	r5, #0x0
-	ldr	r7, .L815
+	ldr	r7, .L816
 	mov	r6, sp
-.L803:
-	ldr	r0, .L815+0x4
+.L804:
+	ldr	r0, .L816+0x4
 	lsl	r4, r5, #0x3
 	add	r4, r4, r0
 	ldr	r0, [r4]
@@ -9959,14 +9953,14 @@ CreateInterfaceSprites:
 	bl	LZ77UnCompWram
 	str	r7, [sp]
 	ldrh	r2, [r4, #0x4]
-	ldr	r0, .L815+0x8
+	ldr	r0, .L816+0x8
 	ldr	r1, [r6, #0x4]
 	and	r1, r1, r0
 	orr	r1, r1, r2
 	str	r1, [r6, #0x4]
 	ldrh	r2, [r4, #0x6]
 	lsl	r2, r2, #0x10
-	ldr	r0, .L815+0xc
+	ldr	r0, .L816+0xc
 	and	r0, r0, r1
 	orr	r0, r0, r2
 	str	r0, [r6, #0x4]
@@ -9976,17 +9970,17 @@ CreateInterfaceSprites:
 	lsl	r0, r0, #0x18
 	lsr	r5, r0, #0x18
 	cmp	r5, #0x4
-	bls	.L803	@cond_branch
-	ldr	r0, .L815+0x10
+	bls	.L804	@cond_branch
+	ldr	r0, .L816+0x10
 	mov	r1, #0xd0
 	mov	r2, #0x10
 	mov	r3, #0x4
 	bl	CreateSprite
-	ldr	r3, .L815+0x14
+	ldr	r3, .L816+0x14
 	ldr	r1, [r3]
 	add	r1, r1, #0x50
 	strb	r0, [r1]
-	ldr	r4, .L815+0x18
+	ldr	r4, .L816+0x18
 	ldr	r0, [r3]
 	add	r0, r0, #0x50
 	ldrb	r1, [r0]
@@ -10001,13 +9995,13 @@ CreateInterfaceSprites:
 	strb	r1, [r0]
 	mov	r5, #0x0
 	add	r7, r3, #0
-.L808:
+.L809:
 	lsl	r1, r5, #0x13
 	mov	r0, #0xc4
 	lsl	r0, r0, #0x10
 	add	r1, r1, r0
 	asr	r1, r1, #0x10
-	ldr	r0, .L815+0x1c
+	ldr	r0, .L816+0x1c
 	mov	r2, #0x18
 	mov	r3, #0x0
 	bl	CreateSprite
@@ -10047,17 +10041,17 @@ CreateInterfaceSprites:
 	lsl	r0, r0, #0x18
 	lsr	r5, r0, #0x18
 	cmp	r5, #0x3
-	bls	.L808	@cond_branch
-	ldr	r0, .L815+0x20
+	bls	.L809	@cond_branch
+	ldr	r0, .L816+0x20
 	mov	r1, #0x78
 	mov	r2, #0x44
 	mov	r3, #0x4
 	bl	CreateSprite
-	ldr	r2, .L815+0x14
+	ldr	r2, .L816+0x14
 	ldr	r1, [r2]
 	add	r1, r1, #0x55
 	strb	r0, [r1]
-	ldr	r3, .L815+0x18
+	ldr	r3, .L816+0x18
 	ldr	r0, [r2]
 	add	r0, r0, #0x55
 	ldrb	r1, [r0]
@@ -10072,13 +10066,13 @@ CreateInterfaceSprites:
 	mov	r5, #0x0
 	add	r4, r2, #0
 	add	r7, r3, #0
-.L813:
+.L814:
 	lsl	r1, r5, #0x14
 	mov	r2, #0xc0
 	lsl	r2, r2, #0x10
 	add	r1, r1, r2
 	asr	r1, r1, #0x10
-	ldr	r0, .L815+0x24
+	ldr	r0, .L816+0x24
 	mov	r2, #0x24
 	mov	r3, #0x4
 	bl	CreateSprite
@@ -10120,17 +10114,17 @@ CreateInterfaceSprites:
 	lsl	r0, r0, #0x18
 	lsr	r5, r0, #0x18
 	cmp	r5, #0x2
-	bls	.L813	@cond_branch
-	ldr	r0, .L815+0x28
+	bls	.L814	@cond_branch
+	ldr	r0, .L816+0x28
 	mov	r1, #0x98
 	mov	r2, #0x60
 	mov	r3, #0x9
 	bl	CreateSprite
-	ldr	r3, .L815+0x14
+	ldr	r3, .L816+0x14
 	ldr	r1, [r3]
 	add	r1, r1, #0x6c
 	strb	r0, [r1]
-	ldr	r4, .L815+0x18
+	ldr	r4, .L816+0x18
 	ldr	r0, [r3]
 	add	r0, r0, #0x6c
 	ldrb	r0, [r0]
@@ -10173,9 +10167,9 @@ CreateInterfaceSprites:
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L816:
+.L817:
 	.align	2, 0
-.L815:
+.L816:
 	.word	gDecompressionBuffer
 	.word	sSpriteSheets_Interface
 	.word	-0x10000
@@ -10205,17 +10199,17 @@ SetCreditDigits:
 	mov	r8, r0
 	mov	r4, #0x0
 	mov	r6, #0x0
-	ldr	r1, .L825
+	ldr	r1, .L826
 	mov	r9, r1
-	ldr	r0, .L825+0x4
+	ldr	r0, .L826+0x4
 	mov	sl, r0
-.L821:
+.L822:
 	add	r0, r7, #0
 	mov	r1, r8
 	bl	__udivsi3
 	lsl	r0, r0, #0x18
 	lsr	r5, r0, #0x18
-	ldr	r1, .L825+0x4
+	ldr	r1, .L826+0x4
 	ldr	r0, [r1]
 	add	r3, r6, #0
 	add	r3, r3, #0x15
@@ -10225,7 +10219,7 @@ SetCreditDigits:
 	lsl	r0, r1, #0x4
 	add	r0, r0, r1
 	lsl	r0, r0, #0x2
-	ldr	r1, .L825
+	ldr	r1, .L826
 	add	r0, r0, r1
 	add	r0, r0, #0x3e
 	ldrb	r1, [r0]
@@ -10233,12 +10227,12 @@ SetCreditDigits:
 	orr	r1, r1, r2
 	strb	r1, [r0]
 	cmp	r5, #0
-	bne	.L823	@cond_branch
+	bne	.L824	@cond_branch
 	cmp	r4, #0
-	bne	.L823	@cond_branch
+	bne	.L824	@cond_branch
 	cmp	r6, #0x3
-	bne	.L822	@cond_branch
-.L823:
+	bne	.L823	@cond_branch
+.L824:
 	mov	r4, sl
 	ldr	r0, [r4]
 	add	r0, r0, #0x3c
@@ -10267,7 +10261,7 @@ SetCreditDigits:
 	add	r3, r0, r4
 	add	r4, r3, #0
 	add	r4, r4, #0x40
-	ldr	r1, .L825+0x8
+	ldr	r1, .L826+0x8
 	add	r0, r0, r1
 	ldr	r0, [r0]
 	ldr	r1, [r0]
@@ -10276,17 +10270,17 @@ SetCreditDigits:
 	ldrh	r2, [r0]
 	ldrh	r4, [r4]
 	add	r2, r2, r4
-	ldr	r4, .L825+0xc
+	ldr	r4, .L826+0xc
 	add	r0, r4, #0
 	and	r2, r2, r0
 	ldrh	r0, [r3, #0x4]
-	ldr	r4, .L825+0x10
+	ldr	r4, .L826+0x10
 	add	r1, r4, #0
 	and	r0, r0, r1
 	orr	r0, r0, r2
 	strh	r0, [r3, #0x4]
 	mov	r4, #0x1
-.L822:
+.L823:
 	add	r0, r7, #0
 	mov	r1, r8
 	bl	__umodsi3
@@ -10302,7 +10296,7 @@ SetCreditDigits:
 	lsl	r0, r0, #0x18
 	lsr	r6, r0, #0x18
 	cmp	r6, #0x3
-	bls	.L821	@cond_branch
+	bls	.L822	@cond_branch
 	pop	{r3, r4, r5}
 	mov	r8, r3
 	mov	r9, r4
@@ -10310,9 +10304,9 @@ SetCreditDigits:
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L826:
+.L827:
 	.align	2, 0
-.L825:
+.L826:
 	.word	gSprites
 	.word	sRoulette
 	.word	gSprites+0x8
@@ -10336,15 +10330,15 @@ GetMultiplierAnimId:
 	add	sp, sp, #-0x8
 	lsl	r0, r0, #0x18
 	lsr	r4, r0, #0x18
-	ldr	r1, .L841
+	ldr	r1, .L842
 	mov	r0, sp
 	mov	r2, #0x5
 	bl	memcpy
 	cmp	r4, #0x13
-	bls	.L828	@cond_branch
+	bls	.L829	@cond_branch
 	mov	r4, #0x0
-.L828:
-	ldr	r3, .L841+0x4
+.L829:
+	ldr	r3, .L842+0x4
 	lsl	r0, r4, #0x2
 	add	r0, r0, r4
 	lsl	r2, r0, #0x2
@@ -10353,65 +10347,65 @@ GetMultiplierAnimId:
 	lsl	r0, r0, #0x1c
 	lsr	r0, r0, #0x1c
 	cmp	r0, #0x4
-	beq	.L832	@cond_branch
+	beq	.L833	@cond_branch
 	cmp	r0, #0x4
-	bgt	.L838	@cond_branch
+	bgt	.L839	@cond_branch
 	cmp	r0, #0x3
-	beq	.L830	@cond_branch
-	b	.L829
-.L842:
+	beq	.L831	@cond_branch
+	b	.L830
+.L843:
 	.align	2, 0
-.L841:
+.L842:
 	.word	.LC301
 	.word	sGridSelections
-.L838:
+.L839:
 	cmp	r0, #0xc
-	beq	.L834	@cond_branch
-	b	.L829
-.L830:
+	beq	.L835	@cond_branch
+	b	.L830
+.L831:
 	add	r0, r4, #0
 	mov	r1, #0x5
 	bl	__udivsi3
 	sub	r0, r0, #0x1
 	lsl	r0, r0, #0x18
 	lsr	r4, r0, #0x18
-	ldr	r0, .L843
+	ldr	r0, .L844
 	ldr	r0, [r0]
 	add	r0, r0, #0x16
 	add	r1, r0, r4
 	ldrb	r0, [r1]
 	cmp	r0, #0x3
-	bhi	.L829	@cond_branch
+	bhi	.L830	@cond_branch
 	ldrb	r0, [r1]
 	add	r0, r0, #0x1
-	b	.L840
-.L844:
+	b	.L841
+.L845:
 	.align	2, 0
-.L843:
+.L844:
 	.word	sRoulette
-.L832:
+.L833:
 	sub	r0, r4, #0x1
 	lsl	r0, r0, #0x18
 	lsr	r4, r0, #0x18
-	ldr	r0, .L845
+	ldr	r0, .L846
 	ldr	r0, [r0]
 	add	r0, r0, #0x12
 	add	r1, r0, r4
 	ldrb	r0, [r1]
 	cmp	r0, #0x2
-	bhi	.L829	@cond_branch
+	bhi	.L830	@cond_branch
 	ldrb	r0, [r1]
 	add	r0, r0, #0x2
-.L840:
+.L841:
 	add	r0, r0, sp
 	ldrb	r0, [r0]
-	b	.L839
-.L846:
+	b	.L840
+.L847:
 	.align	2, 0
-.L845:
+.L846:
 	.word	sRoulette
-.L834:
-	ldr	r0, .L847
+.L835:
+	ldr	r0, .L848
 	ldr	r1, [r0]
 	add	r0, r3, #0
 	add	r0, r0, #0x8
@@ -10420,17 +10414,17 @@ GetMultiplierAnimId:
 	ldr	r0, [r0]
 	and	r1, r1, r0
 	cmp	r1, #0
-	bne	.L829	@cond_branch
+	bne	.L830	@cond_branch
 	mov	r0, sp
 	ldrb	r0, [r0, #0x4]
-	b	.L839
-.L848:
+	b	.L840
+.L849:
 	.align	2, 0
-.L847:
+.L848:
 	.word	sRoulette
-.L829:
+.L830:
 	mov	r0, #0x0
-.L839:
+.L840:
 	add	sp, sp, #0x8
 	pop	{r4}
 	pop	{r1}
@@ -10444,14 +10438,14 @@ SetMultiplierSprite:
 	push	{r4, lr}
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
-	ldr	r1, .L850
+	ldr	r1, .L851
 	ldr	r1, [r1]
 	add	r1, r1, #0x55
 	ldrb	r2, [r1]
 	lsl	r1, r2, #0x4
 	add	r1, r1, r2
 	lsl	r1, r1, #0x2
-	ldr	r2, .L850+0x4
+	ldr	r2, .L851+0x4
 	add	r4, r1, r2
 	bl	GetMultiplierAnimId
 	add	r3, r4, #0
@@ -10467,20 +10461,20 @@ SetMultiplierSprite:
 	ldrh	r1, [r0]
 	ldrh	r2, [r2]
 	add	r1, r1, r2
-	ldr	r2, .L850+0x8
+	ldr	r2, .L851+0x8
 	add	r0, r2, #0
 	and	r1, r1, r0
 	ldrh	r2, [r4, #0x4]
-	ldr	r0, .L850+0xc
+	ldr	r0, .L851+0xc
 	and	r0, r0, r2
 	orr	r0, r0, r1
 	strh	r0, [r4, #0x4]
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L851:
+.L852:
 	.align	2, 0
-.L850:
+.L851:
 	.word	sRoulette
 	.word	gSprites
 	.word	0x3ff
@@ -10497,50 +10491,50 @@ SetBallCounterNumLeft:
 	lsl	r0, r0, #0x18
 	lsr	r2, r0, #0x18
 	mov	r6, #0x0
-	ldr	r1, .L876
+	ldr	r1, .L877
 	ldr	r0, [r1]
 	ldrb	r0, [r0, #0x19]
 	add	r5, r1, #0
 	cmp	r0, #0x1
-	bne	.L853	@cond_branch
+	bne	.L854	@cond_branch
 	mov	r6, #0x2
-.L853:
+.L854:
 	cmp	r2, #0x6
-	bls	.LCB8636
-	b	.L867	@long jump
-.LCB8636:
+	bls	.LCB8639
+	b	.L868	@long jump
+.LCB8639:
 	lsl	r0, r2, #0x2
-	ldr	r1, .L876+0x4
+	ldr	r1, .L877+0x4
 	add	r0, r0, r1
 	ldr	r0, [r0]
 	mov	pc, r0
+.L878:
+	.align	2, 0
 .L877:
-	.align	2, 0
-.L876:
 	.word	sRoulette
-	.word	.L873
+	.word	.L874
 	.align	2, 0
 	.align	2, 0
-.L873:
-	.word	.L867
+.L874:
+	.word	.L868
+	.word	.L866
 	.word	.L865
 	.word	.L864
 	.word	.L863
 	.word	.L862
-	.word	.L861
-	.word	.L855
-.L855:
+	.word	.L856
+.L856:
 	mov	r4, #0x0
-	ldr	r5, .L878
-	ldr	r6, .L878+0x4
+	ldr	r5, .L879
+	ldr	r6, .L879+0x4
 	mov	r0, #0x5
 	neg	r0, r0
 	mov	ip, r0
 	add	r7, r5, #0
 	add	r7, r7, #0x8
-	ldr	r2, .L878+0x8
+	ldr	r2, .L879+0x8
 	mov	r8, r2
-.L859:
+.L860:
 	ldr	r0, [r6]
 	add	r3, r4, #0
 	add	r3, r3, #0x1a
@@ -10572,7 +10566,7 @@ SetBallCounterNumLeft:
 	ldrh	r1, [r0]
 	ldrh	r2, [r2]
 	add	r1, r1, r2
-	ldr	r2, .L878+0xc
+	ldr	r2, .L879+0xc
 	add	r0, r2, #0
 	and	r1, r1, r0
 	ldrh	r2, [r3, #0x4]
@@ -10584,58 +10578,58 @@ SetBallCounterNumLeft:
 	lsl	r0, r0, #0x18
 	lsr	r4, r0, #0x18
 	cmp	r4, #0x2
-	bls	.L859	@cond_branch
-	b	.L854
-.L879:
+	bls	.L860	@cond_branch
+	b	.L855
+.L880:
 	.align	2, 0
-.L878:
+.L879:
 	.word	gSprites
 	.word	sRoulette
 	.word	-0x400
 	.word	0x3ff
-.L861:
-	ldr	r2, .L880
-	ldr	r0, [r5]
-	add	r0, r0, #0x58
-	b	.L874
-.L881:
-	.align	2, 0
-.L880:
-	.word	gSprites
 .L862:
-	ldr	r2, .L882
+	ldr	r2, .L881
 	ldr	r0, [r5]
 	add	r0, r0, #0x58
-	ldrb	r1, [r0]
-	lsl	r0, r1, #0x4
-	add	r0, r0, r1
-	lsl	r0, r0, #0x2
-	add	r3, r0, r2
-	add	r4, r3, #0
-	add	r4, r4, #0x40
-	add	r2, r2, #0x8
-	add	r0, r0, r2
-	ldr	r0, [r0]
-	ldr	r1, [r0]
-	lsl	r0, r6, #0x2
-	add	r0, r0, r1
-	ldrh	r1, [r0, #0x8]
 	b	.L875
-.L883:
-	.align	2, 0
 .L882:
+	.align	2, 0
+.L881:
 	.word	gSprites
 .L863:
-	ldr	r2, .L884
+	ldr	r2, .L883
 	ldr	r0, [r5]
-	add	r0, r0, #0x57
-	b	.L874
-.L885:
-	.align	2, 0
+	add	r0, r0, #0x58
+	ldrb	r1, [r0]
+	lsl	r0, r1, #0x4
+	add	r0, r0, r1
+	lsl	r0, r0, #0x2
+	add	r3, r0, r2
+	add	r4, r3, #0
+	add	r4, r4, #0x40
+	add	r2, r2, #0x8
+	add	r0, r0, r2
+	ldr	r0, [r0]
+	ldr	r1, [r0]
+	lsl	r0, r6, #0x2
+	add	r0, r0, r1
+	ldrh	r1, [r0, #0x8]
+	b	.L876
 .L884:
+	.align	2, 0
+.L883:
 	.word	gSprites
 .L864:
-	ldr	r2, .L886
+	ldr	r2, .L885
+	ldr	r0, [r5]
+	add	r0, r0, #0x57
+	b	.L875
+.L886:
+	.align	2, 0
+.L885:
+	.word	gSprites
+.L865:
+	ldr	r2, .L887
 	ldr	r0, [r5]
 	add	r0, r0, #0x57
 	ldrb	r1, [r0]
@@ -10652,16 +10646,16 @@ SetBallCounterNumLeft:
 	lsl	r0, r6, #0x2
 	add	r0, r0, r1
 	ldrh	r1, [r0, #0x8]
-	b	.L875
-.L887:
+	b	.L876
+.L888:
 	.align	2, 0
-.L886:
+.L887:
 	.word	gSprites
-.L865:
-	ldr	r2, .L888
+.L866:
+	ldr	r2, .L889
 	ldr	r0, [r5]
 	add	r0, r0, #0x56
-.L874:
+.L875:
 	ldrb	r1, [r0]
 	lsl	r0, r1, #0x4
 	add	r0, r0, r1
@@ -10676,34 +10670,34 @@ SetBallCounterNumLeft:
 	lsl	r0, r6, #0x2
 	add	r0, r0, r1
 	ldrh	r1, [r0, #0x4]
-.L875:
+.L876:
 	ldrh	r4, [r4]
 	add	r1, r1, r4
-	ldr	r2, .L888+0x4
+	ldr	r2, .L889+0x4
 	add	r0, r2, #0
 	and	r1, r1, r0
 	ldrh	r2, [r3, #0x4]
-	ldr	r0, .L888+0x8
+	ldr	r0, .L889+0x8
 	and	r0, r0, r2
 	orr	r0, r0, r1
 	strh	r0, [r3, #0x4]
-	b	.L854
-.L889:
+	b	.L855
+.L890:
 	.align	2, 0
-.L888:
+.L889:
 	.word	gSprites
 	.word	0x3ff
 	.word	-0x400
-.L867:
+.L868:
 	mov	r4, #0x0
 	lsl	r7, r6, #0x2
-	ldr	r6, .L890
+	ldr	r6, .L891
 	mov	r0, #0x8
 	add	r0, r0, r6
 	mov	ip, r0
-	ldr	r2, .L890+0x4
+	ldr	r2, .L891+0x4
 	mov	r8, r2
-.L871:
+.L872:
 	ldr	r0, [r5]
 	add	r0, r0, r4
 	add	r0, r0, #0x56
@@ -10721,7 +10715,7 @@ SetBallCounterNumLeft:
 	ldrh	r1, [r0, #0x8]
 	ldrh	r2, [r2]
 	add	r1, r1, r2
-	ldr	r2, .L890+0x8
+	ldr	r2, .L891+0x8
 	add	r0, r2, #0
 	and	r1, r1, r0
 	ldrh	r2, [r3, #0x4]
@@ -10733,16 +10727,16 @@ SetBallCounterNumLeft:
 	lsl	r0, r0, #0x18
 	lsr	r4, r0, #0x18
 	cmp	r4, #0x2
-	bls	.L871	@cond_branch
-.L854:
+	bls	.L872	@cond_branch
+.L855:
 	pop	{r3}
 	mov	r8, r3
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L891:
+.L892:
 	.align	2, 0
-.L890:
+.L891:
 	.word	gSprites
 	.word	-0x400
 	.word	0x3ff
@@ -10752,14 +10746,14 @@ SetBallCounterNumLeft:
 	.type	 SpriteCB_GridSquare,function
 	.thumb_func
 SpriteCB_GridSquare:
-	ldr	r1, .L893
+	ldr	r1, .L894
 	ldr	r1, [r1]
 	ldrh	r1, [r1, #0x26]
 	strh	r1, [r0, #0x24]
 	bx	lr
-.L894:
+.L895:
 	.align	2, 0
-.L893:
+.L894:
 	.word	sRoulette
 .Lfe70:
 	.size	 SpriteCB_GridSquare,.Lfe70-SpriteCB_GridSquare
@@ -10769,9 +10763,9 @@ SpriteCB_GridSquare:
 CreateWheelCenterSprite:
 	push	{r4, r5, lr}
 	add	sp, sp, #-0x8
-	ldr	r4, .L896
+	ldr	r4, .L897
 	ldr	r0, [r4]
-	ldr	r5, .L896+0x4
+	ldr	r5, .L897+0x4
 	add	r1, r5, #0
 	bl	LZ77UnCompWram
 	str	r5, [sp]
@@ -10782,19 +10776,19 @@ CreateWheelCenterSprite:
 	str	r0, [sp, #0x4]
 	mov	r0, sp
 	bl	LoadSpriteSheet
-	ldr	r0, .L896+0x8
+	ldr	r0, .L897+0x8
 	mov	r1, #0x74
 	mov	r2, #0x50
 	mov	r3, #0x51
 	bl	CreateSprite
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
-	ldr	r2, .L896+0xc
+	ldr	r2, .L897+0xc
 	lsl	r1, r0, #0x4
 	add	r1, r1, r0
 	lsl	r1, r1, #0x2
 	add	r1, r1, r2
-	ldr	r0, .L896+0x10
+	ldr	r0, .L897+0x10
 	ldr	r0, [r0]
 	ldrh	r0, [r0, #0x24]
 	mov	r2, #0x0
@@ -10817,9 +10811,9 @@ CreateWheelCenterSprite:
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.L897:
+.L898:
 	.align	2, 0
-.L896:
+.L897:
 	.word	sSpriteSheet_WheelCenter
 	.word	gDecompressionBuffer
 	.word	sSpriteTemplate_WheelCenter
@@ -10834,10 +10828,10 @@ SpriteCB_WheelCenter:
 	ldrb	r0, [r0, #0x3]
 	lsl	r0, r0, #0x1a
 	lsr	r0, r0, #0x1b
-	ldr	r1, .L899
+	ldr	r1, .L900
 	lsl	r0, r0, #0x3
 	add	r0, r0, r1
-	ldr	r1, .L899+0x4
+	ldr	r1, .L900+0x4
 	ldr	r2, [r1]
 	ldrh	r1, [r2, #0x2c]
 	strh	r1, [r0, #0x6]
@@ -10848,9 +10842,9 @@ SpriteCB_WheelCenter:
 	ldrh	r1, [r2, #0x30]
 	strh	r1, [r0, #0x4]
 	bx	lr
-.L900:
+.L901:
 	.align	2, 0
-.L899:
+.L900:
 	.word	gOamMatrices
 	.word	sRoulette
 .Lfe72:
@@ -10861,14 +10855,14 @@ SpriteCB_WheelCenter:
 CreateWheelBallSprites:
 	push	{r4, r5, r6, lr}
 	mov	r4, #0x0
-	ldr	r5, .L908
-	ldr	r6, .L908+0x4
-.L905:
+	ldr	r5, .L909
+	ldr	r6, .L909+0x4
+.L906:
 	mov	r3, #0x39
 	sub	r3, r3, r4
 	lsl	r3, r3, #0x18
 	lsr	r3, r3, #0x18
-	ldr	r0, .L908+0x8
+	ldr	r0, .L909+0x8
 	mov	r1, #0x74
 	mov	r2, #0x50
 	bl	CreateSprite
@@ -10881,7 +10875,7 @@ CreateWheelBallSprites:
 	add	r1, r0, r4
 	ldrb	r0, [r1]
 	cmp	r0, #0x40
-	beq	.L904	@cond_branch
+	beq	.L905	@cond_branch
 	add	r1, r0, #0
 	lsl	r0, r1, #0x4
 	add	r0, r0, r1
@@ -10905,18 +10899,18 @@ CreateWheelBallSprites:
 	mov	r2, #0x2
 	orr	r1, r1, r2
 	strb	r1, [r0]
-.L904:
+.L905:
 	add	r0, r4, #0x1
 	lsl	r0, r0, #0x18
 	lsr	r4, r0, #0x18
 	cmp	r4, #0x5
-	bls	.L905	@cond_branch
+	bls	.L906	@cond_branch
 	pop	{r4, r5, r6}
 	pop	{r0}
 	bx	r0
-.L909:
+.L910:
 	.align	2, 0
-.L908:
+.L909:
 	.word	sRoulette
 	.word	gSprites
 	.word	sSpriteTemplate_Ball
@@ -10931,12 +10925,12 @@ HideWheelBalls:
 	mov	r6, r9
 	mov	r5, r8
 	push	{r5, r6, r7}
-	ldr	r0, .L921
+	ldr	r0, .L922
 	ldr	r0, [r0]
 	add	r0, r0, #0x3c
 	ldrb	r5, [r0]
 	mov	r6, #0x0
-	ldr	r7, .L921+0x4
+	ldr	r7, .L922+0x4
 	mov	r0, #0x1c
 	add	r0, r0, r7
 	mov	sl, r0
@@ -10944,7 +10938,7 @@ HideWheelBalls:
 	add	r1, r1, r7
 	mov	r9, r1
 	mov	r8, r6
-.L914:
+.L915:
 	lsl	r4, r5, #0x4
 	add	r4, r4, r5
 	lsl	r4, r4, #0x2
@@ -10957,14 +10951,14 @@ HideWheelBalls:
 	strb	r1, [r3]
 	mov	r1, sl
 	add	r2, r4, r1
-	ldr	r1, .L921+0x8
+	ldr	r1, .L922+0x8
 	str	r1, [r2]
 	mov	r1, #0x0
 	bl	StartSpriteAnim
 	mov	r1, #0x0
 	add	r2, r5, #0x1
 	add	r3, r6, #0x1
-.L918:
+.L919:
 	lsl	r0, r1, #0x1
 	add	r0, r0, r4
 	add	r0, r0, r9
@@ -10974,13 +10968,13 @@ HideWheelBalls:
 	lsl	r0, r0, #0x18
 	lsr	r1, r0, #0x18
 	cmp	r1, #0x7
-	bls	.L918	@cond_branch
+	bls	.L919	@cond_branch
 	lsl	r0, r2, #0x18
 	lsr	r5, r0, #0x18
 	lsl	r0, r3, #0x18
 	lsr	r6, r0, #0x18
 	cmp	r6, #0x5
-	bls	.L914	@cond_branch
+	bls	.L915	@cond_branch
 	pop	{r3, r4, r5}
 	mov	r8, r3
 	mov	r9, r4
@@ -10988,9 +10982,9 @@ HideWheelBalls:
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L922:
+.L923:
 	.align	2, 0
-.L921:
+.L922:
 	.word	sRoulette
 	.word	gSprites
 	.word	SpriteCallbackDummy
@@ -11002,7 +10996,7 @@ HideWheelBalls:
 UpdateBallRelativeWheelAngle:
 	push	{r4, r5, lr}
 	add	r3, r0, #0
-	ldr	r0, .L928
+	ldr	r0, .L929
 	ldr	r0, [r0]
 	ldrh	r4, [r0, #0x24]
 	mov	r2, #0x24
@@ -11011,30 +11005,30 @@ UpdateBallRelativeWheelAngle:
 	mov	r5, #0x34
 	ldrsh	r0, [r3, r5]
 	cmp	r1, r0
-	ble	.L924	@cond_branch
+	ble	.L925	@cond_branch
 	mov	r1, #0xb4
 	lsl	r1, r1, #0x1
 	add	r0, r2, r1
 	sub	r2, r0, r4
 	strh	r2, [r3, #0x3a]
 	lsl	r1, r2, #0x10
-	ldr	r0, .L928+0x4
+	ldr	r0, .L929+0x4
 	cmp	r1, r0
-	ble	.L926	@cond_branch
-	ldr	r5, .L928+0x8
+	ble	.L927	@cond_branch
+	ldr	r5, .L929+0x8
 	add	r0, r2, r5
-	b	.L927
-.L929:
+	b	.L928
+.L930:
 	.align	2, 0
-.L928:
+.L929:
 	.word	sRoulette
 	.word	0x1670000
 	.word	-0x168
-.L924:
+.L925:
 	sub	r0, r2, r4
-.L927:
+.L928:
 	strh	r0, [r3, #0x3a]
-.L926:
+.L927:
 	mov	r1, #0x3a
 	ldrsh	r0, [r3, r1]
 	pop	{r4, r5}
@@ -11048,12 +11042,12 @@ UpdateBallRelativeWheelAngle:
 UpdateSlotBelowBall:
 	push	{r4, r5, lr}
 	bl	UpdateBallRelativeWheelAngle
-	ldr	r5, .L931
+	ldr	r5, .L932
 	ldr	r4, [r5]
 	lsl	r0, r0, #0x10
 	asr	r0, r0, #0x10
 	bl	__floatsisf
-	ldr	r1, .L931+0x4
+	ldr	r1, .L932+0x4
 	bl	__divsf3
 	bl	__fixunssfsi
 	add	r4, r4, #0x7e
@@ -11064,9 +11058,9 @@ UpdateSlotBelowBall:
 	pop	{r4, r5}
 	pop	{r1}
 	bx	r1
-.L932:
+.L933:
 	.align	2, 0
-.L931:
+.L932:
 	.word	sRoulette
 	.word 0x41f00000	@ float 3.00000000000000000000e1
 .Lfe76:
@@ -11085,25 +11079,25 @@ GetBallDistanceToSlotMidpoint:
 	lsl	r0, r0, #0x10
 	asr	r1, r0, #0x10
 	cmp	r1, #0xe
-	bne	.L934	@cond_branch
+	bne	.L935	@cond_branch
 	mov	r0, #0x0
 	strh	r0, [r4, #0x32]
-	b	.L939
-.L934:
-	cmp	r1, #0xd
-	bgt	.L936	@cond_branch
-	mov	r0, #0xe
 	b	.L940
-.L936:
+.L935:
+	cmp	r1, #0xd
+	bgt	.L937	@cond_branch
+	mov	r0, #0xe
+	b	.L941
+.L937:
 	mov	r0, #0x2b
-.L940:
+.L941:
 	sub	r0, r0, r1
 	lsl	r0, r0, #0x10
 	lsr	r0, r0, #0x10
 	strh	r0, [r4, #0x32]
 	lsl	r0, r0, #0x10
 	asr	r0, r0, #0x10
-.L939:
+.L940:
 	pop	{r4}
 	pop	{r1}
 	bx	r1
@@ -11117,7 +11111,7 @@ UpdateBallPos:
 	mov	r7, r8
 	push	{r7}
 	add	r7, r0, #0
-	ldr	r5, .L947
+	ldr	r5, .L948
 	ldr	r6, [r5]
 	add	r4, r6, #0
 	add	r4, r4, #0x8c
@@ -11133,34 +11127,34 @@ UpdateBallPos:
 	bl	__addsf3
 	add	r6, r0, #0
 	str	r6, [r4]
-	ldr	r0, .L947+0x4
+	ldr	r0, .L948+0x4
 	mov	r8, r0
 	add	r0, r6, #0
 	mov	r1, r8
 	bl	__gesf2
 	cmp	r0, #0
-	blt	.L942	@cond_branch
+	blt	.L943	@cond_branch
 	add	r0, r6, #0
 	mov	r1, r8
 	bl	__subsf3
-	b	.L946
-.L948:
+	b	.L947
+.L949:
 	.align	2, 0
-.L947:
+.L948:
 	.word	sRoulette
 	.word 0x43b40000	@ float 3.60000000000000000000e2
-.L942:
-	ldr	r1, .L949
+.L943:
+	ldr	r1, .L950
 	add	r0, r6, #0
 	bl	__ltsf2
 	cmp	r0, #0
-	bge	.L943	@cond_branch
+	bge	.L944	@cond_branch
 	add	r0, r6, #0
 	mov	r1, r8
 	bl	__addsf3
-.L946:
+.L947:
 	str	r0, [r4]
-.L943:
+.L944:
 	ldr	r5, [r5]
 	add	r0, r5, #0
 	add	r0, r0, #0x88
@@ -11207,29 +11201,29 @@ UpdateBallPos:
 	bl	IsSEPlaying
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.L945	@cond_branch
-	ldr	r0, .L949+0x4
-	ldr	r4, .L949+0x8
+	beq	.L946	@cond_branch
+	ldr	r0, .L950+0x4
+	ldr	r4, .L950+0x8
 	ldrh	r2, [r7, #0x24]
 	lsl	r2, r2, #0x18
 	asr	r2, r2, #0x18
 	add	r1, r4, #0
 	bl	m4aMPlayPanpotControl
-	ldr	r0, .L949+0xc
+	ldr	r0, .L950+0xc
 	ldrh	r2, [r7, #0x24]
 	lsl	r2, r2, #0x18
 	asr	r2, r2, #0x18
 	add	r1, r4, #0
 	bl	m4aMPlayPanpotControl
-.L945:
+.L946:
 	pop	{r3}
 	mov	r8, r3
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L950:
+.L951:
 	.align	2, 0
-.L949:
+.L950:
 	.word 0x0	@ float 0.00000000000000000000e0
 	.word	gMPlayInfo_SE1
 	.word	0xffff
@@ -11242,20 +11236,20 @@ UpdateBallPos:
 SpriteCB_BallLandInSlot:
 	push	{r4, r5, lr}
 	add	r5, r0, #0
-	ldr	r0, .L953
+	ldr	r0, .L954
 	ldr	r1, [r0]
 	ldrh	r0, [r5, #0x3a]
 	ldrh	r1, [r1, #0x24]
 	add	r2, r0, r1
 	strh	r2, [r5, #0x34]
 	lsl	r1, r2, #0x10
-	ldr	r0, .L953+0x4
+	ldr	r0, .L954+0x4
 	cmp	r1, r0
-	ble	.L952	@cond_branch
-	ldr	r1, .L953+0x8
+	ble	.L953	@cond_branch
+	ldr	r1, .L954+0x8
 	add	r0, r2, r1
 	strh	r0, [r5, #0x34]
-.L952:
+.L953:
 	ldrh	r0, [r5, #0x34]
 	bl	Sin2
 	add	r4, r0, #0
@@ -11276,7 +11270,7 @@ SpriteCB_BallLandInSlot:
 	mov	r2, #0x36
 	ldrsh	r1, [r5, r2]
 	mul	r0, r0, r1
-	ldr	r1, .L953+0xc
+	ldr	r1, .L954+0xc
 	asr	r0, r0, #0xc
 	ldrh	r1, [r1]
 	add	r0, r0, r1
@@ -11284,9 +11278,9 @@ SpriteCB_BallLandInSlot:
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.L954:
+.L955:
 	.align	2, 0
-.L953:
+.L954:
 	.word	sRoulette
 	.word	0x1670000
 	.word	-0x168
@@ -11308,66 +11302,66 @@ SpriteCB_UnstickBall_ShroomishBallFall:
 	lsl	r0, r0, #0x10
 	lsr	r0, r0, #0x10
 	cmp	r0, #0xd4
-	bls	.L956	@cond_branch
+	bls	.L957	@cond_branch
 	add	r2, r5, #0
 	add	r2, r2, #0x3e
 	ldrb	r0, [r2]
 	mov	r1, #0x4
 	orr	r0, r0, r1
-	b	.L963
-.L956:
+	b	.L964
+.L957:
 	add	r2, r5, #0
 	add	r2, r2, #0x3e
 	ldrb	r1, [r2]
 	mov	r0, #0x5
 	neg	r0, r0
 	and	r0, r0, r1
-.L963:
+.L964:
 	strb	r0, [r2]
 	mov	r1, #0x32
 	ldrsh	r0, [r5, r1]
 	cmp	r0, #0x1d
-	ble	.L958	@cond_branch
+	ble	.L959	@cond_branch
 	mov	r1, #0x2e
 	ldrsh	r0, [r5, r1]
 	cmp	r0, #0
-	bne	.L959	@cond_branch
-	ldr	r7, .L966
+	bne	.L960	@cond_branch
+	ldr	r7, .L967
 	ldr	r6, [r7]
 	add	r4, r6, #0
 	add	r4, r4, #0x94
 	add	r0, r6, #0
 	add	r0, r0, #0xa0
 	ldr	r0, [r0]
-	ldr	r1, .L966+0x4
+	ldr	r1, .L967+0x4
 	bl	__subsf3
 	add	r1, r0, #0
 	ldr	r0, [r4]
 	bl	__lesf2
 	cmp	r0, #0
-	bgt	.L958	@cond_branch
-	b	.L965
-.L967:
+	bgt	.L959	@cond_branch
+	b	.L966
+.L968:
 	.align	2, 0
-.L966:
+.L967:
 	.word	sRoulette
 	.word 0x40000000	@ float 2.00000000000000000000e0
-.L959:
-	ldr	r7, .L968
+.L960:
+	ldr	r7, .L969
 	ldr	r6, [r7]
 	add	r4, r6, #0
 	add	r4, r4, #0x94
 	add	r0, r6, #0
 	add	r0, r0, #0xa0
 	ldr	r0, [r0]
-	ldr	r1, .L968+0x4
+	ldr	r1, .L969+0x4
 	bl	__subsf3
 	add	r1, r0, #0
 	ldr	r0, [r4]
 	bl	__gesf2
 	cmp	r0, #0
-	blt	.L958	@cond_branch
-.L965:
+	blt	.L959	@cond_branch
+.L966:
 	add	r1, r6, #0
 	add	r1, r1, #0x7d
 	mov	r0, #0xff
@@ -11402,7 +11396,7 @@ SpriteCB_UnstickBall_ShroomishBallFall:
 	lsl	r1, r1, #0x1
 	add	r1, r1, #0xf
 	strh	r1, [r5, #0x3a]
-	ldr	r0, .L968+0x8
+	ldr	r0, .L969+0x8
 	str	r0, [r5, #0x1c]
 	mov	r0, #0x47
 	bl	m4aSongNumStartOrChange
@@ -11411,19 +11405,19 @@ SpriteCB_UnstickBall_ShroomishBallFall:
 	add	r2, r2, #0x9c
 	add	r1, r3, #0
 	add	r1, r1, #0x98
-	ldr	r0, .L968+0xc
+	ldr	r0, .L969+0xc
 	str	r0, [r1]
 	str	r0, [r2]
 	sub	r1, r1, #0xc
-	ldr	r0, .L968+0x10
+	ldr	r0, .L969+0x10
 	str	r0, [r1]
-.L958:
+.L959:
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L969:
+.L970:
 	.align	2, 0
-.L968:
+.L969:
 	.word	sRoulette
 	.word 0x40000000	@ float 2.00000000000000000000e0
 	.word	SpriteCB_BallLandInSlot
@@ -11445,24 +11439,24 @@ SpriteCB_UnstickBall_Shroomish:
 	mov	r1, #0x34
 	ldrsh	r0, [r7, r1]
 	cmp	r0, #0
-	beq	.L972	@cond_branch
+	beq	.L973	@cond_branch
 	cmp	r0, #0xb4
-	beq	.L975	@cond_branch
-	b	.L970
-.L972:
+	beq	.L976	@cond_branch
+	b	.L971
+.L973:
 	mov	r1, #0x2e
 	ldrsh	r0, [r7, r1]
 	cmp	r0, #0x1
-	bne	.LCB9821
-	b	.L970	@long jump
-.LCB9821:
+	bne	.LCB9824
+	b	.L971	@long jump
+.LCB9824:
 	mov	r1, #0x3c
 	ldrsh	r0, [r7, r1]
 	bl	__floatsisf
 	mov	r9, r0
-	ldr	r0, .L981
+	ldr	r0, .L982
 	mov	sl, r0
-	ldr	r1, .L981+0x4
+	ldr	r1, .L982+0x4
 	mov	r8, r1
 	ldr	r0, [r1]
 	ldrb	r4, [r0, #0x4]
@@ -11491,24 +11485,24 @@ SpriteCB_UnstickBall_Shroomish:
 	add	r1, r0, #0
 	mov	r0, r9
 	bl	__divsf3
-	b	.L980
-.L982:
+	b	.L981
+.L983:
 	.align	2, 0
-.L981:
+.L982:
 	.word	sRouletteTables
 	.word	sRoulette
-.L975:
+.L976:
 	mov	r1, #0x2e
 	ldrsh	r0, [r7, r1]
 	cmp	r0, #0
-	beq	.L970	@cond_branch
+	beq	.L971	@cond_branch
 	mov	r1, #0x3c
 	ldrsh	r0, [r7, r1]
 	bl	__floatsisf
 	mov	r9, r0
-	ldr	r0, .L983
+	ldr	r0, .L984
 	mov	sl, r0
-	ldr	r1, .L983+0x4
+	ldr	r1, .L984+0x4
 	mov	r8, r1
 	ldr	r0, [r1]
 	ldrb	r4, [r0, #0x4]
@@ -11538,7 +11532,7 @@ SpriteCB_UnstickBall_Shroomish:
 	mov	r0, r9
 	bl	__divsf3
 	bl	__negsf2
-.L980:
+.L981:
 	add	r2, r0, #0
 	mov	r0, r8
 	ldr	r6, [r0]
@@ -11564,7 +11558,7 @@ SpriteCB_UnstickBall_Shroomish:
 	add	r1, r5, #0
 	bl	__mulsf3
 	add	r1, r0, #0
-	ldr	r0, .L983+0x8
+	ldr	r0, .L984+0x8
 	bl	__divsf3
 	add	r1, r0, #0
 	add	r0, r4, #0
@@ -11574,7 +11568,7 @@ SpriteCB_UnstickBall_Shroomish:
 	str	r0, [r1]
 	add	r1, r6, #0
 	add	r1, r1, #0x8c
-	ldr	r0, .L983+0xc
+	ldr	r0, .L984+0xc
 	str	r0, [r1]
 	add	r2, r7, #0
 	add	r2, r2, #0x2c
@@ -11596,10 +11590,10 @@ SpriteCB_UnstickBall_Shroomish:
 	neg	r1, r1
 	and	r0, r0, r1
 	strb	r0, [r3]
-	ldr	r0, .L983+0x10
+	ldr	r0, .L984+0x10
 	str	r0, [r7, #0x1c]
 	strh	r2, [r7, #0x32]
-.L970:
+.L971:
 	pop	{r3, r4, r5}
 	mov	r8, r3
 	mov	r9, r4
@@ -11607,9 +11601,9 @@ SpriteCB_UnstickBall_Shroomish:
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L984:
+.L985:
 	.align	2, 0
-.L983:
+.L984:
 	.word	sRouletteTables
 	.word	sRoulette
 	.word 0x40000000	@ float 2.00000000000000000000e0
@@ -11627,7 +11621,7 @@ SpriteCB_UnstickBall_TaillowDrop:
 	ldrsh	r0, [r5, r1]
 	bl	__floatsisf
 	add	r4, r0, #0
-	ldr	r1, .L987
+	ldr	r1, .L988
 	bl	__mulsf3
 	add	r1, r4, #0
 	bl	__mulsf3
@@ -11641,11 +11635,11 @@ SpriteCB_UnstickBall_TaillowDrop:
 	lsl	r0, r0, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, #0x1d
-	ble	.L986	@cond_branch
+	ble	.L987	@cond_branch
 	lsl	r0, r1, #0x10
 	cmp	r0, #0
-	blt	.L986	@cond_branch
-	ldr	r4, .L987+0x4
+	blt	.L987	@cond_branch
+	ldr	r4, .L988+0x4
 	ldr	r0, [r4]
 	add	r0, r0, #0x7d
 	mov	r1, #0xff
@@ -11680,7 +11674,7 @@ SpriteCB_UnstickBall_TaillowDrop:
 	lsl	r1, r1, #0x1
 	add	r1, r1, #0xf
 	strh	r1, [r5, #0x3a]
-	ldr	r0, .L987+0x8
+	ldr	r0, .L988+0x8
 	str	r0, [r5, #0x1c]
 	mov	r0, #0x47
 	bl	m4aSongNumStartOrChange
@@ -11689,13 +11683,13 @@ SpriteCB_UnstickBall_TaillowDrop:
 	mov	r1, #0x40
 	orr	r0, r0, r1
 	strb	r0, [r2, #0x3]
-.L986:
+.L987:
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.L988:
+.L989:
 	.align	2, 0
-.L987:
+.L988:
 	.word 0x3d4ccccd	@ float 5.00000007450580596924e-2
 	.word	sRoulette
 	.word	SpriteCB_BallLandInSlot
@@ -11713,16 +11707,16 @@ SpriteCB_UnstickBall_TaillowPickUp:
 	lsl	r0, r0, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, #0x2c
-	bgt	.L990	@cond_branch
+	bgt	.L991	@cond_branch
 	ldrh	r4, [r3, #0x26]
 	sub	r0, r4, #0x1
 	strh	r0, [r3, #0x26]
 	lsl	r0, r1, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, #0x2d
-	bne	.L993	@cond_branch
-	ldr	r2, .L999
-	ldr	r0, .L999+0x4
+	bne	.L994	@cond_branch
+	ldr	r2, .L1000
+	ldr	r0, .L1000+0x4
 	ldr	r0, [r0]
 	add	r0, r0, #0x73
 	ldrb	r1, [r0]
@@ -11733,23 +11727,23 @@ SpriteCB_UnstickBall_TaillowPickUp:
 	add	r0, r0, #0x2b
 	ldrb	r0, [r0]
 	cmp	r0, #0x1
-	bne	.L993	@cond_branch
+	bne	.L994	@cond_branch
 	strh	r4, [r3, #0x26]
-	b	.L993
-.L1000:
+	b	.L994
+.L1001:
 	.align	2, 0
-.L999:
+.L1000:
 	.word	gSprites
 	.word	sRoulette
-.L990:
+.L991:
 	lsl	r0, r1, #0x10
 	asr	r0, r0, #0x10
 	mov	r2, #0x3c
 	ldrsh	r1, [r3, r2]
 	cmp	r0, r1
-	bge	.L994	@cond_branch
-	ldr	r2, .L1001
-	ldr	r0, .L1001+0x4
+	bge	.L995	@cond_branch
+	ldr	r2, .L1002
+	ldr	r0, .L1002+0x4
 	ldr	r0, [r0]
 	add	r0, r0, #0x73
 	ldrb	r1, [r0]
@@ -11762,27 +11756,27 @@ SpriteCB_UnstickBall_TaillowPickUp:
 	ldrb	r0, [r0]
 	lsl	r0, r0, #0x1a
 	cmp	r0, #0
-	bne	.L993	@cond_branch
+	bne	.L994	@cond_branch
 	add	r0, r1, #0
 	add	r0, r0, #0x2b
 	ldrb	r0, [r0]
 	cmp	r0, #0x1
-	bne	.L996	@cond_branch
+	bne	.L997	@cond_branch
 	ldrh	r0, [r3, #0x26]
 	add	r0, r0, #0x1
 	strh	r0, [r3, #0x26]
-	b	.L993
-.L1002:
+	b	.L994
+.L1003:
 	.align	2, 0
-.L1001:
+.L1002:
 	.word	gSprites
 	.word	sRoulette
-.L996:
+.L997:
 	ldrh	r0, [r3, #0x26]
 	sub	r0, r0, #0x1
 	strh	r0, [r3, #0x26]
-	b	.L993
-.L994:
+	b	.L994
+.L995:
 	add	r2, r3, #0
 	add	r2, r2, #0x2c
 	ldrb	r1, [r2]
@@ -11807,17 +11801,17 @@ SpriteCB_UnstickBall_TaillowPickUp:
 	mov	r1, ip
 	strb	r0, [r1]
 	strh	r2, [r3, #0x32]
-	ldr	r0, .L1003
+	ldr	r0, .L1004
 	str	r0, [r3, #0x1c]
 	mov	r0, #0x3d
 	bl	m4aSongNumStart
-.L993:
+.L994:
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L1004:
+.L1005:
 	.align	2, 0
-.L1003:
+.L1004:
 	.word	SpriteCB_UnstickBall_TaillowDrop
 .Lfe83:
 	.size	 SpriteCB_UnstickBall_TaillowPickUp,.Lfe83-SpriteCB_UnstickBall_TaillowPickUp
@@ -11831,35 +11825,35 @@ SpriteCB_UnstickBall_Taillow:
 	mov	r0, #0x34
 	ldrsh	r1, [r4, r0]
 	cmp	r1, #0x5a
-	beq	.L1007	@cond_branch
+	beq	.L1008	@cond_branch
 	mov	r0, #0x87
 	lsl	r0, r0, #0x1
 	cmp	r1, r0
-	beq	.L1009	@cond_branch
-	b	.L1006
-.L1007:
+	beq	.L1010	@cond_branch
+	b	.L1007
+.L1008:
 	mov	r1, #0x2e
 	ldrsh	r0, [r4, r1]
 	cmp	r0, #0x1
-	beq	.L1006	@cond_branch
-	b	.L1013
-.L1009:
+	beq	.L1007	@cond_branch
+	b	.L1014
+.L1010:
 	mov	r1, #0x2e
 	ldrsh	r0, [r4, r1]
 	cmp	r0, #0
-	beq	.L1006	@cond_branch
-.L1013:
-	ldr	r0, .L1014
+	beq	.L1007	@cond_branch
+.L1014:
+	ldr	r0, .L1015
 	str	r0, [r4, #0x1c]
 	mov	r0, #0x0
 	strh	r0, [r4, #0x32]
-.L1006:
+.L1007:
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L1015:
+.L1016:
 	.align	2, 0
-.L1014:
+.L1015:
 	.word	SpriteCB_UnstickBall_TaillowPickUp
 .Lfe84:
 	.size	 SpriteCB_UnstickBall_Taillow,.Lfe84-SpriteCB_UnstickBall_Taillow
@@ -11870,37 +11864,37 @@ SpriteCB_UnstickBall:
 	push	{r4, lr}
 	add	r4, r0, #0
 	bl	UpdateBallPos
-	ldr	r0, .L1023
+	ldr	r0, .L1024
 	ldr	r0, [r0]
 	ldrb	r0, [r0, #0x3]
 	lsl	r0, r0, #0x1b
 	lsr	r0, r0, #0x1b
 	cmp	r0, #0
-	beq	.L1019	@cond_branch
-	cmp	r0, #0x1
 	beq	.L1020	@cond_branch
-.L1019:
-	add	r0, r4, #0
-	bl	CreateShroomishSprite
-	ldr	r0, .L1023+0x4
-	b	.L1022
-.L1024:
-	.align	2, 0
-.L1023:
-	.word	sRoulette
-	.word	SpriteCB_UnstickBall_Shroomish
+	cmp	r0, #0x1
+	beq	.L1021	@cond_branch
 .L1020:
 	add	r0, r4, #0
+	bl	CreateShroomishSprite
+	ldr	r0, .L1024+0x4
+	b	.L1023
+.L1025:
+	.align	2, 0
+.L1024:
+	.word	sRoulette
+	.word	SpriteCB_UnstickBall_Shroomish
+.L1021:
+	add	r0, r4, #0
 	bl	CreateTaillowSprite
-	ldr	r0, .L1025
-.L1022:
+	ldr	r0, .L1026
+.L1023:
 	str	r0, [r4, #0x1c]
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L1026:
+.L1027:
 	.align	2, 0
-.L1025:
+.L1026:
 	.word	SpriteCB_UnstickBall_Taillow
 .Lfe85:
 	.size	 SpriteCB_UnstickBall,.Lfe85-SpriteCB_UnstickBall
@@ -11917,24 +11911,24 @@ SpriteCB_RollBall_TryLandAdjacent:
 	lsl	r0, r0, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, #0xf
-	bne	.L1028	@cond_branch
-	ldr	r0, .L1032
+	bne	.L1029	@cond_branch
+	ldr	r0, .L1033
 	ldr	r4, [r0]
 	add	r4, r4, #0x98
 	ldr	r0, [r4]
-	ldr	r1, .L1032+0x4
+	ldr	r1, .L1033+0x4
 	bl	__mulsf3
 	str	r0, [r4]
-.L1028:
+.L1029:
 	mov	r1, #0x32
 	ldrsh	r0, [r5, r1]
 	cmp	r0, #0
-	bne	.L1029	@cond_branch
+	bne	.L1030	@cond_branch
 	mov	r1, #0x2e
 	ldrsh	r0, [r5, r1]
 	cmp	r0, #0
-	bne	.L1030	@cond_branch
-	ldr	r2, .L1032
+	bne	.L1031	@cond_branch
+	ldr	r2, .L1033
 	ldr	r0, [r2]
 	add	r0, r0, #0x7d
 	mov	r1, #0xff
@@ -11969,18 +11963,18 @@ SpriteCB_RollBall_TryLandAdjacent:
 	lsl	r1, r1, #0x1
 	add	r1, r1, #0xf
 	strh	r1, [r5, #0x3a]
-	ldr	r0, .L1032+0x8
+	ldr	r0, .L1033+0x8
 	str	r0, [r5, #0x1c]
 	mov	r0, #0x47
 	bl	m4aSongNumStartOrChange
-	b	.L1029
-.L1033:
+	b	.L1030
+.L1034:
 	.align	2, 0
-.L1032:
+.L1033:
 	.word	sRoulette
 	.word 0xbf800000	@ float -1.00000000000000000000e0
 	.word	SpriteCB_BallLandInSlot
-.L1030:
+.L1031:
 	add	r0, r5, #0
 	add	r0, r0, #0x2c
 	ldrb	r1, [r0]
@@ -11991,7 +11985,7 @@ SpriteCB_RollBall_TryLandAdjacent:
 	bl	m4aSongNumStart
 	add	r0, r5, #0
 	bl	SetBallStuck
-.L1029:
+.L1030:
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
@@ -12010,8 +12004,8 @@ SpriteCB_RollBall_TryLand:
 	strh	r0, [r6, #0x32]
 	add	r0, r6, #0
 	bl	UpdateSlotBelowBall
-	ldr	r1, .L1046
-	ldr	r4, .L1046+0x4
+	ldr	r1, .L1047
+	ldr	r4, .L1047+0x4
 	ldr	r2, [r4]
 	add	r0, r2, #0
 	add	r0, r0, #0x7e
@@ -12023,7 +12017,7 @@ SpriteCB_RollBall_TryLand:
 	ldr	r1, [r2, #0x8]
 	and	r0, r0, r1
 	cmp	r0, #0
-	bne	.L1035	@cond_branch
+	bne	.L1036	@cond_branch
 	add	r1, r2, #0
 	add	r1, r1, #0x7d
 	mov	r0, #0xff
@@ -12058,18 +12052,18 @@ SpriteCB_RollBall_TryLand:
 	lsl	r1, r1, #0x1
 	add	r1, r1, #0xf
 	strh	r1, [r6, #0x3a]
-	ldr	r0, .L1046+0x8
+	ldr	r0, .L1047+0x8
 	str	r0, [r6, #0x1c]
 	mov	r0, #0x47
 	bl	m4aSongNumStartOrChange
-	b	.L1036
-.L1047:
+	b	.L1037
+.L1048:
 	.align	2, 0
-.L1046:
+.L1047:
 	.word	sRouletteSlots
 	.word	sRoulette
 	.word	SpriteCB_BallLandInSlot
-.L1035:
+.L1036:
 	mov	r0, #0x38
 	bl	m4aSongNumStart
 	bl	Random
@@ -12078,11 +12072,11 @@ SpriteCB_RollBall_TryLand:
 	and	r1, r1, r0
 	mov	r8, r1
 	cmp	r1, #0
-	beq	.L1037	@cond_branch
+	beq	.L1038	@cond_branch
 	ldr	r4, [r4]
 	add	r1, r4, #0
 	add	r1, r1, #0x8c
-	ldr	r0, .L1048
+	ldr	r0, .L1049
 	str	r0, [r1]
 	add	r0, r4, #0
 	add	r0, r0, #0x7e
@@ -12095,18 +12089,18 @@ SpriteCB_RollBall_TryLand:
 	add	r1, r4, #0
 	add	r1, r1, #0x7f
 	strb	r0, [r1]
-	ldr	r5, .L1048+0x4
-	b	.L1038
-.L1049:
+	ldr	r5, .L1049+0x4
+	b	.L1039
+.L1050:
 	.align	2, 0
-.L1048:
+.L1049:
 	.word 0x0	@ float 0.00000000000000000000e0
 	.word	sRouletteTables
-.L1037:
+.L1038:
 	ldr	r7, [r4]
 	add	r4, r7, #0
 	add	r4, r4, #0x8c
-	ldr	r5, .L1050
+	ldr	r5, .L1051
 	ldrb	r0, [r7, #0x4]
 	lsl	r0, r0, #0x1e
 	lsr	r0, r0, #0x19
@@ -12129,18 +12123,18 @@ SpriteCB_RollBall_TryLand:
 	add	r0, r7, #0
 	add	r0, r0, #0x7f
 	strb	r4, [r0]
-.L1038:
-	ldr	r0, .L1050+0x4
+.L1039:
+	ldr	r0, .L1051+0x4
 	lsl	r1, r2, #0x3
 	add	r0, r0, #0x4
 	add	r1, r1, r0
-	ldr	r2, .L1050+0x8
+	ldr	r2, .L1051+0x8
 	ldr	r3, [r2]
 	ldr	r1, [r1]
 	ldr	r0, [r3, #0x8]
 	and	r1, r1, r0
 	cmp	r1, #0
-	beq	.L1039	@cond_branch
+	beq	.L1040	@cond_branch
 	mov	r0, #0x1
 	strh	r0, [r6, #0x2e]
 	ldrb	r0, [r3, #0x4]
@@ -12149,27 +12143,27 @@ SpriteCB_RollBall_TryLand:
 	add	r0, r0, r5
 	ldrb	r0, [r0, #0x2]
 	strh	r0, [r6, #0x32]
-	b	.L1040
-.L1051:
+	b	.L1041
+.L1052:
 	.align	2, 0
-.L1050:
+.L1051:
 	.word	sRouletteTables
 	.word	sRouletteSlots
 	.word	sRoulette
-.L1039:
+.L1040:
 	strh	r1, [r6, #0x2e]
 	ldrb	r1, [r3, #0x4]
 	mov	r0, #0x3
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L1041	@cond_branch
+	beq	.L1042	@cond_branch
 	lsl	r0, r1, #0x1e
 	lsr	r0, r0, #0x19
 	add	r0, r0, r5
 	ldrb	r0, [r0, #0x1]
 	strh	r0, [r6, #0x32]
-	b	.L1040
-.L1041:
+	b	.L1041
+.L1042:
 	lsl	r0, r1, #0x1e
 	lsr	r0, r0, #0x19
 	add	r0, r0, r5
@@ -12177,39 +12171,39 @@ SpriteCB_RollBall_TryLand:
 	strh	r0, [r6, #0x32]
 	mov	r0, r8
 	cmp	r0, #0
-	beq	.L1043	@cond_branch
+	beq	.L1044	@cond_branch
 	add	r1, r3, #0
 	add	r1, r1, #0x8c
-	ldr	r0, .L1052
-	b	.L1045
-.L1053:
+	ldr	r0, .L1053
+	b	.L1046
+.L1054:
 	.align	2, 0
-.L1052:
+.L1053:
 	.word 0x3f000000	@ float 5.00000000000000000000e-1
-.L1043:
+.L1044:
 	add	r1, r3, #0
 	add	r1, r1, #0x8c
-	ldr	r0, .L1054
-.L1045:
+	ldr	r0, .L1055
+.L1046:
 	str	r0, [r1]
-.L1040:
+.L1041:
 	ldr	r0, [r2]
 	add	r0, r0, #0x98
-	ldr	r1, .L1054+0x4
+	ldr	r1, .L1055+0x4
 	str	r1, [r0]
-	ldr	r0, .L1054+0x8
+	ldr	r0, .L1055+0x8
 	str	r0, [r6, #0x1c]
 	mov	r0, #0x5
 	strh	r0, [r6, #0x30]
-.L1036:
+.L1037:
 	pop	{r3}
 	mov	r8, r3
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L1055:
+.L1056:
 	.align	2, 0
-.L1054:
+.L1055:
 	.word 0xbfc00000	@ float -1.50000000000000000000e0
 	.word 0x3dae147b	@ float 8.50000008940696716309e-2
 	.word	SpriteCB_RollBall_TryLandAdjacent
@@ -12225,30 +12219,30 @@ SpriteCB_RollBall_Slow:
 	push	{r6, r7}
 	add	r6, r0, #0
 	bl	UpdateBallPos
-	ldr	r4, .L1063
+	ldr	r4, .L1064
 	ldr	r0, [r4]
 	add	r0, r0, #0x8c
 	ldr	r0, [r0]
-	ldr	r1, .L1063+0x4
+	ldr	r1, .L1064+0x4
 	bl	__gtsf2
 	cmp	r0, #0
-	bgt	.L1056	@cond_branch
+	bgt	.L1057	@cond_branch
 	add	r0, r6, #0
 	bl	UpdateSlotBelowBall
 	add	r0, r6, #0
 	bl	GetBallDistanceToSlotMidpoint
 	lsl	r0, r0, #0x10
 	cmp	r0, #0
-	bne	.L1058	@cond_branch
+	bne	.L1059	@cond_branch
 	ldr	r2, [r4]
 	add	r1, r2, #0
 	add	r1, r1, #0x90
-	ldr	r0, .L1063+0x8
+	ldr	r0, .L1064+0x8
 	str	r0, [r1]
 	mov	r0, #0x8c
 	add	r0, r0, r2
 	mov	r8, r0
-	ldr	r1, .L1063+0xc
+	ldr	r1, .L1064+0xc
 	mov	r9, r1
 	ldrb	r0, [r2, #0x4]
 	lsl	r7, r0, #0x1e
@@ -12260,11 +12254,11 @@ SpriteCB_RollBall_Slow:
 	bl	__floatsisf
 	add	r5, r0, #0
 	cmp	r4, #0
-	bge	.L1059	@cond_branch
-	ldr	r1, .L1063+0x10
+	bge	.L1060	@cond_branch
+	ldr	r1, .L1064+0x10
 	bl	__addsf3
 	add	r5, r0, #0
-.L1059:
+.L1060:
 	lsr	r0, r7, #0x19
 	add	r0, r0, r9
 	ldrb	r0, [r0, #0x4]
@@ -12281,55 +12275,55 @@ SpriteCB_RollBall_Slow:
 	str	r0, [r1]
 	mov	r0, #0x4
 	strh	r0, [r6, #0x30]
-	ldr	r0, .L1063+0x14
+	ldr	r0, .L1064+0x14
 	str	r0, [r6, #0x1c]
-	b	.L1056
-.L1064:
+	b	.L1057
+.L1065:
 	.align	2, 0
-.L1063:
+.L1064:
 	.word	sRoulette
 	.word 0x3f000000	@ float 5.00000000000000000000e-1
 	.word 0x0	@ float 0.00000000000000000000e0
 	.word	sRouletteTables
 	.word 0x43800000	@ float 2.56000000000000000000e2
 	.word	SpriteCB_RollBall_TryLand
-.L1058:
+.L1059:
 	ldr	r4, [r4]
 	add	r7, r4, #0
 	add	r7, r7, #0x90
 	ldr	r0, [r7]
-	ldr	r6, .L1065
+	ldr	r6, .L1066
 	add	r1, r6, #0
 	bl	__nesf2
 	cmp	r0, #0
-	beq	.L1056	@cond_branch
+	beq	.L1057	@cond_branch
 	add	r5, r4, #0
 	add	r5, r5, #0x8c
 	ldr	r0, [r5]
 	add	r1, r6, #0
 	bl	__ltsf2
 	cmp	r0, #0
-	bge	.L1056	@cond_branch
+	bge	.L1057	@cond_branch
 	str	r6, [r7]
 	str	r6, [r5]
 	add	r4, r4, #0x98
 	ldr	r0, [r4]
 	bl	__extendsfdf2
-	ldr	r2, .L1065+0x4		@ created by thumb_load_double_from_address
-	ldr	r3, .L1065+0x8		@ created by thumb_load_double_from_address
+	ldr	r2, .L1066+0x4		@ created by thumb_load_double_from_address
+	ldr	r3, .L1066+0x8		@ created by thumb_load_double_from_address
 	bl	__divdf3
 	bl	__truncdfsf2
 	str	r0, [r4]
-.L1056:
+.L1057:
 	pop	{r3, r4}
 	mov	r8, r3
 	mov	r9, r4
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L1066:
+.L1067:
 	.align	2, 0
-.L1065:
+.L1066:
 	.word 0x0	@ float 0.00000000000000000000e0
 	.long 0x3ff33333, 0x33333333	@ double 1.19999999999999995559e0
 .Lfe88:
@@ -12343,15 +12337,15 @@ SpriteCB_RollBall_Medium:
 	push	{r7}
 	add	r6, r0, #0
 	bl	UpdateBallPos
-	ldr	r0, .L1071
+	ldr	r0, .L1072
 	ldr	r5, [r0]
 	add	r0, r5, #0
 	add	r0, r0, #0x94
 	ldr	r0, [r0]
-	ldr	r1, .L1071+0x4
+	ldr	r1, .L1072+0x4
 	bl	__gtsf2
 	cmp	r0, #0
-	bgt	.L1067	@cond_branch
+	bgt	.L1068	@cond_branch
 	mov	r0, #0x98
 	add	r0, r0, r5
 	mov	r8, r0
@@ -12363,12 +12357,12 @@ SpriteCB_RollBall_Medium:
 	bl	__floatsisf
 	add	r2, r0, #0
 	cmp	r4, #0
-	bge	.L1069	@cond_branch
-	ldr	r1, .L1071+0x8
+	bge	.L1070	@cond_branch
+	ldr	r1, .L1072+0x8
 	bl	__addsf3
 	add	r2, r0, #0
-.L1069:
-	ldr	r0, .L1071+0xc
+.L1070:
+	ldr	r0, .L1072+0xc
 	add	r1, r2, #0
 	bl	__divsf3
 	bl	__negsf2
@@ -12384,11 +12378,11 @@ SpriteCB_RollBall_Medium:
 	bl	__floatsisf
 	add	r2, r0, #0
 	cmp	r4, #0
-	bge	.L1070	@cond_branch
-	ldr	r1, .L1071+0x8
+	bge	.L1071	@cond_branch
+	ldr	r1, .L1072+0x8
 	bl	__addsf3
 	add	r2, r0, #0
-.L1070:
+.L1071:
 	ldr	r0, [r5]
 	add	r1, r2, #0
 	bl	__divsf3
@@ -12410,17 +12404,17 @@ SpriteCB_RollBall_Medium:
 	strb	r0, [r2]
 	mov	r0, #0x3
 	strh	r0, [r6, #0x30]
-	ldr	r0, .L1071+0x10
+	ldr	r0, .L1072+0x10
 	str	r0, [r6, #0x1c]
-.L1067:
+.L1068:
 	pop	{r3}
 	mov	r8, r3
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L1072:
+.L1073:
 	.align	2, 0
-.L1071:
+.L1072:
 	.word	sRoulette
 	.word 0x42200000	@ float 4.00000000000000000000e1
 	.word 0x47800000	@ float 6.55360000000000000000e4
@@ -12437,14 +12431,14 @@ SpriteCB_RollBall_Fast:
 	push	{r7}
 	add	r6, r0, #0
 	bl	UpdateBallPos
-	ldr	r4, .L1077
+	ldr	r4, .L1078
 	ldr	r0, [r4]
 	add	r0, r0, #0x94
 	ldr	r0, [r0]
-	ldr	r1, .L1077+0x4
+	ldr	r1, .L1078+0x4
 	bl	__gtsf2
 	cmp	r0, #0
-	bgt	.L1073	@cond_branch
+	bgt	.L1074	@cond_branch
 	mov	r0, #0x5d
 	bl	m4aSongNumStartOrChange
 	ldr	r5, [r4]
@@ -12459,12 +12453,12 @@ SpriteCB_RollBall_Fast:
 	bl	__floatsisf
 	add	r2, r0, #0
 	cmp	r4, #0
-	bge	.L1075	@cond_branch
-	ldr	r1, .L1077+0x8
+	bge	.L1076	@cond_branch
+	ldr	r1, .L1078+0x8
 	bl	__addsf3
 	add	r2, r0, #0
-.L1075:
-	ldr	r0, .L1077+0xc
+.L1076:
+	ldr	r0, .L1078+0xc
 	add	r1, r2, #0
 	bl	__divsf3
 	bl	__negsf2
@@ -12476,7 +12470,7 @@ SpriteCB_RollBall_Fast:
 	add	r0, r5, #0
 	add	r0, r0, #0x8c
 	ldr	r1, [r0]
-	ldr	r0, .L1077+0x10
+	ldr	r0, .L1078+0x10
 	bl	__subsf3
 	add	r5, r0, #0
 	mov	r1, #0x0
@@ -12485,11 +12479,11 @@ SpriteCB_RollBall_Fast:
 	bl	__floatsisf
 	add	r2, r0, #0
 	cmp	r4, #0
-	bge	.L1076	@cond_branch
-	ldr	r1, .L1077+0x8
+	bge	.L1077	@cond_branch
+	ldr	r1, .L1078+0x8
 	bl	__addsf3
 	add	r2, r0, #0
-.L1076:
+.L1077:
 	add	r0, r5, #0
 	add	r1, r2, #0
 	bl	__divsf3
@@ -12510,17 +12504,17 @@ SpriteCB_RollBall_Fast:
 	strb	r0, [r2]
 	mov	r0, #0x2
 	strh	r0, [r6, #0x30]
-	ldr	r0, .L1077+0x14
+	ldr	r0, .L1078+0x14
 	str	r0, [r6, #0x1c]
-.L1073:
+.L1074:
 	pop	{r3}
 	mov	r8, r3
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L1078:
+.L1079:
 	.align	2, 0
-.L1077:
+.L1078:
 	.word	sRoulette
 	.word 0x42700000	@ float 6.00000000000000000000e1
 	.word 0x47800000	@ float 6.55360000000000000000e4
@@ -12548,14 +12542,14 @@ SpriteCB_RollBall_Start:
 	neg	r0, r0
 	and	r0, r0, r1
 	strb	r0, [r2]
-	ldr	r0, .L1080
+	ldr	r0, .L1081
 	str	r0, [r4, #0x1c]
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L1081:
+.L1082:
 	.align	2, 0
-.L1080:
+.L1081:
 	.word	SpriteCB_RollBall_Fast
 .Lfe91:
 	.size	 SpriteCB_RollBall_Start,.Lfe91-SpriteCB_RollBall_Start
@@ -12578,7 +12572,7 @@ CreateShroomishSprite:
 	push	{r5, r6, r7}
 	add	sp, sp, #-0x8
 	mov	r8, r0
-	ldr	r1, .L1088
+	ldr	r1, .L1089
 	mov	r0, sp
 	mov	r2, #0x8
 	bl	memcpy
@@ -12588,8 +12582,8 @@ CreateShroomishSprite:
 	lsl	r0, r0, #0x10
 	lsr	r0, r0, #0x10
 	mov	r9, r0
-	ldr	r5, .L1088+0x4
-	ldr	r0, .L1088+0x8
+	ldr	r5, .L1089+0x4
+	ldr	r0, .L1089+0x8
 	mov	r2, #0xc
 	neg	r2, r2
 	mov	r1, #0x24
@@ -12598,7 +12592,7 @@ CreateShroomishSprite:
 	ldr	r1, [r5]
 	add	r1, r1, #0x73
 	strb	r0, [r1]
-	ldr	r4, .L1088+0xc
+	ldr	r4, .L1089+0xc
 	mov	r3, r8
 	mov	r0, #0x2e
 	ldrsh	r2, [r3, r0]
@@ -12627,7 +12621,7 @@ CreateShroomishSprite:
 	ldr	r1, [r5]
 	add	r1, r1, #0x75
 	strb	r0, [r1]
-	ldr	r3, .L1088+0x10
+	ldr	r3, .L1089+0x10
 	ldr	r0, [r5]
 	add	r0, r0, #0x75
 	ldrb	r1, [r0]
@@ -12644,10 +12638,10 @@ CreateShroomishSprite:
 	strb	r1, [r0, #0x1]
 	mov	r7, #0x0
 	add	r6, r3, #0
-	ldr	r0, .L1088+0x14
+	ldr	r0, .L1089+0x14
 	mov	ip, r0
 	mov	sl, r5
-.L1086:
+.L1087:
 	ldr	r0, [r5]
 	add	r3, r7, #0
 	add	r3, r3, #0x37
@@ -12758,16 +12752,16 @@ CreateShroomishSprite:
 	lsr	r1, r1, #0x19
 	add	r1, r1, ip
 	ldrb	r0, [r1, #0x2]
-	ldr	r1, .L1088+0x18
+	ldr	r1, .L1089+0x18
 	add	r0, r0, r1
 	add	r3, r3, r0
 	strh	r3, [r2, #0x34]
 	add	r0, r7, #0x1
 	lsl	r0, r0, #0x18
 	lsr	r7, r0, #0x18
-	ldr	r2, .L1088+0x10
+	ldr	r2, .L1089+0x10
 	cmp	r7, #0x2
-	bls	.L1086	@cond_branch
+	bls	.L1087	@cond_branch
 	mov	r3, sl
 	ldr	r0, [r3]
 	add	r0, r0, #0x74
@@ -12792,9 +12786,9 @@ CreateShroomishSprite:
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L1089:
+.L1090:
 	.align	2, 0
-.L1088:
+.L1089:
 	.word	.LC368
 	.word	sRoulette
 	.word	sSpriteTemplate_Shroomish
@@ -12824,7 +12818,7 @@ CreateTaillowSprite:
 	add	r7, r0, #0
 	mov	r0, #0x0
 	mov	r8, r0
-	ldr	r1, .L1096
+	ldr	r1, .L1097
 	mov	r0, sp
 	mov	r2, #0x8
 	bl	memcpy
@@ -12833,7 +12827,7 @@ CreateTaillowSprite:
 	lsl	r0, r0, #0x10
 	lsr	r0, r0, #0x10
 	mov	r9, r0
-	ldr	r0, .L1096+0x4
+	ldr	r0, .L1097+0x4
 	mov	r1, #0x2e
 	ldrsh	r2, [r7, r1]
 	lsl	r2, r2, #0x2
@@ -12848,7 +12842,7 @@ CreateTaillowSprite:
 	ldrsh	r2, [r2, r3]
 	mov	r3, #0x32
 	bl	CreateSprite
-	ldr	r5, .L1096+0x8
+	ldr	r5, .L1097+0x8
 	ldr	r1, [r5]
 	add	r1, r1, #0x73
 	strb	r0, [r1]
@@ -12858,13 +12852,13 @@ CreateTaillowSprite:
 	lsl	r0, r1, #0x4
 	add	r0, r0, r1
 	lsl	r0, r0, #0x2
-	ldr	r6, .L1096+0xc
+	ldr	r6, .L1097+0xc
 	add	r0, r0, r6
 	ldrh	r1, [r7, #0x2e]
 	lsl	r1, r1, #0x18
 	lsr	r1, r1, #0x18
 	bl	StartSpriteAnim
-	ldr	r0, .L1096+0x10
+	ldr	r0, .L1097+0x10
 	mov	r1, #0x2e
 	ldrsh	r2, [r7, r1]
 	lsl	r2, r2, #0x2
@@ -12907,7 +12901,7 @@ CreateTaillowSprite:
 	mov	r0, r9
 	lsl	r2, r0, #0x10
 	asr	r2, r2, #0x10
-	ldr	r3, .L1096+0x14
+	ldr	r3, .L1097+0x14
 	ldr	r0, [r5]
 	ldrb	r1, [r0, #0x4]
 	lsl	r1, r1, #0x1e
@@ -12921,8 +12915,8 @@ CreateTaillowSprite:
 	add	r0, r0, #0x2d
 	add	r2, r2, r0
 	strh	r2, [r7, #0x3c]
-.L1094:
-	ldr	r0, .L1096+0x8
+.L1095:
+	ldr	r0, .L1097+0x8
 	ldr	r4, [r0]
 	mov	r1, r8
 	add	r2, r4, r1
@@ -12973,7 +12967,7 @@ CreateTaillowSprite:
 	lsr	r0, r0, #0x18
 	mov	r8, r0
 	cmp	r0, #0x1
-	bls	.L1094	@cond_branch
+	bls	.L1095	@cond_branch
 	str	r7, [r4, #0x38]
 	add	sp, sp, #0x8
 	pop	{r3, r4}
@@ -12982,9 +12976,9 @@ CreateTaillowSprite:
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L1097:
+.L1098:
 	.align	2, 0
-.L1096:
+.L1097:
 	.word	.LC376
 	.word	sSpriteTemplate_Taillow
 	.word	sRoulette
@@ -13017,7 +13011,7 @@ SetBallStuck:
 	lsl	r0, r0, #0x10
 	lsr	r0, r0, #0x10
 	str	r0, [sp, #0x10]
-	ldr	r3, .L1127
+	ldr	r3, .L1128
 	ldr	r0, [r3]
 	add	r0, r0, #0x7d
 	mov	r5, #0x1
@@ -13046,11 +13040,11 @@ SetBallStuck:
 	str	r0, [r4]
 	add	r1, r6, #0
 	add	r1, r1, #0x98
-	ldr	r0, .L1127+0x4
+	ldr	r0, .L1128+0x4
 	str	r0, [r1]
 	add	r2, r6, #0
 	add	r2, r2, #0x8c
-	ldr	r1, .L1127+0x8
+	ldr	r1, .L1128+0x8
 	ldrb	r0, [r6, #0x4]
 	lsl	r0, r0, #0x1e
 	lsr	r0, r0, #0x19
@@ -13077,16 +13071,16 @@ SetBallStuck:
 	mov	r5, r9
 	mov	r0, #0x34
 	ldrsh	r2, [r7, r0]
-.L1102:
+.L1103:
 	cmp	r1, r2
-	bge	.L1103	@cond_branch
+	bge	.L1104	@cond_branch
 	add	r0, r1, #0
 	add	r0, r0, #0x5a
 	cmp	r2, r0
-	ble	.L1123	@cond_branch
-.L1103:
+	ble	.L1124	@cond_branch
+.L1104:
 	cmp	r5, #0x3
-	beq	.L1124	@cond_branch
+	beq	.L1125	@cond_branch
 	add	r0, r1, #0
 	add	r0, r0, #0x5a
 	lsl	r0, r0, #0x10
@@ -13095,35 +13089,35 @@ SetBallStuck:
 	lsl	r0, r0, #0x18
 	lsr	r5, r0, #0x18
 	cmp	r5, #0x3
-	bls	.L1102	@cond_branch
-.L1100:
-	ldr	r0, .L1127
+	bls	.L1103	@cond_branch
+.L1101:
+	ldr	r0, .L1128
 	ldr	r0, [r0]
 	ldrb	r1, [r0, #0x3]
 	mov	r0, #0x1f
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L1106	@cond_branch
+	beq	.L1107	@cond_branch
 	mov	r1, #0x2e
 	ldrsh	r0, [r7, r1]
 	cmp	r0, #0
-	beq	.L1107	@cond_branch
+	beq	.L1108	@cond_branch
 	mov	r0, #0x8a
 	lsl	r0, r0, #0x1
 	mov	r1, #0x3f
 	neg	r1, r1
 	bl	PlayCry1
-	b	.L1109
-.L1128:
+	b	.L1110
+.L1129:
 	.align	2, 0
-.L1127:
+.L1128:
 	.word	sRoulette
 	.word 0x0	@ float 0.00000000000000000000e0
 	.word	sRouletteTables
-.L1124:
+.L1125:
 	mov	r0, #0x1
 	strh	r0, [r7, #0x2e]
-	ldr	r0, .L1129
+	ldr	r0, .L1130
 	ldr	r2, [r0]
 	ldrb	r1, [r2, #0x3]
 	mov	r0, #0x20
@@ -13132,15 +13126,15 @@ SetBallStuck:
 	mov	r1, #0x1
 	orr	r0, r0, r1
 	strb	r0, [r2, #0x3]
-	b	.L1100
-.L1130:
+	b	.L1101
+.L1131:
 	.align	2, 0
-.L1129:
+.L1130:
 	.word	sRoulette
-.L1123:
+.L1124:
 	lsr	r0, r5, #0x1
 	strh	r0, [r7, #0x2e]
-	ldr	r0, .L1131
+	ldr	r0, .L1132
 	ldr	r3, [r0]
 	mov	r1, #0x1
 	and	r1, r1, r5
@@ -13150,26 +13144,26 @@ SetBallStuck:
 	and	r0, r0, r2
 	orr	r0, r0, r1
 	strb	r0, [r3, #0x3]
-	b	.L1100
-.L1132:
+	b	.L1101
+.L1133:
 	.align	2, 0
-.L1131:
+.L1132:
 	.word	sRoulette
-.L1107:
+.L1108:
 	mov	r0, #0x8a
 	lsl	r0, r0, #0x1
 	mov	r1, #0x3f
 	bl	PlayCry1
-	b	.L1109
-.L1106:
-	ldr	r0, .L1133
+	b	.L1110
+.L1107:
+	ldr	r0, .L1134
 	mov	r1, #0x3f
 	neg	r1, r1
 	bl	PlayCry1
-.L1109:
+.L1110:
 	mov	r0, #0x2
 	mov	sl, r0
-	ldr	r4, .L1133+0x4
+	ldr	r4, .L1134+0x4
 	ldr	r5, [r4]
 	add	r0, r5, #0
 	add	r0, r0, #0x7f
@@ -13183,42 +13177,42 @@ SetBallStuck:
 	mov	r0, #0x1f
 	and	r0, r0, r1
 	cmp	r0, #0x1
-	bne	.L1110	@cond_branch
+	bne	.L1111	@cond_branch
 	ldrb	r1, [r5, #0x4]
 	mov	r0, #0x3
 	and	r0, r0, r1
 	cmp	r0, #0x1
-	bne	.L1110	@cond_branch
+	bne	.L1111	@cond_branch
 	mov	r0, r8
 	add	r0, r0, #0x6
-	b	.L1125
-.L1134:
+	b	.L1126
+.L1135:
 	.align	2, 0
-.L1133:
+.L1134:
 	.word	0x11d
 	.word	sRoulette
-.L1110:
+.L1111:
 	mov	r0, r8
 	add	r0, r0, sl
-.L1125:
+.L1126:
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	mov	r8, r0
 	mov	r5, sl
 	cmp	r5, r8
-	bcs	.L1113	@cond_branch
-	ldr	r1, .L1135
+	bcs	.L1114	@cond_branch
+	ldr	r1, .L1136
 	mov	sl, r1
-.L1115:
+.L1116:
 	ldr	r3, [r4]
 	lsl	r0, r6, #0x3
-	ldr	r1, .L1135+0x4
+	ldr	r1, .L1136+0x4
 	add	r0, r0, r1
 	ldr	r1, [r3, #0x8]
 	ldr	r2, [r0]
 	and	r1, r1, r2
 	cmp	r1, #0
-	bne	.L1116	@cond_branch
+	bne	.L1117	@cond_branch
 	mov	r0, r9
 	add	r1, r0, #0x1
 	lsl	r1, r1, #0x18
@@ -13228,7 +13222,7 @@ SetBallStuck:
 	strb	r5, [r0]
 	ldr	r0, [sp, #0xc]
 	cmp	r0, #0
-	bne	.L1116	@cond_branch
+	bne	.L1117	@cond_branch
 	ldrb	r1, [r3, #0x1a]
 	lsl	r1, r1, #0x1c
 	lsr	r1, r1, #0x1c
@@ -13243,9 +13237,9 @@ SetBallStuck:
 	ldr	r0, [r0]
 	and	r2, r2, r0
 	cmp	r2, #0
-	beq	.L1116	@cond_branch
+	beq	.L1117	@cond_branch
 	str	r5, [sp, #0xc]
-.L1116:
+.L1117:
 	add	r0, r6, #0x1
 	mov	r1, #0xc
 	bl	__modsi3
@@ -13255,8 +13249,8 @@ SetBallStuck:
 	lsl	r0, r0, #0x18
 	lsr	r5, r0, #0x18
 	cmp	r5, r8
-	bcc	.L1115	@cond_branch
-.L1113:
+	bcc	.L1116	@cond_branch
+.L1114:
 	ldr	r0, [r4]
 	ldrb	r1, [r0, #0x3]
 	lsl	r1, r1, #0x1b
@@ -13265,33 +13259,33 @@ SetBallStuck:
 	ldrb	r0, [r0, #0x2]
 	and	r1, r1, r0
 	cmp	r1, #0
-	beq	.L1119	@cond_branch
+	beq	.L1120	@cond_branch
 	ldr	r1, [sp, #0xc]
 	cmp	r1, #0
-	beq	.L1120	@cond_branch
+	beq	.L1121	@cond_branch
 	mov	r0, #0xff
 	ldr	r1, [sp, #0x10]
 	and	r0, r0, r1
 	cmp	r0, #0xbf
-	bhi	.L1120	@cond_branch
+	bhi	.L1121	@cond_branch
 	mov	r0, sp
 	ldrh	r0, [r0, #0xc]
-	b	.L1126
-.L1136:
+	b	.L1127
+.L1137:
 	.align	2, 0
-.L1135:
+.L1136:
 	.word	sGridSelections+0xc
 	.word	sRouletteSlots+0x4
+.L1121:
 .L1120:
-.L1119:
 	ldr	r0, [sp, #0x10]
 	mov	r1, r9
 	bl	__modsi3
 	add	r0, r0, sp
 	ldrb	r0, [r0]
-.L1126:
+.L1127:
 	strh	r0, [r7, #0x3c]
-	ldr	r1, .L1137
+	ldr	r1, .L1138
 	str	r1, [r7, #0x1c]
 	add	sp, sp, #0x14
 	pop	{r3, r4, r5}
@@ -13301,9 +13295,9 @@ SetBallStuck:
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L1138:
+.L1139:
 	.align	2, 0
-.L1137:
+.L1138:
 	.word	SpriteCB_UnstickBall
 .Lfe94:
 	.size	 SetBallStuck,.Lfe94-SetBallStuck
@@ -13337,7 +13331,7 @@ SpriteCB_ShroomishExit:
 	mov	r3, #0x34
 	ldrsh	r1, [r2, r3]
 	cmp	r0, r1
-	blt	.L1140	@cond_branch
+	blt	.L1141	@cond_branch
 	ldrh	r0, [r2, #0x20]
 	sub	r0, r0, #0x2
 	strh	r0, [r2, #0x20]
@@ -13346,34 +13340,34 @@ SpriteCB_ShroomishExit:
 	mov	r1, #0x10
 	neg	r1, r1
 	cmp	r0, r1
-	bge	.L1140	@cond_branch
-	ldr	r4, .L1143
+	bge	.L1141	@cond_branch
+	ldr	r4, .L1144
 	ldr	r3, [r4]
 	ldrb	r1, [r3, #0x3]
 	mov	r0, #0x40
 	and	r0, r0, r1
 	cmp	r0, #0
-	bne	.L1142	@cond_branch
+	bne	.L1143	@cond_branch
 	mov	r0, #0x40
 	orr	r0, r0, r1
 	strb	r0, [r3, #0x3]
-.L1142:
+.L1143:
 	add	r0, r2, #0
 	bl	DestroySprite
 	ldr	r1, [r4]
 	mov	r0, #0x0
 	strb	r0, [r1, #0x1]
 	ldr	r1, [r4]
-	ldr	r0, .L1143+0x4
+	ldr	r0, .L1144+0x4
 	ldrh	r0, [r0]
 	strh	r0, [r1, #0x34]
-.L1140:
+.L1141:
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L1144:
+.L1145:
 	.align	2, 0
-.L1143:
+.L1144:
 	.word	sRoulette
 	.word	sShroomishShadowAlphas
 .Lfe95:
@@ -13401,7 +13395,7 @@ SpriteCB_ShroomishShakeScreen:
 	push	{r4, lr}
 	add	sp, sp, #-0x18
 	add	r4, r0, #0
-	ldr	r1, .L1150
+	ldr	r1, .L1151
 	mov	r0, sp
 	mov	r2, #0x18
 	bl	memcpy
@@ -13413,12 +13407,12 @@ SpriteCB_ShroomishShakeScreen:
 	mov	r3, #0x34
 	ldrsh	r1, [r4, r3]
 	cmp	r0, r1
-	bge	.L1146	@cond_branch
+	bge	.L1147	@cond_branch
 	mov	r0, #0x1
 	and	r2, r2, r0
 	cmp	r2, #0
-	beq	.L1147	@cond_branch
-	ldr	r3, .L1150+0x4
+	beq	.L1148	@cond_branch
+	ldr	r3, .L1151+0x4
 	mov	r0, #0x3c
 	ldrsh	r2, [r4, r0]
 	lsl	r2, r2, #0x1
@@ -13438,14 +13432,14 @@ SpriteCB_ShroomishShakeScreen:
 	add	r1, r2, #0x1
 	add	r0, r1, #0
 	cmp	r1, #0
-	bge	.L1148	@cond_branch
+	bge	.L1149	@cond_branch
 	add	r0, r2, #0x4
-.L1148:
+.L1149:
 	asr	r0, r0, #0x2
 	lsl	r0, r0, #0x2
 	sub	r0, r1, r0
 	strh	r0, [r4, #0x3c]
-.L1147:
+.L1148:
 	add	r3, r4, #0
 	add	r3, r3, #0x3e
 	ldrb	r2, [r3]
@@ -13459,18 +13453,18 @@ SpriteCB_ShroomishShakeScreen:
 	and	r0, r0, r2
 	orr	r0, r0, r1
 	strb	r0, [r3]
-	b	.L1149
-.L1151:
+	b	.L1150
+.L1152:
 	.align	2, 0
-.L1150:
+.L1151:
 	.word	.LC393
 	.word	gSpriteCoordOffsetY
-.L1146:
-	ldr	r1, .L1152
+.L1147:
+	ldr	r1, .L1153
 	mov	r0, #0x0
 	strh	r0, [r1]
-	ldr	r2, .L1152+0x4
-	ldr	r0, .L1152+0x8
+	ldr	r2, .L1153+0x4
+	ldr	r0, .L1153+0x8
 	ldr	r0, [r0]
 	add	r0, r0, #0x73
 	ldrb	r1, [r0]
@@ -13486,14 +13480,14 @@ SpriteCB_ShroomishShakeScreen:
 	strb	r1, [r0]
 	add	r0, r4, #0
 	bl	DestroySprite
-.L1149:
+.L1150:
 	add	sp, sp, #0x18
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L1153:
+.L1154:
 	.align	2, 0
-.L1152:
+.L1153:
 	.word	gSpriteCoordOffsetY
 	.word	gSprites
 	.word	sRoulette
@@ -13512,15 +13506,15 @@ SpriteCB_ShroomishFall:
 	ldrsh	r0, [r5, r1]
 	bl	__floatsisf
 	add	r4, r0, #0
-	ldr	r1, .L1157
+	ldr	r1, .L1158
 	bl	__mulsf3
 	add	r1, r4, #0
 	bl	__mulsf3
 	bl	__fixsfsi
 	strh	r0, [r5, #0x26]
-	ldr	r0, .L1157+0x4
+	ldr	r0, .L1158+0x4
 	ldr	r3, [r0]
-	ldr	r2, .L1157+0x8
+	ldr	r2, .L1158+0x8
 	ldrb	r0, [r3, #0x1]
 	sub	r0, r0, #0x1
 	lsr	r1, r0, #0x1f
@@ -13532,19 +13526,19 @@ SpriteCB_ShroomishFall:
 	strh	r0, [r3, #0x34]
 	ldrb	r0, [r3, #0x1]
 	cmp	r0, #0x12
-	bhi	.L1155	@cond_branch
+	bhi	.L1156	@cond_branch
 	add	r0, r0, #0x1
 	strb	r0, [r3, #0x1]
-.L1155:
+.L1156:
 	mov	r1, #0x30
 	ldrsh	r0, [r5, r1]
 	cmp	r0, #0x3c
-	ble	.L1156	@cond_branch
+	ble	.L1157	@cond_branch
 	mov	r0, #0x0
 	strh	r0, [r5, #0x30]
-	ldr	r3, .L1157+0xc
+	ldr	r3, .L1158+0xc
 	str	r3, [r5, #0x1c]
-	ldr	r2, .L1157+0x10
+	ldr	r2, .L1158+0x10
 	mov	r0, #0x3a
 	ldrsh	r1, [r5, r0]
 	lsl	r0, r1, #0x4
@@ -13560,7 +13554,7 @@ SpriteCB_ShroomishFall:
 	add	r0, r0, r1
 	lsl	r0, r0, #0x2
 	add	r0, r0, r2
-	ldr	r1, .L1157+0x14
+	ldr	r1, .L1158+0x14
 	strh	r1, [r0, #0x30]
 	mov	r0, #0x38
 	ldrsh	r1, [r5, r0]
@@ -13580,17 +13574,17 @@ SpriteCB_ShroomishFall:
 	add	r0, r0, r1
 	lsl	r0, r0, #0x2
 	add	r0, r0, r4
-	ldr	r1, .L1157+0x18
+	ldr	r1, .L1158+0x18
 	str	r1, [r0]
 	mov	r0, #0xd6
 	bl	m4aSongNumStart
-.L1156:
+.L1157:
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.L1158:
+.L1159:
 	.align	2, 0
-.L1157:
+.L1158:
 	.word 0x3d1fbe77	@ float 3.90000008046627044678e-2
 	.word	sRoulette
 	.word	sShroomishShadowAlphas
@@ -13609,41 +13603,41 @@ SpriteCB_Shroomish:
 	mov	r1, #0x3c
 	ldrsh	r0, [r4, r1]
 	cmp	r0, #0
-	bne	.L1160	@cond_branch
-	ldr	r0, .L1173
+	bne	.L1161	@cond_branch
+	ldr	r0, .L1174
 	ldr	r3, [r0]
 	ldr	r1, [r3, #0x38]
 	mov	r2, #0x2e
 	ldrsh	r0, [r1, r2]
 	cmp	r0, #0
-	bne	.L1161	@cond_branch
+	bne	.L1162	@cond_branch
 	mov	r0, #0x34
 	ldrsh	r2, [r1, r0]
-	ldr	r1, .L1173+0x4
+	ldr	r1, .L1174+0x4
 	ldrb	r0, [r3, #0x4]
 	lsl	r0, r0, #0x1e
 	lsr	r0, r0, #0x19
 	add	r0, r0, r1
 	ldrh	r0, [r0, #0x8]
-	b	.L1171
-.L1174:
+	b	.L1172
+.L1175:
 	.align	2, 0
-.L1173:
+.L1174:
 	.word	sRoulette
 	.word	sRouletteTables
-.L1161:
+.L1162:
 	mov	r0, #0x34
 	ldrsh	r2, [r1, r0]
-	ldr	r1, .L1175
+	ldr	r1, .L1176
 	ldrb	r0, [r3, #0x4]
 	lsl	r0, r0, #0x1e
 	lsr	r0, r0, #0x19
 	add	r0, r0, r1
 	ldrh	r0, [r0, #0x8]
 	add	r0, r0, #0xb4
-.L1171:
+.L1172:
 	cmp	r2, r0
-	bne	.L1159	@cond_branch
+	bne	.L1160	@cond_branch
 	add	r2, r4, #0
 	add	r2, r2, #0x3e
 	ldrb	r1, [r2]
@@ -13656,25 +13650,25 @@ SpriteCB_Shroomish:
 	strh	r0, [r4, #0x3c]
 	mov	r0, #0x2b
 	bl	m4aSongNumStart
-	ldr	r2, .L1175+0x4
+	ldr	r2, .L1176+0x4
 	ldr	r1, [r2]
 	mov	r0, #0x1
 	strb	r0, [r1, #0x1]
 	ldr	r1, [r2]
-	ldr	r0, .L1175+0x8
+	ldr	r0, .L1176+0x8
 	ldrh	r0, [r0]
 	strh	r0, [r1, #0x34]
-	b	.L1159
-.L1176:
+	b	.L1160
+.L1177:
 	.align	2, 0
-.L1175:
+.L1176:
 	.word	sRouletteTables
 	.word	sRoulette
 	.word	sShroomishShadowAlphas
-.L1160:
-	ldr	r5, .L1177
+.L1161:
+	ldr	r5, .L1178
 	ldr	r3, [r5]
-	ldr	r2, .L1177+0x4
+	ldr	r2, .L1178+0x4
 	ldrb	r0, [r3, #0x1]
 	sub	r0, r0, #0x1
 	lsr	r1, r0, #0x1f
@@ -13686,45 +13680,45 @@ SpriteCB_Shroomish:
 	strh	r0, [r3, #0x34]
 	ldrb	r0, [r3, #0x1]
 	cmp	r0, #0x12
-	bhi	.L1166	@cond_branch
+	bhi	.L1167	@cond_branch
 	add	r0, r0, #0x1
 	strb	r0, [r3, #0x1]
-.L1166:
+.L1167:
 	ldr	r3, [r5]
 	ldr	r1, [r3, #0x38]
 	mov	r2, #0x2e
 	ldrsh	r0, [r1, r2]
 	cmp	r0, #0
-	bne	.L1167	@cond_branch
+	bne	.L1168	@cond_branch
 	mov	r0, #0x34
 	ldrsh	r2, [r1, r0]
-	ldr	r1, .L1177+0x8
+	ldr	r1, .L1178+0x8
 	ldrb	r0, [r3, #0x4]
 	lsl	r0, r0, #0x1e
 	lsr	r0, r0, #0x19
 	add	r0, r0, r1
 	ldrh	r0, [r0, #0xa]
-	b	.L1172
-.L1178:
+	b	.L1173
+.L1179:
 	.align	2, 0
-.L1177:
+.L1178:
 	.word	sRoulette
 	.word	sShroomishShadowAlphas
 	.word	sRouletteTables
-.L1167:
+.L1168:
 	mov	r0, #0x34
 	ldrsh	r2, [r1, r0]
-	ldr	r1, .L1179
+	ldr	r1, .L1180
 	ldrb	r0, [r3, #0x4]
 	lsl	r0, r0, #0x1e
 	lsr	r0, r0, #0x19
 	add	r0, r0, r1
 	ldrh	r0, [r0, #0xa]
 	add	r0, r0, #0xb4
-.L1172:
+.L1173:
 	cmp	r2, r0
-	bne	.L1159	@cond_branch
-	ldr	r2, .L1179+0x4
+	bne	.L1160	@cond_branch
+	ldr	r2, .L1180+0x4
 	mov	r0, #0x36
 	ldrsh	r1, [r4, r0]
 	lsl	r0, r1, #0x4
@@ -13733,7 +13727,7 @@ SpriteCB_Shroomish:
 	add	r1, r2, #0
 	add	r1, r1, #0x1c
 	add	r0, r0, r1
-	ldr	r1, .L1179+0x8
+	ldr	r1, .L1180+0x8
 	str	r1, [r0]
 	mov	r0, #0x36
 	ldrsh	r1, [r4, r0]
@@ -13747,17 +13741,17 @@ SpriteCB_Shroomish:
 	neg	r1, r1
 	and	r1, r1, r2
 	strb	r1, [r0]
-	ldr	r0, .L1179+0xc
+	ldr	r0, .L1180+0xc
 	str	r0, [r4, #0x1c]
 	mov	r0, #0x0
 	strh	r0, [r4, #0x3c]
-.L1159:
+.L1160:
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.L1180:
+.L1181:
 	.align	2, 0
-.L1179:
+.L1180:
 	.word	sRouletteTables
 	.word	gSprites
 	.word	SpriteCB_ShroomishFall
@@ -13795,12 +13789,12 @@ SpriteCB_Taillow_FlyAway:
 	mov	r0, #0x10
 	neg	r0, r0
 	cmp	r1, r0
-	ble	.L1183	@cond_branch
+	ble	.L1184	@cond_branch
 	sub	r0, r2, #0x1
 	strh	r0, [r4, #0x22]
-	b	.L1184
-.L1183:
-	ldr	r0, .L1185
+	b	.L1185
+.L1184:
+	ldr	r0, .L1186
 	str	r0, [r4, #0x1c]
 	add	r2, r4, #0
 	add	r2, r2, #0x3e
@@ -13817,8 +13811,8 @@ SpriteCB_Taillow_FlyAway:
 	bl	m4aSongNumStop
 	add	r0, r4, #0
 	bl	DestroySprite
-	ldr	r5, .L1185+0x4
-	ldr	r4, .L1185+0x8
+	ldr	r5, .L1186+0x4
+	ldr	r4, .L1186+0x8
 	ldr	r0, [r4]
 	add	r0, r0, #0x74
 	ldrb	r1, [r0]
@@ -13838,13 +13832,13 @@ SpriteCB_Taillow_FlyAway:
 	lsl	r0, r0, #0x2
 	add	r0, r0, r5
 	bl	DestroySprite
-.L1184:
+.L1185:
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.L1186:
+.L1187:
 	.align	2, 0
-.L1185:
+.L1186:
 	.word	SpriteCallbackDummy
 	.word	gSprites
 	.word	sRoulette
@@ -13860,7 +13854,7 @@ SpriteCB_Taillow_PickUpBall:
 	mov	r2, #0x30
 	ldrsh	r0, [r4, r2]
 	cmp	r0, #0
-	blt	.L1188	@cond_branch
+	blt	.L1189	@cond_branch
 	sub	r1, r1, #0x1
 	strh	r1, [r4, #0x30]
 	ldrh	r0, [r4, #0x22]
@@ -13868,19 +13862,19 @@ SpriteCB_Taillow_PickUpBall:
 	strh	r0, [r4, #0x22]
 	lsl	r1, r1, #0x10
 	cmp	r1, #0
-	bne	.L1190	@cond_branch
+	bne	.L1191	@cond_branch
 	add	r0, r4, #0
 	add	r0, r0, #0x2b
 	ldrb	r0, [r0]
 	cmp	r0, #0x1
-	bne	.L1190	@cond_branch
-	b	.L1196
-.L1188:
+	bne	.L1191	@cond_branch
+	b	.L1197
+.L1189:
 	ldrh	r1, [r4, #0x34]
 	mov	r2, #0x34
 	ldrsh	r0, [r4, r2]
 	cmp	r0, #0
-	blt	.L1191	@cond_branch
+	blt	.L1192	@cond_branch
 	sub	r0, r1, #0x1
 	strh	r0, [r4, #0x34]
 	add	r0, r4, #0
@@ -13889,26 +13883,26 @@ SpriteCB_Taillow_PickUpBall:
 	mov	r0, #0x3f
 	and	r0, r0, r1
 	cmp	r0, #0
-	bne	.L1190	@cond_branch
+	bne	.L1191	@cond_branch
 	add	r0, r4, #0
 	add	r0, r0, #0x2b
 	ldrb	r0, [r0]
 	cmp	r0, #0x1
-	bne	.L1193	@cond_branch
-.L1196:
+	bne	.L1194	@cond_branch
+.L1197:
 	ldrh	r0, [r4, #0x26]
 	add	r0, r0, #0x1
 	strh	r0, [r4, #0x26]
-	b	.L1190
-.L1193:
+	b	.L1191
+.L1194:
 	ldrh	r0, [r4, #0x26]
 	sub	r0, r0, #0x1
 	strh	r0, [r4, #0x26]
-	b	.L1190
-.L1191:
+	b	.L1191
+.L1192:
 	mov	r0, #0x2b
 	bl	m4aSongNumStart
-	ldr	r0, .L1197
+	ldr	r0, .L1198
 	ldr	r0, [r0]
 	ldr	r0, [r0, #0x38]
 	ldrh	r1, [r0, #0x2e]
@@ -13917,9 +13911,9 @@ SpriteCB_Taillow_PickUpBall:
 	lsr	r1, r1, #0x18
 	add	r0, r4, #0
 	bl	StartSpriteAnim
-	ldr	r0, .L1197+0x4
+	ldr	r0, .L1198+0x4
 	str	r0, [r4, #0x1c]
-	ldr	r2, .L1197+0x8
+	ldr	r2, .L1198+0x8
 	mov	r0, #0x3a
 	ldrsh	r1, [r4, r0]
 	lsl	r0, r1, #0x4
@@ -13931,13 +13925,13 @@ SpriteCB_Taillow_PickUpBall:
 	mov	r1, #0x7f
 	and	r1, r1, r2
 	strb	r1, [r0]
-.L1190:
+.L1191:
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L1198:
+.L1199:
 	.align	2, 0
-.L1197:
+.L1198:
 	.word	sRoulette
 	.word	SpriteCB_Taillow_FlyAway
 	.word	gSprites
@@ -13972,12 +13966,12 @@ SpriteCB_Taillow_FlyIn:
 	push	{r4, r5, lr}
 	add	sp, sp, #-0x14
 	add	r4, r0, #0
-	ldr	r1, .L1207
+	ldr	r1, .L1208
 	mov	r0, sp
 	mov	r2, #0x2
 	bl	memcpy
 	add	r5, sp, #0x4
-	ldr	r1, .L1207+0x4
+	ldr	r1, .L1208+0x4
 	add	r0, r5, #0
 	mov	r2, #0x10
 	bl	memcpy
@@ -13987,8 +13981,8 @@ SpriteCB_Taillow_FlyIn:
 	lsl	r0, r0, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, #0x7
-	ble	.L1200	@cond_branch
-	ldr	r0, .L1207+0x8
+	ble	.L1201	@cond_branch
+	ldr	r0, .L1208+0x8
 	ldr	r0, [r0]
 	ldr	r0, [r0, #0x38]
 	mov	r1, #0x2e
@@ -14004,7 +13998,7 @@ SpriteCB_Taillow_FlyIn:
 	bl	IsSEPlaying
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.L1202	@cond_branch
+	beq	.L1203	@cond_branch
 	mov	r1, #0x20
 	ldrsh	r0, [r4, r1]
 	mov	r4, #0x74
@@ -14013,32 +14007,32 @@ SpriteCB_Taillow_FlyIn:
 	add	r4, r4, r0
 	asr	r4, r4, #0x1
 	neg	r4, r4
-	ldr	r0, .L1207+0xc
-	ldr	r5, .L1207+0x10
+	ldr	r0, .L1208+0xc
+	ldr	r5, .L1208+0x10
 	lsl	r4, r4, #0x18
 	asr	r4, r4, #0x18
 	add	r1, r5, #0
 	add	r2, r4, #0
 	bl	m4aMPlayPanpotControl
-	ldr	r0, .L1207+0x14
+	ldr	r0, .L1208+0x14
 	add	r1, r5, #0
 	add	r2, r4, #0
 	bl	m4aMPlayPanpotControl
-	b	.L1202
-.L1208:
+	b	.L1203
+.L1209:
 	.align	2, 0
-.L1207:
+.L1208:
 	.word	.LC417
 	.word	.LC419
 	.word	sRoulette
 	.word	gMPlayInfo_SE1
 	.word	0xffff
 	.word	gMPlayInfo_SE2
-.L1200:
+.L1201:
 	lsl	r0, r1, #0x10
 	cmp	r0, #0
-	blt	.L1203	@cond_branch
-	ldr	r0, .L1209
+	blt	.L1204	@cond_branch
+	ldr	r0, .L1210
 	ldr	r0, [r0]
 	ldr	r0, [r0, #0x38]
 	mov	r2, #0x2e
@@ -14072,38 +14066,38 @@ SpriteCB_Taillow_FlyIn:
 	ldrh	r1, [r4, #0x22]
 	add	r0, r0, r1
 	strh	r0, [r4, #0x22]
-	b	.L1202
-.L1210:
+	b	.L1203
+.L1211:
 	.align	2, 0
-.L1209:
+.L1210:
 	.word	sRoulette
-.L1203:
+.L1204:
 	mov	r0, #0x5e
 	bl	m4aSongNumStartOrChange
-	ldr	r0, .L1211
+	ldr	r0, .L1212
 	ldr	r0, [r0]
 	ldr	r0, [r0, #0x38]
 	mov	r2, #0x2e
 	ldrsh	r0, [r0, r2]
 	cmp	r0, #0
-	bne	.L1205	@cond_branch
+	bne	.L1206	@cond_branch
 	mov	r0, #0x8a
 	lsl	r0, r0, #0x1
 	mov	r1, #0x3f
 	bl	PlayCry1
-	b	.L1206
-.L1212:
+	b	.L1207
+.L1213:
 	.align	2, 0
-.L1211:
+.L1212:
 	.word	sRoulette
-.L1205:
+.L1206:
 	mov	r0, #0x8a
 	lsl	r0, r0, #0x1
 	mov	r1, #0x3f
 	neg	r1, r1
 	bl	PlayCry1
-.L1206:
-	ldr	r0, .L1213
+.L1207:
+	ldr	r0, .L1214
 	ldr	r0, [r0]
 	ldr	r0, [r0, #0x38]
 	ldrh	r1, [r0, #0x2e]
@@ -14114,16 +14108,16 @@ SpriteCB_Taillow_FlyIn:
 	bl	StartSpriteAnim
 	mov	r0, #0x2d
 	strh	r0, [r4, #0x30]
-	ldr	r0, .L1213+0x4
+	ldr	r0, .L1214+0x4
 	str	r0, [r4, #0x1c]
-.L1202:
+.L1203:
 	add	sp, sp, #0x14
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.L1214:
+.L1215:
 	.align	2, 0
-.L1213:
+.L1214:
 	.word	sRoulette
 	.word	SpriteCB_Taillow_PickUpBall
 .Lfe102:
@@ -14135,7 +14129,7 @@ SpriteCB_TaillowShadow_FlyIn:
 	push	{r4, lr}
 	add	sp, sp, #-0x4
 	add	r4, r0, #0
-	ldr	r1, .L1218
+	ldr	r1, .L1219
 	mov	r0, sp
 	mov	r2, #0x2
 	bl	memcpy
@@ -14144,8 +14138,8 @@ SpriteCB_TaillowShadow_FlyIn:
 	strh	r1, [r4, #0x30]
 	lsl	r0, r0, #0x10
 	cmp	r0, #0
-	blt	.L1216	@cond_branch
-	ldr	r0, .L1218+0x4
+	blt	.L1217	@cond_branch
+	ldr	r0, .L1219+0x4
 	ldr	r0, [r0]
 	ldr	r0, [r0, #0x38]
 	mov	r1, #0x2e
@@ -14158,7 +14152,7 @@ SpriteCB_TaillowShadow_FlyIn:
 	ldrh	r2, [r4, #0x20]
 	add	r0, r0, r2
 	strh	r0, [r4, #0x20]
-	ldr	r1, .L1218+0x8
+	ldr	r1, .L1219+0x8
 	mov	r2, #0x3a
 	ldrsh	r0, [r4, r2]
 	lsl	r2, r0, #0x4
@@ -14177,24 +14171,24 @@ SpriteCB_TaillowShadow_FlyIn:
 	and	r0, r0, r3
 	orr	r0, r0, r1
 	strb	r0, [r2]
-	b	.L1217
-.L1219:
+	b	.L1218
+.L1220:
 	.align	2, 0
-.L1218:
+.L1219:
 	.word	.LC417
 	.word	sRoulette
 	.word	gSprites
-.L1216:
-	ldr	r0, .L1220
-	str	r0, [r4, #0x1c]
 .L1217:
+	ldr	r0, .L1221
+	str	r0, [r4, #0x1c]
+.L1218:
 	add	sp, sp, #0x4
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L1221:
+.L1222:
 	.align	2, 0
-.L1220:
+.L1221:
 	.word	SpriteCB_TaillowShadow_Flash
 .Lfe103:
 	.size	 SpriteCB_TaillowShadow_FlyIn,.Lfe103-SpriteCB_TaillowShadow_FlyIn
@@ -14204,16 +14198,16 @@ SpriteCB_TaillowShadow_FlyIn:
 SpriteCB_Taillow:
 	push	{r4, lr}
 	add	r4, r0, #0
-	ldr	r0, .L1230
+	ldr	r0, .L1231
 	ldr	r3, [r0]
 	ldr	r1, [r3, #0x38]
 	mov	r2, #0x2e
 	ldrsh	r0, [r1, r2]
 	cmp	r0, #0
-	bne	.L1223	@cond_branch
+	bne	.L1224	@cond_branch
 	mov	r0, #0x34
 	ldrsh	r2, [r1, r0]
-	ldr	r1, .L1230+0x4
+	ldr	r1, .L1231+0x4
 	ldrb	r0, [r3, #0x4]
 	lsl	r0, r0, #0x1e
 	lsr	r0, r0, #0x19
@@ -14221,8 +14215,8 @@ SpriteCB_Taillow:
 	ldrh	r0, [r0, #0x12]
 	add	r0, r0, #0x5a
 	cmp	r2, r0
-	bne	.L1222	@cond_branch
-	ldr	r2, .L1230+0x8
+	bne	.L1223	@cond_branch
+	ldr	r2, .L1231+0x8
 	mov	r0, #0x3a
 	ldrsh	r1, [r4, r0]
 	lsl	r0, r1, #0x4
@@ -14230,17 +14224,17 @@ SpriteCB_Taillow:
 	lsl	r0, r0, #0x2
 	add	r0, r0, r2
 	mov	r3, #0x34
-	b	.L1229
-.L1231:
+	b	.L1230
+.L1232:
 	.align	2, 0
-.L1230:
+.L1231:
 	.word	sRoulette
 	.word	sRouletteTables
 	.word	gSprites
-.L1223:
+.L1224:
 	mov	r0, #0x34
 	ldrsh	r2, [r1, r0]
-	ldr	r1, .L1232
+	ldr	r1, .L1233
 	ldrb	r0, [r3, #0x4]
 	lsl	r0, r0, #0x1e
 	lsr	r0, r0, #0x19
@@ -14250,8 +14244,8 @@ SpriteCB_Taillow:
 	lsl	r1, r1, #0x1
 	add	r0, r0, r1
 	cmp	r2, r0
-	bne	.L1222	@cond_branch
-	ldr	r2, .L1232+0x4
+	bne	.L1223	@cond_branch
+	ldr	r2, .L1233+0x4
 	mov	r0, #0x3a
 	ldrsh	r1, [r4, r0]
 	lsl	r0, r1, #0x4
@@ -14259,7 +14253,7 @@ SpriteCB_Taillow:
 	lsl	r0, r0, #0x2
 	add	r0, r0, r2
 	mov	r3, #0x2e
-.L1229:
+.L1230:
 	strh	r3, [r0, #0x30]
 	mov	r0, #0x36
 	ldrsh	r1, [r4, r0]
@@ -14275,7 +14269,7 @@ SpriteCB_Taillow:
 	lsl	r0, r0, #0x2
 	add	r2, r2, #0x1c
 	add	r0, r0, r2
-	ldr	r1, .L1232+0x8
+	ldr	r1, .L1233+0x8
 	str	r1, [r0]
 	mov	r0, #0x36
 	ldrsh	r1, [r4, r0]
@@ -14283,17 +14277,17 @@ SpriteCB_Taillow:
 	add	r0, r0, r1
 	lsl	r0, r0, #0x2
 	add	r0, r0, r2
-	ldr	r1, .L1232+0xc
+	ldr	r1, .L1233+0xc
 	str	r1, [r0]
 	mov	r0, #0x2b
 	bl	m4aSongNumStart
-.L1222:
+.L1223:
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L1233:
+.L1234:
 	.align	2, 0
-.L1232:
+.L1233:
 	.word	sRouletteTables
 	.word	gSprites
 	.word	SpriteCB_TaillowShadow_FlyIn

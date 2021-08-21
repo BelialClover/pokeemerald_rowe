@@ -12369,103 +12369,97 @@ PlayerHandleDataTransfer:
 	.type	 PlayerHandleDMA3Transfer,function
 	.thumb_func
 PlayerHandleDMA3Transfer:
-	push	{r4, r5, lr}
-	ldr	r0, .L1324
-	ldr	r0, [r0]
-	mov	ip, r0
-	ldr	r0, .L1324+0x4
+	push	{r4, r5, r6, r7, lr}
+	mov	r7, r8
+	push	{r7}
+	ldr	r0, .L1323
+	ldr	r3, [r0]
+	ldr	r0, .L1323+0x4
 	ldrb	r1, [r0]
 	lsl	r1, r1, #0x9
-	mov	r0, ip
+	add	r0, r3, #0
 	add	r0, r0, #0x21
 	add	r0, r0, r1
-	ldrb	r4, [r0]
-	mov	r0, ip
+	ldrb	r5, [r0]
+	add	r0, r3, #0
 	add	r0, r0, #0x22
 	add	r0, r0, r1
 	ldrb	r0, [r0]
 	lsl	r0, r0, #0x8
-	orr	r4, r4, r0
-	mov	r0, ip
+	orr	r5, r5, r0
+	add	r0, r3, #0
 	add	r0, r0, #0x23
 	add	r0, r0, r1
 	ldrb	r0, [r0]
 	lsl	r0, r0, #0x10
-	orr	r4, r4, r0
-	mov	r0, ip
+	orr	r5, r5, r0
+	add	r0, r3, #0
 	add	r0, r0, #0x24
 	add	r0, r0, r1
-	ldrb	r3, [r0]
-	lsl	r3, r3, #0x18
-	mov	r0, ip
+	ldrb	r2, [r0]
+	lsl	r2, r2, #0x18
+	add	r0, r3, #0
 	add	r0, r0, #0x25
 	add	r0, r0, r1
-	ldrb	r2, [r0]
-	mov	r0, ip
+	ldrb	r4, [r0]
+	add	r0, r3, #0
 	add	r0, r0, #0x26
 	add	r0, r0, r1
 	ldrb	r0, [r0]
 	lsl	r0, r0, #0x8
-	orr	r2, r2, r0
-	lsl	r2, r2, #0x10
 	add	r1, r1, #0x20
-	add	r1, r1, ip
-	add	r1, r1, #0x7
-	orr	r4, r4, r3
-	lsr	r3, r2, #0x10
+	add	r1, r3, r1
+	add	r3, r1, #0x7
+	orr	r5, r5, r2
+	orr	r4, r4, r0
 	mov	r0, #0x80
 	lsl	r0, r0, #0x5
-	cmp	r3, r0
-	bhi	.L1321	@cond_branch
-	ldr	r0, .L1324+0x8
-	str	r1, [r0]
-	str	r4, [r0, #0x4]
-	lsr	r1, r2, #0x11
-	mov	r2, #0x80
-	lsl	r2, r2, #0x18
-	orr	r1, r1, r2
-	str	r1, [r0, #0x8]
-	ldr	r0, [r0, #0x8]
-	b	.L1323
-.L1325:
-	.align	2, 0
+	mov	r8, r0
+	mov	r7, #0x80
+	lsl	r7, r7, #0x18
+	mov	ip, r7
+	ldr	r6, .L1323+0x8
+	b	.L1320
 .L1324:
+	.align	2, 0
+.L1323:
 	.word	gBattleResources
 	.word	gActiveBattler
-	.word	0x40000d4
+	.word	-0x7ffff800
 .L1321:
-	ldr	r2, .L1326
-	str	r1, [r2]
-	str	r4, [r2, #0x4]
-	ldr	r0, .L1326+0x4
-	str	r0, [r2, #0x8]
-	ldr	r0, [r2, #0x8]
+	add	r0, r3, #0
+	add	r1, r5, #0
+	add	r2, r6, #0
+	ldr	r7, .L1325
+	stmia r7!, {r0, r1, r2}
+	.code	16
 	mov	r0, #0x80
 	lsl	r0, r0, #0x5
-	add	r1, r1, r0
-	add	r4, r4, r0
-	ldr	r5, .L1326+0x8
-	add	r3, r3, r5
-	cmp	r3, r0
+	add	r3, r3, r0
+	add	r5, r5, r0
+	ldr	r7, .L1325+0x4
+	add	r4, r4, r7
+.L1320:
+	cmp	r4, r8
 	bhi	.L1321	@cond_branch
-	str	r1, [r2]
-	str	r4, [r2, #0x4]
-	lsr	r0, r3, #0x1
-	mov	r1, #0x80
-	lsl	r1, r1, #0x18
-	orr	r0, r0, r1
-	str	r0, [r2, #0x8]
-	ldr	r0, [r2, #0x8]
-.L1323:
+	lsr	r2, r4, #0x1
+	add	r0, r3, #0
+	add	r1, r5, #0
+	mov	r3, ip
+	orr	r2, r2, r3
+	ldr	r7, .L1325
+	stmia r7!, {r0, r1, r2}
+	.code	16
 	bl	PlayerBufferExecCompleted
-	pop	{r4, r5}
+	pop	{r3}
+	mov	r8, r3
+	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L1327:
-	.align	2, 0
 .L1326:
+	.align	2, 0
+.L1325:
 	.word	0x40000d4
-	.word	-0x7ffff800
 	.word	-0x1000
 .Lfe100:
 	.size	 PlayerHandleDMA3Transfer,.Lfe100-PlayerHandleDMA3Transfer
@@ -12474,9 +12468,9 @@ PlayerHandleDMA3Transfer:
 	.thumb_func
 PlayerHandlePlayBGM:
 	push	{lr}
-	ldr	r0, .L1329
+	ldr	r0, .L1328
 	ldr	r2, [r0]
-	ldr	r0, .L1329+0x4
+	ldr	r0, .L1328+0x4
 	ldrb	r1, [r0]
 	lsl	r1, r1, #0x9
 	add	r0, r2, #0
@@ -12492,9 +12486,9 @@ PlayerHandlePlayBGM:
 	bl	PlayerBufferExecCompleted
 	pop	{r0}
 	bx	r0
-.L1330:
-	.align	2, 0
 .L1329:
+	.align	2, 0
+.L1328:
 	.word	gBattleResources
 	.word	gActiveBattler
 .Lfe101:
@@ -12568,7 +12562,7 @@ PlayerHandleOneReturnValue_Duplicate:
 	.thumb_func
 PlayerHandleCmd37:
 	push	{lr}
-	ldr	r2, .L1337
+	ldr	r2, .L1336
 	ldrb	r1, [r2]
 	mov	r0, #0x80
 	neg	r0, r0
@@ -12577,9 +12571,9 @@ PlayerHandleCmd37:
 	bl	PlayerBufferExecCompleted
 	pop	{r0}
 	bx	r0
-.L1338:
-	.align	2, 0
 .L1337:
+	.align	2, 0
+.L1336:
 	.word	gUnknown_02022D0C
 .Lfe107:
 	.size	 PlayerHandleCmd37,.Lfe107-PlayerHandleCmd37
@@ -12588,10 +12582,10 @@ PlayerHandleCmd37:
 	.thumb_func
 PlayerHandleCmd38:
 	push	{lr}
-	ldr	r3, .L1340
-	ldr	r0, .L1340+0x4
+	ldr	r3, .L1339
+	ldr	r0, .L1339+0x4
 	ldr	r1, [r0]
-	ldr	r0, .L1340+0x8
+	ldr	r0, .L1339+0x8
 	ldrb	r0, [r0]
 	lsl	r0, r0, #0x9
 	add	r1, r1, #0x21
@@ -12608,9 +12602,9 @@ PlayerHandleCmd38:
 	bl	PlayerBufferExecCompleted
 	pop	{r0}
 	bx	r0
-.L1341:
-	.align	2, 0
 .L1340:
+	.align	2, 0
+.L1339:
 	.word	gUnknown_02022D0C
 	.word	gBattleResources
 	.word	gActiveBattler
@@ -12621,7 +12615,7 @@ PlayerHandleCmd38:
 	.thumb_func
 PlayerHandleCmd39:
 	push	{lr}
-	ldr	r2, .L1343
+	ldr	r2, .L1342
 	ldrb	r1, [r2]
 	mov	r0, #0x7f
 	and	r0, r0, r1
@@ -12629,9 +12623,9 @@ PlayerHandleCmd39:
 	bl	PlayerBufferExecCompleted
 	pop	{r0}
 	bx	r0
-.L1344:
-	.align	2, 0
 .L1343:
+	.align	2, 0
+.L1342:
 	.word	gUnknown_02022D0C
 .Lfe109:
 	.size	 PlayerHandleCmd39,.Lfe109-PlayerHandleCmd39
@@ -12640,7 +12634,7 @@ PlayerHandleCmd39:
 	.thumb_func
 PlayerHandleCmd40:
 	push	{lr}
-	ldr	r3, .L1346
+	ldr	r3, .L1345
 	ldr	r1, [r3]
 	lsl	r1, r1, #0x18
 	lsr	r1, r1, #0x1f
@@ -12655,9 +12649,9 @@ PlayerHandleCmd40:
 	bl	PlayerBufferExecCompleted
 	pop	{r0}
 	bx	r0
-.L1347:
-	.align	2, 0
 .L1346:
+	.align	2, 0
+.L1345:
 	.word	gUnknown_02022D0C
 .Lfe110:
 	.size	 PlayerHandleCmd40,.Lfe110-PlayerHandleCmd40
@@ -12666,9 +12660,9 @@ PlayerHandleCmd40:
 	.thumb_func
 PlayerHandleHitAnimation:
 	push	{r4, lr}
-	ldr	r3, .L1351
-	ldr	r2, .L1351+0x4
-	ldr	r4, .L1351+0x8
+	ldr	r3, .L1350
+	ldr	r2, .L1350+0x4
+	ldr	r4, .L1350+0x8
 	ldrb	r0, [r4]
 	add	r0, r0, r2
 	ldrb	r1, [r0]
@@ -12680,17 +12674,17 @@ PlayerHandleHitAnimation:
 	ldrb	r0, [r0]
 	lsl	r0, r0, #0x1d
 	cmp	r0, #0
-	bge	.L1349	@cond_branch
+	bge	.L1348	@cond_branch
 	bl	PlayerBufferExecCompleted
-	b	.L1350
-.L1352:
-	.align	2, 0
+	b	.L1349
 .L1351:
+	.align	2, 0
+.L1350:
 	.word	gSprites
 	.word	gBattlerSpriteIds
 	.word	gActiveBattler
-.L1349:
-	ldr	r1, .L1353
+.L1348:
+	ldr	r1, .L1352
 	mov	r0, #0x1
 	strb	r0, [r1]
 	ldrb	r0, [r4]
@@ -12704,19 +12698,19 @@ PlayerHandleHitAnimation:
 	strh	r1, [r0, #0x30]
 	ldrb	r0, [r4]
 	bl	DoHitAnimHealthboxEffect
-	ldr	r1, .L1353+0x4
+	ldr	r1, .L1352+0x4
 	ldrb	r0, [r4]
 	lsl	r0, r0, #0x2
 	add	r0, r0, r1
-	ldr	r1, .L1353+0x8
+	ldr	r1, .L1352+0x8
 	str	r1, [r0]
-.L1350:
+.L1349:
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L1354:
-	.align	2, 0
 .L1353:
+	.align	2, 0
+.L1352:
 	.word	gDoingBattleAnim
 	.word	gBattlerControllerFuncs
 	.word	DoHitAnimBlinkSpriteEffect
@@ -12737,16 +12731,16 @@ PlayerHandleCmd42:
 	.thumb_func
 PlayerHandlePlaySE:
 	push	{r4, lr}
-	ldr	r4, .L1359
+	ldr	r4, .L1358
 	ldrb	r0, [r4]
 	bl	GetBattlerSide
 	lsl	r0, r0, #0x18
 	mov	r3, #0x3f
 	cmp	r0, #0
-	bne	.L1357	@cond_branch
+	bne	.L1356	@cond_branch
 	mov	r3, #0xc0
-.L1357:
-	ldr	r0, .L1359+0x4
+.L1356:
+	ldr	r0, .L1358+0x4
 	ldr	r1, [r0]
 	ldrb	r2, [r4]
 	lsl	r2, r2, #0x9
@@ -12766,9 +12760,9 @@ PlayerHandlePlaySE:
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L1360:
-	.align	2, 0
 .L1359:
+	.align	2, 0
+.L1358:
 	.word	gActiveBattler
 	.word	gBattleResources
 .Lfe113:
@@ -12778,9 +12772,9 @@ PlayerHandlePlaySE:
 	.thumb_func
 PlayerHandlePlayFanfareOrBGM:
 	push	{r4, r5, lr}
-	ldr	r5, .L1364
+	ldr	r5, .L1363
 	ldr	r1, [r5]
-	ldr	r4, .L1364+0x4
+	ldr	r4, .L1363+0x4
 	ldrb	r0, [r4]
 	lsl	r2, r0, #0x9
 	add	r0, r1, #0
@@ -12788,7 +12782,7 @@ PlayerHandlePlayFanfareOrBGM:
 	add	r0, r0, r2
 	ldrb	r0, [r0]
 	cmp	r0, #0
-	beq	.L1362	@cond_branch
+	beq	.L1361	@cond_branch
 	bl	BattleStopLowHpSound
 	ldr	r1, [r5]
 	ldrb	r2, [r4]
@@ -12803,13 +12797,13 @@ PlayerHandlePlayFanfareOrBGM:
 	lsl	r1, r1, #0x8
 	orr	r0, r0, r1
 	bl	PlayBGM
-	b	.L1363
-.L1365:
-	.align	2, 0
+	b	.L1362
 .L1364:
+	.align	2, 0
+.L1363:
 	.word	gBattleResources
 	.word	gActiveBattler
-.L1362:
+.L1361:
 	add	r0, r1, #0
 	add	r0, r0, #0x21
 	add	r0, r0, r2
@@ -12820,7 +12814,7 @@ PlayerHandlePlayFanfareOrBGM:
 	lsl	r1, r1, #0x8
 	orr	r0, r0, r1
 	bl	PlayFanfare
-.L1363:
+.L1362:
 	bl	PlayerBufferExecCompleted
 	pop	{r4, r5}
 	pop	{r0}
@@ -12835,9 +12829,9 @@ PlayerHandleFaintingCry:
 	mov	r6, r9
 	mov	r5, r8
 	push	{r5, r6}
-	ldr	r0, .L1367
+	ldr	r0, .L1366
 	mov	r9, r0
-	ldr	r1, .L1367+0x4
+	ldr	r1, .L1366+0x4
 	mov	r8, r1
 	ldrb	r0, [r1]
 	lsl	r0, r0, #0x1
@@ -12845,7 +12839,7 @@ PlayerHandleFaintingCry:
 	ldrh	r0, [r0]
 	mov	r6, #0x64
 	mul	r0, r0, r6
-	ldr	r5, .L1367+0x8
+	ldr	r5, .L1366+0x8
 	add	r0, r0, r5
 	mov	r1, #0xb
 	bl	GetMonData
@@ -12879,9 +12873,9 @@ PlayerHandleFaintingCry:
 	pop	{r4, r5, r6}
 	pop	{r0}
 	bx	r0
-.L1368:
-	.align	2, 0
 .L1367:
+	.align	2, 0
+.L1366:
 	.word	gBattlerPartyIndexes
 	.word	gActiveBattler
 	.word	gPlayerParty
@@ -12892,16 +12886,16 @@ PlayerHandleFaintingCry:
 	.thumb_func
 PlayerHandleIntroSlide:
 	push	{lr}
-	ldr	r0, .L1370
+	ldr	r0, .L1369
 	ldr	r1, [r0]
-	ldr	r0, .L1370+0x4
+	ldr	r0, .L1369+0x4
 	ldrb	r0, [r0]
 	lsl	r0, r0, #0x9
 	add	r1, r1, #0x21
 	add	r1, r1, r0
 	ldrb	r0, [r1]
 	bl	HandleIntroSlide
-	ldr	r2, .L1370+0x8
+	ldr	r2, .L1369+0x8
 	ldrh	r0, [r2]
 	mov	r1, #0x1
 	orr	r0, r0, r1
@@ -12909,9 +12903,9 @@ PlayerHandleIntroSlide:
 	bl	PlayerBufferExecCompleted
 	pop	{r0}
 	bx	r0
-.L1371:
-	.align	2, 0
 .L1370:
+	.align	2, 0
+.L1369:
 	.word	gBattleResources
 	.word	gActiveBattler
 	.word	gIntroSlideFlags
@@ -12922,15 +12916,15 @@ PlayerHandleIntroSlide:
 	.thumb_func
 PlayerHandleIntroTrainerBallThrow:
 	push	{r4, r5, r6, r7, lr}
-	ldr	r6, .L1374
-	ldr	r7, .L1374+0x4
+	ldr	r6, .L1373
+	ldr	r7, .L1373+0x4
 	ldrb	r0, [r7]
 	add	r0, r0, r6
 	ldrb	r1, [r0]
 	lsl	r0, r1, #0x4
 	add	r0, r0, r1
 	lsl	r0, r0, #0x2
-	ldr	r5, .L1374+0x8
+	ldr	r5, .L1373+0x8
 	add	r0, r0, r5
 	bl	SetSpritePrimaryCoordsFromSecondaryCoords
 	ldrb	r0, [r7]
@@ -12949,7 +12943,7 @@ PlayerHandleIntroTrainerBallThrow:
 	add	r0, r0, r1
 	lsl	r0, r0, #0x2
 	add	r0, r0, r5
-	ldr	r1, .L1374+0xc
+	ldr	r1, .L1373+0xc
 	strh	r1, [r0, #0x32]
 	ldrb	r0, [r7]
 	add	r0, r0, r6
@@ -12969,7 +12963,7 @@ PlayerHandleIntroTrainerBallThrow:
 	add	r1, r5, #0
 	add	r1, r1, #0x1c
 	add	r0, r0, r1
-	ldr	r1, .L1374+0x10
+	ldr	r1, .L1373+0x10
 	str	r1, [r0]
 	ldrb	r2, [r7]
 	add	r0, r2, r6
@@ -12986,7 +12980,7 @@ PlayerHandleIntroTrainerBallThrow:
 	add	r0, r0, r1
 	lsl	r0, r0, #0x2
 	add	r0, r0, r5
-	ldr	r1, .L1374+0x14
+	ldr	r1, .L1373+0x14
 	bl	StoreSpriteCallbackInData6
 	ldrb	r0, [r7]
 	add	r0, r0, r6
@@ -12997,12 +12991,12 @@ PlayerHandleIntroTrainerBallThrow:
 	add	r0, r0, r5
 	mov	r1, #0x1
 	bl	StartSpriteAnim
-	ldr	r0, .L1374+0x18
+	ldr	r0, .L1373+0x18
 	bl	AllocSpritePalette
 	add	r4, r0, #0
 	lsl	r4, r4, #0x18
-	ldr	r1, .L1374+0x1c
-	ldr	r0, .L1374+0x20
+	ldr	r1, .L1373+0x1c
+	ldr	r0, .L1373+0x20
 	ldr	r0, [r0]
 	ldrb	r0, [r0, #0x8]
 	lsl	r0, r0, #0x3
@@ -13026,19 +13020,19 @@ PlayerHandleIntroTrainerBallThrow:
 	and	r0, r0, r2
 	orr	r0, r0, r4
 	strb	r0, [r1, #0x5]
-	ldr	r0, .L1374+0x24
+	ldr	r0, .L1373+0x24
 	mov	r1, #0x5
 	bl	CreateTask
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
-	ldr	r4, .L1374+0x28
+	ldr	r4, .L1373+0x28
 	lsl	r1, r0, #0x2
 	add	r1, r1, r0
 	lsl	r1, r1, #0x3
 	add	r1, r1, r4
 	ldrb	r0, [r7]
 	strh	r0, [r1, #0x8]
-	ldr	r3, .L1374+0x2c
+	ldr	r3, .L1373+0x2c
 	ldr	r0, [r3]
 	ldrb	r2, [r7]
 	ldr	r1, [r0, #0x4]
@@ -13050,35 +13044,35 @@ PlayerHandleIntroTrainerBallThrow:
 	mov	r0, #0x1
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L1373	@cond_branch
-	ldr	r0, .L1374+0x30
+	beq	.L1372	@cond_branch
+	ldr	r0, .L1373+0x30
 	add	r0, r2, r0
 	ldrb	r1, [r0]
 	lsl	r0, r1, #0x2
 	add	r0, r0, r1
 	lsl	r0, r0, #0x3
 	add	r0, r0, r4
-	ldr	r1, .L1374+0x34
+	ldr	r1, .L1373+0x34
 	str	r1, [r0]
-.L1373:
+.L1372:
 	ldr	r0, [r3]
 	ldr	r2, [r0, #0x8]
 	ldrb	r0, [r2, #0x9]
 	mov	r1, #0x1
 	orr	r0, r0, r1
 	strb	r0, [r2, #0x9]
-	ldr	r1, .L1374+0x38
+	ldr	r1, .L1373+0x38
 	ldrb	r0, [r7]
 	lsl	r0, r0, #0x2
 	add	r0, r0, r1
-	ldr	r1, .L1374+0x3c
+	ldr	r1, .L1373+0x3c
 	str	r1, [r0]
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L1375:
-	.align	2, 0
 .L1374:
+	.align	2, 0
+.L1373:
 	.word	gBattlerSpriteIds
 	.word	gActiveBattler
 	.word	gSprites
@@ -13116,32 +13110,32 @@ sub_805CC00:
 	bl	FreeSpritePaletteByTag
 	add	r0, r5, #0
 	bl	DestroySprite
-	ldr	r1, .L1377
+	ldr	r1, .L1376
 	lsl	r0, r4, #0x1
 	add	r0, r0, r1
 	ldrh	r1, [r0]
 	mov	r0, #0x64
 	mul	r0, r0, r1
-	ldr	r1, .L1377+0x4
+	ldr	r1, .L1376+0x4
 	add	r0, r0, r1
 	add	r1, r4, #0
 	bl	BattleLoadPlayerMonSpriteGfx
-	ldr	r0, .L1377+0x8
+	ldr	r0, .L1376+0x8
 	add	r4, r4, r0
 	ldrb	r1, [r4]
 	lsl	r0, r1, #0x4
 	add	r0, r0, r1
 	lsl	r0, r0, #0x2
-	ldr	r1, .L1377+0xc
+	ldr	r1, .L1376+0xc
 	add	r0, r0, r1
 	mov	r1, #0x0
 	bl	StartSpriteAnim
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.L1378:
-	.align	2, 0
 .L1377:
+	.align	2, 0
+.L1376:
 	.word	gBattlerPartyIndexes
 	.word	gPlayerParty
 	.word	gBattlerSpriteIds
@@ -13159,7 +13153,7 @@ task05_08033660:
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	mov	r8, r0
-	ldr	r1, .L1385
+	ldr	r1, .L1384
 	lsl	r0, r0, #0x2
 	add	r0, r0, r8
 	lsl	r0, r0, #0x3
@@ -13168,16 +13162,16 @@ task05_08033660:
 	mov	r3, #0xa
 	ldrsh	r0, [r1, r3]
 	cmp	r0, #0x1e
-	bgt	.L1380	@cond_branch
+	bgt	.L1379	@cond_branch
 	add	r0, r2, #0x1
 	strh	r0, [r1, #0xa]
-	b	.L1381
-.L1386:
-	.align	2, 0
+	b	.L1380
 .L1385:
+	.align	2, 0
+.L1384:
 	.word	gTasks
-.L1380:
-	ldr	r7, .L1387
+.L1379:
+	ldr	r7, .L1386
 	ldrb	r0, [r7]
 	mov	r9, r0
 	ldrh	r0, [r1, #0x8]
@@ -13185,21 +13179,21 @@ task05_08033660:
 	bl	IsDoubleBattle
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.L1383	@cond_branch
-	ldr	r0, .L1387+0x4
+	beq	.L1382	@cond_branch
+	ldr	r0, .L1386+0x4
 	ldr	r0, [r0]
 	mov	r1, #0x40
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L1382	@cond_branch
-.L1383:
-	ldr	r0, .L1387+0x8
+	beq	.L1381	@cond_branch
+.L1382:
+	ldr	r0, .L1386+0x8
 	ldr	r1, [r0]
 	ldrb	r0, [r7]
 	lsl	r2, r0, #0x9
 	add	r1, r1, #0x21
 	add	r1, r1, r2
-	ldr	r2, .L1387+0xc
+	ldr	r2, .L1386+0xc
 	lsl	r0, r0, #0x1
 	add	r0, r0, r2
 	ldrh	r0, [r0]
@@ -13207,22 +13201,22 @@ task05_08033660:
 	ldrb	r0, [r7]
 	mov	r1, #0x0
 	bl	sub_805B258
-	b	.L1384
-.L1388:
-	.align	2, 0
+	b	.L1383
 .L1387:
+	.align	2, 0
+.L1386:
 	.word	gActiveBattler
 	.word	gBattleTypeFlags
 	.word	gBattleResources
 	.word	gBattlerPartyIndexes
-.L1382:
-	ldr	r5, .L1389
+.L1381:
+	ldr	r5, .L1388
 	ldr	r1, [r5]
 	ldrb	r0, [r7]
 	lsl	r2, r0, #0x9
 	add	r1, r1, #0x21
 	add	r1, r1, r2
-	ldr	r4, .L1389+0x4
+	ldr	r4, .L1388+0x4
 	lsl	r0, r0, #0x1
 	add	r0, r0, r4
 	ldrh	r0, [r0]
@@ -13249,7 +13243,7 @@ task05_08033660:
 	ldrh	r2, [r0]
 	mov	r0, #0x64
 	mul	r0, r0, r2
-	ldr	r2, .L1389+0x8
+	ldr	r2, .L1388+0x8
 	add	r0, r0, r2
 	bl	BattleLoadPlayerMonSpriteGfx
 	ldrb	r0, [r7]
@@ -13258,28 +13252,28 @@ task05_08033660:
 	ldrb	r0, [r7]
 	eor	r0, r0, r6
 	strb	r0, [r7]
-.L1384:
-	ldr	r1, .L1389+0xc
-	ldr	r2, .L1389+0x10
+.L1383:
+	ldr	r1, .L1388+0xc
+	ldr	r2, .L1388+0x10
 	ldrb	r0, [r2]
 	lsl	r0, r0, #0x2
 	add	r0, r0, r1
-	ldr	r1, .L1389+0x14
+	ldr	r1, .L1388+0x14
 	str	r1, [r0]
 	mov	r3, r9
 	strb	r3, [r2]
 	mov	r0, r8
 	bl	DestroyTask
-.L1381:
+.L1380:
 	pop	{r3, r4}
 	mov	r8, r3
 	mov	r9, r4
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L1390:
-	.align	2, 0
 .L1389:
+	.align	2, 0
+.L1388:
 	.word	gBattleResources
 	.word	gBattlerPartyIndexes
 	.word	gPlayerParty
@@ -13293,32 +13287,32 @@ task05_08033660:
 	.thumb_func
 PlayerHandleDrawPartyStatusSummary:
 	push	{r4, r5, r6, r7, lr}
-	ldr	r0, .L1395
+	ldr	r0, .L1394
 	ldr	r0, [r0]
-	ldr	r1, .L1395+0x4
+	ldr	r1, .L1394+0x4
 	ldrb	r2, [r1]
 	lsl	r1, r2, #0x9
 	add	r0, r0, #0x21
 	add	r0, r0, r1
 	ldrb	r0, [r0]
 	cmp	r0, #0
-	beq	.L1392	@cond_branch
+	beq	.L1391	@cond_branch
 	add	r0, r2, #0
 	bl	GetBattlerSide
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	bne	.L1392	@cond_branch
+	bne	.L1391	@cond_branch
 	bl	PlayerBufferExecCompleted
-	b	.L1393
-.L1396:
-	.align	2, 0
+	b	.L1392
 .L1395:
+	.align	2, 0
+.L1394:
 	.word	gBattleResources
 	.word	gActiveBattler
-.L1392:
-	ldr	r7, .L1397
+.L1391:
+	ldr	r7, .L1396
 	ldr	r0, [r7]
-	ldr	r6, .L1397+0x4
+	ldr	r6, .L1396+0x4
 	ldrb	r1, [r6]
 	ldr	r2, [r0, #0x4]
 	lsl	r0, r1, #0x1
@@ -13330,7 +13324,7 @@ PlayerHandleDrawPartyStatusSummary:
 	orr	r1, r1, r2
 	strb	r1, [r0]
 	ldrb	r0, [r6]
-	ldr	r5, .L1397+0x8
+	ldr	r5, .L1396+0x8
 	lsl	r4, r0, #0x9
 	add	r1, r4, #0
 	add	r1, r1, #0x20
@@ -13345,7 +13339,7 @@ PlayerHandleDrawPartyStatusSummary:
 	add	r3, r3, r4
 	ldrb	r3, [r3]
 	bl	CreatePartyStatusSummarySprites
-	ldr	r2, .L1397+0xc
+	ldr	r2, .L1396+0xc
 	ldrb	r1, [r6]
 	add	r1, r1, r2
 	mov	r3, #0x0
@@ -13365,7 +13359,7 @@ PlayerHandleDrawPartyStatusSummary:
 	add	r0, r0, r1
 	ldrb	r0, [r0]
 	cmp	r0, #0
-	beq	.L1394	@cond_branch
+	beq	.L1393	@cond_branch
 	ldr	r0, [r7]
 	ldr	r1, [r0, #0x4]
 	lsl	r0, r2, #0x1
@@ -13374,20 +13368,20 @@ PlayerHandleDrawPartyStatusSummary:
 	add	r0, r0, r1
 	mov	r1, #0x5d
 	strb	r1, [r0, #0x5]
-.L1394:
-	ldr	r0, .L1397+0x10
+.L1393:
+	ldr	r0, .L1396+0x10
 	ldrb	r1, [r6]
 	lsl	r1, r1, #0x2
 	add	r1, r1, r0
-	ldr	r0, .L1397+0x14
+	ldr	r0, .L1396+0x14
 	str	r0, [r1]
-.L1393:
+.L1392:
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L1398:
-	.align	2, 0
 .L1397:
+	.align	2, 0
+.L1396:
 	.word	gBattleSpritesDataPtr
 	.word	gActiveBattler
 	.word	gBattleResources
@@ -13401,9 +13395,9 @@ PlayerHandleDrawPartyStatusSummary:
 	.thumb_func
 sub_805CE38:
 	push	{r4, lr}
-	ldr	r4, .L1401
+	ldr	r4, .L1400
 	ldr	r0, [r4]
-	ldr	r3, .L1401+0x4
+	ldr	r3, .L1400+0x4
 	ldrb	r1, [r3]
 	ldr	r2, [r0, #0x4]
 	lsl	r0, r1, #0x1
@@ -13416,7 +13410,7 @@ sub_805CE38:
 	lsl	r1, r1, #0x18
 	lsr	r1, r1, #0x18
 	cmp	r1, #0x5c
-	bls	.L1400	@cond_branch
+	bls	.L1399	@cond_branch
 	ldr	r0, [r4]
 	ldrb	r1, [r3]
 	ldr	r2, [r0, #0x4]
@@ -13427,13 +13421,13 @@ sub_805CE38:
 	mov	r1, #0x0
 	strb	r1, [r0, #0x5]
 	bl	PlayerBufferExecCompleted
-.L1400:
+.L1399:
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L1402:
-	.align	2, 0
 .L1401:
+	.align	2, 0
+.L1400:
 	.word	gBattleSpritesDataPtr
 	.word	gActiveBattler
 .Lfe121:
@@ -13443,9 +13437,9 @@ sub_805CE38:
 	.thumb_func
 PlayerHandleHidePartyStatusSummary:
 	push	{lr}
-	ldr	r0, .L1405
+	ldr	r0, .L1404
 	ldr	r1, [r0]
-	ldr	r0, .L1405+0x4
+	ldr	r0, .L1404+0x4
 	ldrb	r3, [r0]
 	ldr	r1, [r1, #0x4]
 	lsl	r0, r3, #0x1
@@ -13456,24 +13450,24 @@ PlayerHandleHidePartyStatusSummary:
 	mov	r0, #0x1
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L1404	@cond_branch
-	ldr	r2, .L1405+0x8
-	ldr	r0, .L1405+0xc
+	beq	.L1403	@cond_branch
+	ldr	r2, .L1404+0x8
+	ldr	r0, .L1404+0xc
 	add	r0, r3, r0
 	ldrb	r1, [r0]
 	lsl	r0, r1, #0x2
 	add	r0, r0, r1
 	lsl	r0, r0, #0x3
 	add	r0, r0, r2
-	ldr	r1, .L1405+0x10
+	ldr	r1, .L1404+0x10
 	str	r1, [r0]
-.L1404:
+.L1403:
 	bl	PlayerBufferExecCompleted
 	pop	{r0}
 	bx	r0
-.L1406:
-	.align	2, 0
 .L1405:
+	.align	2, 0
+.L1404:
 	.word	gBattleSpritesDataPtr
 	.word	gActiveBattler
 	.word	gTasks
@@ -13486,7 +13480,7 @@ PlayerHandleHidePartyStatusSummary:
 	.thumb_func
 PlayerHandleEndBounceEffect:
 	push	{r4, lr}
-	ldr	r4, .L1408
+	ldr	r4, .L1407
 	ldrb	r0, [r4]
 	mov	r1, #0x1
 	bl	EndBounceEffect
@@ -13497,9 +13491,9 @@ PlayerHandleEndBounceEffect:
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L1409:
-	.align	2, 0
 .L1408:
+	.align	2, 0
+.L1407:
 	.word	gActiveBattler
 .Lfe123:
 	.size	 PlayerHandleEndBounceEffect,.Lfe123-PlayerHandleEndBounceEffect
@@ -13508,14 +13502,14 @@ PlayerHandleEndBounceEffect:
 	.thumb_func
 PlayerHandleSpriteInvisibility:
 	push	{r4, lr}
-	ldr	r4, .L1412
+	ldr	r4, .L1411
 	ldrb	r0, [r4]
 	bl	IsBattlerSpritePresent
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.L1411	@cond_branch
-	ldr	r3, .L1412+0x4
-	ldr	r0, .L1412+0x8
+	beq	.L1410	@cond_branch
+	ldr	r3, .L1411+0x4
+	ldr	r0, .L1411+0x8
 	ldrb	r1, [r4]
 	add	r0, r1, r0
 	ldrb	r0, [r0]
@@ -13523,7 +13517,7 @@ PlayerHandleSpriteInvisibility:
 	add	r2, r2, r0
 	lsl	r2, r2, #0x2
 	add	r2, r2, r3
-	ldr	r0, .L1412+0xc
+	ldr	r0, .L1411+0xc
 	ldr	r0, [r0]
 	lsl	r1, r1, #0x9
 	add	r0, r0, #0x21
@@ -13541,14 +13535,14 @@ PlayerHandleSpriteInvisibility:
 	strb	r0, [r2]
 	ldrb	r0, [r4]
 	bl	CopyBattleSpriteInvisibility
-.L1411:
+.L1410:
 	bl	PlayerBufferExecCompleted
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L1413:
-	.align	2, 0
 .L1412:
+	.align	2, 0
+.L1411:
 	.word	gActiveBattler
 	.word	gSprites
 	.word	gBattlerSpriteIds
@@ -13561,13 +13555,13 @@ PlayerHandleSpriteInvisibility:
 PlayerHandleBattleAnimation:
 	push	{r4, r5, r6, lr}
 	add	sp, sp, #-0x4
-	ldr	r5, .L1418
+	ldr	r5, .L1417
 	ldrb	r0, [r5]
 	bl	mplay_80342A4
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	bne	.L1415	@cond_branch
-	ldr	r0, .L1418+0x4
+	bne	.L1414	@cond_branch
+	ldr	r0, .L1417+0x4
 	ldr	r1, [r0]
 	ldrb	r2, [r5]
 	lsl	r4, r2, #0x9
@@ -13591,32 +13585,32 @@ PlayerHandleBattleAnimation:
 	bl	TryHandleLaunchBattleTableAnimation
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.L1416	@cond_branch
+	beq	.L1415	@cond_branch
 	bl	PlayerBufferExecCompleted
-	b	.L1417
-.L1419:
-	.align	2, 0
+	b	.L1416
 .L1418:
+	.align	2, 0
+.L1417:
 	.word	gActiveBattler
 	.word	gBattleResources
-.L1416:
-	ldr	r0, .L1420
+.L1415:
+	ldr	r0, .L1419
 	ldrb	r1, [r5]
 	lsl	r1, r1, #0x2
 	add	r1, r1, r0
-	ldr	r0, .L1420+0x4
+	ldr	r0, .L1419+0x4
 	str	r0, [r1]
-.L1417:
+.L1416:
 	add	r0, r6, #0
 	bl	BattleTv_SetDataBasedOnAnimation
-.L1415:
+.L1414:
 	add	sp, sp, #0x4
 	pop	{r4, r5, r6}
 	pop	{r0}
 	bx	r0
-.L1421:
-	.align	2, 0
 .L1420:
+	.align	2, 0
+.L1419:
 	.word	gBattlerControllerFuncs
 	.word	CompleteOnFinishedBattleAnimation
 .Lfe125:
@@ -13626,8 +13620,8 @@ PlayerHandleBattleAnimation:
 	.thumb_func
 PlayerHandleLinkStandbyMsg:
 	push	{r4, r5, lr}
-	ldr	r4, .L1430
-	ldr	r5, .L1430+0x4
+	ldr	r4, .L1429
+	ldr	r5, .L1429+0x4
 	ldrb	r1, [r5]
 	lsl	r1, r1, #0x9
 	add	r1, r1, #0x20
@@ -13642,39 +13636,39 @@ PlayerHandleLinkStandbyMsg:
 	add	r1, r1, r0
 	ldrb	r0, [r1]
 	cmp	r0, #0x1
-	beq	.L1425	@cond_branch
-	cmp	r0, #0x1
-	bgt	.L1429	@cond_branch
-	cmp	r0, #0
 	beq	.L1424	@cond_branch
-	b	.L1423
-.L1431:
-	.align	2, 0
+	cmp	r0, #0x1
+	bgt	.L1428	@cond_branch
+	cmp	r0, #0
+	beq	.L1423	@cond_branch
+	b	.L1422
 .L1430:
+	.align	2, 0
+.L1429:
 	.word	gBattleResources
 	.word	gActiveBattler
-.L1429:
+.L1428:
 	cmp	r0, #0x2
-	beq	.L1426	@cond_branch
-	b	.L1423
-.L1424:
+	beq	.L1425	@cond_branch
+	b	.L1422
+.L1423:
 	bl	PrintLinkStandbyMsg
-.L1425:
-	ldr	r4, .L1432
+.L1424:
+	ldr	r4, .L1431
 	ldrb	r0, [r4]
 	mov	r1, #0x1
 	bl	EndBounceEffect
 	ldrb	r0, [r4]
 	mov	r1, #0x0
 	bl	EndBounceEffect
-	b	.L1423
-.L1433:
-	.align	2, 0
+	b	.L1422
 .L1432:
+	.align	2, 0
+.L1431:
 	.word	gActiveBattler
-.L1426:
+.L1425:
 	bl	PrintLinkStandbyMsg
-.L1423:
+.L1422:
 	bl	PlayerBufferExecCompleted
 	pop	{r4, r5}
 	pop	{r0}
@@ -13686,65 +13680,65 @@ PlayerHandleLinkStandbyMsg:
 	.thumb_func
 PlayerHandleResetActionMoveSelection:
 	push	{r4, lr}
-	ldr	r0, .L1443
+	ldr	r0, .L1442
 	ldr	r0, [r0]
-	ldr	r4, .L1443+0x4
+	ldr	r4, .L1442+0x4
 	ldrb	r3, [r4]
 	lsl	r1, r3, #0x9
 	add	r0, r0, #0x21
 	add	r0, r0, r1
 	ldrb	r2, [r0]
 	cmp	r2, #0x1
-	beq	.L1437	@cond_branch
-	cmp	r2, #0x1
-	bgt	.L1441	@cond_branch
-	cmp	r2, #0
 	beq	.L1436	@cond_branch
-	b	.L1435
-.L1444:
-	.align	2, 0
+	cmp	r2, #0x1
+	bgt	.L1440	@cond_branch
+	cmp	r2, #0
+	beq	.L1435	@cond_branch
+	b	.L1434
 .L1443:
+	.align	2, 0
+.L1442:
 	.word	gBattleResources
 	.word	gActiveBattler
-.L1441:
+.L1440:
 	cmp	r2, #0x2
-	beq	.L1438	@cond_branch
-	b	.L1435
-.L1436:
-	ldr	r0, .L1445
+	beq	.L1437	@cond_branch
+	b	.L1434
+.L1435:
+	ldr	r0, .L1444
 	add	r0, r3, r0
 	strb	r2, [r0]
-	ldr	r1, .L1445+0x4
+	ldr	r1, .L1444+0x4
 	ldrb	r0, [r4]
 	add	r0, r0, r1
 	strb	r2, [r0]
-	b	.L1435
-.L1446:
-	.align	2, 0
+	b	.L1434
 .L1445:
+	.align	2, 0
+.L1444:
 	.word	gActionSelectionCursor
 	.word	gMoveSelectionCursor
-.L1437:
-	ldr	r0, .L1447
-	b	.L1442
-.L1448:
-	.align	2, 0
+.L1436:
+	ldr	r0, .L1446
+	b	.L1441
 .L1447:
+	.align	2, 0
+.L1446:
 	.word	gActionSelectionCursor
-.L1438:
-	ldr	r0, .L1449
-.L1442:
+.L1437:
+	ldr	r0, .L1448
+.L1441:
 	add	r0, r3, r0
 	mov	r1, #0x0
 	strb	r1, [r0]
-.L1435:
+.L1434:
 	bl	PlayerBufferExecCompleted
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L1450:
-	.align	2, 0
 .L1449:
+	.align	2, 0
+.L1448:
 	.word	gMoveSelectionCursor
 .Lfe127:
 	.size	 PlayerHandleResetActionMoveSelection,.Lfe127-PlayerHandleResetActionMoveSelection
@@ -13753,8 +13747,8 @@ PlayerHandleResetActionMoveSelection:
 	.thumb_func
 PlayerHandleCmd55:
 	push	{r4, r5, lr}
-	ldr	r4, .L1452
-	ldr	r5, .L1452+0x4
+	ldr	r4, .L1451
+	ldr	r5, .L1451+0x4
 	ldrb	r1, [r5]
 	lsl	r1, r1, #0x9
 	add	r1, r1, #0x20
@@ -13762,7 +13756,7 @@ PlayerHandleCmd55:
 	add	r0, r0, r1
 	add	r0, r0, #0x4
 	bl	sub_81851A8
-	ldr	r3, .L1452+0x8
+	ldr	r3, .L1451+0x8
 	ldr	r2, [r4]
 	ldrb	r1, [r5]
 	lsl	r1, r1, #0x9
@@ -13771,14 +13765,14 @@ PlayerHandleCmd55:
 	add	r0, r0, r1
 	ldrb	r0, [r0]
 	strb	r0, [r3]
-	ldr	r0, .L1452+0xc
+	ldr	r0, .L1451+0xc
 	ldr	r3, [r0]
 	ldrb	r0, [r5]
 	lsl	r0, r0, #0x9
 	add	r2, r2, #0x22
 	add	r2, r2, r0
 	ldrb	r0, [r2]
-	ldr	r1, .L1452+0x10
+	ldr	r1, .L1451+0x10
 	add	r3, r3, r1
 	mov	r1, #0x1
 	and	r1, r1, r0
@@ -13794,18 +13788,18 @@ PlayerHandleCmd55:
 	mov	r0, #0x3
 	bl	BeginFastPaletteFade
 	bl	PlayerBufferExecCompleted
-	ldr	r1, .L1452+0x14
+	ldr	r1, .L1451+0x14
 	ldrb	r0, [r5]
 	lsl	r0, r0, #0x2
 	add	r0, r0, r1
-	ldr	r1, .L1452+0x18
+	ldr	r1, .L1451+0x18
 	str	r1, [r0]
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.L1453:
-	.align	2, 0
 .L1452:
+	.align	2, 0
+.L1451:
 	.word	gBattleResources
 	.word	gActiveBattler
 	.word	gBattleOutcome
@@ -13820,24 +13814,24 @@ PlayerHandleCmd55:
 	.thumb_func
 WaitForDebug:
 	push	{lr}
-	ldr	r0, .L1456
+	ldr	r0, .L1455
 	ldr	r1, [r0, #0x4]
-	ldr	r0, .L1456+0x4
+	ldr	r0, .L1455+0x4
 	cmp	r1, r0
-	bne	.L1455	@cond_branch
-	ldr	r0, .L1456+0x8
+	bne	.L1454	@cond_branch
+	ldr	r0, .L1455+0x8
 	ldrb	r1, [r0, #0x7]
 	mov	r0, #0x80
 	and	r0, r0, r1
 	cmp	r0, #0
-	bne	.L1455	@cond_branch
+	bne	.L1454	@cond_branch
 	bl	PlayerBufferExecCompleted
-.L1455:
+.L1454:
 	pop	{r0}
 	bx	r0
-.L1457:
-	.align	2, 0
 .L1456:
+	.align	2, 0
+.L1455:
 	.word	gMain
 	.word	BattleMainCB2
 	.word	gPaletteFade
@@ -13856,21 +13850,21 @@ PlayerHandleBattleDebug:
 	mov	r2, #0x0
 	mov	r3, #0x10
 	bl	BeginNormalPaletteFade
-	ldr	r0, .L1459
+	ldr	r0, .L1458
 	bl	SetMainCallback2
-	ldr	r1, .L1459+0x4
-	ldr	r0, .L1459+0x8
+	ldr	r1, .L1458+0x4
+	ldr	r0, .L1458+0x8
 	ldrb	r0, [r0]
 	lsl	r0, r0, #0x2
 	add	r0, r0, r1
-	ldr	r1, .L1459+0xc
+	ldr	r1, .L1458+0xc
 	str	r1, [r0]
 	add	sp, sp, #0x4
 	pop	{r0}
 	bx	r0
-.L1460:
-	.align	2, 0
 .L1459:
+	.align	2, 0
+.L1458:
 	.word	CB2_BattleDebugMenu
 	.word	gBattlerControllerFuncs
 	.word	gActiveBattler

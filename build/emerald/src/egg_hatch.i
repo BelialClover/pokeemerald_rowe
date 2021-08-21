@@ -4035,8 +4035,8 @@ struct SoundInfo
     u32 plynote;
     u32 ExtVolPit;
     u8 gap2[16];
-    struct SoundChannel chans[12];
-    s8 pcmBuffer[1584 * 2];
+    struct SoundChannel chans[15];
+    s8 pcmBuffer[0x620 * 2];
 };
 
 struct SongHeader
@@ -16451,10 +16451,10 @@ static void Task_EggHatchPlayBGM(u8 taskID)
         PlayRainStoppingSoundEffect();
     }
     if (gTasks[taskID].data[0] == 1)
-        PlayBGM(376);
+        PlayBGM(347);
     if (gTasks[taskID].data[0] > 60)
     {
-        PlayBGM(377);
+        PlayBGM(348);
         DestroyTask(taskID);
 
     }
@@ -16511,7 +16511,7 @@ static void CB2_EggHatch_1(void)
         GetMonNickname2(&gPlayerParty[sEggHatchData->eggPartyID], gStringVar1);
         StringExpandPlaceholders(gStringVar4, gText_HatchedFromEgg);
         EggHatchPrintMessage(sEggHatchData->windowId, gStringVar4, 0, 3, 0xFF);
-        PlayFanfare(371);
+        PlayFanfare(342);
         sEggHatchData->CB2_state++;
         PutWindowTilemap(sEggHatchData->windowId);
         CopyWindowToVram(sEggHatchData->windowId, 3);

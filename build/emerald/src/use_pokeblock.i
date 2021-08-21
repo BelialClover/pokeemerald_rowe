@@ -18684,7 +18684,7 @@ static void UpdateMonPic(u8 loadId)
     else
     {
         do {} while(0);
-        { const void *_src = sMenu->partySheets[loadId]; void *_dest = sMenu->curMonTileStart; u32 _size = 0x800; { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); dmaRegs[0] = (vu32)(_src); dmaRegs[1] = (vu32)(_dest); dmaRegs[2] = (vu32)((0x8000 | 0x0000 | 0x0000 | 0x0000 | 0x0000) << 16 | ((_size)/(16/8))); dmaRegs[2]; }; };
+        { const void *_src = sMenu->partySheets[loadId]; void *_dest = sMenu->curMonTileStart; u32 _size = 0x800; { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); u32 eval_src = (u32)(_src); u32 eval_dst = (u32)(_dest); u32 eval_ctl = (u32)((0x8000 | 0x0000 | 0x0000 | 0x0000 | 0x0000) << 16 | ((_size)/(16/8))); register u32 r_src asm("r0") = eval_src; register u32 r_dst asm("r1") = eval_dst; register u32 r_ctl asm("r2") = eval_ctl; asm volatile("stmia %0!, {%1, %2, %3}" : "+l" (dmaRegs) : "l" (r_src), "l" (r_dst), "l" (r_ctl) : "memory"); }; };
         LoadPalette(sMenu->partyPalettes[loadId], sMenu->curMonPalette, 32);
     }
 }

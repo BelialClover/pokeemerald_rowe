@@ -10061,7 +10061,7 @@ static void CreateStartSurfingTask(u8 direction)
 
     ScriptContext2_Enable();
     Overworld_ClearSavedMusic();
-    Overworld_ChangeMusicTo(365);
+    Overworld_ChangeMusicTo(336);
     gPlayerAvatar.flags ^= (1 << 0);
     gPlayerAvatar.flags |= (1 << 3);
     gPlayerAvatar.preventStep = 1;

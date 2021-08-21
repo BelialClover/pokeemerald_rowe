@@ -285,32 +285,28 @@ SetupClearSaveDataScreen:
 	add	r0, sp, #0x4
 	mov	r4, #0x0
 	strh	r4, [r0]
-	ldr	r1, .L44+0x4
-	str	r0, [r1]
-	mov	r0, #0xc0
-	lsl	r0, r0, #0x13
-	str	r0, [r1, #0x4]
-	ldr	r0, .L44+0x8
-	str	r0, [r1, #0x8]
-	ldr	r0, [r1, #0x8]
-	mov	r2, #0x0
-	str	r2, [sp, #0x8]
+	mov	r1, #0xc0
+	lsl	r1, r1, #0x13
+	ldr	r2, .L44+0x4
+	ldr	r3, .L44+0x8
+	stmia r3!, {r0, r1, r2}
+	.code	16
+	mov	r3, #0x0
+	str	r3, [sp, #0x8]
 	add	r0, sp, #0x8
-	str	r0, [r1]
-	mov	r0, #0xe0
-	lsl	r0, r0, #0x13
-	str	r0, [r1, #0x4]
-	ldr	r0, .L44+0xc
-	str	r0, [r1, #0x8]
-	ldr	r0, [r1, #0x8]
+	mov	r1, #0xe0
+	lsl	r1, r1, #0x13
+	ldr	r2, .L44+0xc
+	ldr	r4, .L44+0x8
+	stmia r4!, {r0, r1, r2}
+	.code	16
 	add	r0, sp, #0x4
-	strh	r2, [r0]
-	str	r0, [r1]
-	ldr	r0, .L44+0x10
-	str	r0, [r1, #0x4]
-	ldr	r0, .L44+0x14
-	str	r0, [r1, #0x8]
-	ldr	r0, [r1, #0x8]
+	strh	r3, [r0]
+	ldr	r1, .L44+0x10
+	ldr	r2, .L44+0x14
+	ldr	r3, .L44+0x8
+	stmia r3!, {r0, r1, r2}
+	.code	16
 	bl	ResetPaletteFade
 	ldr	r2, .L44+0x18
 	ldr	r0, .L44+0x1c
@@ -322,8 +318,8 @@ SetupClearSaveDataScreen:
 	strh	r0, [r1, #0x2]
 	mov	r1, #0x0
 	ldr	r3, .L44+0x28
-	ldr	r0, .L44+0x2c
-	add	r2, r0, #0
+	ldr	r4, .L44+0x2c
+	add	r2, r4, #0
 .L33:
 	lsl	r0, r1, #0x1
 	add	r0, r0, r3
@@ -387,8 +383,8 @@ SetupClearSaveDataScreen:
 	.align	2, 0
 .L44:
 	.word	gMain
-	.word	0x40000d4
 	.word	-0x7eff4000
+	.word	0x40000d4
 	.word	-0x7affff00
 	.word	0x5000002
 	.word	-0x7efffe01

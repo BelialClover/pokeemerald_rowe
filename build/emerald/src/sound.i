@@ -3029,8 +3029,8 @@ struct SoundInfo
     u32 plynote;
     u32 ExtVolPit;
     u8 gap2[16];
-    struct SoundChannel chans[12];
-    s8 pcmBuffer[1584 * 2];
+    struct SoundChannel chans[15];
+    s8 pcmBuffer[0x620 * 2];
 };
 
 struct SongHeader
@@ -4744,24 +4744,24 @@ static void Task_DuckBGMForPokemonCry(u8 taskId);
 static void RestoreBGMVolumeAfterPokemonCry(void);
 
 static const struct Fanfare sFanfares[] = {
-    { 367, 80 },
-    { 370, 160 },
-    { 371, 220 },
-    { 372, 220 },
-    { 368, 160 },
-    { 369, 340 },
-    { 378, 180 },
-    { 387, 120 },
-    { 388, 710 },
-    { 389, 250 },
-    { 390, 150 },
-    { 391, 160 },
-    { 550, 450 },
-    { 530, 170 },
-    { 529, 196 },
-    { 459, 313 },
-    { 466, 318 },
-    { 460, 135 },
+    { 338, 80 },
+    { 341, 160 },
+    { 342, 220 },
+    { 343, 220 },
+    { 339, 160 },
+    { 340, 340 },
+    { 349, 180 },
+    { 358, 120 },
+    { 359, 710 },
+    { 360, 250 },
+    { 361, 150 },
+    { 362, 160 },
+    { 497, 450 },
+    { 481, 170 },
+    { 480, 196 },
+    { 509, 313 },
+    { 516, 318 },
+    { 510, 135 },
 };
 
 

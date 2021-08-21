@@ -15283,8 +15283,8 @@ struct SoundInfo
     u32 plynote;
     u32 ExtVolPit;
     u8 gap2[16];
-    struct SoundChannel chans[12];
-    s8 pcmBuffer[1584 * 2];
+    struct SoundChannel chans[15];
+    s8 pcmBuffer[0x620 * 2];
 };
 
 struct SongHeader
@@ -25047,7 +25047,7 @@ static bool8 SetupContestGraphics(u8 *stateVar)
         break;
     case 2:
         LZDecompressVram(gContestAudienceGfx, (void *)((0x6000000 + (0x800 * (4)))));
-        { const void *_src = (void *)((0x6000000 + (0x800 * (4)))); void *_dest = (gHeap + 0x18000); u32 _size = 0x2000; while (1) { { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); dmaRegs[0] = (vu32)(_src); dmaRegs[1] = (vu32)(_dest); dmaRegs[2] = (vu32)((0x8000 | 0x0000 | 0x0400 | 0x0000 | 0x0000) << 16 | (((0x1000))/(32/8))); dmaRegs[2]; }; _src += (0x1000); _dest += (0x1000); _size -= (0x1000); if (_size <= (0x1000)) { { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); dmaRegs[0] = (vu32)(_src); dmaRegs[1] = (vu32)(_dest); dmaRegs[2] = (vu32)((0x8000 | 0x0000 | 0x0400 | 0x0000 | 0x0000) << 16 | ((_size)/(32/8))); dmaRegs[2]; }; break; } } };
+        { const void *_src = (void *)((0x6000000 + (0x800 * (4)))); void *_dest = (gHeap + 0x18000); u32 _size = 0x2000; while (1) { { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); u32 eval_src = (u32)(_src); u32 eval_dst = (u32)(_dest); u32 eval_ctl = (u32)((0x8000 | 0x0000 | 0x0400 | 0x0000 | 0x0000) << 16 | (((0x1000))/(32/8))); register u32 r_src asm("r0") = eval_src; register u32 r_dst asm("r1") = eval_dst; register u32 r_ctl asm("r2") = eval_ctl; asm volatile("stmia %0!, {%1, %2, %3}" : "+l" (dmaRegs) : "l" (r_src), "l" (r_dst), "l" (r_ctl) : "memory"); }; _src += (0x1000); _dest += (0x1000); _size -= (0x1000); if (_size <= (0x1000)) { { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); u32 eval_src = (u32)(_src); u32 eval_dst = (u32)(_dest); u32 eval_ctl = (u32)((0x8000 | 0x0000 | 0x0400 | 0x0000 | 0x0000) << 16 | ((_size)/(32/8))); register u32 r_src asm("r0") = eval_src; register u32 r_dst asm("r1") = eval_dst; register u32 r_ctl asm("r2") = eval_ctl; asm volatile("stmia %0!, {%1, %2, %3}" : "+l" (dmaRegs) : "l" (r_src), "l" (r_dst), "l" (r_ctl) : "memory"); }; break; } } };
         break;
     case 3:
         CopyToBgTilemapBuffer(3, gOldContestGfx, 0, 0);
@@ -25057,7 +25057,7 @@ static bool8 SetupContestGraphics(u8 *stateVar)
         CopyToBgTilemapBuffer(2, gUnknown_08C17170, 0, 0);
         CopyBgTilemapBufferToVram(2);
 
-        { const void *_src = gContestResources->contestBgTilemaps[2]; void *_dest = (*(struct Shared1A004 *)(gHeap + 0x1a004)).savedJunk; u32 _size = sizeof((*(struct Shared1A004 *)(gHeap + 0x1a004)).savedJunk); { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); dmaRegs[0] = (vu32)(_src); dmaRegs[1] = (vu32)(_dest); dmaRegs[2] = (vu32)((0x8000 | 0x0000 | 0x0400 | 0x0000 | 0x0000) << 16 | ((_size)/(32/8))); dmaRegs[2]; }; };
+        { const void *_src = gContestResources->contestBgTilemaps[2]; void *_dest = (*(struct Shared1A004 *)(gHeap + 0x1a004)).savedJunk; u32 _size = sizeof((*(struct Shared1A004 *)(gHeap + 0x1a004)).savedJunk); { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); u32 eval_src = (u32)(_src); u32 eval_dst = (u32)(_dest); u32 eval_ctl = (u32)((0x8000 | 0x0000 | 0x0400 | 0x0000 | 0x0000) << 16 | ((_size)/(32/8))); register u32 r_src asm("r0") = eval_src; register u32 r_dst asm("r1") = eval_dst; register u32 r_ctl asm("r2") = eval_ctl; asm volatile("stmia %0!, {%1, %2, %3}" : "+l" (dmaRegs) : "l" (r_src), "l" (r_dst), "l" (r_ctl) : "memory"); }; };
         break;
     case 5:
         LoadCompressedPalette(gOldContestPalette, 0, 0x200);
@@ -25065,7 +25065,7 @@ static bool8 SetupContestGraphics(u8 *stateVar)
         CpuSet(gPlttBufferUnfaded + (5 + gContestPlayerMonIndex) * 16, tempPalette2, 0x04000000 | ((16 * sizeof(u16))/(32/8) & 0x1FFFFF));
         CpuSet(tempPalette2, gPlttBufferUnfaded + 128, 0x04000000 | ((16 * sizeof(u16))/(32/8) & 0x1FFFFF));
         CpuSet(tempPalette1, gPlttBufferUnfaded + (5 + gContestPlayerMonIndex) * 16, 0x04000000 | ((16 * sizeof(u16))/(32/8) & 0x1FFFFF));
-        { const void *_src = gPlttBufferUnfaded; void *_dest = (*(struct Shared1A004 *)(gHeap + 0x1a004)).cachedWindowPalettes; u32 _size = sizeof((*(struct Shared1A004 *)(gHeap + 0x1a004)).cachedWindowPalettes); { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); dmaRegs[0] = (vu32)(_src); dmaRegs[1] = (vu32)(_dest); dmaRegs[2] = (vu32)((0x8000 | 0x0000 | 0x0400 | 0x0000 | 0x0000) << 16 | ((_size)/(32/8))); dmaRegs[2]; }; };
+        { const void *_src = gPlttBufferUnfaded; void *_dest = (*(struct Shared1A004 *)(gHeap + 0x1a004)).cachedWindowPalettes; u32 _size = sizeof((*(struct Shared1A004 *)(gHeap + 0x1a004)).cachedWindowPalettes); { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); u32 eval_src = (u32)(_src); u32 eval_dst = (u32)(_dest); u32 eval_ctl = (u32)((0x8000 | 0x0000 | 0x0400 | 0x0000 | 0x0000) << 16 | ((_size)/(32/8))); register u32 r_src asm("r0") = eval_src; register u32 r_dst asm("r1") = eval_dst; register u32 r_ctl asm("r2") = eval_ctl; asm volatile("stmia %0!, {%1, %2, %3}" : "+l" (dmaRegs) : "l" (r_src), "l" (r_dst), "l" (r_ctl) : "memory"); }; };
         LoadContestPalettes();
         break;
     case 6:
@@ -25205,7 +25205,7 @@ static void Task_DisplayAppealNumberText(u8 taskId)
         gBattle_BG0_Y = 0;
         gBattle_BG2_Y = 0;
         ContestDebugDoPrint();
-        { const void *_src = gPlttBufferUnfaded; void *_dest = (*(struct Shared1A004 *)(gHeap + 0x1a004)).unk18204; u32 _size = 0x200 * 2; { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); dmaRegs[0] = (vu32)(_src); dmaRegs[1] = (vu32)(_dest); dmaRegs[2] = (vu32)((0x8000 | 0x0000 | 0x0400 | 0x0000 | 0x0000) << 16 | ((_size)/(32/8))); dmaRegs[2]; }; };
+        { const void *_src = gPlttBufferUnfaded; void *_dest = (*(struct Shared1A004 *)(gHeap + 0x1a004)).unk18204; u32 _size = 0x200 * 2; { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); u32 eval_src = (u32)(_src); u32 eval_dst = (u32)(_dest); u32 eval_ctl = (u32)((0x8000 | 0x0000 | 0x0400 | 0x0000 | 0x0000) << 16 | ((_size)/(32/8))); register u32 r_src asm("r0") = eval_src; register u32 r_dst asm("r1") = eval_dst; register u32 r_ctl asm("r2") = eval_ctl; asm volatile("stmia %0!, {%1, %2, %3}" : "+l" (dmaRegs) : "l" (r_src), "l" (r_dst), "l" (r_ctl) : "memory"); }; };
         ConvertIntToDecimalStringN(gStringVar1, (*gContestResources->contest).appealNumber + 1, STR_CONV_MODE_LEFT_ALIGN, 1);
         if (!Contest_IsMonsTurnDisabled(gContestPlayerMonIndex))
             StringCopy(gDisplayedStringBattle, gText_AppealNumWhichMoveWillBePlayed);
@@ -25404,7 +25404,7 @@ static void Task_HideMoveSelectScreen(u8 taskId)
     }
     Contest_SetBgCopyFlags(0);
 
-    { const void *_src = gPlttBufferFaded; void *_dest = (*(struct Shared1A004 *)(gHeap + 0x1a004)).unk18604; u32 _size = 0x200 * 2; { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); dmaRegs[0] = (vu32)(_src); dmaRegs[1] = (vu32)(_dest); dmaRegs[2] = (vu32)((0x8000 | 0x0000 | 0x0400 | 0x0000 | 0x0000) << 16 | ((_size)/(32/8))); dmaRegs[2]; }; };
+    { const void *_src = gPlttBufferFaded; void *_dest = (*(struct Shared1A004 *)(gHeap + 0x1a004)).unk18604; u32 _size = 0x200 * 2; { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); u32 eval_src = (u32)(_src); u32 eval_dst = (u32)(_dest); u32 eval_ctl = (u32)((0x8000 | 0x0000 | 0x0400 | 0x0000 | 0x0000) << 16 | ((_size)/(32/8))); register u32 r_src asm("r0") = eval_src; register u32 r_dst asm("r1") = eval_dst; register u32 r_ctl asm("r2") = eval_ctl; asm volatile("stmia %0!, {%1, %2, %3}" : "+l" (dmaRegs) : "l" (r_src), "l" (r_dst), "l" (r_ctl) : "memory"); }; };
     LoadPalette((*(struct Shared1A004 *)(gHeap + 0x1a004)).unk18204, 0, 0x200 * 2);
     gTasks[taskId].data[0] = 0;
     gTasks[taskId].data[1] = 0;
@@ -25980,7 +25980,7 @@ static void Task_DoAppeals(u8 taskId)
         {
         case 0:
             BlendAudienceBackground(-1, 1);
-            PlayFanfare(391);
+            PlayFanfare(362);
             gTasks[taskId].data[10]++;
             break;
         case 1:
@@ -26292,7 +26292,7 @@ static void Task_WaitForHeartSliders(u8 taskId)
 
 static void sub_80DA348(u8 taskId)
 {
-    { const void *_src = (*(struct Shared1A004 *)(gHeap + 0x1a004)).unk18204; void *_dest = gPlttBufferUnfaded; u32 _size = 0x200 * 2; { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); dmaRegs[0] = (vu32)(_src); dmaRegs[1] = (vu32)(_dest); dmaRegs[2] = (vu32)((0x8000 | 0x0000 | 0x0400 | 0x0000 | 0x0000) << 16 | ((_size)/(32/8))); dmaRegs[2]; }; };
+    { const void *_src = (*(struct Shared1A004 *)(gHeap + 0x1a004)).unk18204; void *_dest = gPlttBufferUnfaded; u32 _size = 0x200 * 2; { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); u32 eval_src = (u32)(_src); u32 eval_dst = (u32)(_dest); u32 eval_ctl = (u32)((0x8000 | 0x0000 | 0x0400 | 0x0000 | 0x0000) << 16 | ((_size)/(32/8))); register u32 r_src asm("r0") = eval_src; register u32 r_dst asm("r1") = eval_dst; register u32 r_ctl asm("r2") = eval_ctl; asm volatile("stmia %0!, {%1, %2, %3}" : "+l" (dmaRegs) : "l" (r_src), "l" (r_dst), "l" (r_ctl) : "memory"); }; };
     gTasks[taskId].data[0] = 0;
     gTasks[taskId].data[1] = 2;
     gTasks[taskId].func = Task_WaitPrintRoundResult;
@@ -27783,12 +27783,12 @@ static void UpdateBlendTaskContestantData(u8 contestant)
     InitUnusedBlendTaskData(contestant);
 
     palOffset1 = contestant + 5;
-    { const void *_src = gPlttBufferUnfaded + palOffset1 * 16 + 10; void *_dest = gPlttBufferFaded + palOffset1 * 16 + 10; u32 _size = 2; { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); dmaRegs[0] = (vu32)(_src); dmaRegs[1] = (vu32)(_dest); dmaRegs[2] = (vu32)((0x8000 | 0x0000 | 0x0000 | 0x0000 | 0x0000) << 16 | ((_size)/(16/8))); dmaRegs[2]; }; }
+    { const void *_src = gPlttBufferUnfaded + palOffset1 * 16 + 10; void *_dest = gPlttBufferFaded + palOffset1 * 16 + 10; u32 _size = 2; { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); u32 eval_src = (u32)(_src); u32 eval_dst = (u32)(_dest); u32 eval_ctl = (u32)((0x8000 | 0x0000 | 0x0000 | 0x0000 | 0x0000) << 16 | ((_size)/(16/8))); register u32 r_src asm("r0") = eval_src; register u32 r_dst asm("r1") = eval_dst; register u32 r_ctl asm("r2") = eval_ctl; asm volatile("stmia %0!, {%1, %2, %3}" : "+l" (dmaRegs) : "l" (r_src), "l" (r_dst), "l" (r_ctl) : "memory"); }; }
 
 
                        ;
     palOffset2 = (contestant + 5) * 16 + 12 + contestant;
-    { const void *_src = gPlttBufferUnfaded + palOffset2; void *_dest = gPlttBufferFaded + palOffset2; u32 _size = 2; { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); dmaRegs[0] = (vu32)(_src); dmaRegs[1] = (vu32)(_dest); dmaRegs[2] = (vu32)((0x8000 | 0x0000 | 0x0000 | 0x0000 | 0x0000) << 16 | ((_size)/(16/8))); dmaRegs[2]; }; }
+    { const void *_src = gPlttBufferUnfaded + palOffset2; void *_dest = gPlttBufferFaded + palOffset2; u32 _size = 2; { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); u32 eval_src = (u32)(_src); u32 eval_dst = (u32)(_dest); u32 eval_ctl = (u32)((0x8000 | 0x0000 | 0x0000 | 0x0000 | 0x0000) << 16 | ((_size)/(16/8))); register u32 r_src asm("r0") = eval_src; register u32 r_dst asm("r1") = eval_dst; register u32 r_ctl asm("r2") = eval_ctl; asm volatile("stmia %0!, {%1, %2, %3}" : "+l" (dmaRegs) : "l" (r_src), "l" (r_dst), "l" (r_ctl) : "memory"); }; }
 
 
                        ;

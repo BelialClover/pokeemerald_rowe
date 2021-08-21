@@ -4454,8 +4454,8 @@ struct SoundInfo
     u32 plynote;
     u32 ExtVolPit;
     u8 gap2[16];
-    struct SoundChannel chans[12];
-    s8 pcmBuffer[1584 * 2];
+    struct SoundChannel chans[15];
+    s8 pcmBuffer[0x620 * 2];
 };
 
 struct SongHeader
@@ -8639,7 +8639,7 @@ static void BardSing(struct Task *task, struct BardSong *song)
                     if (sound->var00 <= 50)
                     {
                         u8 num = sound->var00 / 3;
-                        m4aSongNumStart(560 + 3 * num);
+                        m4aSongNumStart(271 + 3 * num);
                     }
                     song->state = 2;
                     song->phonemeTimer--;

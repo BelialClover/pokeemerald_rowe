@@ -4269,8 +4269,8 @@ struct SoundInfo
     u32 plynote;
     u32 ExtVolPit;
     u8 gap2[16];
-    struct SoundChannel chans[12];
-    s8 pcmBuffer[1584 * 2];
+    struct SoundChannel chans[15];
+    s8 pcmBuffer[0x620 * 2];
 };
 
 struct SongHeader
@@ -4538,6 +4538,18 @@ void ply_xcmd_0D(struct MusicPlayerInfo *, struct MusicPlayerTrack *);
 
 void CB2_InitClearSaveDataScreen(void);
 # 7 "src/title_screen.c" 2
+# 1 "include/debug.h" 1
+
+
+
+
+
+
+void Debug_ShowMainMenu(void);
+
+
+void CB2_StartSoundCheckMenu(void);
+# 8 "src/title_screen.c" 2
 # 1 "include/decompress.h" 1
 
 
@@ -4570,7 +4582,7 @@ void LoadSpecialPokePic_2(const struct CompressedSpriteSheet *src, void *dest, s
 void LoadSpecialPokePic_DontHandleDeoxys(const struct CompressedSpriteSheet *src, void *dest, s32 species, u32 personality, bool8 isFrontPic);
 
 u32 GetDecompressedDataSize(const u32 *ptr);
-# 8 "src/title_screen.c" 2
+# 9 "src/title_screen.c" 2
 # 1 "include/event_data.h" 1
 
 
@@ -4625,14 +4637,14 @@ extern u16 gSpecialVar_Unused_0x8014;
 
 extern const u16 sLevelCapFlags[9];
 extern const u16 sLevelCaps[9];
-# 9 "src/title_screen.c" 2
+# 10 "src/title_screen.c" 2
 # 1 "include/intro.h" 1
 # 9 "include/intro.h"
 void CB2_InitCopyrightScreenAfterBootup(void);
 void CB2_InitCopyrightScreenAfterBootup(void);
 void CB2_InitCopyrightScreenAfterTitleScreen(void);
 void PanFadeAndZoomScreen(u16, u16, u16, u16);
-# 10 "src/title_screen.c" 2
+# 11 "src/title_screen.c" 2
 # 1 "include/m4a.h" 1
 
 
@@ -4660,7 +4672,7 @@ extern struct MusicPlayerInfo gMPlayInfo_SE1;
 extern struct MusicPlayerInfo gMPlayInfo_SE2;
 extern struct MusicPlayerInfo gMPlayInfo_SE3;
 extern struct SoundInfo gSoundInfo;
-# 11 "src/title_screen.c" 2
+# 12 "src/title_screen.c" 2
 # 1 "include/main.h" 1
 
 
@@ -4736,7 +4748,7 @@ void StartTimer1(void);
 void SeedRngAndSetTrainerId(void);
 u16 GetGeneratedTrainerIdLower(void);
 void sub_819789C(void);
-# 12 "src/title_screen.c" 2
+# 13 "src/title_screen.c" 2
 # 1 "include/main_menu.h" 1
 
 
@@ -4744,7 +4756,7 @@ void sub_819789C(void);
 void CB2_InitMainMenu(void);
 void CreateYesNoMenuParameterized(u8 a, u8 b, u16 c, u16 d, u8 e, u8 f);
 void NewGameBirchSpeech_SetDefaultPlayerName(u8);
-# 13 "src/title_screen.c" 2
+# 14 "src/title_screen.c" 2
 # 1 "include/palette.h" 1
 # 17 "include/palette.h"
 enum
@@ -4809,7 +4821,7 @@ void TintPalette_GrayScale2(u16 *palette, u16 count);
 void TintPalette_SepiaTone(u16 *palette, u16 count);
 void TintPalette_CustomTone(u16 *palette, u16 count, u16 rTone, u16 gTone, u16 bTone);
 void TintPalette_CustomToneWithCopy(const u16 *src, u16 *dest, u16 count, u16 rTone, u16 gTone, u16 bTone, bool8 excludeZeroes);
-# 14 "src/title_screen.c" 2
+# 15 "src/title_screen.c" 2
 # 1 "include/reset_rtc_screen.h" 1
 
 
@@ -4818,13 +4830,13 @@ extern const struct SpritePalette gSpritePalette_RtcArrow;
 extern const struct SpriteTemplate gSpriteTemplate_RtcArrow;
 
 void CB2_InitResetRtcScreen(void);
-# 15 "src/title_screen.c" 2
+# 16 "src/title_screen.c" 2
 # 1 "include/berry_fix_program.h" 1
 
 
 
 void CB2_InitBerryFixProgram(void);
-# 16 "src/title_screen.c" 2
+# 17 "src/title_screen.c" 2
 # 1 "include/sound.h" 1
 
 
@@ -4874,7 +4886,7 @@ void SE12PanpotControl(s8 pan);
 bool8 IsSEPlaying(void);
 bool8 IsBGMPlaying(void);
 bool8 IsSpecialSEPlaying(void);
-# 17 "src/title_screen.c" 2
+# 18 "src/title_screen.c" 2
 
 # 1 "include/task.h" 1
 # 10 "include/task.h"
@@ -4904,7 +4916,7 @@ u8 FindTaskIdByFunc(TaskFunc func);
 u8 GetTaskCount(void);
 void SetWordTaskArg(u8 taskId, u8 dataElem, u32 value);
 u32 GetWordTaskArg(u8 taskId, u8 dataElem);
-# 19 "src/title_screen.c" 2
+# 20 "src/title_screen.c" 2
 # 1 "include/scanline_effect.h" 1
 # 17 "include/scanline_effect.h"
 struct ScanlineEffectParams
@@ -4937,7 +4949,7 @@ void ScanlineEffect_Clear(void);
 void ScanlineEffect_SetParams(struct ScanlineEffectParams);
 void ScanlineEffect_InitHBlankDmaTransfer(void);
 u8 ScanlineEffect_InitWave(u8 startLine, u8 endLine, u8 frequency, u8 amplitude, u8 delayInterval, u8 regOffset, bool8 a7);
-# 20 "src/title_screen.c" 2
+# 21 "src/title_screen.c" 2
 # 1 "gflib/gpu_regs.h" 1
 # 9 "gflib/gpu_regs.h"
 void InitGpuRegManager(void);
@@ -4949,7 +4961,7 @@ void SetGpuRegBits(u8 regOffset, u16 mask);
 void ClearGpuRegBits(u8 regOffset, u16 mask);
 void EnableInterrupts(u16 mask);
 void DisableInterrupts(u16 mask);
-# 21 "src/title_screen.c" 2
+# 22 "src/title_screen.c" 2
 # 1 "include/trig.h" 1
 
 
@@ -4960,7 +4972,7 @@ s16 Sin(s16 index, s16 amplitude);
 s16 Cos(s16 index, s16 amplitude);
 s16 Sin2(u16 angle);
 s16 Cos2(u16 angle);
-# 22 "src/title_screen.c" 2
+# 23 "src/title_screen.c" 2
 # 1 "include/graphics.h" 1
 
 
@@ -14490,12 +14502,12 @@ extern const u32 gItemIconPalette_PinkMint[];
 extern const u32 gItemIconPalette_GreenMint[];
 extern const u32 gItemIconPalette_LightBlueMint[];
 extern const u32 gItemIconPalette_YellowMint[];
-# 23 "src/title_screen.c" 2
-# 1 "include/constants/rgb.h" 1
 # 24 "src/title_screen.c" 2
-# 1 "include/constants/songs.h" 1
+# 1 "include/constants/rgb.h" 1
 # 25 "src/title_screen.c" 2
-# 38 "src/title_screen.c"
+# 1 "include/constants/songs.h" 1
+# 26 "src/title_screen.c" 2
+# 40 "src/title_screen.c"
 extern struct MusicPlayerInfo gMPlayInfo_BGM;
 
 
@@ -14506,6 +14518,7 @@ static void Task_TitleScreenPhase3(u8);
 static void CB2_GoToMainMenu(void);
 static void CB2_GoToClearSaveDataScreen(void);
 static void CB2_GoToResetRtcScreen(void);
+static void CB2_GoToSoundCheckScreen(void);
 static void CB2_GoToBerryFixScreen(void);
 static void CB2_GoToCopyrightScreen(void);
 static void UpdateLegendaryMarkingColor(u8);
@@ -15000,9 +15013,9 @@ void CB2_InitTitleScreen(void)
         SetGpuReg(0x16, 0);
         SetGpuReg(0x10, 0);
         SetGpuReg(0x12, 0);
-        { vu16 tmp = (vu16)(0); { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); dmaRegs[0] = (vu32)(&tmp); dmaRegs[1] = (vu32)((void *)0x6000000); dmaRegs[2] = (vu32)((0x8000 | 0x0000 | 0x0000 | 0x0100 | 0x0000) << 16 | ((0x18000)/(16/8))); dmaRegs[2]; }; };
-        { vu32 tmp = (vu32)(0); { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); dmaRegs[0] = (vu32)(&tmp); dmaRegs[1] = (vu32)((void *)0x7000000); dmaRegs[2] = (vu32)((0x8000 | 0x0000 | 0x0400 | 0x0100 | 0x0000) << 16 | ((0x400)/(32/8))); dmaRegs[2]; }; };
-        { vu16 tmp = (vu16)(0); { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); dmaRegs[0] = (vu32)(&tmp); dmaRegs[1] = (vu32)((void *)(0x5000000 + 2)); dmaRegs[2] = (vu32)((0x8000 | 0x0000 | 0x0000 | 0x0100 | 0x0000) << 16 | ((0x400 - 2)/(16/8))); dmaRegs[2]; }; };
+        { vu16 tmp = (vu16)(0); { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); u32 eval_src = (u32)(&tmp); u32 eval_dst = (u32)((void *)0x6000000); u32 eval_ctl = (u32)((0x8000 | 0x0000 | 0x0000 | 0x0100 | 0x0000) << 16 | ((0x18000)/(16/8))); register u32 r_src asm("r0") = eval_src; register u32 r_dst asm("r1") = eval_dst; register u32 r_ctl asm("r2") = eval_ctl; asm volatile("stmia %0!, {%1, %2, %3}" : "+l" (dmaRegs) : "l" (r_src), "l" (r_dst), "l" (r_ctl) : "memory"); }; };
+        { vu32 tmp = (vu32)(0); { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); u32 eval_src = (u32)(&tmp); u32 eval_dst = (u32)((void *)0x7000000); u32 eval_ctl = (u32)((0x8000 | 0x0000 | 0x0400 | 0x0100 | 0x0000) << 16 | ((0x400)/(32/8))); register u32 r_src asm("r0") = eval_src; register u32 r_dst asm("r1") = eval_dst; register u32 r_ctl asm("r2") = eval_ctl; asm volatile("stmia %0!, {%1, %2, %3}" : "+l" (dmaRegs) : "l" (r_src), "l" (r_dst), "l" (r_ctl) : "memory"); }; };
+        { vu16 tmp = (vu16)(0); { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); u32 eval_src = (u32)(&tmp); u32 eval_dst = (u32)((void *)(0x5000000 + 2)); u32 eval_ctl = (u32)((0x8000 | 0x0000 | 0x0000 | 0x0100 | 0x0000) << 16 | ((0x400 - 2)/(16/8))); register u32 r_src asm("r0") = eval_src; register u32 r_dst asm("r1") = eval_dst; register u32 r_ctl asm("r2") = eval_ctl; asm volatile("stmia %0!, {%1, %2, %3}" : "+l" (dmaRegs) : "l" (r_src), "l" (r_dst), "l" (r_ctl) : "memory"); }; };
         ResetPaletteFade();
         gMain.state = 1;
         break;
@@ -15070,7 +15083,7 @@ void CB2_InitTitleScreen(void)
                                     | 0x1000
                                     | 0x2000
                                     | 0x8000);
-        m4aSongNumStart(413);
+        m4aSongNumStart(384);
         gMain.state = 5;
         break;
     case 5:
@@ -15205,6 +15218,12 @@ static void Task_TitleScreenPhase3(u8 taskId)
         BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 0x10, ((0) | ((0) << 5) | ((0) << 10)));
         SetMainCallback2(CB2_GoToResetRtcScreen);
     }
+    else if (({(gMain.heldKeys) & ((0x0002 | 0x0004 | 0x0010));}) == (0x0002 | 0x0004 | 0x0010))
+    {
+        FadeOutBGM(4);
+        BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 0x10, ((0) | ((0) << 5) | ((0) << 10)));
+        SetMainCallback2(CB2_GoToSoundCheckScreen);
+    }
     else if (({(gMain.heldKeys) & ((0x0002 | 0x0004));}) == (0x0002 | 0x0004))
     {
         FadeOutBGM(4);
@@ -15253,6 +15272,14 @@ static void CB2_GoToResetRtcScreen(void)
 {
     if (!UpdatePaletteFade())
         SetMainCallback2(CB2_InitResetRtcScreen);
+}
+
+static void CB2_GoToSoundCheckScreen(void)
+{
+    if (!UpdatePaletteFade())
+        SetMainCallback2(CB2_StartSoundCheckMenu);
+    AnimateSprites();
+    BuildOamBuffer();
 }
 
 static void CB2_GoToBerryFixScreen(void)

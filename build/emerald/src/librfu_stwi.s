@@ -9,20 +9,19 @@
 STWI_init_all:
 	push	{r4, lr}
 	add	r3, r0, #0
+	add	r4, r1, #0
 	lsl	r2, r2, #0x18
 	lsr	r2, r2, #0x18
 	cmp	r2, #0x1
 	bne	.L3	@cond_branch
-	add	r2, r3, #0
-	add	r2, r2, #0xe8
-	str	r2, [r1]
-	ldr	r1, .L6
-	ldr	r0, .L6+0x4
-	str	r0, [r1]
-	str	r2, [r1, #0x4]
-	ldr	r0, .L6+0x8
-	str	r0, [r1, #0x8]
-	ldr	r0, [r1, #0x8]
+	add	r1, r3, #0
+	add	r1, r1, #0xe8
+	str	r1, [r4]
+	ldr	r0, .L6
+	ldr	r2, .L6+0x4
+	ldr	r4, .L6+0x8
+	stmia r4!, {r0, r1, r2}
+	.code	16
 	ldr	r1, .L6+0xc
 	ldr	r2, .L6+0x10
 	add	r0, r3, r2
@@ -30,14 +29,14 @@ STWI_init_all:
 .L7:
 	.align	2, 0
 .L6:
-	.word	0x40000d4
 	.word	IntrSIO32
 	.word	-0x7ffffb50
+	.word	0x40000d4
 	.word	gSTWIStatus
 	.word	0xa48
 .L3:
 	ldr	r0, .L8
-	str	r0, [r1]
+	str	r0, [r4]
 	ldr	r1, .L8+0x4
 	add	r0, r3, #0
 	add	r0, r0, #0xe8

@@ -6281,7 +6281,7 @@ static void PokeballGlowEffect_TryPlaySe(struct Sprite *sprite)
         sprite->data[3] = 0;
         if (sprite->data[5])
         {
-            PlayFanfare(368);
+            PlayFanfare(339);
         }
     }
 }
@@ -8042,7 +8042,7 @@ u8 FldEff_UseSurf(void)
     u8 taskId = CreateTask(Task_SurfFieldEffect, 0xff);
     gTasks[taskId].data[15] = gFieldEffectArguments[0];
     Overworld_ClearSavedMusic();
-    Overworld_ChangeMusicTo(365);
+    Overworld_ChangeMusicTo(336);
     return 0;
 }
 

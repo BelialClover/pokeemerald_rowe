@@ -4885,8 +4885,8 @@ void GetOnOffBike(u8 transitionFlags)
     else
     {
         SetPlayerAvatarTransitionFlags(transitionFlags);
-        Overworld_SetSavedMusic(403);
-        Overworld_ChangeMusicTo(403);
+        Overworld_SetSavedMusic(374);
+        Overworld_ChangeMusicTo(374);
     }
 }
 

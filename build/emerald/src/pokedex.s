@@ -160000,8 +160000,10 @@ ResetPokedexView:
 	.thumb_func
 CB2_OpenPokedex:
 	push	{r4, r5, r6, r7, lr}
-	mov	r7, r8
-	push	{r7}
+	mov	r7, sl
+	mov	r6, r9
+	mov	r5, r8
+	push	{r5, r6, r7}
 	add	sp, sp, #-0x8
 	ldr	r0, .L60
 	mov	r1, #0x87
@@ -160023,73 +160025,74 @@ CB2_OpenPokedex:
 	bl	SetVBlankCallback
 	mov	r0, #0x0
 	bl	ResetOtherVideoRegisters
+	mov	r6, #0xc0
+	lsl	r6, r6, #0x13
 	mov	r3, #0xc0
-	lsl	r3, r3, #0x13
-	mov	r4, #0xc0
-	lsl	r4, r4, #0x9
+	lsl	r3, r3, #0x9
 	add	r2, sp, #0x4
-	mov	r8, r2
-	mov	r2, sp
-	mov	r6, #0x0
-	ldr	r1, .L60+0x4
+	mov	r9, r2
+	mov	r4, sp
+	mov	r7, #0x0
+	mov	sl, r7
+	ldr	r0, .L60+0x4
+	mov	ip, r0
 	mov	r5, #0x80
 	lsl	r5, r5, #0x5
-	ldr	r7, .L60+0x8
-	mov	r0, #0x81
-	lsl	r0, r0, #0x18
-	mov	ip, r0
+	mov	r1, #0x81
+	lsl	r1, r1, #0x18
+	mov	r8, r1
 .L48:
-	strh	r6, [r2]
+	mov	r2, sl
+	strh	r2, [r4]
 	mov	r0, sp
-	str	r0, [r1]
-	str	r3, [r1, #0x4]
-	str	r7, [r1, #0x8]
-	ldr	r0, [r1, #0x8]
-	add	r3, r3, r5
-	sub	r4, r4, r5
-	cmp	r4, r5
+	add	r1, r6, #0
+	mov	r2, ip
+	ldr	r7, .L60+0x8
+	stmia r7!, {r0, r1, r2}
+	.code	16
+	add	r6, r6, r5
+	sub	r3, r3, r5
+	cmp	r3, r5
 	bhi	.L48	@cond_branch
-	strh	r6, [r2]
-	mov	r2, sp
-	str	r2, [r1]
-	str	r3, [r1, #0x4]
-	lsr	r0, r4, #0x1
-	mov	r3, ip
-	orr	r0, r0, r3
-	str	r0, [r1, #0x8]
-	ldr	r0, [r1, #0x8]
-	mov	r0, #0xe0
-	lsl	r0, r0, #0x13
+	mov	r0, sl
+	strh	r0, [r4]
+	lsr	r2, r3, #0x1
+	mov	r0, sp
+	add	r1, r6, #0
+	mov	r3, r8
+	orr	r2, r2, r3
+	ldr	r4, .L60+0x8
+	stmia r4!, {r0, r1, r2}
+	.code	16
 	mov	r3, #0x80
 	lsl	r3, r3, #0x3
-	mov	r4, #0x0
-	str	r4, [sp, #0x4]
-	ldr	r2, .L60+0x4
-	mov	r1, r8
-	str	r1, [r2]
-	str	r0, [r2, #0x4]
-	lsr	r0, r3, #0x2
-	mov	r1, #0x85
-	lsl	r1, r1, #0x18
-	orr	r0, r0, r1
-	str	r0, [r2, #0x8]
-	ldr	r0, [r2, #0x8]
+	mov	r5, #0x0
+	str	r5, [sp, #0x4]
+	lsr	r2, r3, #0x2
+	mov	r4, #0x85
+	lsl	r4, r4, #0x18
+	mov	r0, r9
+	mov	r1, #0xe0
+	lsl	r1, r1, #0x13
+	orr	r2, r2, r4
+	ldr	r7, .L60+0x8
+	stmia r7!, {r0, r1, r2}
+	.code	16
+	mov	r0, sp
+	strh	r5, [r0]
+	lsr	r3, r3, #0x1
+	mov	r2, #0x81
+	lsl	r2, r2, #0x18
 	mov	r1, #0xa0
 	lsl	r1, r1, #0x13
-	mov	r0, sp
-	strh	r4, [r0]
-	str	r0, [r2]
-	str	r1, [r2, #0x4]
-	lsr	r3, r3, #0x1
-	mov	r0, #0x81
-	lsl	r0, r0, #0x18
-	orr	r3, r3, r0
-	str	r3, [r2, #0x8]
-	ldr	r0, [r2, #0x8]
+	orr	r2, r2, r3
+	ldr	r3, .L60+0x8
+	stmia r3!, {r0, r1, r2}
+	.code	16
 	ldr	r0, .L60
-	mov	r2, #0x87
-	lsl	r2, r2, #0x3
-	add	r0, r0, r2
+	mov	r4, #0x87
+	lsl	r4, r4, #0x3
+	add	r0, r0, r4
 	mov	r1, #0x1
 	strb	r1, [r0]
 	b	.L43
@@ -160097,8 +160100,8 @@ CB2_OpenPokedex:
 	.align	2, 0
 .L60:
 	.word	gMain
-	.word	0x40000d4
 	.word	-0x7efff800
+	.word	0x40000d4
 .L51:
 	bl	ScanlineEffect_Stop
 	bl	ResetTasks
@@ -160130,15 +160133,15 @@ CB2_OpenPokedex:
 	ldr	r5, .L64+0xc
 	ldr	r0, [r5]
 	ldrb	r0, [r0, #0x19]
-	ldr	r3, .L64+0x10
-	add	r1, r1, r3
+	ldr	r7, .L64+0x10
+	add	r1, r1, r7
 	strh	r0, [r1]
 	bl	IsNationalPokedexEnabled
 	add	r1, r0, #0
 	cmp	r1, #0
 	bne	.L53	@cond_branch
 	ldr	r0, [r4]
-	ldr	r2, .L64+0x10
+	add	r2, r7, #0
 	add	r0, r0, r2
 	strh	r1, [r0]
 .L53:
@@ -160150,16 +160153,16 @@ CB2_OpenPokedex:
 	strh	r2, [r0]
 	ldr	r0, .L64+0x18
 	ldrh	r2, [r0]
-	sub	r3, r3, #0x8
-	add	r0, r1, r3
+	ldr	r7, .L64+0x1c
+	add	r0, r1, r7
 	strh	r2, [r0]
-	ldr	r0, .L64+0x1c
+	ldr	r0, .L64+0x20
 	ldrb	r0, [r0]
-	ldr	r2, .L64+0x20
+	ldr	r2, .L64+0x24
 	add	r1, r1, r2
 	strb	r0, [r1]
 	ldr	r0, [r4]
-	add	r3, r3, #0x4d
+	add	r3, r3, #0x45
 	add	r0, r0, r3
 	mov	r1, #0x4
 	strb	r1, [r0]
@@ -160169,11 +160172,14 @@ CB2_OpenPokedex:
 	mov	r0, #0x0
 	bl	GetHoennPokedexCount
 	ldr	r1, [r4]
-	ldr	r2, .L64+0x24
-	add	r1, r1, r2
+	add	r7, r7, #0xc
+	add	r1, r1, r7
 	strh	r0, [r1]
 	mov	r0, #0x1
 	bl	GetHoennPokedexCount
+	ldr	r1, [r4]
+	ldr	r2, .L64+0x28
+	add	r1, r1, r2
 	b	.L59
 .L65:
 	.align	2, 0
@@ -160185,33 +160191,34 @@ CB2_OpenPokedex:
 	.word	0xe12
 	.word	0xe16
 	.word	sLastSelectedPokemon
+	.word	0xe0e
 	.word	sPokeBallRotation
 	.word	0xe3a
-	.word	0xe1a
+	.word	0xe1c
 .L54:
 	mov	r0, #0x0
 	bl	GetNationalPokedexCount
 	ldr	r1, [r4]
-	ldr	r2, .L66
-	add	r1, r1, r2
+	ldr	r3, .L66
+	add	r1, r1, r3
 	strh	r0, [r1]
 	mov	r0, #0x1
 	bl	GetNationalPokedexCount
-.L59:
 	ldr	r1, [r4]
-	ldr	r3, .L66+0x4
-	add	r1, r1, r3
+	ldr	r4, .L66+0x4
+	add	r1, r1, r4
+.L59:
 	strh	r0, [r1]
 	ldr	r0, .L66+0x8
 	ldr	r0, [r0]
-	ldr	r1, .L66+0xc
-	add	r0, r0, r1
+	ldr	r7, .L66+0xc
+	add	r0, r0, r7
 	mov	r1, #0x8
 	strb	r1, [r0]
 	ldr	r1, .L66+0x10
-	mov	r2, #0x87
-	lsl	r2, r2, #0x3
-	add	r1, r1, r2
+	mov	r0, #0x87
+	lsl	r0, r0, #0x3
+	add	r1, r1, r0
 	ldrb	r0, [r1]
 	add	r0, r0, #0x1
 	strb	r0, [r1]
@@ -160233,11 +160240,11 @@ CB2_OpenPokedex:
 	bl	SetMainCallback2
 	ldr	r0, .L68+0x8
 	ldr	r1, [r0]
-	ldr	r3, .L68+0xc
-	add	r0, r1, r3
+	ldr	r2, .L68+0xc
+	add	r0, r1, r2
 	ldrb	r0, [r0]
-	ldr	r2, .L68+0x10
-	add	r1, r1, r2
+	ldr	r3, .L68+0x10
+	add	r1, r1, r3
 	ldrb	r1, [r1]
 	bl	CreatePokedexList
 	ldr	r0, .L68+0x14
@@ -160246,8 +160253,10 @@ CB2_OpenPokedex:
 	bl	m4aMPlayVolumeControl
 .L43:
 	add	sp, sp, #0x8
-	pop	{r3}
+	pop	{r3, r4, r5}
 	mov	r8, r3
+	mov	r9, r4
+	mov	sl, r5
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
@@ -160351,15 +160360,15 @@ Task_HandlePokedexInput:
 	add	r0, r3, r1
 	ldrb	r0, [r0]
 	cmp	r0, #0
-	beq	.LCB841
+	beq	.LCB851
 	b	.L78	@long jump
-.LCB841:
+.LCB851:
 	lsl	r0, r2, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, #0x8
-	beq	.LCB845
+	beq	.LCB855
 	b	.L78	@long jump
-.LCB845:
+.LCB855:
 	ldr	r2, .L92+0x8
 	add	r0, r3, r2
 	ldrh	r0, [r0]
@@ -161285,15 +161294,15 @@ Task_HandleSearchResultsInput:
 	add	r0, r3, r1
 	ldrb	r0, [r0]
 	cmp	r0, #0
-	beq	.LCB2033
+	beq	.LCB2043
 	b	.L178	@long jump
-.LCB2033:
+.LCB2043:
 	lsl	r0, r2, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, #0x8
-	beq	.LCB2037
+	beq	.LCB2047
 	b	.L178	@long jump
-.LCB2037:
+.LCB2047:
 	ldr	r2, .L192+0x8
 	add	r0, r3, r2
 	ldrh	r0, [r0]
@@ -161624,9 +161633,9 @@ Task_HandleSearchResultsStartMenuInput:
 	mov	r0, #0x1
 	and	r0, r0, r1
 	cmp	r0, #0
-	bne	.LCB2474
+	bne	.LCB2484
 	b	.L213	@long jump
-.LCB2474:
+.LCB2484:
 	ldr	r1, .L232+0x4
 	add	r0, r5, r1
 	ldrh	r0, [r0]
@@ -162165,9 +162174,9 @@ LoadPokedexListPage:
 	lsl	r0, r0, #0x18
 	lsr	r6, r0, #0x18
 	cmp	r6, #0
-	beq	.LCB3148
+	beq	.LCB3158
 	b	.L269	@long jump
-.LCB3148:
+.LCB3158:
 	mov	r0, #0x0
 	bl	SetVBlankCallback
 	ldr	r4, .L294+0x4
@@ -162648,9 +162657,9 @@ CreatePokedexList:
 	strh	r4, [r0, #0x2]
 .L334:
 	cmp	r6, #0x5
-	bls	.LCB3770
+	bls	.LCB3780
 	b	.L341	@long jump
-.LCB3770:
+.LCB3780:
 	lsl	r0, r6, #0x2
 	ldr	r1, .L405
 	add	r0, r0, r1
@@ -162678,9 +162687,9 @@ CreatePokedexList:
 	mov	r0, sp
 	ldrh	r0, [r0]
 	cmp	r4, r0
-	blt	.LCB3801
+	blt	.LCB3811
 	b	.L341	@long jump
-.LCB3801:
+.LCB3811:
 	mov	r5, sp
 	ldr	r2, .L407
 	mov	r8, r2
@@ -162762,9 +162771,9 @@ CreatePokedexList:
 	mov	r0, sp
 	ldrh	r0, [r0]
 	cmp	r4, r0
-	blt	.LCB3915
+	blt	.LCB3925
 	b	.L341	@long jump
-.LCB3915:
+.LCB3925:
 	mov	r6, sp
 	ldr	r0, .L409
 	mov	r8, r0
@@ -163359,9 +163368,9 @@ CreateMonListEntry:
 	cmp	r0, #0x1
 	ble	.L425	@cond_branch
 	cmp	r0, #0x2
-	bne	.LCB4702
+	bne	.LCB4712
 	b	.L442	@long jump
-.LCB4702:
+.LCB4712:
 .L425:
 	sub	r0, r1, #0x5
 	lsl	r0, r0, #0x10
@@ -164076,9 +164085,9 @@ UpdateDexListScroll:
 	ldrb	r3, [r2]
 	add	r7, r0, #0
 	cmp	r3, #0
-	bne	.LCB5616
+	bne	.LCB5626
 	b	.L492	@long jump
-.LCB5616:
+.LCB5626:
 	sub	r0, r3, #0x1
 	strb	r0, [r2]
 	cmp	r4, #0x1
@@ -165139,14 +165148,14 @@ CreateInterfaceSprites:
 	bl	CreateSprite
 	bl	IsNationalPokedexEnabled
 	cmp	r0, #0
-	beq	.LCB7005
+	beq	.LCB7015
 	b	.L639	@long jump
-.LCB7005:
+.LCB7015:
 	mov	r1, sl
 	cmp	r1, #0
-	beq	.LCB7008
+	beq	.LCB7018
 	b	.L672	@long jump
-.LCB7008:
+.LCB7018:
 	ldr	r0, .L675+0xc
 	mov	r1, #0xcc
 	mov	r2, #0x15
@@ -165442,9 +165451,9 @@ CreateInterfaceSprites:
 .L639:
 	mov	r0, sl
 	cmp	r0, #0
-	beq	.LCB7371
+	beq	.LCB7381
 	b	.L672	@long jump
-.LCB7371:
+.LCB7381:
 	ldr	r5, .L685
 	add	r0, r5, #0
 	mov	r1, #0xcc
@@ -167037,9 +167046,9 @@ Task_LoadInfoScreen:
 	mov	r0, #0x80
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.LCB9305
+	beq	.LCB9315
 	b	.L809	@long jump
-.LCB9305:
+.LCB9315:
 	ldr	r0, .L835+0x4
 	ldr	r0, [r0]
 	ldr	r3, .L835+0x8
@@ -167945,9 +167954,9 @@ Task_LoadCryScreen:
 	mov	r0, #0x80
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.LCB10433
+	beq	.LCB10443
 	b	.L931	@long jump
-.LCB10433:
+.LCB10443:
 	ldr	r0, .L952+0x4
 	bl	m4aMPlayStop
 	ldr	r5, .L952+0x8
@@ -168128,9 +168137,9 @@ Task_LoadCryScreen:
 	bl	LoadCryWaveformWindow
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	bne	.LCB10663
+	bne	.LCB10673
 	b	.L931	@long jump
-.LCB10663:
+.LCB10673:
 	ldr	r1, .L964+0x18
 	mov	r2, #0x87
 	lsl	r2, r2, #0x3
@@ -168348,9 +168357,9 @@ Task_HandleCryScreenInput:
 	lsl	r0, r0, #0x18
 	lsr	r1, r0, #0x18
 	cmp	r1, #0
-	beq	.LCB10934
+	beq	.LCB10944
 	b	.L974	@long jump
-.LCB10934:
+.LCB10944:
 	mov	r0, #0x2
 	and	r0, r0, r2
 	lsl	r0, r0, #0x10
@@ -168655,9 +168664,9 @@ Task_LoadSizeScreen:
 	mov	r0, #0x80
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.LCB11325
+	beq	.LCB11335
 	b	.L1022	@long jump
-.LCB11325:
+.LCB11335:
 	ldr	r4, .L1041+0x4
 	ldr	r0, [r4]
 	ldr	r1, .L1041+0x8
@@ -169434,9 +169443,9 @@ Task_DisplayCaughtMonDexPage:
 	mov	r0, #0x80
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.LCB12287
+	beq	.LCB12297
 	b	.L1128	@long jump
-.LCB12287:
+.LCB12297:
 	ldr	r1, .L1144+0x4
 	ldr	r0, .L1144+0x8
 	ldr	r0, [r0, #0xc]
@@ -172122,9 +172131,9 @@ DoPokedexSearch:
 	bne	.L1511	@cond_branch
 	ldr	r0, [sp, #0xc]
 	cmp	r0, #0xff
-	bne	.LCB15689
+	bne	.LCB15699
 	b	.L1509	@long jump
-.LCB15689:
+.LCB15699:
 	str	r0, [sp, #0x8]
 	mov	r1, #0xff
 	str	r1, [sp, #0xc]
@@ -172140,9 +172149,9 @@ DoPokedexSearch:
 	add	r0, r0, r1
 	ldrh	r0, [r0]
 	cmp	r7, r0
-	bcc	.LCB15716
+	bcc	.LCB15726
 	b	.L1521	@long jump
-.LCB15716:
+.LCB15726:
 	add	r3, r5, #0
 	mov	r2, sp
 	mov	r8, r5
@@ -172286,9 +172295,9 @@ DoPokedexSearch:
 .L1509:
 	ldr	r0, .L1562+0xc
 	cmp	r0, r0
-	bne	.LCB15924
+	bne	.LCB15934
 	b	.L1531	@long jump
-.LCB15924:
+.LCB15934:
 	mov	r2, #0xff
 	mov	sl, r2
 	mov	r6, #0x0
@@ -172634,9 +172643,9 @@ Task_LoadSearchMenu:
 	lsl	r0, r0, #0x18
 	lsr	r5, r0, #0x18
 	cmp	r5, #0
-	beq	.LCB16366
+	beq	.LCB16376
 	b	.L1576	@long jump
-.LCB16366:
+.LCB16376:
 	ldr	r0, .L1600+0x4
 	ldr	r0, [r0]
 	ldr	r1, .L1600+0x8
@@ -175242,9 +175251,9 @@ LoadTilesetTilemapHGSS:
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	cmp	r0, #0x6
-	bls	.LCB19577
+	bls	.LCB19587
 	b	.L1924	@long jump
-.LCB19577:
+.LCB19587:
 	lsl	r0, r0, #0x2
 	ldr	r1, .L1946
 	add	r0, r0, r1
@@ -175461,9 +175470,9 @@ Task_LoadStatsScreen:
 	mov	r0, #0x80
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.LCB19822
+	beq	.LCB19832
 	b	.L1966	@long jump
-.LCB19822:
+.LCB19832:
 	ldr	r0, .L1994+0x4
 	ldr	r0, [r0]
 	ldr	r3, .L1994+0x8
@@ -175639,9 +175648,9 @@ Task_LoadStatsScreen:
 	bl	CalculateMoves
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	bne	.LCB20047
+	bne	.LCB20057
 	b	.L1966	@long jump
-.LCB20047:
+.LCB20057:
 	ldr	r1, .L2002+0x14
 	mov	r0, #0x87
 	lsl	r0, r0, #0x3
@@ -177563,9 +177572,9 @@ PrintStatsScreen_Left:
 	lsr	r6, r0, #0x18
 .L2182:
 	cmp	r6, #0x2
-	bls	.LCB22490
+	bls	.LCB22500
 	b	.L2183	@long jump
-.LCB22490:
+.LCB22500:
 	mov	r6, #0x0
 	cmp	r3, #0
 	beq	.L2184	@cond_branch
@@ -177788,9 +177797,9 @@ PrintStatsScreen_Left:
 	lsl	r0, r4, #0x1c
 	lsr	r0, r0, #0x1e
 	cmp	r0, #0
-	bne	.LCB22768
+	bne	.LCB22778
 	b	.L2190	@long jump
-.LCB22768:
+.LCB22778:
 	add	r0, r6, #0x1
 	lsl	r0, r0, #0x18
 	lsr	r6, r0, #0x18
@@ -178049,9 +178058,9 @@ PrintStatsScreen_Left:
 	ldrsh	r0, [r0, r2]
 	add	r7, r1, #0
 	cmp	r0, #0
-	beq	.LCB23093
+	beq	.LCB23103
 	b	.L2197	@long jump
-.LCB23093:
+.LCB23103:
 	ldr	r0, .L2285+0x30
 	mov	r3, #0xb
 	mov	r1, r9
@@ -178490,9 +178499,9 @@ PrintStatsScreen_Left:
 	ldrb	r0, [r0, #0x16]
 	sub	r0, r0, #0x1
 	cmp	r0, #0xe
-	bls	.LCB23677
+	bls	.LCB23687
 	b	.L2236	@long jump
-.LCB23677:
+.LCB23687:
 	lsl	r0, r0, #0x2
 	ldr	r1, .L2329+0x8
 	add	r0, r0, r1
@@ -178675,15 +178684,15 @@ PrintStatsScreen_Left:
 	ldrb	r0, [r1, #0x16]
 	ldrb	r3, [r1, #0x17]
 	cmp	r0, r3
-	bne	.LCB23929
+	bne	.LCB23939
 	b	.L2254	@long jump
-.LCB23929:
+.LCB23939:
 	ldrb	r0, [r1, #0x17]
 	sub	r0, r0, #0x1
 	cmp	r0, #0xe
-	bls	.LCB23934
+	bls	.LCB23944
 	b	.L2255	@long jump
-.LCB23934:
+.LCB23944:
 	lsl	r0, r0, #0x2
 	ldr	r1, .L2359+0xc
 	add	r0, r0, r1
@@ -179386,9 +179395,9 @@ Task_LoadEvolutionScreen:
 	mov	r0, #0x80
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.LCB24802
+	beq	.LCB24812
 	b	.L2439	@long jump
-.LCB24802:
+.LCB24812:
 	ldr	r0, .L2462+0x4
 	ldr	r0, [r0]
 	ldr	r3, .L2462+0x8
@@ -180228,9 +180237,9 @@ PrintEvolutionTargetSpeciesAndMethod:
 	str	r4, [sp, #0x18]
 	ldr	r6, [sp, #0x20]
 	cmp	r4, r6
-	blt	.LCB25831
+	blt	.LCB25841
 	bl	.L2517	@far jump
-.LCB25831:
+.LCB25841:
 .L2519:
 	ldr	r1, [sp, #0x14]
 	ldr	r2, [sp, #0x18]
@@ -180259,9 +180268,9 @@ PrintEvolutionTargetSpeciesAndMethod:
 	add	r5, r1, #0
 	add	r3, r2, #0
 	cmp	r0, #0x1f
-	bls	.LCB25864
+	bls	.LCB25874
 	bl	.L2521	@far jump
-.LCB25864:
+.LCB25874:
 	lsl	r0, r0, #0x2
 	ldr	r1, .L2558+0x1c
 	add	r0, r0, r1
@@ -181957,9 +181966,9 @@ PrintEvolutionTargetSpeciesAndMethod:
 	str	r2, [sp, #0x18]
 	ldr	r3, [sp, #0x20]
 	cmp	r2, r3
-	bge	.LCB27821
+	bge	.LCB27831
 	bl	.L2519	@far jump
-.LCB27821:
+.LCB27831:
 .L2517:
 	ldr	r0, [sp, #0x20]
 	add	sp, sp, #0x28
@@ -182629,9 +182638,9 @@ CreateStatBar:
 	sub	r2, r2, #0x1
 	str	r2, [sp, #0x28]
 	cmp	r1, r2
-	bcc	.LCB28567
+	bcc	.LCB28577
 	b	.L2706	@long jump
-.LCB28567:
+.LCB28577:
 	mov	r6, #0x1
 	ldr	r1, [sp, #0x30]
 	lsl	r0, r1, #0x3
@@ -182891,9 +182900,9 @@ CreateStatBar:
 	str	r1, [sp, #0x8]
 	ldr	r2, [sp, #0x28]
 	cmp	r1, r2
-	bcs	.LCB28864
+	bcs	.LCB28874
 	b	.L2708	@long jump
-.LCB28864:
+.LCB28874:
 .L2706:
 	add	sp, sp, #0x34
 	pop	{r3, r4, r5}
@@ -183405,9 +183414,9 @@ Task_LoadFormsScreen:
 	mov	r0, #0x80
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.LCB29442
+	beq	.LCB29452
 	b	.L2782	@long jump
-.LCB29442:
+.LCB29452:
 	ldr	r0, .L2805+0x4
 	ldr	r0, [r0]
 	ldr	r3, .L2805+0x8
@@ -183868,9 +183877,9 @@ PrintForms:
 	.word	gSpeciesNames
 .L2834:
 	cmp	r1, r6
-	bne	.LCB30014
+	bne	.LCB30024
 	b	.L2832	@long jump
-.LCB30014:
+.LCB30024:
 	add	r0, r5, #0x1
 	lsl	r0, r0, #0x18
 	lsr	r5, r0, #0x18
@@ -184017,9 +184026,9 @@ PrintForms:
 	lsr	r1, r0, #0x10
 	ldr	r0, .L2856+0xc
 	cmp	r1, r0
-	beq	.LCB30212
+	beq	.LCB30222
 	b	.L2834	@long jump
-.LCB30212:
+.LCB30222:
 .L2831:
 	ldr	r1, .L2856+0x4
 	mov	r2, r8

@@ -1218,34 +1218,30 @@ CB2_ShowDiploma:
 	add	r1, sp, #0x4
 	mov	r0, #0x0
 	strh	r0, [r1]
-	ldr	r1, .L8
-	add	r0, sp, #0x4
-	str	r0, [r1]
-	mov	r0, #0xc0
-	lsl	r0, r0, #0x13
-	str	r0, [r1, #0x4]
-	ldr	r0, .L8+0x4
-	str	r0, [r1, #0x8]
-	ldr	r0, [r1, #0x8]
+	add	r0, r1, #0
+	mov	r1, #0xc0
+	lsl	r1, r1, #0x13
+	ldr	r2, .L8
+	ldr	r3, .L8+0x4
+	stmia r3!, {r0, r1, r2}
+	.code	16
 	mov	r5, #0x0
 	str	r5, [sp, #0x8]
 	add	r0, sp, #0x8
-	str	r0, [r1]
-	mov	r0, #0xe0
-	lsl	r0, r0, #0x13
-	str	r0, [r1, #0x4]
-	ldr	r0, .L8+0x8
-	str	r0, [r1, #0x8]
-	ldr	r0, [r1, #0x8]
+	mov	r1, #0xe0
+	lsl	r1, r1, #0x13
+	ldr	r2, .L8+0x8
+	ldr	r3, .L8+0x4
+	stmia r3!, {r0, r1, r2}
+	.code	16
 	add	r0, sp, #0x4
 	strh	r5, [r0]
-	str	r0, [r1]
-	mov	r0, #0xa0
-	lsl	r0, r0, #0x13
-	str	r0, [r1, #0x4]
-	ldr	r0, .L8+0xc
-	str	r0, [r1, #0x8]
-	ldr	r0, [r1, #0x8]
+	mov	r1, #0xa0
+	lsl	r1, r1, #0x13
+	ldr	r2, .L8+0xc
+	ldr	r3, .L8+0x4
+	stmia r3!, {r0, r1, r2}
+	.code	16
 	bl	ScanlineEffect_Stop
 	bl	ResetTasks
 	bl	ResetSpriteData
@@ -1310,8 +1306,8 @@ CB2_ShowDiploma:
 .L9:
 	.align	2, 0
 .L8:
-	.word	0x40000d4
 	.word	-0x7eff4000
+	.word	0x40000d4
 	.word	-0x7affff00
 	.word	-0x7efffe00
 	.word	sDiplomaPalettes

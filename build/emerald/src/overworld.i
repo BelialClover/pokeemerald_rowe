@@ -6389,8 +6389,8 @@ struct SoundInfo
     u32 plynote;
     u32 ExtVolPit;
     u8 gap2[16];
-    struct SoundChannel chans[12];
-    s8 pcmBuffer[1584 * 2];
+    struct SoundChannel chans[15];
+    s8 pcmBuffer[0x620 * 2];
 };
 
 struct SongHeader
@@ -8964,11 +8964,11 @@ u16 GetLocationMusic(struct WarpData *warp)
     if (NoMusicInSotopolisWithLegendaries(warp) == 1)
         return 0xFFFF;
     else if (ShouldLegendaryMusicPlayAtLocation(warp) == 1)
-        return 443;
+        return 506;
     else if (IsInflitratedSpaceCenter(warp) == 1)
-        return 441;
+        return 412;
     else if (IsInfiltratedWeatherInstitute(warp) == 1)
-        return 406;
+        return 377;
     else
         return Overworld_GetMapHeaderByGroupAndId(warp->mapGroup, warp->mapNum)->music;
 }
@@ -8981,7 +8981,7 @@ u16 GetCurrLocationDefaultMusic(void)
     if (gSaveBlock1Ptr->location.mapGroup == ((26 | (0 << 8)) >> 8)
      && gSaveBlock1Ptr->location.mapNum == ((26 | (0 << 8)) & 0xFF)
      && GetSav1Weather() == 8)
-        return 409;
+        return 380;
 
     music = GetLocationMusic(&gSaveBlock1Ptr->location);
     if (music != 0x7FFF)
@@ -8991,9 +8991,9 @@ u16 GetCurrLocationDefaultMusic(void)
     else
     {
         if (gSaveBlock1Ptr->pos.x < 24)
-            return 360;
+            return 331;
         else
-            return 402;
+            return 373;
     }
 }
 
@@ -9008,9 +9008,9 @@ u16 GetWarpDestinationMusic(void)
     {
         if (gSaveBlock1Ptr->location.mapGroup == ((2 | (0 << 8)) >> 8)
          && gSaveBlock1Ptr->location.mapNum == ((2 | (0 << 8)) & 0xFF))
-            return 360;
+            return 331;
         else
-            return 402;
+            return 373;
     }
 }
 
@@ -9023,14 +9023,14 @@ void Overworld_PlaySpecialMapMusic(void)
 {
     u16 music = GetCurrLocationDefaultMusic();
 
-    if (music != 443 && music != 0xFFFF)
+    if (music != 506 && music != 0xFFFF)
     {
         if (gSaveBlock1Ptr->savedMusic)
             music = gSaveBlock1Ptr->savedMusic;
         else if (GetCurrentMapType() == 5)
-            music = 411;
+            music = 382;
         else if (TestPlayerAvatarFlags((1 << 3)))
-            music = 365;
+            music = 336;
     }
 
     if (music != GetCurrentMapMusic())
@@ -9053,12 +9053,12 @@ static void TransitionMapMusic(void)
     {
         u16 newMusic = GetWarpDestinationMusic();
         u16 currentMusic = GetCurrentMapMusic();
-        if (newMusic != 443 && newMusic != 0xFFFF)
+        if (newMusic != 506 && newMusic != 0xFFFF)
         {
-            if (currentMusic == 411 || currentMusic == 365)
+            if (currentMusic == 382 || currentMusic == 336)
                 return;
             if (TestPlayerAvatarFlags((1 << 3)))
-                newMusic = 365;
+                newMusic = 336;
         }
         if (newMusic != currentMusic)
         {
@@ -9080,7 +9080,7 @@ void Overworld_ChangeMusicToDefault(void)
 void Overworld_ChangeMusicTo(u16 newMusic)
 {
     u16 currentMusic = GetCurrentMapMusic();
-    if (currentMusic != newMusic && currentMusic != 443)
+    if (currentMusic != newMusic && currentMusic != 506)
         FadeOutAndPlayNewMapMusic(newMusic, 8);
 }
 
@@ -9099,7 +9099,7 @@ void TryFadeOutOldMapMusic(void)
     u16 warpMusic = GetWarpDestinationMusic();
     if (FlagGet((0x4000 + 0x1)) != 1 && warpMusic != GetCurrentMapMusic())
     {
-        if (currentMusic == 365
+        if (currentMusic == 336
             && VarGet(0x40CA) == 2
             && gSaveBlock1Ptr->location.mapGroup == ((7 | (0 << 8)) >> 8)
             && gSaveBlock1Ptr->location.mapNum == ((7 | (0 << 8)) & 0xFF)
@@ -9951,8 +9951,8 @@ static void sub_80867D8(void)
     SetGpuReg(0x0, 0);
     ScanlineEffect_Stop();
 
-    { vu16 *_dest = (vu16 *)(0x5000000 + 2); u32 _size = 0x400 - 2; { vu16 tmp = (vu16)(0); { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); dmaRegs[0] = (vu32)(&tmp); dmaRegs[1] = (vu32)(_dest); dmaRegs[2] = (vu32)((0x8000 | 0x0000 | 0x0000 | 0x0100 | 0x0000) << 16 | ((_size)/(16/8))); dmaRegs[2]; }; }; };
-    { void *_dest = (void *)(0x6000000 + 0x0); u32 _size = 0x18000; while (1) { { vu16 tmp = (vu16)(0); { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); dmaRegs[0] = (vu32)(&tmp); dmaRegs[1] = (vu32)(_dest); dmaRegs[2] = (vu32)((0x8000 | 0x0000 | 0x0000 | 0x0100 | 0x0000) << 16 | (((0x1000))/(16/8))); dmaRegs[2]; }; }; _dest += (0x1000); _size -= (0x1000); if (_size <= (0x1000)) { { vu16 tmp = (vu16)(0); { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); dmaRegs[0] = (vu32)(&tmp); dmaRegs[1] = (vu32)(_dest); dmaRegs[2] = (vu32)((0x8000 | 0x0000 | 0x0000 | 0x0100 | 0x0000) << 16 | ((_size)/(16/8))); dmaRegs[2]; }; }; break; } } };
+    { vu16 *_dest = (vu16 *)(0x5000000 + 2); u32 _size = 0x400 - 2; { vu16 tmp = (vu16)(0); { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); u32 eval_src = (u32)(&tmp); u32 eval_dst = (u32)(_dest); u32 eval_ctl = (u32)((0x8000 | 0x0000 | 0x0000 | 0x0100 | 0x0000) << 16 | ((_size)/(16/8))); register u32 r_src asm("r0") = eval_src; register u32 r_dst asm("r1") = eval_dst; register u32 r_ctl asm("r2") = eval_ctl; asm volatile("stmia %0!, {%1, %2, %3}" : "+l" (dmaRegs) : "l" (r_src), "l" (r_dst), "l" (r_ctl) : "memory"); }; }; };
+    { void *_dest = (void *)(0x6000000 + 0x0); u32 _size = 0x18000; while (1) { { vu16 tmp = (vu16)(0); { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); u32 eval_src = (u32)(&tmp); u32 eval_dst = (u32)(_dest); u32 eval_ctl = (u32)((0x8000 | 0x0000 | 0x0000 | 0x0100 | 0x0000) << 16 | (((0x1000))/(16/8))); register u32 r_src asm("r0") = eval_src; register u32 r_dst asm("r1") = eval_dst; register u32 r_ctl asm("r2") = eval_ctl; asm volatile("stmia %0!, {%1, %2, %3}" : "+l" (dmaRegs) : "l" (r_src), "l" (r_dst), "l" (r_ctl) : "memory"); }; }; _dest += (0x1000); _size -= (0x1000); if (_size <= (0x1000)) { { vu16 tmp = (vu16)(0); { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); u32 eval_src = (u32)(&tmp); u32 eval_dst = (u32)(_dest); u32 eval_ctl = (u32)((0x8000 | 0x0000 | 0x0000 | 0x0100 | 0x0000) << 16 | ((_size)/(16/8))); register u32 r_src asm("r0") = eval_src; register u32 r_dst asm("r1") = eval_dst; register u32 r_ctl asm("r2") = eval_ctl; asm volatile("stmia %0!, {%1, %2, %3}" : "+l" (dmaRegs) : "l" (r_src), "l" (r_dst), "l" (r_ctl) : "memory"); }; }; break; } } };
     ResetOamRange(0, 128);
     LoadOam();
 }

@@ -4411,7 +4411,7 @@ void ScanlineEffect_InitHBlankDmaTransfer(void)
 
 
 
-        { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xb0); dmaRegs[0] = (vu32)(gScanlineEffect.dmaSrcBuffers[gScanlineEffect.srcBuffer]); dmaRegs[1] = (vu32)(gScanlineEffect.dmaDest); dmaRegs[2] = (vu32)(gScanlineEffect.dmaControl); dmaRegs[2]; };
+        { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xb0); u32 eval_src = (u32)(gScanlineEffect.dmaSrcBuffers[gScanlineEffect.srcBuffer]); u32 eval_dst = (u32)(gScanlineEffect.dmaDest); u32 eval_ctl = (u32)(gScanlineEffect.dmaControl); register u32 r_src asm("r0") = eval_src; register u32 r_dst asm("r1") = eval_dst; register u32 r_ctl asm("r2") = eval_ctl; asm volatile("stmia %0!, {%1, %2, %3}" : "+l" (dmaRegs) : "l" (r_src), "l" (r_dst), "l" (r_ctl) : "memory"); };
 
         gScanlineEffect.setFirstScanlineReg();
 

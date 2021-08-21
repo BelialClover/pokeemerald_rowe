@@ -5649,31 +5649,36 @@ SetupContestGraphics:
 	ldr	r4, .L150+0x4
 	add	r1, r4, #0
 	bl	LZDecompressVram
-	ldr	r3, .L150+0x8
+	ldr	r6, .L150+0x8
 	mov	r5, #0x80
 	lsl	r5, r5, #0x6
-	ldr	r1, .L150+0xc
-	ldr	r6, .L150+0x10
-	mov	r2, #0x80
-	lsl	r2, r2, #0x5
-	mov	r7, #0x84
-	lsl	r7, r7, #0x18
+	ldr	r0, .L150+0xc
+	mov	r9, r0
+	mov	r3, #0x80
+	lsl	r3, r3, #0x5
+	mov	r1, #0x84
+	lsl	r1, r1, #0x18
+	mov	r8, r1
 .L132:
-	str	r4, [r1]
-	str	r3, [r1, #0x4]
-	str	r6, [r1, #0x8]
-	ldr	r0, [r1, #0x8]
-	add	r4, r4, r2
-	add	r3, r3, r2
-	sub	r5, r5, r2
-	cmp	r5, r2
+	add	r0, r4, #0
+	add	r1, r6, #0
+	mov	r2, r9
+	ldr	r7, .L150+0x10
+	stmia r7!, {r0, r1, r2}
+	.code	16
+	add	r4, r4, r3
+	add	r6, r6, r3
+	sub	r5, r5, r3
+	cmp	r5, r3
 	bhi	.L132	@cond_branch
-	str	r4, [r1]
-	str	r3, [r1, #0x4]
-	lsr	r0, r5, #0x2
-	orr	r0, r0, r7
-	str	r0, [r1, #0x8]
-	ldr	r0, [r1, #0x8]
+	lsr	r2, r5, #0x2
+	add	r0, r4, #0
+	add	r1, r6, #0
+	mov	r3, r8
+	orr	r2, r2, r3
+	ldr	r7, .L150+0x10
+	stmia r7!, {r0, r1, r2}
+	.code	16
 	b	.L128
 .L151:
 	.align	2, 0
@@ -5681,8 +5686,8 @@ SetupContestGraphics:
 	.word	gContestAudienceGfx
 	.word	0x6002000
 	.word	gHeap+0x18000
-	.word	0x40000d4
 	.word	-0x7bfffc00
+	.word	0x40000d4
 .L137:
 	ldr	r1, .L152
 	mov	r0, #0x3
@@ -5706,14 +5711,12 @@ SetupContestGraphics:
 	bl	CopyBgTilemapBufferToVram
 	ldr	r0, .L154+0x4
 	ldr	r0, [r0]
-	ldr	r1, [r0, #0x2c]
-	ldr	r2, .L154+0x8
-	ldr	r0, .L154+0xc
-	str	r1, [r0]
-	str	r2, [r0, #0x4]
-	ldr	r1, .L154+0x10
-	str	r1, [r0, #0x8]
-	ldr	r0, [r0, #0x8]
+	ldr	r0, [r0, #0x2c]
+	ldr	r1, .L154+0x8
+	ldr	r2, .L154+0xc
+	ldr	r3, .L154+0x10
+	stmia r3!, {r0, r1, r2}
+	.code	16
 	b	.L128
 .L155:
 	.align	2, 0
@@ -5721,8 +5724,8 @@ SetupContestGraphics:
 	.word	gUnknown_08C17170
 	.word	gContestResources
 	.word	gHeap+0x1aa04
-	.word	0x40000d4
 	.word	-0x7bfffe00
+	.word	0x40000d4
 .L139:
 	ldr	r0, .L156
 	mov	r2, #0x80
@@ -5730,10 +5733,11 @@ SetupContestGraphics:
 	mov	r1, #0x0
 	bl	LoadCompressedPalette
 	ldr	r5, .L156+0x4
-	ldr	r6, .L156+0x8
+	ldr	r7, .L156+0x8
+	mov	r8, r7
 	add	r0, r5, #0
 	mov	r1, sp
-	add	r2, r6, #0
+	mov	r2, r8
 	bl	CpuSet
 	ldr	r0, .L156+0xc
 	mov	r9, r0
@@ -5741,33 +5745,30 @@ SetupContestGraphics:
 	add	r0, r0, #0x5
 	lsl	r0, r0, #0x5
 	ldr	r1, .L156+0x10
-	add	r1, r1, r5
-	mov	r8, r1
-	add	r0, r0, r8
+	add	r6, r5, r1
+	add	r0, r0, r6
 	add	r4, sp, #0x20
 	add	r1, r4, #0
-	add	r2, r6, #0
+	mov	r2, r8
 	bl	CpuSet
 	add	r0, r4, #0
 	add	r1, r5, #0
-	add	r2, r6, #0
+	mov	r2, r8
 	bl	CpuSet
-	mov	r2, r9
-	ldrb	r1, [r2]
+	mov	r3, r9
+	ldrb	r1, [r3]
 	add	r1, r1, #0x5
 	lsl	r1, r1, #0x5
-	add	r1, r1, r8
+	add	r1, r1, r6
 	mov	r0, sp
-	add	r2, r6, #0
-	bl	CpuSet
-	ldr	r1, .L156+0x14
-	ldr	r0, .L156+0x18
 	mov	r2, r8
-	str	r2, [r0]
-	str	r1, [r0, #0x4]
-	ldr	r1, .L156+0x1c
-	str	r1, [r0, #0x8]
-	ldr	r0, [r0, #0x8]
+	bl	CpuSet
+	add	r0, r6, #0
+	ldr	r1, .L156+0x14
+	ldr	r2, .L156+0x18
+	add	r7, r7, #0xcc
+	stmia r7!, {r0, r1, r2}
+	.code	16
 	bl	LoadContestPalettes
 	b	.L128
 .L157:
@@ -5779,7 +5780,6 @@ SetupContestGraphics:
 	.word	gContestPlayerMonIndex
 	.word	-0x100
 	.word	gHeap+0x1a004
-	.word	0x40000d4
 	.word	-0x7bffff80
 .L140:
 	bl	DrawContestantWindows
@@ -5847,10 +5847,10 @@ SetupContestGraphics:
 	mov	r0, #0x1
 	b	.L143
 .L128:
-	mov	r2, sl
-	ldrb	r0, [r2]
+	mov	r3, sl
+	ldrb	r0, [r3]
 	add	r0, r0, #0x1
-	strb	r0, [r2]
+	strb	r0, [r3]
 	mov	r0, #0x0
 .L143:
 	add	sp, sp, #0x40
@@ -6198,14 +6198,12 @@ Task_DisplayAppealNumberText:
 	ldr	r0, .L205+0x8
 	strh	r1, [r0]
 	bl	ContestDebugDoPrint
-	ldr	r1, .L205+0xc
-	ldr	r2, .L205+0x10
-	ldr	r0, .L205+0x14
-	str	r1, [r0]
-	str	r2, [r0, #0x4]
-	ldr	r1, .L205+0x18
-	str	r1, [r0, #0x8]
-	ldr	r0, [r0, #0x8]
+	ldr	r0, .L205+0xc
+	ldr	r1, .L205+0x10
+	ldr	r2, .L205+0x14
+	ldr	r3, .L205+0x18
+	stmia r3!, {r0, r1, r2}
+	.code	16
 	ldr	r0, .L205+0x1c
 	ldr	r1, .L205+0x20
 	ldr	r1, [r1]
@@ -6233,8 +6231,8 @@ Task_DisplayAppealNumberText:
 	.word	gBattle_BG2_Y
 	.word	gPlttBufferUnfaded
 	.word	gHeap+0x1a204
-	.word	0x40000d4
 	.word	-0x7bffff00
+	.word	0x40000d4
 	.word	gStringVar1
 	.word	gContestResources
 	.word	gContestPlayerMonIndex
@@ -6585,9 +6583,9 @@ Task_HandleMoveSelectInput:
 .L242:
 	ldrh	r0, [r3, #0x30]
 	cmp	r0, #0x20
-	bne	.LCB2488
+	bne	.LCB2495
 	b	.L243	@long jump
-.LCB2488:
+.LCB2495:
 	cmp	r0, #0x20
 	bgt	.L260	@cond_branch
 	cmp	r0, #0x2
@@ -6597,9 +6595,9 @@ Task_HandleMoveSelectInput:
 	cmp	r0, #0x40
 	beq	.L250	@cond_branch
 	cmp	r0, #0x80
-	bne	.LCB2499
+	bne	.LCB2506
 	b	.L254	@long jump
-.LCB2499:
+.LCB2506:
 	b	.L243
 .L245:
 	mov	r0, #0x5
@@ -6998,22 +6996,23 @@ Task_HideMoveSelectScreen:
 	ble	.L292	@cond_branch
 	mov	r0, #0x0
 	bl	Contest_SetBgCopyFlags
-	ldr	r1, .L294+0x8
+	ldr	r3, .L294+0x8
+	mov	r5, #0x80
+	lsl	r5, r5, #0x3
+	lsr	r2, r5, #0x2
+	mov	r4, #0x84
+	lsl	r4, r4, #0x18
 	ldr	r0, .L294+0xc
-	mov	r2, #0x80
-	lsl	r2, r2, #0x3
+	add	r1, r3, #0
+	orr	r2, r2, r4
 	ldr	r4, .L294+0x10
-	str	r1, [r4]
-	str	r0, [r4, #0x4]
-	lsr	r1, r2, #0x2
-	mov	r3, #0x84
-	lsl	r3, r3, #0x18
-	orr	r1, r1, r3
-	str	r1, [r4, #0x8]
-	ldr	r1, [r4, #0x8]
-	ldr	r1, .L294+0x14
-	add	r0, r0, r1
+	stmia r4!, {r0, r1, r2}
+	.code	16
+	ldr	r0, .L294+0x14
+	add	r3, r3, r0
+	add	r0, r3, #0
 	mov	r1, #0x0
+	add	r2, r5, #0
 	bl	LoadPalette
 	ldr	r1, .L294+0x18
 	lsl	r0, r7, #0x2
@@ -7033,8 +7032,8 @@ Task_HideMoveSelectScreen:
 .L294:
 	.word	gBattle_BG0_Y
 	.word	gBattle_BG2_Y
-	.word	gPlttBufferFaded
 	.word	gHeap+0x1a604
+	.word	gPlttBufferFaded
 	.word	0x40000d4
 	.word	-0x400
 	.word	gTasks
@@ -7238,9 +7237,9 @@ Task_DoAppeals:
 	mov	r9, r2
 	add	r4, r1, #0
 	cmp	r0, #0x3b
-	bls	.LCB3248
+	bls	.LCB3256
 	bl	.L315	@far jump
-.LCB3248:
+.LCB3256:
 	lsl	r0, r0, #0x2
 	ldr	r1, .L562+0x8
 	add	r0, r0, r1
@@ -7412,9 +7411,9 @@ Task_DoAppeals:
 	mov	r0, #0x4
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.LCB3406
+	beq	.LCB3414
 	bl	.L315	@far jump
-.LCB3406:
+.LCB3414:
 	mov	r5, r8
 	lsl	r0, r5, #0x2
 	add	r0, r0, r8
@@ -7581,9 +7580,9 @@ Task_DoAppeals:
 	ldr	r1, [r0]
 	ldr	r0, .L574+0x4
 	cmp	r1, r0
-	beq	.LCB3621
+	beq	.LCB3629
 	bl	.L315	@far jump
-.LCB3621:
+.LCB3629:
 	mov	r3, r9
 	ldr	r0, [r3]
 	ldr	r1, [r0, #0x14]
@@ -7593,9 +7592,9 @@ Task_DoAppeals:
 	mov	r0, #0x2
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.LCB3635
+	beq	.LCB3643
 	bl	.L315	@far jump
-.LCB3635:
+.LCB3643:
 	mov	r0, #0x5
 	strh	r0, [r2, #0x8]
 	bl	.L315	@ far jump
@@ -7693,9 +7692,9 @@ Task_DoAppeals:
 	bl	Contest_RunTextPrinters
 	add	r1, r0, #0
 	cmp	r1, #0
-	beq	.LCB3761
+	beq	.LCB3769
 	bl	.L315	@far jump
-.LCB3761:
+.LCB3769:
 	ldr	r0, .L580
 	ldr	r0, [r0]
 	ldr	r0, [r0]
@@ -7762,9 +7761,9 @@ Task_DoAppeals:
 	ldr	r0, .L584+0x4
 	ldrb	r4, [r0]
 	cmp	r4, #0
-	beq	.LCB3843
+	beq	.LCB3851
 	bl	.L315	@far jump
-.LCB3843:
+.LCB3851:
 	add	r0, r6, #0
 	bl	ClearMoveAnimData
 	ldr	r0, .L584+0x8
@@ -7826,9 +7825,9 @@ Task_DoAppeals:
 	lsl	r0, r0, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, #0x1e
-	bgt	.LCB3920
+	bgt	.LCB3928
 	bl	.L315	@far jump
-.LCB3920:
+.LCB3928:
 	mov	r0, #0x0
 	strh	r0, [r2, #0x1c]
 	mov	r0, #0x7
@@ -7941,9 +7940,9 @@ Task_DoAppeals:
 .L369:
 	bl	Contest_RunTextPrinters
 	cmp	r0, #0
-	beq	.LCB4079
+	beq	.LCB4087
 	bl	.L315	@far jump
-.LCB4079:
+.LCB4087:
 	ldr	r0, .L590
 	mov	r2, r8
 	lsl	r1, r2, #0x2
@@ -8007,9 +8006,9 @@ Task_DoAppeals:
 	mov	r0, #0x10
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.LCB4163
+	beq	.LCB4171
 	bl	.L315	@far jump
-.LCB4163:
+.LCB4171:
 .L553:
 	mov	r5, r8
 	lsl	r0, r5, #0x2
@@ -8073,9 +8072,9 @@ Task_DoAppeals:
 	mov	r0, #0x4
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.LCB4239
+	beq	.LCB4247
 	bl	.L315	@far jump
-.LCB4239:
+.LCB4247:
 	mov	r1, r8
 	lsl	r0, r1, #0x2
 	add	r0, r0, r8
@@ -8121,9 +8120,9 @@ Task_DoAppeals:
 	mov	r0, #0x10
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.LCB4297
+	beq	.LCB4305
 	bl	.L315	@far jump
-.LCB4297:
+.LCB4305:
 	mov	r1, r8
 	lsl	r0, r1, #0x2
 	add	r0, r0, r8
@@ -8178,9 +8177,9 @@ Task_DoAppeals:
 	lsl	r0, r0, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, #0x14
-	bgt	.LCB4366
+	bgt	.LCB4374
 	bl	.L315	@far jump
-.LCB4366:
+.LCB4374:
 	mov	r0, #0x0
 	strh	r0, [r1, #0x1c]
 .L554:
@@ -8339,9 +8338,9 @@ Task_DoAppeals:
 .L411:
 	bl	Contest_RunTextPrinters
 	cmp	r0, #0
-	beq	.LCB4577
+	beq	.LCB4585
 	bl	.L315	@far jump
-.LCB4577:
+.LCB4585:
 	ldr	r0, .L610
 	mov	r2, r8
 	lsl	r1, r2, #0x2
@@ -8439,9 +8438,9 @@ Task_DoAppeals:
 	mov	r0, #0x4
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.LCB4715
+	beq	.LCB4723
 	bl	.L315	@far jump
-.LCB4715:
+.LCB4723:
 	mov	r0, sl
 	add	r0, r0, r8
 	lsl	r0, r0, #0x3
@@ -8522,9 +8521,9 @@ Task_DoAppeals:
 	lsl	r0, r0, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, #0x14
-	bgt	.LCB4827
+	bgt	.LCB4835
 	bl	.L315	@far jump
-.LCB4827:
+.LCB4835:
 	mov	r0, #0x0
 	strh	r0, [r1, #0x1c]
 .L555:
@@ -8629,9 +8628,9 @@ Task_DoAppeals:
 	asr	r0, r0, #0x10
 	mov	sl, r2
 	cmp	r0, #0x9
-	bgt	.LCB4962
+	bgt	.LCB4970
 	bl	.L315	@far jump
-.LCB4962:
+.LCB4970:
 	mov	r0, #0x0
 	strh	r0, [r4, #0x1c]
 	mov	r1, r9
@@ -8685,9 +8684,9 @@ Task_DoAppeals:
 .L450:
 	bl	Contest_RunTextPrinters
 	cmp	r0, #0
-	beq	.LCB5032
+	beq	.LCB5040
 	bl	.L315	@far jump
-.LCB5032:
+.LCB5040:
 	ldr	r0, .L626
 	ldr	r0, [r0]
 	ldr	r1, [r0, #0x4]
@@ -8827,9 +8826,9 @@ Task_DoAppeals:
 	mov	r0, #0x10
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.LCB5209
+	beq	.LCB5217
 	bl	.L315	@far jump
-.LCB5209:
+.LCB5217:
 	ldrb	r0, [r2, #0x11]
 	bl	StartStopFlashJudgeAttentionEye
 	ldr	r1, .L638
@@ -8848,9 +8847,9 @@ Task_DoAppeals:
 .L463:
 	bl	Contest_RunTextPrinters
 	cmp	r0, #0
-	beq	.LCB5234
+	beq	.LCB5242
 	bl	.L315	@far jump
-.LCB5234:
+.LCB5242:
 	ldr	r1, .L640
 	mov	r5, r8
 	lsl	r0, r5, #0x2
@@ -8863,9 +8862,9 @@ Task_DoAppeals:
 	lsl	r0, r0, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, #0x32
-	bgt	.LCB5248
+	bgt	.LCB5256
 	bl	.L315	@far jump
-.LCB5248:
+.LCB5256:
 	ldr	r7, .L640+0x4
 	ldr	r0, [r7]
 	ldr	r1, [r0, #0x4]
@@ -8912,9 +8911,9 @@ Task_DoAppeals:
 	lsl	r0, r0, #0x18
 	lsr	r1, r0, #0x18
 	cmp	r1, #0
-	beq	.LCB5305
+	beq	.LCB5313
 	bl	.L315	@far jump
-.LCB5305:
+.LCB5313:
 	mov	r2, r8
 	lsl	r0, r2, #0x2
 	add	r0, r0, r8
@@ -8987,9 +8986,9 @@ Task_DoAppeals:
 	mov	r0, #0x10
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.LCB5398
+	beq	.LCB5406
 	b	.L315	@long jump
-.LCB5398:
+.LCB5406:
 	mov	r3, r8
 	lsl	r0, r3, #0x2
 	add	r0, r0, r8
@@ -9001,9 +9000,9 @@ Task_DoAppeals:
 .L474:
 	bl	Contest_RunTextPrinters
 	cmp	r0, #0
-	beq	.LCB5413
+	beq	.LCB5421
 	b	.L315	@long jump
-.LCB5413:
+.LCB5421:
 	ldr	r5, .L644
 	ldr	r0, [r5]
 	ldr	r1, [r0, #0x4]
@@ -9051,9 +9050,9 @@ Task_DoAppeals:
 	lsl	r0, r0, #0x18
 	lsr	r3, r0, #0x18
 	cmp	r3, #0
-	beq	.LCB5468
+	beq	.LCB5476
 	b	.L315	@long jump
-.LCB5468:
+.LCB5476:
 	ldr	r0, .L646+0x4
 	mov	r5, r8
 	lsl	r4, r5, #0x2
@@ -9287,13 +9286,10 @@ Task_DoAppeals:
 	neg	r0, r0
 	mov	r1, #0x1
 	bl	BlendAudienceBackground
-	ldr	r0, .L658
+	mov	r0, #0xb5
+	lsl	r0, r0, #0x1
 	bl	PlayFanfare
 	b	.L559
-.L659:
-	.align	2, 0
-.L658:
-	.word	0x187
 .L496:
 	mov	r1, r9
 	ldr	r0, [r1]
@@ -9301,14 +9297,14 @@ Task_DoAppeals:
 	ldrb	r0, [r0, #0x7]
 	and	r3, r3, r0
 	cmp	r3, #0
-	beq	.LCB5791
+	beq	.LCB5794
 	b	.L315	@long jump
-.LCB5791:
+.LCB5794:
 	bl	Contest_RunTextPrinters
 	cmp	r0, #0
-	beq	.LCB5795
+	beq	.LCB5798
 	b	.L315	@long jump
-.LCB5795:
+.LCB5798:
 	mov	r0, #0x1
 	neg	r0, r0
 	bl	ShowAndUpdateApplauseMeter
@@ -9323,18 +9319,18 @@ Task_DoAppeals:
 	lsl	r0, r0, #0x18
 	lsr	r2, r0, #0x18
 	cmp	r2, #0
-	beq	.LCB5814
+	beq	.LCB5817
 	b	.L315	@long jump
-.LCB5814:
+.LCB5817:
 	ldrh	r0, [r4, #0x1e]
 	add	r1, r0, #0x1
 	strh	r1, [r4, #0x1e]
 	lsl	r0, r0, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, #0x1d
-	bgt	.LCB5822
+	bgt	.LCB5825
 	b	.L315	@long jump
-.LCB5822:
+.LCB5825:
 	strh	r2, [r4, #0x1e]
 	mov	r1, #0x1
 	neg	r1, r1
@@ -9346,24 +9342,24 @@ Task_DoAppeals:
 	strh	r0, [r4, #0x1c]
 	b	.L315
 .L501:
-	ldr	r0, .L660
+	ldr	r0, .L658
 	ldrb	r1, [r0, #0x7]
 	mov	r0, #0x80
 	and	r0, r0, r1
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.LCB5844
+	beq	.LCB5847
 	b	.L315	@long jump
-.LCB5844:
+.LCB5847:
 	strh	r0, [r4, #0x1c]
 	strh	r0, [r4, #0x1e]
 	mov	r0, #0x2b
 	strh	r0, [r4, #0x8]
 	b	.L315
-.L661:
+.L659:
 	.align	2, 0
-.L660:
+.L658:
 	.word	gPaletteFade
 .L506:
 	mov	r3, r8
@@ -9375,17 +9371,17 @@ Task_DoAppeals:
 	ldrsh	r0, [r0, r5]
 	mov	sl, r1
 	cmp	r0, #0x4
-	bls	.LCB5869
+	bls	.LCB5872
 	b	.L315	@long jump
-.LCB5869:
+.LCB5872:
 	lsl	r0, r0, #0x2
-	ldr	r1, .L662
+	ldr	r1, .L660
 	add	r0, r0, r1
 	ldr	r0, [r0]
 	mov	pc, r0
-.L663:
+.L661:
 	.align	2, 0
-.L662:
+.L660:
 	.word	.L520
 	.align	2, 0
 	.align	2, 0
@@ -9398,9 +9394,9 @@ Task_DoAppeals:
 .L508:
 	bl	Contest_RunTextPrinters
 	cmp	r0, #0
-	beq	.LCB5891
+	beq	.LCB5894
 	b	.L315	@long jump
-.LCB5891:
+.LCB5894:
 	mov	r0, #0x1
 	mov	r1, #0x1
 	b	.L560
@@ -9412,9 +9408,9 @@ Task_DoAppeals:
 	mov	r0, #0x1
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.LCB5909
+	beq	.LCB5912
 	b	.L315	@long jump
-.LCB5909:
+.LCB5912:
 	bl	AnimateAudience
 	mov	r0, #0xdf
 	bl	PlaySE
@@ -9431,9 +9427,9 @@ Task_DoAppeals:
 	lsl	r0, r0, #0x18
 	lsr	r3, r0, #0x18
 	cmp	r3, #0
-	beq	.LCB5930
+	beq	.LCB5933
 	b	.L315	@long jump
-.LCB5930:
+.LCB5933:
 	mov	r0, sl
 	add	r0, r0, r8
 	lsl	r0, r0, #0x3
@@ -9444,9 +9440,9 @@ Task_DoAppeals:
 	lsl	r0, r0, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, #0x1d
-	bgt	.LCB5944
+	bgt	.LCB5947
 	b	.L315	@long jump
-.LCB5944:
+.LCB5947:
 	strh	r3, [r5, #0x1e]
 	ldr	r0, [r2, #0x4]
 	lsl	r4, r6, #0x3
@@ -9486,24 +9482,24 @@ Task_DoAppeals:
 	mov	r0, #0x4
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.LCB5987
+	beq	.LCB5990
 	b	.L315	@long jump
-.LCB5987:
+.LCB5990:
 	ldr	r0, [r2]
 	ldrb	r1, [r0, #0x6]
 	mov	r0, #0x80
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.LCB5996
+	beq	.LCB5999
 	b	.L315	@long jump
-.LCB5996:
+.LCB5999:
 	mov	r1, #0x1
 	neg	r1, r1
 	mov	r0, #0x1
 .L560:
 	bl	BlendAudienceBackground
 .L561:
-	ldr	r0, .L664
+	ldr	r0, .L662
 	mov	r1, sl
 	add	r1, r1, r8
 	lsl	r1, r1, #0x3
@@ -9512,21 +9508,21 @@ Task_DoAppeals:
 	add	r0, r0, #0x1
 	strh	r0, [r1, #0x1c]
 	b	.L315
-.L665:
+.L663:
 	.align	2, 0
-.L664:
+.L662:
 	.word	gTasks
 .L518:
-	ldr	r0, .L666
+	ldr	r0, .L664
 	ldrb	r1, [r0, #0x7]
 	mov	r0, #0x80
 	and	r0, r0, r1
 	lsl	r0, r0, #0x18
 	lsr	r3, r0, #0x18
 	cmp	r3, #0
-	beq	.LCB6030
+	beq	.LCB6033
 	b	.L315	@long jump
-.LCB6030:
+.LCB6033:
 	mov	r0, sl
 	add	r0, r0, r8
 	lsl	r0, r0, #0x3
@@ -9536,9 +9532,9 @@ Task_DoAppeals:
 	mov	r1, #0x2b
 	strh	r1, [r0, #0x8]
 	b	.L315
-.L667:
+.L665:
 	.align	2, 0
-.L666:
+.L664:
 	.word	gPaletteFade
 .L522:
 	mov	r5, r9
@@ -9550,36 +9546,36 @@ Task_DoAppeals:
 	mov	r0, #0x4
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.LCB6063
+	beq	.LCB6066
 	b	.L315	@long jump
-.LCB6063:
+.LCB6066:
 	bl	ContestClearGeneralTextWindow
-	ldr	r0, .L668
+	ldr	r0, .L666
 	mov	r2, r8
 	lsl	r1, r2, #0x2
 	b	.L558
-.L669:
+.L667:
 	.align	2, 0
-.L668:
+.L666:
 	.word	gTasks
 .L524:
 	bl	ContestClearGeneralTextWindow
-	ldr	r0, .L670
-	ldr	r5, .L670+0x4
+	ldr	r0, .L668
+	ldr	r5, .L668+0x4
 	ldr	r1, [r5]
 	ldr	r1, [r1, #0x10]
 	ldr	r1, [r1]
 	lsl	r1, r1, #0x14
 	lsr	r1, r1, #0x1d
 	lsl	r1, r1, #0x6
-	ldr	r4, .L670+0x8
+	ldr	r4, .L668+0x8
 	add	r1, r1, r4
 	bl	StringCopy
-	ldr	r0, .L670+0xc
+	ldr	r0, .L668+0xc
 	lsl	r1, r6, #0x6
 	add	r1, r1, r4
 	bl	StringCopy
-	ldr	r0, .L670+0x10
+	ldr	r0, .L668+0x10
 	ldr	r1, [r5]
 	ldr	r2, [r1, #0x4]
 	lsl	r1, r6, #0x3
@@ -9589,17 +9585,17 @@ Task_DoAppeals:
 	ldrh	r2, [r1, #0x6]
 	lsl	r1, r2, #0x4
 	add	r1, r1, r2
-	ldr	r2, .L670+0x14
+	ldr	r2, .L668+0x14
 	add	r1, r1, r2
 	bl	StringCopy
-	ldr	r4, .L670+0x18
-	ldr	r1, .L670+0x1c
+	ldr	r4, .L668+0x18
+	ldr	r1, .L668+0x1c
 	add	r0, r4, #0
 	bl	StringExpandPlaceholders
 	add	r0, r4, #0
 	mov	r1, #0x1
 	bl	Contest_StartTextPrinter
-	ldr	r1, .L670+0x20
+	ldr	r1, .L668+0x20
 	mov	r3, r8
 	lsl	r0, r3, #0x2
 	add	r0, r0, r8
@@ -9608,9 +9604,9 @@ Task_DoAppeals:
 	mov	r1, #0x3a
 	strh	r1, [r0, #0x8]
 	b	.L315
-.L671:
+.L669:
 	.align	2, 0
-.L670:
+.L668:
 	.word	gStringVar3
 	.word	gContestResources
 	.word	gContestMons+0x2
@@ -9623,18 +9619,18 @@ Task_DoAppeals:
 .L525:
 	bl	Contest_RunTextPrinters
 	cmp	r0, #0
-	beq	.LCB6151
+	beq	.LCB6154
 	b	.L315	@long jump
-.LCB6151:
+.LCB6154:
 	bl	ContestClearGeneralTextWindow
-	ldr	r4, .L672
-	ldr	r1, .L672+0x4
+	ldr	r4, .L670
+	ldr	r1, .L670+0x4
 	add	r0, r4, #0
 	bl	StringExpandPlaceholders
 	add	r0, r4, #0
 	mov	r1, #0x1
 	bl	Contest_StartTextPrinter
-	ldr	r1, .L672+0x8
+	ldr	r1, .L670+0x8
 	mov	r4, r8
 	lsl	r0, r4, #0x2
 	add	r0, r0, r8
@@ -9643,26 +9639,26 @@ Task_DoAppeals:
 	mov	r1, #0x3b
 	strh	r1, [r0, #0x8]
 	b	.L315
-.L673:
+.L671:
 	.align	2, 0
-.L672:
+.L670:
 	.word	gStringVar4
 	.word	gText_MonsMoveIsIgnored
 	.word	gTasks
 .L527:
 	bl	Contest_RunTextPrinters
 	cmp	r0, #0
-	beq	.LCB6184
+	beq	.LCB6187
 	b	.L315	@long jump
-.LCB6184:
+.LCB6187:
 	bl	ContestClearGeneralTextWindow
-	ldr	r0, .L674
+	ldr	r0, .L672
 	mov	r5, r8
 	lsl	r1, r5, #0x2
 	b	.L558
-.L675:
+.L673:
 	.align	2, 0
-.L674:
+.L672:
 	.word	gTasks
 .L529:
 	mov	r1, r9
@@ -9684,12 +9680,12 @@ Task_DoAppeals:
 .L530:
 	add	r0, r6, #0
 	bl	StartStopFlashJudgeAttentionEye
-	ldr	r0, .L676
+	ldr	r0, .L674
 	lsl	r1, r6, #0x6
-	ldr	r2, .L676+0x4
+	ldr	r2, .L674+0x4
 	add	r1, r1, r2
 	bl	StringCopy
-	ldr	r0, .L676+0x8
+	ldr	r0, .L674+0x8
 	mov	r2, r9
 	ldr	r1, [r2]
 	ldr	r1, [r1, #0x4]
@@ -9697,17 +9693,17 @@ Task_DoAppeals:
 	ldrh	r2, [r1, #0x6]
 	lsl	r1, r2, #0x4
 	add	r1, r1, r2
-	ldr	r2, .L676+0xc
+	ldr	r2, .L674+0xc
 	add	r1, r1, r2
 	bl	StringCopy
-	ldr	r4, .L676+0x10
-	ldr	r1, .L676+0x14
+	ldr	r4, .L674+0x10
+	ldr	r1, .L674+0x14
 	add	r0, r4, #0
 	bl	StringExpandPlaceholders
 	add	r0, r4, #0
 	mov	r1, #0x1
 	bl	Contest_StartTextPrinter
-	ldr	r1, .L676+0x18
+	ldr	r1, .L674+0x18
 	mov	r3, r8
 	lsl	r0, r3, #0x2
 	add	r0, r0, r8
@@ -9716,9 +9712,9 @@ Task_DoAppeals:
 	mov	r1, #0x22
 	strh	r1, [r0, #0x8]
 	b	.L315
-.L677:
+.L675:
 	.align	2, 0
-.L676:
+.L674:
 	.word	gStringVar1
 	.word	gContestMons+0x2
 	.word	gStringVar2
@@ -9729,10 +9725,10 @@ Task_DoAppeals:
 .L531:
 	bl	Contest_RunTextPrinters
 	cmp	r0, #0
-	beq	.LCB6276
+	beq	.LCB6279
 	b	.L315	@long jump
-.LCB6276:
-	ldr	r0, .L678
+.LCB6279:
+	ldr	r0, .L676
 	mov	r4, r8
 	lsl	r1, r4, #0x2
 .L558:
@@ -9742,13 +9738,13 @@ Task_DoAppeals:
 	mov	r0, #0x37
 	strh	r0, [r1, #0x8]
 	b	.L315
-.L679:
+.L677:
 	.align	2, 0
-.L678:
+.L676:
 	.word	gTasks
 .L533:
 	bl	SlideApplauseMeterOut
-	ldr	r0, .L680
+	ldr	r0, .L678
 	mov	r5, r8
 	lsl	r1, r5, #0x2
 	add	r1, r1, r8
@@ -9757,9 +9753,9 @@ Task_DoAppeals:
 	mov	r0, #0x38
 	strh	r0, [r1, #0x8]
 	b	.L315
-.L681:
+.L679:
 	.align	2, 0
-.L680:
+.L678:
 	.word	gTasks
 .L534:
 	mov	r1, r9
@@ -9771,9 +9767,9 @@ Task_DoAppeals:
 	lsl	r0, r0, #0x18
 	lsr	r1, r0, #0x18
 	cmp	r1, #0
-	beq	.LCB6323
+	beq	.LCB6326
 	b	.L315	@long jump
-.LCB6323:
+.LCB6326:
 	mov	r0, #0x13
 	ldrsb	r0, [r2, r0]
 	cmp	r0, #0x4
@@ -9781,7 +9777,7 @@ Task_DoAppeals:
 	strb	r1, [r2, #0x13]
 	bl	UpdateApplauseMeter
 .L536:
-	ldr	r0, .L682
+	ldr	r0, .L680
 	mov	r2, r8
 	lsl	r1, r2, #0x2
 	add	r1, r1, r8
@@ -9790,9 +9786,9 @@ Task_DoAppeals:
 	mov	r0, #0xa
 	strh	r0, [r1, #0x8]
 	b	.L315
-.L683:
+.L681:
 	.align	2, 0
-.L682:
+.L680:
 	.word	gTasks
 .L537:
 	mov	r3, r8
@@ -9801,20 +9797,20 @@ Task_DoAppeals:
 	lsl	r2, r2, #0x3
 	add	r2, r2, r4
 	ldrb	r5, [r2, #0xc]
-	ldr	r1, .L684
+	ldr	r1, .L682
 	lsl	r0, r5, #0x4
 	add	r0, r0, r5
 	lsl	r0, r0, #0x2
 	add	r1, r1, #0x1c
 	add	r0, r0, r1
-	ldr	r1, .L684+0x4
+	ldr	r1, .L682+0x4
 	str	r1, [r0]
 	mov	r0, #0xb
 	strh	r0, [r2, #0x8]
 	b	.L315
-.L685:
+.L683:
 	.align	2, 0
-.L684:
+.L682:
 	.word	gSprites
 	.word	SpriteCB_MonSlideOut
 .L538:
@@ -9824,7 +9820,7 @@ Task_DoAppeals:
 	lsl	r0, r0, #0x3
 	add	r4, r0, r4
 	ldrb	r5, [r4, #0xc]
-	ldr	r1, .L686
+	ldr	r1, .L684
 	lsl	r0, r5, #0x4
 	add	r0, r0, r5
 	lsl	r0, r0, #0x2
@@ -9842,9 +9838,9 @@ Task_DoAppeals:
 	mov	r0, #0x14
 	strh	r0, [r4, #0x8]
 	b	.L315
-.L687:
+.L685:
 	.align	2, 0
-.L686:
+.L684:
 	.word	gSprites
 .L540:
 	mov	r1, r8
@@ -9859,19 +9855,19 @@ Task_DoAppeals:
 	b	.L315
 .L541:
 	bl	ContestClearGeneralTextWindow
-	ldr	r0, .L688
+	ldr	r0, .L686
 	lsl	r1, r6, #0x6
-	ldr	r2, .L688+0x4
+	ldr	r2, .L686+0x4
 	add	r1, r1, r2
 	bl	StringCopy
-	ldr	r4, .L688+0x8
-	ldr	r1, .L688+0xc
+	ldr	r4, .L686+0x8
+	ldr	r1, .L686+0xc
 	add	r0, r4, #0
 	bl	StringExpandPlaceholders
 	add	r0, r4, #0
 	mov	r1, #0x1
 	bl	Contest_StartTextPrinter
-	ldr	r1, .L688+0x10
+	ldr	r1, .L686+0x10
 	mov	r2, r8
 	lsl	r0, r2, #0x2
 	add	r0, r0, r8
@@ -9880,9 +9876,9 @@ Task_DoAppeals:
 	mov	r1, #0x20
 	strh	r1, [r0, #0x8]
 	b	.L315
-.L689:
+.L687:
 	.align	2, 0
-.L688:
+.L686:
 	.word	gStringVar1
 	.word	gContestMons+0x2
 	.word	gStringVar4
@@ -9892,7 +9888,7 @@ Task_DoAppeals:
 	bl	Contest_RunTextPrinters
 	cmp	r0, #0
 	bne	.L315	@cond_branch
-	ldr	r0, .L690
+	ldr	r0, .L688
 	mov	r3, r8
 	lsl	r1, r3, #0x2
 	add	r1, r1, r8
@@ -9901,9 +9897,9 @@ Task_DoAppeals:
 	mov	r0, #0x15
 	strh	r0, [r1, #0x8]
 	b	.L315
-.L691:
+.L689:
 	.align	2, 0
-.L690:
+.L688:
 	.word	gTasks
 .L544:
 	mov	r5, r8
@@ -9943,12 +9939,12 @@ Task_DoAppeals:
 	strh	r2, [r0, #0x8]
 	strh	r2, [r0, #0xa]
 	strh	r2, [r0, #0xc]
-	ldr	r1, .L692
+	ldr	r1, .L690
 	str	r1, [r0]
 	b	.L315
-.L693:
+.L691:
 	.align	2, 0
-.L692:
+.L690:
 	.word	Task_FinishRoundOfAppeals
 .L547:
 	mov	r5, r8
@@ -9975,7 +9971,7 @@ Task_EndWaitForLink:
 	push	{lr}
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
-	ldr	r1, .L695
+	ldr	r1, .L693
 	ldr	r1, [r1]
 	ldr	r3, [r1]
 	ldrb	r2, [r3, #0x7]
@@ -9986,9 +9982,9 @@ Task_EndWaitForLink:
 	bl	DestroyTask
 	pop	{r0}
 	bx	r0
-.L696:
+.L694:
 	.align	2, 0
-.L695:
+.L693:
 	.word	gContestResources
 .Lfe35:
 	.size	 Task_EndWaitForLink,.Lfe35-Task_EndWaitForLink
@@ -10002,27 +9998,27 @@ SpriteCB_MonSlideIn:
 	mov	r3, #0x24
 	ldrsh	r2, [r1, r3]
 	cmp	r2, #0
-	beq	.L698	@cond_branch
+	beq	.L696	@cond_branch
 	sub	r0, r0, #0x2
 	strh	r0, [r1, #0x24]
-	b	.L699
-.L698:
+	b	.L697
+.L696:
 	ldrh	r0, [r1, #0x2e]
 	add	r0, r0, #0x1
 	strh	r0, [r1, #0x2e]
 	lsl	r0, r0, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, #0x1f
-	bne	.L699	@cond_branch
+	bne	.L697	@cond_branch
 	strh	r2, [r1, #0x2e]
-	ldr	r0, .L701
+	ldr	r0, .L699
 	str	r0, [r1, #0x1c]
-.L699:
+.L697:
 	pop	{r0}
 	bx	r0
-.L702:
+.L700:
 	.align	2, 0
-.L701:
+.L699:
 	.word	SpriteCallbackDummy
 .Lfe36:
 	.size	 SpriteCB_MonSlideIn,.Lfe36-SpriteCB_MonSlideIn
@@ -10043,20 +10039,20 @@ SpriteCB_MonSlideOut:
 	mov	r1, #0x20
 	neg	r1, r1
 	cmp	r0, r1
-	bge	.L704	@cond_branch
-	ldr	r0, .L705
+	bge	.L702	@cond_branch
+	ldr	r0, .L703
 	str	r0, [r2, #0x1c]
 	add	r2, r2, #0x3e
 	ldrb	r0, [r2]
 	mov	r1, #0x4
 	orr	r0, r0, r1
 	strb	r0, [r2]
-.L704:
+.L702:
 	pop	{r0}
 	bx	r0
-.L706:
+.L704:
 	.align	2, 0
-.L705:
+.L703:
 	.word	SpriteCallbackDummy
 .Lfe37:
 	.size	 SpriteCB_MonSlideOut,.Lfe37-SpriteCB_MonSlideOut
@@ -10067,7 +10063,7 @@ Task_FinishRoundOfAppeals:
 	push	{r4, r5, r6, lr}
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
-	ldr	r2, .L720
+	ldr	r2, .L718
 	lsl	r1, r0, #0x2
 	add	r1, r1, r0
 	lsl	r1, r1, #0x3
@@ -10075,29 +10071,29 @@ Task_FinishRoundOfAppeals:
 	mov	r1, #0x8
 	ldrsh	r0, [r5, r1]
 	cmp	r0, #0x1
-	beq	.L713	@cond_branch
+	beq	.L711	@cond_branch
 	cmp	r0, #0x1
-	bgt	.L718	@cond_branch
+	bgt	.L716	@cond_branch
 	cmp	r0, #0
-	beq	.L709	@cond_branch
-	b	.L708
-.L721:
+	beq	.L707	@cond_branch
+	b	.L706
+.L719:
 	.align	2, 0
-.L720:
-	.word	gTasks
 .L718:
+	.word	gTasks
+.L716:
 	cmp	r0, #0x2
-	beq	.L715	@cond_branch
-	b	.L708
-.L709:
-	ldr	r0, .L722
+	beq	.L713	@cond_branch
+	b	.L706
+.L707:
+	ldr	r0, .L720
 	ldrb	r1, [r0]
 	mov	r6, #0x1
 	add	r0, r6, #0
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L710	@cond_branch
-	ldr	r0, .L722+0x4
+	beq	.L708	@cond_branch
+	ldr	r0, .L720+0x4
 	ldr	r0, [r0]
 	ldr	r2, [r0]
 	ldrb	r0, [r2, #0x7]
@@ -10107,62 +10103,62 @@ Task_FinishRoundOfAppeals:
 	bl	IsPlayerLinkLeader
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.L711	@cond_branch
+	beq	.L709	@cond_branch
 	bl	RankContestants
 	bl	SetAttentionLevels
-.L711:
-	ldr	r4, .L722+0x8
+.L709:
+	ldr	r4, .L720+0x8
 	add	r0, r4, #0
 	mov	r1, #0x0
 	bl	CreateTask
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
-	ldr	r2, .L722+0xc
+	ldr	r2, .L720+0xc
 	add	r1, r4, #0
 	bl	SetTaskFuncWithFollowupFunc
 	bl	ContestPrintLinkStandby
 	strh	r6, [r5, #0x8]
-	b	.L708
-.L723:
+	b	.L706
+.L721:
 	.align	2, 0
-.L722:
+.L720:
 	.word	gLinkContestFlags
 	.word	gContestResources
 	.word	Task_LinkContest_CommunicateAppealsState
 	.word	Task_EndWaitForLink
-.L710:
+.L708:
 	bl	RankContestants
 	bl	SetAttentionLevels
-	b	.L719
-.L713:
-	ldr	r0, .L724
+	b	.L717
+.L711:
+	ldr	r0, .L722
 	ldr	r0, [r0]
 	ldr	r0, [r0]
 	ldrb	r1, [r0, #0x7]
 	mov	r0, #0x4
 	and	r0, r0, r1
 	cmp	r0, #0
-	bne	.L708	@cond_branch
-.L719:
+	bne	.L706	@cond_branch
+.L717:
 	mov	r0, #0x2
 	strh	r0, [r5, #0x8]
-	b	.L708
-.L725:
+	b	.L706
+.L723:
 	.align	2, 0
-.L724:
+.L722:
 	.word	gContestResources
-.L715:
+.L713:
 	mov	r0, #0x0
 	strh	r0, [r5, #0x8]
-	ldr	r0, .L726
+	ldr	r0, .L724
 	str	r0, [r5]
-.L708:
+.L706:
 	pop	{r4, r5, r6}
 	pop	{r0}
 	bx	r0
-.L727:
+.L725:
 	.align	2, 0
-.L726:
+.L724:
 	.word	Task_ReadyUpdateHeartSliders
 .Lfe38:
 	.size	 Task_FinishRoundOfAppeals,.Lfe38-Task_FinishRoundOfAppeals
@@ -10176,7 +10172,7 @@ Task_ReadyUpdateHeartSliders:
 	lsr	r4, r4, #0x18
 	mov	r0, #0x0
 	bl	ShowHideNextTurnGfx
-	ldr	r1, .L729
+	ldr	r1, .L727
 	lsl	r0, r4, #0x2
 	add	r0, r0, r4
 	lsl	r0, r0, #0x3
@@ -10184,14 +10180,14 @@ Task_ReadyUpdateHeartSliders:
 	mov	r1, #0x0
 	strh	r1, [r0, #0x8]
 	strh	r1, [r0, #0xa]
-	ldr	r1, .L729+0x4
+	ldr	r1, .L727+0x4
 	str	r1, [r0]
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L730:
+.L728:
 	.align	2, 0
-.L729:
+.L727:
 	.word	gTasks
 	.word	Task_UpdateHeartSliders
 .Lfe39:
@@ -10203,7 +10199,7 @@ Task_UpdateHeartSliders:
 	push	{r4, r5, lr}
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
-	ldr	r2, .L743
+	ldr	r2, .L741
 	lsl	r1, r0, #0x2
 	add	r1, r1, r0
 	lsl	r1, r1, #0x3
@@ -10211,34 +10207,34 @@ Task_UpdateHeartSliders:
 	mov	r0, #0x8
 	ldrsh	r5, [r4, r0]
 	cmp	r5, #0x1
-	beq	.L735	@cond_branch
-	cmp	r5, #0x1
-	bgt	.L741	@cond_branch
-	cmp	r5, #0
 	beq	.L733	@cond_branch
-	b	.L732
-.L744:
+	cmp	r5, #0x1
+	bgt	.L739	@cond_branch
+	cmp	r5, #0
+	beq	.L731	@cond_branch
+	b	.L730
+.L742:
 	.align	2, 0
-.L743:
-	.word	gTasks
 .L741:
+	.word	gTasks
+.L739:
 	cmp	r5, #0x2
-	beq	.L738	@cond_branch
-	b	.L732
-.L733:
+	beq	.L736	@cond_branch
+	b	.L730
+.L731:
 	ldrh	r0, [r4, #0xa]
 	add	r0, r0, #0x1
 	strh	r0, [r4, #0xa]
 	lsl	r0, r0, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, #0x14
-	ble	.L732	@cond_branch
+	ble	.L730	@cond_branch
 	mov	r0, #0x2
 	bl	AnimateSliderHearts
 	strh	r5, [r4, #0xa]
-	b	.L742
-.L735:
-	ldr	r0, .L745
+	b	.L740
+.L733:
+	ldr	r0, .L743
 	ldr	r0, [r0]
 	ldr	r0, [r0]
 	ldrb	r1, [r0, #0x7]
@@ -10247,38 +10243,38 @@ Task_UpdateHeartSliders:
 	lsl	r0, r0, #0x18
 	lsr	r1, r0, #0x18
 	cmp	r1, #0
-	bne	.L732	@cond_branch
+	bne	.L730	@cond_branch
 	ldrh	r0, [r4, #0xa]
 	add	r0, r0, #0x1
 	strh	r0, [r4, #0xa]
 	lsl	r0, r0, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, #0x14
-	ble	.L732	@cond_branch
+	ble	.L730	@cond_branch
 	strh	r1, [r4, #0xa]
-.L742:
+.L740:
 	ldrh	r0, [r4, #0x8]
 	add	r0, r0, #0x1
 	strh	r0, [r4, #0x8]
-	b	.L732
-.L746:
+	b	.L730
+.L744:
 	.align	2, 0
-.L745:
+.L743:
 	.word	gContestResources
-.L738:
+.L736:
 	bl	UpdateHeartSliders
 	mov	r0, #0x0
 	strh	r0, [r4, #0x8]
 	strh	r0, [r4, #0xa]
-	ldr	r0, .L747
+	ldr	r0, .L745
 	str	r0, [r4]
-.L732:
+.L730:
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.L748:
+.L746:
 	.align	2, 0
-.L747:
+.L745:
 	.word	Task_WaitForHeartSliders
 .Lfe40:
 	.size	 Task_UpdateHeartSliders,.Lfe40-Task_UpdateHeartSliders
@@ -10292,21 +10288,21 @@ Task_WaitForHeartSliders:
 	bl	SlidersDoneUpdating
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.L750	@cond_branch
-	ldr	r0, .L751
+	beq	.L748	@cond_branch
+	ldr	r0, .L749
 	lsl	r1, r4, #0x2
 	add	r1, r1, r4
 	lsl	r1, r1, #0x3
 	add	r1, r1, r0
-	ldr	r0, .L751+0x4
+	ldr	r0, .L749+0x4
 	str	r0, [r1]
-.L750:
+.L748:
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L752:
+.L750:
 	.align	2, 0
-.L751:
+.L749:
 	.word	gTasks
 	.word	sub_80DA348
 .Lfe41:
@@ -10315,35 +10311,37 @@ Task_WaitForHeartSliders:
 	.type	 sub_80DA348,function
 	.thumb_func
 sub_80DA348:
-	lsl	r0, r0, #0x18
-	lsr	r0, r0, #0x18
-	ldr	r2, .L754
-	ldr	r3, .L754+0x4
-	ldr	r1, .L754+0x8
-	str	r2, [r1]
-	str	r3, [r1, #0x4]
-	ldr	r2, .L754+0xc
-	str	r2, [r1, #0x8]
-	ldr	r1, [r1, #0x8]
-	ldr	r2, .L754+0x10
-	lsl	r1, r0, #0x2
-	add	r1, r1, r0
-	lsl	r1, r1, #0x3
-	add	r1, r1, r2
-	mov	r0, #0x0
-	strh	r0, [r1, #0x8]
-	mov	r0, #0x2
-	strh	r0, [r1, #0xa]
-	ldr	r0, .L754+0x14
-	str	r0, [r1]
-	bx	lr
-.L755:
+	push	{r4, lr}
+	add	r3, r0, #0
+	lsl	r3, r3, #0x18
+	lsr	r3, r3, #0x18
+	ldr	r0, .L752
+	ldr	r1, .L752+0x4
+	ldr	r2, .L752+0x8
+	ldr	r4, .L752+0xc
+	stmia r4!, {r0, r1, r2}
+	.code	16
+	ldr	r1, .L752+0x10
+	lsl	r0, r3, #0x2
+	add	r0, r0, r3
+	lsl	r0, r0, #0x3
+	add	r0, r0, r1
+	mov	r1, #0x0
+	strh	r1, [r0, #0x8]
+	mov	r1, #0x2
+	strh	r1, [r0, #0xa]
+	ldr	r1, .L752+0x14
+	str	r1, [r0]
+	pop	{r4}
+	pop	{r0}
+	bx	r0
+.L753:
 	.align	2, 0
-.L754:
+.L752:
 	.word	gHeap+0x1a204
 	.word	gPlttBufferUnfaded
-	.word	0x40000d4
 	.word	-0x7bffff00
+	.word	0x40000d4
 	.word	gTasks
 	.word	Task_WaitPrintRoundResult
 .Lfe42:
@@ -10355,7 +10353,7 @@ Task_WaitPrintRoundResult:
 	push	{lr}
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
-	ldr	r2, .L759
+	ldr	r2, .L757
 	lsl	r1, r0, #0x2
 	add	r1, r1, r0
 	lsl	r1, r1, #0x3
@@ -10366,7 +10364,7 @@ Task_WaitPrintRoundResult:
 	lsl	r0, r0, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, #0x2
-	ble	.L757	@cond_branch
+	ble	.L755	@cond_branch
 	mov	r0, #0x0
 	strh	r0, [r1, #0x8]
 	ldrh	r0, [r1, #0xa]
@@ -10374,15 +10372,15 @@ Task_WaitPrintRoundResult:
 	strh	r0, [r1, #0xa]
 	lsl	r0, r0, #0x10
 	cmp	r0, #0
-	bne	.L757	@cond_branch
-	ldr	r0, .L759+0x4
+	bne	.L755	@cond_branch
+	ldr	r0, .L757+0x4
 	str	r0, [r1]
-.L757:
+.L755:
 	pop	{r0}
 	bx	r0
-.L760:
+.L758:
 	.align	2, 0
-.L759:
+.L757:
 	.word	gTasks
 	.word	Task_PrintRoundResultText
 .Lfe43:
@@ -10394,7 +10392,7 @@ Task_PrintRoundResultText:
 	push	{r4, r5, r6, lr}
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
-	ldr	r2, .L765
+	ldr	r2, .L763
 	lsl	r1, r0, #0x2
 	add	r1, r1, r0
 	lsl	r1, r1, #0x3
@@ -10402,10 +10400,10 @@ Task_PrintRoundResultText:
 	mov	r1, #0x8
 	ldrsh	r0, [r6, r1]
 	cmp	r0, #0
-	bne	.L762	@cond_branch
-	ldr	r0, .L765+0x4
+	bne	.L760	@cond_branch
+	ldr	r0, .L763+0x4
 	ldr	r0, [r0]
-	ldr	r5, .L765+0x8
+	ldr	r5, .L763+0x8
 	ldrb	r1, [r5]
 	ldr	r2, [r0, #0x4]
 	lsl	r0, r1, #0x3
@@ -10414,14 +10412,14 @@ Task_PrintRoundResultText:
 	add	r0, r0, r2
 	ldrb	r4, [r0, #0x1a]
 	bl	ContestClearGeneralTextWindow
-	ldr	r0, .L765+0xc
+	ldr	r0, .L763+0xc
 	ldrb	r1, [r5]
 	lsl	r1, r1, #0x6
-	ldr	r2, .L765+0x10
+	ldr	r2, .L763+0x10
 	add	r1, r1, r2
 	bl	StringCopy
-	ldr	r5, .L765+0x14
-	ldr	r0, .L765+0x18
+	ldr	r5, .L763+0x14
+	ldr	r0, .L763+0x18
 	lsl	r4, r4, #0x2
 	add	r4, r4, r0
 	ldr	r1, [r4]
@@ -10433,10 +10431,10 @@ Task_PrintRoundResultText:
 	ldrh	r0, [r6, #0x8]
 	add	r0, r0, #0x1
 	strh	r0, [r6, #0x8]
-	b	.L763
-.L766:
+	b	.L761
+.L764:
 	.align	2, 0
-.L765:
+.L763:
 	.word	gTasks
 	.word	gContestResources
 	.word	gContestPlayerMonIndex
@@ -10444,21 +10442,21 @@ Task_PrintRoundResultText:
 	.word	gContestMons+0x2
 	.word	gStringVar4
 	.word	sRoundResultTexts
-.L762:
+.L760:
 	bl	Contest_RunTextPrinters
 	cmp	r0, #0
-	bne	.L763	@cond_branch
+	bne	.L761	@cond_branch
 	strh	r0, [r6, #0x8]
-	ldr	r0, .L767
+	ldr	r0, .L765
 	str	r0, [r6]
 	bl	ContestDebugDoPrint
-.L763:
+.L761:
 	pop	{r4, r5, r6}
 	pop	{r0}
 	bx	r0
-.L768:
+.L766:
 	.align	2, 0
-.L767:
+.L765:
 	.word	Task_ReUpdateHeartSliders
 .Lfe44:
 	.size	 Task_PrintRoundResultText,.Lfe44-Task_PrintRoundResultText
@@ -10469,7 +10467,7 @@ Task_ReUpdateHeartSliders:
 	push	{r4, lr}
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
-	ldr	r2, .L771
+	ldr	r2, .L769
 	lsl	r1, r0, #0x2
 	add	r1, r1, r0
 	lsl	r1, r1, #0x3
@@ -10480,19 +10478,19 @@ Task_ReUpdateHeartSliders:
 	lsl	r0, r0, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, #0x1d
-	ble	.L770	@cond_branch
+	ble	.L768	@cond_branch
 	mov	r0, #0x0
 	strh	r0, [r4, #0x8]
 	bl	UpdateHeartSliders
-	ldr	r0, .L771+0x4
+	ldr	r0, .L769+0x4
 	str	r0, [r4]
-.L770:
+.L768:
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L772:
+.L770:
 	.align	2, 0
-.L771:
+.L769:
 	.word	gTasks
 	.word	Task_WaitForHeartSlidersAgain
 .Lfe45:
@@ -10507,23 +10505,23 @@ Task_WaitForHeartSlidersAgain:
 	bl	SlidersDoneUpdating
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.L774	@cond_branch
-	ldr	r1, .L775
+	beq	.L772	@cond_branch
+	ldr	r1, .L773
 	lsl	r0, r4, #0x2
 	add	r0, r0, r4
 	lsl	r0, r0, #0x3
 	add	r0, r0, r1
 	mov	r1, #0x0
 	strh	r1, [r0, #0x8]
-	ldr	r1, .L775+0x4
+	ldr	r1, .L773+0x4
 	str	r1, [r0]
-.L774:
+.L772:
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L776:
+.L774:
 	.align	2, 0
-.L775:
+.L773:
 	.word	gTasks
 	.word	Task_DropCurtainAtRoundEnd
 .Lfe46:
@@ -10537,19 +10535,19 @@ Task_DropCurtainAtRoundEnd:
 	lsl	r4, r4, #0x18
 	lsr	r4, r4, #0x18
 	bl	SetBgForCurtainDrop
-	ldr	r1, .L778
+	ldr	r1, .L776
 	lsl	r0, r4, #0x2
 	add	r0, r0, r4
 	lsl	r0, r0, #0x3
 	add	r0, r0, r1
-	ldr	r1, .L778+0x4
+	ldr	r1, .L776+0x4
 	str	r1, [r0]
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L779:
+.L777:
 	.align	2, 0
-.L778:
+.L776:
 	.word	gTasks
 	.word	Task_StartDropCurtainAtRoundEnd
 .Lfe47:
@@ -10563,19 +10561,19 @@ Task_UpdateContestantBoxOrder:
 	lsl	r4, r4, #0x18
 	lsr	r4, r4, #0x18
 	bl	UpdateContestantBoxOrder
-	ldr	r1, .L781
+	ldr	r1, .L779
 	lsl	r0, r4, #0x2
 	add	r0, r0, r4
 	lsl	r0, r0, #0x3
 	add	r0, r0, r1
-	ldr	r1, .L781+0x4
+	ldr	r1, .L779+0x4
 	str	r1, [r0]
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L782:
+.L780:
 	.align	2, 0
-.L781:
+.L779:
 	.word	gTasks
 	.word	Task_TryStartNextRoundOfAppeals
 .Lfe48:
@@ -10614,7 +10612,7 @@ Task_TryStartNextRoundOfAppeals:
 	ldrh	r1, [r4]
 	mov	r0, #0xc
 	bl	SetGpuReg
-	ldr	r2, .L787
+	ldr	r2, .L785
 	ldr	r0, [r2]
 	ldr	r1, [r0]
 	ldrb	r0, [r1, #0x1]
@@ -10624,37 +10622,37 @@ Task_TryStartNextRoundOfAppeals:
 	ldr	r0, [r0]
 	ldrb	r0, [r0, #0x1]
 	cmp	r0, #0x5
-	bne	.L784	@cond_branch
-	ldr	r0, .L787+0x4
+	bne	.L782	@cond_branch
+	ldr	r0, .L785+0x4
 	lsl	r1, r5, #0x2
 	add	r1, r1, r5
 	lsl	r1, r1, #0x3
 	add	r1, r1, r0
-	ldr	r0, .L787+0x8
-	b	.L786
-.L788:
+	ldr	r0, .L785+0x8
+	b	.L784
+.L786:
 	.align	2, 0
-.L787:
+.L785:
 	.word	gContestResources
 	.word	gTasks
 	.word	Task_EndAppeals
-.L784:
+.L782:
 	bl	SlideApplauseMeterIn
-	ldr	r0, .L789
+	ldr	r0, .L787
 	lsl	r1, r5, #0x2
 	add	r1, r1, r5
 	lsl	r1, r1, #0x3
 	add	r1, r1, r0
-	ldr	r0, .L789+0x4
-.L786:
+	ldr	r0, .L787+0x4
+.L784:
 	str	r0, [r1]
 	add	sp, sp, #0x4
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.L790:
+.L788:
 	.align	2, 0
-.L789:
+.L787:
 	.word	gTasks
 	.word	Task_StartNewRoundOfAppeals
 .Lfe49:
@@ -10666,27 +10664,27 @@ Task_StartNewRoundOfAppeals:
 	push	{lr}
 	lsl	r0, r0, #0x18
 	lsr	r2, r0, #0x18
-	ldr	r0, .L793
+	ldr	r0, .L791
 	ldr	r0, [r0]
 	ldr	r0, [r0]
 	ldrb	r1, [r0, #0x6]
 	mov	r0, #0x40
 	and	r0, r0, r1
 	cmp	r0, #0
-	bne	.L792	@cond_branch
-	ldr	r0, .L793+0x4
+	bne	.L790	@cond_branch
+	ldr	r0, .L791+0x4
 	lsl	r1, r2, #0x2
 	add	r1, r1, r2
 	lsl	r1, r1, #0x3
 	add	r1, r1, r0
-	ldr	r0, .L793+0x8
+	ldr	r0, .L791+0x8
 	str	r0, [r1]
-.L792:
+.L790:
 	pop	{r0}
 	bx	r0
-.L794:
+.L792:
 	.align	2, 0
-.L793:
+.L791:
 	.word	gContestResources
 	.word	gTasks
 	.word	Task_DisplayAppealNumberText
@@ -10699,16 +10697,16 @@ Task_EndAppeals:
 	push	{r4, r5, lr}
 	lsl	r0, r0, #0x18
 	lsr	r5, r0, #0x18
-	ldr	r0, .L803
+	ldr	r0, .L801
 	mov	r1, #0x0
 	strh	r1, [r0]
-	ldr	r0, .L803+0x4
+	ldr	r0, .L801+0x4
 	strh	r1, [r0]
-	ldr	r4, .L803+0x8
+	ldr	r4, .L801+0x8
 	mov	r3, #0x0
-	ldr	r2, .L803+0xc
+	ldr	r2, .L801+0xc
 	mov	r1, #0x3
-.L799:
+.L797:
 	ldr	r0, [r4]
 	ldr	r0, [r0, #0x4]
 	add	r0, r3, r0
@@ -10718,18 +10716,18 @@ Task_EndAppeals:
 	add	r2, r2, #0x2
 	sub	r1, r1, #0x1
 	cmp	r1, #0
-	bge	.L799	@cond_branch
+	bge	.L797	@cond_branch
 	bl	CalculateFinalScores
 	bl	ContestClearGeneralTextWindow
-	ldr	r0, .L803+0x10
+	ldr	r0, .L801+0x10
 	ldrb	r1, [r0]
 	mov	r0, #0x1
 	and	r0, r0, r1
 	cmp	r0, #0
-	bne	.L801	@cond_branch
-	ldr	r0, .L803+0x8
+	bne	.L799	@cond_branch
+	ldr	r0, .L801+0x8
 	ldr	r2, [r0]
-	ldr	r0, .L803+0x14
+	ldr	r0, .L801+0x14
 	ldrb	r1, [r0]
 	ldr	r2, [r2, #0x4]
 	lsl	r0, r1, #0x3
@@ -10738,47 +10736,47 @@ Task_EndAppeals:
 	add	r0, r0, r2
 	ldrh	r0, [r0, #0x8]
 	bl	BravoTrainerPokemonProfile_BeforeInterview1
-	b	.L802
-.L804:
+	b	.L800
+.L802:
 	.align	2, 0
-.L803:
+.L801:
 	.word	gBattle_BG0_Y
 	.word	gBattle_BG2_Y
 	.word	gContestResources
 	.word	gContestMonAppealPointTotals
 	.word	gLinkContestFlags
 	.word	gContestPlayerMonIndex
-.L801:
+.L799:
 	bl	CalculateContestLiveUpdateData
 	bl	SetConestLiveUpdateTVData
 	bl	ContestDebugPrintBitStrings
-.L802:
-	ldr	r1, .L805
-	ldr	r0, .L805+0x4
+.L800:
+	ldr	r1, .L803
+	ldr	r0, .L803+0x4
 	ldr	r0, [r0]
 	str	r0, [r1]
-	ldr	r4, .L805+0x8
-	ldr	r1, .L805+0xc
+	ldr	r4, .L803+0x8
+	ldr	r1, .L803+0xc
 	add	r0, r4, #0
 	bl	StringExpandPlaceholders
 	add	r0, r4, #0
 	mov	r1, #0x1
 	bl	Contest_StartTextPrinter
-	ldr	r1, .L805+0x10
+	ldr	r1, .L803+0x10
 	lsl	r0, r5, #0x2
 	add	r0, r0, r5
 	lsl	r0, r0, #0x3
 	add	r0, r0, r1
 	mov	r1, #0x0
 	strh	r1, [r0, #0xc]
-	ldr	r1, .L805+0x14
+	ldr	r1, .L803+0x14
 	str	r1, [r0]
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.L806:
+.L804:
 	.align	2, 0
-.L805:
+.L803:
 	.word	gContestRngValue
 	.word	gRngValue
 	.word	gStringVar4
@@ -10797,31 +10795,31 @@ Task_WaitForOutOfTimeMsg:
 	bl	Contest_RunTextPrinters
 	add	r4, r0, #0
 	cmp	r4, #0
-	bne	.L808	@cond_branch
+	bne	.L806	@cond_branch
 	bl	SetBgForCurtainDrop
-	ldr	r0, .L809
+	ldr	r0, .L807
 	strh	r4, [r0]
-	ldr	r1, .L809+0x4
+	ldr	r1, .L807+0x4
 	mov	r0, #0xa0
 	strh	r0, [r1]
 	mov	r0, #0x62
 	mov	r1, #0x0
 	bl	PlaySE12WithPanning
-	ldr	r1, .L809+0x8
+	ldr	r1, .L807+0x8
 	lsl	r0, r5, #0x2
 	add	r0, r0, r5
 	lsl	r0, r0, #0x3
 	add	r0, r0, r1
 	strh	r4, [r0, #0x8]
-	ldr	r1, .L809+0xc
+	ldr	r1, .L807+0xc
 	str	r1, [r0]
-.L808:
+.L806:
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.L810:
+.L808:
 	.align	2, 0
-.L809:
+.L807:
 	.word	gBattle_BG1_X
 	.word	gBattle_BG1_Y
 	.word	gTasks
@@ -10835,33 +10833,33 @@ Task_DropCurtainAtAppealsEnd:
 	push	{lr}
 	lsl	r0, r0, #0x18
 	lsr	r3, r0, #0x18
-	ldr	r1, .L814
+	ldr	r1, .L812
 	ldrh	r0, [r1]
 	sub	r0, r0, #0x7
 	strh	r0, [r1]
 	lsl	r0, r0, #0x10
 	cmp	r0, #0
-	bge	.L812	@cond_branch
+	bge	.L810	@cond_branch
 	mov	r0, #0x0
 	strh	r0, [r1]
-.L812:
+.L810:
 	ldrh	r2, [r1]
 	cmp	r2, #0
-	bne	.L813	@cond_branch
-	ldr	r0, .L814+0x4
+	bne	.L811	@cond_branch
+	ldr	r0, .L812+0x4
 	lsl	r1, r3, #0x2
 	add	r1, r1, r3
 	lsl	r1, r1, #0x3
 	add	r1, r1, r0
-	ldr	r0, .L814+0x8
+	ldr	r0, .L812+0x8
 	str	r0, [r1]
 	strh	r2, [r1, #0x8]
-.L813:
+.L811:
 	pop	{r0}
 	bx	r0
-.L815:
+.L813:
 	.align	2, 0
-.L814:
+.L812:
 	.word	gBattle_BG1_Y
 	.word	gTasks
 	.word	Task_TryCommunicateFinalStandings
@@ -10875,7 +10873,7 @@ Task_TryCommunicateFinalStandings:
 	add	sp, sp, #-0x4
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
-	ldr	r2, .L821
+	ldr	r2, .L819
 	lsl	r1, r0, #0x2
 	add	r1, r1, r0
 	lsl	r1, r1, #0x3
@@ -10886,24 +10884,24 @@ Task_TryCommunicateFinalStandings:
 	lsl	r0, r0, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, #0x31
-	ble	.L817	@cond_branch
+	ble	.L815	@cond_branch
 	mov	r0, #0x0
 	strh	r0, [r4, #0x8]
-	ldr	r0, .L821+0x4
+	ldr	r0, .L819+0x4
 	ldrb	r0, [r0]
 	mov	r1, #0x1
 	and	r1, r1, r0
 	cmp	r1, #0
-	beq	.L818	@cond_branch
-	ldr	r0, .L821+0x8
-	b	.L820
-.L822:
+	beq	.L816	@cond_branch
+	ldr	r0, .L819+0x8
+	b	.L818
+.L820:
 	.align	2, 0
-.L821:
+.L819:
 	.word	gTasks
 	.word	gLinkContestFlags
 	.word	Task_CommunicateFinalStandings
-.L818:
+.L816:
 	mov	r0, #0x1
 	neg	r0, r0
 	str	r1, [sp]
@@ -10911,17 +10909,17 @@ Task_TryCommunicateFinalStandings:
 	mov	r2, #0x0
 	mov	r3, #0x10
 	bl	BeginNormalPaletteFade
-	ldr	r0, .L823
-.L820:
+	ldr	r0, .L821
+.L818:
 	str	r0, [r4]
-.L817:
+.L815:
 	add	sp, sp, #0x4
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L824:
+.L822:
 	.align	2, 0
-.L823:
+.L821:
 	.word	Task_ContestReturnToField
 .Lfe54:
 	.size	 Task_TryCommunicateFinalStandings,.Lfe54-Task_TryCommunicateFinalStandings
@@ -10933,21 +10931,21 @@ Task_CommunicateFinalStandings:
 	add	r4, r0, #0
 	lsl	r4, r4, #0x18
 	lsr	r4, r4, #0x18
-	ldr	r5, .L826
+	ldr	r5, .L824
 	add	r0, r5, #0
 	mov	r1, #0x0
 	bl	CreateTask
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
-	ldr	r2, .L826+0x4
+	ldr	r2, .L824+0x4
 	add	r1, r5, #0
 	bl	SetTaskFuncWithFollowupFunc
-	ldr	r1, .L826+0x8
+	ldr	r1, .L824+0x8
 	lsl	r0, r4, #0x2
 	add	r0, r0, r4
 	lsl	r0, r0, #0x3
 	add	r0, r0, r1
-	ldr	r1, .L826+0xc
+	ldr	r1, .L824+0xc
 	str	r1, [r0]
 	bl	ContestPrintLinkStandby
 	mov	r0, #0x0
@@ -10955,9 +10953,9 @@ Task_CommunicateFinalStandings:
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.L827:
+.L825:
 	.align	2, 0
-.L826:
+.L824:
 	.word	Task_LinkContest_CommunicateFinalStandings
 	.word	Task_EndCommunicateFinalStandings
 	.word	gTasks
@@ -10980,8 +10978,8 @@ Task_EndCommunicateFinalStandings:
 	mov	r2, #0x0
 	mov	r3, #0x10
 	bl	BeginNormalPaletteFade
-	ldr	r2, .L829
-	ldr	r0, .L829+0x4
+	ldr	r2, .L827
+	ldr	r0, .L827+0x4
 	ldr	r0, [r0]
 	ldr	r0, [r0]
 	ldrb	r1, [r0, #0x8]
@@ -10989,14 +10987,14 @@ Task_EndCommunicateFinalStandings:
 	add	r0, r0, r1
 	lsl	r0, r0, #0x3
 	add	r0, r0, r2
-	ldr	r1, .L829+0x8
+	ldr	r1, .L827+0x8
 	str	r1, [r0]
 	add	sp, sp, #0x4
 	pop	{r0}
 	bx	r0
-.L830:
+.L828:
 	.align	2, 0
-.L829:
+.L827:
 	.word	gTasks
 	.word	gContestResources
 	.word	Task_ContestReturnToField
@@ -11009,28 +11007,28 @@ Task_ContestReturnToField:
 	push	{lr}
 	lsl	r0, r0, #0x18
 	lsr	r2, r0, #0x18
-	ldr	r0, .L833
+	ldr	r0, .L831
 	ldrb	r1, [r0, #0x7]
 	mov	r0, #0x80
 	and	r0, r0, r1
 	cmp	r0, #0
-	bne	.L832	@cond_branch
+	bne	.L830	@cond_branch
 	add	r0, r2, #0
 	bl	DestroyTask
-	ldr	r0, .L833+0x4
-	ldr	r1, .L833+0x8
+	ldr	r0, .L831+0x4
+	ldr	r1, .L831+0x8
 	str	r1, [r0]
 	bl	FreeAllWindowBuffers
 	bl	FreeContestResources
 	bl	FreeMonSpritesGfx
-	ldr	r0, .L833+0xc
+	ldr	r0, .L831+0xc
 	bl	SetMainCallback2
-.L832:
+.L830:
 	pop	{r0}
 	bx	r0
-.L834:
+.L832:
 	.align	2, 0
-.L833:
+.L831:
 	.word	gPaletteFade
 	.word	gFieldCallback
 	.word	FieldCB_ContestReturnToField
@@ -11053,21 +11051,21 @@ FieldCB_ContestReturnToField:
 	.thumb_func
 TryPutPlayerLast:
 	push	{lr}
-	ldr	r0, .L838
+	ldr	r0, .L836
 	ldrb	r1, [r0]
 	mov	r0, #0x1
 	and	r0, r0, r1
 	cmp	r0, #0
-	bne	.L837	@cond_branch
-	ldr	r1, .L838+0x4
+	bne	.L835	@cond_branch
+	ldr	r1, .L836+0x4
 	mov	r0, #0x3
 	strb	r0, [r1]
-.L837:
+.L835:
 	pop	{r0}
 	bx	r0
-.L839:
+.L837:
 	.align	2, 0
-.L838:
+.L836:
 	.word	gLinkContestFlags
 	.word	gContestPlayerMonIndex
 .Lfe59:
@@ -11077,22 +11075,22 @@ TryPutPlayerLast:
 	.thumb_func
 IsPlayerLinkLeader:
 	push	{lr}
-	ldr	r0, .L843
-	ldr	r1, .L843+0x4
+	ldr	r0, .L841
+	ldr	r1, .L841+0x4
 	ldrb	r0, [r0]
 	ldrb	r1, [r1]
 	cmp	r0, r1
-	beq	.L841	@cond_branch
+	beq	.L839	@cond_branch
 	mov	r0, #0x0
-	b	.L842
-.L844:
+	b	.L840
+.L842:
 	.align	2, 0
-.L843:
+.L841:
 	.word	gContestPlayerMonIndex
 	.word	gContestLinkLeaderIndex
-.L841:
+.L839:
 	mov	r0, #0x1
-.L842:
+.L840:
 	pop	{r1}
 	bx	r1
 .Lfe60:
@@ -11109,23 +11107,23 @@ CreateContestMonFromParty:
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	mov	r8, r0
-	ldr	r6, .L865
+	ldr	r6, .L863
 	ldr	r1, [r6]
 	mov	r0, sp
 	bl	StringCopy
-	ldr	r0, .L865+0x4
+	ldr	r0, .L863+0x4
 	ldrb	r1, [r0]
 	mov	r0, #0x1
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L846	@cond_branch
+	beq	.L844	@cond_branch
 	mov	r0, sp
 	bl	StripPlayerNameForLinkContest
-.L846:
-	ldr	r5, .L865+0x8
+.L844:
+	ldr	r5, .L863+0x8
 	ldrb	r0, [r5]
 	lsl	r0, r0, #0x6
-	ldr	r4, .L865+0xc
+	ldr	r4, .L863+0xc
 	add	r0, r0, r4
 	mov	r1, sp
 	mov	r2, #0x8
@@ -11133,28 +11131,28 @@ CreateContestMonFromParty:
 	ldr	r0, [r6]
 	ldrb	r0, [r0, #0x8]
 	cmp	r0, #0
-	bne	.L847	@cond_branch
+	bne	.L845	@cond_branch
 	ldrb	r0, [r5]
 	lsl	r0, r0, #0x6
 	add	r0, r4, r0
 	mov	r1, #0xd8
-	b	.L864
-.L866:
+	b	.L862
+.L864:
 	.align	2, 0
-.L865:
+.L863:
 	.word	gSaveBlock2Ptr
 	.word	gLinkContestFlags
 	.word	gContestPlayerMonIndex
 	.word	gContestMons+0xd
-.L847:
+.L845:
 	ldrb	r0, [r5]
 	lsl	r0, r0, #0x6
 	add	r0, r4, r0
 	mov	r1, #0xd9
-.L864:
+.L862:
 	strb	r1, [r0, #0x8]
-	ldr	r7, .L867
-	ldr	r6, .L867+0x4
+	ldr	r7, .L865
+	ldr	r6, .L865+0x4
 	ldrb	r0, [r6]
 	lsl	r0, r0, #0x6
 	add	r1, r7, #0
@@ -11170,7 +11168,7 @@ CreateContestMonFromParty:
 	mov	r0, #0x64
 	mov	r1, r8
 	mul	r1, r1, r0
-	ldr	r0, .L867+0x8
+	ldr	r0, .L865+0x8
 	add	r5, r1, r0
 	add	r0, r5, #0
 	mov	r1, #0xb
@@ -11178,11 +11176,11 @@ CreateContestMonFromParty:
 	ldrb	r2, [r6]
 	lsl	r2, r2, #0x6
 	add	r2, r2, r7
-	ldr	r3, .L867+0xc
+	ldr	r3, .L865+0xc
 	add	r1, r3, #0
 	and	r0, r0, r1
 	ldrh	r3, [r2]
-	ldr	r1, .L867+0x10
+	ldr	r1, .L865+0x10
 	and	r1, r1, r3
 	orr	r1, r1, r0
 	strh	r1, [r2]
@@ -11192,19 +11190,19 @@ CreateContestMonFromParty:
 	bl	GetMonData
 	mov	r0, sp
 	bl	StringGetEnd10
-	ldr	r0, .L867+0x14
+	ldr	r0, .L865+0x14
 	ldrb	r1, [r0]
 	mov	r0, #0x1
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L849	@cond_branch
+	beq	.L847	@cond_branch
 	add	r0, r5, #0
 	mov	r1, #0x3
 	bl	GetMonData
 	add	r1, r0, #0
 	mov	r0, sp
 	bl	StripMonNameForLinkContest
-.L849:
+.L847:
 	ldrb	r0, [r6]
 	lsl	r0, r0, #0x6
 	add	r4, r7, #0x2
@@ -11333,98 +11331,98 @@ CreateContestMonFromParty:
 	mov	r0, #0xc4
 	lsl	r0, r0, #0x1
 	cmp	r2, r0
-	bne	.L850	@cond_branch
+	bne	.L848	@cond_branch
 	add	r3, r3, #0x14
-	b	.L851
-.L868:
+	b	.L849
+.L866:
 	.align	2, 0
-.L867:
+.L865:
 	.word	gContestMons
 	.word	gContestPlayerMonIndex
 	.word	gPlayerParty
 	.word	0x7ff
 	.word	-0x800
 	.word	gLinkContestFlags
-.L850:
-	ldr	r0, .L869
+.L848:
+	ldr	r0, .L867
 	cmp	r2, r0
-	bne	.L852	@cond_branch
+	bne	.L850	@cond_branch
 	lsl	r0, r5, #0x10
 	mov	r1, #0xa0
 	lsl	r1, r1, #0xd
 	add	r0, r0, r1
 	lsr	r5, r0, #0x10
-	b	.L851
-.L870:
+	b	.L849
+.L868:
 	.align	2, 0
-.L869:
+.L867:
 	.word	0x189
-.L852:
+.L850:
 	mov	r0, #0xc5
 	lsl	r0, r0, #0x1
 	cmp	r2, r0
-	bne	.L854	@cond_branch
+	bne	.L852	@cond_branch
 	lsl	r0, r6, #0x10
 	mov	r1, #0xa0
 	lsl	r1, r1, #0xd
 	add	r0, r0, r1
 	lsr	r6, r0, #0x10
-	b	.L851
-.L854:
-	ldr	r0, .L871
+	b	.L849
+.L852:
+	ldr	r0, .L869
 	cmp	r2, r0
-	bne	.L856	@cond_branch
+	bne	.L854	@cond_branch
 	lsl	r0, r7, #0x10
 	mov	r1, #0xa0
 	lsl	r1, r1, #0xd
 	add	r0, r0, r1
 	lsr	r7, r0, #0x10
-	b	.L851
-.L872:
+	b	.L849
+.L870:
 	.align	2, 0
-.L871:
+.L869:
 	.word	0x18b
-.L856:
+.L854:
 	mov	r0, #0xc6
 	lsl	r0, r0, #0x1
 	cmp	r2, r0
-	bne	.L851	@cond_branch
+	bne	.L849	@cond_branch
 	lsl	r0, r4, #0x10
 	mov	r1, #0xa0
 	lsl	r1, r1, #0xd
 	add	r0, r0, r1
 	lsr	r4, r0, #0x10
-.L851:
+.L849:
 	cmp	r3, #0xff
-	ble	.L859	@cond_branch
+	ble	.L857	@cond_branch
 	mov	r3, #0xff
-.L859:
+.L857:
 	lsl	r0, r5, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, #0xff
-	ble	.L860	@cond_branch
+	ble	.L858	@cond_branch
 	mov	r5, #0xff
-.L860:
+.L858:
 	lsl	r0, r6, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, #0xff
-	ble	.L861	@cond_branch
+	ble	.L859	@cond_branch
 	mov	r6, #0xff
-.L861:
+.L859:
 	lsl	r0, r7, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, #0xff
-	ble	.L862	@cond_branch
+	ble	.L860	@cond_branch
 	mov	r7, #0xff
-.L862:
+.L860:
 	lsl	r0, r4, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, #0xff
-	ble	.L863	@cond_branch
+	ble	.L861	@cond_branch
 	mov	r4, #0xff
-.L863:
-	ldr	r2, .L873
-	ldr	r1, .L873+0x4
+.L861:
+	ldr	r2, .L871
+	ldr	r1, .L871+0x4
 	ldrb	r0, [r1]
 	lsl	r0, r0, #0x6
 	add	r0, r0, r2
@@ -11456,9 +11454,9 @@ CreateContestMonFromParty:
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L874:
+.L872:
 	.align	2, 0
-.L873:
+.L871:
 	.word	gContestMons
 	.word	gContestPlayerMonIndex
 .Lfe61:
@@ -11480,100 +11478,100 @@ SetContestants:
 	mov	r6, #0x0
 	mov	r7, #0x0
 	bl	TryPutPlayerLast
-	ldr	r0, .L907
+	ldr	r0, .L905
 	bl	FlagGet
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.L876	@cond_branch
-	ldr	r0, .L907+0x4
+	beq	.L874	@cond_branch
+	ldr	r0, .L905+0x4
 	ldrb	r1, [r0]
 	mov	r0, #0x1
 	and	r0, r0, r1
 	cmp	r0, #0
-	bne	.L876	@cond_branch
+	bne	.L874	@cond_branch
 	mov	r7, #0x1
-.L876:
+.L874:
 	mov	r5, #0x0
-	ldr	r2, .L907+0x8
-	ldr	r3, .L907+0xc
-.L880:
+	ldr	r2, .L905+0x8
+	ldr	r3, .L905+0xc
+.L878:
 	ldrb	r0, [r2, #0x1c]
 	lsl	r0, r0, #0x1e
 	lsr	r0, r0, #0x1e
 	cmp	r8, r0
-	bne	.L879	@cond_branch
+	bne	.L877	@cond_branch
 	cmp	r7, #0x1
-	bne	.L882	@cond_branch
+	bne	.L880	@cond_branch
 	ldrb	r0, [r3]
 	cmp	r0, #0x1
-	beq	.L879	@cond_branch
-	b	.L884
-.L908:
+	beq	.L877	@cond_branch
+	b	.L882
+.L906:
 	.align	2, 0
-.L907:
+.L905:
 	.word	0x864
 	.word	gLinkContestFlags
 	.word	gContestOpponents
 	.word	gPostgameContestOpponentFilter
-.L882:
+.L880:
 	ldrb	r0, [r3]
 	cmp	r0, #0x2
-	beq	.L879	@cond_branch
-.L884:
+	beq	.L877	@cond_branch
+.L882:
 	cmp	r4, #0
-	bne	.L886	@cond_branch
+	bne	.L884	@cond_branch
 	ldrb	r0, [r2, #0x1c]
 	lsl	r0, r0, #0x1d
 	cmp	r0, #0
-	blt	.L906	@cond_branch
-.L886:
+	blt	.L904	@cond_branch
+.L884:
 	cmp	r4, #0x1
-	bne	.L888	@cond_branch
+	bne	.L886	@cond_branch
 	ldrb	r0, [r2, #0x1c]
 	lsl	r0, r0, #0x1c
 	cmp	r0, #0
-	blt	.L906	@cond_branch
-.L888:
+	blt	.L904	@cond_branch
+.L886:
 	cmp	r4, #0x2
-	bne	.L890	@cond_branch
+	bne	.L888	@cond_branch
 	ldrb	r0, [r2, #0x1c]
 	lsl	r0, r0, #0x1b
 	cmp	r0, #0
-	blt	.L906	@cond_branch
-.L890:
+	blt	.L904	@cond_branch
+.L888:
 	cmp	r4, #0x3
-	bne	.L892	@cond_branch
+	bne	.L890	@cond_branch
 	ldrb	r0, [r2, #0x1c]
 	lsl	r0, r0, #0x1a
 	cmp	r0, #0
-	blt	.L906	@cond_branch
-.L892:
+	blt	.L904	@cond_branch
+.L890:
 	cmp	r4, #0x4
-	bne	.L879	@cond_branch
+	bne	.L877	@cond_branch
 	ldrb	r0, [r2, #0x1c]
 	lsl	r0, r0, #0x19
 	cmp	r0, #0
-	bge	.L879	@cond_branch
-.L906:
+	bge	.L877	@cond_branch
+.L904:
 	add	r0, r6, #0
 	add	r1, r0, #0x1
 	lsl	r1, r1, #0x18
 	lsr	r6, r1, #0x18
 	add	r0, r0, sp
 	strb	r5, [r0]
-.L879:
+.L877:
 	add	r2, r2, #0x40
 	add	r3, r3, #0x1
 	add	r5, r5, #0x1
 	cmp	r5, #0x5f
-	bls	.L880	@cond_branch
+	bls	.L878	@cond_branch
 	mov	r0, sp
 	add	r1, r0, r6
 	mov	r0, #0xff
 	strb	r0, [r1]
 	mov	r5, #0x0
-	ldr	r7, .L909
-.L899:
+	ldr	r7, .L907
+.L897:
 	bl	Random
 	lsl	r0, r0, #0x10
 	lsr	r0, r0, #0x10
@@ -11581,7 +11579,7 @@ SetContestants:
 	bl	__modsi3
 	lsl	r0, r0, #0x10
 	lsr	r0, r0, #0x10
-	ldr	r1, .L909+0x4
+	ldr	r1, .L907+0x4
 	lsl	r2, r5, #0x6
 	add	r2, r2, r1
 	mov	r1, sp
@@ -11596,22 +11594,22 @@ SetContestants:
 	add	r2, r5, #0x1
 	sub	r1, r6, #0x1
 	cmp	r0, #0xff
-	beq	.L901	@cond_branch
+	beq	.L899	@cond_branch
 	add	r3, r4, #0
-.L903:
+.L901:
 	ldrb	r0, [r3, #0x1]
 	strb	r0, [r3]
 	add	r3, r3, #0x1
 	ldrb	r0, [r3]
 	cmp	r0, #0xff
-	bne	.L903	@cond_branch
-.L901:
+	bne	.L901	@cond_branch
+.L899:
 	lsl	r0, r1, #0x18
 	lsr	r6, r0, #0x18
 	add	r5, r2, #0
 	cmp	r5, #0x2
-	ble	.L899	@cond_branch
-	ldr	r0, .L909+0x8
+	ble	.L897	@cond_branch
+	ldr	r0, .L907+0x8
 	ldrb	r0, [r0]
 	bl	CreateContestMonFromParty
 	add	sp, sp, #0x64
@@ -11620,9 +11618,9 @@ SetContestants:
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L910:
+.L908:
 	.align	2, 0
-.L909:
+.L907:
 	.word	gContestOpponents
 	.word	gContestMons
 	.word	gContestMonPartyIndex
@@ -11644,87 +11642,87 @@ SetLinkAIContestants:
 	lsl	r1, r1, #0x18
 	lsr	r2, r1, #0x18
 	mov	r7, #0x0
-	ldr	r0, .L939
+	ldr	r0, .L937
 	ldrb	r1, [r0]
 	mov	r9, r0
 	cmp	r1, #0x4
-	bne	.LCB8599
-	b	.L911	@long jump
-.LCB8599:
+	bne	.LCB8603
+	b	.L909	@long jump
+.LCB8603:
 	mov	r5, #0x0
-	ldr	r3, .L939+0x4
-	ldr	r6, .L939+0x8
-.L916:
+	ldr	r3, .L937+0x4
+	ldr	r6, .L937+0x8
+.L914:
 	ldrb	r0, [r3, #0x1c]
 	lsl	r0, r0, #0x1e
 	lsr	r0, r0, #0x1e
 	cmp	r2, r0
-	bne	.L915	@cond_branch
+	bne	.L913	@cond_branch
 	mov	r0, r8
 	cmp	r0, #0x1
-	bne	.L918	@cond_branch
+	bne	.L916	@cond_branch
 	ldrb	r0, [r6]
 	cmp	r0, #0x1
-	beq	.L915	@cond_branch
-	b	.L920
-.L940:
+	beq	.L913	@cond_branch
+	b	.L918
+.L938:
 	.align	2, 0
-.L939:
+.L937:
 	.word	gNumLinkContestPlayers
 	.word	gContestOpponents
 	.word	gPostgameContestOpponentFilter
-.L918:
+.L916:
 	ldrb	r0, [r6]
 	cmp	r0, #0x2
-	beq	.L915	@cond_branch
-.L920:
+	beq	.L913	@cond_branch
+.L918:
 	cmp	r4, #0
-	bne	.L924	@cond_branch
+	bne	.L922	@cond_branch
 	ldrb	r0, [r3, #0x1c]
 	lsl	r0, r0, #0x1d
 	cmp	r0, #0
-	blt	.L923	@cond_branch
-.L924:
+	blt	.L921	@cond_branch
+.L922:
 	cmp	r4, #0x1
-	bne	.L925	@cond_branch
+	bne	.L923	@cond_branch
 	ldrb	r0, [r3, #0x1c]
 	lsl	r0, r0, #0x1c
 	cmp	r0, #0
-	blt	.L923	@cond_branch
-.L925:
+	blt	.L921	@cond_branch
+.L923:
 	cmp	r4, #0x2
-	bne	.L926	@cond_branch
+	bne	.L924	@cond_branch
 	ldrb	r0, [r3, #0x1c]
 	lsl	r0, r0, #0x1b
 	cmp	r0, #0
-	blt	.L923	@cond_branch
-.L926:
+	blt	.L921	@cond_branch
+.L924:
 	cmp	r4, #0x3
-	bne	.L927	@cond_branch
+	bne	.L925	@cond_branch
 	ldrb	r0, [r3, #0x1c]
 	lsl	r0, r0, #0x1a
 	cmp	r0, #0
-	blt	.L923	@cond_branch
-.L927:
+	blt	.L921	@cond_branch
+.L925:
 	cmp	r4, #0x4
-	bne	.L915	@cond_branch
+	bne	.L913	@cond_branch
 	ldrb	r0, [r3, #0x1c]
 	lsl	r0, r0, #0x19
 	cmp	r0, #0
-	bge	.L915	@cond_branch
-.L923:
+	bge	.L913	@cond_branch
+.L921:
 	add	r0, r7, #0
 	add	r1, r0, #0x1
 	lsl	r1, r1, #0x18
 	lsr	r7, r1, #0x18
 	add	r0, r0, sp
 	strb	r5, [r0]
-.L915:
+.L913:
 	add	r3, r3, #0x40
 	add	r6, r6, #0x1
 	add	r5, r5, #0x1
 	cmp	r5, #0x5f
-	bls	.L916	@cond_branch
+	bls	.L914	@cond_branch
 	mov	r3, sp
 	add	r1, r3, r7
 	mov	r0, #0xff
@@ -11735,14 +11733,14 @@ SetLinkAIContestants:
 	mov	r0, #0x4
 	sub	r0, r0, r1
 	cmp	r5, r0
-	bge	.L911	@cond_branch
-	ldr	r3, .L941
+	bge	.L909	@cond_branch
+	ldr	r3, .L939
 	mov	r8, r3
 	mov	r6, r9
 	mov	r0, #0x2
 	add	r0, r0, r8
 	mov	r9, r0
-.L932:
+.L930:
 	bl	GetContestRand
 	lsl	r0, r0, #0x10
 	lsr	r0, r0, #0x10
@@ -11755,7 +11753,7 @@ SetLinkAIContestants:
 	add	r0, r0, r5
 	lsl	r0, r0, #0x6
 	add	r0, r0, r8
-	ldr	r2, .L941+0x4
+	ldr	r2, .L939+0x4
 	mov	r3, sp
 	add	r4, r3, r1
 	ldrb	r1, [r4]
@@ -11780,16 +11778,16 @@ SetLinkAIContestants:
 	add	r3, r5, #0x1
 	sub	r1, r7, #0x1
 	cmp	r0, #0xff
-	beq	.L934	@cond_branch
+	beq	.L932	@cond_branch
 	add	r2, r4, #0
-.L936:
+.L934:
 	ldrb	r0, [r2, #0x1]
 	strb	r0, [r2]
 	add	r2, r2, #0x1
 	ldrb	r0, [r2]
 	cmp	r0, #0xff
-	bne	.L936	@cond_branch
-.L934:
+	bne	.L934	@cond_branch
+.L932:
 	lsl	r0, r1, #0x18
 	lsr	r7, r0, #0x18
 	add	r5, r3, #0
@@ -11797,8 +11795,8 @@ SetLinkAIContestants:
 	mov	r0, #0x4
 	sub	r0, r0, r1
 	cmp	r5, r0
-	blt	.L932	@cond_branch
-.L911:
+	blt	.L930	@cond_branch
+.L909:
 	add	sp, sp, #0x64
 	pop	{r3, r4}
 	mov	r8, r3
@@ -11806,9 +11804,9 @@ SetLinkAIContestants:
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L942:
+.L940:
 	.align	2, 0
-.L941:
+.L939:
 	.word	gContestMons
 	.word	gContestOpponents
 .Lfe63:
@@ -11823,85 +11821,85 @@ GetContestEntryEligibility:
 	mov	r1, #0x2d
 	bl	GetMonData
 	cmp	r0, #0
-	beq	.L944	@cond_branch
+	beq	.L942	@cond_branch
 	mov	r0, #0x3
-	b	.L958
-.L944:
+	b	.L956
+.L942:
 	add	r0, r4, #0
 	mov	r1, #0x39
 	bl	GetMonData
 	cmp	r0, #0
-	bne	.L945	@cond_branch
+	bne	.L943	@cond_branch
 	mov	r0, #0x4
-	b	.L958
-.L945:
-	ldr	r0, .L960
+	b	.L956
+.L943:
+	ldr	r0, .L958
 	ldrh	r0, [r0]
 	cmp	r0, #0x4
-	bhi	.L952	@cond_branch
+	bhi	.L950	@cond_branch
 	lsl	r0, r0, #0x2
-	ldr	r1, .L960+0x4
+	ldr	r1, .L958+0x4
 	add	r0, r0, r1
 	ldr	r0, [r0]
 	mov	pc, r0
-.L961:
+.L959:
 	.align	2, 0
-.L960:
+.L958:
 	.word	gSpecialVar_ContestCategory
-	.word	.L953
+	.word	.L951
 	.align	2, 0
 	.align	2, 0
-.L953:
+.L951:
+	.word	.L945
+	.word	.L946
 	.word	.L947
 	.word	.L948
 	.word	.L949
-	.word	.L950
-	.word	.L951
-.L947:
+.L945:
 	add	r0, r4, #0
 	mov	r1, #0x32
-	b	.L959
-.L948:
+	b	.L957
+.L946:
 	add	r0, r4, #0
 	mov	r1, #0x33
-	b	.L959
-.L949:
+	b	.L957
+.L947:
 	add	r0, r4, #0
 	mov	r1, #0x34
-	b	.L959
-.L950:
+	b	.L957
+.L948:
 	add	r0, r4, #0
 	mov	r1, #0x35
-	b	.L959
-.L951:
+	b	.L957
+.L949:
 	add	r0, r4, #0
 	mov	r1, #0x36
-.L959:
+.L957:
 	bl	GetMonData
 	lsl	r0, r0, #0x18
 	lsr	r1, r0, #0x18
-	b	.L946
-.L952:
+	b	.L944
+.L950:
 	mov	r0, #0x0
-	b	.L958
-.L946:
-	ldr	r0, .L962
+	b	.L956
+.L944:
+	ldr	r0, .L960
 	add	r2, r1, #0
 	ldrh	r1, [r0]
 	mov	r0, #0x2
 	cmp	r2, r1
-	bhi	.L958	@cond_branch
+	bhi	.L956	@cond_branch
 	mov	r0, #0x0
 	cmp	r2, r1
-	bcc	.L958	@cond_branch
+	bcc	.L956	@cond_branch
 	mov	r0, #0x1
-.L958:
+.L956:
 	pop	{r4}
 	pop	{r1}
 	bx	r1
-.L963:
+.L961:
 	.align	2, 0
-.L962:
+.L960:
 	.word	gSpecialVar_ContestRank
 .Lfe64:
 	.size	 GetContestEntryEligibility,.Lfe64-GetContestEntryEligibility
@@ -11911,8 +11909,8 @@ GetContestEntryEligibility:
 DrawContestantWindowText:
 	push	{r4, r5, lr}
 	mov	r5, #0x0
-.L968:
-	ldr	r0, .L970
+.L966:
+	ldr	r0, .L968
 	add	r0, r5, r0
 	ldrb	r0, [r0]
 	mov	r1, #0x0
@@ -11925,13 +11923,13 @@ DrawContestantWindowText:
 	bl	PrintContestantMonName
 	add	r5, r5, #0x1
 	cmp	r5, #0x3
-	ble	.L968	@cond_branch
+	ble	.L966	@cond_branch
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.L971:
+.L969:
 	.align	2, 0
-.L970:
+.L968:
 	.word	gContestantTurnOrder
 .Lfe65:
 	.size	 DrawContestantWindowText,.Lfe65-DrawContestantWindowText
@@ -11943,8 +11941,8 @@ Contest_CopyStringWithColor:
 	add	r5, r0, #0
 	lsl	r4, r1, #0x18
 	lsr	r4, r4, #0x18
-	ldr	r0, .L973
-	ldr	r1, .L973+0x4
+	ldr	r0, .L971
+	ldr	r1, .L971+0x4
 	bl	StringCopy
 	add	r1, r0, #0
 	sub	r0, r1, #0x1
@@ -11956,9 +11954,9 @@ Contest_CopyStringWithColor:
 	pop	{r4, r5}
 	pop	{r1}
 	bx	r1
-.L974:
+.L972:
 	.align	2, 0
-.L973:
+.L971:
 	.word	gDisplayedStringBattle
 	.word	gText_ColorTransparent
 .Lfe66:
@@ -11992,28 +11990,28 @@ PrintContestantTrainerNameWithColor:
 	add	r5, r0, #0
 	lsl	r4, r4, #0x18
 	lsr	r4, r4, #0x18
-	ldr	r1, .L978
+	ldr	r1, .L976
 	add	r0, sp, #0x4
 	bl	StringCopy
 	lsl	r1, r5, #0x6
-	ldr	r0, .L978+0x4
+	ldr	r0, .L976+0x4
 	add	r1, r1, r0
 	add	r0, sp, #0x4
 	bl	StringAppend
 	add	r0, sp, #0x4
 	add	r1, r4, #0
 	bl	Contest_CopyStringWithColor
-	ldr	r4, .L978+0x8
+	ldr	r4, .L976+0x8
 	mov	r0, #0x7
 	add	r1, r4, #0
 	mov	r2, #0x60
 	bl	GetStringRightAlignXOffset
 	add	r2, r0, #0
 	cmp	r2, #0x37
-	ble	.L977	@cond_branch
+	ble	.L975	@cond_branch
 	mov	r2, #0x37
-.L977:
-	ldr	r0, .L978+0xc
+.L975:
+	ldr	r0, .L976+0xc
 	add	r0, r5, r0
 	ldrb	r0, [r0]
 	mov	r1, #0x7
@@ -12025,9 +12023,9 @@ PrintContestantTrainerNameWithColor:
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.L979:
+.L977:
 	.align	2, 0
-.L978:
+.L976:
 	.word	gText_Slash
 	.word	gContestMons+0xd
 	.word	gDisplayedStringBattle
@@ -12063,13 +12061,13 @@ PrintContestantMonNameWithColor:
 	lsl	r1, r1, #0x18
 	lsr	r1, r1, #0x18
 	lsl	r0, r4, #0x6
-	ldr	r2, .L982
+	ldr	r2, .L980
 	add	r0, r0, r2
 	bl	Contest_CopyStringWithColor
-	ldr	r0, .L982+0x4
+	ldr	r0, .L980+0x4
 	add	r4, r4, r0
 	ldrb	r0, [r4]
-	ldr	r1, .L982+0x8
+	ldr	r1, .L980+0x8
 	mov	r2, #0x7
 	str	r2, [sp]
 	mov	r2, #0x5
@@ -12079,9 +12077,9 @@ PrintContestantMonNameWithColor:
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L983:
+.L981:
 	.align	2, 0
-.L982:
+.L980:
 	.word	gContestMons+0x2
 	.word	gContestantTurnOrder
 	.word	gDisplayedStringBattle
@@ -12097,26 +12095,26 @@ CalculateContestantRound1Points:
 	lsl	r1, r1, #0x18
 	lsr	r0, r1, #0x18
 	cmp	r0, #0x4
-	bhi	.L991	@cond_branch
+	bhi	.L989	@cond_branch
 	lsl	r0, r0, #0x2
-	ldr	r1, .L995
+	ldr	r1, .L993
 	add	r0, r0, r1
 	ldr	r0, [r0]
 	mov	pc, r0
-.L996:
+.L994:
 	.align	2, 0
-.L995:
-	.word	.L992
+.L993:
+	.word	.L990
 	.align	2, 0
 	.align	2, 0
-.L992:
+.L990:
+	.word	.L984
+	.word	.L985
 	.word	.L986
 	.word	.L987
-	.word	.L988
 	.word	.L989
-	.word	.L991
-.L986:
-	ldr	r0, .L997
+.L984:
+	ldr	r0, .L995
 	lsl	r2, r2, #0x6
 	add	r1, r2, r0
 	add	r3, r1, #0
@@ -12125,13 +12123,13 @@ CalculateContestantRound1Points:
 	add	r3, r3, #0x4
 	ldrb	r4, [r3]
 	add	r1, r1, #0x27
-	b	.L993
-.L998:
+	b	.L991
+.L996:
 	.align	2, 0
-.L997:
+.L995:
 	.word	gContestMons
-.L987:
-	ldr	r0, .L999
+.L985:
+	ldr	r0, .L997
 	lsl	r2, r2, #0x6
 	add	r1, r2, r0
 	add	r3, r1, #0
@@ -12140,42 +12138,42 @@ CalculateContestantRound1Points:
 	sub	r3, r3, #0x1
 	ldrb	r4, [r3]
 	add	r1, r1, #0x28
-	b	.L993
-.L1000:
+	b	.L991
+.L998:
 	.align	2, 0
-.L999:
+.L997:
 	.word	gContestMons
-.L988:
-	ldr	r1, .L1001
+.L986:
+	ldr	r1, .L999
 	lsl	r2, r2, #0x6
 	add	r3, r2, r1
 	add	r0, r3, #0
 	add	r0, r0, #0x28
-	b	.L994
-.L1002:
+	b	.L992
+.L1000:
 	.align	2, 0
-.L1001:
+.L999:
 	.word	gContestMons
-.L989:
-	ldr	r1, .L1003
+.L987:
+	ldr	r1, .L1001
 	lsl	r2, r2, #0x6
 	add	r3, r2, r1
 	add	r0, r3, #0
 	add	r0, r0, #0x29
-.L994:
+.L992:
 	ldrb	r5, [r0]
 	sub	r0, r0, #0x1
 	ldrb	r4, [r0]
 	add	r0, r0, #0x2
 	ldrb	r3, [r0]
 	add	r0, r1, #0
-	b	.L985
-.L1004:
+	b	.L983
+.L1002:
 	.align	2, 0
-.L1003:
+.L1001:
 	.word	gContestMons
-.L991:
-	ldr	r0, .L1005
+.L989:
+	ldr	r0, .L1003
 	lsl	r2, r2, #0x6
 	add	r1, r2, r0
 	add	r3, r1, #0
@@ -12184,9 +12182,9 @@ CalculateContestantRound1Points:
 	sub	r3, r3, #0x1
 	ldrb	r4, [r3]
 	add	r1, r1, #0x26
-.L993:
+.L991:
 	ldrb	r3, [r1]
-.L985:
+.L983:
 	add	r1, r2, r0
 	add	r1, r1, #0x2b
 	add	r0, r4, r3
@@ -12199,9 +12197,9 @@ CalculateContestantRound1Points:
 	pop	{r4, r5}
 	pop	{r1}
 	bx	r1
-.L1006:
+.L1004:
 	.align	2, 0
-.L1005:
+.L1003:
 	.word	gContestMons
 .Lfe71:
 	.size	 CalculateContestantRound1Points,.Lfe71-CalculateContestantRound1Points
@@ -12214,8 +12212,8 @@ CalculateRound1Points:
 	lsl	r0, r0, #0x18
 	lsr	r6, r0, #0x18
 	mov	r4, #0x0
-	ldr	r5, .L1013
-.L1011:
+	ldr	r5, .L1011
+.L1009:
 	lsl	r0, r4, #0x18
 	lsr	r0, r0, #0x18
 	add	r1, r6, #0
@@ -12224,13 +12222,13 @@ CalculateRound1Points:
 	add	r5, r5, #0x2
 	add	r4, r4, #0x1
 	cmp	r4, #0x3
-	ble	.L1011	@cond_branch
+	ble	.L1009	@cond_branch
 	pop	{r4, r5, r6}
 	pop	{r0}
 	bx	r0
-.L1014:
+.L1012:
 	.align	2, 0
-.L1013:
+.L1011:
 	.word	gContestMonRound1Points
 .Lfe72:
 	.size	 CalculateRound1Points,.Lfe72-CalculateRound1Points
@@ -12239,21 +12237,21 @@ CalculateRound1Points:
 	.thumb_func
 CreateJudgeSprite:
 	push	{r4, r5, lr}
-	ldr	r0, .L1016
+	ldr	r0, .L1014
 	bl	LoadCompressedSpriteSheet
-	ldr	r0, .L1016+0x4
+	ldr	r0, .L1014+0x4
 	mov	r1, #0x88
 	lsl	r1, r1, #0x1
 	mov	r2, #0x20
 	bl	LoadCompressedPalette
-	ldr	r0, .L1016+0x8
+	ldr	r0, .L1014+0x8
 	mov	r1, #0x70
 	mov	r2, #0x24
 	mov	r3, #0x1e
 	bl	CreateSprite
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
-	ldr	r4, .L1016+0xc
+	ldr	r4, .L1014+0xc
 	lsl	r2, r0, #0x4
 	add	r2, r2, r0
 	lsl	r2, r2, #0x2
@@ -12266,14 +12264,14 @@ CreateJudgeSprite:
 	strb	r1, [r5, #0x5]
 	add	r4, r4, #0x1c
 	add	r2, r2, r4
-	ldr	r1, .L1016+0x10
+	ldr	r1, .L1014+0x10
 	str	r1, [r2]
 	pop	{r4, r5}
 	pop	{r1}
 	bx	r1
-.L1017:
+.L1015:
 	.align	2, 0
-.L1016:
+.L1014:
 	.word	sSpriteSheet_Judge
 	.word	gContest2Pal
 	.word	sSpriteTemplate_Judge
@@ -12286,18 +12284,18 @@ CreateJudgeSprite:
 	.thumb_func
 CreateJudgeSpeechBubbleSprite:
 	push	{lr}
-	ldr	r0, .L1019
+	ldr	r0, .L1017
 	bl	LoadCompressedSpriteSheet
-	ldr	r0, .L1019+0x4
+	ldr	r0, .L1017+0x4
 	bl	LoadCompressedSpritePalette
-	ldr	r0, .L1019+0x8
+	ldr	r0, .L1017+0x8
 	mov	r1, #0x60
 	mov	r2, #0xa
 	mov	r3, #0x1d
 	bl	CreateSprite
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
-	ldr	r1, .L1019+0xc
+	ldr	r1, .L1017+0xc
 	lsl	r2, r0, #0x4
 	add	r2, r2, r0
 	lsl	r2, r2, #0x2
@@ -12316,9 +12314,9 @@ CreateJudgeSpeechBubbleSprite:
 	strh	r1, [r2, #0x2e]
 	pop	{r1}
 	bx	r1
-.L1020:
+.L1018:
 	.align	2, 0
-.L1019:
+.L1017:
 	.word	sSpriteSheet_JudgeSymbols
 	.word	sSpritePalette_JudgeSymbols
 	.word	sSpriteTemplate_JudgeSpeechBubble
@@ -12353,9 +12351,9 @@ CreateContestantSprite:
 	lsl	r4, r4, #0x10
 	lsr	r4, r4, #0x10
 	lsl	r0, r4, #0x3
-	ldr	r1, .L1025
+	ldr	r1, .L1023
 	add	r0, r0, r1
-	ldr	r1, .L1025+0x4
+	ldr	r1, .L1023+0x4
 	ldr	r1, [r1]
 	ldr	r1, [r1, #0x4]
 	add	r2, r4, #0
@@ -12373,7 +12371,7 @@ CreateContestantSprite:
 	mov	r1, #0x0
 	add	r2, r5, #0
 	bl	SetMultiuseSpriteTemplateToPokemon
-	ldr	r4, .L1025+0x8
+	ldr	r4, .L1023+0x8
 	mov	r0, #0x2
 	mov	r1, sl
 	mov	r2, #0x0
@@ -12387,7 +12385,7 @@ CreateContestantSprite:
 	bl	CreateSprite
 	lsl	r0, r0, #0x18
 	lsr	r7, r0, #0x18
-	ldr	r6, .L1025+0xc
+	ldr	r6, .L1023+0xc
 	lsl	r0, r7, #0x4
 	add	r0, r0, r7
 	lsl	r5, r0, #0x2
@@ -12411,7 +12409,7 @@ CreateContestantSprite:
 	add	r0, r6, #0
 	add	r0, r0, #0x1c
 	add	r0, r5, r0
-	ldr	r1, .L1025+0x10
+	ldr	r1, .L1023+0x10
 	str	r1, [r0]
 	ldrb	r0, [r4, #0x5]
 	lsr	r0, r0, #0x4
@@ -12423,32 +12421,32 @@ CreateContestantSprite:
 	bl	IsSpeciesNotUnown
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.L1022	@cond_branch
+	beq	.L1020	@cond_branch
 	add	r0, r6, #0
 	add	r0, r0, #0x10
 	add	r0, r5, r0
-	ldr	r1, .L1025+0x14
-	b	.L1024
-.L1026:
+	ldr	r1, .L1023+0x14
+	b	.L1022
+.L1024:
 	.align	2, 0
-.L1025:
+.L1023:
 	.word	gMonBackPicTable
 	.word	gMonSpritesGfxPtr
 	.word	gMultiuseSpriteTemplate
 	.word	gSprites
 	.word	SpriteCallbackDummy
 	.word	gUnknown_082FF6C0
-.L1022:
+.L1020:
 	add	r0, r6, #0
 	add	r0, r0, #0x10
 	add	r0, r5, r0
-	ldr	r1, .L1027
-.L1024:
+	ldr	r1, .L1025
+.L1022:
 	str	r1, [r0]
 	lsl	r0, r7, #0x4
 	add	r0, r0, r7
 	lsl	r0, r0, #0x2
-	ldr	r1, .L1027+0x4
+	ldr	r1, .L1025+0x4
 	add	r0, r0, r1
 	mov	r1, #0x0
 	bl	StartSpriteAffineAnim
@@ -12461,9 +12459,9 @@ CreateContestantSprite:
 	pop	{r4, r5, r6, r7}
 	pop	{r1}
 	bx	r1
-.L1028:
+.L1026:
 	.align	2, 0
-.L1027:
+.L1025:
 	.word	gUnknown_082FF694
 	.word	gSprites
 .Lfe75:
@@ -12477,12 +12475,12 @@ IsSpeciesNotUnown:
 	lsl	r0, r0, #0x10
 	lsr	r0, r0, #0x10
 	cmp	r0, #0xc9
-	beq	.L1030	@cond_branch
+	beq	.L1028	@cond_branch
 	mov	r0, #0x1
-	b	.L1032
-.L1030:
+	b	.L1030
+.L1028:
 	mov	r0, #0x0
-.L1032:
+.L1030:
 	pop	{r1}
 	bx	r1
 .Lfe76:
@@ -12492,7 +12490,7 @@ IsSpeciesNotUnown:
 	.thumb_func
 SwapMoveDescAndContestTilemaps:
 	push	{r4, r5, r6, lr}
-	ldr	r5, .L1034
+	ldr	r5, .L1032
 	ldr	r0, [r5]
 	ldr	r0, [r0, #0x24]
 	mov	r4, #0xa0
@@ -12511,9 +12509,9 @@ SwapMoveDescAndContestTilemaps:
 	pop	{r4, r5, r6}
 	pop	{r0}
 	bx	r0
-.L1035:
+.L1033:
 	.align	2, 0
-.L1034:
+.L1032:
 	.word	gContestResources
 .Lfe77:
 	.size	 SwapMoveDescAndContestTilemaps,.Lfe77-SwapMoveDescAndContestTilemaps
@@ -12525,8 +12523,8 @@ GetMoveEffectSymbolTileOffset:
 	lsl	r0, r0, #0x10
 	lsl	r1, r1, #0x18
 	lsr	r3, r1, #0x18
-	ldr	r2, .L1045
-	ldr	r1, .L1045+0x4
+	ldr	r2, .L1043
+	ldr	r1, .L1043+0x4
 	lsr	r0, r0, #0xd
 	add	r0, r0, r1
 	ldrb	r0, [r0]
@@ -12534,47 +12532,47 @@ GetMoveEffectSymbolTileOffset:
 	add	r0, r0, r2
 	ldrb	r0, [r0]
 	cmp	r0, #0x8
-	bhi	.L1043	@cond_branch
+	bhi	.L1041	@cond_branch
 	lsl	r0, r0, #0x2
-	ldr	r1, .L1045+0x8
+	ldr	r1, .L1043+0x8
 	add	r0, r0, r1
 	ldr	r0, [r0]
 	mov	pc, r0
+.L1044:
+	.align	2, 0
+.L1043:
+	.word	gContestEffects
+	.word	gContestMoves
+	.word	.L1042
+	.align	2, 0
+	.align	2, 0
+.L1042:
+	.word	.L1038
+	.word	.L1038
+	.word	.L1040
+	.word	.L1040
+	.word	.L1041
+	.word	.L1041
+	.word	.L1041
+	.word	.L1041
+	.word	.L1038
+.L1038:
+	ldr	r0, .L1045
+	b	.L1035
 .L1046:
 	.align	2, 0
 .L1045:
-	.word	gContestEffects
-	.word	gContestMoves
-	.word	.L1044
-	.align	2, 0
-	.align	2, 0
-.L1044:
-	.word	.L1040
-	.word	.L1040
-	.word	.L1042
-	.word	.L1042
-	.word	.L1043
-	.word	.L1043
-	.word	.L1043
-	.word	.L1043
-	.word	.L1040
+	.word	0x9082
 .L1040:
 	ldr	r0, .L1047
-	b	.L1037
+	b	.L1035
 .L1048:
 	.align	2, 0
 .L1047:
-	.word	0x9082
-.L1042:
-	ldr	r0, .L1049
-	b	.L1037
-.L1050:
-	.align	2, 0
-.L1049:
 	.word	0x9088
-.L1043:
-	ldr	r0, .L1051
-.L1037:
+.L1041:
+	ldr	r0, .L1049
+.L1035:
 	lsl	r1, r3, #0xc
 	mov	r2, #0x90
 	lsl	r2, r2, #0x8
@@ -12586,9 +12584,9 @@ GetMoveEffectSymbolTileOffset:
 	lsr	r0, r0, #0x10
 	pop	{r1}
 	bx	r1
-.L1052:
+.L1050:
 	.align	2, 0
-.L1051:
+.L1049:
 	.word	0x9086
 .Lfe78:
 	.size	 GetMoveEffectSymbolTileOffset,.Lfe78-GetMoveEffectSymbolTileOffset
@@ -12603,26 +12601,26 @@ PrintContestMoveDescription:
 	lsl	r0, r0, #0x10
 	lsr	r0, r0, #0x10
 	mov	r8, r0
-	ldr	r1, .L1068
+	ldr	r1, .L1066
 	lsl	r0, r0, #0x3
 	add	r0, r0, r1
 	ldrb	r0, [r0, #0x1]
 	lsl	r0, r0, #0x1d
 	lsr	r0, r0, #0x1d
-	ldr	r7, .L1068+0x4
+	ldr	r7, .L1066+0x4
 	cmp	r0, #0
-	beq	.L1055	@cond_branch
+	beq	.L1053	@cond_branch
 	add	r7, r7, #0x5
 	cmp	r0, #0x1
-	beq	.L1055	@cond_branch
+	beq	.L1053	@cond_branch
 	add	r7, r7, #0x5
 	cmp	r0, #0x2
-	beq	.L1055	@cond_branch
+	beq	.L1053	@cond_branch
 	add	r7, r7, #0x40
 	cmp	r0, #0x3
-	bne	.L1055	@cond_branch
+	bne	.L1053	@cond_branch
 	sub	r7, r7, #0x20
-.L1055:
+.L1053:
 	mov	r6, #0x5
 	str	r6, [sp]
 	mov	r4, #0x1
@@ -12645,8 +12643,8 @@ PrintContestMoveDescription:
 	mov	r2, #0xb
 	mov	r3, #0x20
 	bl	ContestBG_FillBoxWithIncrementingTile
-	ldr	r2, .L1068+0x8
-	ldr	r0, .L1068
+	ldr	r2, .L1066+0x8
+	ldr	r0, .L1066
 	mov	r3, r8
 	lsl	r1, r3, #0x3
 	add	r0, r1, r0
@@ -12656,27 +12654,27 @@ PrintContestMoveDescription:
 	ldrb	r0, [r2, #0x1]
 	add	r7, r1, #0
 	cmp	r0, #0xff
-	bne	.L1062	@cond_branch
+	bne	.L1060	@cond_branch
 	mov	r6, #0x0
-	b	.L1063
-.L1069:
+	b	.L1061
+.L1067:
 	.align	2, 0
-.L1068:
+.L1066:
 	.word	gContestMoves
 	.word	0x4040
 	.word	gContestEffects
-.L1062:
+.L1060:
 	ldrb	r0, [r2, #0x1]
 	mov	r1, #0xa
 	bl	__udivsi3
 	lsl	r0, r0, #0x18
 	lsr	r6, r0, #0x18
-.L1063:
+.L1061:
 	cmp	r6, #0x8
-	bls	.L1064	@cond_branch
+	bls	.L1062	@cond_branch
 	mov	r6, #0x8
-.L1064:
-	ldr	r1, .L1070
+.L1062:
+	ldr	r1, .L1068
 	mov	r0, #0x8
 	str	r0, [sp]
 	mov	r5, #0x1
@@ -12687,7 +12685,7 @@ PrintContestMoveDescription:
 	mov	r2, #0x15
 	mov	r3, #0x1f
 	bl	ContestBG_FillBoxWithTile
-	ldr	r1, .L1070+0x4
+	ldr	r1, .L1068+0x4
 	str	r6, [sp]
 	str	r5, [sp, #0x4]
 	str	r4, [sp, #0x8]
@@ -12695,36 +12693,36 @@ PrintContestMoveDescription:
 	mov	r2, #0x15
 	mov	r3, #0x1f
 	bl	ContestBG_FillBoxWithTile
-	ldr	r1, .L1070+0x8
-	ldr	r0, .L1070+0xc
+	ldr	r1, .L1068+0x8
+	ldr	r0, .L1068+0xc
 	add	r0, r7, r0
 	ldrb	r0, [r0]
 	lsl	r0, r0, #0x2
 	add	r1, r0, r1
 	ldrb	r0, [r1, #0x2]
 	cmp	r0, #0xff
-	bne	.L1065	@cond_branch
+	bne	.L1063	@cond_branch
 	mov	r6, #0x0
-	b	.L1066
-.L1071:
+	b	.L1064
+.L1069:
 	.align	2, 0
-.L1070:
+.L1068:
 	.word	0x5035
 	.word	0x5012
 	.word	gContestEffects
 	.word	gContestMoves
-.L1065:
+.L1063:
 	ldrb	r0, [r1, #0x2]
 	mov	r1, #0xa
 	bl	__udivsi3
 	lsl	r0, r0, #0x18
 	lsr	r6, r0, #0x18
-.L1066:
+.L1064:
 	cmp	r6, #0x8
-	bls	.L1067	@cond_branch
+	bls	.L1065	@cond_branch
 	mov	r6, #0x8
-.L1067:
-	ldr	r1, .L1072
+.L1065:
+	ldr	r1, .L1070
 	mov	r0, #0x8
 	str	r0, [sp]
 	mov	r5, #0x1
@@ -12735,7 +12733,7 @@ PrintContestMoveDescription:
 	mov	r2, #0x15
 	mov	r3, #0x20
 	bl	ContestBG_FillBoxWithTile
-	ldr	r1, .L1072+0x4
+	ldr	r1, .L1070+0x4
 	str	r6, [sp]
 	str	r5, [sp, #0x4]
 	str	r4, [sp, #0x8]
@@ -12746,8 +12744,8 @@ PrintContestMoveDescription:
 	mov	r0, #0xa
 	mov	r1, #0x0
 	bl	FillWindowPixelBuffer
-	ldr	r1, .L1072+0x8
-	ldr	r0, .L1072+0xc
+	ldr	r1, .L1070+0x8
+	ldr	r0, .L1070+0xc
 	add	r0, r7, r0
 	ldrb	r0, [r0]
 	lsl	r0, r0, #0x2
@@ -12755,7 +12753,7 @@ PrintContestMoveDescription:
 	ldr	r1, [r0]
 	mov	r0, #0xa
 	bl	Contest_PrintTextToBg0WindowStd
-	ldr	r1, .L1072+0x10
+	ldr	r1, .L1070+0x10
 	mov	r0, #0x9
 	bl	Contest_PrintTextToBg0WindowStd
 	add	sp, sp, #0x10
@@ -12764,9 +12762,9 @@ PrintContestMoveDescription:
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L1073:
+.L1071:
 	.align	2, 0
-.L1072:
+.L1070:
 	.word	0x5036
 	.word	0x5014
 	.word	gContestEffectDescriptionPointers
@@ -12786,7 +12784,7 @@ DrawMoveEffectSymbol:
 	lsr	r5, r0, #0x10
 	lsl	r1, r1, #0x18
 	lsr	r4, r1, #0x18
-	ldr	r0, .L1077
+	ldr	r0, .L1075
 	add	r0, r4, r0
 	ldrb	r1, [r0]
 	lsl	r0, r1, #0x2
@@ -12798,9 +12796,9 @@ DrawMoveEffectSymbol:
 	bl	Contest_IsMonsTurnDisabled
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	bne	.L1075	@cond_branch
+	bne	.L1073	@cond_branch
 	cmp	r5, #0
-	beq	.L1075	@cond_branch
+	beq	.L1073	@cond_branch
 	add	r0, r5, #0
 	add	r1, r4, #0
 	bl	GetMoveEffectSymbolTileOffset
@@ -12835,12 +12833,12 @@ DrawMoveEffectSymbol:
 	add	r1, r4, #0
 	mov	r2, #0x14
 	bl	ContestBG_FillBoxWithIncrementingTile
-	b	.L1076
-.L1078:
+	b	.L1074
+.L1076:
 	.align	2, 0
-.L1077:
-	.word	gContestantTurnOrder
 .L1075:
+	.word	gContestantTurnOrder
+.L1073:
 	mov	r0, #0x2
 	str	r0, [sp]
 	str	r0, [sp, #0x4]
@@ -12851,7 +12849,7 @@ DrawMoveEffectSymbol:
 	mov	r2, #0x14
 	add	r3, r7, #0
 	bl	ContestBG_FillBoxWithTile
-.L1076:
+.L1074:
 	add	sp, sp, #0x10
 	pop	{r3}
 	mov	r8, r3
@@ -12867,8 +12865,8 @@ DrawMoveEffectSymbols:
 	push	{r4, r5, lr}
 	mov	r4, #0x0
 	mov	r5, #0x0
-.L1083:
-	ldr	r0, .L1085
+.L1081:
+	ldr	r0, .L1083
 	ldr	r0, [r0]
 	ldr	r0, [r0, #0x4]
 	add	r0, r5, r0
@@ -12879,13 +12877,13 @@ DrawMoveEffectSymbols:
 	add	r5, r5, #0x1c
 	add	r4, r4, #0x1
 	cmp	r4, #0x3
-	ble	.L1083	@cond_branch
+	ble	.L1081	@cond_branch
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.L1086:
+.L1084:
 	.align	2, 0
-.L1085:
+.L1083:
 	.word	gContestResources
 .Lfe81:
 	.size	 DrawMoveEffectSymbols,.Lfe81-DrawMoveEffectSymbols
@@ -12893,11 +12891,11 @@ DrawMoveEffectSymbols:
 	.type	 GetStarTileOffset,function
 	.thumb_func
 GetStarTileOffset:
-	ldr	r0, .L1088
+	ldr	r0, .L1086
 	bx	lr
-.L1089:
+.L1087:
 	.align	2, 0
-.L1088:
+.L1086:
 	.word	0x2034
 .Lfe82:
 	.size	 GetStarTileOffset,.Lfe82-GetStarTileOffset
@@ -12917,7 +12915,7 @@ UpdateConditionStars:
 	lsr	r1, r1, #0x18
 	mov	r8, r1
 	mov	sl, r8
-	ldr	r0, .L1098
+	ldr	r0, .L1096
 	mov	r9, r0
 	ldr	r0, [r0]
 	ldr	r1, [r0, #0x4]
@@ -12929,15 +12927,15 @@ UpdateConditionStars:
 	mov	r5, #0x30
 	and	r5, r5, r0
 	cmp	r5, #0
-	bne	.L1091	@cond_branch
+	bne	.L1089	@cond_branch
 	mov	r0, #0x0
-	b	.L1096
-.L1099:
+	b	.L1094
+.L1097:
 	.align	2, 0
-.L1098:
+.L1096:
 	.word	gContestResources
-.L1091:
-	ldr	r0, .L1100
+.L1089:
+	ldr	r0, .L1098
 	add	r0, r2, r0
 	ldrb	r1, [r0]
 	lsl	r0, r1, #0x2
@@ -12952,7 +12950,7 @@ UpdateConditionStars:
 	lsl	r0, r0, #0x18
 	asr	r4, r0, #0x18
 	cmp	r5, #0x10
-	bne	.L1092	@cond_branch
+	bne	.L1090	@cond_branch
 	bl	GetStarTileOffset
 	add	r1, r0, #0
 	lsl	r1, r1, #0x10
@@ -12970,14 +12968,14 @@ UpdateConditionStars:
 	bl	ContestBG_FillBoxWithTile
 	mov	r1, r8
 	cmp	r1, #0
-	beq	.L1094	@cond_branch
+	beq	.L1092	@cond_branch
 	mov	r0, #0x5b
-	b	.L1097
-.L1101:
+	b	.L1095
+.L1099:
 	.align	2, 0
-.L1100:
+.L1098:
 	.word	gContestantTurnOrder
-.L1092:
+.L1090:
 	add	r3, r6, r4
 	lsl	r3, r3, #0x18
 	lsr	r3, r3, #0x18
@@ -12996,9 +12994,9 @@ UpdateConditionStars:
 	bl	ContestBG_FillBoxWithTile
 	mov	r0, sl
 	cmp	r0, #0
-	beq	.L1094	@cond_branch
+	beq	.L1092	@cond_branch
 	mov	r0, #0x26
-.L1097:
+.L1095:
 	bl	PlaySE
 	mov	r1, r9
 	ldr	r0, [r1]
@@ -13009,9 +13007,9 @@ UpdateConditionStars:
 	neg	r0, r0
 	and	r0, r0, r2
 	strb	r0, [r1, #0x10]
-.L1094:
+.L1092:
 	mov	r0, #0x1
-.L1096:
+.L1094:
 	add	sp, sp, #0xc
 	pop	{r3, r4, r5}
 	mov	r8, r3
@@ -13039,8 +13037,8 @@ DrawConditionStars:
 	mov	r9, r1
 	mov	r0, #0x0
 	mov	r8, r0
-.L1106:
-	ldr	r0, .L1108
+.L1104:
+	ldr	r0, .L1106
 	add	r0, r7, r0
 	ldrb	r0, [r0]
 	lsl	r4, r0, #0x2
@@ -13052,7 +13050,7 @@ DrawConditionStars:
 	add	r5, r0, #0
 	lsl	r5, r5, #0x10
 	lsr	r5, r5, #0x10
-	ldr	r0, .L1108+0x4
+	ldr	r0, .L1106+0x4
 	ldr	r0, [r0]
 	ldr	r0, [r0, #0x4]
 	add	r0, r0, r8
@@ -13095,7 +13093,7 @@ DrawConditionStars:
 	add	r8, r8, r1
 	add	r7, r7, #0x1
 	cmp	r7, #0x3
-	ble	.L1106	@cond_branch
+	ble	.L1104	@cond_branch
 	add	sp, sp, #0xc
 	pop	{r3, r4, r5}
 	mov	r8, r3
@@ -13104,9 +13102,9 @@ DrawConditionStars:
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L1109:
+.L1107:
 	.align	2, 0
-.L1108:
+.L1106:
 	.word	gContestantTurnOrder
 	.word	gContestResources
 .Lfe84:
@@ -13120,39 +13118,39 @@ GetStatusSymbolTileOffset:
 	lsr	r1, r0, #0x18
 	mov	r0, #0x0
 	cmp	r1, #0x4
-	bhi	.L1111	@cond_branch
+	bhi	.L1109	@cond_branch
 	lsl	r0, r1, #0x2
-	ldr	r1, .L1119
+	ldr	r1, .L1117
 	add	r0, r0, r1
 	ldr	r0, [r0]
 	mov	pc, r0
-.L1120:
-	.align	2, 0
-.L1119:
-	.word	.L1117
-	.align	2, 0
+.L1118:
 	.align	2, 0
 .L1117:
+	.word	.L1115
+	.align	2, 0
+	.align	2, 0
+.L1115:
+	.word	.L1110
+	.word	.L1111
 	.word	.L1112
 	.word	.L1113
 	.word	.L1114
-	.word	.L1115
-	.word	.L1116
-.L1112:
+.L1110:
 	mov	r0, #0x80
-	b	.L1111
-.L1113:
-	mov	r0, #0x84
-	b	.L1111
-.L1114:
-	mov	r0, #0x86
-	b	.L1111
-.L1115:
-	mov	r0, #0x88
-	b	.L1111
-.L1116:
-	mov	r0, #0x82
+	b	.L1109
 .L1111:
+	mov	r0, #0x84
+	b	.L1109
+.L1112:
+	mov	r0, #0x86
+	b	.L1109
+.L1113:
+	mov	r0, #0x88
+	b	.L1109
+.L1114:
+	mov	r0, #0x82
+.L1109:
 	mov	r1, #0x90
 	lsl	r1, r1, #0x8
 	add	r0, r0, r1
@@ -13177,7 +13175,7 @@ DrawStatusSymbol:
 	mov	r9, r1
 	mov	r1, #0x0
 	mov	r8, r1
-	ldr	r1, .L1133
+	ldr	r1, .L1131
 	add	r1, r0, r1
 	ldrb	r2, [r1]
 	lsl	r1, r2, #0x2
@@ -13185,7 +13183,7 @@ DrawStatusSymbol:
 	add	r1, r1, #0x2
 	lsl	r1, r1, #0x18
 	lsr	r7, r1, #0x18
-	ldr	r1, .L1133+0x4
+	ldr	r1, .L1131+0x4
 	ldr	r1, [r1]
 	ldr	r2, [r1, #0x4]
 	lsl	r1, r0, #0x3
@@ -13193,55 +13191,55 @@ DrawStatusSymbol:
 	lsl	r1, r1, #0x2
 	add	r2, r1, r2
 	ldr	r0, [r2, #0x10]
-	ldr	r1, .L1133+0x8
+	ldr	r1, .L1131+0x8
 	and	r0, r0, r1
 	cmp	r0, #0
-	bne	.L1123	@cond_branch
+	bne	.L1121	@cond_branch
 	ldrb	r0, [r2, #0xf]
 	cmp	r0, #0
-	beq	.L1122	@cond_branch
-.L1123:
+	beq	.L1120	@cond_branch
+.L1121:
 	mov	r0, #0x0
-	b	.L1132
-.L1134:
+	b	.L1130
+.L1132:
 	.align	2, 0
-.L1133:
+.L1131:
 	.word	gContestantTurnOrder
 	.word	gContestResources
 	.word	0xff0003
-.L1122:
+.L1120:
 	ldrb	r1, [r2, #0xc]
 	mov	r0, r9
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L1125	@cond_branch
+	beq	.L1123	@cond_branch
 	mov	r0, #0x1
-	b	.L1132
-.L1125:
+	b	.L1130
+.L1123:
 	mov	r0, #0x6
 	and	r0, r0, r1
 	cmp	r0, #0
-	bne	.L1128	@cond_branch
+	bne	.L1126	@cond_branch
 	ldrb	r1, [r2, #0xb]
 	mov	r0, #0x80
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L1127	@cond_branch
-.L1128:
+	beq	.L1125	@cond_branch
+.L1126:
 	mov	r0, #0x2
-.L1132:
+.L1130:
 	bl	GetStatusSymbolTileOffset
 	lsl	r0, r0, #0x10
 	lsr	r0, r0, #0x10
 	mov	r8, r0
-	b	.L1124
-.L1127:
+	b	.L1122
+.L1125:
 	mov	r0, #0x0
 	mov	r9, r0
-.L1124:
+.L1122:
 	mov	r1, r9
 	cmp	r1, #0
-	beq	.L1130	@cond_branch
+	beq	.L1128	@cond_branch
 	mov	r6, #0x2
 	str	r6, [sp]
 	mov	r4, #0x1
@@ -13268,8 +13266,8 @@ DrawStatusSymbol:
 	mov	r0, #0x0
 	mov	r2, #0x14
 	bl	ContestBG_FillBoxWithIncrementingTile
-	b	.L1131
-.L1130:
+	b	.L1129
+.L1128:
 	mov	r0, #0x2
 	str	r0, [sp]
 	str	r0, [sp, #0x4]
@@ -13280,7 +13278,7 @@ DrawStatusSymbol:
 	mov	r2, #0x14
 	add	r3, r7, #0
 	bl	ContestBG_FillBoxWithTile
-.L1131:
+.L1129:
 	mov	r0, r9
 	add	sp, sp, #0x10
 	pop	{r3, r4}
@@ -13297,13 +13295,13 @@ DrawStatusSymbol:
 DrawStatusSymbols:
 	push	{r4, lr}
 	mov	r4, #0x0
-.L1139:
+.L1137:
 	lsl	r0, r4, #0x18
 	lsr	r0, r0, #0x18
 	bl	DrawStatusSymbol
 	add	r4, r4, #0x1
 	cmp	r4, #0x3
-	ble	.L1139	@cond_branch
+	ble	.L1137	@cond_branch
 	pop	{r4}
 	pop	{r0}
 	bx	r0
@@ -13338,47 +13336,47 @@ GetChosenMove:
 	bl	Contest_IsMonsTurnDisabled
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.L1143	@cond_branch
+	beq	.L1141	@cond_branch
 	mov	r0, #0x0
-	b	.L1146
-.L1143:
-	ldr	r0, .L1149
+	b	.L1144
+.L1141:
+	ldr	r0, .L1147
 	ldrb	r0, [r0]
 	cmp	r4, r0
-	beq	.L1144	@cond_branch
+	beq	.L1142	@cond_branch
 	add	r0, r4, #0
 	bl	ContestAI_ResetAI
 	bl	ContestAI_GetActionToUse
 	lsl	r0, r0, #0x18
-	ldr	r2, .L1149+0x4
+	ldr	r2, .L1147+0x4
 	lsr	r0, r0, #0x17
 	lsl	r1, r4, #0x6
-	b	.L1148
-.L1150:
+	b	.L1146
+.L1148:
 	.align	2, 0
-.L1149:
+.L1147:
 	.word	gContestPlayerMonIndex
 	.word	gContestMons
-.L1144:
-	ldr	r2, .L1151
-	ldr	r0, .L1151+0x4
+.L1142:
+	ldr	r2, .L1149
+	ldr	r0, .L1149+0x4
 	ldr	r0, [r0]
 	ldr	r0, [r0]
 	ldrb	r0, [r0]
 	lsl	r0, r0, #0x1
 	lsl	r1, r5, #0x6
-.L1148:
+.L1146:
 	add	r0, r0, r1
 	add	r2, r2, #0x1e
 	add	r0, r0, r2
 	ldrh	r0, [r0]
-.L1146:
+.L1144:
 	pop	{r4, r5}
 	pop	{r1}
 	bx	r1
-.L1152:
+.L1150:
 	.align	2, 0
-.L1151:
+.L1149:
 	.word	gContestMons
 	.word	gContestResources
 .Lfe89:
@@ -13390,11 +13388,11 @@ GetAllChosenMoves:
 	push	{r4, r5, lr}
 	mov	r4, #0x0
 	mov	r5, #0x0
-.L1157:
+.L1155:
 	lsl	r0, r4, #0x18
 	lsr	r0, r0, #0x18
 	bl	GetChosenMove
-	ldr	r1, .L1159
+	ldr	r1, .L1157
 	ldr	r1, [r1]
 	ldr	r1, [r1, #0x4]
 	add	r1, r5, r1
@@ -13402,13 +13400,13 @@ GetAllChosenMoves:
 	add	r5, r5, #0x1c
 	add	r4, r4, #0x1
 	cmp	r4, #0x3
-	ble	.L1157	@cond_branch
+	ble	.L1155	@cond_branch
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.L1160:
+.L1158:
 	.align	2, 0
-.L1159:
+.L1157:
 	.word	gContestResources
 .Lfe90:
 	.size	 GetAllChosenMoves,.Lfe90-GetAllChosenMoves
@@ -13421,11 +13419,11 @@ RankContestants:
 	mov	r6, r8
 	push	{r6, r7}
 	add	sp, sp, #-0x8
-	ldr	r5, .L1189
+	ldr	r5, .L1187
 	mov	r4, sp
 	mov	r3, #0x0
 	mov	r6, #0x3
-.L1165:
+.L1163:
 	ldr	r2, [r5]
 	ldr	r1, [r2, #0x4]
 	add	r1, r3, r1
@@ -13441,13 +13439,13 @@ RankContestants:
 	add	r3, r3, #0x1c
 	sub	r6, r6, #0x1
 	cmp	r6, #0
-	bge	.L1165	@cond_branch
+	bge	.L1163	@cond_branch
 	mov	r6, #0x0
-.L1170:
+.L1168:
 	mov	r4, #0x3
 	cmp	r4, r6
-	ble	.L1169	@cond_branch
-.L1174:
+	ble	.L1167	@cond_branch
+.L1172:
 	sub	r5, r4, #0x1
 	lsl	r0, r5, #0x1
 	mov	r1, sp
@@ -13460,34 +13458,34 @@ RankContestants:
 	mov	r7, #0x0
 	ldrsh	r0, [r2, r7]
 	cmp	r1, r0
-	bge	.L1173	@cond_branch
+	bge	.L1171	@cond_branch
 	ldrh	r0, [r2]
 	strh	r4, [r2]
 	strh	r0, [r3]
-.L1173:
+.L1171:
 	add	r4, r5, #0
 	cmp	r4, r6
-	bgt	.L1174	@cond_branch
-.L1169:
+	bgt	.L1172	@cond_branch
+.L1167:
 	add	r6, r6, #0x1
 	cmp	r6, #0x2
-	ble	.L1170	@cond_branch
+	ble	.L1168	@cond_branch
 	mov	r6, #0x0
 	mov	r0, #0x4
 	neg	r0, r0
 	mov	r9, r0
-	ldr	r1, .L1189
+	ldr	r1, .L1187
 	mov	r8, r1
 	mov	r7, #0x3
 	mov	ip, r7
-.L1181:
+.L1179:
 	mov	r4, #0x0
 	lsl	r0, r6, #0x3
 	add	r7, r6, #0x1
 	sub	r0, r0, r6
 	lsl	r5, r0, #0x2
 	mov	r3, sp
-.L1185:
+.L1183:
 	mov	r1, r8
 	ldr	r0, [r1]
 	ldr	r0, [r0, #0x4]
@@ -13497,7 +13495,7 @@ RankContestants:
 	mov	r6, #0x0
 	ldrsh	r0, [r3, r6]
 	cmp	r1, r0
-	bne	.L1184	@cond_branch
+	bne	.L1182	@cond_branch
 	mov	r0, ip
 	and	r4, r4, r0
 	ldrb	r1, [r2, #0xb]
@@ -13505,20 +13503,20 @@ RankContestants:
 	and	r0, r0, r1
 	orr	r0, r0, r4
 	strb	r0, [r2, #0xb]
-	b	.L1180
-.L1190:
+	b	.L1178
+.L1188:
 	.align	2, 0
-.L1189:
+.L1187:
 	.word	gContestResources
-.L1184:
+.L1182:
 	add	r3, r3, #0x2
 	add	r4, r4, #0x1
 	cmp	r4, #0x3
-	ble	.L1185	@cond_branch
-.L1180:
+	ble	.L1183	@cond_branch
+.L1178:
 	add	r6, r7, #0
 	cmp	r6, #0x3
-	ble	.L1181	@cond_branch
+	ble	.L1179	@cond_branch
 	mov	r0, #0x1
 	bl	SortContestants
 	bl	ApplyNextTurnOrder
@@ -13536,39 +13534,39 @@ RankContestants:
 	.thumb_func
 SetAttentionLevels:
 	push	{r4, r5, lr}
-	ldr	r4, .L1207
+	ldr	r4, .L1205
 	mov	r2, #0x0
 	mov	r3, #0x3
-.L1195:
+.L1193:
 	ldr	r0, [r4]
 	ldr	r0, [r0, #0x4]
 	add	r1, r2, r0
 	ldrh	r0, [r1, #0x6]
 	cmp	r0, #0
-	bne	.L1196	@cond_branch
+	bne	.L1194	@cond_branch
 	mov	r1, #0x5
-	b	.L1197
-.L1208:
+	b	.L1195
+.L1206:
 	.align	2, 0
-.L1207:
+.L1205:
 	.word	gContestResources
-.L1196:
+.L1194:
 	mov	r5, #0x2
 	ldrsh	r0, [r1, r5]
 	mov	r1, #0x0
 	cmp	r0, #0
-	ble	.L1197	@cond_branch
+	ble	.L1195	@cond_branch
 	mov	r1, #0x1
 	cmp	r0, #0x1d
-	ble	.L1197	@cond_branch
+	ble	.L1195	@cond_branch
 	mov	r1, #0x2
 	cmp	r0, #0x3b
-	ble	.L1197	@cond_branch
+	ble	.L1195	@cond_branch
 	mov	r1, #0x4
 	cmp	r0, #0x4f
-	bgt	.L1197	@cond_branch
+	bgt	.L1195	@cond_branch
 	mov	r1, #0x3
-.L1197:
+.L1195:
 	ldr	r0, [r4]
 	ldr	r0, [r0, #0x4]
 	add	r0, r2, r0
@@ -13576,7 +13574,7 @@ SetAttentionLevels:
 	add	r2, r2, #0x1c
 	sub	r3, r3, #0x1
 	cmp	r3, #0
-	bge	.L1195	@cond_branch
+	bge	.L1193	@cond_branch
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
@@ -13589,7 +13587,7 @@ ContestantCanUseTurn:
 	push	{lr}
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
-	ldr	r1, .L1214
+	ldr	r1, .L1212
 	ldr	r1, [r1]
 	ldr	r2, [r1, #0x4]
 	lsl	r1, r0, #0x3
@@ -13600,22 +13598,22 @@ ContestantCanUseTurn:
 	mov	r0, #0x6
 	and	r0, r0, r1
 	cmp	r0, #0
-	bne	.L1211	@cond_branch
+	bne	.L1209	@cond_branch
 	ldrb	r1, [r2, #0xb]
 	mov	r0, #0x80
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L1210	@cond_branch
-.L1211:
+	beq	.L1208	@cond_branch
+.L1209:
 	mov	r0, #0x0
-	b	.L1213
-.L1215:
-	.align	2, 0
-.L1214:
-	.word	gContestResources
-.L1210:
-	mov	r0, #0x1
+	b	.L1211
 .L1213:
+	.align	2, 0
+.L1212:
+	.word	gContestResources
+.L1208:
+	mov	r0, #0x1
+.L1211:
 	pop	{r1}
 	bx	r1
 .Lfe93:
@@ -13629,7 +13627,7 @@ SetContestantStatusesForNextRound:
 	mov	r6, r9
 	mov	r5, r8
 	push	{r5, r6, r7}
-	ldr	r5, .L1230
+	ldr	r5, .L1228
 	mov	r0, #0x0
 	mov	r8, r0
 	mov	r1, #0x7
@@ -13640,7 +13638,7 @@ SetContestantStatusesForNextRound:
 	mov	r9, r0
 	mov	r4, #0x0
 	mov	r6, #0x3
-.L1220:
+.L1218:
 	ldr	r1, [r5]
 	ldr	r0, [r1, #0x4]
 	add	r0, r4, r0
@@ -13660,7 +13658,7 @@ SetContestantStatusesForNextRound:
 	mov	r0, #0x6
 	and	r0, r0, r2
 	cmp	r0, #0
-	beq	.L1221	@cond_branch
+	beq	.L1219	@cond_branch
 	lsl	r0, r2, #0x1d
 	lsr	r0, r0, #0x1e
 	sub	r0, r0, #0x1
@@ -13671,7 +13669,7 @@ SetContestantStatusesForNextRound:
 	and	r1, r1, r2
 	orr	r1, r1, r0
 	strb	r1, [r3, #0xc]
-.L1221:
+.L1219:
 	ldr	r0, [r5]
 	ldr	r0, [r0, #0x4]
 	add	r0, r4, r0
@@ -13782,7 +13780,7 @@ SetContestantStatusesForNextRound:
 	mov	r0, #0x4
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L1222	@cond_branch
+	beq	.L1220	@cond_branch
 	ldrb	r1, [r2, #0xc]
 	mov	r0, sl
 	and	r0, r0, r1
@@ -13796,7 +13794,7 @@ SetContestantStatusesForNextRound:
 	add	r0, r7, #0
 	and	r0, r0, r2
 	strb	r0, [r1, #0x11]
-.L1222:
+.L1220:
 	ldr	r0, [r5]
 	ldr	r0, [r0, #0x4]
 	add	r2, r4, r0
@@ -13804,7 +13802,7 @@ SetContestantStatusesForNextRound:
 	mov	r0, #0x8
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L1223	@cond_branch
+	beq	.L1221	@cond_branch
 	ldrb	r0, [r2, #0xb]
 	mov	r1, #0x80
 	orr	r0, r0, r1
@@ -13816,7 +13814,7 @@ SetContestantStatusesForNextRound:
 	mov	r0, ip
 	and	r0, r0, r2
 	strb	r0, [r1, #0x11]
-.L1223:
+.L1221:
 	ldr	r0, [r5]
 	ldr	r1, [r0, #0x4]
 	add	r1, r4, r1
@@ -13828,14 +13826,14 @@ SetContestantStatusesForNextRound:
 	add	r4, r4, #0x1c
 	sub	r6, r6, #0x1
 	cmp	r6, #0
-	blt	.LCB11255
-	b	.L1220	@long jump
-.LCB11255:
+	blt	.LCB11259
+	b	.L1218	@long jump
+.LCB11259:
 	mov	r6, #0x0
-	ldr	r5, .L1230
+	ldr	r5, .L1228
 	mov	r7, #0x0
 	mov	r4, #0x0
-.L1228:
+.L1226:
 	ldr	r3, [r5]
 	ldr	r0, [r3, #0x4]
 	add	r0, r4, r0
@@ -13871,8 +13869,8 @@ SetContestantStatusesForNextRound:
 	add	r4, r4, #0x1c
 	add	r6, r6, #0x1
 	cmp	r6, #0x3
-	ble	.L1228	@cond_branch
-	ldr	r0, .L1230
+	ble	.L1226	@cond_branch
+	ldr	r0, .L1228
 	ldr	r0, [r0]
 	ldr	r2, [r0, #0x10]
 	ldrb	r1, [r2, #0x1]
@@ -13887,9 +13885,9 @@ SetContestantStatusesForNextRound:
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L1231:
+.L1229:
 	.align	2, 0
-.L1230:
+.L1228:
 	.word	gContestResources
 .Lfe94:
 	.size	 SetContestantStatusesForNextRound,.Lfe94-SetContestantStatusesForNextRound
@@ -13901,7 +13899,7 @@ Contest_IsMonsTurnDisabled:
 	push	{lr}
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
-	ldr	r1, .L1237
+	ldr	r1, .L1235
 	ldr	r1, [r1]
 	ldr	r2, [r1, #0x4]
 	lsl	r1, r0, #0x3
@@ -13912,22 +13910,22 @@ Contest_IsMonsTurnDisabled:
 	mov	r0, #0x6
 	and	r0, r0, r1
 	cmp	r0, #0
-	bne	.L1234	@cond_branch
+	bne	.L1232	@cond_branch
 	ldrb	r1, [r2, #0xb]
 	mov	r0, #0x80
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L1233	@cond_branch
-.L1234:
+	beq	.L1231	@cond_branch
+.L1232:
 	mov	r0, #0x1
-	b	.L1236
-.L1238:
-	.align	2, 0
-.L1237:
-	.word	gContestResources
-.L1233:
-	mov	r0, #0x0
+	b	.L1234
 .L1236:
+	.align	2, 0
+.L1235:
+	.word	gContestResources
+.L1231:
+	mov	r0, #0x0
+.L1234:
 	pop	{r1}
 	bx	r1
 .Lfe95:
@@ -13942,13 +13940,13 @@ CalculateTotalPointsForContestant:
 	lsr	r4, r4, #0x18
 	add	r0, r4, #0
 	bl	GetContestantRound2Points
-	ldr	r1, .L1240
+	ldr	r1, .L1238
 	lsl	r4, r4, #0x1
 	add	r1, r4, r1
 	strh	r0, [r1]
-	ldr	r2, .L1240+0x4
+	ldr	r2, .L1238+0x4
 	add	r2, r4, r2
-	ldr	r1, .L1240+0x8
+	ldr	r1, .L1238+0x8
 	add	r4, r4, r1
 	ldrh	r4, [r4]
 	add	r0, r0, r4
@@ -13956,9 +13954,9 @@ CalculateTotalPointsForContestant:
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L1241:
+.L1239:
 	.align	2, 0
-.L1240:
+.L1238:
 	.word	gContestMonRound2Points
 	.word	gContestMonTotalPoints
 	.word	gContestMonRound1Points
@@ -13970,13 +13968,13 @@ CalculateTotalPointsForContestant:
 CalculateFinalScores:
 	push	{r4, lr}
 	mov	r4, #0x0
-.L1246:
+.L1244:
 	lsl	r0, r4, #0x18
 	lsr	r0, r0, #0x18
 	bl	CalculateTotalPointsForContestant
 	add	r4, r4, #0x1
 	cmp	r4, #0x3
-	ble	.L1246	@cond_branch
+	ble	.L1244	@cond_branch
 	bl	DetermineFinalStandings
 	pop	{r4}
 	pop	{r0}
@@ -13988,7 +13986,7 @@ CalculateFinalScores:
 	.thumb_func
 GetContestantRound2Points:
 	lsl	r0, r0, #0x18
-	ldr	r1, .L1249
+	ldr	r1, .L1247
 	lsr	r0, r0, #0x17
 	add	r0, r0, r1
 	mov	r1, #0x0
@@ -13996,9 +13994,9 @@ GetContestantRound2Points:
 	lsl	r0, r0, #0x11
 	asr	r0, r0, #0x10
 	bx	lr
-.L1250:
+.L1248:
 	.align	2, 0
-.L1249:
+.L1247:
 	.word	gContestMonAppealPointTotals
 .Lfe98:
 	.size	 GetContestantRound2Points,.Lfe98-GetContestantRound2Points
@@ -14028,53 +14026,53 @@ DetermineFinalStandings:
 	add	r6, r6, #0x14
 	str	r6, [sp, #0x6c]
 	mov	r4, sp
-.L1255:
+.L1253:
 	bl	Random
 	strh	r0, [r4]
 	mov	r2, #0x0
 	cmp	r2, r9
-	bge	.L1254	@cond_branch
+	bge	.L1252	@cond_branch
 	mov	r1, sp
 	lsl	r0, r0, #0x10
 	lsr	r0, r0, #0x10
 	ldrh	r1, [r1]
 	cmp	r0, r1
-	bne	.L1258	@cond_branch
+	bne	.L1256	@cond_branch
 	sub	r4, r4, #0x2
 	mov	r7, #0x1
 	neg	r7, r7
 	add	r9, r9, r7
-	b	.L1254
-.L1258:
+	b	.L1252
+.L1256:
 	add	r2, r2, #0x1
 	cmp	r2, r9
-	bge	.L1254	@cond_branch
+	bge	.L1252	@cond_branch
 	lsl	r0, r2, #0x1
 	mov	r3, sp
 	add	r1, r3, r0
 	ldrh	r0, [r4]
 	ldrh	r1, [r1]
 	cmp	r0, r1
-	bne	.L1258	@cond_branch
+	bne	.L1256	@cond_branch
 	sub	r4, r4, #0x2
 	mov	r6, #0x1
 	neg	r6, r6
 	add	r9, r9, r6
-.L1254:
+.L1252:
 	add	r4, r4, #0x2
 	mov	r7, #0x1
 	add	r9, r9, r7
 	mov	r0, r9
 	cmp	r0, #0x3
-	ble	.L1255	@cond_branch
+	ble	.L1253	@cond_branch
 	mov	r1, #0x0
 	mov	r9, r1
 	mov	r4, sp
-	ldr	r6, .L1284
+	ldr	r6, .L1282
 	ldr	r2, [sp, #0x64]
-	ldr	r5, .L1284+0x4
+	ldr	r5, .L1282+0x4
 	ldr	r3, [sp, #0x68]
-.L1266:
+.L1264:
 	mov	r7, r9
 	lsl	r1, r7, #0x4
 	mov	r7, #0x0
@@ -14098,13 +14096,13 @@ DetermineFinalStandings:
 	add	r9, r9, r0
 	mov	r1, r9
 	cmp	r1, #0x3
-	ble	.L1266	@cond_branch
+	ble	.L1264	@cond_branch
 	mov	r3, #0x0
 	mov	r9, r3
-.L1271:
+.L1269:
 	mov	r4, #0x3
 	cmp	r4, r9
-	ble	.L1270	@cond_branch
+	ble	.L1268	@cond_branch
 	add	r7, sp, #0x48
 	ldr	r6, [sp, #0x68]
 	str	r6, [sp, #0x58]
@@ -14113,7 +14111,7 @@ DetermineFinalStandings:
 	str	r0, [sp, #0x5c]
 	ldr	r1, [sp, #0x6c]
 	str	r1, [sp, #0x60]
-.L1275:
+.L1273:
 	sub	r3, r4, #0x1
 	mov	sl, r3
 	mov	r0, sl
@@ -14122,7 +14120,7 @@ DetermineFinalStandings:
 	bl	DidContestantPlaceHigher
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.L1274	@cond_branch
+	beq	.L1272	@cond_branch
 	mov	r6, sl
 	lsl	r2, r6, #0x4
 	ldr	r0, [sp, #0x64]
@@ -14168,21 +14166,21 @@ DetermineFinalStandings:
 	str	r0, [r3]
 	ldr	r0, [r7, #0xc]
 	str	r0, [r1]
-.L1274:
+.L1272:
 	mov	r4, sl
 	cmp	r4, r9
-	bgt	.L1275	@cond_branch
-.L1270:
+	bgt	.L1273	@cond_branch
+.L1268:
 	mov	r1, #0x1
 	add	r9, r9, r1
 	mov	r3, r9
 	cmp	r3, #0x2
-	ble	.L1271	@cond_branch
+	ble	.L1269	@cond_branch
 	mov	r6, #0x0
 	mov	r9, r6
-	ldr	r2, .L1284+0x8
+	ldr	r2, .L1282+0x8
 	ldr	r1, [sp, #0x6c]
-.L1282:
+.L1280:
 	ldr	r0, [r1]
 	add	r0, r0, r2
 	mov	r7, r9
@@ -14192,7 +14190,7 @@ DetermineFinalStandings:
 	add	r9, r9, r0
 	mov	r3, r9
 	cmp	r3, #0x3
-	ble	.L1282	@cond_branch
+	ble	.L1280	@cond_branch
 	add	sp, sp, #0x70
 	pop	{r3, r4, r5}
 	mov	r8, r3
@@ -14201,9 +14199,9 @@ DetermineFinalStandings:
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L1285:
+.L1283:
 	.align	2, 0
-.L1284:
+.L1282:
 	.word	gContestMonTotalPoints
 	.word	gContestMonRound1Points
 	.word	gContestFinalStandings
@@ -14215,41 +14213,41 @@ DetermineFinalStandings:
 	.thumb_func
 SaveLinkContestResults:
 	push	{lr}
-	ldr	r0, .L1289
+	ldr	r0, .L1287
 	ldrb	r1, [r0]
 	mov	r0, #0x1
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L1287	@cond_branch
-	ldr	r0, .L1289+0x4
+	beq	.L1285	@cond_branch
+	ldr	r0, .L1287+0x4
 	ldr	r2, [r0]
-	ldr	r1, .L1289+0x8
-	ldr	r0, .L1289+0xc
+	ldr	r1, .L1287+0x8
+	ldr	r0, .L1287+0xc
 	ldrb	r0, [r0]
 	add	r0, r0, r1
 	ldrb	r1, [r0]
 	lsl	r1, r1, #0x1
-	ldr	r0, .L1289+0x10
+	ldr	r0, .L1287+0x10
 	ldrh	r0, [r0]
 	lsl	r0, r0, #0x3
 	add	r1, r1, r0
-	ldr	r0, .L1289+0x14
+	ldr	r0, .L1287+0x14
 	add	r2, r2, r0
 	add	r2, r2, r1
 	ldrh	r0, [r2]
 	add	r0, r0, #0x1
-	ldr	r1, .L1289+0x18
+	ldr	r1, .L1287+0x18
 	cmp	r0, r1
-	ble	.L1288	@cond_branch
+	ble	.L1286	@cond_branch
 	add	r0, r1, #0
-.L1288:
+.L1286:
 	strh	r0, [r2]
-.L1287:
+.L1285:
 	pop	{r0}
 	bx	r0
-.L1290:
+.L1288:
 	.align	2, 0
-.L1289:
+.L1287:
 	.word	gLinkContestFlags
 	.word	gSaveBlock2Ptr
 	.word	gContestFinalStandings
@@ -14271,27 +14269,27 @@ DidContestantPlaceHigher:
 	ldr	r2, [r0]
 	ldr	r1, [r3]
 	cmp	r2, r1
-	blt	.L1302	@cond_branch
+	blt	.L1300	@cond_branch
 	cmp	r2, r1
-	bgt	.L1303	@cond_branch
+	bgt	.L1301	@cond_branch
 	ldr	r2, [r0, #0x4]
 	ldr	r1, [r3, #0x4]
 	cmp	r2, r1
-	blt	.L1302	@cond_branch
+	blt	.L1300	@cond_branch
 	cmp	r2, r1
-	ble	.L1298	@cond_branch
-.L1303:
+	ble	.L1296	@cond_branch
+.L1301:
 	mov	r2, #0x0
-	b	.L1293
-.L1298:
+	b	.L1291
+.L1296:
 	ldr	r1, [r0, #0x8]
 	ldr	r0, [r3, #0x8]
 	mov	r2, #0x0
 	cmp	r1, r0
-	bge	.L1293	@cond_branch
-.L1302:
+	bge	.L1291	@cond_branch
+.L1300:
 	mov	r2, #0x1
-.L1293:
+.L1291:
 	add	r0, r2, #0
 	pop	{r1}
 	bx	r1
@@ -14302,20 +14300,20 @@ DidContestantPlaceHigher:
 	.thumb_func
 ContestPrintLinkStandby:
 	push	{lr}
-	ldr	r0, .L1305
+	ldr	r0, .L1303
 	mov	r1, #0x0
 	strh	r1, [r0]
-	ldr	r0, .L1305+0x4
+	ldr	r0, .L1303+0x4
 	strh	r1, [r0]
 	bl	ContestClearGeneralTextWindow
-	ldr	r0, .L1305+0x8
+	ldr	r0, .L1303+0x8
 	mov	r1, #0x0
 	bl	Contest_StartTextPrinter
 	pop	{r0}
 	bx	r0
-.L1306:
+.L1304:
 	.align	2, 0
-.L1305:
+.L1303:
 	.word	gBattle_BG0_Y
 	.word	gBattle_BG2_Y
 	.word	gText_LinkStandby4
@@ -14330,7 +14328,7 @@ FillContestantWindowBgs:
 	mov	r5, #0x80
 	lsl	r5, r5, #0x12
 	mov	r4, #0x3
-.L1311:
+.L1309:
 	lsr	r3, r5, #0x18
 	mov	r0, #0x8
 	str	r0, [sp]
@@ -14347,7 +14345,7 @@ FillContestantWindowBgs:
 	add	r5, r5, r0
 	sub	r4, r4, #0x1
 	cmp	r4, #0
-	bge	.L1311	@cond_branch
+	bge	.L1309	@cond_branch
 	add	sp, sp, #0xc
 	pop	{r4, r5}
 	pop	{r0}
@@ -14361,25 +14359,25 @@ GetAppealHeartTileOffset:
 	push	{lr}
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
-	ldr	r1, .L1320
+	ldr	r1, .L1318
 	cmp	r0, #0
-	beq	.L1315	@cond_branch
-	ldr	r1, .L1320+0x4
+	beq	.L1313	@cond_branch
+	ldr	r1, .L1318+0x4
 	cmp	r0, #0x1
-	beq	.L1315	@cond_branch
-	ldr	r1, .L1320+0x8
+	beq	.L1313	@cond_branch
+	ldr	r1, .L1318+0x8
 	cmp	r0, #0x2
-	bne	.L1315	@cond_branch
-	ldr	r1, .L1320+0xc
-.L1315:
+	bne	.L1313	@cond_branch
+	ldr	r1, .L1318+0xc
+.L1313:
 	add	r0, r1, #0x1
 	lsl	r0, r0, #0x10
 	lsr	r0, r0, #0x10
 	pop	{r1}
 	bx	r1
-.L1321:
+.L1319:
 	.align	2, 0
-.L1320:
+.L1318:
 	.word	0x5011
 	.word	0x6011
 	.word	0x8011
@@ -14399,16 +14397,16 @@ GetNumHeartsFromAppealPoints:
 	lsr	r1, r0, #0x18
 	asr	r2, r0, #0x18
 	cmp	r2, #0x10
-	ble	.L1323	@cond_branch
+	ble	.L1321	@cond_branch
 	mov	r1, #0x10
-	b	.L1324
-.L1323:
+	b	.L1322
+.L1321:
 	mov	r0, #0x10
 	neg	r0, r0
 	cmp	r2, r0
-	bge	.L1324	@cond_branch
+	bge	.L1322	@cond_branch
 	mov	r1, #0xf0
-.L1324:
+.L1322:
 	lsl	r0, r1, #0x18
 	asr	r0, r0, #0x18
 	pop	{r1}
@@ -14431,7 +14429,7 @@ UpdateAppealHearts:
 	lsl	r2, r2, #0x18
 	lsr	r2, r2, #0x18
 	mov	r8, r2
-	ldr	r0, .L1331
+	ldr	r0, .L1329
 	ldr	r0, [r0]
 	ldr	r0, [r0, #0x14]
 	lsl	r1, r2, #0x2
@@ -14440,7 +14438,7 @@ UpdateAppealHearts:
 	mov	r2, #0x4
 	orr	r0, r0, r2
 	strb	r0, [r1, #0x2]
-	ldr	r0, .L1331+0x4
+	ldr	r0, .L1329+0x4
 	mov	r1, #0x14
 	bl	CreateTask
 	lsl	r0, r0, #0x18
@@ -14466,45 +14464,45 @@ UpdateAppealHearts:
 	lsr	r5, r0, #0x18
 	mov	r0, r8
 	bl	GetAppealHeartTileOffset
-	ldr	r2, .L1331+0x8
+	ldr	r2, .L1329+0x8
 	lsl	r3, r7, #0x2
 	add	r0, r3, r7
 	lsl	r0, r0, #0x3
 	add	r1, r0, r2
 	add	r0, r4, #0
 	cmp	r4, #0
-	bge	.L1327	@cond_branch
+	bge	.L1325	@cond_branch
 	neg	r0, r4
-.L1327:
+.L1325:
 	strh	r0, [r1, #0x8]
 	lsl	r0, r5, #0x18
 	asr	r0, r0, #0x18
 	strh	r0, [r1, #0xa]
 	cmp	r4, #0
-	bgt	.L1329	@cond_branch
+	bgt	.L1327	@cond_branch
 	cmp	r4, #0
-	bne	.L1328	@cond_branch
+	bne	.L1326	@cond_branch
 	cmp	r0, #0
-	ble	.L1328	@cond_branch
-.L1329:
+	ble	.L1326	@cond_branch
+.L1327:
 	mov	r0, #0x1
 	strh	r0, [r1, #0xc]
-	b	.L1330
-.L1332:
+	b	.L1328
+.L1330:
 	.align	2, 0
-.L1331:
+.L1329:
 	.word	gContestResources
 	.word	Task_UpdateAppealHearts
 	.word	gTasks
-.L1328:
-	ldr	r2, .L1333
+.L1326:
+	ldr	r2, .L1331
 	lsl	r3, r7, #0x2
 	add	r0, r3, r7
 	lsl	r0, r0, #0x3
 	add	r0, r0, r2
-	ldr	r1, .L1333+0x4
+	ldr	r1, .L1331+0x4
 	strh	r1, [r0, #0xc]
-.L1330:
+.L1328:
 	add	r0, r3, r7
 	lsl	r0, r0, #0x3
 	add	r0, r0, r2
@@ -14516,9 +14514,9 @@ UpdateAppealHearts:
 	pop	{r4, r5, r6, r7}
 	pop	{r1}
 	bx	r1
-.L1334:
+.L1332:
 	.align	2, 0
-.L1333:
+.L1331:
 	.word	gTasks
 	.word	0xffff
 .Lfe106:
@@ -14535,7 +14533,7 @@ Task_UpdateAppealHearts:
 	add	sp, sp, #-0x10
 	lsl	r0, r0, #0x18
 	lsr	r7, r0, #0x18
-	ldr	r1, .L1355
+	ldr	r1, .L1353
 	lsl	r0, r7, #0x2
 	add	r0, r0, r7
 	lsl	r0, r0, #0x3
@@ -14550,19 +14548,19 @@ Task_UpdateAppealHearts:
 	lsl	r0, r0, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, #0xe
-	bgt	.LCB12142
-	b	.L1335	@long jump
-.LCB12142:
+	bgt	.LCB12146
+	b	.L1333	@long jump
+.LCB12146:
 	mov	r0, #0x0
 	strh	r0, [r4, #0x1c]
 	ldrh	r2, [r4, #0xa]
 	mov	r5, #0xa
 	ldrsh	r0, [r4, r5]
 	cmp	r0, #0
-	bne	.L1337	@cond_branch
+	bne	.L1335	@cond_branch
 	add	r0, r7, #0
 	bl	DestroyTask
-	ldr	r0, .L1355+0x4
+	ldr	r0, .L1353+0x4
 	ldr	r0, [r0]
 	ldr	r0, [r0, #0x14]
 	mov	r2, r9
@@ -14573,19 +14571,19 @@ Task_UpdateAppealHearts:
 	neg	r0, r0
 	and	r0, r0, r2
 	strb	r0, [r1, #0x2]
-	b	.L1335
-.L1356:
+	b	.L1333
+.L1354:
 	.align	2, 0
-.L1355:
+.L1353:
 	.word	gTasks
 	.word	gContestResources
-.L1337:
+.L1335:
 	cmp	r3, #0
-	bne	.L1339	@cond_branch
+	bne	.L1337	@cond_branch
 	lsl	r0, r1, #0x10
 	mov	r8, r0
 	cmp	r0, #0
-	bge	.L1340	@cond_branch
+	bge	.L1338	@cond_branch
 	mov	r0, r9
 	bl	GetAppealHeartTileOffset
 	add	r0, r0, #0x2
@@ -14593,17 +14591,17 @@ Task_UpdateAppealHearts:
 	lsr	r6, r0, #0x10
 	ldrh	r0, [r4, #0xa]
 	add	r0, r0, #0x1
-	b	.L1353
-.L1340:
+	b	.L1351
+.L1338:
 	mov	r0, r9
 	bl	GetAppealHeartTileOffset
 	lsl	r0, r0, #0x10
 	lsr	r6, r0, #0x10
 	ldrh	r0, [r4, #0xa]
 	sub	r0, r0, #0x1
-.L1353:
+.L1351:
 	strh	r0, [r4, #0xa]
-	ldr	r1, .L1357
+	ldr	r1, .L1355
 	lsl	r0, r7, #0x2
 	add	r0, r0, r7
 	lsl	r0, r0, #0x3
@@ -14613,20 +14611,20 @@ Task_UpdateAppealHearts:
 	strh	r2, [r0, #0x8]
 	lsl	r1, r1, #0x18
 	lsr	r5, r1, #0x18
-	b	.L1338
-.L1358:
+	b	.L1336
+.L1356:
 	.align	2, 0
-.L1357:
+.L1355:
 	.word	gTasks
-.L1339:
+.L1337:
 	mov	r3, #0xc
 	ldrsh	r0, [r4, r3]
 	cmp	r0, #0
-	bge	.L1343	@cond_branch
+	bge	.L1341	@cond_branch
 	lsl	r0, r1, #0x10
 	mov	r8, r0
 	cmp	r0, #0
-	bge	.L1344	@cond_branch
+	bge	.L1342	@cond_branch
 	ldrh	r0, [r4, #0x8]
 	add	r1, r0, #0x1
 	strh	r1, [r4, #0x8]
@@ -14637,8 +14635,8 @@ Task_UpdateAppealHearts:
 	mov	r0, r9
 	bl	GetAppealHeartTileOffset
 	add	r0, r0, #0x2
-	b	.L1354
-.L1344:
+	b	.L1352
+.L1342:
 	ldrh	r0, [r4, #0x8]
 	sub	r0, r0, #0x1
 	strh	r0, [r4, #0x8]
@@ -14647,12 +14645,12 @@ Task_UpdateAppealHearts:
 	mov	r6, #0x0
 	sub	r0, r2, #0x1
 	strh	r0, [r4, #0xa]
-	b	.L1338
-.L1343:
+	b	.L1336
+.L1341:
 	lsl	r0, r1, #0x10
 	mov	r8, r0
 	cmp	r0, #0
-	bge	.L1347	@cond_branch
+	bge	.L1345	@cond_branch
 	ldrh	r0, [r4, #0x8]
 	sub	r0, r0, #0x1
 	strh	r0, [r4, #0x8]
@@ -14661,8 +14659,8 @@ Task_UpdateAppealHearts:
 	mov	r6, #0x0
 	add	r0, r2, #0x1
 	strh	r0, [r4, #0xa]
-	b	.L1338
-.L1347:
+	b	.L1336
+.L1345:
 	ldrh	r0, [r4, #0x8]
 	add	r1, r0, #0x1
 	strh	r1, [r4, #0x8]
@@ -14672,27 +14670,27 @@ Task_UpdateAppealHearts:
 	strh	r0, [r4, #0xa]
 	mov	r0, r9
 	bl	GetAppealHeartTileOffset
-.L1354:
+.L1352:
 	lsl	r0, r0, #0x10
 	lsr	r6, r0, #0x10
-.L1338:
+.L1336:
 	str	r5, [sp, #0xc]
 	mov	r0, #0x0
 	mov	sl, r0
 	cmp	r5, #0x7
-	bls	.L1349	@cond_branch
+	bls	.L1347	@cond_branch
 	mov	r2, #0x1
 	mov	sl, r2
 	add	r0, r5, #0
 	sub	r0, r0, #0x8
 	lsl	r0, r0, #0x18
 	lsr	r5, r0, #0x18
-.L1349:
+.L1347:
 	add	r2, r5, #0
 	add	r2, r2, #0x16
 	lsl	r2, r2, #0x18
 	lsr	r2, r2, #0x18
-	ldr	r0, .L1359
+	ldr	r0, .L1357
 	add	r0, r0, r9
 	ldrb	r0, [r0]
 	lsl	r3, r0, #0x2
@@ -14711,37 +14709,37 @@ Task_UpdateAppealHearts:
 	bl	ContestBG_FillBoxWithTile
 	mov	r3, r8
 	cmp	r3, #0
-	ble	.L1350	@cond_branch
+	ble	.L1348	@cond_branch
 	mov	r0, #0x60
 	bl	PlaySE
-	ldr	r4, .L1359+0x4
+	ldr	r4, .L1357+0x4
 	add	r0, r4, #0
 	bl	m4aMPlayImmInit
-	ldr	r1, .L1359+0x8
+	ldr	r1, .L1357+0x8
 	ldr	r0, [sp, #0xc]
 	lsl	r2, r0, #0x18
 	asr	r2, r2, #0x10
 	add	r0, r4, #0
 	bl	m4aMPlayPitchControl
-	b	.L1351
-.L1360:
+	b	.L1349
+.L1358:
 	.align	2, 0
-.L1359:
+.L1357:
 	.word	gContestantTurnOrder
 	.word	gMPlayInfo_SE1
 	.word	0xffff
-.L1350:
+.L1348:
 	mov	r0, #0x16
 	bl	PlaySE
-.L1351:
+.L1349:
 	mov	r2, sl
 	cmp	r2, #0
-	bne	.L1335	@cond_branch
+	bne	.L1333	@cond_branch
 	cmp	r5, #0
-	bne	.L1335	@cond_branch
+	bne	.L1333	@cond_branch
 	cmp	r6, #0
-	bne	.L1335	@cond_branch
-	ldr	r0, .L1361
+	bne	.L1333	@cond_branch
+	ldr	r0, .L1359
 	lsl	r1, r7, #0x2
 	add	r1, r1, r7
 	lsl	r1, r1, #0x3
@@ -14749,7 +14747,7 @@ Task_UpdateAppealHearts:
 	ldrh	r0, [r1, #0xc]
 	neg	r0, r0
 	strh	r0, [r1, #0xc]
-.L1335:
+.L1333:
 	add	sp, sp, #0x10
 	pop	{r3, r4, r5}
 	mov	r8, r3
@@ -14758,9 +14756,9 @@ Task_UpdateAppealHearts:
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L1362:
+.L1360:
 	.align	2, 0
-.L1361:
+.L1359:
 	.word	gTasks
 .Lfe107:
 	.size	 Task_UpdateAppealHearts,.Lfe107-Task_UpdateAppealHearts
@@ -14769,21 +14767,21 @@ Task_UpdateAppealHearts:
 	.thumb_func
 CreateSliderHeartSprites:
 	push	{r4, r5, lr}
-	ldr	r0, .L1369
+	ldr	r0, .L1367
 	bl	LoadSpriteSheet
 	mov	r4, #0x0
-	ldr	r5, .L1369+0x4
-.L1367:
-	ldr	r0, .L1369+0x8
+	ldr	r5, .L1367+0x4
+.L1365:
+	ldr	r0, .L1367+0x8
 	add	r0, r4, r0
 	ldrb	r0, [r0]
 	add	r0, r0, r5
 	ldrb	r2, [r0]
-	ldr	r0, .L1369+0xc
+	ldr	r0, .L1367+0xc
 	mov	r1, #0xb4
 	mov	r3, #0x1
 	bl	CreateSprite
-	ldr	r1, .L1369+0x10
+	ldr	r1, .L1367+0x10
 	ldr	r1, [r1]
 	ldr	r2, [r1, #0x14]
 	lsl	r1, r4, #0x2
@@ -14791,13 +14789,13 @@ CreateSliderHeartSprites:
 	strb	r0, [r1]
 	add	r4, r4, #0x1
 	cmp	r4, #0x3
-	ble	.L1367	@cond_branch
+	ble	.L1365	@cond_branch
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.L1370:
+.L1368:
 	.align	2, 0
-.L1369:
+.L1367:
 	.word	sSpriteSheet_SliderHeart
 	.word	sSliderHeartYPositions
 	.word	gContestantTurnOrder
@@ -14812,7 +14810,7 @@ UpdateHeartSlider:
 	push	{r4, r5, r6, r7, lr}
 	lsl	r0, r0, #0x18
 	lsr	r6, r0, #0x18
-	ldr	r4, .L1378
+	ldr	r4, .L1376
 	ldr	r0, [r4]
 	ldr	r2, [r0, #0x14]
 	lsl	r3, r6, #0x2
@@ -14838,19 +14836,19 @@ UpdateHeartSlider:
 	lsr	r5, r0, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, #0x38
-	ble	.L1372	@cond_branch
+	ble	.L1370	@cond_branch
 	mov	r5, #0x38
-	b	.L1373
-.L1379:
+	b	.L1371
+.L1377:
 	.align	2, 0
-.L1378:
+.L1376:
 	.word	gContestResources
-.L1372:
+.L1370:
 	cmp	r0, #0
-	bge	.L1373	@cond_branch
+	bge	.L1371	@cond_branch
 	mov	r5, #0x0
-.L1373:
-	ldr	r2, .L1380
+.L1371:
+	ldr	r2, .L1378
 	lsl	r3, r7, #0x4
 	add	r0, r3, r7
 	lsl	r0, r0, #0x2
@@ -14871,30 +14869,30 @@ UpdateHeartSlider:
 	mov	r5, #0x24
 	ldrsh	r1, [r4, r5]
 	cmp	r0, r1
-	ble	.L1375	@cond_branch
+	ble	.L1373	@cond_branch
 	mov	r0, #0x1
-	b	.L1377
-.L1381:
+	b	.L1375
+.L1379:
 	.align	2, 0
-.L1380:
+.L1378:
 	.word	gSprites
+.L1373:
+	ldr	r0, .L1380
 .L1375:
-	ldr	r0, .L1382
-.L1377:
 	strh	r0, [r4, #0x32]
 	add	r0, r3, r7
 	lsl	r0, r0, #0x2
 	add	r1, r2, #0
 	add	r1, r1, #0x1c
 	add	r0, r0, r1
-	ldr	r1, .L1382+0x4
+	ldr	r1, .L1380+0x4
 	str	r1, [r0]
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L1383:
+.L1381:
 	.align	2, 0
-.L1382:
+.L1380:
 	.word	0xffff
 	.word	SpriteCB_UpdateHeartSlider
 .Lfe109:
@@ -14905,13 +14903,13 @@ UpdateHeartSlider:
 UpdateHeartSliders:
 	push	{r4, lr}
 	mov	r4, #0x0
-.L1388:
+.L1386:
 	lsl	r0, r4, #0x18
 	lsr	r0, r0, #0x18
 	bl	UpdateHeartSlider
 	add	r4, r4, #0x1
 	cmp	r4, #0x3
-	ble	.L1388	@cond_branch
+	ble	.L1386	@cond_branch
 	pop	{r4}
 	pop	{r0}
 	bx	r0
@@ -14923,19 +14921,19 @@ UpdateHeartSliders:
 SlidersDoneUpdating:
 	push	{r4, lr}
 	mov	r2, #0x0
-	ldr	r3, .L1400
+	ldr	r3, .L1398
 	ldr	r0, [r3]
 	ldr	r0, [r0, #0x14]
 	ldrb	r1, [r0, #0x2]
 	mov	r0, #0x1
 	and	r0, r0, r1
 	cmp	r0, #0
-	bne	.L1392	@cond_branch
+	bne	.L1390	@cond_branch
 	mov	r4, #0x1
-.L1393:
+.L1391:
 	add	r2, r2, #0x1
 	cmp	r2, #0x3
-	bgt	.L1392	@cond_branch
+	bgt	.L1390	@cond_branch
 	ldr	r0, [r3]
 	ldr	r1, [r0, #0x14]
 	lsl	r0, r2, #0x2
@@ -14944,19 +14942,19 @@ SlidersDoneUpdating:
 	add	r0, r4, #0
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L1393	@cond_branch
-.L1392:
+	beq	.L1391	@cond_branch
+.L1390:
 	cmp	r2, #0x4
-	beq	.L1397	@cond_branch
+	beq	.L1395	@cond_branch
 	mov	r0, #0x0
-	b	.L1399
-.L1401:
-	.align	2, 0
-.L1400:
-	.word	gContestResources
-.L1397:
-	mov	r0, #0x1
+	b	.L1397
 .L1399:
+	.align	2, 0
+.L1398:
+	.word	gContestResources
+.L1395:
+	mov	r0, #0x1
+.L1397:
 	pop	{r4}
 	pop	{r1}
 	bx	r1
@@ -14974,8 +14972,8 @@ SpriteCB_UpdateHeartSlider:
 	mov	r4, #0x30
 	ldrsh	r0, [r3, r4]
 	cmp	r1, r0
-	bne	.L1403	@cond_branch
-	ldr	r0, .L1405
+	bne	.L1401	@cond_branch
+	ldr	r0, .L1403
 	ldr	r0, [r0]
 	mov	r2, #0x2e
 	ldrsh	r1, [r3, r2]
@@ -14987,19 +14985,19 @@ SpriteCB_UpdateHeartSlider:
 	neg	r0, r0
 	and	r0, r0, r2
 	strb	r0, [r1, #0x2]
-	ldr	r0, .L1405+0x4
+	ldr	r0, .L1403+0x4
 	str	r0, [r3, #0x1c]
-	b	.L1404
-.L1406:
+	b	.L1402
+.L1404:
 	.align	2, 0
-.L1405:
+.L1403:
 	.word	gContestResources
 	.word	SpriteCallbackDummy
-.L1403:
+.L1401:
 	ldrh	r0, [r3, #0x32]
 	add	r0, r2, r0
 	strh	r0, [r3, #0x24]
-.L1404:
+.L1402:
 	pop	{r4}
 	pop	{r0}
 	bx	r0
@@ -15011,11 +15009,11 @@ SpriteCB_UpdateHeartSlider:
 UpdateSliderHeartSpriteYPositions:
 	push	{r4, r5, r6, lr}
 	mov	r2, #0x0
-	ldr	r6, .L1413
-	ldr	r5, .L1413+0x4
-	ldr	r4, .L1413+0x8
-	ldr	r3, .L1413+0xc
-.L1411:
+	ldr	r6, .L1411
+	ldr	r5, .L1411+0x4
+	ldr	r4, .L1411+0x8
+	ldr	r3, .L1411+0xc
+.L1409:
 	ldr	r0, [r5]
 	ldr	r1, [r0, #0x14]
 	lsl	r0, r2, #0x2
@@ -15032,13 +15030,13 @@ UpdateSliderHeartSpriteYPositions:
 	strh	r0, [r1, #0x22]
 	add	r2, r2, #0x1
 	cmp	r2, #0x3
-	ble	.L1411	@cond_branch
+	ble	.L1409	@cond_branch
 	pop	{r4, r5, r6}
 	pop	{r0}
 	bx	r0
-.L1414:
+.L1412:
 	.align	2, 0
-.L1413:
+.L1411:
 	.word	gSprites
 	.word	gContestResources
 	.word	sSliderHeartYPositions
@@ -15053,17 +15051,17 @@ SetBottomSliderHeartsInvisibility:
 	lsl	r0, r0, #0x18
 	lsr	r6, r0, #0x18
 	mov	r3, #0x0
-	ldr	r7, .L1425
-	ldr	r5, .L1425+0x4
-	ldr	r4, .L1425+0x8
+	ldr	r7, .L1423
+	ldr	r5, .L1423+0x4
+	ldr	r4, .L1423+0x8
 	mov	r2, #0x0
-.L1419:
+.L1417:
 	add	r0, r3, r7
 	ldrb	r0, [r0]
 	cmp	r0, #0x1
-	bls	.L1418	@cond_branch
+	bls	.L1416	@cond_branch
 	cmp	r6, #0
-	bne	.L1421	@cond_branch
+	bne	.L1419	@cond_branch
 	ldr	r0, [r4]
 	ldr	r0, [r0, #0x14]
 	add	r0, r2, r0
@@ -15073,14 +15071,14 @@ SetBottomSliderHeartsInvisibility:
 	lsl	r0, r0, #0x2
 	add	r0, r0, r5
 	mov	r1, #0xb4
-	b	.L1424
-.L1426:
+	b	.L1422
+.L1424:
 	.align	2, 0
-.L1425:
+.L1423:
 	.word	gContestantTurnOrder
 	.word	gSprites
 	.word	gContestResources
-.L1421:
+.L1419:
 	ldr	r0, [r4]
 	ldr	r0, [r0, #0x14]
 	add	r0, r2, r0
@@ -15091,13 +15089,13 @@ SetBottomSliderHeartsInvisibility:
 	add	r0, r0, r5
 	mov	r1, #0x80
 	lsl	r1, r1, #0x1
-.L1424:
+.L1422:
 	strh	r1, [r0, #0x20]
-.L1418:
+.L1416:
 	add	r2, r2, #0x4
 	add	r3, r3, #0x1
 	cmp	r3, #0x3
-	ble	.L1419	@cond_branch
+	ble	.L1417	@cond_branch
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
@@ -15110,22 +15108,22 @@ CreateNextTurnSprites:
 	push	{r4, r5, r6, r7, lr}
 	mov	r7, r8
 	push	{r7}
-	ldr	r0, .L1433
+	ldr	r0, .L1431
 	bl	LoadSpritePalette
 	mov	r5, #0x0
-	ldr	r7, .L1433+0x4
-	ldr	r0, .L1433+0x8
+	ldr	r7, .L1431+0x4
+	ldr	r0, .L1431+0x8
 	mov	r8, r0
 	mov	r6, #0x0
-.L1431:
+.L1429:
 	lsl	r0, r5, #0x3
-	ldr	r1, .L1433+0xc
+	ldr	r1, .L1431+0xc
 	add	r0, r0, r1
 	bl	LoadCompressedSpriteSheet
-	ldr	r0, .L1433+0x10
+	ldr	r0, .L1431+0x10
 	add	r0, r6, r0
-	ldr	r2, .L1433+0x14
-	ldr	r1, .L1433+0x18
+	ldr	r2, .L1431+0x14
+	ldr	r1, .L1431+0x18
 	add	r1, r5, r1
 	ldrb	r1, [r1]
 	add	r1, r1, r2
@@ -15146,7 +15144,7 @@ CreateNextTurnSprites:
 	add	r0, r0, r1
 	lsl	r0, r0, #0x2
 	add	r0, r0, r8
-	ldr	r1, .L1433+0x1c
+	ldr	r1, .L1431+0x1c
 	bl	SetSubspriteTables
 	ldr	r0, [r7]
 	ldr	r0, [r0, #0x14]
@@ -15164,15 +15162,15 @@ CreateNextTurnSprites:
 	add	r6, r6, #0x18
 	add	r5, r5, #0x1
 	cmp	r5, #0x3
-	ble	.L1431	@cond_branch
+	ble	.L1429	@cond_branch
 	pop	{r3}
 	mov	r8, r3
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L1434:
+.L1432:
 	.align	2, 0
-.L1433:
+.L1431:
 	.word	sSpritePalette_NextTurn
 	.word	gContestResources
 	.word	gSprites
@@ -15188,18 +15186,18 @@ CreateNextTurnSprites:
 	.thumb_func
 CreateApplauseMeterSprite:
 	push	{lr}
-	ldr	r0, .L1436
+	ldr	r0, .L1434
 	bl	LoadCompressedSpriteSheet
-	ldr	r0, .L1436+0x4
+	ldr	r0, .L1434+0x4
 	bl	LoadSpritePalette
-	ldr	r0, .L1436+0x8
+	ldr	r0, .L1434+0x8
 	mov	r1, #0x1e
 	mov	r2, #0x2c
 	mov	r3, #0x1
 	bl	CreateSprite
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
-	ldr	r2, .L1436+0xc
+	ldr	r2, .L1434+0xc
 	lsl	r1, r0, #0x4
 	add	r1, r1, r0
 	lsl	r1, r1, #0x2
@@ -15209,16 +15207,16 @@ CreateApplauseMeterSprite:
 	mov	r3, #0x4
 	orr	r2, r2, r3
 	strb	r2, [r1]
-	ldr	r1, .L1436+0x10
+	ldr	r1, .L1434+0x10
 	ldr	r1, [r1]
 	ldr	r1, [r1]
 	add	r1, r1, #0x58
 	strb	r0, [r1]
 	pop	{r0}
 	bx	r0
-.L1437:
+.L1435:
 	.align	2, 0
-.L1436:
+.L1434:
 	.word	sSpriteSheet_ApplauseMeter
 	.word	sSpritePalette_ApplauseMeter
 	.word	sSpriteTemplate_ApplauseMeter
@@ -15231,12 +15229,12 @@ CreateApplauseMeterSprite:
 	.thumb_func
 CreateJudgeAttentionEyeTask:
 	push	{r4, lr}
-	ldr	r0, .L1444
+	ldr	r0, .L1442
 	mov	r1, #0x1e
 	bl	CreateTask
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
-	ldr	r1, .L1444+0x4
+	ldr	r1, .L1442+0x4
 	ldr	r1, [r1]
 	ldr	r1, [r1]
 	strb	r0, [r1, #0xd]
@@ -15244,9 +15242,9 @@ CreateJudgeAttentionEyeTask:
 	lsl	r1, r0, #0x2
 	add	r1, r1, r0
 	lsl	r1, r1, #0x3
-	ldr	r4, .L1444+0x8
+	ldr	r4, .L1442+0x8
 	mov	r3, #0xff
-.L1442:
+.L1440:
 	lsl	r0, r2, #0x3
 	add	r0, r0, r1
 	add	r0, r0, r4
@@ -15255,13 +15253,13 @@ CreateJudgeAttentionEyeTask:
 	lsl	r0, r0, #0x18
 	lsr	r2, r0, #0x18
 	cmp	r2, #0x3
-	bls	.L1442	@cond_branch
+	bls	.L1440	@cond_branch
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L1445:
+.L1443:
 	.align	2, 0
-.L1444:
+.L1442:
 	.word	Task_FlashJudgeAttentionEye
 	.word	gContestResources
 	.word	gTasks+0x8
@@ -15274,8 +15272,8 @@ StartFlashJudgeAttentionEye:
 	push	{r4, r5, lr}
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
-	ldr	r3, .L1447
-	ldr	r1, .L1447+0x4
+	ldr	r3, .L1445
+	ldr	r1, .L1445+0x4
 	ldr	r5, [r1]
 	ldr	r1, [r5]
 	ldrb	r2, [r1, #0xd]
@@ -15301,9 +15299,9 @@ StartFlashJudgeAttentionEye:
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.L1448:
+.L1446:
 	.align	2, 0
-.L1447:
+.L1445:
 	.word	gTasks
 	.word	gContestResources
 .Lfe118:
@@ -15316,12 +15314,12 @@ StopFlashJudgeAttentionEye:
 	add	r4, r0, #0
 	lsl	r4, r4, #0x18
 	lsr	r4, r4, #0x18
-	ldr	r0, .L1450
+	ldr	r0, .L1448
 	mov	r1, #0x1f
 	bl	CreateTask
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
-	ldr	r2, .L1450+0x4
+	ldr	r2, .L1448+0x4
 	lsl	r1, r0, #0x2
 	add	r1, r1, r0
 	lsl	r1, r1, #0x3
@@ -15330,9 +15328,9 @@ StopFlashJudgeAttentionEye:
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L1451:
+.L1449:
 	.align	2, 0
-.L1450:
+.L1448:
 	.word	Task_StopFlashJudgeAttentionEye
 	.word	gTasks
 .Lfe119:
@@ -15345,14 +15343,14 @@ Task_StopFlashJudgeAttentionEye:
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	add	r6, r0, #0
-	ldr	r2, .L1455
+	ldr	r2, .L1453
 	lsl	r0, r6, #0x2
 	add	r0, r0, r6
 	lsl	r0, r0, #0x3
 	add	r0, r0, r2
 	ldrb	r0, [r0, #0x8]
 	add	r5, r0, #0
-	ldr	r0, .L1455+0x4
+	ldr	r0, .L1453+0x4
 	ldr	r4, [r0]
 	ldr	r0, [r4]
 	ldrb	r1, [r0, #0xd]
@@ -15366,10 +15364,10 @@ Task_StopFlashJudgeAttentionEye:
 	mov	r2, #0x0
 	ldrsh	r0, [r1, r2]
 	cmp	r0, #0
-	beq	.L1454	@cond_branch
+	beq	.L1452	@cond_branch
 	cmp	r0, #0xff
-	bne	.L1453	@cond_branch
-.L1454:
+	bne	.L1451	@cond_branch
+.L1452:
 	mov	r3, #0x0
 	mov	r0, #0xff
 	strh	r0, [r1]
@@ -15391,19 +15389,19 @@ Task_StopFlashJudgeAttentionEye:
 	add	r0, r0, #0x5
 	lsl	r0, r0, #0x4
 	add	r0, r0, #0x6
-	ldr	r3, .L1455+0x8
+	ldr	r3, .L1453+0x8
 	mov	r1, #0x2
 	mov	r2, #0x0
 	bl	BlendPalette
 	add	r0, r6, #0
 	bl	DestroyTask
-.L1453:
+.L1451:
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L1456:
+.L1454:
 	.align	2, 0
-.L1455:
+.L1453:
 	.word	gTasks
 	.word	gContestResources
 	.word	0x4bff
@@ -15425,13 +15423,13 @@ Task_FlashJudgeAttentionEye:
 	add	r1, r1, r0
 	mov	r9, r1
 	lsl	r7, r1, #0x3
-	ldr	r0, .L1469
+	ldr	r0, .L1467
 	mov	r8, r0
 	mov	r1, #0x8
 	neg	r1, r1
 	add	r1, r1, r8
 	mov	sl, r1
-.L1461:
+.L1459:
 	lsl	r0, r6, #0x1a
 	lsr	r3, r0, #0x18
 	lsl	r0, r3, #0x1
@@ -15442,7 +15440,7 @@ Task_FlashJudgeAttentionEye:
 	mov	r5, #0x0
 	ldrsh	r0, [r2, r5]
 	cmp	r0, #0xff
-	beq	.L1460	@cond_branch
+	beq	.L1458	@cond_branch
 	add	r0, r3, #0x1
 	lsl	r1, r0, #0x1
 	add	r1, r1, r7
@@ -15451,16 +15449,16 @@ Task_FlashJudgeAttentionEye:
 	ldrsh	r1, [r1, r5]
 	add	r5, r0, #0
 	cmp	r1, #0
-	bne	.L1463	@cond_branch
+	bne	.L1461	@cond_branch
 	add	r0, r4, #0x1
-	b	.L1468
-.L1470:
-	.align	2, 0
-.L1469:
-	.word	gTasks+0x8
-.L1463:
-	sub	r0, r4, #0x1
+	b	.L1466
 .L1468:
+	.align	2, 0
+.L1467:
+	.word	gTasks+0x8
+.L1461:
+	sub	r0, r4, #0x1
+.L1466:
 	strh	r0, [r2]
 	lsl	r1, r3, #0x1
 	mov	r0, r9
@@ -15473,10 +15471,10 @@ Task_FlashJudgeAttentionEye:
 	ldrsh	r0, [r0, r4]
 	add	r4, r1, #0
 	cmp	r0, #0x10
-	beq	.L1466	@cond_branch
+	beq	.L1464	@cond_branch
 	cmp	r0, #0
-	bne	.L1465	@cond_branch
-.L1466:
+	bne	.L1463	@cond_branch
+.L1464:
 	lsl	r0, r5, #0x1
 	add	r0, r0, r2
 	add	r0, r0, r3
@@ -15484,8 +15482,8 @@ Task_FlashJudgeAttentionEye:
 	mov	r2, #0x1
 	eor	r1, r1, r2
 	strh	r1, [r0]
-.L1465:
-	ldr	r0, .L1471
+.L1463:
+	ldr	r0, .L1469
 	ldr	r0, [r0]
 	ldr	r0, [r0]
 	add	r0, r0, #0x14
@@ -15498,14 +15496,14 @@ Task_FlashJudgeAttentionEye:
 	add	r1, r1, r8
 	ldrb	r2, [r1]
 	mov	r1, #0x2
-	ldr	r3, .L1471+0x4
+	ldr	r3, .L1469+0x4
 	bl	BlendPalette
-.L1460:
+.L1458:
 	add	r0, r6, #0x1
 	lsl	r0, r0, #0x18
 	lsr	r6, r0, #0x18
 	cmp	r6, #0x3
-	bls	.L1461	@cond_branch
+	bls	.L1459	@cond_branch
 	pop	{r3, r4, r5}
 	mov	r8, r3
 	mov	r9, r4
@@ -15513,9 +15511,9 @@ Task_FlashJudgeAttentionEye:
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L1472:
+.L1470:
 	.align	2, 0
-.L1471:
+.L1469:
 	.word	gContestResources
 	.word	0x4bff
 .Lfe121:
@@ -15525,27 +15523,27 @@ Task_FlashJudgeAttentionEye:
 	.thumb_func
 CreateUnusedBlendTask:
 	push	{r4, lr}
-	ldr	r0, .L1479
+	ldr	r0, .L1477
 	mov	r1, #0x1e
 	bl	CreateTask
-	ldr	r1, .L1479+0x4
+	ldr	r1, .L1477+0x4
 	ldr	r1, [r1]
 	ldr	r1, [r1]
 	strb	r0, [r1, #0xe]
 	mov	r4, #0x0
-.L1477:
+.L1475:
 	lsl	r0, r4, #0x18
 	lsr	r0, r0, #0x18
 	bl	InitUnusedBlendTaskData
 	add	r4, r4, #0x1
 	cmp	r4, #0x3
-	ble	.L1477	@cond_branch
+	ble	.L1475	@cond_branch
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L1480:
+.L1478:
 	.align	2, 0
-.L1479:
+.L1477:
 	.word	Task_UnusedBlend
 	.word	gContestResources
 .Lfe122:
@@ -15557,8 +15555,8 @@ InitUnusedBlendTaskData:
 	push	{r4, r5, lr}
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
-	ldr	r3, .L1482
-	ldr	r1, .L1482+0x4
+	ldr	r3, .L1480
+	ldr	r1, .L1480+0x4
 	ldr	r4, [r1]
 	ldr	r1, [r4]
 	ldrb	r2, [r1, #0xe]
@@ -15585,9 +15583,9 @@ InitUnusedBlendTaskData:
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.L1483:
+.L1481:
 	.align	2, 0
-.L1482:
+.L1480:
 	.word	gTasks
 	.word	gContestResources
 .Lfe123:
@@ -15598,13 +15596,13 @@ InitUnusedBlendTaskData:
 UpdateBlendTaskContestantsData:
 	push	{r4, lr}
 	mov	r4, #0x0
-.L1488:
+.L1486:
 	lsl	r0, r4, #0x18
 	lsr	r0, r0, #0x18
 	bl	UpdateBlendTaskContestantData
 	add	r4, r4, #0x1
 	cmp	r4, #0x3
-	ble	.L1488	@cond_branch
+	ble	.L1486	@cond_branch
 	pop	{r4}
 	pop	{r0}
 	bx	r0
@@ -15614,46 +15612,50 @@ UpdateBlendTaskContestantsData:
 	.type	 UpdateBlendTaskContestantData,function
 	.thumb_func
 UpdateBlendTaskContestantData:
-	push	{r4, r5, r6, lr}
+	push	{r4, r5, r6, r7, lr}
+	mov	r7, r8
+	push	{r7}
 	add	r4, r0, #0
 	lsl	r4, r4, #0x18
 	lsr	r4, r4, #0x18
 	add	r0, r4, #0
 	bl	InitUnusedBlendTaskData
-	add	r0, r4, #0x5
-	lsl	r2, r0, #0x5
-	ldr	r3, .L1491
-	add	r6, r2, r3
-	ldr	r5, .L1491+0x4
-	add	r2, r2, r5
-	ldr	r1, .L1491+0x8
-	str	r6, [r1]
-	str	r2, [r1, #0x4]
-	ldr	r2, .L1491+0xc
-	str	r2, [r1, #0x8]
-	ldr	r6, [r1, #0x8]
-	lsl	r0, r0, #0x4
+	add	r3, r4, #0x5
+	lsl	r1, r3, #0x5
+	ldr	r5, .L1489
+	ldr	r6, .L1489+0x4
+	ldr	r0, .L1489+0x8
+	mov	r8, r0
+	add	r0, r1, r5
+	add	r1, r1, r6
+	mov	r2, r8
+	ldr	r7, .L1489+0xc
+	stmia r7!, {r0, r1, r2}
+	.code	16
+	lsl	r3, r3, #0x4
 	add	r4, r4, #0xc
-	add	r0, r0, r4
-	lsl	r0, r0, #0x1
-	sub	r3, r3, #0x14
-	add	r3, r0, r3
+	add	r3, r3, r4
+	lsl	r3, r3, #0x1
 	sub	r5, r5, #0x14
-	add	r0, r0, r5
-	str	r3, [r1]
-	str	r0, [r1, #0x4]
-	str	r2, [r1, #0x8]
-	ldr	r0, [r1, #0x8]
-	pop	{r4, r5, r6}
+	sub	r6, r6, #0x14
+	add	r0, r3, r5
+	add	r1, r3, r6
+	mov	r2, r8
+	ldr	r3, .L1489+0xc
+	stmia r3!, {r0, r1, r2}
+	.code	16
+	pop	{r3}
+	mov	r8, r3
+	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L1492:
+.L1490:
 	.align	2, 0
-.L1491:
+.L1489:
 	.word	gPlttBufferUnfaded+0x14
 	.word	gPlttBufferFaded+0x14
-	.word	0x40000d4
 	.word	-0x7fffffff
+	.word	0x40000d4
 .Lfe125:
 	.size	 UpdateBlendTaskContestantData,.Lfe125-UpdateBlendTaskContestantData
 	.align	2, 0
@@ -15672,11 +15674,11 @@ Task_UnusedBlend:
 	add	r1, r1, r0
 	mov	r9, r1
 	lsl	r6, r1, #0x3
-	ldr	r0, .L1506
+	ldr	r0, .L1504
 	mov	r8, r0
-	ldr	r1, .L1506+0x4
+	ldr	r1, .L1504+0x4
 	mov	sl, r1
-.L1497:
+.L1495:
 	lsl	r0, r7, #0x1a
 	lsr	r3, r0, #0x18
 	lsl	r0, r3, #0x1
@@ -15686,7 +15688,7 @@ Task_UnusedBlend:
 	mov	r5, #0x0
 	ldrsh	r0, [r2, r5]
 	cmp	r0, #0xff
-	beq	.L1496	@cond_branch
+	beq	.L1494	@cond_branch
 	add	r0, r3, #0x2
 	lsl	r0, r0, #0x1
 	add	r0, r0, r6
@@ -15698,7 +15700,7 @@ Task_UnusedBlend:
 	lsl	r0, r0, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, #0x2
-	ble	.L1496	@cond_branch
+	ble	.L1494	@cond_branch
 	strh	r4, [r1]
 	add	r0, r3, #0x1
 	lsl	r1, r0, #0x1
@@ -15708,35 +15710,35 @@ Task_UnusedBlend:
 	ldrsh	r1, [r1, r4]
 	add	r4, r0, #0
 	cmp	r1, #0
-	bne	.L1500	@cond_branch
+	bne	.L1498	@cond_branch
 	ldrh	r0, [r2]
 	add	r0, r0, #0x1
-	b	.L1505
-.L1507:
+	b	.L1503
+.L1505:
 	.align	2, 0
-.L1506:
+.L1504:
 	.word	gTasks+0x8
 	.word	0x4bff
-.L1500:
+.L1498:
 	ldrh	r0, [r2]
 	sub	r0, r0, #0x1
-.L1505:
+.L1503:
 	strh	r0, [r2]
 	lsl	r1, r3, #0x1
 	mov	r5, r9
 	lsl	r2, r5, #0x3
 	add	r0, r1, r2
-	ldr	r3, .L1508
+	ldr	r3, .L1506
 	add	r3, r3, #0x8
 	add	r0, r0, r3
 	mov	r5, #0x0
 	ldrsh	r0, [r0, r5]
 	add	r5, r1, #0
 	cmp	r0, #0x10
-	beq	.L1503	@cond_branch
+	beq	.L1501	@cond_branch
 	cmp	r0, #0
-	bne	.L1502	@cond_branch
-.L1503:
+	bne	.L1500	@cond_branch
+.L1501:
 	lsl	r0, r4, #0x1
 	add	r0, r0, r2
 	add	r0, r0, r3
@@ -15744,7 +15746,7 @@ Task_UnusedBlend:
 	mov	r2, #0x1
 	eor	r1, r1, r2
 	strh	r1, [r0]
-.L1502:
+.L1500:
 	add	r4, r7, #0x5
 	lsl	r4, r4, #0x4
 	add	r0, r4, #0
@@ -15762,12 +15764,12 @@ Task_UnusedBlend:
 	mov	r1, #0x1
 	mov	r3, sl
 	bl	BlendPalette
-.L1496:
+.L1494:
 	add	r0, r7, #0x1
 	lsl	r0, r0, #0x18
 	lsr	r7, r0, #0x18
 	cmp	r7, #0x3
-	bls	.L1497	@cond_branch
+	bls	.L1495	@cond_branch
 	pop	{r3, r4, r5}
 	mov	r8, r3
 	mov	r9, r4
@@ -15775,9 +15777,9 @@ Task_UnusedBlend:
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L1509:
+.L1507:
 	.align	2, 0
-.L1508:
+.L1506:
 	.word	gTasks
 .Lfe126:
 	.size	 Task_UnusedBlend,.Lfe126-Task_UnusedBlend
@@ -15788,7 +15790,7 @@ StartStopFlashJudgeAttentionEye:
 	push	{lr}
 	lsl	r0, r0, #0x18
 	lsr	r2, r0, #0x18
-	ldr	r0, .L1513
+	ldr	r0, .L1511
 	ldr	r0, [r0]
 	ldr	r1, [r0, #0x4]
 	lsl	r0, r2, #0x3
@@ -15799,18 +15801,18 @@ StartStopFlashJudgeAttentionEye:
 	mov	r0, #0x10
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L1511	@cond_branch
+	beq	.L1509	@cond_branch
 	add	r0, r2, #0
 	bl	StartFlashJudgeAttentionEye
-	b	.L1512
-.L1514:
+	b	.L1510
+.L1512:
 	.align	2, 0
-.L1513:
-	.word	gContestResources
 .L1511:
+	.word	gContestResources
+.L1509:
 	add	r0, r2, #0
 	bl	StopFlashJudgeAttentionEye
-.L1512:
+.L1510:
 	pop	{r0}
 	bx	r0
 .Lfe127:
@@ -15828,7 +15830,7 @@ CreateContestantBoxBlinkSprites:
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	str	r0, [sp, #0xc]
-	ldr	r6, .L1516
+	ldr	r6, .L1514
 	add	r6, r0, r6
 	ldrb	r0, [r6]
 	lsl	r5, r0, #0x2
@@ -15840,10 +15842,10 @@ CreateContestantBoxBlinkSprites:
 	lsr	r5, r5, #0x18
 	ldr	r1, [sp, #0xc]
 	lsl	r4, r1, #0x3
-	ldr	r0, .L1516+0x4
+	ldr	r0, .L1514+0x4
 	add	r0, r4, r0
 	bl	LoadCompressedSpriteSheet
-	ldr	r0, .L1516+0x8
+	ldr	r0, .L1514+0x8
 	add	r4, r4, r0
 	add	r0, r4, #0
 	bl	LoadSpritePalette
@@ -15851,7 +15853,7 @@ CreateContestantBoxBlinkSprites:
 	lsl	r4, r2, #0x1
 	add	r4, r4, r2
 	lsl	r4, r4, #0x3
-	ldr	r0, .L1516+0xc
+	ldr	r0, .L1514+0xc
 	add	r4, r4, r0
 	add	r0, r4, #0
 	mov	r1, #0xb8
@@ -15876,16 +15878,16 @@ CreateContestantBoxBlinkSprites:
 	lsl	r5, r0, #0x4
 	add	r5, r5, r8
 	lsl	r5, r5, #0x2
-	ldr	r1, .L1516+0x10
+	ldr	r1, .L1514+0x10
 	add	r5, r5, r1
 	ldrh	r2, [r5, #0x4]
 	lsl	r1, r2, #0x16
 	lsr	r1, r1, #0x16
 	add	r1, r1, #0x40
-	ldr	r3, .L1516+0x14
+	ldr	r3, .L1514+0x14
 	add	r0, r3, #0
 	and	r1, r1, r0
-	ldr	r0, .L1516+0x18
+	ldr	r0, .L1514+0x18
 	and	r0, r0, r2
 	orr	r0, r0, r1
 	strh	r0, [r5, #0x4]
@@ -15895,9 +15897,9 @@ CreateContestantBoxBlinkSprites:
 	lsl	r3, r0, #0x2
 	add	r3, r3, r0
 	lsl	r3, r3, #0x6
-	ldr	r0, .L1516+0x1c
+	ldr	r0, .L1514+0x1c
 	add	r3, r3, r0
-	ldr	r7, .L1516+0x20
+	ldr	r7, .L1514+0x20
 	ldr	r0, [r7]
 	ldr	r0, [r0, #0x34]
 	str	r0, [sp]
@@ -15909,7 +15911,7 @@ CreateContestantBoxBlinkSprites:
 	lsl	r3, r0, #0x2
 	add	r3, r3, r0
 	lsl	r3, r3, #0x6
-	ldr	r1, .L1516+0x24
+	ldr	r1, .L1514+0x24
 	add	r3, r3, r1
 	ldr	r0, [r7]
 	ldr	r0, [r0, #0x38]
@@ -15925,7 +15927,7 @@ CreateContestantBoxBlinkSprites:
 	mov	r6, #0xa0
 	lsl	r6, r6, #0x3
 	add	r1, r1, r6
-	ldr	r2, .L1516+0x28
+	ldr	r2, .L1514+0x28
 	mov	sl, r2
 	add	r0, sp, #0x4
 	bl	CpuSet
@@ -15942,12 +15944,12 @@ CreateContestantBoxBlinkSprites:
 	lsl	r4, r3, #0x4
 	add	r4, r4, r9
 	lsl	r4, r4, #0x2
-	ldr	r1, .L1516+0x10
+	ldr	r1, .L1514+0x10
 	add	r4, r4, r1
 	ldrh	r1, [r4, #0x4]
 	lsl	r1, r1, #0x16
 	lsr	r1, r1, #0x11
-	ldr	r6, .L1516+0x2c
+	ldr	r6, .L1514+0x2c
 	add	r1, r1, r6
 	mov	r2, #0x80
 	lsl	r2, r2, #0x4
@@ -15982,9 +15984,9 @@ CreateContestantBoxBlinkSprites:
 	pop	{r4, r5, r6, r7}
 	pop	{r1}
 	bx	r1
-.L1517:
+.L1515:
 	.align	2, 0
-.L1516:
+.L1514:
 	.word	gContestantTurnOrder
 	.word	sSpriteSheets_ContestantsTurnBlinkEffect
 	.word	sSpritePalettes_ContestantsTurnBlinkEffect
@@ -16006,7 +16008,7 @@ DestroyContestantBoxBlinkSprites:
 	push	{r4, r5, lr}
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
-	ldr	r1, .L1519
+	ldr	r1, .L1517
 	lsl	r5, r0, #0x4
 	add	r5, r5, r0
 	lsl	r5, r5, #0x2
@@ -16027,9 +16029,9 @@ DestroyContestantBoxBlinkSprites:
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.L1520:
+.L1518:
 	.align	2, 0
-.L1519:
+.L1517:
 	.word	gSprites
 .Lfe129:
 	.size	 DestroyContestantBoxBlinkSprites,.Lfe129-DestroyContestantBoxBlinkSprites
@@ -16042,14 +16044,14 @@ SetBlendForContestantBoxBlink:
 	lsl	r1, r1, #0x6
 	mov	r0, #0x50
 	bl	SetGpuReg
-	ldr	r1, .L1522
+	ldr	r1, .L1520
 	mov	r0, #0x52
 	bl	SetGpuReg
 	pop	{r0}
 	bx	r0
-.L1523:
+.L1521:
 	.align	2, 0
-.L1522:
+.L1520:
 	.word	0x907
 .Lfe130:
 	.size	 SetBlendForContestantBoxBlink,.Lfe130-SetBlendForContestantBoxBlink
@@ -16085,9 +16087,9 @@ BlinkContestantBox:
 	lsr	r0, r0, #0x18
 	mov	r9, r0
 	bl	SetBlendForContestantBoxBlink
-	ldr	r0, .L1528
+	ldr	r0, .L1526
 	ldr	r1, [r0]
-	ldr	r2, .L1528+0x4
+	ldr	r2, .L1526+0x4
 	mov	r8, r2
 	lsl	r6, r4, #0x4
 	add	r6, r6, r4
@@ -16117,28 +16119,28 @@ BlinkContestantBox:
 	mov	r2, #0x1c
 	add	r8, r8, r2
 	add	r6, r6, r8
-	ldr	r0, .L1528+0x8
+	ldr	r0, .L1526+0x8
 	str	r0, [r6]
 	add	r4, r4, r8
-	ldr	r0, .L1528+0xc
+	ldr	r0, .L1526+0xc
 	str	r0, [r4]
 	mov	r3, r9
 	cmp	r3, #0
-	bne	.L1526	@cond_branch
+	bne	.L1524	@cond_branch
 	mov	r0, #0x65
 	bl	PlaySE
-	b	.L1527
-.L1529:
+	b	.L1525
+.L1527:
 	.align	2, 0
-.L1528:
+.L1526:
 	.word	gContestResources
 	.word	gSprites
 	.word	SpriteCB_BlinkContestantBox
 	.word	SpriteCallbackDummy
-.L1526:
+.L1524:
 	mov	r0, #0x2
 	bl	PlaySE
-.L1527:
+.L1525:
 	pop	{r3, r4}
 	mov	r8, r3
 	mov	r9, r4
@@ -16158,12 +16160,12 @@ SpriteCB_BlinkContestantBox:
 	mov	r0, #0x20
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L1531	@cond_branch
+	beq	.L1529	@cond_branch
 	mov	r0, ip
 	ldrh	r1, [r0, #0x2e]
 	lsl	r1, r1, #0x18
 	lsr	r1, r1, #0x18
-	ldr	r2, .L1533
+	ldr	r2, .L1531
 	lsl	r0, r1, #0x4
 	add	r0, r0, r1
 	lsl	r0, r0, #0x2
@@ -16173,7 +16175,7 @@ SpriteCB_BlinkContestantBox:
 	ldrb	r0, [r0]
 	lsl	r0, r0, #0x1a
 	cmp	r0, #0
-	bge	.L1531	@cond_branch
+	bge	.L1529	@cond_branch
 	mov	r3, ip
 	add	r3, r3, #0x3e
 	ldrb	r0, [r3]
@@ -16184,15 +16186,15 @@ SpriteCB_BlinkContestantBox:
 	ldrb	r0, [r1]
 	orr	r0, r0, r2
 	strb	r0, [r1]
-	ldr	r0, .L1533+0x4
+	ldr	r0, .L1531+0x4
 	mov	r1, ip
 	str	r0, [r1, #0x1c]
-.L1531:
+.L1529:
 	pop	{r0}
 	bx	r0
-.L1534:
+.L1532:
 	.align	2, 0
-.L1533:
+.L1531:
 	.word	gSprites
 	.word	SpriteCB_EndBlinkContestantBox
 .Lfe133:
@@ -16202,7 +16204,7 @@ SpriteCB_BlinkContestantBox:
 	.thumb_func
 SpriteCB_EndBlinkContestantBox:
 	push	{lr}
-	ldr	r1, .L1536
+	ldr	r1, .L1534
 	ldr	r1, [r1]
 	mov	r3, #0x30
 	ldrsh	r2, [r0, r3]
@@ -16221,9 +16223,9 @@ SpriteCB_EndBlinkContestantBox:
 	bl	ResetBlendForContestantBoxBlink
 	pop	{r0}
 	bx	r0
-.L1537:
+.L1535:
 	.align	2, 0
-.L1536:
+.L1534:
 	.word	gContestResources
 .Lfe134:
 	.size	 SpriteCB_EndBlinkContestantBox,.Lfe134-SpriteCB_EndBlinkContestantBox
@@ -16232,36 +16234,36 @@ SpriteCB_EndBlinkContestantBox:
 	.thumb_func
 ContestDebugTogglePointTotal:
 	push	{lr}
-	ldr	r0, .L1544
+	ldr	r0, .L1542
 	mov	r1, #0xd0
 	lsl	r1, r1, #0x9
 	add	r2, r0, r1
 	ldrb	r1, [r2]
 	add	r3, r0, #0
 	cmp	r1, #0x1
-	bne	.L1539	@cond_branch
+	bne	.L1537	@cond_branch
 	mov	r0, #0x0
-	b	.L1543
-.L1545:
-	.align	2, 0
-.L1544:
-	.word	gHeap
-.L1539:
-	mov	r0, #0x1
+	b	.L1541
 .L1543:
+	.align	2, 0
+.L1542:
+	.word	gHeap
+.L1537:
+	mov	r0, #0x1
+.L1541:
 	strb	r0, [r2]
 	mov	r1, #0xd0
 	lsl	r1, r1, #0x9
 	add	r0, r3, r1
 	ldrb	r0, [r0]
 	cmp	r0, #0
-	bne	.L1541	@cond_branch
+	bne	.L1539	@cond_branch
 	bl	DrawContestantWindowText
 	bl	SwapMoveDescAndContestTilemaps
-	b	.L1542
-.L1541:
+	b	.L1540
+.L1539:
 	bl	ContestDebugDoPrint
-.L1542:
+.L1540:
 	pop	{r0}
 	bx	r0
 .Lfe135:
@@ -16272,33 +16274,33 @@ ContestDebugTogglePointTotal:
 ContestDebugDoPrint:
 	push	{r4, r5, lr}
 	add	sp, sp, #-0xc
-	ldr	r0, .L1571
+	ldr	r0, .L1569
 	ldrb	r0, [r0]
 	cmp	r0, #0
-	beq	.L1546	@cond_branch
-	ldr	r0, .L1571+0x4
+	beq	.L1544	@cond_branch
+	ldr	r0, .L1569+0x4
 	mov	r1, #0xd0
 	lsl	r1, r1, #0x9
 	add	r0, r0, r1
 	ldrb	r0, [r0]
 	cmp	r0, #0
-	beq	.L1546	@cond_branch
+	beq	.L1544	@cond_branch
 	cmp	r0, #0
-	blt	.L1552	@cond_branch
+	blt	.L1550	@cond_branch
 	cmp	r0, #0x3
-	bgt	.L1552	@cond_branch
+	bgt	.L1550	@cond_branch
 	cmp	r0, #0x2
-	blt	.L1552	@cond_branch
+	blt	.L1550	@cond_branch
 	bl	ContestDebugPrintBitStrings
-	b	.L1546
-.L1572:
+	b	.L1544
+.L1570:
 	.align	2, 0
-.L1571:
+.L1569:
 	.word	gEnableContestDebugging
 	.word	gHeap
-.L1552:
+.L1550:
 	mov	r5, #0x0
-.L1556:
+.L1554:
 	add	r0, r5, #0
 	mov	r1, #0x0
 	bl	FillWindowPixelBuffer
@@ -16306,10 +16308,10 @@ ContestDebugDoPrint:
 	lsl	r0, r0, #0x18
 	lsr	r5, r0, #0x18
 	cmp	r5, #0x3
-	bls	.L1556	@cond_branch
+	bls	.L1554	@cond_branch
 	mov	r5, #0x0
-.L1561:
-	ldr	r0, .L1573
+.L1559:
+	ldr	r0, .L1571
 	ldr	r0, [r0]
 	ldr	r1, [r0, #0x4]
 	lsl	r0, r5, #0x3
@@ -16321,22 +16323,22 @@ ContestDebugDoPrint:
 	mov	r1, #0x4
 	ldrsh	r0, [r0, r1]
 	cmp	r0, #0
-	bge	.L1562	@cond_branch
+	bge	.L1560	@cond_branch
 	neg	r0, r0
 	lsl	r0, r0, #0x10
 	lsr	r4, r0, #0x10
 	add	r0, r2, #0
-	ldr	r1, .L1573+0x4
+	ldr	r1, .L1571+0x4
 	bl	StringCopy
 	add	r2, r0, #0
-.L1562:
+.L1560:
 	lsl	r1, r4, #0x10
 	asr	r1, r1, #0x10
 	add	r0, r2, #0
 	mov	r2, #0x0
 	mov	r3, #0x4
 	bl	ConvertIntToDecimalStringN
-	ldr	r0, .L1573+0x8
+	ldr	r0, .L1571+0x8
 	add	r0, r5, r0
 	ldrb	r0, [r0]
 	mov	r1, #0x7
@@ -16349,10 +16351,10 @@ ContestDebugDoPrint:
 	lsl	r0, r0, #0x18
 	lsr	r5, r0, #0x18
 	cmp	r5, #0x3
-	bls	.L1561	@cond_branch
+	bls	.L1559	@cond_branch
 	mov	r5, #0x0
-.L1567:
-	ldr	r0, .L1573
+.L1565:
+	ldr	r0, .L1571
 	ldr	r0, [r0]
 	ldr	r1, [r0, #0x4]
 	lsl	r0, r5, #0x3
@@ -16364,22 +16366,22 @@ ContestDebugDoPrint:
 	mov	r1, #0x2
 	ldrsh	r0, [r0, r1]
 	cmp	r0, #0
-	bge	.L1568	@cond_branch
+	bge	.L1566	@cond_branch
 	neg	r0, r0
 	lsl	r0, r0, #0x10
 	lsr	r4, r0, #0x10
 	add	r0, r2, #0
-	ldr	r1, .L1573+0x4
+	ldr	r1, .L1571+0x4
 	bl	StringCopy
 	add	r2, r0, #0
-.L1568:
+.L1566:
 	lsl	r1, r4, #0x10
 	asr	r1, r1, #0x10
 	add	r0, r2, #0
 	mov	r2, #0x0
 	mov	r3, #0x4
 	bl	ConvertIntToDecimalStringN
-	ldr	r0, .L1573+0x8
+	ldr	r0, .L1571+0x8
 	add	r0, r5, r0
 	ldrb	r0, [r0]
 	mov	r1, #0x7
@@ -16392,16 +16394,16 @@ ContestDebugDoPrint:
 	lsl	r0, r0, #0x18
 	lsr	r5, r0, #0x18
 	cmp	r5, #0x3
-	bls	.L1567	@cond_branch
+	bls	.L1565	@cond_branch
 	bl	SwapMoveDescAndContestTilemaps
-.L1546:
+.L1544:
 	add	sp, sp, #0xc
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.L1574:
+.L1572:
 	.align	2, 0
-.L1573:
+.L1571:
 	.word	gContestResources
 	.word	gText_OneDash
 	.word	gContestantTurnOrder
@@ -16430,7 +16432,7 @@ SortContestants:
 	add	r4, sp, #0x4
 	add	r6, r4, #0
 	mov	r7, #0x0
-.L1579:
+.L1577:
 	bl	Random
 	add	r1, r0, #0
 	mov	r0, sp
@@ -16439,46 +16441,46 @@ SortContestants:
 	strh	r1, [r0]
 	mov	r2, #0x0
 	cmp	r2, r5
-	bge	.L1578	@cond_branch
+	bge	.L1576	@cond_branch
 	lsl	r0, r1, #0x10
 	lsr	r0, r0, #0x10
 	mov	r1, sp
 	ldrh	r1, [r1, #0x4]
 	cmp	r0, r1
-	beq	.L1634	@cond_branch
-.L1582:
+	beq	.L1632	@cond_branch
+.L1580:
 	add	r2, r2, #0x1
 	cmp	r2, r5
-	bge	.L1578	@cond_branch
+	bge	.L1576	@cond_branch
 	lsl	r0, r2, #0x1
 	add	r0, r4, r0
 	ldrh	r1, [r6]
 	ldrh	r0, [r0]
 	cmp	r1, r0
-	bne	.L1582	@cond_branch
-.L1634:
+	bne	.L1580	@cond_branch
+.L1632:
 	sub	r6, r6, #0x2
 	sub	r7, r7, #0x2
 	sub	r5, r5, #0x1
-.L1578:
+.L1576:
 	add	r6, r6, #0x2
 	add	r7, r7, #0x2
 	add	r5, r5, #0x1
 	cmp	r5, #0x3
-	ble	.L1579	@cond_branch
+	ble	.L1577	@cond_branch
 	mov	r2, r8
 	cmp	r2, #0
-	bne	.L1587	@cond_branch
+	bne	.L1585	@cond_branch
 	mov	r5, #0x0
-	ldr	r3, .L1636
+	ldr	r3, .L1634
 	mov	r8, r3
-.L1591:
+.L1589:
 	mov	r6, r8
 	strb	r5, [r6]
 	mov	r4, #0x0
 	cmp	r4, r5
-	bge	.L1593	@cond_branch
-	ldr	r7, .L1636+0x4
+	bge	.L1591	@cond_branch
+	ldr	r7, .L1634+0x4
 	mov	r9, r7
 	lsl	r0, r5, #0x1
 	add	r1, r0, #0
@@ -16490,10 +16492,10 @@ SortContestants:
 	add	r0, r0, sp
 	add	r0, r0, #0x4
 	str	r0, [sp, #0x10]
-	ldr	r3, .L1636
+	ldr	r3, .L1634
 	add	r6, r3, #0
 	mov	sl, r6
-.L1595:
+.L1593:
 	ldrb	r0, [r3]
 	lsl	r2, r0, #0x1
 	mov	r7, r9
@@ -16504,61 +16506,61 @@ SortContestants:
 	mov	r6, #0x0
 	ldrsh	r0, [r7, r6]
 	cmp	r1, r0
-	blt	.L1597	@cond_branch
+	blt	.L1595	@cond_branch
 	cmp	r1, r0
-	bne	.L1594	@cond_branch
+	bne	.L1592	@cond_branch
 	ldr	r7, [sp, #0xc]
 	add	r0, r7, r2
 	ldrh	r0, [r0]
 	ldr	r1, [sp, #0x10]
 	ldrh	r1, [r1]
 	cmp	r0, r1
-	bcs	.L1594	@cond_branch
-.L1597:
+	bcs	.L1592	@cond_branch
+.L1595:
 	add	r2, r5, #0
 	cmp	r5, r4
-	ble	.L1599	@cond_branch
+	ble	.L1597	@cond_branch
 	sub	r0, r5, #0x1
 	mov	r6, sl
 	add	r1, r0, r6
-.L1601:
+.L1599:
 	ldrb	r0, [r1]
 	strb	r0, [r1, #0x1]
 	sub	r1, r1, #0x1
 	sub	r2, r2, #0x1
 	cmp	r2, r4
-	bgt	.L1601	@cond_branch
-.L1599:
+	bgt	.L1599	@cond_branch
+.L1597:
 	strb	r5, [r3]
-	b	.L1593
-.L1637:
+	b	.L1591
+.L1635:
 	.align	2, 0
-.L1636:
+.L1634:
 	.word	gContestantTurnOrder
 	.word	gContestMonRound1Points
-.L1594:
+.L1592:
 	add	r3, r3, #0x1
 	add	r4, r4, #0x1
 	cmp	r4, r5
-	blt	.L1595	@cond_branch
-.L1593:
+	blt	.L1593	@cond_branch
+.L1591:
 	cmp	r4, r5
-	bne	.L1590	@cond_branch
+	bne	.L1588	@cond_branch
 	mov	r7, r8
 	strb	r5, [r7]
-.L1590:
+.L1588:
 	mov	r0, #0x1
 	add	r8, r8, r0
 	add	r5, r5, #0x1
 	cmp	r5, #0x3
-	ble	.L1591	@cond_branch
-	ldr	r4, .L1638
+	ble	.L1589	@cond_branch
+	ldr	r4, .L1636
 	mov	r0, sp
 	add	r1, r4, #0
 	mov	r2, #0x4
 	bl	memcpy
 	mov	r5, #0x0
-.L1609:
+.L1607:
 	mov	r1, sp
 	add	r0, r1, r5
 	ldrb	r0, [r0]
@@ -16566,22 +16568,22 @@ SortContestants:
 	strb	r5, [r0]
 	add	r5, r5, #0x1
 	cmp	r5, #0x3
-	ble	.L1609	@cond_branch
-	b	.L1611
-.L1639:
+	ble	.L1607	@cond_branch
+	b	.L1609
+.L1637:
 	.align	2, 0
-.L1638:
+.L1636:
 	.word	gContestantTurnOrder
-.L1587:
+.L1585:
 	mov	r0, sp
 	mov	r1, #0xff
 	mov	r2, #0x4
 	bl	memset
 	mov	r5, #0x0
-	ldr	r3, .L1640
+	ldr	r3, .L1638
 	mov	r6, #0x0
-.L1615:
-	ldr	r0, .L1640+0x4
+.L1613:
+	ldr	r0, .L1638+0x4
 	ldr	r0, [r0]
 	ldr	r0, [r0, #0x4]
 	add	r0, r6, r0
@@ -16590,43 +16592,43 @@ SortContestants:
 	lsr	r2, r0, #0x1e
 	mov	r7, sp
 	add	r1, r7, r2
-	b	.L1635
-.L1641:
+	b	.L1633
+.L1639:
 	.align	2, 0
-.L1640:
+.L1638:
 	.word	gContestantTurnOrder
 	.word	gContestResources
-.L1619:
+.L1617:
 	add	r0, r2, #0x1
 	lsl	r0, r0, #0x18
 	lsr	r2, r0, #0x18
 	mov	r0, sp
 	add	r1, r0, r2
-.L1635:
+.L1633:
 	ldrb	r0, [r1]
 	cmp	r0, #0xff
-	bne	.L1619	@cond_branch
+	bne	.L1617	@cond_branch
 	strb	r5, [r1]
 	strb	r2, [r3]
 	add	r3, r3, #0x1
 	add	r6, r6, #0x1c
 	add	r5, r5, #0x1
 	cmp	r5, #0x3
-	ble	.L1615	@cond_branch
+	ble	.L1613	@cond_branch
 	mov	r5, #0x0
-.L1625:
+.L1623:
 	mov	r4, #0x3
 	add	r1, r5, #0x1
 	mov	sl, r1
 	cmp	r4, r5
-	ble	.L1624	@cond_branch
+	ble	.L1622	@cond_branch
 	mov	r9, r4
-	ldr	r2, .L1642
+	ldr	r2, .L1640
 	mov	r8, r2
 	add	r3, sp, #0x4
 	mov	ip, r3
-.L1629:
-	ldr	r6, .L1642+0x4
+.L1627:
+	ldr	r6, .L1640+0x4
 	ldr	r0, [r6]
 	ldr	r1, [r0, #0x4]
 	lsl	r0, r4, #0x3
@@ -16643,14 +16645,14 @@ SortContestants:
 	and	r0, r0, r3
 	sub	r3, r4, #0x1
 	cmp	r1, r0
-	bne	.L1628	@cond_branch
+	bne	.L1626	@cond_branch
 	mov	r0, r8
 	add	r7, r3, r0
 	add	r2, r4, r0
 	ldrb	r6, [r7]
 	ldrb	r1, [r2]
 	cmp	r6, r1
-	bcs	.L1628	@cond_branch
+	bcs	.L1626	@cond_branch
 	lsl	r0, r3, #0x1
 	add	r0, r0, ip
 	lsl	r1, r4, #0x1
@@ -16658,19 +16660,19 @@ SortContestants:
 	ldrh	r0, [r0]
 	ldrh	r1, [r1]
 	cmp	r0, r1
-	bcs	.L1628	@cond_branch
+	bcs	.L1626	@cond_branch
 	ldrb	r0, [r2]
 	strb	r6, [r2]
 	strb	r0, [r7]
-.L1628:
+.L1626:
 	add	r4, r3, #0
 	cmp	r4, r5
-	bgt	.L1629	@cond_branch
-.L1624:
+	bgt	.L1627	@cond_branch
+.L1622:
 	mov	r5, sl
 	cmp	r5, #0x2
-	ble	.L1625	@cond_branch
-.L1611:
+	ble	.L1623	@cond_branch
+.L1609:
 	add	sp, sp, #0x14
 	pop	{r3, r4, r5}
 	mov	r8, r3
@@ -16679,9 +16681,9 @@ SortContestants:
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L1643:
+.L1641:
 	.align	2, 0
-.L1642:
+.L1640:
 	.word	gContestantTurnOrder
 	.word	gContestResources
 .Lfe137:
@@ -16693,10 +16695,10 @@ DrawContestantWindows:
 	push	{r4, r5, lr}
 	mov	r4, #0x0
 	mov	r5, #0xa0
-.L1648:
-	ldr	r0, .L1650
+.L1646:
+	ldr	r0, .L1648
 	add	r0, r5, r0
-	ldr	r1, .L1650+0x4
+	ldr	r1, .L1648+0x4
 	add	r1, r4, r1
 	ldrb	r1, [r1]
 	add	r1, r1, #0x5
@@ -16706,14 +16708,14 @@ DrawContestantWindows:
 	add	r5, r5, #0x20
 	add	r4, r4, #0x1
 	cmp	r4, #0x3
-	ble	.L1648	@cond_branch
+	ble	.L1646	@cond_branch
 	bl	DrawContestantWindowText
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.L1651:
+.L1649:
 	.align	2, 0
-.L1650:
+.L1648:
 	.word	gHeap+0x1a004
 	.word	gContestantTurnOrder
 .Lfe138:
@@ -16728,7 +16730,7 @@ CalculateAppealMoveImpact:
 	push	{r6, r7}
 	lsl	r0, r0, #0x18
 	lsr	r6, r0, #0x18
-	ldr	r4, .L1690
+	ldr	r4, .L1688
 	ldr	r3, [r4]
 	ldr	r1, [r3, #0x4]
 	lsl	r7, r6, #0x3
@@ -16745,14 +16747,14 @@ CalculateAppealMoveImpact:
 	lsl	r0, r0, #0x18
 	mov	r8, r4
 	cmp	r0, #0
-	bne	.LCB14878
-	b	.L1652	@long jump
-.LCB14878:
+	bne	.LCB14886
+	b	.L1650	@long jump
+.LCB14886:
 	ldr	r0, [r4]
 	ldr	r1, [r0, #0x4]
 	add	r1, r5, r1
 	ldrh	r0, [r1, #0x6]
-	ldr	r2, .L1690+0x4
+	ldr	r2, .L1688+0x4
 	lsl	r0, r0, #0x3
 	add	r0, r0, r2
 	ldrb	r2, [r0]
@@ -16767,9 +16769,9 @@ CalculateAppealMoveImpact:
 	ldrh	r0, [r2, #0x6]
 	ldrh	r1, [r2, #0x8]
 	cmp	r0, r1
-	bne	.L1654	@cond_branch
+	bne	.L1652	@cond_branch
 	cmp	r0, #0
-	beq	.L1654	@cond_branch
+	beq	.L1652	@cond_branch
 	ldrb	r0, [r2, #0x15]
 	mov	r1, #0x1
 	orr	r0, r0, r1
@@ -16789,14 +16791,14 @@ CalculateAppealMoveImpact:
 	and	r0, r0, r3
 	orr	r0, r0, r1
 	strb	r0, [r2, #0xb]
-	b	.L1655
-.L1691:
+	b	.L1653
+.L1689:
 	.align	2, 0
-.L1690:
+.L1688:
 	.word	gContestResources
 	.word	gContestMoves
-.L1654:
-	ldr	r4, .L1692
+.L1652:
+	ldr	r4, .L1690
 	ldr	r0, [r4]
 	ldr	r0, [r0, #0x4]
 	lsl	r3, r6, #0x3
@@ -16810,14 +16812,14 @@ CalculateAppealMoveImpact:
 	strb	r0, [r1, #0xb]
 	mov	r8, r4
 	add	r7, r3, #0
-.L1655:
+.L1653:
 	mov	r2, r8
 	ldr	r4, [r2]
 	ldr	r2, [r4, #0x4]
 	sub	r0, r7, r6
 	lsl	r0, r0, #0x2
 	add	r2, r0, r2
-	ldr	r3, .L1692+0x4
+	ldr	r3, .L1690+0x4
 	mov	r1, r9
 	lsl	r5, r1, #0x2
 	add	r3, r5, r3
@@ -16840,7 +16842,7 @@ CalculateAppealMoveImpact:
 	mov	r4, r8
 	mov	r3, #0x0
 	mov	r1, #0x0
-.L1659:
+.L1657:
 	ldr	r0, [r4]
 	ldr	r0, [r0, #0x4]
 	add	r0, r1, r0
@@ -16853,8 +16855,8 @@ CalculateAppealMoveImpact:
 	add	r1, r1, #0x1c
 	add	r2, r2, #0x1
 	cmp	r2, #0x3
-	ble	.L1659	@cond_branch
-	ldr	r5, .L1692
+	ble	.L1657	@cond_branch
+	ldr	r5, .L1690
 	ldr	r0, [r5]
 	ldr	r1, [r0, #0x4]
 	sub	r0, r7, r6
@@ -16864,13 +16866,13 @@ CalculateAppealMoveImpact:
 	mov	r0, #0x10
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L1661	@cond_branch
+	beq	.L1659	@cond_branch
 	ldrh	r0, [r2, #0x8]
 	ldrh	r1, [r2, #0x6]
 	bl	AreMovesContestCombo
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	bne	.L1661	@cond_branch
+	bne	.L1659	@cond_branch
 	ldr	r0, [r5]
 	ldr	r1, [r0, #0x4]
 	add	r1, r4, r1
@@ -16879,12 +16881,12 @@ CalculateAppealMoveImpact:
 	neg	r0, r0
 	and	r0, r0, r2
 	strb	r0, [r1, #0x15]
-.L1661:
-	ldr	r0, .L1692+0x8
+.L1659:
+	ldr	r0, .L1690+0x8
 	add	r0, r0, r9
 	ldr	r0, [r0]
 	bl	_call_via_r0
-	ldr	r0, .L1692
+	ldr	r0, .L1690
 	ldr	r0, [r0]
 	ldr	r1, [r0, #0x4]
 	sub	r0, r7, r6
@@ -16894,38 +16896,38 @@ CalculateAppealMoveImpact:
 	mov	r0, #0x30
 	and	r0, r0, r1
 	cmp	r0, #0x10
-	bne	.L1662	@cond_branch
+	bne	.L1660	@cond_branch
 	ldrh	r1, [r2, #0x2]
 	sub	r1, r1, #0xa
 	mov	r0, #0xd
 	ldrsb	r0, [r2, r0]
-	b	.L1685
-.L1693:
+	b	.L1683
+.L1691:
 	.align	2, 0
-.L1692:
+.L1690:
 	.word	gContestResources
 	.word	gContestEffects
 	.word	gContestEffectFuncs
-.L1662:
+.L1660:
 	ldrb	r1, [r2, #0x11]
 	mov	r0, #0x20
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L1664	@cond_branch
+	beq	.L1662	@cond_branch
 	mov	r1, #0xd
 	ldrsb	r1, [r2, r1]
 	lsl	r0, r1, #0x1
 	add	r0, r0, r1
-	b	.L1686
-.L1664:
+	b	.L1684
+.L1662:
 	mov	r0, #0xd
 	ldrsb	r0, [r2, r0]
-.L1686:
+.L1684:
 	ldrh	r1, [r2, #0x2]
-.L1685:
+.L1683:
 	add	r0, r0, r1
 	strh	r0, [r2, #0x2]
-	ldr	r5, .L1694
+	ldr	r5, .L1692
 	ldr	r0, [r5]
 	ldr	r1, [r0, #0x4]
 	sub	r0, r7, r6
@@ -16945,7 +16947,7 @@ CalculateAppealMoveImpact:
 	bl	IsContestantAllowedToCombo
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.L1666	@cond_branch
+	beq	.L1664	@cond_branch
 	ldr	r0, [r5]
 	ldr	r1, [r0, #0x4]
 	add	r1, r4, r1
@@ -16955,7 +16957,7 @@ CalculateAppealMoveImpact:
 	lsl	r0, r0, #0x18
 	lsr	r3, r0, #0x18
 	cmp	r3, #0
-	beq	.L1667	@cond_branch
+	beq	.L1665	@cond_branch
 	ldr	r0, [r5]
 	ldr	r0, [r0, #0x4]
 	add	r2, r4, r0
@@ -16963,7 +16965,7 @@ CalculateAppealMoveImpact:
 	mov	r0, #0x10
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L1667	@cond_branch
+	beq	.L1665	@cond_branch
 	strb	r3, [r2, #0x16]
 	ldr	r0, [r5]
 	ldr	r1, [r0, #0x4]
@@ -16993,14 +16995,14 @@ CalculateAppealMoveImpact:
 	add	r1, r4, r1
 	ldrb	r0, [r1, #0x15]
 	mov	r2, #0x8
-	b	.L1687
-.L1695:
+	b	.L1685
+.L1693:
 	.align	2, 0
-.L1694:
+.L1692:
 	.word	gContestResources
-.L1667:
-	ldr	r2, .L1696
-	ldr	r5, .L1696+0x4
+.L1665:
+	ldr	r2, .L1694
+	ldr	r5, .L1694+0x4
 	ldr	r0, [r5]
 	ldr	r1, [r0, #0x4]
 	sub	r0, r7, r6
@@ -17011,7 +17013,7 @@ CalculateAppealMoveImpact:
 	add	r0, r0, r2
 	ldrb	r0, [r0, #0x2]
 	cmp	r0, #0
-	beq	.L1669	@cond_branch
+	beq	.L1667	@cond_branch
 	ldrb	r0, [r3, #0x15]
 	mov	r1, #0x10
 	orr	r0, r0, r1
@@ -17021,23 +17023,23 @@ CalculateAppealMoveImpact:
 	add	r1, r4, r1
 	ldrb	r0, [r1, #0x15]
 	mov	r2, #0x40
-.L1687:
+.L1685:
 	orr	r0, r0, r2
 	strb	r0, [r1, #0x15]
-	b	.L1666
-.L1697:
+	b	.L1664
+.L1695:
 	.align	2, 0
-.L1696:
+.L1694:
 	.word	gContestMoves
 	.word	gContestResources
-.L1669:
+.L1667:
 	ldrb	r1, [r3, #0x15]
 	mov	r0, #0x11
 	neg	r0, r0
 	and	r0, r0, r1
 	strb	r0, [r3, #0x15]
-.L1666:
-	ldr	r5, .L1698
+.L1664:
+	ldr	r5, .L1696
 	ldr	r0, [r5]
 	ldr	r1, [r0, #0x4]
 	sub	r0, r7, r6
@@ -17048,7 +17050,7 @@ CalculateAppealMoveImpact:
 	mov	r8, r0
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L1671	@cond_branch
+	beq	.L1669	@cond_branch
 	ldrb	r0, [r2, #0xb]
 	lsl	r0, r0, #0x19
 	lsr	r0, r0, #0x1d
@@ -17057,7 +17059,7 @@ CalculateAppealMoveImpact:
 	add	r1, r1, r0
 	lsl	r1, r1, #0x1
 	strb	r1, [r2, #0x18]
-.L1671:
+.L1669:
 	ldr	r0, [r5]
 	ldr	r0, [r0, #0x4]
 	add	r2, r4, r0
@@ -17065,7 +17067,7 @@ CalculateAppealMoveImpact:
 	mov	r0, r8
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L1672	@cond_branch
+	beq	.L1670	@cond_branch
 	ldrb	r1, [r2, #0x15]
 	mov	r0, #0x11
 	neg	r0, r0
@@ -17079,7 +17081,7 @@ CalculateAppealMoveImpact:
 	ldr	r0, [r2, #0x4]
 	add	r0, r4, r0
 	strh	r1, [r0]
-.L1672:
+.L1670:
 	ldr	r0, [r5]
 	ldr	r0, [r0, #0x4]
 	add	r0, r4, r0
@@ -17095,17 +17097,17 @@ CalculateAppealMoveImpact:
 	mov	r0, #0x10
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L1673	@cond_branch
+	beq	.L1671	@cond_branch
 	ldr	r0, [r2, #0x10]
 	mov	r1, r8
 	strb	r1, [r0]
-.L1673:
+.L1671:
 	ldr	r1, [r5]
 	ldr	r3, [r1, #0x10]
 	mov	r0, #0x0
 	ldrsb	r0, [r3, r0]
 	cmp	r0, #0
-	ble	.L1674	@cond_branch
+	ble	.L1672	@cond_branch
 	ldr	r0, [r1]
 	ldrb	r0, [r0, #0x13]
 	lsl	r0, r0, #24
@@ -17114,19 +17116,19 @@ CalculateAppealMoveImpact:
 	ldrsb	r1, [r3, r1]
 	add	r0, r0, r1
 	cmp	r0, #0x4
-	ble	.L1675	@cond_branch
+	ble	.L1673	@cond_branch
 	mov	r0, #0x3c
-	b	.L1688
-.L1699:
+	b	.L1686
+.L1697:
 	.align	2, 0
-.L1698:
+.L1696:
 	.word	gContestResources
-.L1675:
+.L1673:
 	mov	r0, #0xa
-	b	.L1688
-.L1674:
+	b	.L1686
+.L1672:
 	mov	r0, #0x0
-.L1688:
+.L1686:
 	strb	r0, [r3, #0x2]
 	bl	Random
 	lsl	r0, r0, #0x10
@@ -17136,38 +17138,38 @@ CalculateAppealMoveImpact:
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	mov	r2, #0x0
-	b	.L1689
-.L1683:
+	b	.L1687
+.L1681:
 	sub	r0, r0, #0x1
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
-.L1680:
+.L1678:
 	add	r2, r2, #0x1
 	cmp	r2, #0x3
-	bgt	.L1679	@cond_branch
-.L1689:
+	bgt	.L1677	@cond_branch
+.L1687:
 	cmp	r2, r6
-	beq	.L1680	@cond_branch
+	beq	.L1678	@cond_branch
 	cmp	r0, #0
-	bne	.L1683	@cond_branch
-.L1679:
-	ldr	r0, .L1700
+	bne	.L1681	@cond_branch
+.L1677:
+	ldr	r0, .L1698
 	ldr	r0, [r0]
 	ldr	r1, [r0, #0x4]
 	sub	r0, r7, r6
 	lsl	r0, r0, #0x2
 	add	r0, r0, r1
 	strb	r2, [r0, #0x1b]
-.L1652:
+.L1650:
 	pop	{r3, r4}
 	mov	r8, r3
 	mov	r9, r4
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L1701:
+.L1699:
 	.align	2, 0
-.L1700:
+.L1698:
 	.word	gContestResources
 .Lfe139:
 	.size	 CalculateAppealMoveImpact,.Lfe139-CalculateAppealMoveImpact
@@ -17178,7 +17180,7 @@ CalculateAppealMoveImpact:
 SetContestantEffectStringID:
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
-	ldr	r2, .L1703
+	ldr	r2, .L1701
 	ldr	r2, [r2]
 	ldr	r3, [r2, #0x4]
 	lsl	r2, r0, #0x3
@@ -17187,9 +17189,9 @@ SetContestantEffectStringID:
 	add	r2, r2, r3
 	strb	r1, [r2, #0x13]
 	bx	lr
-.L1704:
+.L1702:
 	.align	2, 0
-.L1703:
+.L1701:
 	.word	gContestResources
 .Lfe140:
 	.size	 SetContestantEffectStringID,.Lfe140-SetContestantEffectStringID
@@ -17200,7 +17202,7 @@ SetContestantEffectStringID:
 SetContestantEffectStringID2:
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
-	ldr	r2, .L1706
+	ldr	r2, .L1704
 	ldr	r2, [r2]
 	ldr	r3, [r2, #0x4]
 	lsl	r2, r0, #0x3
@@ -17209,9 +17211,9 @@ SetContestantEffectStringID2:
 	add	r2, r2, r3
 	strb	r1, [r2, #0x14]
 	bx	lr
-.L1707:
+.L1705:
 	.align	2, 0
-.L1706:
+.L1704:
 	.word	gContestResources
 .Lfe141:
 	.size	 SetContestantEffectStringID2,.Lfe141-SetContestantEffectStringID2
@@ -17228,35 +17230,35 @@ SetStartledString:
 	lsr	r1, r1, #0x18
 	add	r2, r1, #0
 	cmp	r1, #0x3b
-	bls	.L1709	@cond_branch
+	bls	.L1707	@cond_branch
 	mov	r1, #0x35
 	bl	SetContestantEffectStringID
-	b	.L1710
-.L1709:
+	b	.L1708
+.L1707:
 	cmp	r1, #0x27
-	bls	.L1711	@cond_branch
+	bls	.L1709	@cond_branch
 	mov	r1, #0x34
 	bl	SetContestantEffectStringID
-	b	.L1710
-.L1711:
+	b	.L1708
+.L1709:
 	cmp	r1, #0x1d
-	bls	.L1713	@cond_branch
+	bls	.L1711	@cond_branch
 	mov	r1, #0x33
 	bl	SetContestantEffectStringID
-	b	.L1710
-.L1713:
+	b	.L1708
+.L1711:
 	cmp	r1, #0x13
-	bls	.L1715	@cond_branch
+	bls	.L1713	@cond_branch
 	mov	r1, #0x32
 	bl	SetContestantEffectStringID
-	b	.L1710
-.L1715:
+	b	.L1708
+.L1713:
 	cmp	r2, #0x9
-	bls	.L1710	@cond_branch
+	bls	.L1708	@cond_branch
 	add	r0, r3, #0
 	mov	r1, #0x31
 	bl	SetContestantEffectStringID
-.L1710:
+.L1708:
 	pop	{r0}
 	bx	r0
 .Lfe142:
@@ -17271,13 +17273,13 @@ PrintAppealMoveResultText:
 	lsr	r4, r4, #0x18
 	lsl	r1, r1, #0x18
 	lsr	r6, r1, #0x18
-	ldr	r0, .L1727
+	ldr	r0, .L1725
 	lsl	r1, r4, #0x6
-	ldr	r2, .L1727+0x4
+	ldr	r2, .L1725+0x4
 	add	r1, r1, r2
 	bl	StringCopy
-	ldr	r0, .L1727+0x8
-	ldr	r5, .L1727+0xc
+	ldr	r0, .L1725+0x8
+	ldr	r5, .L1725+0xc
 	ldr	r1, [r5]
 	ldr	r2, [r1, #0x4]
 	lsl	r1, r4, #0x3
@@ -17287,10 +17289,10 @@ PrintAppealMoveResultText:
 	ldrh	r2, [r1, #0x6]
 	lsl	r1, r2, #0x4
 	add	r1, r1, r2
-	ldr	r2, .L1727+0x10
+	ldr	r2, .L1725+0x10
 	add	r1, r1, r2
 	bl	StringCopy
-	ldr	r3, .L1727+0x14
+	ldr	r3, .L1725+0x14
 	ldr	r1, [r5]
 	ldr	r0, [r1, #0x8]
 	ldrb	r2, [r0, #0x11]
@@ -17305,14 +17307,14 @@ PrintAppealMoveResultText:
 	ldrb	r0, [r0, #0x1]
 	lsl	r1, r0, #0x1d
 	cmp	r1, #0
-	bne	.L1719	@cond_branch
-	ldr	r0, .L1727+0x18
-	ldr	r1, .L1727+0x1c
+	bne	.L1717	@cond_branch
+	ldr	r0, .L1725+0x18
+	ldr	r1, .L1725+0x1c
 	bl	StringCopy
-	b	.L1720
-.L1728:
+	b	.L1718
+.L1726:
 	.align	2, 0
-.L1727:
+.L1725:
 	.word	gStringVar1
 	.word	gContestMons+0x2
 	.word	gStringVar2
@@ -17321,52 +17323,52 @@ PrintAppealMoveResultText:
 	.word	gContestMoves
 	.word	gStringVar3
 	.word	gText_Contest_Shyness
-.L1719:
+.L1717:
 	lsr	r0, r1, #0x1d
 	cmp	r0, #0x1
+	bne	.L1719	@cond_branch
+	ldr	r0, .L1727
+	ldr	r1, .L1727+0x4
+	bl	StringCopy
+	b	.L1718
+.L1728:
+	.align	2, 0
+.L1727:
+	.word	gStringVar3
+	.word	gText_Contest_Anxiety
+.L1719:
+	lsr	r0, r1, #0x1d
+	cmp	r0, #0x2
 	bne	.L1721	@cond_branch
 	ldr	r0, .L1729
 	ldr	r1, .L1729+0x4
 	bl	StringCopy
-	b	.L1720
+	b	.L1718
 .L1730:
 	.align	2, 0
 .L1729:
 	.word	gStringVar3
-	.word	gText_Contest_Anxiety
+	.word	gText_Contest_Laziness
 .L1721:
 	lsr	r0, r1, #0x1d
-	cmp	r0, #0x2
+	cmp	r0, #0x3
 	bne	.L1723	@cond_branch
 	ldr	r0, .L1731
 	ldr	r1, .L1731+0x4
 	bl	StringCopy
-	b	.L1720
+	b	.L1718
 .L1732:
 	.align	2, 0
 .L1731:
 	.word	gStringVar3
-	.word	gText_Contest_Laziness
+	.word	gText_Contest_Hesitancy
 .L1723:
-	lsr	r0, r1, #0x1d
-	cmp	r0, #0x3
-	bne	.L1725	@cond_branch
 	ldr	r0, .L1733
 	ldr	r1, .L1733+0x4
 	bl	StringCopy
-	b	.L1720
-.L1734:
-	.align	2, 0
-.L1733:
-	.word	gStringVar3
-	.word	gText_Contest_Hesitancy
-.L1725:
-	ldr	r0, .L1735
-	ldr	r1, .L1735+0x4
-	bl	StringCopy
-.L1720:
-	ldr	r4, .L1735+0x8
-	ldr	r1, .L1735+0xc
+.L1718:
+	ldr	r4, .L1733+0x8
+	ldr	r1, .L1733+0xc
 	lsl	r0, r6, #0x2
 	add	r0, r0, r1
 	ldr	r1, [r0]
@@ -17379,9 +17381,9 @@ PrintAppealMoveResultText:
 	pop	{r4, r5, r6}
 	pop	{r0}
 	bx	r0
-.L1736:
+.L1734:
 	.align	2, 0
-.L1735:
+.L1733:
 	.word	gStringVar3
 	.word	gText_Contest_Fear
 	.word	gStringVar4
@@ -17396,7 +17398,7 @@ MakeContestantNervous:
 	push	{r4, lr}
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
-	ldr	r4, .L1738
+	ldr	r4, .L1736
 	ldr	r1, [r4]
 	ldr	r3, [r1, #0x4]
 	lsl	r1, r0, #0x3
@@ -17415,9 +17417,9 @@ MakeContestantNervous:
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L1739:
+.L1737:
 	.align	2, 0
-.L1738:
+.L1736:
 	.word	gContestResources
 .Lfe144:
 	.size	 MakeContestantNervous,.Lfe144-MakeContestantNervous
@@ -17433,13 +17435,13 @@ ApplyNextTurnOrder:
 	mov	r0, #0x0
 	mov	ip, r0
 	mov	r4, #0x0
-	ldr	r1, .L1777
+	ldr	r1, .L1775
 	mov	r9, r1
 	add	r2, sp, #0x4
 	mov	r6, r9
 	mov	r5, #0x0
 	add	r3, r2, #0
-.L1744:
+.L1742:
 	mov	r0, sp
 	add	r1, r0, r4
 	add	r0, r4, r6
@@ -17449,60 +17451,60 @@ ApplyNextTurnOrder:
 	strb	r5, [r0]
 	add	r4, r4, #0x1
 	cmp	r4, #0x3
-	ble	.L1744	@cond_branch
+	ble	.L1742	@cond_branch
 	mov	r4, #0x0
-	ldr	r7, .L1777+0x4
+	ldr	r7, .L1775+0x4
 	ldr	r1, [r7]
 	mov	r8, r1
 	add	r5, r2, #0
-.L1749:
+.L1747:
 	mov	r2, #0x0
 	mov	r0, r8
 	ldr	r1, [r0, #0x4]
-.L1753:
+.L1751:
 	ldrb	r0, [r1, #0x19]
 	cmp	r0, r4
-	beq	.L1776	@cond_branch
+	beq	.L1774	@cond_branch
 	add	r1, r1, #0x1c
 	add	r2, r2, #0x1
 	cmp	r2, #0x3
-	ble	.L1753	@cond_branch
-.L1751:
+	ble	.L1751	@cond_branch
+.L1749:
 	cmp	r2, #0x4
-	bne	.L1748	@cond_branch
+	bne	.L1746	@cond_branch
 	mov	r2, #0x0
 	ldrb	r0, [r5]
 	cmp	r0, #0
-	bne	.L1759	@cond_branch
+	bne	.L1757	@cond_branch
 	ldr	r0, [r7]
 	ldr	r0, [r0, #0x4]
 	ldrb	r0, [r0, #0x19]
 	cmp	r0, #0xff
-	bne	.L1759	@cond_branch
+	bne	.L1757	@cond_branch
 	mov	ip, r2
 	mov	r2, #0x1
-	b	.L1758
-.L1778:
+	b	.L1756
+.L1776:
 	.align	2, 0
-.L1777:
+.L1775:
 	.word	gContestantTurnOrder
 	.word	gContestResources
-.L1776:
+.L1774:
 	mov	r1, sp
 	add	r0, r1, r2
 	strb	r4, [r0]
 	add	r1, r5, r2
 	mov	r0, #0x1
 	strb	r0, [r1]
-	b	.L1751
-.L1759:
+	b	.L1749
+.L1757:
 	add	r2, r2, #0x1
 	cmp	r2, #0x3
-	bgt	.L1775	@cond_branch
+	bgt	.L1773	@cond_branch
 	add	r0, r5, r2
 	ldrb	r0, [r0]
 	cmp	r0, #0
-	bne	.L1759	@cond_branch
+	bne	.L1757	@cond_branch
 	ldr	r0, [r7]
 	ldr	r1, [r0, #0x4]
 	lsl	r0, r2, #0x3
@@ -17511,45 +17513,45 @@ ApplyNextTurnOrder:
 	add	r0, r0, r1
 	ldrb	r0, [r0, #0x19]
 	cmp	r0, #0xff
-	bne	.L1759	@cond_branch
+	bne	.L1757	@cond_branch
 	lsl	r0, r2, #0x18
 	lsr	r0, r0, #0x18
 	mov	ip, r0
 	add	r2, r2, #0x1
-.L1758:
+.L1756:
 	cmp	r2, #0x3
-	bgt	.L1775	@cond_branch
-	ldr	r6, .L1779
+	bgt	.L1773	@cond_branch
+	ldr	r6, .L1777
 	lsl	r0, r2, #0x3
 	sub	r0, r0, r2
 	lsl	r3, r0, #0x2
-.L1766:
+.L1764:
 	add	r0, r5, r2
 	ldrb	r0, [r0]
 	cmp	r0, #0
-	bne	.L1765	@cond_branch
+	bne	.L1763	@cond_branch
 	ldr	r0, [r7]
 	ldr	r0, [r0, #0x4]
 	add	r0, r3, r0
 	ldrb	r0, [r0, #0x19]
 	cmp	r0, #0xff
-	bne	.L1765	@cond_branch
+	bne	.L1763	@cond_branch
 	mov	r1, ip
 	add	r0, r1, r6
 	add	r1, r2, r6
 	ldrb	r0, [r0]
 	ldrb	r1, [r1]
 	cmp	r0, r1
-	bls	.L1765	@cond_branch
+	bls	.L1763	@cond_branch
 	lsl	r0, r2, #0x18
 	lsr	r0, r0, #0x18
 	mov	ip, r0
-.L1765:
+.L1763:
 	add	r3, r3, #0x1c
 	add	r2, r2, #0x1
 	cmp	r2, #0x3
-	ble	.L1766	@cond_branch
-.L1775:
+	ble	.L1764	@cond_branch
+.L1773:
 	mov	r0, sp
 	add	r0, r0, ip
 	strb	r4, [r0]
@@ -17557,14 +17559,14 @@ ApplyNextTurnOrder:
 	add	r1, r5, r0
 	mov	r0, #0x1
 	strb	r0, [r1]
-.L1748:
+.L1746:
 	add	r4, r4, #0x1
 	cmp	r4, #0x3
-	ble	.L1749	@cond_branch
+	ble	.L1747	@cond_branch
 	mov	r4, #0x0
-	ldr	r6, .L1779+0x4
+	ldr	r6, .L1777+0x4
 	mov	r5, #0x0
-.L1773:
+.L1771:
 	ldr	r0, [r6]
 	ldr	r1, [r0, #0x8]
 	add	r1, r1, r4
@@ -17591,7 +17593,7 @@ ApplyNextTurnOrder:
 	add	r5, r5, #0x1c
 	add	r4, r4, #0x1
 	cmp	r4, #0x3
-	ble	.L1773	@cond_branch
+	ble	.L1771	@cond_branch
 	add	sp, sp, #0x8
 	pop	{r3, r4}
 	mov	r8, r3
@@ -17599,9 +17601,9 @@ ApplyNextTurnOrder:
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L1780:
+.L1778:
 	.align	2, 0
-.L1779:
+.L1777:
 	.word	gContestantTurnOrder
 	.word	gContestResources
 .Lfe145:
@@ -17618,7 +17620,7 @@ SpriteCB_JudgeSpeechBubble:
 	lsl	r0, r0, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, #0x54
-	ble	.L1782	@cond_branch
+	ble	.L1780	@cond_branch
 	mov	r0, #0x0
 	strh	r0, [r2, #0x30]
 	add	r3, r2, #0
@@ -17627,9 +17629,9 @@ SpriteCB_JudgeSpeechBubble:
 	mov	r1, #0x4
 	orr	r0, r0, r1
 	strb	r0, [r3]
-	ldr	r0, .L1783
+	ldr	r0, .L1781
 	str	r0, [r2, #0x1c]
-	ldr	r0, .L1783+0x4
+	ldr	r0, .L1781+0x4
 	ldr	r0, [r0]
 	ldr	r2, [r0]
 	ldrb	r1, [r2, #0x6]
@@ -17637,12 +17639,12 @@ SpriteCB_JudgeSpeechBubble:
 	neg	r0, r0
 	and	r0, r0, r1
 	strb	r0, [r2, #0x6]
-.L1782:
+.L1780:
 	pop	{r0}
 	bx	r0
-.L1784:
+.L1782:
 	.align	2, 0
-.L1783:
+.L1781:
 	.word	SpriteCallbackDummy
 	.word	gContestResources
 .Lfe146:
@@ -17654,67 +17656,92 @@ DoJudgeSpeechBubble:
 	push	{r4, r5, lr}
 	lsl	r0, r0, #0x18
 	lsr	r1, r0, #0x18
-	ldr	r0, .L1799
+	ldr	r0, .L1797
 	ldr	r0, [r0]
 	ldr	r0, [r0]
 	ldrb	r5, [r0, #0x12]
 	cmp	r1, #0x8
-	bls	.LCB16027
-	b	.L1796	@long jump
-.LCB16027:
+	bls	.LCB16035
+	b	.L1794	@long jump
+.LCB16035:
 	lsl	r0, r1, #0x2
-	ldr	r1, .L1799+0x4
+	ldr	r1, .L1797+0x4
 	add	r0, r0, r1
 	ldr	r0, [r0]
 	mov	pc, r0
-.L1800:
-	.align	2, 0
-.L1799:
-	.word	gContestResources
-	.word	.L1797
-	.align	2, 0
+.L1798:
 	.align	2, 0
 .L1797:
-	.word	.L1788
+	.word	gContestResources
+	.word	.L1795
+	.align	2, 0
+	.align	2, 0
+.L1795:
+	.word	.L1786
+	.word	.L1786
+	.word	.L1787
 	.word	.L1788
 	.word	.L1789
 	.word	.L1790
 	.word	.L1791
-	.word	.L1792
-	.word	.L1793
-	.word	.L1796
 	.word	.L1794
-.L1788:
-	ldr	r0, .L1801
+	.word	.L1792
+.L1786:
+	ldr	r0, .L1799
 	lsl	r4, r5, #0x4
 	add	r1, r4, r5
 	lsl	r1, r1, #0x2
 	add	r1, r1, r0
 	ldrh	r0, [r1, #0x2e]
-	ldr	r2, .L1801+0x4
+	ldr	r2, .L1799+0x4
 	and	r2, r2, r0
 	ldrh	r3, [r1, #0x4]
-	ldr	r0, .L1801+0x8
+	ldr	r0, .L1799+0x8
 	and	r0, r0, r3
 	orr	r0, r0, r2
 	strh	r0, [r1, #0x4]
 	mov	r0, #0x20
 	bl	PlaySE
-	b	.L1798
-.L1802:
+	b	.L1796
+.L1800:
 	.align	2, 0
-.L1801:
+.L1799:
 	.word	gSprites
 	.word	0x3ff
 	.word	-0x400
-.L1789:
-	ldr	r0, .L1803
+.L1787:
+	ldr	r0, .L1801
 	lsl	r4, r5, #0x4
 	add	r1, r4, r5
 	lsl	r1, r1, #0x2
 	add	r1, r1, r0
 	ldrh	r2, [r1, #0x2e]
 	add	r2, r2, #0x4
+	ldr	r3, .L1801+0x4
+	add	r0, r3, #0
+	and	r2, r2, r0
+	ldrh	r3, [r1, #0x4]
+	ldr	r0, .L1801+0x8
+	and	r0, r0, r3
+	orr	r0, r0, r2
+	strh	r0, [r1, #0x4]
+	mov	r0, #0x1f
+	bl	PlaySE
+	b	.L1796
+.L1802:
+	.align	2, 0
+.L1801:
+	.word	gSprites
+	.word	0x3ff
+	.word	-0x400
+.L1788:
+	ldr	r0, .L1803
+	lsl	r4, r5, #0x4
+	add	r1, r4, r5
+	lsl	r1, r1, #0x2
+	add	r1, r1, r0
+	ldrh	r2, [r1, #0x2e]
+	add	r2, r2, #0x8
 	ldr	r3, .L1803+0x4
 	add	r0, r3, #0
 	and	r2, r2, r0
@@ -17725,21 +17752,21 @@ DoJudgeSpeechBubble:
 	strh	r0, [r1, #0x4]
 	mov	r0, #0x1f
 	bl	PlaySE
-	b	.L1798
+	b	.L1796
 .L1804:
 	.align	2, 0
 .L1803:
 	.word	gSprites
 	.word	0x3ff
 	.word	-0x400
-.L1790:
+.L1789:
 	ldr	r0, .L1805
 	lsl	r4, r5, #0x4
 	add	r1, r4, r5
 	lsl	r1, r1, #0x2
 	add	r1, r1, r0
 	ldrh	r2, [r1, #0x2e]
-	add	r2, r2, #0x8
+	add	r2, r2, #0xc
 	ldr	r3, .L1805+0x4
 	add	r0, r3, #0
 	and	r2, r2, r0
@@ -17748,16 +17775,16 @@ DoJudgeSpeechBubble:
 	and	r0, r0, r3
 	orr	r0, r0, r2
 	strh	r0, [r1, #0x4]
-	mov	r0, #0x1f
+	mov	r0, #0x2d
 	bl	PlaySE
-	b	.L1798
+	b	.L1796
 .L1806:
 	.align	2, 0
 .L1805:
 	.word	gSprites
 	.word	0x3ff
 	.word	-0x400
-.L1791:
+.L1790:
 	ldr	r0, .L1807
 	lsl	r4, r5, #0x4
 	add	r1, r4, r5
@@ -17775,21 +17802,21 @@ DoJudgeSpeechBubble:
 	strh	r0, [r1, #0x4]
 	mov	r0, #0x2d
 	bl	PlaySE
-	b	.L1798
+	b	.L1796
 .L1808:
 	.align	2, 0
 .L1807:
 	.word	gSprites
 	.word	0x3ff
 	.word	-0x400
-.L1792:
+.L1791:
 	ldr	r0, .L1809
 	lsl	r4, r5, #0x4
 	add	r1, r4, r5
 	lsl	r1, r1, #0x2
 	add	r1, r1, r0
 	ldrh	r2, [r1, #0x2e]
-	add	r2, r2, #0xc
+	add	r2, r2, #0x10
 	ldr	r3, .L1809+0x4
 	add	r0, r3, #0
 	and	r2, r2, r0
@@ -17800,21 +17827,21 @@ DoJudgeSpeechBubble:
 	strh	r0, [r1, #0x4]
 	mov	r0, #0x2d
 	bl	PlaySE
-	b	.L1798
+	b	.L1796
 .L1810:
 	.align	2, 0
 .L1809:
 	.word	gSprites
 	.word	0x3ff
 	.word	-0x400
-.L1793:
+.L1792:
 	ldr	r0, .L1811
 	lsl	r4, r5, #0x4
 	add	r1, r4, r5
 	lsl	r1, r1, #0x2
 	add	r1, r1, r0
 	ldrh	r2, [r1, #0x2e]
-	add	r2, r2, #0x10
+	add	r2, r2, #0x18
 	ldr	r3, .L1811+0x4
 	add	r0, r3, #0
 	and	r2, r2, r0
@@ -17823,9 +17850,9 @@ DoJudgeSpeechBubble:
 	and	r0, r0, r3
 	orr	r0, r0, r2
 	strh	r0, [r1, #0x4]
-	mov	r0, #0x2d
+	mov	r0, #0xc3
 	bl	PlaySE
-	b	.L1798
+	b	.L1796
 .L1812:
 	.align	2, 0
 .L1811:
@@ -17839,7 +17866,7 @@ DoJudgeSpeechBubble:
 	lsl	r1, r1, #0x2
 	add	r1, r1, r0
 	ldrh	r2, [r1, #0x2e]
-	add	r2, r2, #0x18
+	add	r2, r2, #0x14
 	ldr	r3, .L1813+0x4
 	add	r0, r3, #0
 	and	r2, r2, r0
@@ -17848,36 +17875,11 @@ DoJudgeSpeechBubble:
 	and	r0, r0, r3
 	orr	r0, r0, r2
 	strh	r0, [r1, #0x4]
-	mov	r0, #0xc3
-	bl	PlaySE
-	b	.L1798
-.L1814:
-	.align	2, 0
-.L1813:
-	.word	gSprites
-	.word	0x3ff
-	.word	-0x400
-.L1796:
-	ldr	r0, .L1815
-	lsl	r4, r5, #0x4
-	add	r1, r4, r5
-	lsl	r1, r1, #0x2
-	add	r1, r1, r0
-	ldrh	r2, [r1, #0x2e]
-	add	r2, r2, #0x14
-	ldr	r3, .L1815+0x4
-	add	r0, r3, #0
-	and	r2, r2, r0
-	ldrh	r3, [r1, #0x4]
-	ldr	r0, .L1815+0x8
-	and	r0, r0, r3
-	orr	r0, r0, r2
-	strh	r0, [r1, #0x4]
 	mov	r0, #0x2d
 	bl	PlaySE
-.L1798:
+.L1796:
 	add	r2, r4, #0
-	ldr	r4, .L1815
+	ldr	r4, .L1813
 	add	r2, r2, r5
 	lsl	r2, r2, #0x2
 	add	r1, r2, r4
@@ -17890,9 +17892,9 @@ DoJudgeSpeechBubble:
 	strb	r0, [r1]
 	add	r4, r4, #0x1c
 	add	r2, r2, r4
-	ldr	r0, .L1815+0xc
+	ldr	r0, .L1813+0xc
 	str	r0, [r2]
-	ldr	r0, .L1815+0x10
+	ldr	r0, .L1813+0x10
 	ldr	r0, [r0]
 	ldr	r2, [r0]
 	ldrb	r0, [r2, #0x6]
@@ -17902,9 +17904,9 @@ DoJudgeSpeechBubble:
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.L1816:
+.L1814:
 	.align	2, 0
-.L1815:
+.L1813:
 	.word	gSprites
 	.word	0x3ff
 	.word	-0x400
@@ -17921,22 +17923,22 @@ UpdateApplauseMeter:
 	mov	r6, r8
 	push	{r6, r7}
 	mov	r5, #0x0
-	ldr	r6, .L1826
-	ldr	r0, .L1826+0x4
+	ldr	r6, .L1824
+	ldr	r0, .L1824+0x4
 	mov	r9, r0
-	ldr	r0, .L1826+0x8
+	ldr	r0, .L1824+0x8
 	mov	r8, r0
-	ldr	r7, .L1826+0xc
-.L1821:
+	ldr	r7, .L1824+0xc
+.L1819:
 	ldr	r0, [r6]
 	ldr	r1, [r0]
 	mov	r0, #0x13
 	ldrsb	r0, [r1, r0]
-	ldr	r4, .L1826+0x10
+	ldr	r4, .L1824+0x10
 	cmp	r5, r0
-	bge	.L1822	@cond_branch
+	bge	.L1820	@cond_branch
 	add	r4, r4, #0x40
-.L1822:
+.L1820:
 	add	r0, r1, #0
 	add	r0, r0, #0x58
 	ldrb	r1, [r0]
@@ -17981,21 +17983,21 @@ UpdateApplauseMeter:
 	lsl	r0, r0, #24
 	asr	r0, r0, #24
 	cmp	r0, #0x4
-	ble	.L1820	@cond_branch
+	ble	.L1818	@cond_branch
 	bl	StartApplauseOverflowAnimation
-.L1820:
+.L1818:
 	add	r5, r5, #0x1
 	cmp	r5, #0x4
-	ble	.L1821	@cond_branch
+	ble	.L1819	@cond_branch
 	pop	{r3, r4}
 	mov	r8, r3
 	mov	r9, r4
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L1827:
+.L1825:
 	.align	2, 0
-.L1826:
+.L1824:
 	.word	gContestResources
 	.word	gSprites
 	.word	0x6010000
@@ -18009,14 +18011,14 @@ UpdateApplauseMeter:
 	.thumb_func
 Contest_GetMoveExcitement:
 	lsl	r0, r0, #0x10
-	ldr	r3, .L1829
-	ldr	r1, .L1829+0x4
+	ldr	r3, .L1827
+	ldr	r1, .L1827+0x4
 	lsr	r0, r0, #0xd
 	add	r0, r0, r1
 	ldrb	r1, [r0, #0x1]
 	lsl	r1, r1, #0x1d
 	lsr	r1, r1, #0x1d
-	ldr	r0, .L1829+0x8
+	ldr	r0, .L1827+0x8
 	ldrh	r2, [r0]
 	lsl	r0, r2, #0x2
 	add	r0, r0, r2
@@ -18025,9 +18027,9 @@ Contest_GetMoveExcitement:
 	mov	r0, #0x0
 	ldrsb	r0, [r1, r0]
 	bx	lr
-.L1830:
+.L1828:
 	.align	2, 0
-.L1829:
+.L1827:
 	.word	gContestExcitementTable
 	.word	gContestMoves
 	.word	gSpecialVar_ContestCategory
@@ -18038,20 +18040,20 @@ Contest_GetMoveExcitement:
 	.thumb_func
 StartApplauseOverflowAnimation:
 	push	{r4, r5, lr}
-	ldr	r0, .L1832
+	ldr	r0, .L1830
 	mov	r1, #0xa
 	bl	CreateTask
 	add	r5, r0, #0
 	lsl	r5, r5, #0x18
 	lsr	r5, r5, #0x18
-	ldr	r0, .L1832+0x4
+	ldr	r0, .L1830+0x4
 	lsl	r4, r5, #0x2
 	add	r4, r4, r5
 	lsl	r4, r4, #0x3
 	add	r4, r4, r0
 	mov	r0, #0x1
 	strh	r0, [r4, #0xa]
-	ldr	r0, .L1832+0x8
+	ldr	r0, .L1830+0x8
 	bl	IndexOfSpritePaletteTag
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
@@ -18060,9 +18062,9 @@ StartApplauseOverflowAnimation:
 	pop	{r4, r5}
 	pop	{r1}
 	bx	r1
-.L1833:
+.L1831:
 	.align	2, 0
-.L1832:
+.L1830:
 	.word	Task_ApplauseOverflowAnimation
 	.word	gTasks
 	.word	0xabe2
@@ -18075,7 +18077,7 @@ Task_ApplauseOverflowAnimation:
 	push	{r4, r5, r6, lr}
 	lsl	r0, r0, #0x18
 	lsr	r5, r0, #0x18
-	ldr	r1, .L1842
+	ldr	r1, .L1840
 	lsl	r0, r5, #0x2
 	add	r0, r0, r5
 	lsl	r0, r0, #0x3
@@ -18086,24 +18088,24 @@ Task_ApplauseOverflowAnimation:
 	lsl	r0, r0, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, #0x1
-	bne	.L1835	@cond_branch
+	bne	.L1833	@cond_branch
 	mov	r0, #0x0
 	strh	r0, [r2, #0x8]
 	mov	r3, #0xe
 	ldrsh	r0, [r2, r3]
 	cmp	r0, #0
-	bne	.L1836	@cond_branch
+	bne	.L1834	@cond_branch
 	ldrh	r0, [r2, #0x10]
 	add	r0, r0, #0x1
-	b	.L1841
-.L1843:
+	b	.L1839
+.L1841:
 	.align	2, 0
-.L1842:
+.L1840:
 	.word	gTasks
-.L1836:
+.L1834:
 	ldrh	r0, [r2, #0x10]
 	sub	r0, r0, #0x1
-.L1841:
+.L1839:
 	strh	r0, [r2, #0x10]
 	lsl	r0, r5, #0x2
 	add	r0, r0, r5
@@ -18119,28 +18121,28 @@ Task_ApplauseOverflowAnimation:
 	lsl	r0, r0, #0x10
 	lsr	r0, r0, #0x10
 	ldrb	r2, [r4, #0x10]
-	ldr	r3, .L1844
+	ldr	r3, .L1842
 	mov	r1, #0x1
 	bl	BlendPalette
 	mov	r1, #0x10
 	ldrsh	r0, [r4, r1]
 	cmp	r0, #0
-	beq	.L1839	@cond_branch
+	beq	.L1837	@cond_branch
 	cmp	r0, #0x10
-	bne	.L1835	@cond_branch
-.L1839:
+	bne	.L1833	@cond_branch
+.L1837:
 	ldrh	r0, [r4, #0xe]
 	mov	r1, #0x1
 	eor	r0, r0, r1
 	strh	r0, [r4, #0xe]
-	ldr	r0, .L1844+0x4
+	ldr	r0, .L1842+0x4
 	ldr	r0, [r0]
 	ldr	r0, [r0]
 	ldrb	r0, [r0, #0x13]
 	lsl	r0, r0, #24
 	asr	r0, r0, #24
 	cmp	r0, #0x4
-	bgt	.L1835	@cond_branch
+	bgt	.L1833	@cond_branch
 	mov	r3, #0xc
 	ldrsh	r0, [r4, r3]
 	lsl	r0, r0, #0x4
@@ -18153,13 +18155,13 @@ Task_ApplauseOverflowAnimation:
 	bl	BlendPalette
 	add	r0, r5, #0
 	bl	DestroyTask
-.L1835:
+.L1833:
 	pop	{r4, r5, r6}
 	pop	{r0}
 	bx	r0
-.L1845:
+.L1843:
 	.align	2, 0
-.L1844:
+.L1842:
 	.word	0x7fff
 	.word	gContestResources
 .Lfe151:
@@ -18169,11 +18171,11 @@ Task_ApplauseOverflowAnimation:
 	.thumb_func
 SlideApplauseMeterIn:
 	push	{r4, lr}
-	ldr	r0, .L1847
+	ldr	r0, .L1845
 	mov	r1, #0xa
 	bl	CreateTask
-	ldr	r3, .L1847+0x4
-	ldr	r4, .L1847+0x8
+	ldr	r3, .L1845+0x4
+	ldr	r4, .L1845+0x8
 	ldr	r2, [r4]
 	ldr	r0, [r2]
 	add	r0, r0, #0x58
@@ -18182,7 +18184,7 @@ SlideApplauseMeterIn:
 	add	r0, r0, r1
 	lsl	r0, r0, #0x2
 	add	r0, r0, r3
-	ldr	r1, .L1847+0xc
+	ldr	r1, .L1845+0xc
 	strh	r1, [r0, #0x24]
 	ldr	r0, [r2]
 	add	r0, r0, #0x58
@@ -18206,9 +18208,9 @@ SlideApplauseMeterIn:
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L1848:
+.L1846:
 	.align	2, 0
-.L1847:
+.L1845:
 	.word	Task_SlideApplauseMeterIn
 	.word	gSprites
 	.word	gContestResources
@@ -18223,7 +18225,7 @@ Task_SlideApplauseMeterIn:
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	add	r3, r0, #0
-	ldr	r4, .L1852
+	ldr	r4, .L1850
 	ldr	r0, [r4]
 	ldr	r0, [r0]
 	add	r0, r0, #0x58
@@ -18231,9 +18233,9 @@ Task_SlideApplauseMeterIn:
 	lsl	r0, r1, #0x4
 	add	r0, r0, r1
 	lsl	r0, r0, #0x2
-	ldr	r1, .L1852+0x4
+	ldr	r1, .L1850+0x4
 	add	r2, r0, r1
-	ldr	r0, .L1852+0x8
+	ldr	r0, .L1850+0x8
 	lsl	r1, r3, #0x2
 	add	r1, r1, r3
 	lsl	r1, r1, #0x3
@@ -18254,14 +18256,14 @@ Task_SlideApplauseMeterIn:
 	mov	r1, #0x24
 	ldrsh	r0, [r2, r1]
 	cmp	r0, #0
-	ble	.L1850	@cond_branch
+	ble	.L1848	@cond_branch
 	mov	r0, #0x0
 	strh	r0, [r2, #0x24]
-.L1850:
+.L1848:
 	mov	r5, #0x24
 	ldrsh	r0, [r2, r5]
 	cmp	r0, #0
-	bne	.L1851	@cond_branch
+	bne	.L1849	@cond_branch
 	ldr	r0, [r4]
 	ldr	r2, [r0]
 	ldrb	r1, [r2, #0x6]
@@ -18271,13 +18273,13 @@ Task_SlideApplauseMeterIn:
 	strb	r0, [r2, #0x6]
 	add	r0, r3, #0
 	bl	DestroyTask
-.L1851:
+.L1849:
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.L1853:
+.L1851:
 	.align	2, 0
-.L1852:
+.L1850:
 	.word	gContestResources
 	.word	gSprites
 	.word	gTasks
@@ -18288,8 +18290,8 @@ Task_SlideApplauseMeterIn:
 	.thumb_func
 SlideApplauseMeterOut:
 	push	{r4, r5, lr}
-	ldr	r5, .L1858
-	ldr	r4, .L1858+0x4
+	ldr	r5, .L1856
+	ldr	r4, .L1856+0x4
 	ldr	r0, [r4]
 	ldr	r2, [r0]
 	add	r0, r2, #0
@@ -18303,19 +18305,19 @@ SlideApplauseMeterOut:
 	ldrb	r0, [r0]
 	lsl	r0, r0, #0x1d
 	cmp	r0, #0
-	bge	.L1855	@cond_branch
+	bge	.L1853	@cond_branch
 	ldrb	r1, [r2, #0x6]
 	mov	r0, #0x41
 	neg	r0, r0
 	and	r0, r0, r1
-	b	.L1857
-.L1859:
+	b	.L1855
+.L1857:
 	.align	2, 0
-.L1858:
+.L1856:
 	.word	gSprites
 	.word	gContestResources
-.L1855:
-	ldr	r0, .L1860
+.L1853:
+	ldr	r0, .L1858
 	mov	r1, #0xa
 	bl	CreateTask
 	ldr	r2, [r4]
@@ -18332,14 +18334,14 @@ SlideApplauseMeterOut:
 	ldrb	r0, [r2, #0x6]
 	mov	r1, #0x40
 	orr	r0, r0, r1
-.L1857:
+.L1855:
 	strb	r0, [r2, #0x6]
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.L1861:
+.L1859:
 	.align	2, 0
-.L1860:
+.L1858:
 	.word	Task_SlideApplauseMeterOut
 .Lfe154:
 	.size	 SlideApplauseMeterOut,.Lfe154-SlideApplauseMeterOut
@@ -18351,7 +18353,7 @@ Task_SlideApplauseMeterOut:
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	add	r4, r0, #0
-	ldr	r5, .L1865
+	ldr	r5, .L1863
 	ldr	r0, [r5]
 	ldr	r0, [r0]
 	add	r0, r0, #0x58
@@ -18359,9 +18361,9 @@ Task_SlideApplauseMeterOut:
 	lsl	r0, r1, #0x4
 	add	r0, r0, r1
 	lsl	r0, r0, #0x2
-	ldr	r1, .L1865+0x4
+	ldr	r1, .L1863+0x4
 	add	r3, r0, r1
-	ldr	r0, .L1865+0x8
+	ldr	r0, .L1863+0x8
 	lsl	r2, r4, #0x2
 	add	r2, r2, r4
 	lsl	r2, r2, #0x3
@@ -18384,14 +18386,14 @@ Task_SlideApplauseMeterOut:
 	mov	r1, #0x46
 	neg	r1, r1
 	cmp	r0, r1
-	bge	.L1863	@cond_branch
-	ldr	r0, .L1865+0xc
+	bge	.L1861	@cond_branch
+	ldr	r0, .L1863+0xc
 	strh	r0, [r3, #0x24]
-.L1863:
+.L1861:
 	mov	r2, #0x24
 	ldrsh	r0, [r3, r2]
 	cmp	r0, r1
-	bne	.L1864	@cond_branch
+	bne	.L1862	@cond_branch
 	add	r2, r3, #0
 	add	r2, r2, #0x3e
 	ldrb	r0, [r2]
@@ -18407,13 +18409,13 @@ Task_SlideApplauseMeterOut:
 	strb	r0, [r2, #0x6]
 	add	r0, r4, #0
 	bl	DestroyTask
-.L1864:
+.L1862:
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.L1866:
+.L1864:
 	.align	2, 0
-.L1865:
+.L1863:
 	.word	gContestResources
 	.word	gSprites
 	.word	gTasks
@@ -18428,12 +18430,12 @@ ShowAndUpdateApplauseMeter:
 	add	r4, r0, #0
 	lsl	r4, r4, #0x18
 	lsr	r4, r4, #0x18
-	ldr	r0, .L1868
+	ldr	r0, .L1866
 	mov	r1, #0x5
 	bl	CreateTask
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
-	ldr	r2, .L1868+0x4
+	ldr	r2, .L1866+0x4
 	lsl	r1, r0, #0x2
 	add	r1, r1, r0
 	lsl	r1, r1, #0x3
@@ -18441,7 +18443,7 @@ ShowAndUpdateApplauseMeter:
 	lsl	r4, r4, #0x18
 	asr	r4, r4, #0x18
 	strh	r4, [r1, #0x8]
-	ldr	r0, .L1868+0x8
+	ldr	r0, .L1866+0x8
 	ldr	r0, [r0]
 	ldr	r2, [r0]
 	ldrb	r0, [r2, #0x6]
@@ -18451,9 +18453,9 @@ ShowAndUpdateApplauseMeter:
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L1869:
+.L1867:
 	.align	2, 0
-.L1868:
+.L1866:
 	.word	Task_ShowAndUpdateApplauseMeter
 	.word	gTasks
 	.word	gContestResources
@@ -18466,7 +18468,7 @@ Task_ShowAndUpdateApplauseMeter:
 	push	{r4, r5, lr}
 	lsl	r0, r0, #0x18
 	lsr	r5, r0, #0x18
-	ldr	r1, .L1881
+	ldr	r1, .L1879
 	lsl	r0, r5, #0x2
 	add	r0, r0, r5
 	lsl	r0, r0, #0x3
@@ -18474,53 +18476,53 @@ Task_ShowAndUpdateApplauseMeter:
 	mov	r1, #0x1c
 	ldrsh	r0, [r4, r1]
 	cmp	r0, #0x1
-	beq	.L1873	@cond_branch
+	beq	.L1871	@cond_branch
 	cmp	r0, #0x1
-	bgt	.L1879	@cond_branch
+	bgt	.L1877	@cond_branch
 	cmp	r0, #0
-	beq	.L1872	@cond_branch
-	b	.L1871
-.L1882:
+	beq	.L1870	@cond_branch
+	b	.L1869
+.L1880:
 	.align	2, 0
-.L1881:
-	.word	gTasks
 .L1879:
+	.word	gTasks
+.L1877:
 	cmp	r0, #0x2
-	beq	.L1875	@cond_branch
-	b	.L1871
-.L1872:
+	beq	.L1873	@cond_branch
+	b	.L1869
+.L1870:
 	bl	SlideApplauseMeterIn
-	b	.L1880
-.L1873:
-	ldr	r0, .L1883
+	b	.L1878
+.L1871:
+	ldr	r0, .L1881
 	ldr	r0, [r0]
 	ldr	r0, [r0]
 	ldrb	r1, [r0, #0x6]
 	mov	r0, #0x40
 	and	r0, r0, r1
 	cmp	r0, #0
-	bne	.L1871	@cond_branch
-.L1880:
+	bne	.L1869	@cond_branch
+.L1878:
 	ldrh	r0, [r4, #0x1c]
 	add	r0, r0, #0x1
 	strh	r0, [r4, #0x1c]
-	b	.L1871
-.L1884:
+	b	.L1869
+.L1882:
 	.align	2, 0
-.L1883:
+.L1881:
 	.word	gContestResources
-.L1875:
+.L1873:
 	ldrh	r0, [r4, #0x1e]
 	add	r1, r0, #0x1
 	strh	r1, [r4, #0x1e]
 	lsl	r0, r0, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, #0x14
-	ble	.L1871	@cond_branch
+	ble	.L1869	@cond_branch
 	mov	r0, #0x0
 	strh	r0, [r4, #0x1e]
 	bl	UpdateApplauseMeter
-	ldr	r0, .L1885
+	ldr	r0, .L1883
 	ldr	r0, [r0]
 	ldr	r2, [r0]
 	ldrb	r1, [r2, #0x6]
@@ -18530,13 +18532,13 @@ Task_ShowAndUpdateApplauseMeter:
 	strb	r0, [r2, #0x6]
 	add	r0, r5, #0
 	bl	DestroyTask
-.L1871:
+.L1869:
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.L1886:
+.L1884:
 	.align	2, 0
-.L1885:
+.L1883:
 	.word	gContestResources
 .Lfe157:
 	.size	 Task_ShowAndUpdateApplauseMeter,.Lfe157-Task_ShowAndUpdateApplauseMeter
@@ -18544,8 +18546,8 @@ Task_ShowAndUpdateApplauseMeter:
 	.type	 HideApplauseMeterNoAnim,function
 	.thumb_func
 HideApplauseMeterNoAnim:
-	ldr	r3, .L1888
-	ldr	r0, .L1888+0x4
+	ldr	r3, .L1886
+	ldr	r0, .L1886+0x4
 	ldr	r2, [r0]
 	ldr	r0, [r2]
 	add	r0, r0, #0x58
@@ -18570,9 +18572,9 @@ HideApplauseMeterNoAnim:
 	and	r1, r1, r2
 	strb	r1, [r0]
 	bx	lr
-.L1889:
+.L1887:
 	.align	2, 0
-.L1888:
+.L1886:
 	.word	gSprites
 	.word	gContestResources
 .Lfe158:
@@ -18581,8 +18583,8 @@ HideApplauseMeterNoAnim:
 	.type	 ShowApplauseMeterNoAnim,function
 	.thumb_func
 ShowApplauseMeterNoAnim:
-	ldr	r2, .L1891
-	ldr	r0, .L1891+0x4
+	ldr	r2, .L1889
+	ldr	r0, .L1889+0x4
 	ldr	r0, [r0]
 	ldr	r0, [r0]
 	add	r0, r0, #0x58
@@ -18597,9 +18599,9 @@ ShowApplauseMeterNoAnim:
 	orr	r1, r1, r2
 	strb	r1, [r0]
 	bx	lr
-.L1892:
+.L1890:
 	.align	2, 0
-.L1891:
+.L1889:
 	.word	gSprites
 	.word	gContestResources
 .Lfe159:
@@ -18609,10 +18611,10 @@ ShowApplauseMeterNoAnim:
 	.thumb_func
 AnimateAudience:
 	push	{lr}
-	ldr	r0, .L1894
+	ldr	r0, .L1892
 	mov	r1, #0xf
 	bl	CreateTask
-	ldr	r0, .L1894+0x4
+	ldr	r0, .L1892+0x4
 	ldr	r0, [r0]
 	ldr	r2, [r0]
 	ldrb	r0, [r2, #0x6]
@@ -18621,9 +18623,9 @@ AnimateAudience:
 	strb	r0, [r2, #0x6]
 	pop	{r0}
 	bx	r0
-.L1895:
+.L1893:
 	.align	2, 0
-.L1894:
+.L1892:
 	.word	Task_AnimateAudience
 	.word	gContestResources
 .Lfe160:
@@ -18635,7 +18637,7 @@ Task_AnimateAudience:
 	push	{r4, r5, lr}
 	lsl	r0, r0, #0x18
 	lsr	r5, r0, #0x18
-	ldr	r1, .L1901
+	ldr	r1, .L1899
 	lsl	r0, r5, #0x2
 	add	r0, r0, r5
 	lsl	r0, r0, #0x3
@@ -18646,29 +18648,29 @@ Task_AnimateAudience:
 	lsl	r0, r0, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, #0x6
-	ble	.L1897	@cond_branch
+	ble	.L1895	@cond_branch
 	mov	r0, #0x0
 	strh	r0, [r4, #0x1c]
 	mov	r1, #0x1e
 	ldrsh	r0, [r4, r1]
 	cmp	r0, #0
-	bne	.L1898	@cond_branch
-	ldr	r0, .L1901+0x4
-	ldr	r1, .L1901+0x8
+	bne	.L1896	@cond_branch
+	ldr	r0, .L1899+0x4
+	ldr	r1, .L1899+0x8
 	mov	r2, #0x80
 	lsl	r2, r2, #0x5
 	mov	r3, #0x1
 	bl	RequestDma3Copy
-	b	.L1899
-.L1902:
+	b	.L1897
+.L1900:
 	.align	2, 0
-.L1901:
+.L1899:
 	.word	gTasks
 	.word	gHeap+0x19000
 	.word	0x6002000
-.L1898:
-	ldr	r0, .L1903
-	ldr	r1, .L1903+0x4
+.L1896:
+	ldr	r0, .L1901
+	ldr	r1, .L1901+0x4
 	mov	r2, #0x80
 	lsl	r2, r2, #0x5
 	mov	r3, #0x1
@@ -18676,8 +18678,8 @@ Task_AnimateAudience:
 	ldrh	r0, [r4, #0x20]
 	add	r0, r0, #0x1
 	strh	r0, [r4, #0x20]
-.L1899:
-	ldr	r1, .L1903+0x8
+.L1897:
+	ldr	r1, .L1901+0x8
 	lsl	r0, r5, #0x2
 	add	r0, r0, r5
 	lsl	r0, r0, #0x3
@@ -18689,8 +18691,8 @@ Task_AnimateAudience:
 	mov	r1, #0x20
 	ldrsh	r0, [r0, r1]
 	cmp	r0, #0x9
-	bne	.L1897	@cond_branch
-	ldr	r0, .L1903+0xc
+	bne	.L1895	@cond_branch
+	ldr	r0, .L1901+0xc
 	ldr	r0, [r0]
 	ldr	r2, [r0]
 	ldrb	r1, [r2, #0x6]
@@ -18699,13 +18701,13 @@ Task_AnimateAudience:
 	strb	r0, [r2, #0x6]
 	add	r0, r5, #0
 	bl	DestroyTask
-.L1897:
+.L1895:
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.L1904:
+.L1902:
 	.align	2, 0
-.L1903:
+.L1901:
 	.word	gHeap+0x18000
 	.word	0x6002000
 	.word	gTasks
@@ -18722,21 +18724,21 @@ BlendAudienceBackground:
 	lsr	r4, r4, #0x18
 	lsl	r1, r1, #0x18
 	lsr	r5, r1, #0x18
-	ldr	r0, .L1913
+	ldr	r0, .L1911
 	mov	r1, #0xa
 	bl	CreateTask
 	lsl	r0, r0, #0x18
 	lsr	r6, r0, #0x18
 	lsl	r4, r4, #0x18
 	cmp	r4, #0
-	ble	.L1906	@cond_branch
-	ldr	r7, .L1913+0x4
+	ble	.L1904	@cond_branch
+	ldr	r7, .L1911+0x4
 	lsl	r0, r5, #0x18
 	add	r4, r0, #0
 	cmp	r4, #0
-	ble	.L1907	@cond_branch
+	ble	.L1905	@cond_branch
 	mov	r5, #0x0
-	ldr	r2, .L1913+0x8
+	ldr	r2, .L1911+0x8
 	ldr	r0, [r2]
 	ldr	r0, [r0]
 	mov	r1, #0x13
@@ -18745,15 +18747,15 @@ BlendAudienceBackground:
 	add	r0, r0, r1
 	lsl	r0, r0, #0x18
 	lsr	r3, r0, #0x18
-	b	.L1909
-.L1914:
+	b	.L1907
+.L1912:
 	.align	2, 0
-.L1913:
+.L1911:
 	.word	Task_BlendAudienceBackground
 	.word	0x237e
 	.word	gContestResources
-.L1907:
-	ldr	r2, .L1915
+.L1905:
+	ldr	r2, .L1913
 	ldr	r0, [r2]
 	ldr	r0, [r0]
 	mov	r1, #0x13
@@ -18763,27 +18765,27 @@ BlendAudienceBackground:
 	lsl	r0, r0, #0x18
 	lsr	r5, r0, #0x18
 	mov	r3, #0x0
-	b	.L1909
-.L1916:
+	b	.L1907
+.L1914:
 	.align	2, 0
-.L1915:
+.L1913:
 	.word	gContestResources
-.L1906:
+.L1904:
 	mov	r7, #0x0
 	lsl	r0, r5, #0x18
 	add	r4, r0, #0
 	cmp	r4, #0
-	ble	.L1910	@cond_branch
+	ble	.L1908	@cond_branch
 	mov	r5, #0x0
 	mov	r3, #0xc
-	b	.L1912
-.L1910:
+	b	.L1910
+.L1908:
 	mov	r5, #0xc
 	mov	r3, #0x0
-.L1912:
-	ldr	r2, .L1917
-.L1909:
-	ldr	r1, .L1917+0x4
+.L1910:
+	ldr	r2, .L1915
+.L1907:
+	ldr	r1, .L1915+0x4
 	lsl	r0, r6, #0x2
 	add	r0, r0, r6
 	lsl	r0, r0, #0x3
@@ -18803,9 +18805,9 @@ BlendAudienceBackground:
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L1918:
+.L1916:
 	.align	2, 0
-.L1917:
+.L1915:
 	.word	gContestResources
 	.word	gTasks
 .Lfe162:
@@ -18817,7 +18819,7 @@ Task_BlendAudienceBackground:
 	push	{r4, r5, lr}
 	lsl	r0, r0, #0x18
 	lsr	r5, r0, #0x18
-	ldr	r2, .L1925
+	ldr	r2, .L1923
 	lsl	r0, r5, #0x2
 	add	r0, r0, r5
 	lsl	r0, r0, #0x3
@@ -18827,24 +18829,24 @@ Task_BlendAudienceBackground:
 	strh	r1, [r3, #0x1c]
 	lsl	r0, r0, #0x10
 	cmp	r0, #0
-	blt	.L1920	@cond_branch
+	blt	.L1918	@cond_branch
 	mov	r0, #0x0
 	strh	r0, [r3, #0x1c]
 	mov	r1, #0xc
 	ldrsh	r0, [r3, r1]
 	cmp	r0, #0
-	ble	.L1921	@cond_branch
+	ble	.L1919	@cond_branch
 	ldrh	r0, [r3, #0xa]
 	add	r0, r0, #0x1
-	b	.L1924
-.L1926:
+	b	.L1922
+.L1924:
 	.align	2, 0
-.L1925:
+.L1923:
 	.word	gTasks
-.L1921:
+.L1919:
 	ldrh	r0, [r3, #0xa]
 	sub	r0, r0, #0x1
-.L1924:
+.L1922:
 	strh	r0, [r3, #0xa]
 	lsl	r4, r5, #0x2
 	add	r4, r4, r5
@@ -18865,10 +18867,10 @@ Task_BlendAudienceBackground:
 	mov	r2, #0xe
 	ldrsh	r0, [r4, r2]
 	cmp	r1, r0
-	bne	.L1920	@cond_branch
+	bne	.L1918	@cond_branch
 	add	r0, r5, #0
 	bl	DestroyTask
-	ldr	r0, .L1927
+	ldr	r0, .L1925
 	ldr	r0, [r0]
 	ldr	r2, [r0]
 	ldrb	r1, [r2, #0x7]
@@ -18876,13 +18878,13 @@ Task_BlendAudienceBackground:
 	neg	r0, r0
 	and	r0, r0, r1
 	strb	r0, [r2, #0x7]
-.L1920:
+.L1918:
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.L1928:
+.L1926:
 	.align	2, 0
-.L1927:
+.L1925:
 	.word	gContestResources
 .Lfe163:
 	.size	 Task_BlendAudienceBackground,.Lfe163-Task_BlendAudienceBackground
@@ -18899,13 +18901,13 @@ ShowHideNextTurnGfx:
 	lsr	r0, r0, #0x18
 	mov	sl, r0
 	mov	r5, #0x0
-	ldr	r0, .L1938
+	ldr	r0, .L1936
 	mov	r9, r0
 	mov	r8, r9
-	ldr	r6, .L1938+0x4
+	ldr	r6, .L1936+0x4
 	mov	r4, #0x0
 	mov	r7, #0x0
-.L1933:
+.L1931:
 	mov	r1, r8
 	ldr	r0, [r1]
 	ldr	r0, [r0, #0x4]
@@ -18914,10 +18916,10 @@ ShowHideNextTurnGfx:
 	mov	r0, #0xc0
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L1934	@cond_branch
+	beq	.L1932	@cond_branch
 	mov	r2, sl
 	cmp	r2, #0
-	beq	.L1934	@cond_branch
+	beq	.L1932	@cond_branch
 	lsl	r0, r5, #0x18
 	lsr	r0, r0, #0x18
 	bl	GetTurnOrderNumberGfx
@@ -18933,9 +18935,9 @@ ShowHideNextTurnGfx:
 	ldrh	r1, [r1, #0x4]
 	lsl	r1, r1, #0x16
 	lsr	r1, r1, #0x11
-	ldr	r2, .L1938+0x8
+	ldr	r2, .L1936+0x8
 	add	r1, r1, r2
-	ldr	r2, .L1938+0xc
+	ldr	r2, .L1936+0xc
 	bl	CpuSet
 	mov	r0, r8
 	ldr	r3, [r0]
@@ -18946,8 +18948,8 @@ ShowHideNextTurnGfx:
 	add	r1, r1, r0
 	lsl	r1, r1, #0x2
 	add	r1, r1, r6
-	ldr	r2, .L1938+0x10
-	ldr	r0, .L1938+0x14
+	ldr	r2, .L1936+0x10
+	ldr	r0, .L1936+0x14
 	add	r0, r5, r0
 	ldrb	r0, [r0]
 	add	r0, r0, r2
@@ -18966,17 +18968,17 @@ ShowHideNextTurnGfx:
 	neg	r3, r3
 	add	r2, r3, #0
 	and	r1, r1, r2
-	b	.L1937
-.L1939:
+	b	.L1935
+.L1937:
 	.align	2, 0
-.L1938:
+.L1936:
 	.word	gContestResources
 	.word	gSprites
 	.word	0x60100c0
 	.word	0x4000008
 	.word	sNextTurnSpriteYPositions
 	.word	gContestantTurnOrder
-.L1934:
+.L1932:
 	mov	r1, r9
 	ldr	r0, [r1]
 	ldr	r0, [r0, #0x14]
@@ -18990,13 +18992,13 @@ ShowHideNextTurnGfx:
 	ldrb	r1, [r0]
 	mov	r2, #0x4
 	orr	r1, r1, r2
-.L1937:
+.L1935:
 	strb	r1, [r0]
 	add	r4, r4, #0x4
 	add	r7, r7, #0x1c
 	add	r5, r5, #0x1
 	cmp	r5, #0x3
-	ble	.L1933	@cond_branch
+	ble	.L1931	@cond_branch
 	pop	{r3, r4, r5}
 	mov	r8, r3
 	mov	r9, r4
@@ -19013,7 +19015,7 @@ GetTurnOrderNumberGfx:
 	push	{lr}
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
-	ldr	r1, .L1944
+	ldr	r1, .L1942
 	ldr	r1, [r1]
 	ldr	r2, [r1, #0x4]
 	lsl	r1, r0, #0x3
@@ -19024,25 +19026,25 @@ GetTurnOrderNumberGfx:
 	mov	r0, #0xc0
 	and	r0, r0, r1
 	cmp	r0, #0x40
-	bne	.L1941	@cond_branch
+	bne	.L1939	@cond_branch
 	ldrb	r0, [r2, #0x19]
 	lsl	r0, r0, #0x5
-	ldr	r1, .L1944+0x4
+	ldr	r1, .L1942+0x4
 	add	r0, r0, r1
-	b	.L1943
+	b	.L1941
+.L1943:
+	.align	2, 0
+.L1942:
+	.word	gContestResources
+	.word	gContestNextTurnNumbersGfx
+.L1939:
+	ldr	r0, .L1944
+.L1941:
+	pop	{r1}
+	bx	r1
 .L1945:
 	.align	2, 0
 .L1944:
-	.word	gContestResources
-	.word	gContestNextTurnNumbersGfx
-.L1941:
-	ldr	r0, .L1946
-.L1943:
-	pop	{r1}
-	bx	r1
-.L1947:
-	.align	2, 0
-.L1946:
 	.word	gContestNextTurnRandomGfx
 .Lfe165:
 	.size	 GetTurnOrderNumberGfx,.Lfe165-GetTurnOrderNumberGfx
@@ -19063,22 +19065,22 @@ DrawUnnervedSymbols:
 	mov	r8, r0
 	mov	r0, #0x11
 	mov	r9, r0
-.L1952:
-	ldr	r0, .L1955
+.L1950:
+	ldr	r0, .L1953
 	ldr	r0, [r0]
 	ldr	r0, [r0, #0x8]
 	add	r0, r0, #0xd
 	add	r0, r0, r7
 	ldrb	r0, [r0]
 	cmp	r0, #0
-	beq	.L1951	@cond_branch
+	beq	.L1949	@cond_branch
 	lsl	r0, r7, #0x18
 	lsr	r0, r0, #0x18
 	bl	Contest_IsMonsTurnDisabled
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	bne	.L1951	@cond_branch
-	ldr	r0, .L1955+0x4
+	bne	.L1949	@cond_branch
+	ldr	r0, .L1953+0x4
 	add	r0, r7, r0
 	ldrb	r0, [r0]
 	lsl	r5, r0, #0x2
@@ -19125,10 +19127,10 @@ DrawUnnervedSymbols:
 	bl	ContestBG_FillBoxWithIncrementingTile
 	mov	r0, #0x63
 	bl	PlaySE
-.L1951:
+.L1949:
 	add	r7, r7, #0x1
 	cmp	r7, #0x3
-	ble	.L1952	@cond_branch
+	ble	.L1950	@cond_branch
 	add	sp, sp, #0x10
 	pop	{r3, r4, r5}
 	mov	r8, r3
@@ -19137,9 +19139,9 @@ DrawUnnervedSymbols:
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L1956:
+.L1954:
 	.align	2, 0
-.L1955:
+.L1953:
 	.word	gContestResources
 	.word	gContestantTurnOrder
 .Lfe166:
@@ -19152,7 +19154,7 @@ IsContestantAllowedToCombo:
 	push	{lr}
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
-	ldr	r1, .L1962
+	ldr	r1, .L1960
 	ldr	r1, [r1]
 	ldr	r2, [r1, #0x4]
 	lsl	r1, r0, #0x3
@@ -19164,22 +19166,22 @@ IsContestantAllowedToCombo:
 	add	r0, r3, #0
 	and	r0, r0, r1
 	cmp	r0, #0
-	bne	.L1959	@cond_branch
+	bne	.L1957	@cond_branch
 	ldrb	r1, [r2, #0xc]
 	add	r0, r3, #0
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L1958	@cond_branch
-.L1959:
+	beq	.L1956	@cond_branch
+.L1957:
 	mov	r0, #0x0
-	b	.L1961
-.L1963:
-	.align	2, 0
-.L1962:
-	.word	gContestResources
-.L1958:
-	mov	r0, #0x1
+	b	.L1959
 .L1961:
+	.align	2, 0
+.L1960:
+	.word	gContestResources
+.L1956:
+	mov	r0, #0x1
+.L1959:
 	pop	{r1}
 	bx	r1
 .Lfe167:
@@ -19249,10 +19251,10 @@ SetBgForCurtainDrop:
 	ldrh	r1, [r5]
 	mov	r0, #0xc
 	bl	SetGpuReg
-	ldr	r1, .L1970
+	ldr	r1, .L1968
 	mov	r0, #0xf0
 	strh	r0, [r1]
-	ldr	r4, .L1970+0x4
+	ldr	r4, .L1968+0x4
 	mov	r0, #0xa0
 	strh	r0, [r4]
 	mov	r0, #0x14
@@ -19264,12 +19266,12 @@ SetBgForCurtainDrop:
 	mov	r0, #0x0
 	str	r0, [sp, #0x8]
 	add	r0, sp, #0x8
-	ldr	r4, .L1970+0x8
+	ldr	r4, .L1968+0x8
 	ldr	r1, [r4]
 	ldr	r1, [r1, #0x28]
-	ldr	r2, .L1970+0xc
+	ldr	r2, .L1968+0xc
 	bl	CpuSet
-	ldr	r1, .L1970+0x10
+	ldr	r1, .L1968+0x10
 	mov	r0, #0x1
 	mov	r2, #0x0
 	mov	r3, #0x0
@@ -19277,9 +19279,9 @@ SetBgForCurtainDrop:
 	mov	r0, #0x1
 	bl	Contest_SetBgCopyFlags
 	mov	r5, #0x0
-	ldr	r7, .L1970+0x14
+	ldr	r7, .L1968+0x14
 	mov	r6, #0x4
-.L1968:
+.L1966:
 	ldr	r0, [r4]
 	ldr	r0, [r0, #0x14]
 	lsl	r3, r5, #0x2
@@ -19309,16 +19311,16 @@ SetBgForCurtainDrop:
 	strb	r0, [r1, #0x5]
 	add	r5, r5, #0x1
 	cmp	r5, #0x3
-	ble	.L1968	@cond_branch
+	ble	.L1966	@cond_branch
 	add	sp, sp, #0xc
 	pop	{r3}
 	mov	r8, r3
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L1971:
+.L1969:
 	.align	2, 0
-.L1970:
+.L1968:
 	.word	gBattle_BG1_X
 	.word	gBattle_BG1_Y
 	.word	gContestResources
@@ -19333,7 +19335,7 @@ SetBgForCurtainDrop:
 UpdateContestantBoxOrder:
 	push	{r4, r5, r6, r7, lr}
 	add	sp, sp, #-0x8
-	ldr	r1, .L1978
+	ldr	r1, .L1976
 	mov	r2, #0x80
 	lsl	r2, r2, #0x6
 	mov	r0, #0x0
@@ -19341,10 +19343,10 @@ UpdateContestantBoxOrder:
 	bl	RequestDma3Fill
 	mov	r5, #0x0
 	str	r5, [sp]
-	ldr	r6, .L1978+0x4
+	ldr	r6, .L1976+0x4
 	ldr	r0, [r6]
 	ldr	r1, [r0, #0x28]
-	ldr	r2, .L1978+0x8
+	ldr	r2, .L1976+0x8
 	mov	r0, sp
 	bl	CpuSet
 	mov	r0, #0x1
@@ -19382,12 +19384,12 @@ UpdateContestantBoxOrder:
 	ldrh	r1, [r3]
 	mov	r0, #0xa
 	bl	SetGpuReg
-	ldr	r0, .L1978+0xc
+	ldr	r0, .L1976+0xc
 	strh	r5, [r0]
-	ldr	r0, .L1978+0x10
+	ldr	r0, .L1976+0x10
 	strh	r5, [r0]
-	ldr	r7, .L1978+0x14
-.L1976:
+	ldr	r7, .L1976+0x14
+.L1974:
 	ldr	r0, [r6]
 	ldr	r0, [r0, #0x14]
 	lsl	r3, r5, #0x2
@@ -19415,14 +19417,14 @@ UpdateContestantBoxOrder:
 	strb	r0, [r1, #0x5]
 	add	r5, r5, #0x1
 	cmp	r5, #0x3
-	ble	.L1976	@cond_branch
+	ble	.L1974	@cond_branch
 	add	sp, sp, #0x8
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L1979:
+.L1977:
 	.align	2, 0
-.L1978:
+.L1976:
 	.word	0x6008000
 	.word	gContestResources
 	.word	0x5000400
@@ -19439,28 +19441,28 @@ Task_StartDropCurtainAtRoundEnd:
 	add	r4, r0, #0
 	lsl	r4, r4, #0x18
 	lsr	r4, r4, #0x18
-	ldr	r1, .L1981
+	ldr	r1, .L1979
 	mov	r0, #0x0
 	strh	r0, [r1]
-	ldr	r1, .L1981+0x4
+	ldr	r1, .L1979+0x4
 	mov	r0, #0xa0
 	strh	r0, [r1]
 	mov	r0, #0x62
 	mov	r1, #0x0
 	bl	PlaySE12WithPanning
-	ldr	r1, .L1981+0x8
+	ldr	r1, .L1979+0x8
 	lsl	r0, r4, #0x2
 	add	r0, r0, r4
 	lsl	r0, r0, #0x3
 	add	r0, r0, r1
-	ldr	r1, .L1981+0xc
+	ldr	r1, .L1979+0xc
 	str	r1, [r0]
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L1982:
+.L1980:
 	.align	2, 0
-.L1981:
+.L1979:
 	.word	gBattle_BG1_X
 	.word	gBattle_BG1_Y
 	.word	gTasks
@@ -19474,20 +19476,20 @@ Task_UpdateCurtainDropAtRoundEnd:
 	push	{lr}
 	lsl	r0, r0, #0x18
 	lsr	r3, r0, #0x18
-	ldr	r1, .L1986
+	ldr	r1, .L1984
 	ldrh	r0, [r1]
 	sub	r0, r0, #0x7
 	strh	r0, [r1]
 	lsl	r0, r0, #0x10
 	cmp	r0, #0
-	bge	.L1984	@cond_branch
+	bge	.L1982	@cond_branch
 	mov	r0, #0x0
 	strh	r0, [r1]
-.L1984:
+.L1982:
 	ldrh	r2, [r1]
 	cmp	r2, #0
-	bne	.L1985	@cond_branch
-	ldr	r0, .L1986+0x4
+	bne	.L1983	@cond_branch
+	ldr	r0, .L1984+0x4
 	lsl	r1, r3, #0x2
 	add	r1, r1, r3
 	lsl	r1, r1, #0x3
@@ -19495,14 +19497,14 @@ Task_UpdateCurtainDropAtRoundEnd:
 	strh	r2, [r1, #0x8]
 	strh	r2, [r1, #0xa]
 	strh	r2, [r1, #0xc]
-	ldr	r0, .L1986+0x8
+	ldr	r0, .L1984+0x8
 	str	r0, [r1]
-.L1985:
+.L1983:
 	pop	{r0}
 	bx	r0
-.L1987:
+.L1985:
 	.align	2, 0
-.L1986:
+.L1984:
 	.word	gBattle_BG1_Y
 	.word	gTasks
 	.word	Task_ResetForNextRound
@@ -19515,7 +19517,7 @@ Task_ResetForNextRound:
 	push	{r4, r5, r6, lr}
 	lsl	r0, r0, #0x18
 	lsr	r4, r0, #0x18
-	ldr	r1, .L2007
+	ldr	r1, .L2005
 	lsl	r3, r4, #0x2
 	add	r0, r3, r4
 	lsl	r0, r0, #0x3
@@ -19523,28 +19525,28 @@ Task_ResetForNextRound:
 	mov	r0, #0x8
 	ldrsh	r1, [r5, r0]
 	cmp	r1, #0x1
-	beq	.L1996	@cond_branch
+	beq	.L1994	@cond_branch
 	cmp	r1, #0x1
-	bgt	.L2005	@cond_branch
+	bgt	.L2003	@cond_branch
 	cmp	r1, #0
-	beq	.L1990	@cond_branch
-	b	.L1989
-.L2008:
+	beq	.L1988	@cond_branch
+	b	.L1987
+.L2006:
 	.align	2, 0
-.L2007:
-	.word	gTasks
 .L2005:
+	.word	gTasks
+.L2003:
 	cmp	r1, #0x2
-	beq	.L2000	@cond_branch
+	beq	.L1998	@cond_branch
 	cmp	r1, #0x3
-	beq	.L2002	@cond_branch
-	b	.L1989
-.L1990:
+	beq	.L2000	@cond_branch
+	b	.L1987
+.L1988:
 	mov	r2, #0x0
 	add	r6, r3, #0
-	ldr	r5, .L2009
-	ldr	r3, .L2009+0x4
-.L1994:
+	ldr	r5, .L2007
+	ldr	r3, .L2007+0x4
+.L1992:
 	ldr	r0, [r5]
 	ldr	r1, [r0]
 	add	r1, r1, #0x14
@@ -19554,7 +19556,7 @@ Task_ResetForNextRound:
 	strb	r0, [r1]
 	add	r2, r2, #0x1
 	cmp	r2, #0x3
-	ble	.L1994	@cond_branch
+	ble	.L1992	@cond_branch
 	bl	FillContestantWindowBgs
 	bl	UpdateBlendTaskContestantsData
 	bl	DrawConditionStars
@@ -19562,26 +19564,26 @@ Task_ResetForNextRound:
 	mov	r0, #0x1
 	bl	ShowHideNextTurnGfx
 	bl	UpdateSliderHeartSpriteYPositions
-	ldr	r0, .L2009+0x8
+	ldr	r0, .L2007+0x8
 	add	r1, r6, r4
 	lsl	r1, r1, #0x3
 	add	r1, r1, r0
 	mov	r0, #0x1
 	strh	r0, [r1, #0x8]
-	b	.L1989
-.L2010:
+	b	.L1987
+.L2008:
 	.align	2, 0
-.L2009:
+.L2007:
 	.word	gContestResources
 	.word	gContestantTurnOrder
 	.word	gTasks
-.L1996:
-	ldr	r0, .L2011
+.L1994:
+	ldr	r0, .L2009
 	ldrb	r0, [r0]
 	and	r1, r1, r0
 	cmp	r1, #0
-	beq	.L1997	@cond_branch
-	ldr	r0, .L2011+0x4
+	beq	.L1995	@cond_branch
+	ldr	r0, .L2009+0x4
 	ldr	r0, [r0]
 	ldr	r2, [r0]
 	ldrb	r0, [r2, #0x7]
@@ -19591,63 +19593,63 @@ Task_ResetForNextRound:
 	bl	IsPlayerLinkLeader
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.L1998	@cond_branch
+	beq	.L1996	@cond_branch
 	bl	SetContestantStatusesForNextRound
-.L1998:
-	ldr	r4, .L2011+0x8
+.L1996:
+	ldr	r4, .L2009+0x8
 	add	r0, r4, #0
 	mov	r1, #0x0
 	bl	CreateTask
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
-	ldr	r2, .L2011+0xc
+	ldr	r2, .L2009+0xc
 	add	r1, r4, #0
 	bl	SetTaskFuncWithFollowupFunc
 	bl	ContestPrintLinkStandby
 	mov	r0, #0x2
 	strh	r0, [r5, #0x8]
-	b	.L1989
-.L2012:
+	b	.L1987
+.L2010:
 	.align	2, 0
-.L2011:
+.L2009:
 	.word	gLinkContestFlags
 	.word	gContestResources
 	.word	Task_LinkContest_CommunicateAppealsState
 	.word	Task_EndWaitForLink
-.L1997:
+.L1995:
 	bl	SetContestantStatusesForNextRound
-	b	.L2006
-.L2000:
-	ldr	r0, .L2013
+	b	.L2004
+.L1998:
+	ldr	r0, .L2011
 	ldr	r0, [r0]
 	ldr	r0, [r0]
 	ldrb	r1, [r0, #0x7]
 	mov	r0, #0x4
 	and	r0, r0, r1
 	cmp	r0, #0
-	bne	.L1989	@cond_branch
-.L2006:
+	bne	.L1987	@cond_branch
+.L2004:
 	mov	r0, #0x3
 	strh	r0, [r5, #0x8]
-	b	.L1989
-.L2014:
+	b	.L1987
+.L2012:
 	.align	2, 0
-.L2013:
+.L2011:
 	.word	gContestResources
-.L2002:
+.L2000:
 	bl	DrawStatusSymbols
 	bl	SwapMoveDescAndContestTilemaps
 	mov	r0, #0x0
 	strh	r0, [r5, #0x8]
-	ldr	r0, .L2015
+	ldr	r0, .L2013
 	str	r0, [r5]
-.L1989:
+.L1987:
 	pop	{r4, r5, r6}
 	pop	{r0}
 	bx	r0
-.L2016:
+.L2014:
 	.align	2, 0
-.L2015:
+.L2013:
 	.word	Task_WaitRaiseCurtainAtRoundEnd
 .Lfe172:
 	.size	 Task_ResetForNextRound,.Lfe172-Task_ResetForNextRound
@@ -19658,27 +19660,27 @@ Task_UpdateRaiseCurtainAtRoundEnd:
 	push	{lr}
 	lsl	r0, r0, #0x18
 	lsr	r2, r0, #0x18
-	ldr	r1, .L2019
+	ldr	r1, .L2017
 	ldrh	r0, [r1]
 	add	r0, r0, #0x7
 	strh	r0, [r1]
 	lsl	r0, r0, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, #0xa0
-	ble	.L2018	@cond_branch
-	ldr	r0, .L2019+0x4
+	ble	.L2016	@cond_branch
+	ldr	r0, .L2017+0x4
 	lsl	r1, r2, #0x2
 	add	r1, r1, r2
 	lsl	r1, r1, #0x3
 	add	r1, r1, r0
-	ldr	r0, .L2019+0x8
+	ldr	r0, .L2017+0x8
 	str	r0, [r1]
-.L2018:
+.L2016:
 	pop	{r0}
 	bx	r0
-.L2020:
+.L2018:
 	.align	2, 0
-.L2019:
+.L2017:
 	.word	gBattle_BG1_Y
 	.word	gTasks
 	.word	Task_UpdateContestantBoxOrder
@@ -19691,7 +19693,7 @@ Task_WaitRaiseCurtainAtRoundEnd:
 	push	{r4, lr}
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
-	ldr	r2, .L2031
+	ldr	r2, .L2029
 	lsl	r1, r0, #0x2
 	add	r1, r1, r0
 	lsl	r1, r1, #0x3
@@ -19700,51 +19702,51 @@ Task_WaitRaiseCurtainAtRoundEnd:
 	mov	r3, #0xc
 	ldrsh	r0, [r1, r3]
 	cmp	r0, #0x9
-	bgt	.L2022	@cond_branch
+	bgt	.L2020	@cond_branch
 	add	r0, r2, #0x1
 	strh	r0, [r1, #0xc]
-	b	.L2023
-.L2032:
+	b	.L2021
+.L2030:
 	.align	2, 0
-.L2031:
+.L2029:
 	.word	gTasks
-.L2022:
+.L2020:
 	ldrh	r3, [r1, #0xa]
 	mov	r4, #0xa
 	ldrsh	r0, [r1, r4]
 	cmp	r0, #0
-	bne	.L2024	@cond_branch
+	bne	.L2022	@cond_branch
 	ldrh	r2, [r1, #0x8]
 	mov	r4, #0x8
 	ldrsh	r0, [r1, r4]
 	cmp	r0, #0x10
-	bne	.L2025	@cond_branch
+	bne	.L2023	@cond_branch
 	add	r0, r3, #0x1
 	strh	r0, [r1, #0xa]
-	b	.L2023
-.L2025:
+	b	.L2021
+.L2023:
 	add	r0, r2, #0x1
-	b	.L2030
-.L2024:
+	b	.L2028
+.L2022:
 	ldrh	r0, [r1, #0x8]
 	mov	r3, #0x8
 	ldrsh	r2, [r1, r3]
 	cmp	r2, #0
-	bne	.L2028	@cond_branch
+	bne	.L2026	@cond_branch
 	strh	r2, [r1, #0xa]
 	strh	r2, [r1, #0xc]
-	ldr	r0, .L2033
+	ldr	r0, .L2031
 	str	r0, [r1]
-	b	.L2023
-.L2034:
+	b	.L2021
+.L2032:
 	.align	2, 0
-.L2033:
+.L2031:
 	.word	Task_StartRaiseCurtainAtRoundEnd
-.L2028:
+.L2026:
 	sub	r0, r0, #0x1
-.L2030:
+.L2028:
 	strh	r0, [r1, #0x8]
-.L2023:
+.L2021:
 	pop	{r4}
 	pop	{r0}
 	bx	r0
@@ -19757,7 +19759,7 @@ Task_StartRaiseCurtainAtRoundEnd:
 	push	{r4, lr}
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
-	ldr	r2, .L2038
+	ldr	r2, .L2036
 	lsl	r1, r0, #0x2
 	add	r1, r1, r0
 	lsl	r1, r1, #0x3
@@ -19766,29 +19768,29 @@ Task_StartRaiseCurtainAtRoundEnd:
 	mov	r2, #0xc
 	ldrsh	r0, [r4, r2]
 	cmp	r0, #0x9
-	bgt	.L2036	@cond_branch
+	bgt	.L2034	@cond_branch
 	add	r0, r1, #0x1
 	strh	r0, [r4, #0xc]
-	b	.L2037
-.L2039:
+	b	.L2035
+.L2037:
 	.align	2, 0
-.L2038:
-	.word	gTasks
 .L2036:
+	.word	gTasks
+.L2034:
 	mov	r0, #0x0
 	strh	r0, [r4, #0xc]
 	mov	r0, #0x61
 	mov	r1, #0x0
 	bl	PlaySE12WithPanning
-	ldr	r0, .L2040
+	ldr	r0, .L2038
 	str	r0, [r4]
-.L2037:
+.L2035:
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L2041:
+.L2039:
 	.align	2, 0
-.L2040:
+.L2038:
 	.word	Task_UpdateRaiseCurtainAtRoundEnd
 .Lfe175:
 	.size	 Task_StartRaiseCurtainAtRoundEnd,.Lfe175-Task_StartRaiseCurtainAtRoundEnd
@@ -19803,9 +19805,9 @@ AnimateSliderHearts:
 	lsr	r0, r0, #0x18
 	mov	r8, r0
 	mov	r7, #0x0
-	ldr	r6, .L2049
-	ldr	r5, .L2049+0x4
-.L2046:
+	ldr	r6, .L2047
+	ldr	r5, .L2047+0x4
+.L2044:
 	bl	AllocOamMatrix
 	ldr	r1, [r5]
 	ldr	r1, [r1, #0x14]
@@ -19857,7 +19859,7 @@ AnimateSliderHearts:
 	bl	StartSpriteAffineAnim
 	mov	r0, r8
 	cmp	r0, #0x2
-	bne	.L2045	@cond_branch
+	bne	.L2043	@cond_branch
 	ldr	r0, [r5]
 	ldr	r0, [r0, #0x14]
 	add	r0, r4, r0
@@ -19882,23 +19884,23 @@ AnimateSliderHearts:
 	add	r2, r3, #0
 	and	r1, r1, r2
 	strb	r1, [r0]
-.L2045:
+.L2043:
 	add	r7, r7, #0x1
 	cmp	r7, #0x3
-	ble	.L2046	@cond_branch
-	ldr	r0, .L2049+0x8
+	ble	.L2044	@cond_branch
+	ldr	r0, .L2047+0x8
 	mov	r1, #0x5
 	bl	CreateTask
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
-	ldr	r2, .L2049+0xc
+	ldr	r2, .L2047+0xc
 	lsl	r1, r0, #0x2
 	add	r1, r1, r0
 	lsl	r1, r1, #0x3
 	add	r1, r1, r2
 	mov	r0, r8
 	strh	r0, [r1, #0x8]
-	ldr	r0, .L2049+0x4
+	ldr	r0, .L2047+0x4
 	ldr	r0, [r0]
 	ldr	r2, [r0]
 	ldrb	r0, [r2, #0x7]
@@ -19910,9 +19912,9 @@ AnimateSliderHearts:
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L2050:
+.L2048:
 	.align	2, 0
-.L2049:
+.L2047:
 	.word	gSprites
 	.word	gContestResources
 	.word	Task_WaitForSliderHeartAnim
@@ -19926,8 +19928,8 @@ Task_WaitForSliderHeartAnim:
 	push	{r4, r5, r6, lr}
 	lsl	r0, r0, #0x18
 	lsr	r6, r0, #0x18
-	ldr	r2, .L2064
-	ldr	r3, .L2064+0x4
+	ldr	r2, .L2062
+	ldr	r3, .L2062+0x4
 	ldr	r0, [r3]
 	ldr	r0, [r0, #0x14]
 	ldrb	r1, [r0]
@@ -19939,19 +19941,19 @@ Task_WaitForSliderHeartAnim:
 	ldrb	r0, [r0]
 	lsl	r0, r0, #0x1a
 	cmp	r0, #0
-	bge	.L2052	@cond_branch
-	ldr	r0, .L2064+0x8
+	bge	.L2050	@cond_branch
+	ldr	r0, .L2062+0x8
 	lsl	r1, r6, #0x2
 	add	r1, r1, r6
 	lsl	r1, r1, #0x3
 	add	r1, r1, r0
 	ldrb	r0, [r1, #0x8]
 	cmp	r0, #0x1
-	bne	.L2053	@cond_branch
+	bne	.L2051	@cond_branch
 	mov	r4, #0x0
 	add	r5, r2, #0
 	mov	r2, #0x4
-.L2057:
+.L2055:
 	ldr	r0, [r3]
 	ldr	r1, [r0, #0x14]
 	lsl	r0, r4, #0x2
@@ -19967,11 +19969,11 @@ Task_WaitForSliderHeartAnim:
 	strb	r1, [r0]
 	add	r4, r4, #0x1
 	cmp	r4, #0x3
-	ble	.L2057	@cond_branch
-.L2053:
+	ble	.L2055	@cond_branch
+.L2051:
 	mov	r4, #0x0
-.L2062:
-	ldr	r5, .L2064+0x4
+.L2060:
+	ldr	r5, .L2062+0x4
 	ldr	r0, [r5]
 	ldr	r1, [r0, #0x14]
 	lsl	r0, r4, #0x2
@@ -19980,12 +19982,12 @@ Task_WaitForSliderHeartAnim:
 	lsl	r0, r1, #0x4
 	add	r0, r0, r1
 	lsl	r0, r0, #0x2
-	ldr	r1, .L2064
+	ldr	r1, .L2062
 	add	r0, r0, r1
 	bl	FreeSpriteOamMatrix
 	add	r4, r4, #0x1
 	cmp	r4, #0x3
-	ble	.L2062	@cond_branch
+	ble	.L2060	@cond_branch
 	ldr	r0, [r5]
 	ldr	r2, [r0]
 	ldrb	r1, [r2, #0x7]
@@ -19995,13 +19997,13 @@ Task_WaitForSliderHeartAnim:
 	strb	r0, [r2, #0x7]
 	add	r0, r6, #0
 	bl	DestroyTask
-.L2052:
+.L2050:
 	pop	{r4, r5, r6}
 	pop	{r0}
 	bx	r0
-.L2065:
+.L2063:
 	.align	2, 0
-.L2064:
+.L2062:
 	.word	gSprites
 	.word	gContestResources
 	.word	gTasks
@@ -20014,17 +20016,17 @@ SanitizeMove:
 	push	{lr}
 	lsl	r0, r0, #0x10
 	lsr	r1, r0, #0x10
-	ldr	r0, .L2068
+	ldr	r0, .L2066
 	cmp	r1, r0
-	bls	.L2067	@cond_branch
+	bls	.L2065	@cond_branch
 	mov	r1, #0x1
-.L2067:
+.L2065:
 	add	r0, r1, #0
 	pop	{r1}
 	bx	r1
-.L2069:
+.L2067:
 	.align	2, 0
-.L2068:
+.L2066:
 	.word	0x2f2
 .Lfe178:
 	.size	 SanitizeMove,.Lfe178-SanitizeMove
@@ -20035,17 +20037,17 @@ SanitizeSpecies:
 	push	{lr}
 	lsl	r0, r0, #0x10
 	lsr	r1, r0, #0x10
-	ldr	r0, .L2072
+	ldr	r0, .L2070
 	cmp	r1, r0
-	bls	.L2071	@cond_branch
+	bls	.L2069	@cond_branch
 	mov	r1, #0x0
-.L2071:
+.L2069:
 	add	r0, r1, #0
 	pop	{r1}
 	bx	r1
-.L2073:
+.L2071:
 	.align	2, 0
-.L2072:
+.L2070:
 	.word	0x4b6
 .Lfe179:
 	.size	 SanitizeSpecies,.Lfe179-SanitizeSpecies
@@ -20056,7 +20058,7 @@ SetMoveSpecificAnimData:
 	push	{r4, r5, r6, r7, lr}
 	lsl	r0, r0, #0x18
 	lsr	r7, r0, #0x18
-	ldr	r4, .L2101
+	ldr	r4, .L2099
 	ldr	r0, [r4]
 	ldr	r1, [r0, #0x4]
 	lsl	r0, r7, #0x3
@@ -20067,7 +20069,7 @@ SetMoveSpecificAnimData:
 	bl	SanitizeMove
 	lsl	r0, r0, #0x10
 	lsr	r5, r0, #0x10
-	ldr	r1, .L2101+0x4
+	ldr	r1, .L2099+0x4
 	lsl	r0, r7, #0x6
 	add	r0, r0, r1
 	ldrh	r0, [r0]
@@ -20082,76 +20084,76 @@ SetMoveSpecificAnimData:
 	mov	r2, #0x14
 	bl	memset
 	bl	ClearBattleAnimationVars
-	ldr	r1, .L2101+0x8
+	ldr	r1, .L2099+0x8
 	mov	r2, #0x0
 	add	r0, r1, #0x3
-.L2078:
+.L2076:
 	strb	r2, [r0]
 	sub	r0, r0, #0x1
 	cmp	r0, r1
-	bge	.L2078	@cond_branch
+	bge	.L2076	@cond_branch
 	cmp	r5, #0x90
-	beq	.L2086	@cond_branch
+	beq	.L2084	@cond_branch
 	cmp	r5, #0x90
-	bgt	.L2097	@cond_branch
+	bgt	.L2095	@cond_branch
 	cmp	r5, #0x4c
-	beq	.L2092	@cond_branch
+	beq	.L2090	@cond_branch
 	cmp	r5, #0x4c
-	bgt	.L2098	@cond_branch
+	bgt	.L2096	@cond_branch
 	cmp	r5, #0xd
-	beq	.L2092	@cond_branch
-	b	.L2080
-.L2102:
+	beq	.L2090	@cond_branch
+	b	.L2078
+.L2100:
 	.align	2, 0
-.L2101:
+.L2099:
 	.word	gContestResources
 	.word	gContestMons
 	.word	gBattleMonForms
-.L2098:
+.L2096:
 	cmp	r5, #0x82
-	beq	.L2092	@cond_branch
+	beq	.L2090	@cond_branch
 	cmp	r5, #0x8f
-	beq	.L2092	@cond_branch
-	b	.L2080
-.L2097:
+	beq	.L2090	@cond_branch
+	b	.L2078
+.L2095:
 	cmp	r5, #0xd8
-	beq	.L2087	@cond_branch
+	beq	.L2085	@cond_branch
 	cmp	r5, #0xd8
-	bgt	.L2099	@cond_branch
+	bgt	.L2097	@cond_branch
 	cmp	r5, #0xae
-	beq	.L2081	@cond_branch
-	b	.L2080
-.L2099:
+	beq	.L2079	@cond_branch
+	b	.L2078
+.L2097:
 	cmp	r5, #0xda
-	beq	.L2088	@cond_branch
+	beq	.L2086	@cond_branch
 	mov	r0, #0x88
 	lsl	r0, r0, #0x1
 	cmp	r5, r0
-	beq	.L2086	@cond_branch
-	b	.L2080
-.L2081:
-	ldr	r0, .L2103
+	beq	.L2084	@cond_branch
+	b	.L2078
+.L2079:
+	ldr	r0, .L2101
 	lsl	r1, r6, #0x3
 	add	r1, r1, r6
 	lsl	r1, r1, #0x2
 	add	r1, r1, r0
 	ldrb	r0, [r1, #0x6]
 	cmp	r0, #0x7
-	beq	.L2083	@cond_branch
+	beq	.L2081	@cond_branch
 	ldrb	r0, [r1, #0x7]
 	cmp	r0, #0x7
-	bne	.L2093	@cond_branch
-.L2083:
-	ldr	r1, .L2103+0x4
+	bne	.L2091	@cond_branch
+.L2081:
+	ldr	r1, .L2101+0x4
 	mov	r0, #0x0
-	b	.L2100
-.L2104:
+	b	.L2098
+.L2102:
 	.align	2, 0
-.L2103:
+.L2101:
 	.word	gBaseStats
 	.word	gAnimMoveTurn
-.L2086:
-	ldr	r6, .L2105
+.L2084:
+	ldr	r6, .L2103
 	ldr	r0, [r6]
 	ldr	r1, [r0, #0x4]
 	lsl	r0, r7, #0x3
@@ -20159,7 +20161,7 @@ SetMoveSpecificAnimData:
 	lsl	r0, r0, #0x2
 	add	r0, r0, r1
 	ldrb	r4, [r0, #0x1b]
-	ldr	r5, .L2105+0x4
+	ldr	r5, .L2103+0x4
 	lsl	r4, r4, #0x6
 	add	r0, r4, r5
 	ldrh	r0, [r0]
@@ -20178,60 +20180,60 @@ SetMoveSpecificAnimData:
 	mov	r1, #0x1
 	orr	r0, r0, r1
 	strb	r0, [r2, #0x4]
-	b	.L2080
+	b	.L2078
+.L2104:
+	.align	2, 0
+.L2103:
+	.word	gContestResources
+	.word	gContestMons
+.L2085:
+	ldr	r1, .L2105
+	mov	r0, #0xff
+	b	.L2098
 .L2106:
 	.align	2, 0
 .L2105:
-	.word	gContestResources
-	.word	gContestMons
-.L2087:
+	.word	gAnimFriendship
+.L2086:
 	ldr	r1, .L2107
-	mov	r0, #0xff
-	b	.L2100
+	mov	r0, #0x0
+	b	.L2098
 .L2108:
 	.align	2, 0
 .L2107:
 	.word	gAnimFriendship
-.L2088:
-	ldr	r1, .L2109
-	mov	r0, #0x0
-	b	.L2100
-.L2110:
-	.align	2, 0
-.L2109:
-	.word	gAnimFriendship
-.L2092:
-	ldr	r0, .L2111
+.L2090:
+	ldr	r0, .L2109
 	ldr	r0, [r0]
 	ldr	r0, [r0]
 	add	r2, r0, #0
 	add	r2, r2, #0x5a
 	ldrb	r1, [r2]
 	cmp	r1, #0
-	bne	.L2093	@cond_branch
+	bne	.L2091	@cond_branch
 	mov	r0, #0x2
 	strb	r0, [r2]
-	ldr	r0, .L2111+0x4
+	ldr	r0, .L2109+0x4
 	strb	r1, [r0]
-	b	.L2080
-.L2112:
+	b	.L2078
+.L2110:
 	.align	2, 0
-.L2111:
+.L2109:
 	.word	gContestResources
 	.word	gAnimMoveTurn
-.L2093:
-	ldr	r1, .L2113
+.L2091:
+	ldr	r1, .L2111
 	mov	r0, #0x1
-.L2100:
+.L2098:
 	strb	r0, [r1]
-.L2080:
+.L2078:
 	bl	SetBattleTargetSpritePosition
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L2114:
+.L2112:
 	.align	2, 0
-.L2113:
+.L2111:
 	.word	gAnimMoveTurn
 .Lfe180:
 	.size	 SetMoveSpecificAnimData,.Lfe180-SetMoveSpecificAnimData
@@ -20240,7 +20242,7 @@ SetMoveSpecificAnimData:
 	.thumb_func
 ClearMoveAnimData:
 	push	{r4, lr}
-	ldr	r4, .L2117
+	ldr	r4, .L2115
 	ldr	r0, [r4]
 	ldr	r0, [r0, #0x18]
 	mov	r1, #0x0
@@ -20252,16 +20254,16 @@ ClearMoveAnimData:
 	add	r1, r1, #0x5a
 	ldrb	r0, [r1]
 	cmp	r0, #0
-	beq	.L2116	@cond_branch
+	beq	.L2114	@cond_branch
 	sub	r0, r0, #0x1
 	strb	r0, [r1]
-.L2116:
+.L2114:
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L2118:
+.L2116:
 	.align	2, 0
-.L2117:
+.L2115:
 	.word	gContestResources
 .Lfe181:
 	.size	 ClearMoveAnimData,.Lfe181-ClearMoveAnimData
@@ -20273,11 +20275,11 @@ SetMoveAnimAttackerData:
 	add	r4, r0, #0
 	lsl	r4, r4, #0x18
 	lsr	r4, r4, #0x18
-	ldr	r6, .L2120
+	ldr	r6, .L2118
 	ldr	r0, [r6]
 	ldr	r0, [r0, #0x18]
 	strb	r4, [r0, #0x5]
-	ldr	r5, .L2120+0x4
+	ldr	r5, .L2118+0x4
 	lsl	r4, r4, #0x6
 	add	r0, r4, r5
 	ldrh	r0, [r0]
@@ -20300,9 +20302,9 @@ SetMoveAnimAttackerData:
 	pop	{r4, r5, r6}
 	pop	{r0}
 	bx	r0
-.L2121:
+.L2119:
 	.align	2, 0
-.L2120:
+.L2118:
 	.word	gContestResources
 	.word	gContestMons
 .Lfe182:
@@ -20312,26 +20314,26 @@ SetMoveAnimAttackerData:
 	.thumb_func
 CreateInvisibleBattleTargetSprite:
 	push	{lr}
-	ldr	r0, .L2123
+	ldr	r0, .L2121
 	bl	CreateInvisibleSpriteWithCallback
-	ldr	r1, .L2123+0x4
+	ldr	r1, .L2121+0x4
 	strb	r0, [r1, #0x3]
-	ldr	r0, .L2123+0x8
+	ldr	r0, .L2121+0x8
 	ldrb	r0, [r0]
 	add	r0, r0, r1
 	ldrb	r1, [r0]
 	lsl	r0, r1, #0x4
 	add	r0, r0, r1
 	lsl	r0, r0, #0x2
-	ldr	r1, .L2123+0xc
+	ldr	r1, .L2121+0xc
 	add	r0, r0, r1
 	bl	InitSpriteAffineAnim
 	bl	SetBattleTargetSpritePosition
 	pop	{r0}
 	bx	r0
-.L2124:
+.L2122:
 	.align	2, 0
-.L2123:
+.L2121:
 	.word	SpriteCallbackDummy
 	.word	gBattlerSpriteIds
 	.word	gBattlerTarget
@@ -20343,12 +20345,12 @@ CreateInvisibleBattleTargetSprite:
 	.thumb_func
 SetBattleTargetSpritePosition:
 	push	{r4, lr}
-	ldr	r0, .L2126
+	ldr	r0, .L2124
 	ldrb	r0, [r0, #0x3]
 	lsl	r4, r0, #0x4
 	add	r4, r4, r0
 	lsl	r4, r4, #0x2
-	ldr	r0, .L2126+0x4
+	ldr	r0, .L2124+0x4
 	add	r4, r4, r0
 	mov	r0, #0x0
 	strh	r0, [r4, #0x24]
@@ -20373,9 +20375,9 @@ SetBattleTargetSpritePosition:
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L2127:
+.L2125:
 	.align	2, 0
-.L2126:
+.L2124:
 	.word	gBattlerSpriteIds
 	.word	gSprites
 .Lfe184:
@@ -20387,78 +20389,78 @@ SetMoveTargetPosition:
 	push	{lr}
 	lsl	r0, r0, #0x10
 	lsr	r0, r0, #0x10
-	ldr	r2, .L2139
+	ldr	r2, .L2137
 	lsl	r1, r0, #0x2
 	add	r1, r1, r0
 	lsl	r1, r1, #0x2
 	add	r1, r1, r2
 	ldrb	r0, [r1, #0x7]
 	cmp	r0, #0x20
-	bhi	.L2136	@cond_branch
+	bhi	.L2134	@cond_branch
 	lsl	r0, r0, #0x2
-	ldr	r1, .L2139+0x4
+	ldr	r1, .L2137+0x4
 	add	r0, r0, r1
 	ldr	r0, [r0]
 	mov	pc, r0
+.L2138:
+	.align	2, 0
+.L2137:
+	.word	gBattleMoves
+	.word	.L2135
+	.align	2, 0
+	.align	2, 0
+.L2135:
+	.word	.L2134
+	.word	.L2134
+	.word	.L2129
+	.word	.L2134
+	.word	.L2134
+	.word	.L2134
+	.word	.L2134
+	.word	.L2134
+	.word	.L2134
+	.word	.L2134
+	.word	.L2134
+	.word	.L2134
+	.word	.L2134
+	.word	.L2134
+	.word	.L2134
+	.word	.L2134
+	.word	.L2129
+	.word	.L2134
+	.word	.L2134
+	.word	.L2134
+	.word	.L2134
+	.word	.L2134
+	.word	.L2134
+	.word	.L2134
+	.word	.L2134
+	.word	.L2134
+	.word	.L2134
+	.word	.L2134
+	.word	.L2134
+	.word	.L2134
+	.word	.L2134
+	.word	.L2134
+	.word	.L2134
+.L2129:
+	ldr	r1, .L2139
+	mov	r0, #0x2
+	b	.L2136
 .L2140:
 	.align	2, 0
 .L2139:
-	.word	gBattleMoves
-	.word	.L2137
-	.align	2, 0
-	.align	2, 0
-.L2137:
-	.word	.L2136
-	.word	.L2136
-	.word	.L2131
-	.word	.L2136
-	.word	.L2136
-	.word	.L2136
-	.word	.L2136
-	.word	.L2136
-	.word	.L2136
-	.word	.L2136
-	.word	.L2136
-	.word	.L2136
-	.word	.L2136
-	.word	.L2136
-	.word	.L2136
-	.word	.L2136
-	.word	.L2131
-	.word	.L2136
-	.word	.L2136
-	.word	.L2136
-	.word	.L2136
-	.word	.L2136
-	.word	.L2136
-	.word	.L2136
-	.word	.L2136
-	.word	.L2136
-	.word	.L2136
-	.word	.L2136
-	.word	.L2136
-	.word	.L2136
-	.word	.L2136
-	.word	.L2136
-	.word	.L2136
-.L2131:
-	ldr	r1, .L2141
-	mov	r0, #0x2
-	b	.L2138
-.L2142:
-	.align	2, 0
-.L2141:
 	.word	gBattlerTarget
-.L2136:
-	ldr	r1, .L2143
+.L2134:
+	ldr	r1, .L2141
 	mov	r0, #0x3
-.L2138:
+.L2136:
 	strb	r0, [r1]
 	pop	{r0}
 	bx	r0
-.L2144:
+.L2142:
 	.align	2, 0
-.L2143:
+.L2141:
 	.word	gBattlerTarget
 .Lfe185:
 	.size	 SetMoveTargetPosition,.Lfe185-SetMoveTargetPosition
@@ -20600,34 +20602,34 @@ Contest_StartTextPrinter:
 	mov	r0, #0x80
 	strb	r0, [r2, #0xd]
 	cmp	r1, #0
-	bne	.L2148	@cond_branch
+	bne	.L2146	@cond_branch
 	mov	r0, sp
 	mov	r1, #0x0
 	mov	r2, #0x0
 	bl	AddTextPrinter
-	b	.L2149
-.L2148:
-	ldr	r0, .L2152
+	b	.L2147
+.L2146:
+	ldr	r0, .L2150
 	ldrb	r1, [r0]
 	add	r0, r5, #0
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L2150	@cond_branch
+	beq	.L2148	@cond_branch
 	mov	r1, #0x4
-	b	.L2151
-.L2153:
+	b	.L2149
+.L2151:
 	.align	2, 0
-.L2152:
-	.word	gLinkContestFlags
 .L2150:
+	.word	gLinkContestFlags
+.L2148:
 	bl	GetPlayerTextSpeedDelay
 	lsl	r0, r0, #0x18
 	lsr	r1, r0, #0x18
-.L2151:
+.L2149:
 	mov	r0, sp
 	mov	r2, #0x0
 	bl	AddTextPrinter
-.L2149:
+.L2147:
 	mov	r0, #0x4
 	bl	PutWindowTilemap
 	mov	r0, #0x0
@@ -20738,16 +20740,16 @@ Contest_RunTextPrinters:
 	.type	 Contest_SetBgCopyFlags,function
 	.thumb_func
 Contest_SetBgCopyFlags:
-	ldr	r2, .L2158
+	ldr	r2, .L2156
 	mov	r1, #0x1
 	lsl	r1, r1, r0
 	ldrb	r0, [r2]
 	orr	r1, r1, r0
 	strb	r1, [r2]
 	bx	lr
-.L2159:
+.L2157:
 	.align	2, 0
-.L2158:
+.L2156:
 	.word	sContestBgCopyFlags
 .Lfe192:
 	.size	 Contest_SetBgCopyFlags,.Lfe192-Contest_SetBgCopyFlags
@@ -20758,14 +20760,14 @@ Contest_SetBgCopyFlags:
 ResetContestLinkResults:
 	push	{r4, r5, r6, lr}
 	mov	r0, #0x0
-	ldr	r6, .L2171
-	ldr	r5, .L2171+0x4
+	ldr	r6, .L2169
+	ldr	r5, .L2169+0x4
 	mov	r4, #0x0
-.L2164:
+.L2162:
 	add	r3, r0, #0x1
 	lsl	r1, r0, #0x3
 	mov	r2, #0x3
-.L2168:
+.L2166:
 	ldr	r0, [r6]
 	add	r0, r0, r5
 	add	r0, r0, r1
@@ -20773,16 +20775,16 @@ ResetContestLinkResults:
 	add	r1, r1, #0x2
 	sub	r2, r2, #0x1
 	cmp	r2, #0
-	bge	.L2168	@cond_branch
+	bge	.L2166	@cond_branch
 	add	r0, r3, #0
 	cmp	r0, #0x4
-	ble	.L2164	@cond_branch
+	ble	.L2162	@cond_branch
 	pop	{r4, r5, r6}
 	pop	{r0}
 	bx	r0
-.L2172:
+.L2170:
 	.align	2, 0
-.L2171:
+.L2169:
 	.word	gSaveBlock2Ptr
 	.word	0x5ac
 .Lfe193:
@@ -20810,96 +20812,96 @@ sub_80DEDA8:
 	lsr	r0, r0, #0x18
 	mov	r8, r0
 	mov	r5, #0x0
-	ldr	r1, .L2198
+	ldr	r1, .L2196
 	ldrb	r0, [r1]
 	cmp	r0, #0
-	beq	.L2175	@cond_branch
-.L2176:
+	beq	.L2173	@cond_branch
+.L2174:
 	add	r5, r5, #0x1
 	cmp	r5, #0x2
-	bgt	.L2175	@cond_branch
+	bgt	.L2173	@cond_branch
 	add	r0, r5, r1
 	ldrb	r0, [r0]
 	cmp	r0, #0
-	bne	.L2176	@cond_branch
-.L2175:
+	bne	.L2174	@cond_branch
+.L2173:
 	ldr	r0, [sp]
 	cmp	r0, #0xff
-	bne	.L2180	@cond_branch
-	ldr	r0, .L2198+0x4
+	bne	.L2178	@cond_branch
+	ldr	r0, .L2196+0x4
 	ldrb	r0, [r0]
 	cmp	r5, r0
-	beq	.L2180	@cond_branch
+	beq	.L2178	@cond_branch
 	mov	r0, #0x0
-	b	.L2195
-.L2199:
+	b	.L2193
+.L2197:
 	.align	2, 0
-.L2198:
+.L2196:
 	.word	gContestFinalStandings
 	.word	gContestPlayerMonIndex
-.L2180:
-	ldr	r0, .L2200
+.L2178:
+	ldr	r0, .L2198
 	ldrh	r0, [r0]
 	cmp	r0, #0x4
-	bhi	.L2181	@cond_branch
+	bhi	.L2179	@cond_branch
 	lsl	r0, r0, #0x2
-	ldr	r1, .L2200+0x4
+	ldr	r1, .L2198+0x4
 	add	r0, r0, r1
 	ldr	r0, [r0]
 	mov	pc, r0
-.L2201:
+.L2199:
 	.align	2, 0
-.L2200:
+.L2198:
 	.word	gSpecialVar_ContestCategory
-	.word	.L2187
+	.word	.L2185
 	.align	2, 0
 	.align	2, 0
-.L2187:
+.L2185:
+	.word	.L2179
 	.word	.L2181
+	.word	.L2182
 	.word	.L2183
 	.word	.L2184
-	.word	.L2185
-	.word	.L2186
-.L2183:
+.L2181:
 	mov	r0, r8
 	add	r0, r0, #0x3
-	b	.L2196
-.L2184:
+	b	.L2194
+.L2182:
 	mov	r0, r8
 	add	r0, r0, #0x6
-	b	.L2196
-.L2185:
+	b	.L2194
+.L2183:
 	mov	r0, r8
 	add	r0, r0, #0x9
-	b	.L2196
-.L2186:
+	b	.L2194
+.L2184:
 	mov	r0, r8
 	add	r0, r0, #0xc
-.L2196:
+.L2194:
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	mov	r8, r0
-.L2181:
+.L2179:
 	ldr	r1, [sp]
 	cmp	r1, #0xfe
-	bne	.LCB19840
-	b	.L2189	@long jump
-.LCB19840:
+	bne	.LCB19848
+	b	.L2187	@long jump
+.LCB19848:
 	add	r0, r1, #0
 	mov	r1, #0x1
 	bl	sub_80DEFA8
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	mov	r9, r0
-	ldr	r2, .L2202
+	ldr	r2, .L2200
 	mov	sl, r2
 	ldr	r0, [r2]
 	mov	r3, r9
 	lsl	r7, r3, #0x5
-	ldr	r6, .L2202+0x4
+	ldr	r6, .L2200+0x4
 	add	r2, r0, r6
 	add	r2, r2, r7
-	ldr	r4, .L2202+0x8
+	ldr	r4, .L2200+0x8
 	lsl	r5, r5, #0x6
 	add	r1, r4, #0
 	add	r1, r1, #0x38
@@ -20911,10 +20913,10 @@ sub_80DEDA8:
 	ldrh	r1, [r1]
 	lsl	r1, r1, #0x15
 	lsr	r1, r1, #0x15
-	ldr	r3, .L2202+0xc
+	ldr	r3, .L2200+0xc
 	add	r2, r2, r3
 	strh	r1, [r2]
-	ldr	r1, .L2202+0x10
+	ldr	r1, .L2200+0x10
 	add	r2, r0, r1
 	add	r2, r2, r7
 	add	r1, r4, #0
@@ -20936,22 +20938,22 @@ sub_80DEDA8:
 	add	r5, r5, r4
 	add	r1, r5, #0
 	bl	StringCopy
-	ldr	r0, .L2202+0x14
+	ldr	r0, .L2200+0x14
 	ldrb	r1, [r0]
 	mov	r0, #0x1
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L2190	@cond_branch
+	beq	.L2188	@cond_branch
 	mov	r3, sl
 	ldr	r0, [r3]
 	add	r0, r0, r7
-	ldr	r1, .L2202+0x18
+	ldr	r1, .L2200+0x18
 	add	r0, r0, r1
 	mov	r1, #0x4
-	b	.L2197
-.L2203:
+	b	.L2195
+.L2201:
 	.align	2, 0
-.L2202:
+.L2200:
 	.word	gSaveBlock1Ptr
 	.word	0x2b10
 	.word	gContestMons
@@ -20959,57 +20961,57 @@ sub_80DEDA8:
 	.word	0x2b14
 	.word	gLinkContestFlags
 	.word	0x2b2e
-.L2190:
+.L2188:
 	mov	r2, sl
 	ldr	r0, [r2]
 	add	r0, r0, r7
-	ldr	r1, .L2204
+	ldr	r1, .L2202
 	ldrh	r1, [r1]
-	ldr	r3, .L2204+0x4
+	ldr	r3, .L2202+0x4
 	add	r0, r0, r3
-.L2197:
+.L2195:
 	strb	r1, [r0]
 	ldr	r0, [sp]
 	cmp	r0, #0xff
-	beq	.L2192	@cond_branch
-	ldr	r0, .L2204+0x8
+	beq	.L2190	@cond_branch
+	ldr	r0, .L2202+0x8
 	ldr	r0, [r0]
 	mov	r2, r9
 	lsl	r1, r2, #0x5
 	add	r0, r0, r1
-	ldr	r1, .L2204+0xc
+	ldr	r1, .L2202+0xc
 	ldrh	r1, [r1]
-	ldr	r3, .L2204+0x10
+	ldr	r3, .L2202+0x10
 	add	r0, r0, r3
 	strb	r1, [r0]
-	b	.L2194
-.L2205:
+	b	.L2192
+.L2203:
 	.align	2, 0
-.L2204:
+.L2202:
 	.word	gSpecialVar_ContestRank
 	.word	0x2b2e
 	.word	gSaveBlock1Ptr
 	.word	gSpecialVar_ContestCategory
 	.word	0x2b1a
-.L2192:
-	ldr	r0, .L2206
+.L2190:
+	ldr	r0, .L2204
 	ldr	r0, [r0]
 	mov	r2, r9
 	lsl	r1, r2, #0x5
 	add	r0, r0, r1
-	ldr	r3, .L2206+0x4
+	ldr	r3, .L2204+0x4
 	add	r0, r0, r3
 	mov	r1, r8
 	strb	r1, [r0]
-	b	.L2194
-.L2207:
+	b	.L2192
+.L2205:
 	.align	2, 0
-.L2206:
+.L2204:
 	.word	gSaveBlock1Ptr
 	.word	0x2b1a
-.L2189:
-	ldr	r6, .L2208
-	ldr	r4, .L2208+0x4
+.L2187:
+	ldr	r6, .L2206
+	ldr	r4, .L2206+0x4
 	lsl	r5, r5, #0x6
 	add	r0, r4, #0
 	add	r0, r0, #0x38
@@ -21039,9 +21041,9 @@ sub_80DEDA8:
 	bl	StringCopy
 	mov	r2, r8
 	strb	r2, [r6, #0xa]
-.L2194:
+.L2192:
 	mov	r0, #0x1
-.L2195:
+.L2193:
 	add	sp, sp, #0x4
 	pop	{r3, r4, r5}
 	mov	r8, r3
@@ -21050,9 +21052,9 @@ sub_80DEDA8:
 	pop	{r4, r5, r6, r7}
 	pop	{r1}
 	bx	r1
-.L2209:
+.L2207:
 	.align	2, 0
-.L2208:
+.L2206:
 	.word	gCurContestWinner
 	.word	gContestMons
 .Lfe194:
@@ -21068,17 +21070,17 @@ sub_80DEFA8:
 	lsl	r1, r1, #0x18
 	lsr	r1, r1, #0x18
 	cmp	r0, #0x3
-	bgt	.L2222	@cond_branch
+	bgt	.L2220	@cond_branch
 	cmp	r0, #0
-	blt	.L2222	@cond_branch
+	blt	.L2220	@cond_branch
 	cmp	r1, #0
-	beq	.L2216	@cond_branch
+	beq	.L2214	@cond_branch
 	mov	r2, #0x5
-	ldr	r0, .L2233
+	ldr	r0, .L2231
 	mov	ip, r0
-	ldr	r4, .L2233+0x4
-	ldr	r3, .L2233+0x8
-.L2220:
+	ldr	r4, .L2231+0x4
+	ldr	r3, .L2231+0x8
+.L2218:
 	mov	r1, ip
 	ldr	r0, [r1]
 	lsl	r1, r2, #0x5
@@ -21093,54 +21095,54 @@ sub_80DEFA8:
 	stmia	r0!, {r5, r6}
 	sub	r2, r2, #0x1
 	cmp	r2, #0
-	bgt	.L2220	@cond_branch
-.L2216:
+	bgt	.L2218	@cond_branch
+.L2214:
 	mov	r0, #0x0
-	b	.L2232
-.L2234:
+	b	.L2230
+.L2232:
 	.align	2, 0
-.L2233:
+.L2231:
 	.word	gSaveBlock1Ptr
 	.word	0x2b10
 	.word	0x2af0
-.L2222:
-	ldr	r0, .L2235
+.L2220:
+	ldr	r0, .L2233
 	ldrh	r0, [r0]
 	cmp	r0, #0x4
-	bhi	.L2229	@cond_branch
+	bhi	.L2227	@cond_branch
 	lsl	r0, r0, #0x2
-	ldr	r1, .L2235+0x4
+	ldr	r1, .L2233+0x4
 	add	r0, r0, r1
 	ldr	r0, [r0]
 	mov	pc, r0
-.L2236:
+.L2234:
 	.align	2, 0
-.L2235:
+.L2233:
 	.word	gSpecialVar_ContestCategory
-	.word	.L2230
+	.word	.L2228
 	.align	2, 0
 	.align	2, 0
-.L2230:
+.L2228:
+	.word	.L2222
+	.word	.L2223
 	.word	.L2224
 	.word	.L2225
-	.word	.L2226
 	.word	.L2227
-	.word	.L2229
-.L2224:
+.L2222:
 	mov	r0, #0x8
-	b	.L2232
-.L2225:
+	b	.L2230
+.L2223:
 	mov	r0, #0x9
-	b	.L2232
-.L2226:
+	b	.L2230
+.L2224:
 	mov	r0, #0xa
-	b	.L2232
-.L2227:
+	b	.L2230
+.L2225:
 	mov	r0, #0xb
-	b	.L2232
-.L2229:
+	b	.L2230
+.L2227:
 	mov	r0, #0xc
-.L2232:
+.L2230:
 	pop	{r4, r5, r6, r7}
 	pop	{r1}
 	bx	r1
@@ -21153,11 +21155,11 @@ sub_80DEFA8:
 ClearContestWinnerPicsInContestHall:
 	push	{r4, r5, r6, r7, lr}
 	mov	r2, #0x0
-	ldr	r0, .L2243
+	ldr	r0, .L2241
 	mov	ip, r0
-	ldr	r4, .L2243+0x4
-	ldr	r3, .L2243+0x8
-.L2241:
+	ldr	r4, .L2241+0x4
+	ldr	r3, .L2241+0x8
+.L2239:
 	mov	r1, ip
 	ldr	r0, [r1]
 	lsl	r1, r2, #0x5
@@ -21173,13 +21175,13 @@ ClearContestWinnerPicsInContestHall:
 	add	r3, r3, #0x20
 	add	r2, r2, #0x1
 	cmp	r2, #0x7
-	ble	.L2241	@cond_branch
+	ble	.L2239	@cond_branch
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L2244:
+.L2242:
 	.align	2, 0
-.L2243:
+.L2241:
 	.word	gSaveBlock1Ptr
 	.word	0x2b10
 	.word	gDefaultContestWinners
@@ -21192,7 +21194,7 @@ SetContestLiveUpdateFlags:
 	push	{r4, r5, r6, r7, lr}
 	lsl	r0, r0, #0x18
 	lsr	r4, r0, #0x18
-	ldr	r2, .L2262
+	ldr	r2, .L2260
 	ldr	r3, [r2]
 	ldr	r5, [r3, #0x10]
 	ldrb	r1, [r5, #0x1]
@@ -21201,11 +21203,11 @@ SetContestLiveUpdateFlags:
 	and	r0, r0, r1
 	add	r6, r2, #0
 	cmp	r0, #0
-	bne	.L2246	@cond_branch
+	bne	.L2244	@cond_branch
 	mov	r0, #0x0
 	ldrsb	r0, [r5, r0]
 	cmp	r0, #0
-	ble	.L2246	@cond_branch
+	ble	.L2244	@cond_branch
 	ldr	r1, [r3, #0x4]
 	lsl	r0, r4, #0x3
 	sub	r0, r0, r4
@@ -21215,7 +21217,7 @@ SetContestLiveUpdateFlags:
 	add	r0, r7, #0
 	and	r0, r0, r1
 	cmp	r0, #0
-	bne	.L2246	@cond_branch
+	bne	.L2244	@cond_branch
 	ldr	r1, [r3, #0x1c]
 	lsl	r2, r4, #0x4
 	add	r1, r2, r1
@@ -21230,7 +21232,7 @@ SetContestLiveUpdateFlags:
 	mov	r1, #0x2
 	orr	r0, r0, r1
 	strb	r0, [r2, #0xe]
-.L2246:
+.L2244:
 	ldr	r3, [r6]
 	ldr	r1, [r3, #0x4]
 	lsl	r2, r4, #0x3
@@ -21243,7 +21245,7 @@ SetContestLiveUpdateFlags:
 	and	r0, r0, r1
 	add	r7, r2, #0
 	cmp	r0, #0
-	beq	.L2247	@cond_branch
+	beq	.L2245	@cond_branch
 	ldr	r0, [r3, #0x1c]
 	lsl	r1, r4, #0x4
 	add	r1, r1, r0
@@ -21251,22 +21253,22 @@ SetContestLiveUpdateFlags:
 	mov	r0, #0x2
 	orr	r0, r0, r2
 	strb	r0, [r1, #0xc]
-.L2247:
+.L2245:
 	ldr	r3, [r6]
 	ldr	r2, [r3, #0x10]
 	ldrb	r1, [r2, #0x1]
 	add	r0, r5, #0
 	and	r0, r0, r1
 	cmp	r0, #0
-	bne	.L2248	@cond_branch
+	bne	.L2246	@cond_branch
 	mov	r0, #0x0
 	ldrsb	r0, [r2, r0]
 	cmp	r0, #0
-	beq	.L2248	@cond_branch
+	beq	.L2246	@cond_branch
 	mov	r0, #0x2
 	ldrsb	r0, [r2, r0]
 	cmp	r0, #0x3c
-	bne	.L2248	@cond_branch
+	bne	.L2246	@cond_branch
 	ldr	r0, [r3, #0x1c]
 	lsl	r1, r4, #0x4
 	add	r1, r1, r0
@@ -21274,7 +21276,7 @@ SetContestLiveUpdateFlags:
 	mov	r0, #0x4
 	orr	r0, r0, r2
 	strb	r0, [r1, #0xc]
-.L2248:
+.L2246:
 	ldr	r3, [r6]
 	ldr	r1, [r3, #0x4]
 	sub	r0, r7, r4
@@ -21284,10 +21286,10 @@ SetContestLiveUpdateFlags:
 	mov	r0, #0x40
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L2249	@cond_branch
+	beq	.L2247	@cond_branch
 	ldrb	r0, [r2, #0x16]
 	cmp	r0, #0
-	beq	.L2249	@cond_branch
+	beq	.L2247	@cond_branch
 	ldr	r0, [r3, #0x1c]
 	lsl	r1, r4, #0x4
 	add	r1, r1, r0
@@ -21295,18 +21297,18 @@ SetContestLiveUpdateFlags:
 	mov	r0, #0x8
 	orr	r0, r0, r2
 	strb	r0, [r1, #0xc]
-.L2249:
+.L2247:
 	mov	r3, #0x0
 	mov	r5, #0x0
-.L2253:
+.L2251:
 	cmp	r3, r4
-	beq	.L2252	@cond_branch
+	beq	.L2250	@cond_branch
 	ldr	r1, [r6]
 	ldr	r0, [r1, #0x4]
 	add	r0, r5, r0
 	ldrb	r0, [r0, #0xe]
 	cmp	r0, #0
-	beq	.L2252	@cond_branch
+	beq	.L2250	@cond_branch
 	ldr	r0, [r1, #0x1c]
 	lsl	r2, r4, #0x4
 	add	r2, r2, r0
@@ -21322,11 +21324,11 @@ SetContestLiveUpdateFlags:
 	mov	r1, #0x40
 	orr	r0, r0, r1
 	strb	r0, [r2, #0xc]
-.L2252:
+.L2250:
 	add	r5, r5, #0x1c
 	add	r3, r3, #0x1
 	cmp	r3, #0x3
-	ble	.L2253	@cond_branch
+	ble	.L2251	@cond_branch
 	ldr	r2, [r6]
 	ldr	r1, [r2, #0x4]
 	sub	r0, r7, r4
@@ -21336,13 +21338,13 @@ SetContestLiveUpdateFlags:
 	mov	r0, #0x6
 	and	r0, r0, r3
 	cmp	r0, #0
-	bne	.L2257	@cond_branch
+	bne	.L2255	@cond_branch
 	ldrb	r1, [r1, #0xb]
 	mov	r0, #0x80
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L2256	@cond_branch
-.L2257:
+	beq	.L2254	@cond_branch
+.L2255:
 	ldr	r0, [r2, #0x1c]
 	lsl	r1, r4, #0x4
 	add	r1, r1, r0
@@ -21350,16 +21352,16 @@ SetContestLiveUpdateFlags:
 	mov	r0, #0x20
 	orr	r0, r0, r2
 	strb	r0, [r1, #0xc]
-	b	.L2258
-.L2263:
+	b	.L2256
+.L2261:
 	.align	2, 0
-.L2262:
+.L2260:
 	.word	gContestResources
-.L2256:
+.L2254:
 	mov	r0, #0x1
 	and	r0, r0, r3
 	cmp	r0, #0
-	bne	.L2258	@cond_branch
+	bne	.L2256	@cond_branch
 	ldr	r2, [r2, #0x1c]
 	lsl	r3, r4, #0x4
 	add	r2, r3, r2
@@ -21385,7 +21387,7 @@ SetContestLiveUpdateFlags:
 	add	r0, r5, r0
 	ldrh	r0, [r0, #0x6]
 	strh	r0, [r3]
-.L2258:
+.L2256:
 	ldr	r2, [r6]
 	ldr	r1, [r2, #0x4]
 	sub	r0, r7, r4
@@ -21396,7 +21398,7 @@ SetContestLiveUpdateFlags:
 	add	r0, r5, #0
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L2260	@cond_branch
+	beq	.L2258	@cond_branch
 	ldr	r0, [r2, #0x1c]
 	lsl	r1, r4, #0x4
 	add	r1, r1, r0
@@ -21404,24 +21406,24 @@ SetContestLiveUpdateFlags:
 	mov	r0, #0x2
 	orr	r0, r0, r2
 	strb	r0, [r1, #0xd]
-.L2260:
+.L2258:
 	ldr	r2, [r6]
 	ldr	r0, [r2]
 	ldrb	r0, [r0, #0x13]
 	lsl	r0, r0, #24
 	asr	r0, r0, #24
 	cmp	r0, #0x4
-	bne	.L2261	@cond_branch
+	bne	.L2259	@cond_branch
 	ldr	r3, [r2, #0x10]
 	ldrb	r1, [r3, #0x1]
 	add	r0, r5, #0
 	and	r0, r0, r1
 	cmp	r0, #0
-	bne	.L2261	@cond_branch
+	bne	.L2259	@cond_branch
 	mov	r0, #0x0
 	ldrsb	r0, [r3, r0]
 	cmp	r0, #0
-	bge	.L2261	@cond_branch
+	bge	.L2259	@cond_branch
 	ldr	r0, [r2, #0x1c]
 	lsl	r1, r4, #0x4
 	add	r1, r1, r0
@@ -21429,7 +21431,7 @@ SetContestLiveUpdateFlags:
 	mov	r0, #0x20
 	orr	r0, r0, r2
 	strb	r0, [r1, #0xd]
-.L2261:
+.L2259:
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
@@ -21449,7 +21451,7 @@ CalculateContestLiveUpdateData:
 	mov	r0, #0x0
 	str	r0, [sp, #0x20]
 	mov	r4, #0x0
-	ldr	r6, .L2323
+	ldr	r6, .L2321
 	mov	r2, sp
 	add	r2, r2, #0xc
 	str	r2, [sp, #0x28]
@@ -21459,32 +21461,32 @@ CalculateContestLiveUpdateData:
 	mov	r7, sp
 	add	r7, r7, #0x2
 	str	r7, [sp, #0x24]
-	ldr	r5, .L2323+0x4
+	ldr	r5, .L2321+0x4
 	mov	r2, #0x0
 	mov	r3, #0x80
 	lsl	r3, r3, #0x11
-.L2268:
+.L2266:
 	add	r0, r4, r5
 	ldrb	r0, [r0]
 	cmp	r0, #0
-	bne	.L2269	@cond_branch
+	bne	.L2267	@cond_branch
 	lsr	r0, r2, #0x18
 	str	r0, [sp, #0x20]
-	b	.L2267
-.L2324:
+	b	.L2265
+.L2322:
 	.align	2, 0
-.L2323:
+.L2321:
 	.word	gContestResources
 	.word	gContestFinalStandings
-.L2269:
-	cmp	r0, #0x3
-	bne	.L2267	@cond_branch
-	lsr	r1, r2, #0x18
 .L2267:
+	cmp	r0, #0x3
+	bne	.L2265	@cond_branch
+	lsr	r1, r2, #0x18
+.L2265:
 	add	r2, r2, r3
 	add	r4, r4, #0x1
 	cmp	r4, #0x3
-	ble	.L2268	@cond_branch
+	ble	.L2266	@cond_branch
 	ldr	r0, [r6]
 	ldr	r0, [r0, #0x1c]
 	lsl	r1, r1, #0x4
@@ -21499,11 +21501,11 @@ CalculateContestLiveUpdateData:
 	str	r1, [sp, #0x30]
 	mov	r9, r4
 	mov	sl, r4
-.L2276:
+.L2274:
 	ldr	r2, [sp, #0x20]
 	cmp	r4, r2
-	beq	.L2277	@cond_branch
-	ldr	r1, .L2325
+	beq	.L2275	@cond_branch
+	ldr	r1, .L2323
 	lsl	r0, r2, #0x1
 	add	r0, r0, r1
 	mov	r3, #0x0
@@ -21513,8 +21515,8 @@ CalculateContestLiveUpdateData:
 	ldrsh	r0, [r1, r6]
 	sub	r2, r2, r0
 	cmp	r2, #0x32
-	bgt	.L2277	@cond_branch
-	ldr	r7, .L2325+0x4
+	bgt	.L2275	@cond_branch
+	ldr	r7, .L2323+0x4
 	ldr	r0, [r7]
 	ldr	r2, [r0, #0x1c]
 	add	r2, r2, r9
@@ -21522,8 +21524,8 @@ CalculateContestLiveUpdateData:
 	mov	r1, #0x4
 	orr	r0, r0, r1
 	strb	r0, [r2, #0xd]
-.L2277:
-	ldr	r1, .L2325+0x4
+.L2275:
+	ldr	r1, .L2323+0x4
 	ldr	r0, [r1]
 	ldr	r0, [r0, #0x1c]
 	mov	r3, r9
@@ -21532,44 +21534,44 @@ CalculateContestLiveUpdateData:
 	mov	r0, #0x2
 	and	r0, r0, r1
 	cmp	r0, #0
-	bne	.L2278	@cond_branch
+	bne	.L2276	@cond_branch
 	ldrb	r0, [r2, #0xd]
 	mov	r1, #0x8
 	orr	r0, r0, r1
 	strb	r0, [r2, #0xd]
-.L2278:
+.L2276:
 	mov	r5, #0x0
-	ldr	r2, .L2325+0x8
+	ldr	r2, .L2323+0x8
 	add	r2, r2, sl
 	mov	r6, #0x0
 	ldrsh	r1, [r2, r6]
-	ldr	r7, .L2325+0x8
+	ldr	r7, .L2323+0x8
 	mov	r3, #0x0
 	ldrsh	r0, [r7, r3]
 	cmp	r1, r0
-	blt	.L2280	@cond_branch
+	blt	.L2278	@cond_branch
 	add	r3, r2, #0
 	add	r2, r7, #0
-.L2281:
+.L2279:
 	add	r2, r2, #0x2
 	add	r5, r5, #0x1
 	cmp	r5, #0x3
-	bgt	.L2280	@cond_branch
+	bgt	.L2278	@cond_branch
 	mov	r6, #0x0
 	ldrsh	r1, [r3, r6]
 	mov	r7, #0x0
 	ldrsh	r0, [r2, r7]
 	cmp	r1, r0
-	bge	.L2281	@cond_branch
-.L2280:
+	bge	.L2279	@cond_branch
+.L2278:
 	cmp	r5, #0x4
-	bne	.L2285	@cond_branch
-	ldr	r1, .L2325+0xc
+	bne	.L2283	@cond_branch
+	ldr	r1, .L2323+0xc
 	add	r0, r4, r1
 	ldrb	r0, [r0]
 	cmp	r0, #0
-	beq	.L2285	@cond_branch
-	ldr	r2, .L2325+0x4
+	beq	.L2283	@cond_branch
+	ldr	r2, .L2323+0x4
 	ldr	r0, [r2]
 	ldr	r2, [r0, #0x1c]
 	add	r2, r2, r9
@@ -21577,51 +21579,51 @@ CalculateContestLiveUpdateData:
 	mov	r1, #0x10
 	orr	r0, r0, r1
 	strb	r0, [r2, #0xd]
-.L2285:
+.L2283:
 	mov	r3, #0x0
 	mov	ip, r3
 	mov	r8, r3
 	mov	r5, #0x0
-	ldr	r0, .L2325+0x8
+	ldr	r0, .L2323+0x8
 	add	r0, r0, sl
 	mov	r7, #0x0
 	ldrsh	r6, [r0, r7]
 	str	r6, [sp, #0x34]
-	ldr	r2, .L2325+0x8
-	ldr	r0, .L2325+0x10
+	ldr	r2, .L2323+0x8
+	ldr	r0, .L2323+0x10
 	mov	r1, sl
 	add	r6, r1, r0
 	add	r3, r0, #0
-.L2289:
+.L2287:
 	mov	r7, #0x0
 	ldrsh	r0, [r2, r7]
 	ldr	r1, [sp, #0x34]
 	cmp	r1, r0
-	ble	.L2290	@cond_branch
+	ble	.L2288	@cond_branch
 	mov	r7, #0x1
 	mov	ip, r7
-.L2290:
+.L2288:
 	mov	r0, #0x0
 	ldrsh	r1, [r6, r0]
 	mov	r7, #0x0
 	ldrsh	r0, [r3, r7]
 	cmp	r1, r0
-	ble	.L2288	@cond_branch
+	ble	.L2286	@cond_branch
 	mov	r0, #0x1
 	mov	r8, r0
-.L2288:
+.L2286:
 	add	r2, r2, #0x2
 	add	r3, r3, #0x2
 	add	r5, r5, #0x1
 	cmp	r5, #0x3
-	ble	.L2289	@cond_branch
+	ble	.L2287	@cond_branch
 	mov	r1, ip
 	cmp	r1, #0
-	bne	.L2293	@cond_branch
+	bne	.L2291	@cond_branch
 	mov	r2, r8
 	cmp	r2, #0
-	bne	.L2293	@cond_branch
-	ldr	r3, .L2325+0x4
+	bne	.L2291	@cond_branch
+	ldr	r3, .L2323+0x4
 	ldr	r0, [r3]
 	ldr	r2, [r0, #0x1c]
 	add	r2, r2, r9
@@ -21629,8 +21631,8 @@ CalculateContestLiveUpdateData:
 	mov	r1, #0x40
 	orr	r0, r0, r1
 	strb	r0, [r2, #0xd]
-.L2293:
-	ldr	r6, .L2325+0x4
+.L2291:
+	ldr	r6, .L2323+0x4
 	ldr	r0, [r6]
 	ldr	r0, [r0, #0x1c]
 	mov	r7, r9
@@ -21639,46 +21641,46 @@ CalculateContestLiveUpdateData:
 	mov	r0, #0x1
 	and	r0, r0, r1
 	cmp	r0, #0
-	bne	.L2275	@cond_branch
+	bne	.L2273	@cond_branch
 	ldrb	r0, [r2, #0xd]
 	mov	r1, #0x80
 	orr	r0, r0, r1
 	strb	r0, [r2, #0xd]
-.L2275:
+.L2273:
 	mov	r0, #0x10
 	add	r9, r9, r0
 	mov	r1, #0x2
 	add	sl, sl, r1
 	add	r4, r4, #0x1
 	cmp	r4, #0x3
-	bgt	.LCB20795
-	b	.L2276	@long jump
-.LCB20795:
+	bgt	.LCB20803
+	b	.L2274	@long jump
+.LCB20803:
 	mov	r4, #0x0
 	mov	r5, #0x0
 	mov	r3, #0x0
 	ldr	r2, [sp, #0x28]
 	mov	r1, sp
-.L2299:
+.L2297:
 	strh	r3, [r1]
 	add	r0, r2, r4
 	strb	r5, [r0]
 	add	r1, r1, #0x2
 	add	r4, r4, #0x1
 	cmp	r4, #0x4
-	ble	.L2299	@cond_branch
+	ble	.L2297	@cond_branch
 	mov	r1, sp
-	ldr	r0, .L2325+0x14
+	ldr	r0, .L2323+0x14
 	strh	r0, [r1, #0xa]
 	mov	r0, #0x0
 	ldr	r2, [sp, #0x28]
 	strb	r0, [r2, #0x5]
 	mov	r4, #0x0
-	ldr	r0, .L2325+0x4
+	ldr	r0, .L2323+0x4
 	ldr	r0, [r0]
 	mov	r8, r0
 	ldr	r7, [sp, #0x30]
-.L2304:
+.L2302:
 	mov	r3, r8
 	ldr	r0, [r3, #0x1c]
 	add	r0, r7, r0
@@ -21688,37 +21690,37 @@ CalculateContestLiveUpdateData:
 	add	r4, r4, #0x1
 	mov	ip, r4
 	cmp	r0, #0
-	beq	.L2303	@cond_branch
-	ldr	r0, .L2325+0x4
+	beq	.L2301	@cond_branch
+	ldr	r0, .L2323+0x4
 	ldr	r6, [r0]
 	ldr	r3, [sp, #0x28]
 	mov	r4, sp
 	mov	r5, #0x4
-.L2309:
+.L2307:
 	ldr	r0, [r6, #0x1c]
 	add	r0, r7, r0
 	add	r0, r0, r1
 	ldrh	r0, [r0]
 	ldrh	r2, [r4]
 	cmp	r0, r2
-	beq	.L2310	@cond_branch
+	beq	.L2308	@cond_branch
 	cmp	r2, #0
-	bne	.L2308	@cond_branch
+	bne	.L2306	@cond_branch
 	strh	r0, [r4]
-.L2310:
+.L2308:
 	ldrb	r0, [r3]
 	add	r0, r0, #0x1
 	strb	r0, [r3]
-.L2308:
+.L2306:
 	add	r3, r3, #0x1
 	add	r4, r4, #0x2
 	sub	r5, r5, #0x1
 	cmp	r5, #0
-	bge	.L2309	@cond_branch
-.L2303:
+	bge	.L2307	@cond_branch
+.L2301:
 	mov	r4, ip
 	cmp	r4, #0x4
-	ble	.L2304	@cond_branch
+	ble	.L2302	@cond_branch
 	mov	r0, sp
 	ldrh	r0, [r0]
 	ldr	r6, [sp, #0x2c]
@@ -21729,36 +21731,36 @@ CalculateContestLiveUpdateData:
 	mov	r4, #0x1
 	ldr	r1, [sp, #0x24]
 	ldrh	r0, [r1]
-	ldr	r1, .L2325+0x14
+	ldr	r1, .L2323+0x14
 	cmp	r0, r1
-	beq	.L2316	@cond_branch
+	beq	.L2314	@cond_branch
 	ldr	r5, [sp, #0x2c]
 	add	r7, r1, #0
 	mov	r2, sp
 	add	r2, r2, #0x2
-.L2318:
+.L2316:
 	ldr	r0, [sp, #0x28]
 	add	r1, r0, r4
 	ldrb	r0, [r1]
 	cmp	r3, r0
-	bcs	.L2319	@cond_branch
+	bcs	.L2317	@cond_branch
 	ldrh	r0, [r2]
 	strh	r0, [r5]
 	ldrb	r3, [r1]
 	mov	r6, #0x1
-	b	.L2317
-.L2326:
+	b	.L2315
+.L2324:
 	.align	2, 0
-.L2325:
+.L2323:
 	.word	gContestMonTotalPoints
 	.word	gContestResources
 	.word	gContestMonRound1Points
 	.word	gContestFinalStandings
 	.word	gContestMonRound2Points
 	.word	0xffff
-.L2319:
+.L2317:
 	cmp	r3, r0
-	bne	.L2317	@cond_branch
+	bne	.L2315	@cond_branch
 	lsl	r0, r6, #0x1
 	add	r0, r5, r0
 	ldrh	r1, [r2]
@@ -21766,15 +21768,15 @@ CalculateContestLiveUpdateData:
 	add	r0, r6, #0x1
 	lsl	r0, r0, #0x18
 	lsr	r6, r0, #0x18
-.L2317:
+.L2315:
 	add	r2, r2, #0x2
 	add	r4, r4, #0x1
 	ldrh	r0, [r2]
 	cmp	r0, r7
-	bne	.L2318	@cond_branch
-.L2316:
+	bne	.L2316	@cond_branch
+.L2314:
 	bl	Random
-	ldr	r1, .L2327
+	ldr	r1, .L2325
 	ldr	r1, [r1]
 	ldr	r4, [r1, #0x1c]
 	ldr	r1, [sp, #0x30]
@@ -21796,9 +21798,9 @@ CalculateContestLiveUpdateData:
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L2328:
+.L2326:
 	.align	2, 0
-.L2327:
+.L2325:
 	.word	gContestResources
 .Lfe198:
 	.size	 CalculateContestLiveUpdateData,.Lfe198-CalculateContestLiveUpdateData
@@ -21812,30 +21814,30 @@ SetConestLiveUpdateTVData:
 	mov	r5, r8
 	push	{r5, r6, r7}
 	add	sp, sp, #-0xc
-	ldr	r1, .L2375
-	ldr	r0, .L2375+0x4
+	ldr	r1, .L2373
+	ldr	r0, .L2373+0x4
 	ldrb	r0, [r0]
 	add	r0, r0, r1
 	ldrb	r0, [r0]
 	cmp	r0, #0
-	beq	.LCB21038
-	b	.L2329	@long jump
-.LCB21038:
+	beq	.LCB21046
+	b	.L2327	@long jump
+.LCB21046:
 	mov	r7, #0x0
 	mov	r3, #0x0
-	ldr	r0, .L2375+0x8
+	ldr	r0, .L2373+0x8
 	mov	ip, r0
-.L2334:
+.L2332:
 	add	r0, r3, r1
 	ldrb	r0, [r0]
 	cmp	r0, #0
-	bne	.L2333	@cond_branch
+	bne	.L2331	@cond_branch
 	lsl	r0, r3, #0x18
 	lsr	r7, r0, #0x18
-.L2333:
+.L2331:
 	add	r3, r3, #0x1
 	cmp	r3, #0x3
-	ble	.L2334	@cond_branch
+	ble	.L2332	@cond_branch
 	mov	r1, #0x0
 	mov	r9, r1
 	mov	sl, r1
@@ -21843,44 +21845,44 @@ SetConestLiveUpdateTVData:
 	lsl	r2, r7, #0x1
 	lsl	r4, r7, #0x4
 	mov	r8, r4
-	ldr	r1, .L2375+0xc
+	ldr	r1, .L2373+0xc
 	add	r0, r2, r1
 	mov	r6, #0x0
 	ldrsh	r5, [r0, r6]
 	str	r5, [sp, #0x8]
 	add	r5, r1, #0
-	ldr	r0, .L2375+0x10
+	ldr	r0, .L2373+0x10
 	add	r2, r2, r0
 	add	r4, r0, #0
-.L2340:
+.L2338:
 	mov	r1, #0x0
 	ldrsh	r0, [r5, r1]
 	ldr	r6, [sp, #0x8]
 	cmp	r6, r0
-	bge	.L2341	@cond_branch
+	bge	.L2339	@cond_branch
 	mov	r0, r9
 	add	r0, r0, #0x1
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	mov	r9, r0
-.L2341:
+.L2339:
 	mov	r0, #0x0
 	ldrsh	r1, [r2, r0]
 	mov	r6, #0x0
 	ldrsh	r0, [r4, r6]
 	cmp	r1, r0
-	bge	.L2339	@cond_branch
+	bge	.L2337	@cond_branch
 	mov	r0, sl
 	add	r0, r0, #0x1
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	mov	sl, r0
-.L2339:
+.L2337:
 	add	r5, r5, #0x2
 	add	r4, r4, #0x2
 	add	r3, r3, #0x1
 	cmp	r3, #0x3
-	ble	.L2340	@cond_branch
+	ble	.L2338	@cond_branch
 	mov	r1, ip
 	ldr	r0, [r1]
 	ldr	r0, [r0, #0x1c]
@@ -21889,19 +21891,19 @@ SetConestLiveUpdateTVData:
 	mov	r4, #0x0
 	mov	r2, #0x1
 	mov	r3, #0x7
-.L2347:
+.L2345:
 	add	r0, r1, #0
 	and	r0, r0, r2
 	cmp	r0, #0
-	beq	.L2346	@cond_branch
+	beq	.L2344	@cond_branch
 	add	r0, r4, #0x1
 	lsl	r0, r0, #0x18
 	lsr	r4, r0, #0x18
-.L2346:
+.L2344:
 	lsr	r1, r1, #0x1
 	sub	r3, r3, #0x1
 	cmp	r3, #0
-	bge	.L2347	@cond_branch
+	bge	.L2345	@cond_branch
 	bl	Random
 	lsl	r0, r0, #0x10
 	lsr	r0, r0, #0x10
@@ -21909,7 +21911,7 @@ SetConestLiveUpdateTVData:
 	bl	__modsi3
 	lsl	r0, r0, #0x18
 	lsr	r5, r0, #0x18
-	ldr	r0, .L2375+0x8
+	ldr	r0, .L2373+0x8
 	ldr	r0, [r0]
 	ldr	r0, [r0, #0x1c]
 	add	r0, r0, r8
@@ -21920,70 +21922,70 @@ SetConestLiveUpdateTVData:
 	mov	r0, #0x1
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L2352	@cond_branch
+	beq	.L2350	@cond_branch
 	cmp	r5, #0
-	beq	.L2351	@cond_branch
-.L2355:
+	beq	.L2349	@cond_branch
+.L2353:
 	add	r0, r4, #0x1
 	lsl	r0, r0, #0x18
 	lsr	r4, r0, #0x18
-.L2352:
+.L2350:
 	lsr	r1, r1, #0x1
 	add	r0, r2, #0x1
 	lsl	r0, r0, #0x18
 	lsr	r2, r0, #0x18
 	add	r3, r3, #0x1
 	cmp	r3, #0x7
-	bgt	.L2351	@cond_branch
+	bgt	.L2349	@cond_branch
 	mov	r0, #0x1
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L2352	@cond_branch
+	beq	.L2350	@cond_branch
 	cmp	r5, r4
-	bne	.L2355	@cond_branch
-.L2351:
+	bne	.L2353	@cond_branch
+.L2349:
 	mov	r1, #0x1
 	add	r0, r1, #0
 	lsl	r0, r0, r2
 	lsl	r0, r0, #0x10
 	lsr	r2, r0, #0x10
 	cmp	r7, #0
-	bne	.L2357	@cond_branch
+	bne	.L2355	@cond_branch
 	mov	r0, sp
 	strb	r1, [r0]
-	ldr	r1, .L2375+0x8
+	ldr	r1, .L2373+0x8
 	ldr	r0, [r1]
 	ldr	r0, [r0, #0x1c]
 	ldrb	r4, [r0, #0x1d]
 	mov	r3, #0x2
-	b	.L2374
-.L2376:
+	b	.L2372
+.L2374:
 	.align	2, 0
-.L2375:
+.L2373:
 	.word	gContestFinalStandings
 	.word	gContestPlayerMonIndex
 	.word	gContestResources
 	.word	gContestMonRound1Points
 	.word	gContestMonRound2Points
-.L2357:
+.L2355:
 	mov	r1, sp
 	mov	r0, #0x0
 	strb	r0, [r1]
-	ldr	r1, .L2377
+	ldr	r1, .L2375
 	ldr	r0, [r1]
 	ldr	r0, [r0, #0x1c]
 	ldrb	r4, [r0, #0xd]
 	mov	r3, #0x1
-.L2374:
+.L2372:
 	mov	ip, r1
 	mov	r5, #0x1
 	lsl	r2, r2, #0x18
 	str	r2, [sp, #0x4]
 	cmp	r3, #0x3
-	bgt	.L2360	@cond_branch
-.L2362:
+	bgt	.L2358	@cond_branch
+.L2360:
 	cmp	r3, r7
-	beq	.L2361	@cond_branch
+	beq	.L2359	@cond_branch
 	mov	r6, ip
 	ldr	r2, [r6]
 	ldr	r0, [r2, #0x1c]
@@ -21991,32 +21993,32 @@ SetConestLiveUpdateTVData:
 	add	r0, r1, r0
 	ldrb	r0, [r0, #0xd]
 	cmp	r4, r0
-	bcs	.L2364	@cond_branch
+	bcs	.L2362	@cond_branch
 	mov	r0, sp
 	strb	r3, [r0]
 	ldr	r0, [r2, #0x1c]
 	add	r0, r1, r0
 	ldrb	r4, [r0, #0xd]
 	mov	r5, #0x1
-	b	.L2361
-.L2378:
+	b	.L2359
+.L2376:
 	.align	2, 0
-.L2377:
+.L2375:
 	.word	gContestResources
-.L2364:
+.L2362:
 	cmp	r4, r0
-	bne	.L2361	@cond_branch
+	bne	.L2359	@cond_branch
 	mov	r1, sp
 	add	r0, r1, r5
 	strb	r3, [r0]
 	add	r0, r5, #0x1
 	lsl	r0, r0, #0x18
 	lsr	r5, r0, #0x18
-.L2361:
+.L2359:
 	add	r3, r3, #0x1
 	cmp	r3, #0x3
-	ble	.L2362	@cond_branch
-.L2360:
+	ble	.L2360	@cond_branch
+.L2358:
 	bl	Random
 	lsl	r0, r0, #0x10
 	lsr	r0, r0, #0x10
@@ -22026,7 +22028,7 @@ SetConestLiveUpdateTVData:
 	ldrb	r6, [r0]
 	mov	r2, #0x80
 	mov	r3, #0x0
-	ldr	r5, .L2379
+	ldr	r5, .L2377
 	ldr	r0, [r5]
 	ldr	r0, [r0, #0x1c]
 	lsl	r1, r6, #0x4
@@ -22036,20 +22038,20 @@ SetConestLiveUpdateTVData:
 	lsl	r0, r0, #0x18
 	lsr	r4, r0, #0x18
 	cmp	r4, #0
-	bne	.L2369	@cond_branch
-.L2370:
+	bne	.L2367	@cond_branch
+.L2368:
 	lsr	r2, r2, #0x1
 	add	r3, r3, #0x1
 	cmp	r3, #0x7
-	bgt	.L2369	@cond_branch
+	bgt	.L2367	@cond_branch
 	ldr	r0, [r5]
 	ldr	r0, [r0, #0x1c]
 	add	r0, r1, r0
 	ldrb	r4, [r0, #0xd]
 	and	r4, r4, r2
 	cmp	r4, #0
-	beq	.L2370	@cond_branch
-.L2369:
+	beq	.L2368	@cond_branch
+.L2367:
 	mov	r0, r9
 	bl	ContestLiveUpdates_Init
 	mov	r0, sl
@@ -22057,7 +22059,7 @@ SetConestLiveUpdateTVData:
 	ldr	r5, [sp, #0x4]
 	lsr	r0, r5, #0x18
 	bl	ContestLiveUpdates_SetWinnerAppealFlag
-	ldr	r0, .L2379
+	ldr	r0, .L2377
 	ldr	r0, [r0]
 	ldr	r0, [r0, #0x1c]
 	add	r0, r0, r8
@@ -22066,7 +22068,7 @@ SetConestLiveUpdateTVData:
 	add	r0, r4, #0
 	add	r1, r6, #0
 	bl	ContestLiveUpdates_SetLoserData
-.L2329:
+.L2327:
 	add	sp, sp, #0xc
 	pop	{r3, r4, r5}
 	mov	r8, r3
@@ -22075,9 +22077,9 @@ SetConestLiveUpdateTVData:
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L2380:
+.L2378:
 	.align	2, 0
-.L2379:
+.L2377:
 	.word	gContestResources
 .Lfe199:
 	.size	 SetConestLiveUpdateTVData,.Lfe199-SetConestLiveUpdateTVData
@@ -22089,41 +22091,41 @@ ContestDebugToggleBitfields:
 	push	{r4, lr}
 	lsl	r0, r0, #0x18
 	lsr	r3, r0, #0x18
-	ldr	r0, .L2389
+	ldr	r0, .L2387
 	mov	r1, #0xd0
 	lsl	r1, r1, #0x9
 	add	r2, r0, r1
 	ldrb	r1, [r2]
 	add	r4, r0, #0
 	cmp	r1, #0
-	bne	.L2382	@cond_branch
+	bne	.L2380	@cond_branch
 	cmp	r3, #0
-	bne	.L2383	@cond_branch
+	bne	.L2381	@cond_branch
 	mov	r0, #0x2
-	b	.L2388
-.L2390:
-	.align	2, 0
-.L2389:
-	.word	gHeap
-.L2383:
-	mov	r0, #0x3
-	b	.L2388
-.L2382:
-	mov	r0, #0x0
+	b	.L2386
 .L2388:
+	.align	2, 0
+.L2387:
+	.word	gHeap
+.L2381:
+	mov	r0, #0x3
+	b	.L2386
+.L2380:
+	mov	r0, #0x0
+.L2386:
 	strb	r0, [r2]
 	mov	r1, #0xd0
 	lsl	r1, r1, #0x9
 	add	r0, r4, r1
 	ldrb	r0, [r0]
 	cmp	r0, #0
-	bne	.L2386	@cond_branch
+	bne	.L2384	@cond_branch
 	bl	DrawContestantWindowText
 	bl	SwapMoveDescAndContestTilemaps
-	b	.L2387
-.L2386:
+	b	.L2385
+.L2384:
 	bl	ContestDebugPrintBitStrings
-.L2387:
+.L2385:
 	pop	{r4}
 	pop	{r0}
 	bx	r0
@@ -22139,13 +22141,13 @@ ContestDebugPrintBitStrings:
 	mov	r5, r8
 	push	{r5, r6, r7}
 	add	sp, sp, #-0x34
-	ldr	r0, .L2431
+	ldr	r0, .L2429
 	ldrb	r0, [r0]
 	cmp	r0, #0
-	bne	.LCB21460
-	b	.L2391	@long jump
-.LCB21460:
-	ldr	r0, .L2431+0x4
+	bne	.LCB21468
+	b	.L2389	@long jump
+.LCB21468:
+	ldr	r0, .L2429+0x4
 	mov	r1, #0xd0
 	lsl	r1, r1, #0x9
 	add	r0, r0, r1
@@ -22154,14 +22156,14 @@ ContestDebugPrintBitStrings:
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	cmp	r0, #0x1
-	bls	.LCB21471
-	b	.L2391	@long jump
-.LCB21471:
+	bls	.LCB21479
+	b	.L2389	@long jump
+.LCB21479:
 	mov	r7, #0x0
 	mov	r2, sp
 	add	r2, r2, #0x18
 	str	r2, [sp, #0x30]
-.L2397:
+.L2395:
 	add	r0, r7, #0
 	mov	r1, #0x0
 	bl	FillWindowPixelBuffer
@@ -22169,25 +22171,25 @@ ContestDebugPrintBitStrings:
 	lsl	r0, r0, #0x18
 	lsr	r7, r0, #0x18
 	cmp	r7, #0x3
-	bls	.L2397	@cond_branch
-	ldr	r0, .L2431+0x4
+	bls	.L2395	@cond_branch
+	ldr	r0, .L2429+0x4
 	mov	r1, #0xd0
 	lsl	r1, r1, #0x9
 	add	r0, r0, r1
 	ldrb	r0, [r0]
 	cmp	r0, #0x2
-	bne	.L2399	@cond_branch
+	bne	.L2397	@cond_branch
 	mov	r7, #0x0
 	mov	r2, #0x7
 	mov	sl, r2
 	ldr	r0, [sp, #0x30]
 	mov	r9, r0
-.L2403:
+.L2401:
 	add	r0, sp, #0x4
-	ldr	r1, .L2431+0x8
+	ldr	r1, .L2429+0x8
 	bl	StringCopy
 	add	r5, r0, #0
-	ldr	r0, .L2431+0xc
+	ldr	r0, .L2429+0xc
 	add	r0, r7, r0
 	ldrb	r0, [r0]
 	mov	r1, sl
@@ -22196,7 +22198,7 @@ ContestDebugPrintBitStrings:
 	mov	r2, #0x5
 	mov	r3, #0x1
 	bl	Contest_PrintTextToBg0WindowAt
-	ldr	r0, .L2431+0x10
+	ldr	r0, .L2429+0x10
 	ldr	r0, [r0]
 	ldr	r1, [r0, #0x1c]
 	lsl	r0, r7, #0x4
@@ -22205,7 +22207,7 @@ ContestDebugPrintBitStrings:
 	mov	r6, #0x7
 	add	r2, r7, #0x1
 	mov	r8, r2
-.L2407:
+.L2405:
 	mov	r1, #0x1
 	and	r1, r1, r4
 	add	r0, r5, #0
@@ -22223,11 +22225,11 @@ ContestDebugPrintBitStrings:
 	mov	r2, #0x1
 	neg	r2, r2
 	cmp	r0, r2
-	bgt	.L2407	@cond_branch
+	bgt	.L2405	@cond_branch
 	mov	r6, #0x0
-	ldr	r4, .L2431+0xc
+	ldr	r4, .L2429+0xc
 	ldr	r3, [sp, #0x30]
-.L2412:
+.L2410:
 	lsl	r0, r6, #0x18
 	asr	r0, r0, #0x18
 	add	r2, r3, r0
@@ -22241,7 +22243,7 @@ ContestDebugPrintBitStrings:
 	lsr	r6, r0, #0x18
 	asr	r5, r0, #0x18
 	cmp	r5, #0x4
-	ble	.L2412	@cond_branch
+	ble	.L2410	@cond_branch
 	mov	r0, r9
 	add	r1, r0, r5
 	mov	r0, #0xff
@@ -22267,17 +22269,17 @@ ContestDebugPrintBitStrings:
 	lsl	r0, r1, #0x18
 	lsr	r7, r0, #0x18
 	cmp	r7, #0x3
-	bls	.L2403	@cond_branch
-	b	.L2415
-.L2432:
+	bls	.L2401	@cond_branch
+	b	.L2413
+.L2430:
 	.align	2, 0
-.L2431:
+.L2429:
 	.word	gEnableContestDebugging
 	.word	gHeap
 	.word	gText_CDot
 	.word	gContestantTurnOrder
 	.word	gContestResources
-.L2399:
+.L2397:
 	mov	r7, #0x0
 	mov	r2, sp
 	add	r2, r2, #0x6
@@ -22286,11 +22288,11 @@ ContestDebugPrintBitStrings:
 	mov	r9, r0
 	mov	r1, #0x7
 	mov	sl, r1
-.L2419:
+.L2417:
 	add	r0, sp, #0x4
-	ldr	r1, .L2433
+	ldr	r1, .L2431
 	bl	StringCopy
-	ldr	r0, .L2433+0x4
+	ldr	r0, .L2431+0x4
 	ldr	r0, [r0]
 	ldr	r1, [r0, #0x1c]
 	lsl	r0, r7, #0x4
@@ -22300,7 +22302,7 @@ ContestDebugPrintBitStrings:
 	mov	r6, #0x7
 	add	r2, r7, #0x1
 	mov	r8, r2
-.L2423:
+.L2421:
 	mov	r1, #0x1
 	and	r1, r1, r4
 	add	r0, r5, #0
@@ -22318,11 +22320,11 @@ ContestDebugPrintBitStrings:
 	mov	r2, #0x1
 	neg	r2, r2
 	cmp	r0, r2
-	bgt	.L2423	@cond_branch
+	bgt	.L2421	@cond_branch
 	mov	r6, #0x0
-	ldr	r4, .L2433+0x8
+	ldr	r4, .L2431+0x8
 	ldr	r3, [sp, #0x30]
-.L2428:
+.L2426:
 	lsl	r0, r6, #0x18
 	asr	r0, r0, #0x18
 	add	r2, r3, r0
@@ -22336,7 +22338,7 @@ ContestDebugPrintBitStrings:
 	lsr	r6, r0, #0x18
 	asr	r5, r0, #0x18
 	cmp	r5, #0x4
-	ble	.L2428	@cond_branch
+	ble	.L2426	@cond_branch
 	mov	r0, r9
 	add	r1, r0, r5
 	mov	r0, #0xff
@@ -22362,10 +22364,10 @@ ContestDebugPrintBitStrings:
 	lsl	r0, r1, #0x18
 	lsr	r7, r0, #0x18
 	cmp	r7, #0x3
-	bls	.L2419	@cond_branch
-.L2415:
+	bls	.L2417	@cond_branch
+.L2413:
 	bl	SwapMoveDescAndContestTilemaps
-.L2391:
+.L2389:
 	add	sp, sp, #0x34
 	pop	{r3, r4, r5}
 	mov	r8, r3
@@ -22374,9 +22376,9 @@ ContestDebugPrintBitStrings:
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L2434:
+.L2432:
 	.align	2, 0
-.L2433:
+.L2431:
 	.word	gText_BDot
 	.word	gContestResources
 	.word	gContestantTurnOrder
@@ -22391,76 +22393,76 @@ GetMonNicknameLanguage:
 	mov	r5, #0x2
 	ldrb	r0, [r4]
 	cmp	r0, #0xfc
-	bne	.L2436	@cond_branch
+	bne	.L2434	@cond_branch
 	ldrb	r0, [r4, #0x1]
 	cmp	r0, #0x15
-	bne	.L2436	@cond_branch
+	bne	.L2434	@cond_branch
 	mov	r0, #0x2
-	b	.L2445
-.L2436:
+	b	.L2443
+.L2434:
 	add	r0, r4, #0
 	bl	StringLength
 	lsl	r0, r0, #0x10
 	lsr	r0, r0, #0x10
 	cmp	r0, #0x5
-	bhi	.L2437	@cond_branch
+	bhi	.L2435	@cond_branch
 	ldrb	r0, [r4]
 	cmp	r0, #0xff
-	beq	.L2437	@cond_branch
-.L2440:
+	beq	.L2435	@cond_branch
+.L2438:
 	ldrb	r1, [r4]
 	add	r0, r1, #0
 	add	r0, r0, #0x45
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	cmp	r0, #0x33
-	bls	.L2442	@cond_branch
+	bls	.L2440	@cond_branch
 	add	r0, r1, #0
 	add	r0, r0, #0x5f
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	cmp	r0, #0x9
-	bls	.L2442	@cond_branch
+	bls	.L2440	@cond_branch
 	add	r0, r1, #0
 	cmp	r0, #0
-	beq	.L2442	@cond_branch
+	beq	.L2440	@cond_branch
 	cmp	r0, #0xad
-	beq	.L2442	@cond_branch
+	beq	.L2440	@cond_branch
 	cmp	r0, #0xb8
-	beq	.L2442	@cond_branch
+	beq	.L2440	@cond_branch
 	cmp	r0, #0xab
-	beq	.L2442	@cond_branch
+	beq	.L2440	@cond_branch
 	cmp	r0, #0xac
-	beq	.L2442	@cond_branch
+	beq	.L2440	@cond_branch
 	cmp	r0, #0xb5
-	beq	.L2442	@cond_branch
+	beq	.L2440	@cond_branch
 	cmp	r0, #0xb6
-	beq	.L2442	@cond_branch
+	beq	.L2440	@cond_branch
 	cmp	r0, #0xba
-	beq	.L2442	@cond_branch
+	beq	.L2440	@cond_branch
 	cmp	r0, #0xae
-	beq	.L2442	@cond_branch
+	beq	.L2440	@cond_branch
 	cmp	r0, #0xb0
-	beq	.L2442	@cond_branch
+	beq	.L2440	@cond_branch
 	cmp	r0, #0xb1
-	beq	.L2442	@cond_branch
+	beq	.L2440	@cond_branch
 	cmp	r0, #0xb2
-	beq	.L2442	@cond_branch
+	beq	.L2440	@cond_branch
 	cmp	r0, #0xb3
-	beq	.L2442	@cond_branch
+	beq	.L2440	@cond_branch
 	cmp	r0, #0xb1
-	bne	.L2441	@cond_branch
-.L2442:
+	bne	.L2439	@cond_branch
+.L2440:
 	add	r4, r4, #0x1
 	ldrb	r0, [r4]
 	cmp	r0, #0xff
-	bne	.L2440	@cond_branch
-	b	.L2437
-.L2441:
+	bne	.L2438	@cond_branch
+	b	.L2435
+.L2439:
 	mov	r5, #0x1
-.L2437:
+.L2435:
 	add	r0, r5, #0
-.L2445:
+.L2443:
 	pop	{r4, r5}
 	pop	{r1}
 	bx	r1
@@ -22486,18 +22488,18 @@ StripMonNameForLinkContest:
 	add	r4, r1, #0
 	bl	StripExtCtrlCodes
 	cmp	r4, #0x1
-	bne	.L2448	@cond_branch
+	bne	.L2446	@cond_branch
 	mov	r0, #0xff
 	strb	r0, [r5, #0x5]
 	mov	r0, #0xfc
 	strb	r0, [r5, #0xa]
-	b	.L2449
-.L2448:
+	b	.L2447
+.L2446:
 	ldrb	r1, [r5, #0x5]
 	mov	r0, #0xff
 	strb	r0, [r5, #0x5]
 	strb	r1, [r5, #0xa]
-.L2449:
+.L2447:
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
@@ -22513,7 +22515,7 @@ StripPlayerAndMonNamesForLinkContest:
 	add	r6, r1, #0
 	add	r4, r5, #0x2
 	cmp	r6, #0x1
-	bne	.L2451	@cond_branch
+	bne	.L2449	@cond_branch
 	add	r0, r4, #0
 	bl	GetMonNicknameLanguage
 	add	r1, r0, #0
@@ -22521,24 +22523,24 @@ StripPlayerAndMonNamesForLinkContest:
 	lsr	r1, r1, #0x18
 	add	r0, r4, #0
 	bl	ConvertInternationalString
-	b	.L2452
-.L2451:
+	b	.L2450
+.L2449:
 	ldrb	r0, [r4, #0xa]
 	cmp	r0, #0xfc
-	bne	.L2453	@cond_branch
+	bne	.L2451	@cond_branch
 	add	r0, r4, #0
 	mov	r1, #0x1
 	bl	ConvertInternationalString
-	b	.L2452
-.L2453:
+	b	.L2450
+.L2451:
 	strb	r0, [r4, #0x5]
 	mov	r0, #0xff
 	strb	r0, [r4, #0xa]
-.L2452:
+.L2450:
 	add	r4, r5, #0
 	add	r4, r4, #0xd
 	cmp	r6, #0x1
-	bne	.L2455	@cond_branch
+	bne	.L2453	@cond_branch
 	mov	r0, #0xff
 	strb	r0, [r4, #0x7]
 	ldrb	r0, [r4, #0x4]
@@ -22555,13 +22557,13 @@ StripPlayerAndMonNamesForLinkContest:
 	strb	r0, [r4, #0x1]
 	mov	r0, #0xfc
 	strb	r0, [r5, #0xd]
-	b	.L2456
-.L2455:
+	b	.L2454
+.L2453:
 	ldrb	r0, [r4, #0x7]
 	strb	r0, [r4, #0x5]
 	mov	r0, #0xff
 	strb	r0, [r4, #0x7]
-.L2456:
+.L2454:
 	pop	{r4, r5, r6}
 	pop	{r0}
 	bx	r0

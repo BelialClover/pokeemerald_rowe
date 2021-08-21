@@ -2299,52 +2299,48 @@ unref_sub_8119094:
 	mov	r5, r8
 	push	{r5, r6, r7}
 	add	sp, sp, #-0x4
-	ldr	r4, [sp, #0x24]
-	ldr	r5, [sp, #0x28]
-	mov	r8, r5
+	mov	r8, r1
+	ldr	r1, [sp, #0x24]
+	ldr	r6, [sp, #0x28]
 	ldr	r5, [sp, #0x2c]
-	ldr	r6, [sp, #0x30]
-	mov	r9, r6
+	ldr	r4, [sp, #0x30]
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	mov	ip, r0
-	lsl	r1, r1, #0x18
+	mov	r0, r8
+	lsl	r0, r0, #0x18
+	lsr	r0, r0, #0x18
+	mov	r8, r0
 	lsl	r2, r2, #0x18
 	lsl	r3, r3, #0x18
-	lsl	r4, r4, #0x18
-	lsr	r4, r4, #0x18
-	mov	sl, r4
-	mov	r7, r8
-	lsl	r7, r7, #0x10
-	lsr	r6, r7, #0x10
+	lsl	r1, r1, #0x18
+	lsr	r1, r1, #0x18
+	mov	sl, r1
+	lsl	r6, r6, #0x10
+	lsr	r1, r6, #0x10
 	lsl	r5, r5, #0x18
 	lsr	r5, r5, #0x18
-	mov	r0, r9
-	lsl	r0, r0, #0x18
-	mov	r9, r0
-	ldr	r4, .L322
-	ldr	r0, .L322+0x4
+	lsl	r4, r4, #0x18
+	lsr	r4, r4, #0x18
+	ldr	r0, .L322
 	ldr	r0, [r0]
 	lsr	r2, r2, #0x16
 	add	r0, r0, #0x4
 	add	r0, r0, r2
 	lsr	r3, r3, #0xd
 	ldr	r0, [r0]
+	mov	r2, #0xc0
+	lsl	r2, r2, #0x13
 	add	r0, r0, r3
-	str	r0, [r4]
-	mov	r0, #0xc0
-	lsl	r0, r0, #0x13
-	add	r6, r6, r0
-	str	r6, [r4, #0x4]
-	ldr	r0, .L322+0x8
-	str	r0, [r4, #0x8]
-	ldr	r0, [r4, #0x8]
-	add	r2, r7, #0
-	lsr	r2, r2, #0x15
-	mov	r6, r9
-	lsr	r6, r6, #0xf
-	sub	r4, r2, r6
-	lsr	r0, r1, #0x18
+	orr	r1, r1, r2
+	ldr	r2, .L322+0x4
+	ldr	r3, .L322+0x8
+	stmia r3!, {r0, r1, r2}
+	.code	16
+	lsr	r6, r6, #0x15
+	lsl	r4, r4, #0x9
+	sub	r6, r6, r4
+	mov	r0, r8
 	add	r1, r0, #0
 	add	r1, r1, #0x8
 	cmp	r0, r1
@@ -2356,31 +2352,31 @@ unref_sub_8119094:
 	lsl	r5, r5, #0xb
 	str	r5, [sp]
 .L315:
-	mov	r2, ip
-	add	r3, r2, #0
+	mov	r1, ip
+	add	r3, r1, #0
 	add	r3, r3, #0x8
 	add	r5, r0, #0x1
-	cmp	r2, r3
+	cmp	r1, r3
 	bge	.L314	@cond_branch
-	mov	r1, sl
-	lsl	r6, r1, #0xc
+	mov	r2, sl
+	lsl	r4, r2, #0xc
 	lsl	r0, r0, #0x6
 	mov	r7, #0xc0
 	lsl	r7, r7, #0x13
 	add	r0, r0, r7
-	ldr	r1, [sp]
-	add	r0, r1, r0
+	ldr	r2, [sp]
+	add	r0, r2, r0
 	mov	r7, r8
-	add	r1, r7, r0
-	sub	r2, r3, r2
+	add	r2, r7, r0
+	sub	r1, r3, r1
 .L319:
-	add	r0, r4, #0
-	orr	r0, r0, r6
-	strh	r0, [r1]
-	add	r4, r4, #0x1
-	add	r1, r1, #0x2
-	sub	r2, r2, #0x1
-	cmp	r2, #0
+	add	r0, r6, #0
+	orr	r0, r0, r4
+	strh	r0, [r2]
+	add	r6, r6, #0x1
+	add	r2, r2, #0x2
+	sub	r1, r1, #0x1
+	cmp	r1, #0
 	bne	.L319	@cond_branch
 .L314:
 	add	r0, r5, #0
@@ -2398,9 +2394,9 @@ unref_sub_8119094:
 .L323:
 	.align	2, 0
 .L322:
-	.word	0x40000d4
 	.word	gMonSpritesGfxPtr
 	.word	-0x7ffffc00
+	.word	0x40000d4
 .Lfe12:
 	.size	 unref_sub_8119094,.Lfe12-unref_sub_8119094
 .text

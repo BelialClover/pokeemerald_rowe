@@ -4075,8 +4075,8 @@ struct SoundInfo
     u32 plynote;
     u32 ExtVolPit;
     u8 gap2[16];
-    struct SoundChannel chans[12];
-    s8 pcmBuffer[1584 * 2];
+    struct SoundChannel chans[15];
+    s8 pcmBuffer[0x620 * 2];
 };
 
 struct SongHeader
@@ -6937,7 +6937,7 @@ void InitIntrHandlers(void)
     for (i = 0; i < ((int)(sizeof(gIntrTableTemplate)/sizeof(IntrFunc))); i++)
         gIntrTable[i] = gIntrTableTemplate[i];
 
-    { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); dmaRegs[0] = (vu32)(IntrMain); dmaRegs[1] = (vu32)(IntrMain_Buffer); dmaRegs[2] = (vu32)((0x8000 | 0x0000 | 0x0400 | 0x0000 | 0x0000) << 16 | ((sizeof(IntrMain_Buffer))/(32/8))); dmaRegs[2]; };
+    { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); u32 eval_src = (u32)(IntrMain); u32 eval_dst = (u32)(IntrMain_Buffer); u32 eval_ctl = (u32)((0x8000 | 0x0000 | 0x0400 | 0x0000 | 0x0000) << 16 | ((sizeof(IntrMain_Buffer))/(32/8))); register u32 r_src asm("r0") = eval_src; register u32 r_dst asm("r1") = eval_dst; register u32 r_ctl asm("r2") = eval_ctl; asm volatile("stmia %0!, {%1, %2, %3}" : "+l" (dmaRegs) : "l" (r_src), "l" (r_dst), "l" (r_ctl) : "memory"); };
 
     (*(void **)0x3007FFC) = IntrMain_Buffer;
 

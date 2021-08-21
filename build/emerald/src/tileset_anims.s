@@ -33953,44 +33953,43 @@ AppendTilesetAnimToBuffer:
 	.type	 TransferTilesetAnimsBuffer,function
 	.thumb_func
 TransferTilesetAnimsBuffer:
-	push	{r4, r5, r6, lr}
-	mov	r3, #0x0
-	ldr	r4, .L15
-	add	r6, r4, #0
-	ldrb	r0, [r4]
-	cmp	r3, r0
+	push	{r4, r5, r6, r7, lr}
+	mov	r4, #0x0
+	ldr	r5, .L15
+	mov	ip, r5
+	ldrb	r0, [r5]
+	cmp	r4, r0
 	bge	.L11	@cond_branch
-	ldr	r2, .L15+0x4
-	ldr	r1, .L15+0x8
-	mov	r5, #0x80
-	lsl	r5, r5, #0x18
+	ldr	r3, .L15+0x4
+	mov	r6, #0x80
+	lsl	r6, r6, #0x18
 .L13:
-	ldr	r0, [r1]
-	str	r0, [r2]
-	ldr	r0, [r1, #0x4]
-	str	r0, [r2, #0x4]
-	ldrh	r0, [r1, #0x8]
-	lsr	r0, r0, #0x1
-	orr	r0, r0, r5
-	str	r0, [r2, #0x8]
-	ldr	r0, [r2, #0x8]
-	add	r1, r1, #0xc
-	add	r3, r3, #0x1
-	ldrb	r0, [r4]
-	cmp	r3, r0
+	ldrh	r2, [r3, #0x8]
+	lsr	r2, r2, #0x1
+	ldr	r0, [r3]
+	ldr	r1, [r3, #0x4]
+	orr	r2, r2, r6
+	ldr	r7, .L15+0x8
+	stmia r7!, {r0, r1, r2}
+	.code	16
+	add	r3, r3, #0xc
+	add	r4, r4, #0x1
+	ldrb	r0, [r5]
+	cmp	r4, r0
 	blt	.L13	@cond_branch
 .L11:
 	mov	r0, #0x0
-	strb	r0, [r6]
-	pop	{r4, r5, r6}
+	mov	r1, ip
+	strb	r0, [r1]
+	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
 .L16:
 	.align	2, 0
 .L15:
 	.word	sTilesetDMA3TransferBufferSize
-	.word	0x40000d4
 	.word	sTilesetDMA3TransferBuffer
+	.word	0x40000d4
 .Lfe3:
 	.size	 TransferTilesetAnimsBuffer,.Lfe3-TransferTilesetAnimsBuffer
 	.align	2, 0

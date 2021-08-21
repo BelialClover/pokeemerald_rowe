@@ -6537,7 +6537,7 @@ static void VBlankCB_Phase2_Swirl(void)
 {
     VBlankCB_BattleTransition();
     if (sTransitionStructPtr->VBlank_DMA)
-        { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); dmaRegs[0] = (vu32)(gScanlineEffectRegBuffers[0]); dmaRegs[1] = (vu32)(gScanlineEffectRegBuffers[1]); dmaRegs[2] = (vu32)((0x8000 | 0x0000 | 0x0000 | 0x0000 | 0x0000) << 16 | ((320)/(16/8))); dmaRegs[2]; };
+        { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); u32 eval_src = (u32)(gScanlineEffectRegBuffers[0]); u32 eval_dst = (u32)(gScanlineEffectRegBuffers[1]); u32 eval_ctl = (u32)((0x8000 | 0x0000 | 0x0000 | 0x0000 | 0x0000) << 16 | ((320)/(16/8))); register u32 r_src asm("r0") = eval_src; register u32 r_dst asm("r1") = eval_dst; register u32 r_ctl asm("r2") = eval_ctl; asm volatile("stmia %0!, {%1, %2, %3}" : "+l" (dmaRegs) : "l" (r_src), "l" (r_dst), "l" (r_ctl) : "memory"); };
 }
 
 static void HBlankCB_Phase2_Swirl(void)
@@ -6598,7 +6598,7 @@ static void VBlankCB_Phase2_Shuffle(void)
 {
     VBlankCB_BattleTransition();
     if (sTransitionStructPtr->VBlank_DMA)
-        { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); dmaRegs[0] = (vu32)(gScanlineEffectRegBuffers[0]); dmaRegs[1] = (vu32)(gScanlineEffectRegBuffers[1]); dmaRegs[2] = (vu32)((0x8000 | 0x0000 | 0x0000 | 0x0000 | 0x0000) << 16 | ((320)/(16/8))); dmaRegs[2]; };
+        { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); u32 eval_src = (u32)(gScanlineEffectRegBuffers[0]); u32 eval_dst = (u32)(gScanlineEffectRegBuffers[1]); u32 eval_ctl = (u32)((0x8000 | 0x0000 | 0x0000 | 0x0000 | 0x0000) << 16 | ((320)/(16/8))); register u32 r_src asm("r0") = eval_src; register u32 r_dst asm("r1") = eval_dst; register u32 r_ctl asm("r2") = eval_ctl; asm volatile("stmia %0!, {%1, %2, %3}" : "+l" (dmaRegs) : "l" (r_src), "l" (r_dst), "l" (r_ctl) : "memory"); };
 }
 
 static void HBlankCB_Phase2_Shuffle(void)
@@ -6996,7 +6996,7 @@ static void Transition_BigPokeball_Vblank(void)
     { vu16 *dmaRegs = (vu16 *)(0x4000000 + 0xb0); dmaRegs[5] &= ~(0x3000 | 0x0800 | 0x0200); dmaRegs[5] &= ~0x8000; dmaRegs[5]; };
     VBlankCB_BattleTransition();
     if (sTransitionStructPtr->VBlank_DMA)
-        { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); dmaRegs[0] = (vu32)(gScanlineEffectRegBuffers[0]); dmaRegs[1] = (vu32)(gScanlineEffectRegBuffers[1]); dmaRegs[2] = (vu32)((0x8000 | 0x0000 | 0x0000 | 0x0000 | 0x0000) << 16 | ((320)/(16/8))); dmaRegs[2]; };
+        { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); u32 eval_src = (u32)(gScanlineEffectRegBuffers[0]); u32 eval_dst = (u32)(gScanlineEffectRegBuffers[1]); u32 eval_ctl = (u32)((0x8000 | 0x0000 | 0x0000 | 0x0000 | 0x0000) << 16 | ((320)/(16/8))); register u32 r_src asm("r0") = eval_src; register u32 r_dst asm("r1") = eval_dst; register u32 r_ctl asm("r2") = eval_ctl; asm volatile("stmia %0!, {%1, %2, %3}" : "+l" (dmaRegs) : "l" (r_src), "l" (r_dst), "l" (r_ctl) : "memory"); };
     (*(vu16 *)(0x4000000 + 0x48)) = sTransitionStructPtr->WININ;
     (*(vu16 *)(0x4000000 + 0x4a)) = sTransitionStructPtr->WINOUT;
     (*(vu16 *)(0x4000000 + 0x44)) = sTransitionStructPtr->WIN0V;
@@ -7007,13 +7007,13 @@ static void Transition_BigPokeball_Vblank(void)
 static void VBlankCB0_Phase2_BigPokeball(void)
 {
     Transition_BigPokeball_Vblank();
-    { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xb0); dmaRegs[0] = (vu32)(gScanlineEffectRegBuffers[1]); dmaRegs[1] = (vu32)(&(*(vu16 *)(0x4000000 + 0x10))); dmaRegs[2] = (vu32)(0xA2400001); dmaRegs[2]; };
+    { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xb0); u32 eval_src = (u32)(gScanlineEffectRegBuffers[1]); u32 eval_dst = (u32)(&(*(vu16 *)(0x4000000 + 0x10))); u32 eval_ctl = (u32)(0xA2400001); register u32 r_src asm("r0") = eval_src; register u32 r_dst asm("r1") = eval_dst; register u32 r_ctl asm("r2") = eval_ctl; asm volatile("stmia %0!, {%1, %2, %3}" : "+l" (dmaRegs) : "l" (r_src), "l" (r_dst), "l" (r_ctl) : "memory"); };
 }
 
 static void VBlankCB1_Phase2_BigPokeball(void)
 {
     Transition_BigPokeball_Vblank();
-    { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xb0); dmaRegs[0] = (vu32)(gScanlineEffectRegBuffers[1]); dmaRegs[1] = (vu32)(&(*(vu16 *)(0x4000000 + 0x40))); dmaRegs[2] = (vu32)(0xA2400001); dmaRegs[2]; };
+    { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xb0); u32 eval_src = (u32)(gScanlineEffectRegBuffers[1]); u32 eval_dst = (u32)(&(*(vu16 *)(0x4000000 + 0x40))); u32 eval_ctl = (u32)(0xA2400001); register u32 r_src asm("r0") = eval_src; register u32 r_dst asm("r1") = eval_dst; register u32 r_ctl asm("r2") = eval_ctl; asm volatile("stmia %0!, {%1, %2, %3}" : "+l" (dmaRegs) : "l" (r_src), "l" (r_dst), "l" (r_ctl) : "memory"); };
 }
 
 static void Phase2Task_PokeballsTrail(u8 taskId)
@@ -7309,12 +7309,12 @@ static void VBlankCB_Phase2_Clockwise_BlackFade(void)
     { vu16 *dmaRegs = (vu16 *)(0x4000000 + 0xb0); dmaRegs[5] &= ~(0x3000 | 0x0800 | 0x0200); dmaRegs[5] &= ~0x8000; dmaRegs[5]; };
     VBlankCB_BattleTransition();
     if (sTransitionStructPtr->VBlank_DMA != 0)
-        { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); dmaRegs[0] = (vu32)(gScanlineEffectRegBuffers[0]); dmaRegs[1] = (vu32)(gScanlineEffectRegBuffers[1]); dmaRegs[2] = (vu32)((0x8000 | 0x0000 | 0x0000 | 0x0000 | 0x0000) << 16 | ((320)/(16/8))); dmaRegs[2]; };
+        { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); u32 eval_src = (u32)(gScanlineEffectRegBuffers[0]); u32 eval_dst = (u32)(gScanlineEffectRegBuffers[1]); u32 eval_ctl = (u32)((0x8000 | 0x0000 | 0x0000 | 0x0000 | 0x0000) << 16 | ((320)/(16/8))); register u32 r_src asm("r0") = eval_src; register u32 r_dst asm("r1") = eval_dst; register u32 r_ctl asm("r2") = eval_ctl; asm volatile("stmia %0!, {%1, %2, %3}" : "+l" (dmaRegs) : "l" (r_src), "l" (r_dst), "l" (r_ctl) : "memory"); };
     (*(vu16 *)(0x4000000 + 0x48)) = sTransitionStructPtr->WININ;
     (*(vu16 *)(0x4000000 + 0x4a)) = sTransitionStructPtr->WINOUT;
     (*(vu16 *)(0x4000000 + 0x44)) = sTransitionStructPtr->WIN0V;
     (*(vu16 *)(0x4000000 + 0x40)) = gScanlineEffectRegBuffers[1][0];
-    { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xb0); dmaRegs[0] = (vu32)(gScanlineEffectRegBuffers[1]); dmaRegs[1] = (vu32)(&(*(vu16 *)(0x4000000 + 0x40))); dmaRegs[2] = (vu32)(0xA2400001); dmaRegs[2]; };
+    { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xb0); u32 eval_src = (u32)(gScanlineEffectRegBuffers[1]); u32 eval_dst = (u32)(&(*(vu16 *)(0x4000000 + 0x40))); u32 eval_ctl = (u32)(0xA2400001); register u32 r_src asm("r0") = eval_src; register u32 r_dst asm("r1") = eval_dst; register u32 r_ctl asm("r2") = eval_ctl; asm volatile("stmia %0!, {%1, %2, %3}" : "+l" (dmaRegs) : "l" (r_src), "l" (r_dst), "l" (r_ctl) : "memory"); };
 }
 
 static void Phase2Task_Ripple(u8 taskId)
@@ -7384,7 +7384,7 @@ static void VBlankCB_Phase2_Ripple(void)
 {
     VBlankCB_BattleTransition();
     if (sTransitionStructPtr->VBlank_DMA)
-        { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); dmaRegs[0] = (vu32)(gScanlineEffectRegBuffers[0]); dmaRegs[1] = (vu32)(gScanlineEffectRegBuffers[1]); dmaRegs[2] = (vu32)((0x8000 | 0x0000 | 0x0000 | 0x0000 | 0x0000) << 16 | ((320)/(16/8))); dmaRegs[2]; };
+        { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); u32 eval_src = (u32)(gScanlineEffectRegBuffers[0]); u32 eval_dst = (u32)(gScanlineEffectRegBuffers[1]); u32 eval_ctl = (u32)((0x8000 | 0x0000 | 0x0000 | 0x0000 | 0x0000) << 16 | ((320)/(16/8))); register u32 r_src asm("r0") = eval_src; register u32 r_dst asm("r1") = eval_dst; register u32 r_ctl asm("r2") = eval_ctl; asm volatile("stmia %0!, {%1, %2, %3}" : "+l" (dmaRegs) : "l" (r_src), "l" (r_dst), "l" (r_ctl) : "memory"); };
 }
 
 static void HBlankCB_Phase2_Ripple(void)
@@ -7466,11 +7466,11 @@ static void VBlankCB_Phase2_Wave(void)
     { vu16 *dmaRegs = (vu16 *)(0x4000000 + 0xb0); dmaRegs[5] &= ~(0x3000 | 0x0800 | 0x0200); dmaRegs[5] &= ~0x8000; dmaRegs[5]; };
     VBlankCB_BattleTransition();
     if (sTransitionStructPtr->VBlank_DMA != 0)
-        { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); dmaRegs[0] = (vu32)(gScanlineEffectRegBuffers[0]); dmaRegs[1] = (vu32)(gScanlineEffectRegBuffers[1]); dmaRegs[2] = (vu32)((0x8000 | 0x0000 | 0x0000 | 0x0000 | 0x0000) << 16 | ((320)/(16/8))); dmaRegs[2]; };
+        { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); u32 eval_src = (u32)(gScanlineEffectRegBuffers[0]); u32 eval_dst = (u32)(gScanlineEffectRegBuffers[1]); u32 eval_ctl = (u32)((0x8000 | 0x0000 | 0x0000 | 0x0000 | 0x0000) << 16 | ((320)/(16/8))); register u32 r_src asm("r0") = eval_src; register u32 r_dst asm("r1") = eval_dst; register u32 r_ctl asm("r2") = eval_ctl; asm volatile("stmia %0!, {%1, %2, %3}" : "+l" (dmaRegs) : "l" (r_src), "l" (r_dst), "l" (r_ctl) : "memory"); };
     (*(vu16 *)(0x4000000 + 0x48)) = sTransitionStructPtr->WININ;
     (*(vu16 *)(0x4000000 + 0x4a)) = sTransitionStructPtr->WINOUT;
     (*(vu16 *)(0x4000000 + 0x44)) = sTransitionStructPtr->WIN0V;
-    { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xb0); dmaRegs[0] = (vu32)(gScanlineEffectRegBuffers[1]); dmaRegs[1] = (vu32)(&(*(vu16 *)(0x4000000 + 0x40))); dmaRegs[2] = (vu32)(0xA2400001); dmaRegs[2]; };
+    { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xb0); u32 eval_src = (u32)(gScanlineEffectRegBuffers[1]); u32 eval_dst = (u32)(&(*(vu16 *)(0x4000000 + 0x40))); u32 eval_ctl = (u32)(0xA2400001); register u32 r_src asm("r0") = eval_src; register u32 r_dst asm("r1") = eval_dst; register u32 r_ctl asm("r2") = eval_ctl; asm volatile("stmia %0!, {%1, %2, %3}" : "+l" (dmaRegs) : "l" (r_src), "l" (r_dst), "l" (r_ctl) : "memory"); };
 }
 
 static void Phase2Task_Sidney(u8 taskId)
@@ -7750,12 +7750,12 @@ static void VBlankCB0_Phase2_Mugshots(void)
     { vu16 *dmaRegs = (vu16 *)(0x4000000 + 0xb0); dmaRegs[5] &= ~(0x3000 | 0x0800 | 0x0200); dmaRegs[5] &= ~0x8000; dmaRegs[5]; };
     VBlankCB_BattleTransition();
     if (sTransitionStructPtr->VBlank_DMA != 0)
-        { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); dmaRegs[0] = (vu32)(gScanlineEffectRegBuffers[0]); dmaRegs[1] = (vu32)(gScanlineEffectRegBuffers[1]); dmaRegs[2] = (vu32)((0x8000 | 0x0000 | 0x0000 | 0x0000 | 0x0000) << 16 | ((320)/(16/8))); dmaRegs[2]; };
+        { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); u32 eval_src = (u32)(gScanlineEffectRegBuffers[0]); u32 eval_dst = (u32)(gScanlineEffectRegBuffers[1]); u32 eval_ctl = (u32)((0x8000 | 0x0000 | 0x0000 | 0x0000 | 0x0000) << 16 | ((320)/(16/8))); register u32 r_src asm("r0") = eval_src; register u32 r_dst asm("r1") = eval_dst; register u32 r_ctl asm("r2") = eval_ctl; asm volatile("stmia %0!, {%1, %2, %3}" : "+l" (dmaRegs) : "l" (r_src), "l" (r_dst), "l" (r_ctl) : "memory"); };
     (*(vu16 *)(0x4000000 + 0x12)) = sTransitionStructPtr->BG0VOFS;
     (*(vu16 *)(0x4000000 + 0x48)) = sTransitionStructPtr->WININ;
     (*(vu16 *)(0x4000000 + 0x4a)) = sTransitionStructPtr->WINOUT;
     (*(vu16 *)(0x4000000 + 0x44)) = sTransitionStructPtr->WIN0V;
-    { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xb0); dmaRegs[0] = (vu32)(gScanlineEffectRegBuffers[1]); dmaRegs[1] = (vu32)(&(*(vu16 *)(0x4000000 + 0x40))); dmaRegs[2] = (vu32)(0xA2400001); dmaRegs[2]; };
+    { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xb0); u32 eval_src = (u32)(gScanlineEffectRegBuffers[1]); u32 eval_dst = (u32)(&(*(vu16 *)(0x4000000 + 0x40))); u32 eval_ctl = (u32)(0xA2400001); register u32 r_src asm("r0") = eval_src; register u32 r_dst asm("r1") = eval_dst; register u32 r_ctl asm("r2") = eval_ctl; asm volatile("stmia %0!, {%1, %2, %3}" : "+l" (dmaRegs) : "l" (r_src), "l" (r_dst), "l" (r_ctl) : "memory"); };
 }
 
 static void VBlankCB1_Phase2_Mugshots(void)
@@ -7763,9 +7763,9 @@ static void VBlankCB1_Phase2_Mugshots(void)
     { vu16 *dmaRegs = (vu16 *)(0x4000000 + 0xb0); dmaRegs[5] &= ~(0x3000 | 0x0800 | 0x0200); dmaRegs[5] &= ~0x8000; dmaRegs[5]; };
     VBlankCB_BattleTransition();
     if (sTransitionStructPtr->VBlank_DMA != 0)
-        { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); dmaRegs[0] = (vu32)(gScanlineEffectRegBuffers[0]); dmaRegs[1] = (vu32)(gScanlineEffectRegBuffers[1]); dmaRegs[2] = (vu32)((0x8000 | 0x0000 | 0x0000 | 0x0000 | 0x0000) << 16 | ((320)/(16/8))); dmaRegs[2]; };
+        { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); u32 eval_src = (u32)(gScanlineEffectRegBuffers[0]); u32 eval_dst = (u32)(gScanlineEffectRegBuffers[1]); u32 eval_ctl = (u32)((0x8000 | 0x0000 | 0x0000 | 0x0000 | 0x0000) << 16 | ((320)/(16/8))); register u32 r_src asm("r0") = eval_src; register u32 r_dst asm("r1") = eval_dst; register u32 r_ctl asm("r2") = eval_ctl; asm volatile("stmia %0!, {%1, %2, %3}" : "+l" (dmaRegs) : "l" (r_src), "l" (r_dst), "l" (r_ctl) : "memory"); };
     (*(vu16 *)(0x4000000 + 0x50)) = sTransitionStructPtr->BLDCNT;
-    { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xb0); dmaRegs[0] = (vu32)(gScanlineEffectRegBuffers[1]); dmaRegs[1] = (vu32)(&(*(vu16 *)(0x4000000 + 0x54))); dmaRegs[2] = (vu32)(0xA2400001); dmaRegs[2]; };
+    { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xb0); u32 eval_src = (u32)(gScanlineEffectRegBuffers[1]); u32 eval_dst = (u32)(&(*(vu16 *)(0x4000000 + 0x54))); u32 eval_ctl = (u32)(0xA2400001); register u32 r_src asm("r0") = eval_src; register u32 r_dst asm("r1") = eval_dst; register u32 r_ctl asm("r2") = eval_ctl; asm volatile("stmia %0!, {%1, %2, %3}" : "+l" (dmaRegs) : "l" (r_src), "l" (r_dst), "l" (r_ctl) : "memory"); };
 }
 
 static void HBlankCB_Phase2_Mugshots(void)
@@ -7980,8 +7980,8 @@ static void VBlankCB_Phase2_Slice(void)
     (*(vu16 *)(0x4000000 + 0x4a)) = sTransitionStructPtr->WINOUT;
     (*(vu16 *)(0x4000000 + 0x44)) = sTransitionStructPtr->WIN0V;
     if (sTransitionStructPtr->VBlank_DMA)
-        { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); dmaRegs[0] = (vu32)(gScanlineEffectRegBuffers[0]); dmaRegs[1] = (vu32)(gScanlineEffectRegBuffers[1]); dmaRegs[2] = (vu32)((0x8000 | 0x0000 | 0x0000 | 0x0000 | 0x0000) << 16 | ((640)/(16/8))); dmaRegs[2]; };
-    { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xb0); dmaRegs[0] = (vu32)(&gScanlineEffectRegBuffers[1][160]); dmaRegs[1] = (vu32)(&(*(vu16 *)(0x4000000 + 0x40))); dmaRegs[2] = (vu32)(0xA2400001); dmaRegs[2]; };
+        { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); u32 eval_src = (u32)(gScanlineEffectRegBuffers[0]); u32 eval_dst = (u32)(gScanlineEffectRegBuffers[1]); u32 eval_ctl = (u32)((0x8000 | 0x0000 | 0x0000 | 0x0000 | 0x0000) << 16 | ((640)/(16/8))); register u32 r_src asm("r0") = eval_src; register u32 r_dst asm("r1") = eval_dst; register u32 r_ctl asm("r2") = eval_ctl; asm volatile("stmia %0!, {%1, %2, %3}" : "+l" (dmaRegs) : "l" (r_src), "l" (r_dst), "l" (r_ctl) : "memory"); };
+    { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xb0); u32 eval_src = (u32)(&gScanlineEffectRegBuffers[1][160]); u32 eval_dst = (u32)(&(*(vu16 *)(0x4000000 + 0x40))); u32 eval_ctl = (u32)(0xA2400001); register u32 r_src asm("r0") = eval_src; register u32 r_dst asm("r1") = eval_dst; register u32 r_ctl asm("r2") = eval_ctl; asm volatile("stmia %0!, {%1, %2, %3}" : "+l" (dmaRegs) : "l" (r_src), "l" (r_dst), "l" (r_ctl) : "memory"); };
 }
 
 static void HBlankCB_Phase2_Slice(void)
@@ -8641,7 +8641,7 @@ static void VBlankCB_Phase2_Rayquaza(void)
     else
         dmaSrc = gScanlineEffectRegBuffers[0];
 
-    { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xb0); dmaRegs[0] = (vu32)(dmaSrc); dmaRegs[1] = (vu32)(&(*(vu16 *)(0x4000000 + 0x12))); dmaRegs[2] = (vu32)(0xA2400001); dmaRegs[2]; };
+    { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xb0); u32 eval_src = (u32)(dmaSrc); u32 eval_dst = (u32)(&(*(vu16 *)(0x4000000 + 0x12))); u32 eval_ctl = (u32)(0xA2400001); register u32 r_src asm("r0") = eval_src; register u32 r_dst asm("r1") = eval_dst; register u32 r_ctl asm("r2") = eval_ctl; asm volatile("stmia %0!, {%1, %2, %3}" : "+l" (dmaRegs) : "l" (r_src), "l" (r_dst), "l" (r_ctl) : "memory"); };
 }
 
 static void Phase2Task_WhiteFade(u8 taskId)
@@ -8745,8 +8745,8 @@ static void VBlankCB0_Phase2_WhiteFade(void)
     (*(vu16 *)(0x4000000 + 0x4a)) = sTransitionStructPtr->WINOUT;
     (*(vu16 *)(0x4000000 + 0x44)) = sTransitionStructPtr->WIN0V;
     if (sTransitionStructPtr->VBlank_DMA)
-        { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); dmaRegs[0] = (vu32)(gScanlineEffectRegBuffers[0]); dmaRegs[1] = (vu32)(gScanlineEffectRegBuffers[1]); dmaRegs[2] = (vu32)((0x8000 | 0x0000 | 0x0000 | 0x0000 | 0x0000) << 16 | ((640)/(16/8))); dmaRegs[2]; };
-    { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xb0); dmaRegs[0] = (vu32)(&gScanlineEffectRegBuffers[1][160]); dmaRegs[1] = (vu32)(&(*(vu16 *)(0x4000000 + 0x40))); dmaRegs[2] = (vu32)(0xA2400001); dmaRegs[2]; };
+        { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); u32 eval_src = (u32)(gScanlineEffectRegBuffers[0]); u32 eval_dst = (u32)(gScanlineEffectRegBuffers[1]); u32 eval_ctl = (u32)((0x8000 | 0x0000 | 0x0000 | 0x0000 | 0x0000) << 16 | ((640)/(16/8))); register u32 r_src asm("r0") = eval_src; register u32 r_dst asm("r1") = eval_dst; register u32 r_ctl asm("r2") = eval_ctl; asm volatile("stmia %0!, {%1, %2, %3}" : "+l" (dmaRegs) : "l" (r_src), "l" (r_dst), "l" (r_ctl) : "memory"); };
+    { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xb0); u32 eval_src = (u32)(&gScanlineEffectRegBuffers[1][160]); u32 eval_dst = (u32)(&(*(vu16 *)(0x4000000 + 0x40))); u32 eval_ctl = (u32)(0xA2400001); register u32 r_src asm("r0") = eval_src; register u32 r_dst asm("r1") = eval_dst; register u32 r_ctl asm("r2") = eval_ctl; asm volatile("stmia %0!, {%1, %2, %3}" : "+l" (dmaRegs) : "l" (r_src), "l" (r_dst), "l" (r_ctl) : "memory"); };
 }
 
 static void VBlankCB1_Phase2_WhiteFade(void)
@@ -8970,12 +8970,12 @@ static void VBlankCB_Phase2_Shards(void)
     { vu16 *dmaRegs = (vu16 *)(0x4000000 + 0xb0); dmaRegs[5] &= ~(0x3000 | 0x0800 | 0x0200); dmaRegs[5] &= ~0x8000; dmaRegs[5]; };
     VBlankCB_BattleTransition();
     if (sTransitionStructPtr->VBlank_DMA)
-        { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); dmaRegs[0] = (vu32)(gScanlineEffectRegBuffers[0]); dmaRegs[1] = (vu32)(gScanlineEffectRegBuffers[1]); dmaRegs[2] = (vu32)((0x8000 | 0x0000 | 0x0000 | 0x0000 | 0x0000) << 16 | ((320)/(16/8))); dmaRegs[2]; };
+        { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); u32 eval_src = (u32)(gScanlineEffectRegBuffers[0]); u32 eval_dst = (u32)(gScanlineEffectRegBuffers[1]); u32 eval_ctl = (u32)((0x8000 | 0x0000 | 0x0000 | 0x0000 | 0x0000) << 16 | ((320)/(16/8))); register u32 r_src asm("r0") = eval_src; register u32 r_dst asm("r1") = eval_dst; register u32 r_ctl asm("r2") = eval_ctl; asm volatile("stmia %0!, {%1, %2, %3}" : "+l" (dmaRegs) : "l" (r_src), "l" (r_dst), "l" (r_ctl) : "memory"); };
     (*(vu16 *)(0x4000000 + 0x48)) = sTransitionStructPtr->WININ;
     (*(vu16 *)(0x4000000 + 0x4a)) = sTransitionStructPtr->WINOUT;
     (*(vu16 *)(0x4000000 + 0x44)) = sTransitionStructPtr->WIN0V;
     (*(vu16 *)(0x4000000 + 0x40)) = gScanlineEffectRegBuffers[1][0];
-    { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xb0); dmaRegs[0] = (vu32)(gScanlineEffectRegBuffers[1]); dmaRegs[1] = (vu32)(&(*(vu16 *)(0x4000000 + 0x40))); dmaRegs[2] = (vu32)(0xA2400001); dmaRegs[2]; };
+    { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xb0); u32 eval_src = (u32)(gScanlineEffectRegBuffers[1]); u32 eval_dst = (u32)(&(*(vu16 *)(0x4000000 + 0x40))); u32 eval_ctl = (u32)(0xA2400001); register u32 r_src asm("r0") = eval_src; register u32 r_dst asm("r1") = eval_dst; register u32 r_ctl asm("r2") = eval_ctl; asm volatile("stmia %0!, {%1, %2, %3}" : "+l" (dmaRegs) : "l" (r_src), "l" (r_dst), "l" (r_ctl) : "memory"); };
 }
 # 3610 "src/battle_transition.c"
 static void CreatePhase1Task(s16 a0, s16 a1, s16 a2, s16 a3, s16 a4)
@@ -9357,7 +9357,7 @@ static void VBlankCB_Phase2_30(void)
     (*(vu16 *)(0x4000000 + 0x52)) = sTransitionStructPtr->BLDALPHA;
 
     if (sTransitionStructPtr->VBlank_DMA)
-        { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); dmaRegs[0] = (vu32)(gScanlineEffectRegBuffers[0]); dmaRegs[1] = (vu32)(gScanlineEffectRegBuffers[1]); dmaRegs[2] = (vu32)((0x8000 | 0x0000 | 0x0000 | 0x0000 | 0x0000) << 16 | ((320)/(16/8))); dmaRegs[2]; };
+        { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); u32 eval_src = (u32)(gScanlineEffectRegBuffers[0]); u32 eval_dst = (u32)(gScanlineEffectRegBuffers[1]); u32 eval_ctl = (u32)((0x8000 | 0x0000 | 0x0000 | 0x0000 | 0x0000) << 16 | ((320)/(16/8))); register u32 r_src asm("r0") = eval_src; register u32 r_dst asm("r1") = eval_dst; register u32 r_ctl asm("r2") = eval_ctl; asm volatile("stmia %0!, {%1, %2, %3}" : "+l" (dmaRegs) : "l" (r_src), "l" (r_dst), "l" (r_ctl) : "memory"); };
 }
 
 static void HBlankCB_Phase2_30(void)

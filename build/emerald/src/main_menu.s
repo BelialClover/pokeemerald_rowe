@@ -616,33 +616,29 @@ InitMainMenu:
 	add	r1, sp, #0x4
 	mov	r0, #0x0
 	strh	r0, [r1]
-	ldr	r1, .L9
-	add	r0, sp, #0x4
-	str	r0, [r1]
-	mov	r0, #0xc0
-	lsl	r0, r0, #0x13
-	str	r0, [r1, #0x4]
-	ldr	r0, .L9+0x4
-	str	r0, [r1, #0x8]
-	ldr	r0, [r1, #0x8]
+	add	r0, r1, #0
+	mov	r1, #0xc0
+	lsl	r1, r1, #0x13
+	ldr	r2, .L9
+	ldr	r3, .L9+0x4
+	stmia r3!, {r0, r1, r2}
+	.code	16
 	mov	r5, #0x0
 	str	r5, [sp, #0x8]
 	add	r0, sp, #0x8
-	str	r0, [r1]
-	mov	r0, #0xe0
-	lsl	r0, r0, #0x13
-	str	r0, [r1, #0x4]
-	ldr	r0, .L9+0x8
-	str	r0, [r1, #0x8]
-	ldr	r0, [r1, #0x8]
+	mov	r1, #0xe0
+	lsl	r1, r1, #0x13
+	ldr	r2, .L9+0x8
+	ldr	r3, .L9+0x4
+	stmia r3!, {r0, r1, r2}
+	.code	16
 	add	r0, sp, #0x4
 	strh	r5, [r0]
-	str	r0, [r1]
-	ldr	r0, .L9+0xc
-	str	r0, [r1, #0x4]
-	ldr	r0, .L9+0x10
-	str	r0, [r1, #0x8]
-	ldr	r0, [r1, #0x8]
+	ldr	r1, .L9+0xc
+	ldr	r2, .L9+0x10
+	ldr	r3, .L9+0x4
+	stmia r3!, {r0, r1, r2}
+	.code	16
 	bl	ResetPaletteFade
 	ldr	r0, .L9+0x14
 	mov	r1, #0x0
@@ -669,8 +665,8 @@ InitMainMenu:
 .L10:
 	.align	2, 0
 .L9:
-	.word	0x40000d4
 	.word	-0x7eff4000
+	.word	0x40000d4
 	.word	-0x7affff00
 	.word	0x5000002
 	.word	-0x7efffe01
@@ -791,9 +787,9 @@ Task_MainMenuCheckSaveFile:
 	lsl	r0, r0, #0x18
 	lsr	r5, r0, #0x18
 	cmp	r5, #0
-	beq	.LCB298
+	beq	.LCB302
 	b	.L14	@long jump
-.LCB298:
+.LCB302:
 	mov	r0, #0x40
 	mov	r1, #0x0
 	bl	SetGpuReg
@@ -1166,9 +1162,9 @@ Task_DisplayMainMenu:
 	lsl	r0, r0, #0x18
 	lsr	r4, r0, #0x18
 	cmp	r4, #0
-	beq	.LCB748
+	beq	.LCB752
 	b	.L70	@long jump
-.LCB748:
+.LCB752:
 	mov	r0, #0x40
 	mov	r1, #0x0
 	bl	SetGpuReg
@@ -1267,13 +1263,13 @@ Task_DisplayMainMenu:
 	cmp	r0, #0x1
 	ble	.L75	@cond_branch
 	cmp	r0, #0x2
-	bne	.LCB857
+	bne	.LCB861
 	b	.L77	@long jump
-.LCB857:
+.LCB861:
 	cmp	r0, #0x3
-	bne	.LCB859
+	bne	.LCB863
 	b	.L78	@long jump
-.LCB859:
+.LCB863:
 .L75:
 	mov	r0, #0x0
 	mov	r1, #0xaa
@@ -1947,9 +1943,9 @@ Task_HandleMainMenuAPressed:
 	mov	r0, #0x80
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.LCB1618
+	beq	.LCB1622
 	b	.L118	@long jump
-.LCB1618:
+.LCB1622:
 	ldr	r2, .L178+0x4
 	lsl	r1, r6, #0x2
 	add	r0, r1, r6
@@ -2768,8 +2764,7 @@ Task_NewGameBirchSpeech_Init:
 	strh	r1, [r0, #0xe]
 	mov	r1, #0xd8
 	strh	r1, [r0, #0x16]
-	mov	r0, #0xbb
-	lsl	r0, r0, #0x1
+	ldr	r0, .L322+0x20
 	bl	PlayBGM
 	mov	r0, #0x0
 	bl	ShowBg
@@ -2790,6 +2785,7 @@ Task_NewGameBirchSpeech_Init:
 	.word	sBirchSpeechPlatformBlackPal
 	.word	gTasks
 	.word	Task_NewGameBirchSpeech_WaitToShowBirch
+	.word	0x159
 .Lfe18:
 	.size	 Task_NewGameBirchSpeech_Init,.Lfe18-Task_NewGameBirchSpeech_Init
 	.align	2, 0
@@ -4745,33 +4741,30 @@ CB2_NewGameBirchSpeech_ReturnFromNamingScreen:
 	add	r0, sp, #0x4
 	mov	r4, #0x0
 	strh	r4, [r0]
-	ldr	r1, .L512+0x8
-	str	r0, [r1]
 	mov	r4, #0xc0
 	lsl	r4, r4, #0x13
-	str	r4, [r1, #0x4]
-	ldr	r0, .L512+0xc
-	str	r0, [r1, #0x8]
-	ldr	r0, [r1, #0x8]
-	mov	r2, #0x0
-	str	r2, [sp, #0x8]
+	add	r1, r4, #0
+	ldr	r2, .L512+0x8
+	ldr	r3, .L512+0xc
+	stmia r3!, {r0, r1, r2}
+	.code	16
+	mov	r3, #0x0
+	str	r3, [sp, #0x8]
 	add	r0, sp, #0x8
-	str	r0, [r1]
-	mov	r0, #0xe0
-	lsl	r0, r0, #0x13
-	str	r0, [r1, #0x4]
-	ldr	r0, .L512+0x10
-	str	r0, [r1, #0x8]
-	ldr	r0, [r1, #0x8]
+	mov	r1, #0xe0
+	lsl	r1, r1, #0x13
+	ldr	r2, .L512+0x10
+	ldr	r5, .L512+0xc
+	stmia r5!, {r0, r1, r2}
+	.code	16
 	add	r0, sp, #0x4
-	strh	r2, [r0]
-	str	r0, [r1]
-	mov	r0, #0xa0
-	lsl	r0, r0, #0x13
-	str	r0, [r1, #0x4]
-	ldr	r0, .L512+0x14
-	str	r0, [r1, #0x8]
-	ldr	r0, [r1, #0x8]
+	strh	r3, [r0]
+	mov	r1, #0xa0
+	lsl	r1, r1, #0x13
+	ldr	r2, .L512+0x14
+	ldr	r3, .L512+0xc
+	stmia r3!, {r0, r1, r2}
+	.code	16
 	bl	ResetPaletteFade
 	ldr	r0, .L512+0x18
 	add	r1, r4, #0
@@ -4822,8 +4815,8 @@ CB2_NewGameBirchSpeech_ReturnFromNamingScreen:
 .L512:
 	.word	sMainMenuBgTemplates
 	.word	sBirchBgTemplate
-	.word	0x40000d4
 	.word	-0x7eff4000
+	.word	0x40000d4
 	.word	-0x7affff00
 	.word	-0x7efffe00
 	.word	sBirchSpeechShadowGfx

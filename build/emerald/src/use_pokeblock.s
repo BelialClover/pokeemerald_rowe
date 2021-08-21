@@ -3115,13 +3115,13 @@ UpdateMonPic:
 	add	sp, sp, #-0x28
 	lsl	r0, r0, #0x18
 	lsr	r6, r0, #0x18
-	ldr	r1, .L417
-	ldr	r3, [r1]
+	ldr	r3, .L417
+	ldr	r2, [r3]
 	ldr	r0, .L417+0x4
 	mov	r8, r0
-	add	r0, r3, r0
+	add	r0, r2, r0
 	ldrb	r0, [r0]
-	add	r7, r1, #0
+	add	r7, r3, #0
 	cmp	r0, #0xff
 	bne	.L408	@cond_branch
 	add	r5, sp, #0x18
@@ -3163,8 +3163,8 @@ UpdateMonPic:
 	lsl	r0, r0, #0x18
 	lsr	r1, r0, #0x18
 	ldr	r0, [r7]
-	ldr	r2, .L417+0x4
-	add	r0, r0, r2
+	ldr	r4, .L417+0x4
+	add	r0, r0, r4
 	strb	r1, [r0]
 	cmp	r1, #0x40
 	bne	.L409	@cond_branch
@@ -3211,15 +3211,15 @@ UpdateMonPic:
 	strh	r1, [r0, #0x26]
 	ldr	r3, .L419+0x8
 	add	r1, r2, r3
-	sub	r3, r3, #0x4
-	add	r0, r2, r3
+	ldr	r4, .L419+0xc
+	add	r0, r2, r4
 	ldrh	r0, [r0]
 	lsl	r0, r0, #0x5
-	ldr	r3, .L419+0xc
+	ldr	r3, .L419+0x10
 	add	r0, r0, r3
 	str	r0, [r1]
-	ldr	r0, .L419+0x10
-	add	r2, r2, r0
+	sub	r4, r4, #0x2
+	add	r2, r2, r4
 	ldrh	r0, [r2]
 	lsl	r0, r0, #0x4
 	mov	r1, #0x80
@@ -3233,28 +3233,27 @@ UpdateMonPic:
 	.word	gSprites
 	.word	SpriteCB_MonPic
 	.word	0x7b18
+	.word	0x7b14
 	.word	0x6010000
-	.word	0x7b12
 .L408:
-	lsl	r1, r6, #0xd
-	mov	r0, #0xc1
-	lsl	r0, r0, #0x2
-	add	r1, r1, r0
-	add	r1, r3, r1
-	ldr	r2, .L421
-	add	r0, r3, r2
-	ldr	r2, [r0]
-	ldr	r0, .L421+0x4
-	str	r1, [r0]
-	str	r2, [r0, #0x4]
-	ldr	r1, .L421+0x8
-	str	r1, [r0, #0x8]
-	ldr	r0, [r0, #0x8]
+	lsl	r0, r6, #0xd
+	mov	r1, #0xc1
+	lsl	r1, r1, #0x2
+	add	r0, r0, r1
+	ldr	r4, .L421
+	add	r1, r2, r4
+	add	r0, r2, r0
+	ldr	r1, [r1]
+	ldr	r2, .L421+0x4
+	ldr	r4, .L421+0x8
+	stmia r4!, {r0, r1, r2}
+	.code	16
 	lsl	r0, r6, #0x7
 	add	r0, r0, #0x4
-	add	r0, r3, r0
+	ldr	r1, [r3]
+	add	r0, r1, r0
 	ldr	r2, .L421+0xc
-	add	r1, r3, r2
+	add	r1, r1, r2
 	ldrh	r1, [r1]
 	mov	r2, #0x20
 	bl	LoadPalette
@@ -3269,8 +3268,8 @@ UpdateMonPic:
 	.align	2, 0
 .L421:
 	.word	0x7b18
-	.word	0x40000d4
 	.word	-0x7ffffc00
+	.word	0x40000d4
 	.word	0x7b12
 .Lfe36:
 	.size	 UpdateMonPic,.Lfe36-UpdateMonPic
@@ -3520,9 +3519,9 @@ LoadUsePokeblockMenuGfx:
 	add	r1, r0, r2
 	ldrb	r0, [r1]
 	cmp	r0, #0xb
-	bls	.LCB3821
+	bls	.LCB3822
 	b	.L462	@long jump
-.LCB3821:
+.LCB3822:
 	lsl	r0, r0, #0x2
 	ldr	r1, .L466+0x8
 	add	r0, r0, r1

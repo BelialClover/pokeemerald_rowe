@@ -3675,8 +3675,8 @@ struct SoundInfo
     u32 plynote;
     u32 ExtVolPit;
     u8 gap2[16];
-    struct SoundChannel chans[12];
-    s8 pcmBuffer[1584 * 2];
+    struct SoundChannel chans[15];
+    s8 pcmBuffer[0x620 * 2];
 };
 
 struct SongHeader
@@ -14669,13 +14669,13 @@ static void Task_IntroLoadPart1Graphics(u8 taskId)
     SetGpuReg(0x12, 0x28);
     LZ77UnCompVram(gIntro1BGLeavesGfx, (void *)0x6000000);
     LZ77UnCompVram(gIntro1BG0_Tilemap, (void *)((0x6000000 + (0x4000 * (2)))));
-    { vu16 *_dest = (vu16 *)((0x6000000 + (0x800 * (17)))); u32 _size = 0x800; { vu16 tmp = (vu16)(0); { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); dmaRegs[0] = (vu32)(&tmp); dmaRegs[1] = (vu32)(_dest); dmaRegs[2] = (vu32)((0x8000 | 0x0000 | 0x0000 | 0x0100 | 0x0000) << 16 | ((_size)/(16/8))); dmaRegs[2]; }; }; };
+    { vu16 *_dest = (vu16 *)((0x6000000 + (0x800 * (17)))); u32 _size = 0x800; { vu16 tmp = (vu16)(0); { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); u32 eval_src = (u32)(&tmp); u32 eval_dst = (u32)(_dest); u32 eval_ctl = (u32)((0x8000 | 0x0000 | 0x0000 | 0x0100 | 0x0000) << 16 | ((_size)/(16/8))); register u32 r_src asm("r0") = eval_src; register u32 r_dst asm("r1") = eval_dst; register u32 r_ctl asm("r2") = eval_ctl; asm volatile("stmia %0!, {%1, %2, %3}" : "+l" (dmaRegs) : "l" (r_src), "l" (r_dst), "l" (r_ctl) : "memory"); }; }; };
     LZ77UnCompVram(gIntro1BG1_Tilemap, (void *)((0x6000000 + (0x800 * (18)))));
-    { vu16 *_dest = (vu16 *)((0x6000000 + (0x800 * (19)))); u32 _size = 0x800; { vu16 tmp = (vu16)(0); { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); dmaRegs[0] = (vu32)(&tmp); dmaRegs[1] = (vu32)(_dest); dmaRegs[2] = (vu32)((0x8000 | 0x0000 | 0x0000 | 0x0100 | 0x0000) << 16 | ((_size)/(16/8))); dmaRegs[2]; }; }; };
+    { vu16 *_dest = (vu16 *)((0x6000000 + (0x800 * (19)))); u32 _size = 0x800; { vu16 tmp = (vu16)(0); { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); u32 eval_src = (u32)(&tmp); u32 eval_dst = (u32)(_dest); u32 eval_ctl = (u32)((0x8000 | 0x0000 | 0x0000 | 0x0100 | 0x0000) << 16 | ((_size)/(16/8))); register u32 r_src asm("r0") = eval_src; register u32 r_dst asm("r1") = eval_dst; register u32 r_ctl asm("r2") = eval_ctl; asm volatile("stmia %0!, {%1, %2, %3}" : "+l" (dmaRegs) : "l" (r_src), "l" (r_dst), "l" (r_ctl) : "memory"); }; }; };
     LZ77UnCompVram(gIntro1BG2_Tilemap, (void *)((0x6000000 + (0x800 * (20)))));
-    { vu16 *_dest = (vu16 *)((0x6000000 + (0x800 * (21)))); u32 _size = 0x800; { vu16 tmp = (vu16)(0); { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); dmaRegs[0] = (vu32)(&tmp); dmaRegs[1] = (vu32)(_dest); dmaRegs[2] = (vu32)((0x8000 | 0x0000 | 0x0000 | 0x0100 | 0x0000) << 16 | ((_size)/(16/8))); dmaRegs[2]; }; }; };
+    { vu16 *_dest = (vu16 *)((0x6000000 + (0x800 * (21)))); u32 _size = 0x800; { vu16 tmp = (vu16)(0); { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); u32 eval_src = (u32)(&tmp); u32 eval_dst = (u32)(_dest); u32 eval_ctl = (u32)((0x8000 | 0x0000 | 0x0000 | 0x0100 | 0x0000) << 16 | ((_size)/(16/8))); register u32 r_src asm("r0") = eval_src; register u32 r_dst asm("r1") = eval_dst; register u32 r_ctl asm("r2") = eval_ctl; asm volatile("stmia %0!, {%1, %2, %3}" : "+l" (dmaRegs) : "l" (r_src), "l" (r_dst), "l" (r_ctl) : "memory"); }; }; };
     LZ77UnCompVram(gIntro1BG3_Tilemap, (void *)((0x6000000 + (0x800 * (22)))));
-    { vu16 *_dest = (vu16 *)((0x6000000 + (0x800 * (23)))); u32 _size = 0x800; { vu16 tmp = (vu16)(0); { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); dmaRegs[0] = (vu32)(&tmp); dmaRegs[1] = (vu32)(_dest); dmaRegs[2] = (vu32)((0x8000 | 0x0000 | 0x0000 | 0x0100 | 0x0000) << 16 | ((_size)/(16/8))); dmaRegs[2]; }; }; };
+    { vu16 *_dest = (vu16 *)((0x6000000 + (0x800 * (23)))); u32 _size = 0x800; { vu16 tmp = (vu16)(0); { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); u32 eval_src = (u32)(&tmp); u32 eval_dst = (u32)(_dest); u32 eval_ctl = (u32)((0x8000 | 0x0000 | 0x0000 | 0x0100 | 0x0000) << 16 | ((_size)/(16/8))); register u32 r_src asm("r0") = eval_src; register u32 r_dst asm("r1") = eval_dst; register u32 r_ctl asm("r2") = eval_ctl; asm volatile("stmia %0!, {%1, %2, %3}" : "+l" (dmaRegs) : "l" (r_src), "l" (r_dst), "l" (r_ctl) : "memory"); }; }; };
     LoadPalette(gIntro1BGPals, 0, sizeof(gIntro1BGPals));
     SetGpuReg(0xe, (3) | ((0) << 2) | ((22) << 8) | 0x0000 | 0x8000);
     SetGpuReg(0xc, (2) | ((0) << 2) | ((20) << 8) | 0x0000 | 0x8000);
@@ -14705,7 +14705,7 @@ static void Task_IntroFadeIn(u8 taskId)
     SetGpuReg(0x0, 0x0000 | 0x0040 | 0x0F00 | 0x1000);
     gTasks[taskId].func = Task_IntroWaterDrops;
     gIntroFrameCounter = 0;
-    m4aSongNumStart(414);
+    m4aSongNumStart(385);
     ResetSerial();
 }
 
@@ -15139,7 +15139,7 @@ static void Task_IntroLoadPart3Graphics(u8 taskId)
     SetGpuReg(0x0, 0x0001 | 0x0040 | 0x0400 | 0x1000);
     gTasks[taskId].func = Task_IntroSpinAndZoomPokeball;
     gIntroFrameCounter = 0;
-    m4aSongNumStart(442);
+    m4aSongNumStart(413);
 }
 
 static void Task_IntroSpinAndZoomPokeball(u8 taskId)

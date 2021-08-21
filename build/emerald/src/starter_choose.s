@@ -1770,36 +1770,35 @@ CB2_ChooseStarter:
 	add	r1, sp, #0x4
 	mov	r0, #0x0
 	strh	r0, [r1]
+	mov	r3, #0xc0
+	lsl	r3, r3, #0x13
+	add	r0, r1, #0
+	add	r1, r3, #0
 	ldr	r2, .L8
-	str	r1, [r2]
-	mov	r1, #0xc0
-	lsl	r1, r1, #0x13
-	str	r1, [r2, #0x4]
-	ldr	r0, .L8+0x4
-	str	r0, [r2, #0x8]
-	ldr	r0, [r2, #0x8]
+	ldr	r4, .L8+0x4
+	stmia r4!, {r0, r1, r2}
+	.code	16
 	mov	r0, #0x0
 	mov	r9, r0
 	str	r0, [sp, #0x8]
 	add	r0, sp, #0x8
-	str	r0, [r2]
-	mov	r0, #0xe0
-	lsl	r0, r0, #0x13
-	str	r0, [r2, #0x4]
-	ldr	r0, .L8+0x8
-	str	r0, [r2, #0x8]
-	ldr	r0, [r2, #0x8]
+	mov	r1, #0xe0
+	lsl	r1, r1, #0x13
+	ldr	r2, .L8+0x8
+	ldr	r4, .L8+0x4
+	stmia r4!, {r0, r1, r2}
+	.code	16
 	add	r0, sp, #0x4
-	mov	r3, r9
-	strh	r3, [r0]
-	str	r0, [r2]
-	mov	r0, #0xa0
-	lsl	r0, r0, #0x13
-	str	r0, [r2, #0x4]
-	ldr	r0, .L8+0xc
-	str	r0, [r2, #0x8]
-	ldr	r0, [r2, #0x8]
+	mov	r1, r9
+	strh	r1, [r0]
+	mov	r1, #0xa0
+	lsl	r1, r1, #0x13
+	ldr	r2, .L8+0xc
+	ldr	r4, .L8+0x4
+	stmia r4!, {r0, r1, r2}
+	.code	16
 	ldr	r0, .L8+0x10
+	add	r1, r3, #0
 	bl	LZ77UnCompVram
 	ldr	r0, .L8+0x14
 	ldr	r1, .L8+0x18
@@ -1898,8 +1897,8 @@ CB2_ChooseStarter:
 	add	r0, r0, r4
 	lsl	r0, r0, #0x3
 	add	r0, r0, r1
-	mov	r3, #0x1
-	mov	sl, r3
+	mov	r1, #0x1
+	mov	sl, r1
 	mov	r1, sl
 	strh	r1, [r0, #0x8]
 	ldr	r0, .L8+0x4c
@@ -1909,8 +1908,8 @@ CB2_ChooseStarter:
 	bl	CreateSprite
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
-	ldr	r3, .L8+0x50
-	mov	r8, r3
+	ldr	r1, .L8+0x50
+	mov	r8, r1
 	lsl	r1, r0, #0x4
 	add	r1, r1, r0
 	lsl	r1, r1, #0x2
@@ -1944,8 +1943,8 @@ CB2_ChooseStarter:
 	lsl	r1, r1, #0x2
 	add	r1, r1, r8
 	strh	r4, [r1, #0x2e]
-	mov	r3, sl
-	strh	r3, [r1, #0x30]
+	mov	r0, sl
+	strh	r0, [r1, #0x30]
 	ldrb	r1, [r5, #0x4]
 	ldrb	r2, [r5, #0x5]
 	add	r0, r6, #0
@@ -1974,8 +1973,8 @@ CB2_ChooseStarter:
 .L9:
 	.align	2, 0
 .L8:
-	.word	0x40000d4
 	.word	-0x7eff4000
+	.word	0x40000d4
 	.word	-0x7affff00
 	.word	-0x7efffe00
 	.word	gBirchHelpGfx

@@ -6784,13 +6784,10 @@ CB2_InitCopyrightScreenAfterTitleScreen:
 	.thumb_func
 Task_IntroLoadPart1Graphics:
 	push	{r4, r5, r6, lr}
-	mov	r6, r8
-	push	{r6}
 	add	sp, sp, #-0xc
-	mov	r8, r0
-	lsl	r0, r0, #0x18
-	lsr	r0, r0, #0x18
-	mov	r8, r0
+	add	r6, r0, #0
+	lsl	r6, r6, #0x18
+	lsr	r6, r6, #0x18
 	mov	r0, #0x0
 	bl	SetVBlankCallback
 	ldr	r4, .L54
@@ -6818,46 +6815,45 @@ Task_IntroLoadPart1Graphics:
 	ldr	r0, .L54+0x8
 	ldr	r1, .L54+0xc
 	bl	LZ77UnCompVram
-	ldr	r1, .L54+0x10
 	add	r0, sp, #0x8
-	mov	r6, #0x0
-	strh	r6, [r0]
-	ldr	r4, .L54+0x14
-	str	r0, [r4]
-	str	r1, [r4, #0x4]
-	ldr	r5, .L54+0x18
-	str	r5, [r4, #0x8]
-	ldr	r0, [r4, #0x8]
+	mov	r4, #0x0
+	strh	r4, [r0]
+	ldr	r5, .L54+0x10
+	ldr	r1, .L54+0x14
+	add	r2, r5, #0
+	ldr	r3, .L54+0x18
+	stmia r3!, {r0, r1, r2}
+	.code	16
 	ldr	r0, .L54+0x1c
 	ldr	r1, .L54+0x20
 	bl	LZ77UnCompVram
-	ldr	r1, .L54+0x24
 	add	r0, sp, #0x8
-	strh	r6, [r0]
-	str	r0, [r4]
-	str	r1, [r4, #0x4]
-	str	r5, [r4, #0x8]
-	ldr	r0, [r4, #0x8]
+	strh	r4, [r0]
+	ldr	r1, .L54+0x24
+	add	r2, r5, #0
+	ldr	r3, .L54+0x18
+	stmia r3!, {r0, r1, r2}
+	.code	16
 	ldr	r0, .L54+0x28
 	ldr	r1, .L54+0x2c
 	bl	LZ77UnCompVram
-	ldr	r1, .L54+0x30
 	add	r0, sp, #0x8
-	strh	r6, [r0]
-	str	r0, [r4]
-	str	r1, [r4, #0x4]
-	str	r5, [r4, #0x8]
-	ldr	r0, [r4, #0x8]
+	strh	r4, [r0]
+	ldr	r1, .L54+0x30
+	add	r2, r5, #0
+	ldr	r3, .L54+0x18
+	stmia r3!, {r0, r1, r2}
+	.code	16
 	ldr	r0, .L54+0x34
 	ldr	r1, .L54+0x38
 	bl	LZ77UnCompVram
-	ldr	r1, .L54+0x3c
 	add	r0, sp, #0x8
-	strh	r6, [r0]
-	str	r0, [r4]
-	str	r1, [r4, #0x4]
-	str	r5, [r4, #0x8]
-	ldr	r0, [r4, #0x8]
+	strh	r4, [r0]
+	ldr	r1, .L54+0x3c
+	add	r2, r5, #0
+	ldr	r3, .L54+0x18
+	stmia r3!, {r0, r1, r2}
+	.code	16
 	ldr	r0, .L54+0x40
 	mov	r5, #0x80
 	lsl	r5, r5, #0x2
@@ -6888,45 +6884,45 @@ Task_IntroLoadPart1Graphics:
 	ldr	r0, .L54+0x60
 	bl	LoadSpritePalettes
 	ldr	r4, .L54+0x64
-	mov	r3, #0xf0
-	lsl	r3, r3, #0x1
-	add	r1, r4, r3
+	mov	r0, #0xf0
+	lsl	r0, r0, #0x1
+	add	r1, r4, r0
 	add	r0, r4, #0
 	mov	r2, #0x10
 	bl	CpuSet
-	mov	r0, #0xe1
-	lsl	r0, r0, #0x1
-	add	r1, r4, r0
+	mov	r3, #0xe1
+	lsl	r3, r3, #0x1
+	add	r1, r4, r3
 	add	r0, r4, #0
 	mov	r2, #0xf
 	bl	CpuSet
-	mov	r3, #0xd2
-	lsl	r3, r3, #0x1
-	add	r1, r4, r3
+	mov	r0, #0xd2
+	lsl	r0, r0, #0x1
+	add	r1, r4, r0
 	add	r0, r4, #0
 	mov	r2, #0xe
 	bl	CpuSet
-	mov	r0, #0xc3
-	lsl	r0, r0, #0x1
-	add	r1, r4, r0
+	mov	r3, #0xc3
+	lsl	r3, r3, #0x1
+	add	r1, r4, r3
 	add	r0, r4, #0
 	mov	r2, #0xd
 	bl	CpuSet
-	mov	r3, #0xb4
-	lsl	r3, r3, #0x1
-	add	r1, r4, r3
-	add	r0, r4, #0
-	mov	r2, #0xc
-	bl	CpuSet
-	mov	r0, #0xa5
+	mov	r0, #0xb4
 	lsl	r0, r0, #0x1
 	add	r1, r4, r0
 	add	r0, r4, #0
-	mov	r2, #0xb
+	mov	r2, #0xc
 	bl	CpuSet
-	mov	r3, #0x96
+	mov	r3, #0xa5
 	lsl	r3, r3, #0x1
 	add	r1, r4, r3
+	add	r0, r4, #0
+	mov	r2, #0xb
+	bl	CpuSet
+	mov	r0, #0x96
+	lsl	r0, r0, #0x1
+	add	r1, r4, r0
 	add	r0, r4, #0
 	mov	r2, #0xa
 	bl	CpuSet
@@ -6945,9 +6941,8 @@ Task_IntroLoadPart1Graphics:
 	mov	r3, #0x1
 	bl	CreateWaterDrop
 	ldr	r2, .L54+0x68
-	mov	r3, r8
-	lsl	r1, r3, #0x2
-	add	r1, r1, r8
+	lsl	r1, r6, #0x2
+	add	r1, r1, r6
 	lsl	r1, r1, #0x3
 	add	r1, r1, r2
 	lsl	r0, r0, #0x18
@@ -6956,8 +6951,6 @@ Task_IntroLoadPart1Graphics:
 	ldr	r0, .L54+0x6c
 	str	r0, [r1]
 	add	sp, sp, #0xc
-	pop	{r3}
-	mov	r8, r3
 	pop	{r4, r5, r6}
 	pop	{r0}
 	bx	r0
@@ -6968,9 +6961,9 @@ Task_IntroLoadPart1Graphics:
 	.word	gIntro1BGLeavesGfx
 	.word	gIntro1BG0_Tilemap
 	.word	0x6008000
+	.word	-0x7efffc00
 	.word	0x6008800
 	.word	0x40000d4
-	.word	-0x7efffc00
 	.word	gIntro1BG1_Tilemap
 	.word	0x6009000
 	.word	0x6009800
@@ -7026,8 +7019,7 @@ Task_IntroFadeIn:
 	str	r1, [r0]
 	ldr	r0, .L57+0xc
 	str	r5, [r0]
-	mov	r0, #0xcf
-	lsl	r0, r0, #0x1
+	ldr	r0, .L57+0x10
 	bl	m4aSongNumStart
 	bl	ResetSerial
 	add	sp, sp, #0x4
@@ -7041,6 +7033,7 @@ Task_IntroFadeIn:
 	.word	gTasks
 	.word	Task_IntroWaterDrops
 	.word	gIntroFrameCounter
+	.word	0x181
 .Lfe10:
 	.size	 Task_IntroFadeIn,.Lfe10-Task_IntroFadeIn
 	.align	2, 0
@@ -7897,9 +7890,9 @@ sub_816D81C:
 	mov	r1, #0x2e
 	ldrsh	r0, [r4, r1]
 	cmp	r0, #0x8
-	bls	.LCB1815
+	bls	.LCB1818
 	b	.L135	@long jump
-.LCB1815:
+.LCB1818:
 	lsl	r0, r0, #0x2
 	ldr	r1, .L157
 	add	r0, r0, r1
@@ -7928,9 +7921,9 @@ sub_816D81C:
 	lsl	r0, r0, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, #0xb3
-	bgt	.LCB1840
+	bgt	.LCB1843
 	b	.L135	@long jump
-.LCB1840:
+.LCB1843:
 	ldrh	r0, [r4, #0x2e]
 	add	r0, r0, #0x1
 	strh	r0, [r4, #0x2e]
@@ -7941,9 +7934,9 @@ sub_816D81C:
 	lsl	r0, r0, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, #0x3c
-	beq	.LCB1852
+	beq	.LCB1855
 	b	.L135	@long jump
-.LCB1852:
+.LCB1855:
 	mov	r0, #0x8
 	strh	r0, [r4, #0x2e]
 	mov	r0, #0x14
@@ -7961,9 +7954,9 @@ sub_816D81C:
 	lsl	r1, r1, #0x10
 	asr	r1, r1, #0x10
 	cmp	r1, #0x7c
-	beq	.LCB1873
+	beq	.LCB1876
 	b	.L135	@long jump
-.LCB1873:
+.LCB1876:
 	mov	r0, #0x8
 	strh	r0, [r4, #0x2e]
 	mov	r0, #0x14
@@ -8115,9 +8108,9 @@ sub_816D9C0:
 	mov	r1, #0x2e
 	ldrsh	r0, [r4, r1]
 	cmp	r0, #0x5
-	bls	.LCB2055
+	bls	.LCB2058
 	b	.L160	@long jump
-.LCB2055:
+.LCB2058:
 	lsl	r0, r0, #0x2
 	ldr	r1, .L186
 	add	r0, r0, r1
@@ -8445,8 +8438,7 @@ Task_IntroLoadPart3Graphics:
 	str	r0, [r4]
 	ldr	r0, .L217+0x24
 	str	r5, [r0]
-	mov	r0, #0xdd
-	lsl	r0, r0, #0x1
+	ldr	r0, .L217+0x28
 	bl	m4aSongNumStart
 	add	sp, sp, #0x4
 	pop	{r4, r5}
@@ -8465,6 +8457,7 @@ Task_IntroLoadPart3Graphics:
 	.word	0x1441
 	.word	Task_IntroSpinAndZoomPokeball
 	.word	gIntroFrameCounter
+	.word	0x19d
 .Lfe23:
 	.size	 Task_IntroLoadPart3Graphics,.Lfe23-Task_IntroLoadPart3Graphics
 	.align	2, 0
@@ -8875,9 +8868,9 @@ Task_IntroGroudonScene:
 	mov	r1, #0x0
 	ldrsh	r0, [r4, r1]
 	cmp	r0, #0x9
-	bls	.LCB2951
+	bls	.LCB2954
 	b	.L253	@long jump
-.LCB2951:
+.LCB2954:
 	lsl	r0, r0, #0x2
 	ldr	r1, .L279+0x4
 	add	r0, r0, r1
@@ -8908,9 +8901,9 @@ Task_IntroGroudonScene:
 	lsl	r0, r0, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, #0xa0
-	beq	.LCB2978
+	beq	.LCB2981
 	b	.L253	@long jump
-.LCB2978:
+.LCB2981:
 	ldrh	r0, [r4]
 	add	r0, r0, #0x1
 	strh	r0, [r4]
@@ -8929,9 +8922,9 @@ Task_IntroGroudonScene:
 	strh	r0, [r4, #0xc]
 	lsl	r0, r0, #0x10
 	cmp	r0, #0
-	beq	.LCB3001
+	beq	.LCB3004
 	b	.L253	@long jump
-.LCB3001:
+.LCB3004:
 	mov	r0, #0x2
 	strh	r0, [r4, #0xc]
 	mov	r1, #0xe
@@ -8948,9 +8941,9 @@ Task_IntroGroudonScene:
 	mov	r1, #0xf6
 	lsl	r1, r1, #0x11
 	cmp	r0, r1
-	beq	.LCB3024
+	beq	.LCB3027
 	b	.L253	@long jump
-.LCB3024:
+.LCB3027:
 	b	.L273
 .L282:
 	.align	2, 0
@@ -8963,9 +8956,9 @@ Task_IntroGroudonScene:
 	strh	r0, [r4, #0xc]
 	lsl	r0, r0, #0x10
 	cmp	r0, #0
-	beq	.LCB3042
+	beq	.LCB3045
 	b	.L253	@long jump
-.LCB3042:
+.LCB3045:
 	mov	r0, #0x2
 	strh	r0, [r4, #0xc]
 	b	.L273
@@ -8975,9 +8968,9 @@ Task_IntroGroudonScene:
 	strh	r0, [r4, #0xc]
 	lsl	r0, r0, #0x10
 	cmp	r0, #0
-	beq	.LCB3056
+	beq	.LCB3059
 	b	.L253	@long jump
-.LCB3056:
+.LCB3059:
 	mov	r0, #0x2
 	strh	r0, [r4, #0xc]
 	mov	r2, #0xe
@@ -8994,9 +8987,9 @@ Task_IntroGroudonScene:
 	mov	r1, #0xf0
 	lsl	r1, r1, #0x11
 	cmp	r0, r1
-	beq	.LCB3079
+	beq	.LCB3082
 	b	.L253	@long jump
-.LCB3079:
+.LCB3082:
 	mov	r0, #0x8
 	strh	r0, [r4, #0xc]
 	b	.L273
@@ -9408,9 +9401,9 @@ Task_IntroKyogreScene:
 	mov	r1, #0x0
 	ldrsh	r0, [r5, r1]
 	cmp	r0, #0xd
-	bls	.LCB3576
+	bls	.LCB3579
 	b	.L319	@long jump
-.LCB3576:
+.LCB3579:
 	lsl	r0, r0, #0x2
 	ldr	r1, .L355+0x4
 	add	r0, r0, r1
@@ -9444,9 +9437,9 @@ Task_IntroKyogreScene:
 	strh	r0, [r5, #0xc]
 	lsl	r0, r0, #0x10
 	cmp	r0, #0
-	beq	.LCB3603
+	beq	.LCB3606
 	b	.L319	@long jump
-.LCB3603:
+.LCB3606:
 	ldrh	r0, [r5]
 	add	r0, r0, #0x1
 	strh	r0, [r5]
@@ -9479,9 +9472,9 @@ Task_IntroKyogreScene:
 	mov	r2, #0xc
 	ldrsh	r0, [r5, r2]
 	cmp	r0, #0x40
-	beq	.LCB3640
+	beq	.LCB3643
 	b	.L319	@long jump
-.LCB3640:
+.LCB3643:
 	mov	r0, #0x19
 	strh	r0, [r5, #0xc]
 	mov	r0, #0x1
@@ -9502,9 +9495,9 @@ Task_IntroKyogreScene:
 	strh	r0, [r5, #0xc]
 	lsl	r0, r0, #0x10
 	cmp	r0, #0
-	beq	.LCB3667
+	beq	.LCB3670
 	b	.L319	@long jump
-.LCB3667:
+.LCB3670:
 	ldr	r0, .L359
 	lsl	r1, r6, #0x2
 	add	r1, r1, r6
@@ -9541,9 +9534,9 @@ Task_IntroKyogreScene:
 	strh	r0, [r5, #0xc]
 	lsl	r0, r0, #0x10
 	cmp	r0, #0
-	beq	.LCB3712
+	beq	.LCB3715
 	b	.L319	@long jump
-.LCB3712:
+.LCB3715:
 	ldr	r0, .L361
 	lsl	r1, r6, #0x2
 	add	r1, r1, r6
@@ -9574,9 +9567,9 @@ Task_IntroKyogreScene:
 	strh	r0, [r5, #0xc]
 	lsl	r0, r0, #0x10
 	cmp	r0, #0
-	beq	.LCB3751
+	beq	.LCB3754
 	b	.L319	@long jump
-.LCB3751:
+.LCB3754:
 	ldr	r1, .L363
 	lsl	r0, r6, #0x2
 	add	r0, r0, r6
@@ -9598,9 +9591,9 @@ Task_IntroKyogreScene:
 	strh	r0, [r5, #0xc]
 	lsl	r0, r0, #0x10
 	cmp	r0, #0
-	beq	.LCB3779
+	beq	.LCB3782
 	b	.L319	@long jump
-.LCB3779:
+.LCB3782:
 	ldr	r0, .L365
 	lsl	r1, r6, #0x2
 	add	r1, r1, r6
@@ -9645,9 +9638,9 @@ Task_IntroKyogreScene:
 	strh	r0, [r5, #0xc]
 	lsl	r0, r0, #0x10
 	cmp	r0, #0
-	beq	.LCB3834
+	beq	.LCB3837
 	b	.L319	@long jump
-.LCB3834:
+.LCB3837:
 	mov	r0, #0x4
 	strh	r0, [r5, #0xc]
 	mov	r1, #0xf5
@@ -9661,9 +9654,9 @@ Task_IntroKyogreScene:
 	strh	r0, [r5, #0xc]
 	lsl	r0, r0, #0x10
 	cmp	r0, #0
-	beq	.LCB3852
+	beq	.LCB3855
 	b	.L319	@long jump
-.LCB3852:
+.LCB3855:
 	mov	r0, #0x4
 	strh	r0, [r5, #0xc]
 	mov	r2, #0xe
@@ -9680,9 +9673,9 @@ Task_IntroKyogreScene:
 	mov	r1, #0xf0
 	lsl	r1, r1, #0x11
 	cmp	r0, r1
-	beq	.LCB3875
+	beq	.LCB3878
 	b	.L319	@long jump
-.LCB3875:
+.LCB3878:
 	b	.L354
 .L368:
 	.align	2, 0
@@ -9695,9 +9688,9 @@ Task_IntroKyogreScene:
 	strh	r0, [r5, #0xc]
 	lsl	r0, r0, #0x10
 	cmp	r0, #0
-	beq	.LCB3893
+	beq	.LCB3896
 	b	.L319	@long jump
-.LCB3893:
+.LCB3896:
 	mov	r0, #0x4
 	strh	r0, [r5, #0xc]
 	mov	r1, #0xf1
@@ -10915,9 +10908,9 @@ Task_IntroRayquazaGlowScene_1:
 	mov	r1, #0x0
 	ldrsh	r0, [r5, r1]
 	cmp	r0, #0x5
-	bls	.LCB5336
+	bls	.LCB5339
 	b	.L504	@long jump
-.LCB5336:
+.LCB5339:
 	lsl	r0, r0, #0x2
 	ldr	r1, .L529+0x4
 	add	r0, r0, r1
@@ -10958,9 +10951,9 @@ Task_IntroRayquazaGlowScene_1:
 	mov	r1, #0x2
 	ldrsh	r0, [r5, r1]
 	cmp	r0, #0x6
-	beq	.LCB5381
+	beq	.LCB5384
 	b	.L504	@long jump
-.LCB5381:
+.LCB5384:
 	ldrh	r0, [r5]
 	add	r0, r0, #0x1
 	strh	r0, [r5]
@@ -10998,9 +10991,9 @@ Task_IntroRayquazaGlowScene_1:
 	mov	r2, #0x2
 	ldrsh	r0, [r5, r2]
 	cmp	r0, #0x6
-	beq	.LCB5429
+	beq	.LCB5432
 	b	.L504	@long jump
-.LCB5429:
+.LCB5432:
 	ldrh	r0, [r5]
 	add	r0, r0, #0x1
 	strh	r0, [r5]
@@ -11039,9 +11032,9 @@ Task_IntroRayquazaGlowScene_1:
 	mov	r2, #0x2
 	ldrsh	r0, [r5, r2]
 	cmp	r0, #0x6
-	beq	.LCB5479
+	beq	.LCB5482
 	b	.L504	@long jump
-.LCB5479:
+.LCB5482:
 	ldr	r0, .L535+0x8
 	mov	r1, #0x78
 	mov	r2, #0x58
@@ -12632,9 +12625,9 @@ sub_816FB38:
 	mov	r1, #0x2e
 	ldrsh	r0, [r6, r1]
 	cmp	r0, #0x5
-	bls	.LCB7363
+	bls	.LCB7366
 	b	.L704	@long jump
-.LCB7363:
+.LCB7366:
 	lsl	r0, r0, #0x2
 	ldr	r1, .L729
 	add	r0, r0, r1
@@ -12678,9 +12671,9 @@ sub_816FB38:
 	ldr	r0, .L731
 	ldr	r0, [r0]
 	cmp	r0, #0x90
-	beq	.LCB7411
+	beq	.LCB7414
 	b	.L704	@long jump
-.LCB7411:
+.LCB7414:
 	ldrh	r0, [r6, #0x2e]
 	add	r0, r0, #0x1
 	strh	r0, [r6, #0x2e]

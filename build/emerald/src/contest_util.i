@@ -20737,7 +20737,7 @@ static void CB2_StartShowContestResults(void)
     if (gLinkContestFlags & (1 << 1))
         gPaletteFade.bufferTransferDisabled = 1;
     else
-        PlayBGM(446);
+        PlayBGM(417);
 
     SetVBlankCallback(VBlankCB_ShowContestResults);
 }
@@ -20823,7 +20823,7 @@ static void Task_ShowContestResults(u8 taskId)
         case 3:
             if (IsLinkTaskFinished() == 1)
             {
-                PlayBGM(446);
+                PlayBGM(417);
                 gPaletteFade.bufferTransferDisabled = 0;
                 gTasks[taskId].data[0]++;
                 break;

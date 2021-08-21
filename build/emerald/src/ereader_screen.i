@@ -7148,7 +7148,7 @@ static void sub_81D5084(u8 taskId)
         if (sub_81D5064(&data->unk0, 120))
         {
             AddTextPrinterToWindow1(gJPText_NewTrainerHasComeToHoenn);
-            PlayFanfare(370);
+            PlayFanfare(341);
             data->unk8 = 19;
         }
         break;

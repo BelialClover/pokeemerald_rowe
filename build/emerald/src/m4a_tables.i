@@ -419,8 +419,8 @@ struct SoundInfo
     u32 plynote;
     u32 ExtVolPit;
     u8 gap2[16];
-    struct SoundChannel chans[12];
-    s8 pcmBuffer[1584 * 2];
+    struct SoundChannel chans[15];
+    s8 pcmBuffer[0x620 * 2];
 };
 
 struct SongHeader
@@ -909,7 +909,7 @@ const u8 gClockTable[] =
     0x5C,
     0x60,
 };
-# 258 "src/m4a_tables.c"
+# 260 "src/m4a_tables.c"
 const struct PokemonCrySong gPokemonCrySongTemplate =
 {
     1,

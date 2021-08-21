@@ -2664,10 +2664,12 @@ sub_80A03D8:
 	.thumb_func
 InitSaveWindowAfterLinkBattle:
 	push	{r4, r5, r6, r7, lr}
-	mov	r7, r8
-	push	{r7}
+	mov	r7, sl
+	mov	r6, r9
+	mov	r5, r8
+	push	{r5, r6, r7}
 	add	sp, sp, #-0x4
-	mov	r8, r0
+	mov	r9, r0
 	ldrb	r0, [r0]
 	cmp	r0, #0x4
 	bls	.LCB3170
@@ -2697,56 +2699,58 @@ InitSaveWindowAfterLinkBattle:
 	mov	r0, #0x0
 	bl	SetVBlankCallback
 	bl	ScanlineEffect_Stop
-	mov	r2, #0xa0
-	lsl	r2, r2, #0x13
 	mov	r1, sp
 	mov	r0, #0x0
 	strh	r0, [r1]
-	ldr	r1, .L453
-	mov	r0, sp
-	str	r0, [r1]
-	str	r2, [r1, #0x4]
-	ldr	r0, .L453+0x4
-	str	r0, [r1, #0x8]
-	ldr	r0, [r1, #0x8]
-	mov	r2, #0xc0
-	lsl	r2, r2, #0x13
-	mov	r3, #0xc0
-	lsl	r3, r3, #0x9
-	mov	r4, sp
-	mov	r6, #0x0
-	mov	r5, #0x80
-	lsl	r5, r5, #0x5
-	ldr	r7, .L453+0x8
 	mov	r0, #0x81
 	lsl	r0, r0, #0x18
 	mov	ip, r0
+	mov	r0, sp
+	mov	r1, #0xa0
+	lsl	r1, r1, #0x13
+	ldr	r2, .L453
+	ldr	r3, .L453+0x4
+	stmia r3!, {r0, r1, r2}
+	.code	16
+	mov	r7, #0xc0
+	lsl	r7, r7, #0x13
+	mov	r4, #0xc0
+	lsl	r4, r4, #0x9
+	mov	sl, sp
+	mov	r3, #0x0
+	ldr	r5, .L453+0x8
+	mov	r8, r5
+	mov	r6, #0x80
+	lsl	r6, r6, #0x5
 .L441:
-	strh	r6, [r4]
+	mov	r0, sl
+	strh	r3, [r0]
 	mov	r0, sp
-	str	r0, [r1]
-	str	r2, [r1, #0x4]
-	str	r7, [r1, #0x8]
-	ldr	r0, [r1, #0x8]
-	add	r2, r2, r5
-	sub	r3, r3, r5
-	cmp	r3, r5
+	add	r1, r7, #0
+	mov	r2, r8
+	ldr	r5, .L453+0x4
+	stmia r5!, {r0, r1, r2}
+	.code	16
+	add	r7, r7, r6
+	sub	r4, r4, r6
+	cmp	r4, r6
 	bhi	.L441	@cond_branch
-	strh	r6, [r4]
+	mov	r0, sl
+	strh	r3, [r0]
+	lsr	r2, r4, #0x1
 	mov	r0, sp
-	str	r0, [r1]
-	str	r2, [r1, #0x4]
-	lsr	r0, r3, #0x1
-	mov	r2, ip
-	orr	r0, r0, r2
-	str	r0, [r1, #0x8]
-	ldr	r0, [r1, #0x8]
+	add	r1, r7, #0
+	mov	r3, ip
+	orr	r2, r2, r3
+	ldr	r5, .L453+0x4
+	stmia r5!, {r0, r1, r2}
+	.code	16
 	b	.L437
 .L454:
 	.align	2, 0
 .L453:
-	.word	0x40000d4
 	.word	-0x7efffe00
+	.word	0x40000d4
 	.word	-0x7efff800
 .L444:
 	bl	ResetSpriteData
@@ -2796,15 +2800,17 @@ InitSaveWindowAfterLinkBattle:
 	mov	r0, #0x1
 	b	.L450
 .L437:
-	mov	r1, r8
+	mov	r1, r9
 	ldrb	r0, [r1]
 	add	r0, r0, #0x1
 	strb	r0, [r1]
 	mov	r0, #0x0
 .L450:
 	add	sp, sp, #0x4
-	pop	{r3}
+	pop	{r3, r4, r5}
 	mov	r8, r3
+	mov	r9, r4
+	mov	sl, r5
 	pop	{r4, r5, r6, r7}
 	pop	{r1}
 	bx	r1
@@ -2865,15 +2871,15 @@ Task_SaveAfterLinkBattle:
 	mov	r0, #0x80
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.LCB3415
+	beq	.LCB3419
 	b	.L465	@long jump
-.LCB3415:
+.LCB3419:
 	mov	r1, #0x0
 	ldrsh	r0, [r5, r1]
 	cmp	r0, #0x6
-	bls	.LCB3419
+	bls	.LCB3423
 	b	.L465	@long jump
-.LCB3419:
+.LCB3423:
 	lsl	r0, r0, #0x2
 	ldr	r1, .L483+0x8
 	add	r0, r0, r1

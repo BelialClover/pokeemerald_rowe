@@ -350,36 +350,36 @@ CB2_SaveFailedScreen:
 	add	r1, sp, #0x4
 	mov	r0, #0x0
 	strh	r0, [r1]
+	mov	r3, #0xc0
+	lsl	r3, r3, #0x13
+	add	r0, r1, #0
+	add	r1, r3, #0
 	ldr	r2, .L16+0x4
-	str	r1, [r2]
-	mov	r1, #0xc0
-	lsl	r1, r1, #0x13
-	str	r1, [r2, #0x4]
-	ldr	r0, .L16+0x8
-	str	r0, [r2, #0x8]
-	ldr	r0, [r2, #0x8]
-	mov	r3, #0x0
-	mov	r8, r3
-	str	r3, [sp, #0x8]
+	ldr	r4, .L16+0x8
+	stmia r4!, {r0, r1, r2}
+	.code	16
+	mov	r5, #0x0
+	mov	r8, r5
+	str	r5, [sp, #0x8]
 	add	r4, sp, #0x8
-	str	r4, [r2]
-	mov	r0, #0xe0
-	lsl	r0, r0, #0x13
-	str	r0, [r2, #0x4]
-	ldr	r0, .L16+0xc
-	str	r0, [r2, #0x8]
-	ldr	r0, [r2, #0x8]
+	add	r0, r4, #0
+	mov	r1, #0xe0
+	lsl	r1, r1, #0x13
+	ldr	r2, .L16+0xc
+	ldr	r5, .L16+0x8
+	stmia r5!, {r0, r1, r2}
+	.code	16
 	add	r0, sp, #0x4
-	mov	r3, r8
-	strh	r3, [r0]
-	str	r0, [r2]
-	mov	r0, #0xa0
-	lsl	r0, r0, #0x13
-	str	r0, [r2, #0x4]
-	ldr	r0, .L16+0x10
-	str	r0, [r2, #0x8]
-	ldr	r0, [r2, #0x8]
+	mov	r1, r8
+	strh	r1, [r0]
+	mov	r1, #0xa0
+	lsl	r1, r1, #0x13
+	ldr	r2, .L16+0x10
+	ldr	r5, .L16+0x8
+	stmia r5!, {r0, r1, r2}
+	.code	16
 	ldr	r0, .L16+0x14
+	add	r1, r3, #0
 	bl	LZ77UnCompVram
 	ldr	r0, .L16+0x18
 	ldr	r1, .L16+0x1c
@@ -430,9 +430,9 @@ CB2_SaveFailedScreen:
 	bl	AddWindowWithoutTileMap
 	strb	r0, [r4, #0x1]
 	ldrb	r0, [r4, #0x1]
-	mov	r3, #0xe8
-	lsl	r3, r3, #0x5
-	add	r5, r5, r3
+	mov	r1, #0xe8
+	lsl	r1, r1, #0x5
+	add	r5, r5, r1
 	mov	r1, #0x7
 	add	r2, r5, #0
 	bl	SetWindowAttribute
@@ -485,8 +485,8 @@ CB2_SaveFailedScreen:
 	bl	SaveFailedScreenTextPrint
 	mov	r0, #0x1
 	neg	r0, r0
-	mov	r1, r8
-	str	r1, [sp]
+	mov	r4, r8
+	str	r4, [sp]
 	mov	r1, #0x0
 	mov	r2, #0x10
 	mov	r3, #0x0
@@ -513,8 +513,8 @@ CB2_SaveFailedScreen:
 	.align	2, 0
 .L16:
 	.word	gMain
-	.word	0x40000d4
 	.word	-0x7eff4000
+	.word	0x40000d4
 	.word	-0x7affff00
 	.word	-0x7efffe00
 	.word	gBirchHelpGfx

@@ -2125,6 +2125,9 @@ LoadEonGraphics:
 	.thumb_func
 CB2_LoadSoarGraphics:
 	push	{r4, r5, r6, r7, lr}
+	mov	r7, r9
+	mov	r6, r8
+	push	{r6, r7}
 	add	sp, sp, #-0x8
 	ldr	r0, .L53
 	mov	r1, #0x87
@@ -2156,39 +2159,41 @@ CB2_LoadSoarGraphics:
 	mov	r0, #0x80
 	lsl	r0, r0, #0x13
 	strh	r1, [r0]
-	mov	r2, #0xc0
-	lsl	r2, r2, #0x13
+	mov	r5, #0xc0
+	lsl	r5, r5, #0x13
 	mov	r3, #0xc0
 	lsl	r3, r3, #0x9
-	ldr	r0, .L55
-	mov	ip, r0
-	mov	r5, #0x0
-	ldr	r1, .L55+0x4
+	ldr	r2, .L55
+	mov	r8, r2
+	mov	r6, #0x0
+	ldr	r7, .L55+0x4
+	mov	r9, r7
 	mov	r4, #0x80
 	lsl	r4, r4, #0x5
-	ldr	r6, .L55+0x8
-	mov	r7, #0x85
-	lsl	r7, r7, #0x18
-.L35:
-	str	r5, [sp, #0x4]
+	mov	r0, #0x85
+	lsl	r0, r0, #0x18
+	mov	ip, r0
+.L37:
+	str	r6, [sp, #0x4]
 	add	r0, sp, #0x4
-	str	r0, [r1]
-	str	r2, [r1, #0x4]
-	str	r6, [r1, #0x8]
-	ldr	r0, [r1, #0x8]
-	add	r2, r2, r4
+	add	r1, r5, #0
+	mov	r2, r9
+	ldr	r7, .L55+0x8
+	stmia r7!, {r0, r1, r2}
+	.code	16
+	add	r5, r5, r4
 	sub	r3, r3, r4
 	cmp	r3, r4
-	bhi	.L35	@cond_branch
-	str	r5, [sp, #0x4]
-	add	r0, sp, #0x4
-	str	r0, [r1]
-	str	r2, [r1, #0x4]
-	lsr	r0, r3, #0x2
-	orr	r0, r0, r7
-	str	r0, [r1, #0x8]
-	ldr	r0, [r1, #0x8]
-	mov	r0, ip
+	bhi	.L37	@cond_branch
+	str	r6, [sp, #0x4]
+	lsr	r2, r3, #0x2
+	add	r1, r5, #0
+	mov	r3, ip
+	orr	r2, r2, r3
+	ldr	r7, .L55+0x8
+	stmia r7!, {r0, r1, r2}
+	.code	16
+	mov	r0, r8
 	bl	SetVBlankCallback
 	ldr	r0, .L55+0xc
 	bl	SetHBlankCallback
@@ -2200,19 +2205,20 @@ CB2_LoadSoarGraphics:
 	ldr	r4, .L55+0x18
 	add	r1, r4, #0
 	bl	LZ77UnCompVram
-	ldr	r3, .L55+0x1c
-	mov	r2, #0x0
-	ldr	r1, .L55+0x4
-	ldr	r5, .L55+0x20
+	ldr	r5, .L55+0x1c
+	mov	r3, #0x0
+	ldr	r6, .L55+0x20
 .L43:
-	str	r4, [r1]
-	str	r3, [r1, #0x4]
-	str	r5, [r1, #0x8]
-	ldr	r0, [r1, #0x8]
+	add	r0, r4, #0
+	add	r1, r5, #0
+	add	r2, r6, #0
+	ldr	r7, .L55+0x8
+	stmia r7!, {r0, r1, r2}
+	.code	16
 	add	r4, r4, #0x40
-	add	r3, r3, #0x80
-	add	r2, r2, #0x1
-	cmp	r2, #0x3f
+	add	r5, r5, #0x80
+	add	r3, r3, #0x1
+	cmp	r3, #0x3f
 	bls	.L43	@cond_branch
 	ldr	r0, .L55+0x24
 	mov	r1, #0x70
@@ -2223,9 +2229,9 @@ CB2_LoadSoarGraphics:
 	ldr	r0, .L55+0x2c
 	strh	r0, [r1]
 	ldr	r1, .L55+0x30
-	mov	r2, #0x87
-	lsl	r2, r2, #0x3
-	add	r1, r1, r2
+	mov	r0, #0x87
+	lsl	r0, r0, #0x3
+	add	r1, r1, r0
 	ldrb	r0, [r1]
 	add	r0, r0, #0x1
 	strb	r0, [r1]
@@ -2234,8 +2240,8 @@ CB2_LoadSoarGraphics:
 	.align	2, 0
 .L55:
 	.word	SoarVBlankCallback
-	.word	0x40000d4
 	.word	-0x7afffc00
+	.word	0x40000d4
 	.word	SoarHBlankCallback
 	.word	sRegionMapBg_GfxLZ
 	.word	sRegionMapBg_TilemapLZ
@@ -2305,8 +2311,8 @@ CB2_LoadSoarGraphics:
 	add	r0, r2, #0
 	strh	r0, [r1]
 	add	r1, r1, #0xc
-	ldr	r2, .L59+0x10
-	add	r0, r2, #0
+	ldr	r3, .L59+0x10
+	add	r0, r3, #0
 	strh	r0, [r1]
 	mov	r0, #0x1
 	neg	r0, r0
@@ -2340,6 +2346,9 @@ CB2_LoadSoarGraphics:
 .L33:
 	bl	BuildOamBuffer
 	add	sp, sp, #0x8
+	pop	{r3, r4}
+	mov	r8, r3
+	mov	r9, r4
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0

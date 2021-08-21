@@ -28428,6 +28428,8 @@ CB2_QuitContestPainting:
 	.thumb_func
 ShowContestPainting:
 	push	{r4, r5, r6, r7, lr}
+	mov	r7, r8
+	push	{r7}
 	add	sp, sp, #-0x4
 	ldr	r1, .L26
 	mov	r2, #0x87
@@ -28468,77 +28470,80 @@ ShowContestPainting:
 	mov	r0, #0x1
 	bl	InitContestPaintingVars
 	bl	InitContestPaintingBg
-	ldr	r1, .L28+0x8
-	mov	r0, #0x87
-	lsl	r0, r0, #0x3
-	add	r1, r1, r0
 	b	.L24
 .L29:
 	.align	2, 0
 .L28:
 	.word	gContestPaintingWinner
 	.word	gCurContestWinner
-	.word	gMain
 .L13:
 	bl	ResetPaletteFade
-	mov	r2, #0xc0
-	lsl	r2, r2, #0x13
+	mov	r4, #0xc0
+	lsl	r4, r4, #0x13
 	mov	r3, #0xc0
 	lsl	r3, r3, #0x9
-	mov	r5, #0x0
-	ldr	r1, .L30
-	mov	r4, #0x80
-	lsl	r4, r4, #0x5
-	ldr	r6, .L30+0x4
-	mov	r7, #0x85
-	lsl	r7, r7, #0x18
-.L14:
-	str	r5, [sp]
+	mov	r6, #0x0
+	ldr	r7, .L30
+	mov	r8, r7
+	mov	r5, #0x80
+	lsl	r5, r5, #0x5
+	mov	r0, #0x85
+	lsl	r0, r0, #0x18
+	mov	ip, r0
+.L16:
+	str	r6, [sp]
 	mov	r0, sp
-	str	r0, [r1]
-	str	r2, [r1, #0x4]
-	str	r6, [r1, #0x8]
-	ldr	r0, [r1, #0x8]
-	add	r2, r2, r4
-	sub	r3, r3, r4
-	cmp	r3, r4
-	bhi	.L14	@cond_branch
-	str	r5, [sp]
+	add	r1, r4, #0
+	mov	r2, r8
+	ldr	r7, .L30+0x4
+	stmia r7!, {r0, r1, r2}
+	.code	16
+	add	r4, r4, r5
+	sub	r3, r3, r5
+	cmp	r3, r5
+	bhi	.L16	@cond_branch
+	str	r6, [sp]
+	lsr	r2, r3, #0x2
 	mov	r0, sp
-	str	r0, [r1]
-	str	r2, [r1, #0x4]
-	lsr	r0, r3, #0x2
-	orr	r0, r0, r7
-	str	r0, [r1, #0x8]
-	ldr	r0, [r1, #0x8]
+	add	r1, r4, #0
+	mov	r3, ip
+	orr	r2, r2, r3
+	ldr	r7, .L30+0x4
+	stmia r7!, {r0, r1, r2}
+	.code	16
 	bl	ResetSpriteData
+	ldr	r1, .L30+0x8
+	mov	r0, #0x87
+	lsl	r0, r0, #0x3
+	add	r1, r1, r0
 	b	.L25
 .L31:
 	.align	2, 0
 .L30:
-	.word	0x40000d4
 	.word	-0x7afffc00
+	.word	0x40000d4
+	.word	gMain
 .L19:
 	ldrh	r0, [r4, #0x20]
 	bl	SeedRng
 	bl	InitKeys
 	bl	InitContestPaintingWindow
-	mov	r0, #0x87
-	lsl	r0, r0, #0x3
-	add	r1, r4, r0
-	b	.L24
+	mov	r2, #0x87
+	lsl	r2, r2, #0x3
+	add	r1, r4, r2
+	b	.L25
 .L20:
 	ldr	r0, .L32
 	ldrb	r0, [r0]
 	ldr	r1, .L32+0x4
 	ldrb	r1, [r1]
 	bl	CreateContestPaintingPicture
-.L25:
-	ldr	r1, .L32+0x8
-	mov	r2, #0x87
-	lsl	r2, r2, #0x3
-	add	r1, r1, r2
 .L24:
+	ldr	r1, .L32+0x8
+	mov	r3, #0x87
+	lsl	r3, r3, #0x3
+	add	r1, r1, r3
+.L25:
 	ldrb	r0, [r1]
 	add	r0, r0, #0x1
 	strb	r0, [r1]
@@ -28559,17 +28564,15 @@ ShowContestPainting:
 	mov	r1, #0x0
 	mov	r2, #0x2
 	bl	LoadPalette
-	mov	r1, #0xa0
-	lsl	r1, r1, #0x13
 	mov	r4, #0x0
 	str	r4, [sp]
-	ldr	r0, .L34+0xc
-	mov	r2, sp
-	str	r2, [r0]
-	str	r1, [r0, #0x4]
-	ldr	r1, .L34+0x10
-	str	r1, [r0, #0x8]
-	ldr	r0, [r0, #0x8]
+	mov	r0, sp
+	mov	r1, #0xa0
+	lsl	r1, r1, #0x13
+	ldr	r2, .L34+0xc
+	ldr	r7, .L34+0x10
+	stmia r7!, {r0, r1, r2}
+	.code	16
 	mov	r0, #0x2
 	bl	BeginFastPaletteFade
 	ldr	r0, .L34+0x14
@@ -28584,6 +28587,8 @@ ShowContestPainting:
 	bl	SetMainCallback2
 .L11:
 	add	sp, sp, #0x4
+	pop	{r3}
+	mov	r8, r3
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
@@ -28593,8 +28598,8 @@ ShowContestPainting:
 	.word	gUnknown_02039F5D
 	.word	gUnknown_02039F5C
 	.word	gUnknown_085B0838
-	.word	0x40000d4
 	.word	-0x7affff00
+	.word	0x40000d4
 	.word	VBlankCB_ContestPainting
 	.word	gContestPaintingState
 	.word	CB2_HoldContestPainting
@@ -29204,9 +29209,9 @@ LoadContestPaintingFrame:
 	mov	r1, #0x0
 	bl	LoadPalette
 	cmp	r4, #0x1
-	beq	.LCB1115
+	beq	.LCB1120
 	b	.L123	@long jump
-.LCB1115:
+.LCB1120:
 	ldr	r0, .L170+0x4
 	ldr	r0, [r0]
 	ldrb	r0, [r0, #0xa]

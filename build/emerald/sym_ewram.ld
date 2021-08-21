@@ -146,6 +146,8 @@ src/money.o(ewram_data);
 . = ALIGN(4);
 src/record_mixing.o(ewram_data);
 . = ALIGN(4);
+src/sound_check_menu.o(ewram_data);
+. = ALIGN(4);
 src/secret_base.o(ewram_data);
 . = ALIGN(4);
 src/tv.o(ewram_data);

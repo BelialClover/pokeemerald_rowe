@@ -15283,8 +15283,8 @@ struct SoundInfo
     u32 plynote;
     u32 ExtVolPit;
     u8 gap2[16];
-    struct SoundChannel chans[12];
-    s8 pcmBuffer[1584 * 2];
+    struct SoundChannel chans[15];
+    s8 pcmBuffer[0x620 * 2];
 };
 
 struct SongHeader
@@ -18781,7 +18781,7 @@ void LoadMoveBg(u16 bgId)
         sub_80A4720(GetBattleBgPaletteNum(), (void*)(gDecompressionBuffer), 0x100, 0);
         dmaSrc = gDecompressionBuffer;
         dmaDest = (void *)((0x6000000 + (0x800 * (26))));
-        { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); dmaRegs[0] = (vu32)(dmaSrc); dmaRegs[1] = (vu32)(dmaDest); dmaRegs[2] = (vu32)((0x8000 | 0x0000 | 0x0400 | 0x0000 | 0x0000) << 16 | ((0x800)/(32/8))); dmaRegs[2]; };
+        { vu32 *dmaRegs = (vu32 *)(0x4000000 + 0xd4); u32 eval_src = (u32)(dmaSrc); u32 eval_dst = (u32)(dmaDest); u32 eval_ctl = (u32)((0x8000 | 0x0000 | 0x0400 | 0x0000 | 0x0000) << 16 | ((0x800)/(32/8))); register u32 r_src asm("r0") = eval_src; register u32 r_dst asm("r1") = eval_dst; register u32 r_ctl asm("r2") = eval_ctl; asm volatile("stmia %0!, {%1, %2, %3}" : "+l" (dmaRegs) : "l" (r_src), "l" (r_dst), "l" (r_ctl) : "memory"); };
         LZDecompressVram(gBattleAnimBackgroundTable[bgId].image, (void *)((0x6000000 + (0x800 * (4)))));
         LoadCompressedPalette(gBattleAnimBackgroundTable[bgId].palette, GetBattleBgPaletteNum() * 16, 32);
     }

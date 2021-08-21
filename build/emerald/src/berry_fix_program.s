@@ -1110,34 +1110,30 @@ berry_fix_gpu_set:
 	mov	r0, #0x50
 	mov	r1, #0x0
 	bl	SetGpuReg
-	mov	r1, #0x0
-	str	r1, [sp, #0xc]
-	ldr	r4, .L52
+	mov	r3, #0x0
+	str	r3, [sp, #0xc]
 	add	r0, sp, #0xc
-	str	r0, [r4]
-	mov	r0, #0xc0
-	lsl	r0, r0, #0x13
-	str	r0, [r4, #0x4]
-	ldr	r0, .L52+0x4
-	str	r0, [r4, #0x8]
-	ldr	r0, [r4, #0x8]
-	str	r1, [sp, #0xc]
-	add	r0, sp, #0xc
-	str	r0, [r4]
-	mov	r0, #0xe0
-	lsl	r0, r0, #0x13
-	str	r0, [r4, #0x4]
-	ldr	r2, .L52+0x8
-	str	r2, [r4, #0x8]
-	ldr	r0, [r4, #0x8]
-	str	r1, [sp, #0xc]
-	add	r0, sp, #0xc
-	str	r0, [r4]
-	mov	r0, #0xa0
-	lsl	r0, r0, #0x13
-	str	r0, [r4, #0x4]
-	str	r2, [r4, #0x8]
-	ldr	r0, [r4, #0x8]
+	mov	r1, #0xc0
+	lsl	r1, r1, #0x13
+	ldr	r2, .L52
+	ldr	r4, .L52+0x4
+	stmia r4!, {r0, r1, r2}
+	.code	16
+	str	r3, [sp, #0xc]
+	ldr	r4, .L52+0x8
+	mov	r1, #0xe0
+	lsl	r1, r1, #0x13
+	add	r2, r4, #0
+	ldr	r5, .L52+0x4
+	stmia r5!, {r0, r1, r2}
+	.code	16
+	str	r3, [sp, #0xc]
+	mov	r1, #0xa0
+	lsl	r1, r1, #0x13
+	add	r2, r4, #0
+	ldr	r3, .L52+0x4
+	stmia r3!, {r0, r1, r2}
+	.code	16
 	mov	r0, #0x0
 	bl	ResetBgsAndClearDma3BusyFlags
 	ldr	r1, .L52+0xc
@@ -1164,12 +1160,11 @@ berry_fix_gpu_set:
 	bl	InitWindows
 	bl	DeactivateAllTextPrinters
 	ldr	r0, .L52+0x14
-	str	r0, [r4]
-	ldr	r0, .L52+0x18
-	str	r0, [r4, #0x4]
-	ldr	r0, .L52+0x1c
-	str	r0, [r4, #0x8]
-	ldr	r0, [r4, #0x8]
+	ldr	r1, .L52+0x18
+	ldr	r2, .L52+0x1c
+	ldr	r4, .L52+0x4
+	stmia r4!, {r0, r1, r2}
+	.code	16
 	mov	r0, #0x0
 	mov	r1, #0x40
 	bl	SetGpuReg
@@ -1221,8 +1216,8 @@ berry_fix_gpu_set:
 	lsl	r2, r0, #0x18
 	lsr	r2, r2, #0x18
 	str	r6, [sp]
-	mov	r0, r8
-	str	r0, [sp, #0x4]
+	mov	r3, r8
+	str	r3, [sp, #0x4]
 	str	r5, [sp, #0x8]
 	mov	r0, #0x2
 	mov	r1, #0x0
@@ -1241,8 +1236,8 @@ berry_fix_gpu_set:
 	lsl	r2, r0, #0x18
 	lsr	r2, r2, #0x18
 	str	r6, [sp]
-	mov	r0, r8
-	str	r0, [sp, #0x4]
+	mov	r4, r8
+	str	r4, [sp, #0x4]
 	str	r5, [sp, #0x8]
 	mov	r0, #0x3
 	mov	r1, #0x0
@@ -1263,8 +1258,8 @@ berry_fix_gpu_set:
 	lsr	r2, r2, #0x18
 	ldr	r0, .L52+0x30
 	str	r0, [sp]
-	mov	r0, r8
-	str	r0, [sp, #0x4]
+	mov	r5, r8
+	str	r5, [sp, #0x4]
 	str	r4, [sp, #0x8]
 	mov	r0, #0x0
 	mov	r1, #0x1
@@ -1288,8 +1283,8 @@ berry_fix_gpu_set:
 .L53:
 	.align	2, 0
 .L52:
-	.word	0x40000d4
 	.word	-0x7affa000
+	.word	0x40000d4
 	.word	-0x7affff00
 	.word	sBerryFixBgTemplates
 	.word	sBerryFixWindowTemplates
