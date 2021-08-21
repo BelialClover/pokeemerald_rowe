@@ -4460,6 +4460,16 @@
       "secondary_tileset": "gTileset_Viridian_Forest",
       "border_filepath": "data/layouts/Petalburg_Woods_2/border.bin",
       "blockdata_filepath": "data/layouts/Petalburg_Woods_2/map.bin"
+    },
+    {
+      "id": "LAYOUT_SECRET_SHORE_V2",
+      "name": "SecretShoreV2_Layout",
+      "width": 40,
+      "height": 40,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Mossdeep",
+      "border_filepath": "data/layouts/SecretShoreV2/border.bin",
+      "blockdata_filepath": "data/layouts/SecretShoreV2/map.bin"
     }
   ]
 }
