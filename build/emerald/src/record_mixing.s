@@ -150,17 +150,18 @@ SetSrcLookupPointers:
 	ldr	r2, .L6+0x34
 	ldr	r0, .L6+0x38
 	ldr	r0, [r0]
-	ldr	r4, .L6+0x3c
+	mov	r4, #0xbb
+	lsl	r4, r4, #0x3
 	add	r3, r0, r4
 	str	r3, [r2]
-	ldr	r2, .L6+0x40
-	ldr	r4, .L6+0x44
+	ldr	r2, .L6+0x3c
+	ldr	r4, .L6+0x40
 	add	r1, r1, r4
 	str	r1, [r2]
-	ldr	r1, .L6+0x48
-	add	r0, r0, #0x74
+	ldr	r1, .L6+0x44
+	add	r0, r0, #0x78
 	str	r0, [r1]
-	ldr	r0, .L6+0x4c
+	ldr	r0, .L6+0x48
 	str	r3, [r0]
 	pop	{r4}
 	pop	{r0}
@@ -183,7 +184,6 @@ SetSrcLookupPointers:
 	.word	gUnknown_02039F9C
 	.word	sBattleTowerSave
 	.word	gSaveBlock2Ptr
-	.word	0x5d4
 	.word	sLilycoveLadySave
 	.word	0x3010
 	.word	sApprenticesSave
@@ -2904,7 +2904,7 @@ GetSavedApprentices:
 .L371:
 	mov	r1, r9
 	ldr	r0, [r1]
-	add	r0, r0, #0x4a
+	add	r0, r0, #0x4e
 	ldrb	r0, [r0]
 	lsl	r0, r0, #0x1b
 	lsr	r0, r0, #0x1e
@@ -2989,7 +2989,7 @@ GetSavedApprentices:
 	bls	.L380	@cond_branch
 	ldr	r0, .L387+0x4
 	ldr	r0, [r0]
-	add	r0, r0, #0x4a
+	add	r0, r0, #0x4e
 	ldrb	r0, [r0]
 	lsl	r0, r0, #0x1b
 	lsr	r0, r0, #0x1e
@@ -3012,7 +3012,7 @@ GetSavedApprentices:
 .L380:
 	ldr	r0, .L389
 	ldr	r0, [r0]
-	add	r0, r0, #0x4a
+	add	r0, r0, #0x4e
 	ldrb	r0, [r0]
 	lsl	r0, r0, #0x1b
 	lsr	r0, r0, #0x1e
@@ -3165,7 +3165,8 @@ GetPlayerHallRecords:
 	add	r1, r3, r1
 	str	r1, [sp]
 	mov	sl, r4
-	ldr	r2, .L412+0x10
+	mov	r2, #0xc8
+	lsl	r2, r2, #0x4
 	add	r5, r3, r2
 .L410:
 	lsl	r2, r6, #0x1
@@ -3177,38 +3178,38 @@ GetPlayerHallRecords:
 	ldrh	r0, [r5, #0x4]
 	mov	r1, ip
 	strh	r0, [r1]
-	ldr	r1, .L412+0x14
+	mov	r1, #0xca
+	lsl	r1, r1, #0x4
 	add	r0, r3, r1
 	add	r0, r0, r2
 	ldrh	r0, [r0]
 	mov	r1, ip
 	strh	r0, [r1, #0x20]
-	ldr	r1, .L412+0x18
+	ldr	r1, .L412+0x10
 	add	r0, r3, r1
 	add	r0, r0, r2
 	ldrh	r0, [r0]
 	mov	r1, r8
+	strh	r0, [r1]
+	ldr	r1, .L412+0x14
+	add	r0, r3, r1
+	add	r0, r0, r2
+	ldrh	r0, [r0]
+	mov	r1, r8
+	strh	r0, [r1, #0x20]
+	ldr	r1, .L412+0x18
+	add	r0, r3, r1
+	add	r0, r0, r2
+	ldrh	r0, [r0]
+	mov	r1, r9
 	strh	r0, [r1]
 	ldr	r1, .L412+0x1c
 	add	r0, r3, r1
 	add	r0, r0, r2
 	ldrh	r0, [r0]
-	mov	r1, r8
+	mov	r1, r9
 	strh	r0, [r1, #0x20]
 	ldr	r1, .L412+0x20
-	add	r0, r3, r1
-	add	r0, r0, r2
-	ldrh	r0, [r0]
-	mov	r1, r9
-	strh	r0, [r1]
-	mov	r1, #0xd9
-	lsl	r1, r1, #0x4
-	add	r0, r3, r1
-	add	r0, r0, r2
-	ldrh	r0, [r0]
-	mov	r1, r9
-	strh	r0, [r1, #0x20]
-	ldr	r1, .L412+0x24
 	add	r0, r3, r1
 	add	r0, r0, r2
 	ldrh	r1, [r0]
@@ -3216,7 +3217,7 @@ GetPlayerHallRecords:
 	lsl	r0, r0, #0x1
 	add	r0, r0, sl
 	strh	r1, [r0]
-	ldr	r1, .L412+0x28
+	ldr	r1, .L412+0x24
 	add	r0, r3, r1
 	add	r0, r0, r2
 	ldrh	r1, [r0]
@@ -3250,16 +3251,15 @@ GetPlayerHallRecords:
 	.align	2, 0
 .L412:
 	.word	gSaveBlock2Ptr
-	.word	0xe69
-	.word	0xe79
-	.word	0xc78
+	.word	0xe6d
+	.word	0xe7d
 	.word	0xc7c
-	.word	0xc9c
-	.word	0xd58
-	.word	0xd66
-	.word	0xd72
-	.word	0xda6
-	.word	0xc84
+	.word	0xd5c
+	.word	0xd6a
+	.word	0xd76
+	.word	0xd94
+	.word	0xdaa
+	.word	0xc88
 .Lfe32:
 	.size	 GetPlayerHallRecords,.Lfe32-GetPlayerHallRecords
 	.align	2, 0
@@ -3339,7 +3339,7 @@ ReceiveApprenticeData:
 	beq	.L425	@cond_branch
 	ldr	r0, .L440
 	ldr	r1, [r0]
-	add	r1, r1, #0x74
+	add	r1, r1, #0x78
 	add	r0, r4, #0
 	str	r3, [sp, #0x10]
 	bl	IsApprenticeAlreadySaved
@@ -3367,7 +3367,7 @@ ReceiveApprenticeData:
 	ldr	r4, .L442
 	ldr	r0, [r4]
 	add	r1, r0, #0
-	add	r1, r1, #0x4a
+	add	r1, r1, #0x4e
 	ldrb	r1, [r1]
 	lsl	r1, r1, #0x1b
 	lsr	r1, r1, #0x1e
@@ -3381,11 +3381,11 @@ ReceiveApprenticeData:
 	add	r1, r1, r8
 	lsl	r1, r1, #0x2
 	add	r1, r1, r3
-	add	r0, r0, #0x74
+	add	r0, r0, #0x78
 	mov	r2, #0x44
 	bl	memcpy
 	ldr	r4, [r4]
-	add	r4, r4, #0x4a
+	add	r4, r4, #0x4e
 	ldrb	r5, [r4]
 	lsl	r0, r5, #0x1b
 	lsr	r0, r0, #0x1e
@@ -3404,7 +3404,7 @@ ReceiveApprenticeData:
 	ldr	r7, .L444
 	ldr	r4, [r7]
 	add	r1, r4, #0
-	add	r1, r1, #0x4a
+	add	r1, r1, #0x4e
 	ldrb	r1, [r1]
 	lsl	r1, r1, #0x1b
 	lsr	r1, r1, #0x1e
@@ -3416,7 +3416,7 @@ ReceiveApprenticeData:
 	add	r0, r0, r2
 	lsl	r0, r0, #0x2
 	add	r4, r4, r0
-	add	r4, r4, #0x74
+	add	r4, r4, #0x78
 	add	r0, r4, #0
 	add	r1, r6, #0
 	mov	r2, #0x44
@@ -3426,7 +3426,7 @@ ReceiveApprenticeData:
 	cmp	r5, #0x1
 	ble	.L435	@cond_branch
 	ldr	r4, [r7]
-	add	r4, r4, #0x4a
+	add	r4, r4, #0x4e
 	ldrb	r5, [r4]
 	lsl	r0, r5, #0x1b
 	lsr	r0, r0, #0x1e
@@ -3533,7 +3533,7 @@ sub_80E8578:
 	add	r2, r0, r5
 .L465:
 	add	r0, r2, #0
-	mov	r6, #0xd2
+	mov	r6, #0xd4
 	lsl	r6, r6, #0x1
 	add	r1, r3, r6
 	ldmia	r1!, {r4, r5, r6}
@@ -3690,7 +3690,8 @@ sub_80E8578:
 	mov	r5, #0xd8
 	lsl	r5, r5, #0x3
 	add	r0, r2, r5
-	ldr	r6, .L507+0x8
+	mov	r6, #0xa1
+	lsl	r6, r6, #0x3
 	add	r1, r3, r6
 	ldmia	r1!, {r4, r5, r6}
 	stmia	r0!, {r4, r5, r6}
@@ -3710,9 +3711,9 @@ sub_80E8578:
 	mov	r8, r2
 	ldr	r3, [sp, #0x24]
 	cmp	r8, r3
-	blt	.LCB4611
+	blt	.LCB4612
 	b	.L484	@long jump
-.LCB4611:
+.LCB4612:
 	ldr	r4, [sp, #0x8]
 	lsl	r1, r4, #0x3
 	mov	r0, #0xa8
@@ -3849,9 +3850,9 @@ sub_80E8578:
 	ldr	r5, [sp, #0x2c]
 	str	r5, [sp, #0x8]
 	cmp	r5, #0x1
-	bgt	.LCB4799
+	bgt	.LCB4800
 	b	.L485	@long jump
-.LCB4799:
+.LCB4800:
 	add	sp, sp, #0x54
 	pop	{r3, r4, r5}
 	mov	r8, r3
@@ -3865,7 +3866,6 @@ sub_80E8578:
 .L507:
 	.word	gSaveBlock2Ptr
 	.word	gUnknown_03001168
-	.word	0x504
 .Lfe35:
 	.size	 sub_80E8578,.Lfe35-sub_80E8578
 	.align	2, 0
@@ -3989,7 +3989,7 @@ sub_80E8924:
 	mov	r8, r2
 	add	r1, r1, r0
 	lsl	r0, r1, #0x5
-	mov	r2, #0xd2
+	mov	r2, #0xd4
 	lsl	r2, r2, #0x1
 	add	r7, r0, r2
 	lsl	r1, r1, #0x6
@@ -4018,7 +4018,8 @@ sub_80E8924:
 	mov	r0, #0x54
 	mov	r1, r5
 	mul	r1, r1, r0
-	ldr	r2, .L551+0x4
+	mov	r2, #0xa1
+	lsl	r2, r2, #0x3
 	add	r1, r1, r2
 	ldr	r0, [r4]
 	add	r0, r0, r1
@@ -4043,7 +4044,6 @@ sub_80E8924:
 	.align	2, 0
 .L551:
 	.word	gSaveBlock2Ptr
-	.word	0x504
 .Lfe38:
 	.size	 sub_80E8924,.Lfe38-sub_80E8924
 	.align	2, 0

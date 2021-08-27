@@ -70,7 +70,7 @@ GetMoney:
 	ldr	r1, .L3
 	ldr	r1, [r1]
 	ldr	r0, [r0]
-	ldr	r1, [r1, #0x44]
+	ldr	r1, [r1, #0x48]
 	eor	r0, r0, r1
 	bx	lr
 .L4:
@@ -86,7 +86,7 @@ GetMoney:
 SetMoney:
 	ldr	r2, .L6
 	ldr	r2, [r2]
-	ldr	r2, [r2, #0x44]
+	ldr	r2, [r2, #0x48]
 	eor	r2, r2, r1
 	str	r2, [r0]
 	bx	lr

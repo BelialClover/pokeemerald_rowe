@@ -2,10 +2,15 @@
 #include "gba/m4a_internal.h"
 #include "sound.h"
 #include "battle.h"
+#include "event_data.h"
 #include "m4a.h"
 #include "main.h"
 #include "pokemon.h"
+#include "rtc.h"
+#include "day_night.h"
+#include "script.h"
 #include "constants/songs.h"
+#include "constants/flags.h"
 #include "task.h"
 
 struct Fanfare
@@ -543,9 +548,131 @@ static void RestoreBGMVolumeAfterPokemonCry(void)
 
 void PlayBGM(u16 songNum)
 {
+	u16 song = RegionalMusicHandler(songNum);
     if (gDisableMusic || songNum == MUS_NONE)
         return;
-    m4aSongNumStart(songNum);
+    m4aSongNumStart(song);
+}
+
+u16 RegionalMusicHandler(u16 songNum)
+{
+	switch(songNum)
+	{
+	//Surf
+	case MUS_SURF:
+		if (gSaveBlock2Ptr->optionsMusicGame == OPTIONS_MUSIC_KANTO)
+			return MUS_RG_SURF;
+		else if(gSaveBlock2Ptr->optionsMusicGame == OPTIONS_MUSIC_JOTHO)
+			return HG_SEQ_GS_NAMINORI;
+		else if(gSaveBlock2Ptr->optionsMusicGame == OPTIONS_MUSIC_SINNOH)
+			return DP_SEQ_NAMINORI;
+		else 
+			return songNum;
+	break;
+	//Pokemon Center
+	case MUS_POKE_CENTER:
+		RtcCalcLocalTime();
+		if (gSaveBlock2Ptr->optionsMusicGame == OPTIONS_MUSIC_KANTO)
+			return MUS_RG_POKE_CENTER;
+		else if(gSaveBlock2Ptr->optionsMusicGame == OPTIONS_MUSIC_JOTHO)
+			return HG_SEQ_GS_POKESEN;
+		else if(gSaveBlock2Ptr->optionsMusicGame == OPTIONS_MUSIC_SINNOH && IsCurrentlyDay())
+			return DP_SEQ_PC_01;
+		else if (gSaveBlock2Ptr->optionsMusicGame == OPTIONS_MUSIC_SINNOH && !IsCurrentlyDay())
+			return DP_SEQ_PC_02;
+		else 
+			return songNum;
+	break;
+	//Intro
+	case MUS_INTRO:
+		if(gSaveBlock2Ptr->optionsMusicGame == OPTIONS_MUSIC_SINNOH)
+			return PL_SEQ_TITLE00;
+		else 
+			return songNum;
+	break;
+	//Wild Battle
+	case MUS_VS_WILD:
+		if (gSaveBlock2Ptr->optionsMusicGame == OPTIONS_MUSIC_KANTO)
+			return MUS_RG_VS_WILD;
+		else if(gSaveBlock2Ptr->optionsMusicGame == OPTIONS_MUSIC_JOTHO)
+			return HG_SEQ_GS_VS_NORAPOKE;
+		else if(gSaveBlock2Ptr->optionsMusicGame == OPTIONS_MUSIC_SINNOH)
+			return DP_SEQ_BA_POKE;
+		else 
+			return songNum;
+	break;
+	//Vs Trainer
+	case MUS_VS_TRAINER:
+	if (gSaveBlock2Ptr->optionsMusicGame == OPTIONS_MUSIC_KANTO)
+			return MUS_RG_VS_TRAINER;
+		else if(gSaveBlock2Ptr->optionsMusicGame == OPTIONS_MUSIC_JOTHO)
+			return HG_SEQ_GS_VS_TRAINER;
+		else if(gSaveBlock2Ptr->optionsMusicGame == OPTIONS_MUSIC_SINNOH)
+			return DP_SEQ_BA_TRAIN;
+		else 
+			return songNum;
+	break;
+	//Gym 
+	case MUS_GYM:
+	if (gSaveBlock2Ptr->optionsMusicGame == OPTIONS_MUSIC_KANTO)
+			return MUS_RG_GYM;
+		else if(gSaveBlock2Ptr->optionsMusicGame == OPTIONS_MUSIC_JOTHO)
+			return HG_SEQ_GS_GYM;
+		else if(gSaveBlock2Ptr->optionsMusicGame == OPTIONS_MUSIC_SINNOH)
+			return DP_SEQ_GYM;
+		else 
+			return songNum;
+	break;
+	//Gym Battle
+	case MUS_VS_GYM_LEADER:
+	if (gSaveBlock2Ptr->optionsMusicGame == OPTIONS_MUSIC_KANTO)
+			return MUS_RG_VS_GYM_LEADER;
+		else if(gSaveBlock2Ptr->optionsMusicGame == OPTIONS_MUSIC_JOTHO)
+			return HG_SEQ_GS_VS_GYMREADER;
+		else if(gSaveBlock2Ptr->optionsMusicGame == OPTIONS_MUSIC_SINNOH)
+			return DP_SEQ_BA_GYM;
+		else 
+			return songNum;
+	break;
+	//Victory Trainer
+	case MUS_VICTORY_TRAINER:
+	if(gSaveBlock2Ptr->optionsMusicGame == OPTIONS_MUSIC_JOTHO)
+			return HG_SEQ_GS_WIN1;
+		else if(gSaveBlock2Ptr->optionsMusicGame == OPTIONS_MUSIC_SINNOH)
+			return DP_SEQ_WINTRAIN;
+		else 
+			return songNum;
+	break;
+	//Gym Victory
+	case MUS_VICTORY_GYM_LEADER:
+	if(gSaveBlock2Ptr->optionsMusicGame == OPTIONS_MUSIC_JOTHO)
+			return HG_SEQ_GS_WIN3;
+		else if(gSaveBlock2Ptr->optionsMusicGame == OPTIONS_MUSIC_SINNOH)
+			return DP_SEQ_WINTGYM;
+		else 
+			return songNum;
+	break;
+	//Wild Victory
+	case MUS_VICTORY_WILD:
+	if(gSaveBlock2Ptr->optionsMusicGame == OPTIONS_MUSIC_JOTHO)
+			return HG_SEQ_GS_WIN2_NOT_FAN;
+		else if(gSaveBlock2Ptr->optionsMusicGame == OPTIONS_MUSIC_SINNOH)
+			return DP_SEQ_WINPOKE;
+		else 
+			return songNum;
+	break;
+	//Victory Road
+	case MUS_VICTORY_ROAD:
+	if (gSaveBlock2Ptr->optionsMusicGame == OPTIONS_MUSIC_KANTO)
+			return MUS_RG_VICTORY_ROAD;
+		else if(gSaveBlock2Ptr->optionsMusicGame == OPTIONS_MUSIC_JOTHO)
+			return HG_SEQ_GS_D_CHAMPROAD;
+		else if(gSaveBlock2Ptr->optionsMusicGame == OPTIONS_MUSIC_SINNOH)
+			return DP_SEQ_D_01;
+		else 
+			return songNum;
+	}
+	return songNum;
 }
 
 void PlaySE(u16 songNum)

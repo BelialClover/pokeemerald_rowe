@@ -2581,7 +2581,8 @@ GetSpecialBattleTransition:
 	add	r0, r1, r2
 	ldrh	r0, [r0]
 	lsl	r2, r0, #0x2
-	ldr	r3, .L291+0x8
+	mov	r3, #0xc4
+	lsl	r3, r3, #0x4
 	add	r1, r1, r3
 	add	r2, r1, r2
 	lsl	r0, r0, #0x1
@@ -2593,7 +2594,7 @@ GetSpecialBattleTransition:
 	add	r0, r0, r2
 	lsl	r0, r0, #0x10
 	lsr	r0, r0, #0x10
-	ldr	r4, .L291+0xc
+	ldr	r4, .L291+0x8
 .L273:
 	mov	r1, #0xc
 .L269:
@@ -2611,8 +2612,7 @@ GetSpecialBattleTransition:
 	.align	2, 0
 .L291:
 	.word	gSaveBlock2Ptr
-	.word	0xc3a
-	.word	0xc3c
+	.word	0xc3e
 	.word	sBattleTransitionTable_BattleFrontier
 .Lfe27:
 	.size	 GetSpecialBattleTransition,.Lfe27-GetSpecialBattleTransition

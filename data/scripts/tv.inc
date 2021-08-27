@@ -90,3 +90,19 @@ EventScript_DoInSearchOfTrainers:: @ 827EEFF
 	goto_if_eq EventScript_DoInSearchOfTrainers
 	goto EventScript_TurnOffTV
 	end
+	
+EventScript_Sinnoh_Sounds::
+	goto_if_set FLAG_SINNOH_SOUNDS, EventScript_Hoenn_Sounds
+	msgbox gText_MomOrDadMightLikeThisProgram, MSGBOX_DEFAULT
+	setflag FLAG_SINNOH_SOUNDS
+	end
+
+EventScript_Hoenn_Sounds::
+	clearflag FLAG_SINNOH_SOUNDS
+	clearflag FLAG_KANTO_SOUNDS
+	clearflag FLAG_JOTHO_SOUNDS
+	clearflag FLAG_SINNOH_SOUNDS
+	setflag FLAG_HOENN_SOUNDS
+	msgbox gText_MomOrDadMightLikeThisProgram, MSGBOX_DEFAULT
+	end
+	

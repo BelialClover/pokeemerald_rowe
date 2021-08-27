@@ -41062,6 +41062,77 @@ gText_FORMS_NONE:
 	.byte	0xad
 	.byte	0xff
 	.size	 gText_FORMS_NONE,27
+	.globl	gText_Region_Kanto
+	.type	 gText_Region_Kanto,object
+gText_Region_Kanto:
+	.byte	0xfc
+	.byte	0x1
+	.byte	0x6
+	.byte	0xfc
+	.byte	0x3
+	.byte	0x7
+	.byte	0xc5
+	.byte	0xd5
+	.byte	0xe2
+	.byte	0xe8
+	.byte	0xe3
+	.byte	0x0
+	.byte	0x0
+	.byte	0xff
+	.size	 gText_Region_Kanto,14
+	.globl	gText_Region_Jotho
+	.type	 gText_Region_Jotho,object
+gText_Region_Jotho:
+	.byte	0xfc
+	.byte	0x1
+	.byte	0x6
+	.byte	0xfc
+	.byte	0x3
+	.byte	0x7
+	.byte	0xc4
+	.byte	0xe3
+	.byte	0xe8
+	.byte	0xdc
+	.byte	0xe3
+	.byte	0x0
+	.byte	0x0
+	.byte	0xff
+	.size	 gText_Region_Jotho,14
+	.globl	gText_Region_Hoenn
+	.type	 gText_Region_Hoenn,object
+gText_Region_Hoenn:
+	.byte	0xfc
+	.byte	0x1
+	.byte	0x6
+	.byte	0xfc
+	.byte	0x3
+	.byte	0x7
+	.byte	0xc2
+	.byte	0xe3
+	.byte	0xd9
+	.byte	0xe2
+	.byte	0xe2
+	.byte	0x0
+	.byte	0x0
+	.byte	0xff
+	.size	 gText_Region_Hoenn,14
+	.globl	gText_Region_Sinnoh
+	.type	 gText_Region_Sinnoh,object
+gText_Region_Sinnoh:
+	.byte	0xfc
+	.byte	0x1
+	.byte	0x6
+	.byte	0xfc
+	.byte	0x3
+	.byte	0x7
+	.byte	0xcd
+	.byte	0xdd
+	.byte	0xe2
+	.byte	0xe2
+	.byte	0xe3
+	.byte	0xdc
+	.byte	0xff
+	.size	 gText_Region_Sinnoh,13
 .text
 	.align	2, 0
 

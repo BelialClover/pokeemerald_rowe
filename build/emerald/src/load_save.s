@@ -5,11 +5,11 @@
 	.section ewram_data,"aw"
 	.align	2, 0
 	.type	 gSaveblock2,object
-	.size	 gSaveblock2,3864
+	.size	 gSaveblock2,3868
 gSaveblock2:
 	.byte	0x0
 	.space	7
-	.space	3856
+	.space	3860
 	.globl	gSaveblock2_DMA
 	.type	 gSaveblock2_DMA,object
 	.size	 gSaveblock2_DMA,128
@@ -112,7 +112,7 @@ ClearSav2:
 	.align	2, 0
 .L10:
 	.word	gSaveblock2
-	.word	0x10007cc
+	.word	0x10007ce
 .Lfe2:
 	.size	 ClearSav2,.Lfe2-ClearSav2
 	.align	2, 0
@@ -265,7 +265,7 @@ MoveSaveBlocks_ResetHeap:
 	bl	ApplyNewEncryptionKeyToAllEncryptedData
 	ldr	r1, .L19+0xc
 	ldr	r0, [r1]
-	str	r4, [r0, #0x44]
+	str	r4, [r0, #0x48]
 	add	sp, sp, #0x8
 	pop	{r3, r4, r5}
 	mov	r8, r3
@@ -281,13 +281,13 @@ MoveSaveBlocks_ResetHeap:
 	.word	gTrainerHillVBlankCounter
 	.word	gHeap
 	.word	gSaveBlock2Ptr
-	.word	0xf18
+	.word	0xf1c
 	.word	gSaveBlock1Ptr
 	.word	0x3620
-	.word	gHeap+0xf18
+	.word	gHeap+0xf1c
 	.word	gPokemonStoragePtr
 	.word	0x83d0
-	.word	gHeap+0x4538
+	.word	gHeap+0x453c
 .Lfe5:
 	.size	 MoveSaveBlocks_ResetHeap,.Lfe5-MoveSaveBlocks_ResetHeap
 	.align	2, 0
@@ -787,7 +787,7 @@ LoadPlayerBag:
 	ble	.L124	@cond_branch
 	mov	r1, sl
 	ldr	r0, [r1]
-	ldr	r0, [r0, #0x44]
+	ldr	r0, [r0, #0x48]
 	mov	r2, ip
 	str	r0, [r2]
 	pop	{r3, r4, r5}
@@ -1021,15 +1021,15 @@ SavePlayerBag:
 	ble	.L182	@cond_branch
 	mov	r2, r8
 	ldr	r1, [r2]
-	ldr	r4, [r1, #0x44]
+	ldr	r4, [r1, #0x48]
 	mov	r5, ip
 	ldr	r0, [r5]
-	str	r0, [r1, #0x44]
+	str	r0, [r1, #0x48]
 	add	r0, r4, #0
 	bl	ApplyNewEncryptionKeyToBagItems
 	mov	r6, r8
 	ldr	r0, [r6]
-	str	r4, [r0, #0x44]
+	str	r4, [r0, #0x48]
 	pop	{r3, r4, r5}
 	mov	r8, r3
 	mov	r9, r4
@@ -1065,7 +1065,7 @@ SavePlayerBag:
 ApplyNewEncryptionKeyToHword:
 	ldr	r2, .L187
 	ldr	r2, [r2]
-	ldr	r2, [r2, #0x44]
+	ldr	r2, [r2, #0x48]
 	ldrh	r3, [r0]
 	eor	r2, r2, r3
 	eor	r2, r2, r1
@@ -1085,7 +1085,7 @@ ApplyNewEncryptionKeyToWord:
 	ldr	r2, .L190
 	ldr	r3, [r2]
 	ldr	r2, [r0]
-	ldr	r3, [r3, #0x44]
+	ldr	r3, [r3, #0x48]
 	eor	r2, r2, r3
 	eor	r2, r2, r1
 	str	r2, [r0]

@@ -140,7 +140,7 @@ GetCoins:
 	add	r1, r1, r0
 	ldr	r0, .L12+0x8
 	ldr	r0, [r0]
-	ldr	r0, [r0, #0x44]
+	ldr	r0, [r0, #0x48]
 	ldrh	r1, [r1]
 	eor	r0, r0, r1
 	lsl	r0, r0, #0x10
@@ -165,7 +165,7 @@ SetCoins:
 	ldr	r2, [r1]
 	ldr	r1, .L15+0x4
 	ldr	r1, [r1]
-	ldr	r1, [r1, #0x44]
+	ldr	r1, [r1, #0x48]
 	eor	r0, r0, r1
 	ldr	r1, .L15+0x8
 	add	r2, r2, r1

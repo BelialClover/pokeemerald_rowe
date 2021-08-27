@@ -1,5 +1,6 @@
 #include "global.h"
 #include "main.h"
+#include "event_data.h"
 #include "palette.h"
 #include "scanline_effect.h"
 #include "task.h"
@@ -25,6 +26,7 @@
 #include "title_screen.h"
 #include "constants/rgb.h"
 #include "constants/battle_anim.h"
+#include "constants/flags.h"
 
 /*
  * Intro animation sequence state machine
@@ -1128,7 +1130,11 @@ static void Task_IntroFadeIn(u8 taskId)
     SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_MODE_0 | DISPCNT_OBJ_1D_MAP | DISPCNT_BG_ALL_ON | DISPCNT_OBJ_ON);
     gTasks[taskId].func = Task_IntroWaterDrops;
     gIntroFrameCounter = 0;
-    m4aSongNumStart(MUS_INTRO);
+    ;
+	//if(gSaveBlock2Ptr->optionsMusicGame == OPTIONS_MUSIC_SINNOH)
+	//	m4aSongNumStart(PL_SEQ_TITLE00);
+	//else
+		m4aSongNumStart(MUS_INTRO);
     ResetSerial();
 }
 

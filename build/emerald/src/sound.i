@@ -694,6 +694,7 @@ struct SaveBlock2
              u8 optionsButtonMode;
              u16 optionsTextSpeed:3;
              u16 optionsWindowFrameType:5;
+    u16 optionsMusicGame:5;
              u16 optionsSound:2;
              u16 optionsBattleStyle:1;
              u16 optionsBattleSceneOff:1;
@@ -755,7 +756,7 @@ struct SecretBase
 };
 
 # 1 "include/constants/game_stat.h" 1
-# 543 "include/global.h" 2
+# 544 "include/global.h" 2
 # 1 "include/global.fieldmap.h" 1
 # 13 "include/global.fieldmap.h"
 enum
@@ -1067,7 +1068,7 @@ extern u8 gSelectedObjectEvent;
 extern struct MapHeader gMapHeader;
 extern struct PlayerAvatar gPlayerAvatar;
 extern struct Camera gCamera;
-# 544 "include/global.h" 2
+# 545 "include/global.h" 2
 # 1 "include/global.berry.h" 1
 
 
@@ -1143,7 +1144,7 @@ struct BerryTree
     u8 watered3:1;
     u8 watered4:1;
 };
-# 545 "include/global.h" 2
+# 546 "include/global.h" 2
 # 1 "include/global.tv.h" 1
 
 
@@ -1637,7 +1638,7 @@ struct GabbyAndTyData
              u8 playerThrewABall2:1;
              u8 valB_4:4;
 };
-# 546 "include/global.h" 2
+# 547 "include/global.h" 2
 # 1 "include/pokemon.h" 1
 
 
@@ -2383,7 +2384,7 @@ u8 GetFormIdFromFormSpeciesId(u16 formSpeciesId);
 u16 GetBaseFormSpeciesId(u16 formSpeciesId);
 void CreateShinyMonWithNature(struct Pokemon *mon, u16 species, u8 level, u8 nature);
 u16 MonTryLearningNewMoveEvolution(struct Pokemon *mon, bool8 firstMove);
-# 547 "include/global.h" 2
+# 548 "include/global.h" 2
 
 struct WarpData
 {
@@ -3333,6 +3334,7 @@ void StopCry(void);
 bool8 IsCryPlayingOrClearCrySongs(void);
 bool8 IsCryPlaying(void);
 void PlayBGM(u16 songNum);
+u16 RegionalMusicHandler(u16 songNum);
 void PlaySE(u16 songNum);
 void PlaySE12WithPanning(u16 songNum, s8 pan);
 void PlaySE1WithPanning(u16 songNum, s8 pan);
@@ -4573,6 +4575,61 @@ extern u8 gMultiUsePlayerCursor;
 extern u8 gNumberOfMovesToChoose;
 extern u8 gUnknown_03005D7C[4];
 # 5 "src/sound.c" 2
+# 1 "include/event_data.h" 1
+
+
+
+
+void InitEventData(void);
+void ClearTempFieldEventData(void);
+void ClearDailyFlags(void);
+void DisableNationalPokedex(void);
+void EnableNationalPokedex(void);
+bool32 IsNationalPokedexEnabled(void);
+void DisableMysteryEvent(void);
+void EnableMysteryEvent(void);
+bool32 IsMysteryEventEnabled(void);
+void DisableMysteryGift(void);
+void EnableMysteryGift(void);
+bool32 IsMysteryGiftEnabled(void);
+void ClearMysteryEventFlags(void);
+void ClearMysteryEventVars(void);
+void DisableResetRTC(void);
+void EnableResetRTC(void);
+bool32 CanResetRTC(void);
+u16 *GetVarPointer(u16 id);
+u16 VarGet(u16 id);
+u16 VarGetIfExist(u16 id);
+bool8 VarSet(u16 id, u16 value);
+u8 VarGetObjectEventGraphicsId(u8 id);
+u8 *GetFlagPointer(u16 id);
+u8 FlagSet(u16 id);
+u8 FlagToggle(u16 id);
+u8 FlagClear(u16 id);
+bool8 FlagGet(u16 id);
+
+extern u16 gSpecialVar_0x8000;
+extern u16 gSpecialVar_0x8001;
+extern u16 gSpecialVar_0x8002;
+extern u16 gSpecialVar_0x8003;
+extern u16 gSpecialVar_0x8004;
+extern u16 gSpecialVar_0x8005;
+extern u16 gSpecialVar_0x8006;
+extern u16 gSpecialVar_0x8007;
+extern u16 gSpecialVar_0x8008;
+extern u16 gSpecialVar_0x8009;
+extern u16 gSpecialVar_0x800A;
+extern u16 gSpecialVar_0x800B;
+extern u16 gSpecialVar_Result;
+extern u16 gSpecialVar_LastTalked;
+extern u16 gSpecialVar_Facing;
+extern u16 gSpecialVar_MonBoxId;
+extern u16 gSpecialVar_MonBoxPos;
+extern u16 gSpecialVar_Unused_0x8014;
+
+extern const u16 sLevelCapFlags[9];
+extern const u16 sLevelCaps[9];
+# 6 "src/sound.c" 2
 # 1 "include/m4a.h" 1
 
 
@@ -4600,7 +4657,7 @@ extern struct MusicPlayerInfo gMPlayInfo_SE1;
 extern struct MusicPlayerInfo gMPlayInfo_SE2;
 extern struct MusicPlayerInfo gMPlayInfo_SE3;
 extern struct SoundInfo gSoundInfo;
-# 6 "src/sound.c" 2
+# 7 "src/sound.c" 2
 # 1 "include/main.h" 1
 
 
@@ -4676,11 +4733,191 @@ void StartTimer1(void);
 void SeedRngAndSetTrainerId(void);
 u16 GetGeneratedTrainerIdLower(void);
 void sub_819789C(void);
-# 7 "src/sound.c" 2
-# 1 "include/pokemon.h" 1
 # 8 "src/sound.c" 2
-# 1 "include/constants/songs.h" 1
+# 1 "include/pokemon.h" 1
 # 9 "src/sound.c" 2
+# 1 "include/rtc.h" 1
+
+
+
+# 1 "include/siirtc.h" 1
+# 12 "include/siirtc.h"
+enum
+{
+    MONTH_JAN = 1,
+    MONTH_FEB,
+    MONTH_MAR,
+    MONTH_APR,
+    MONTH_MAY,
+    MONTH_JUN,
+    MONTH_JUL,
+    MONTH_AUG,
+    MONTH_SEP,
+    MONTH_OCT,
+    MONTH_NOV,
+    MONTH_DEC
+};
+
+struct SiiRtcInfo
+{
+    u8 year;
+    u8 month;
+    u8 day;
+    u8 dayOfWeek;
+    u8 hour;
+    u8 minute;
+    u8 second;
+    u8 status;
+    u8 alarmHour;
+    u8 alarmMinute;
+};
+
+void SiiRtcUnprotect(void);
+void SiiRtcProtect(void);
+u8 SiiRtcProbe(void);
+bool8 SiiRtcReset(void);
+bool8 SiiRtcGetStatus(struct SiiRtcInfo *rtc);
+bool8 SiiRtcSetStatus(struct SiiRtcInfo *rtc);
+bool8 SiiRtcGetDateTime(struct SiiRtcInfo *rtc);
+bool8 SiiRtcSetDateTime(struct SiiRtcInfo *rtc);
+bool8 SiiRtcGetTime(struct SiiRtcInfo *rtc);
+bool8 SiiRtcSetTime(struct SiiRtcInfo *rtc);
+bool8 SiiRtcSetAlarm(struct SiiRtcInfo *rtc);
+# 5 "include/rtc.h" 2
+# 20 "include/rtc.h"
+extern struct Time gLocalTime;
+
+void RtcDisableInterrupts(void);
+void RtcRestoreInterrupts(void);
+u32 ConvertBcdToBinary(u8 bcd);
+bool8 IsLeapYear(u32 year);
+u16 ConvertDateToDayCount(u8 year, u8 month, u8 day);
+u16 RtcGetDayCount(struct SiiRtcInfo *rtc);
+void RtcInit(void);
+u16 RtcGetErrorStatus(void);
+void RtcGetInfo(struct SiiRtcInfo *rtc);
+void RtcGetDateTime(struct SiiRtcInfo *rtc);
+void RtcGetTime(struct SiiRtcInfo *rtc);
+void RtcGetStatus(struct SiiRtcInfo *rtc);
+void RtcGetRawInfo(struct SiiRtcInfo *rtc);
+void RtcGetRawInfoFast(struct SiiRtcInfo *rtc);
+u16 RtcCheckInfo(struct SiiRtcInfo *rtc);
+void RtcReset(void);
+void FormatDecimalTime(u8 *dest, s32 hour, s32 minute, s32 second);
+void FormatHexTime(u8 *dest, s32 hour, s32 minute, s32 second);
+void FormatHexRtcTime(u8 *dest);
+void FormatDecimalDate(u8 *dest, s32 year, s32 month, s32 day);
+void FormatHexDate(u8 *dest, s32 year, s32 month, s32 day);
+void RtcCalcTimeDifference(struct SiiRtcInfo *rtc, struct Time *result, struct Time *t);
+void RtcCalcLocalTime(void);
+void RtcCalcLocalTimeFast(void);
+void RtcInitLocalTimeOffset(s32 hour, s32 minute);
+void RtcCalcLocalTimeOffset(s32 days, s32 hours, s32 minutes, s32 seconds);
+void RtcSetDayOfWeek(s8 dayOfWeek);
+void CalcTimeDifference(struct Time *result, struct Time *t1, struct Time *t2);
+u32 RtcGetMinuteCount(void);
+u32 GetTotalMinutes(struct Time *time);
+u32 GetTotalSeconds(struct Time *time);
+u32 RtcGetLocalDayCount(void);
+# 10 "src/sound.c" 2
+# 1 "include/day_night.h" 1
+
+
+
+
+
+struct PaletteOverride
+{
+    u8 slot;
+    u8 timeOfDay;
+    void *palette;
+};
+
+extern u16 gPlttBufferPreDN[];
+extern struct PaletteOverride *gPaletteOverrides[];
+
+bool8 IsCurrentlyDay(void);
+u8 GetCurrentTimeOfDay(void);
+u8 GetTimeOfDay(s8 hours);
+void LoadCompressedPaletteDayNight(const void *src, u16 offset, u16 size);
+void LoadPaletteDayNight(const void *src, u16 offset, u16 size);
+void CheckClockForImmediateTimeEvents(void);
+void ProcessImmediateTimeEvents(void);
+void DoLoadSpritePaletteDayNight(const u16 *src, u16 paletteOffset);
+const u8 *GetDayOfWeekString(u8 dayOfWeek);
+const u8 GetTimeOfDayString(void);
+# 11 "src/sound.c" 2
+# 1 "include/script.h" 1
+
+
+
+struct ScriptContext;
+
+typedef bool8 (*ScrCmdFunc)(struct ScriptContext *);
+typedef u8 Script[];
+
+struct ScriptContext
+{
+    u8 stackDepth;
+    u8 mode;
+    u8 comparisonResult;
+    u8 (*nativePtr)(void);
+    const u8 *scriptPtr;
+    const u8 *stack[20];
+    ScrCmdFunc *cmdTable;
+    ScrCmdFunc *cmdTableEnd;
+    u32 data[4];
+};
+
+
+
+void InitScriptContext(struct ScriptContext *ctx, void *cmdTable, void *cmdTableEnd);
+u8 SetupBytecodeScript(struct ScriptContext *ctx, const u8 *ptr);
+void SetupNativeScript(struct ScriptContext *ctx, bool8 (*ptr)(void));
+void StopScript(struct ScriptContext *ctx);
+bool8 RunScriptCommand(struct ScriptContext *ctx);
+u8 ScriptPush(struct ScriptContext *ctx, const u8 *ptr);
+const u8 *ScriptPop(struct ScriptContext *ctx);
+void ScriptJump(struct ScriptContext *ctx, const u8 *ptr);
+void ScriptCall(struct ScriptContext *ctx, const u8 *ptr);
+void ScriptReturn(struct ScriptContext *ctx);
+u16 ScriptReadHalfword(struct ScriptContext *ctx);
+u32 ScriptReadWord(struct ScriptContext *ctx);
+void ScriptContext2_Enable(void);
+void ScriptContext2_Disable(void);
+bool8 ScriptContext2_IsEnabled(void);
+void ScriptContext1_Init(void);
+bool8 ScriptContext1_IsScriptSetUp(void);
+bool8 ScriptContext2_RunScript(void);
+void ScriptContext1_SetupScript(const u8 *ptr);
+void ScriptContext1_Stop(void);
+void EnableBothScriptContexts(void);
+void ScriptContext2_RunNewScript(const u8 *ptr);
+u8 *MapHeaderGetScriptTable(u8 tag);
+void MapHeaderRunScriptType(u8 tag);
+u8 *MapHeaderCheckScriptTable(u8 tag);
+void RunOnLoadMapScript(void);
+void RunOnTransitionMapScript(void);
+void RunOnResumeMapScript(void);
+void RunOnReturnToFieldMapScript(void);
+void RunOnDiveWarpMapScript(void);
+bool8 TryRunOnFrameMapScript(void);
+void TryRunOnWarpIntoMapScript(void);
+u32 CalculateRamScriptChecksum(void);
+void ClearRamScript(void);
+bool8 InitRamScript(const u8 *script, u16 scriptSize, u8 mapGroup, u8 mapNum, u8 objectId);
+const u8 *GetRamScript(u8 objectId, const u8 *script);
+bool32 ValidateSavedRamScript(void);
+u8 *GetSavedRamScriptIfValid(void);
+void InitRamScript_NoObjectEvent(u8 *script, u16 scriptSize);
+
+
+void SetMovingNpcId(u16 npcId);
+# 12 "src/sound.c" 2
+# 1 "include/constants/songs.h" 1
+# 13 "src/sound.c" 2
+# 1 "include/constants/flags.h" 1
+# 14 "src/sound.c" 2
 # 1 "include/task.h" 1
 # 10 "include/task.h"
 typedef void (*TaskFunc)(u8 taskId);
@@ -4709,7 +4946,7 @@ u8 FindTaskIdByFunc(TaskFunc func);
 u8 GetTaskCount(void);
 void SetWordTaskArg(u8 taskId, u8 dataElem, u32 value);
 u32 GetWordTaskArg(u8 taskId, u8 dataElem);
-# 10 "src/sound.c" 2
+# 15 "src/sound.c" 2
 
 struct Fanfare
 {
@@ -5246,9 +5483,131 @@ static void RestoreBGMVolumeAfterPokemonCry(void)
 
 void PlayBGM(u16 songNum)
 {
+ u16 song = RegionalMusicHandler(songNum);
     if (gDisableMusic || songNum == 0xFFFF)
         return;
-    m4aSongNumStart(songNum);
+    m4aSongNumStart(song);
+}
+
+u16 RegionalMusicHandler(u16 songNum)
+{
+ switch(songNum)
+ {
+
+ case 336:
+  if (gSaveBlock2Ptr->optionsMusicGame == 0)
+   return 471;
+  else if(gSaveBlock2Ptr->optionsMusicGame == 1)
+   return 785;
+  else if(gSaveBlock2Ptr->optionsMusicGame == 3)
+   return 632;
+  else
+   return songNum;
+ break;
+
+ case 371:
+  RtcCalcLocalTime();
+  if (gSaveBlock2Ptr->optionsMusicGame == 0)
+   return 469;
+  else if(gSaveBlock2Ptr->optionsMusicGame == 1)
+   return 727;
+  else if(gSaveBlock2Ptr->optionsMusicGame == 3 && IsCurrentlyDay())
+   return 544;
+  else if (gSaveBlock2Ptr->optionsMusicGame == 3 && !IsCurrentlyDay())
+   return 545;
+  else
+   return songNum;
+ break;
+
+ case 385:
+  if(gSaveBlock2Ptr->optionsMusicGame == 3)
+   return 677;
+  else
+   return songNum;
+ break;
+
+ case 428:
+  if (gSaveBlock2Ptr->optionsMusicGame == 0)
+   return 464;
+  else if(gSaveBlock2Ptr->optionsMusicGame == 1)
+   return 721;
+  else if(gSaveBlock2Ptr->optionsMusicGame == 3)
+   return 535;
+  else
+   return songNum;
+ break;
+
+ case 430:
+ if (gSaveBlock2Ptr->optionsMusicGame == 0)
+   return 463;
+  else if(gSaveBlock2Ptr->optionsMusicGame == 1)
+   return 730;
+  else if(gSaveBlock2Ptr->optionsMusicGame == 3)
+   return 549;
+  else
+   return songNum;
+ break;
+
+ case 335:
+ if (gSaveBlock2Ptr->optionsMusicGame == 0)
+   return 441;
+  else if(gSaveBlock2Ptr->optionsMusicGame == 1)
+   return 755;
+  else if(gSaveBlock2Ptr->optionsMusicGame == 3)
+   return 563;
+  else
+   return songNum;
+ break;
+
+ case 431:
+ if (gSaveBlock2Ptr->optionsMusicGame == 0)
+   return 462;
+  else if(gSaveBlock2Ptr->optionsMusicGame == 1)
+   return 756;
+  else if(gSaveBlock2Ptr->optionsMusicGame == 3)
+   return 564;
+  else
+   return songNum;
+ break;
+
+ case 383:
+ if(gSaveBlock2Ptr->optionsMusicGame == 1)
+   return 731;
+  else if(gSaveBlock2Ptr->optionsMusicGame == 3)
+   return 550;
+  else
+   return songNum;
+ break;
+
+ case 325:
+ if(gSaveBlock2Ptr->optionsMusicGame == 1)
+   return 757;
+  else if(gSaveBlock2Ptr->optionsMusicGame == 3)
+   return 565;
+  else
+   return songNum;
+ break;
+
+ case 324:
+ if(gSaveBlock2Ptr->optionsMusicGame == 1)
+   return 723;
+  else if(gSaveBlock2Ptr->optionsMusicGame == 3)
+   return 536;
+  else
+   return songNum;
+ break;
+
+ case 400:
+ if (gSaveBlock2Ptr->optionsMusicGame == 0)
+   return 461;
+  else if(gSaveBlock2Ptr->optionsMusicGame == 1)
+   return 877;
+  else if(gSaveBlock2Ptr->optionsMusicGame == 3)
+   return 619;
+  else
+   return songNum;
+ }
+ return songNum;
 }
 
 void PlaySE(u16 songNum)

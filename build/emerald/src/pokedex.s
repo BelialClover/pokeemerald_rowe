@@ -159702,17 +159702,17 @@ ResetPokedex:
 	ldr	r1, .L8+0xc
 	ldr	r0, [r1]
 	mov	r3, #0x0
-	strb	r2, [r0, #0x19]
+	strb	r2, [r0, #0x1d]
 	ldr	r0, [r1]
-	strb	r2, [r0, #0x18]
+	strb	r2, [r0, #0x1c]
 	ldr	r0, [r1]
-	strb	r2, [r0, #0x1a]
+	strb	r2, [r0, #0x1e]
 	ldr	r0, [r1]
-	strb	r2, [r0, #0x1b]
+	strb	r2, [r0, #0x1f]
 	ldr	r0, [r1]
-	str	r3, [r0, #0x1c]
 	str	r3, [r0, #0x20]
 	str	r3, [r0, #0x24]
+	str	r3, [r0, #0x28]
 	bl	DisableNationalPokedex
 	mov	r1, #0x0
 	ldr	r3, .L8+0x10
@@ -160132,7 +160132,7 @@ CB2_OpenPokedex:
 	ldr	r1, [r4]
 	ldr	r5, .L64+0xc
 	ldr	r0, [r5]
-	ldrb	r0, [r0, #0x19]
+	ldrb	r0, [r0, #0x1d]
 	ldr	r7, .L64+0x10
 	add	r1, r1, r7
 	strh	r0, [r1]
@@ -160147,7 +160147,7 @@ CB2_OpenPokedex:
 .L53:
 	ldr	r1, [r4]
 	ldr	r0, [r5]
-	ldrb	r2, [r0, #0x18]
+	ldrb	r2, [r0, #0x1c]
 	ldr	r3, .L64+0x14
 	add	r0, r1, r3
 	strh	r2, [r0]
@@ -161180,20 +161180,20 @@ Task_ClosePokedex:
 	ldr	r2, .L169+0xc
 	add	r1, r1, r2
 	ldrh	r1, [r1]
-	strb	r1, [r0, #0x19]
+	strb	r1, [r0, #0x1d]
 	bl	IsNationalPokedexEnabled
 	add	r1, r0, #0
 	cmp	r1, #0
 	bne	.L168	@cond_branch
 	ldr	r0, [r4]
-	strb	r1, [r0, #0x19]
+	strb	r1, [r0, #0x1d]
 .L168:
 	ldr	r1, [r4]
 	ldr	r0, [r5]
 	ldr	r2, .L169+0x10
 	add	r0, r0, r2
 	ldrh	r0, [r0]
-	strb	r0, [r1, #0x18]
+	strb	r0, [r1, #0x1c]
 	bl	ClearMonSprites
 	bl	FreeWindowAndBgBuffers
 	add	r0, r6, #0
@@ -171749,7 +171749,7 @@ GetPokedexMonPersonality:
 	bne	.L1458	@cond_branch
 	ldr	r0, .L1465+0x4
 	ldr	r0, [r0]
-	ldr	r0, [r0, #0x20]
+	ldr	r0, [r0, #0x24]
 	b	.L1463
 .L1466:
 	.align	2, 0
@@ -171759,7 +171759,7 @@ GetPokedexMonPersonality:
 .L1464:
 	ldr	r0, .L1467
 	ldr	r0, [r0]
-	ldr	r0, [r0, #0x1c]
+	ldr	r0, [r0, #0x20]
 	b	.L1463
 .L1468:
 	.align	2, 0
@@ -173246,17 +173246,17 @@ Task_HandleSearchMenuInput:
 	bl	GetSearchModeSelection
 	ldr	r4, .L1668+0x14
 	ldr	r1, [r4]
-	strb	r0, [r1, #0x19]
+	strb	r0, [r1, #0x1d]
 	bl	IsNationalPokedexEnabled
 	cmp	r0, #0
 	bne	.L1657	@cond_branch
 	ldr	r1, [r4]
 	mov	r0, #0x0
-	strb	r0, [r1, #0x19]
+	strb	r0, [r1, #0x1d]
 .L1657:
 	ldr	r0, [r7]
 	ldr	r1, [r4]
-	ldrb	r1, [r1, #0x19]
+	ldrb	r1, [r1, #0x1d]
 	ldr	r2, .L1668+0x18
 	add	r0, r0, r2
 	strh	r1, [r0]
@@ -173264,10 +173264,10 @@ Task_HandleSearchMenuInput:
 	mov	r1, #0x4
 	bl	GetSearchModeSelection
 	ldr	r1, [r4]
-	strb	r0, [r1, #0x18]
+	strb	r0, [r1, #0x1c]
 	ldr	r0, [r7]
 	ldr	r1, [r4]
-	ldrb	r1, [r1, #0x18]
+	ldrb	r1, [r1, #0x1c]
 	ldr	r2, .L1668+0x1c
 	add	r0, r0, r2
 	strh	r1, [r0]

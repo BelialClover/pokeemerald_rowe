@@ -1151,3 +1151,9 @@ loop:
 	.include "data/maps/viridian_forest/scripts.inc"
 
 	.include "data/maps/Petalburg_Woods_2/scripts.inc"
+
+	.include "data/maps/PetalburgWoods_House/scripts.inc"
+
+	.include "data/maps/SecretIslet/scripts.inc"
+
+	.include "data/maps/SecretShore/scripts.inc"

@@ -413,7 +413,7 @@ GetGameStat:
 	ldr	r1, .L38+0x8
 	ldr	r1, [r1]
 	ldr	r0, [r0]
-	ldr	r1, [r1, #0x44]
+	ldr	r1, [r1, #0x48]
 	eor	r0, r0, r1
 	b	.L37
 .L39:
@@ -448,7 +448,7 @@ SetGameStat:
 	add	r1, r1, r0
 	ldr	r0, .L42+0x8
 	ldr	r0, [r0]
-	ldr	r0, [r0, #0x44]
+	ldr	r0, [r0, #0x48]
 	eor	r0, r0, r3
 	str	r0, [r1]
 .L41:

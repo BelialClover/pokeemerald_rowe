@@ -2512,7 +2512,7 @@ TrainerCard_GenerateCardForLinkPlayer:
 	.align	2, 0
 .L236:
 	.word	gSaveBlock2Ptr
-	.word	0xe42
+	.word	0xe46
 	.word	gLinkPlayerFacilityClasses
 .L233:
 	ldr	r2, .L238
@@ -2581,7 +2581,7 @@ TrainerCard_GenerateCardForPlayer:
 	.align	2, 0
 .L245:
 	.word	gSaveBlock2Ptr
-	.word	0xe42
+	.word	0xe46
 	.word	gLinkPlayerFacilityClasses
 .L242:
 	ldr	r2, .L247

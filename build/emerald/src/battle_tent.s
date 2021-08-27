@@ -84,23 +84,22 @@ InitVerdanturfTentChallenge:
 	push	{lr}
 	ldr	r1, .L6
 	ldr	r0, [r1]
-	mov	r2, #0xc3
-	lsl	r2, r2, #0x4
+	ldr	r2, .L6+0x4
 	add	r0, r0, r2
 	mov	r2, #0x0
 	strb	r2, [r0]
 	ldr	r1, [r1]
-	ldr	r3, .L6+0x4
+	ldr	r3, .L6+0x8
 	add	r0, r1, r3
 	strh	r2, [r0]
-	ldr	r0, .L6+0x8
+	ldr	r0, .L6+0xc
 	add	r1, r1, r0
 	ldrb	r2, [r1]
 	mov	r0, #0x5
 	neg	r0, r0
 	and	r0, r0, r2
 	strb	r0, [r1]
-	ldr	r0, .L6+0xc
+	ldr	r0, .L6+0x10
 	ldr	r0, [r0]
 	mov	r1, #0x4
 	ldrsb	r1, [r0, r1]
@@ -116,8 +115,9 @@ InitVerdanturfTentChallenge:
 	.align	2, 0
 .L6:
 	.word	gSaveBlock2Ptr
-	.word	0xc3a
-	.word	0xc31
+	.word	0xc34
+	.word	0xc3e
+	.word	0xc35
 	.word	gSaveBlock1Ptr
 .Lfe2:
 	.size	 InitVerdanturfTentChallenge,.Lfe2-InitVerdanturfTentChallenge
@@ -138,7 +138,7 @@ GetVerdanturfTentPrize:
 .L9:
 	.word	gSpecialVar_Result
 	.word	gSaveBlock2Ptr
-	.word	0xdf2
+	.word	0xdf6
 .Lfe3:
 	.size	 GetVerdanturfTentPrize,.Lfe3-GetVerdanturfTentPrize
 	.align	2, 0
@@ -158,7 +158,7 @@ SetVerdanturfTentPrize:
 .L12:
 	.word	gSaveBlock2Ptr
 	.word	gSpecialVar_0x8006
-	.word	0xdf2
+	.word	0xdf6
 .Lfe4:
 	.size	 SetVerdanturfTentPrize,.Lfe4-SetVerdanturfTentPrize
 	.align	2, 0
@@ -227,8 +227,7 @@ SaveVerdanturfTentChallenge:
 	ldr	r0, [r4]
 	ldr	r1, .L22+0x4
 	ldrh	r1, [r1]
-	mov	r2, #0xc3
-	lsl	r2, r2, #0x4
+	ldr	r2, .L22+0x8
 	add	r0, r0, r2
 	strb	r1, [r0]
 	mov	r0, #0x80
@@ -236,7 +235,7 @@ SaveVerdanturfTentChallenge:
 	mov	r1, #0x0
 	bl	VarSet
 	ldr	r1, [r4]
-	ldr	r0, .L22+0x8
+	ldr	r0, .L22+0xc
 	add	r1, r1, r0
 	ldrb	r0, [r1]
 	mov	r2, #0x4
@@ -251,7 +250,8 @@ SaveVerdanturfTentChallenge:
 .L22:
 	.word	gSaveBlock2Ptr
 	.word	gSpecialVar_0x8005
-	.word	0xc31
+	.word	0xc34
+	.word	0xc35
 .Lfe7:
 	.size	 SaveVerdanturfTentChallenge,.Lfe7-SaveVerdanturfTentChallenge
 	.align	2, 0
@@ -275,7 +275,7 @@ SetRandomVerdanturfTentPrize:
 .L25:
 	.word	gSaveBlock2Ptr
 	.word	sVerdanturfTentRewards
-	.word	0xdf2
+	.word	0xdf6
 .Lfe8:
 	.size	 SetRandomVerdanturfTentPrize,.Lfe8-SetRandomVerdanturfTentPrize
 	.align	2, 0
@@ -312,7 +312,7 @@ GiveVerdanturfTentPrize:
 	.align	2, 0
 .L30:
 	.word	gSaveBlock2Ptr
-	.word	0xdf2
+	.word	0xdf6
 	.word	gStringVar1
 	.word	gSpecialVar_Result
 .L28:
@@ -358,23 +358,22 @@ InitFallarborTentChallenge:
 	push	{lr}
 	ldr	r1, .L38
 	ldr	r0, [r1]
-	mov	r2, #0xc3
-	lsl	r2, r2, #0x4
+	ldr	r2, .L38+0x4
 	add	r0, r0, r2
 	mov	r2, #0x0
 	strb	r2, [r0]
 	ldr	r1, [r1]
-	ldr	r3, .L38+0x4
+	ldr	r3, .L38+0x8
 	add	r0, r1, r3
 	strh	r2, [r0]
-	ldr	r0, .L38+0x8
+	ldr	r0, .L38+0xc
 	add	r1, r1, r0
 	ldrb	r2, [r1]
 	mov	r0, #0x5
 	neg	r0, r0
 	and	r0, r0, r2
 	strb	r0, [r1]
-	ldr	r0, .L38+0xc
+	ldr	r0, .L38+0x10
 	ldr	r0, [r0]
 	mov	r1, #0x4
 	ldrsb	r1, [r0, r1]
@@ -390,8 +389,9 @@ InitFallarborTentChallenge:
 	.align	2, 0
 .L38:
 	.word	gSaveBlock2Ptr
-	.word	0xc3a
-	.word	0xc31
+	.word	0xc34
+	.word	0xc3e
+	.word	0xc35
 	.word	gSaveBlock1Ptr
 .Lfe11:
 	.size	 InitFallarborTentChallenge,.Lfe11-InitFallarborTentChallenge
@@ -412,7 +412,7 @@ GetFallarborTentPrize:
 .L41:
 	.word	gSpecialVar_Result
 	.word	gSaveBlock2Ptr
-	.word	0xdf4
+	.word	0xdf8
 .Lfe12:
 	.size	 GetFallarborTentPrize,.Lfe12-GetFallarborTentPrize
 	.align	2, 0
@@ -432,7 +432,7 @@ SetFallarborTentPrize:
 .L44:
 	.word	gSaveBlock2Ptr
 	.word	gSpecialVar_0x8006
-	.word	0xdf4
+	.word	0xdf8
 .Lfe13:
 	.size	 SetFallarborTentPrize,.Lfe13-SetFallarborTentPrize
 	.align	2, 0
@@ -444,8 +444,7 @@ SaveFallarborTentChallenge:
 	ldr	r0, [r4]
 	ldr	r1, .L47+0x4
 	ldrh	r1, [r1]
-	mov	r2, #0xc3
-	lsl	r2, r2, #0x4
+	ldr	r2, .L47+0x8
 	add	r0, r0, r2
 	strb	r1, [r0]
 	mov	r0, #0x80
@@ -453,7 +452,7 @@ SaveFallarborTentChallenge:
 	mov	r1, #0x0
 	bl	VarSet
 	ldr	r1, [r4]
-	ldr	r0, .L47+0x8
+	ldr	r0, .L47+0xc
 	add	r1, r1, r0
 	ldrb	r0, [r1]
 	mov	r2, #0x4
@@ -468,7 +467,8 @@ SaveFallarborTentChallenge:
 .L47:
 	.word	gSaveBlock2Ptr
 	.word	gSpecialVar_0x8005
-	.word	0xc31
+	.word	0xc34
+	.word	0xc35
 .Lfe14:
 	.size	 SaveFallarborTentChallenge,.Lfe14-SaveFallarborTentChallenge
 	.align	2, 0
@@ -492,7 +492,7 @@ SetRandomFallarborTentPrize:
 .L50:
 	.word	gSaveBlock2Ptr
 	.word	sFallarborTentRewards
-	.word	0xdf4
+	.word	0xdf8
 .Lfe15:
 	.size	 SetRandomFallarborTentPrize,.Lfe15-SetRandomFallarborTentPrize
 	.align	2, 0
@@ -529,7 +529,7 @@ GiveFallarborTentPrize:
 	.align	2, 0
 .L55:
 	.word	gSaveBlock2Ptr
-	.word	0xdf4
+	.word	0xdf8
 	.word	gStringVar1
 	.word	gSpecialVar_Result
 .L53:
@@ -593,23 +593,22 @@ InitSlateportTentChallenge:
 	push	{lr}
 	ldr	r1, .L66
 	ldr	r0, [r1]
-	mov	r2, #0xc3
-	lsl	r2, r2, #0x4
+	ldr	r2, .L66+0x4
 	add	r0, r0, r2
 	mov	r2, #0x0
 	strb	r2, [r0]
 	ldr	r1, [r1]
-	ldr	r3, .L66+0x4
+	ldr	r3, .L66+0x8
 	add	r0, r1, r3
 	strh	r2, [r0]
-	ldr	r0, .L66+0x8
+	ldr	r0, .L66+0xc
 	add	r1, r1, r0
 	ldrb	r2, [r1]
 	mov	r0, #0x5
 	neg	r0, r0
 	and	r0, r0, r2
 	strb	r0, [r1]
-	ldr	r0, .L66+0xc
+	ldr	r0, .L66+0x10
 	ldr	r0, [r0]
 	mov	r1, #0x4
 	ldrsb	r1, [r0, r1]
@@ -625,8 +624,9 @@ InitSlateportTentChallenge:
 	.align	2, 0
 .L66:
 	.word	gSaveBlock2Ptr
-	.word	0xc3a
-	.word	0xc31
+	.word	0xc34
+	.word	0xc3e
+	.word	0xc35
 	.word	gSaveBlock1Ptr
 .Lfe19:
 	.size	 InitSlateportTentChallenge,.Lfe19-InitSlateportTentChallenge
@@ -647,7 +647,7 @@ GetSlateportTentPrize:
 .L69:
 	.word	gSpecialVar_Result
 	.word	gSaveBlock2Ptr
-	.word	0xdf6
+	.word	0xdfa
 .Lfe20:
 	.size	 GetSlateportTentPrize,.Lfe20-GetSlateportTentPrize
 	.align	2, 0
@@ -667,7 +667,7 @@ SetSlateportTentPrize:
 .L72:
 	.word	gSaveBlock2Ptr
 	.word	gSpecialVar_0x8006
-	.word	0xdf6
+	.word	0xdfa
 .Lfe21:
 	.size	 SetSlateportTentPrize,.Lfe21-SetSlateportTentPrize
 	.align	2, 0
@@ -679,8 +679,7 @@ SaveSlateportTentChallenge:
 	ldr	r0, [r4]
 	ldr	r1, .L75+0x4
 	ldrh	r1, [r1]
-	mov	r2, #0xc3
-	lsl	r2, r2, #0x4
+	ldr	r2, .L75+0x8
 	add	r0, r0, r2
 	strb	r1, [r0]
 	mov	r0, #0x80
@@ -688,7 +687,7 @@ SaveSlateportTentChallenge:
 	mov	r1, #0x0
 	bl	VarSet
 	ldr	r1, [r4]
-	ldr	r0, .L75+0x8
+	ldr	r0, .L75+0xc
 	add	r1, r1, r0
 	ldrb	r0, [r1]
 	mov	r2, #0x4
@@ -703,7 +702,8 @@ SaveSlateportTentChallenge:
 .L75:
 	.word	gSaveBlock2Ptr
 	.word	gSpecialVar_0x8005
-	.word	0xc31
+	.word	0xc34
+	.word	0xc35
 .Lfe22:
 	.size	 SaveSlateportTentChallenge,.Lfe22-SaveSlateportTentChallenge
 	.align	2, 0
@@ -727,7 +727,7 @@ SetRandomSlateportTentPrize:
 .L78:
 	.word	gSaveBlock2Ptr
 	.word	sSlateportTentRewards
-	.word	0xdf6
+	.word	0xdfa
 .Lfe23:
 	.size	 SetRandomSlateportTentPrize,.Lfe23-SetRandomSlateportTentPrize
 	.align	2, 0
@@ -764,7 +764,7 @@ GiveSlateportTentPrize:
 	.align	2, 0
 .L83:
 	.word	gSaveBlock2Ptr
-	.word	0xdf6
+	.word	0xdfa
 	.word	gStringVar1
 	.word	gSpecialVar_Result
 .L81:
@@ -889,7 +889,7 @@ GenerateInitialRentalMons:
 	bl	Random
 	lsl	r0, r0, #0x10
 	lsr	r0, r0, #0x10
-	mov	r1, #0x46
+	mov	r1, #0x7
 	bl	__umodsi3
 	lsl	r0, r0, #0x10
 	lsr	r5, r0, #0x10
@@ -1031,7 +1031,7 @@ GenerateInitialRentalMons:
 	.align	2, 0
 .L123:
 	.word	gSaveBlock2Ptr
-	.word	0xdf8
+	.word	0xdfc
 	.word	gFacilityTrainerMons
 	.word	gBattleFrontierHeldItems
 .Lfe28:
@@ -1075,7 +1075,8 @@ GenerateOpponentMons:
 	ldrh	r0, [r0]
 	cmp	r5, r0
 	bge	.L131	@cond_branch
-	ldr	r2, .L172+0x1c
+	mov	r2, #0xc4
+	lsl	r2, r2, #0x4
 	add	r0, r1, r2
 	ldrh	r0, [r0]
 	cmp	r0, r3
@@ -1101,7 +1102,7 @@ GenerateOpponentMons:
 	ldrh	r0, [r0]
 	cmp	r5, r0
 	bne	.L129	@cond_branch
-	ldr	r2, .L172+0x20
+	ldr	r2, .L172+0x1c
 	strh	r3, [r2]
 	ldrh	r3, [r2]
 	ldr	r4, .L172
@@ -1138,8 +1139,7 @@ GenerateOpponentMons:
 	.word	gSlateportBattleTentMons
 	.word	gSaveBlock2Ptr
 	.word	0xffff
-	.word	0xc3a
-	.word	0xc3c
+	.word	0xc3e
 	.word	gTrainerBattleOpponent_A
 .L127:
 	ldr	r0, .L174
@@ -1150,7 +1150,8 @@ GenerateOpponentMons:
 	cmp	r0, #0x1
 	bhi	.L146	@cond_branch
 	lsl	r0, r0, #0x1
-	ldr	r3, .L174+0x8
+	mov	r3, #0xc4
+	lsl	r3, r3, #0x4
 	add	r1, r1, r3
 	add	r1, r1, r0
 	ldrh	r0, [r2]
@@ -1164,7 +1165,7 @@ GenerateOpponentMons:
 	ldr	r0, [r0, #0x30]
 	mov	r9, r0
 	mov	r5, #0x0
-	ldr	r7, .L174+0xc
+	ldr	r7, .L174+0x8
 	mov	r8, sp
 .L149:
 	bl	Random
@@ -1178,7 +1179,7 @@ GenerateOpponentMons:
 	strh	r0, [r7]
 	mov	r2, #0x0
 	ldrh	r0, [r7]
-	ldr	r4, .L174+0x10
+	ldr	r4, .L174+0xc
 	ldr	r3, [r4]
 	lsl	r0, r0, #0x4
 	add	r0, r0, r3
@@ -1186,7 +1187,7 @@ GenerateOpponentMons:
 	ldrh	r6, [r0]
 	ldr	r1, [r1]
 .L153:
-	ldr	r4, .L174+0x14
+	ldr	r4, .L174+0x10
 	add	r0, r1, r4
 	ldrh	r0, [r0]
 	lsl	r0, r0, #0x4
@@ -1208,8 +1209,8 @@ GenerateOpponentMons:
 	ldrh	r0, [r0]
 	cmp	r0, r6
 	beq	.L158	@cond_branch
-	ldr	r6, .L174+0xc
-	ldr	r3, .L174+0x10
+	ldr	r6, .L174+0x8
+	ldr	r3, .L174+0xc
 	mov	r2, sp
 .L159:
 	add	r2, r2, #0x2
@@ -1230,16 +1231,16 @@ GenerateOpponentMons:
 	mov	r4, #0x0
 	cmp	r4, r5
 	bge	.L165	@cond_branch
-	ldr	r6, .L174+0x18
+	ldr	r6, .L174+0x14
 	mov	ip, r6
 	add	r3, sp, #0x8
 .L167:
 	ldrh	r2, [r3]
 	cmp	r2, #0
 	beq	.L166	@cond_branch
-	ldr	r1, .L174+0xc
+	ldr	r1, .L174+0x8
 	ldrh	r0, [r1]
-	ldr	r6, .L174+0x10
+	ldr	r6, .L174+0xc
 	ldr	r1, [r6]
 	lsl	r0, r0, #0x4
 	add	r0, r0, r1
@@ -1259,7 +1260,7 @@ GenerateOpponentMons:
 	bne	.L147	@cond_branch
 	lsl	r2, r5, #0x1
 	ldrh	r0, [r7]
-	ldr	r1, .L174+0x10
+	ldr	r1, .L174+0xc
 	ldr	r4, [r1]
 	lsl	r0, r0, #0x4
 	add	r0, r0, r4
@@ -1268,7 +1269,7 @@ GenerateOpponentMons:
 	strh	r0, [r3]
 	add	r1, sp, #0x8
 	add	r1, r1, r2
-	ldr	r3, .L174+0x18
+	ldr	r3, .L174+0x14
 	ldrh	r0, [r7]
 	lsl	r0, r0, #0x4
 	add	r0, r0, r4
@@ -1277,7 +1278,7 @@ GenerateOpponentMons:
 	add	r0, r0, r3
 	ldrh	r0, [r0]
 	strh	r0, [r1]
-	ldr	r0, .L174+0x1c
+	ldr	r0, .L174+0x18
 	add	r2, r2, r0
 	ldrh	r0, [r7]
 	strh	r0, [r2]
@@ -1299,11 +1300,10 @@ GenerateOpponentMons:
 	.align	2, 0
 .L174:
 	.word	gSaveBlock2Ptr
-	.word	0xc3a
-	.word	0xc3c
+	.word	0xc3e
 	.word	sRandMonSetId
 	.word	gFacilityTrainerMons
-	.word	0xdf8
+	.word	0xdfc
 	.word	gBattleFrontierHeldItems
 	.word	gFrontierTempParty
 .Lfe29:

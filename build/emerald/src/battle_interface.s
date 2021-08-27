@@ -5871,10 +5871,14 @@ Task_HidePartyStatusSummary:
 .LCB5092:
 	ldr	r0, .L477+0x4
 	ldr	r0, [r0]
-	ldrb	r1, [r0, #0x17]
-	mov	r0, #0xc
+	ldrb	r2, [r0, #0x17]
+	lsr	r2, r2, #0x7
+	ldrb	r0, [r0, #0x18]
+	mov	r1, #0x1
 	and	r0, r0, r1
-	cmp	r0, #0x4
+	lsl	r0, r0, #0x1
+	orr	r0, r0, r2
+	cmp	r0, #0x1
 	bne	.L455	@cond_branch
 	ldr	r3, .L477+0x8
 	ldr	r0, [r3]
@@ -6041,9 +6045,9 @@ Task_HidePartyStatusSummary:
 	orr	r0, r0, r1
 	strb	r0, [r2, #0x1]
 	cmp	r7, #0
-	bne	.LCB5309
+	bne	.LCB5316
 	b	.L468	@long jump
-.LCB5309:
+.LCB5316:
 	mov	r5, #0x0
 	mov	r6, ip
 	mov	sl, r5
@@ -7606,9 +7610,9 @@ UpdateHealthboxAttribute:
 	bl	GetBattlerSide
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.LCB7259
+	beq	.LCB7266
 	b	.L683	@long jump
-.LCB7259:
+.LCB7266:
 	cmp	r7, #0x3
 	beq	.L685	@cond_branch
 	cmp	r7, #0
@@ -7974,8 +7978,8 @@ MoveBattleBar:
 	str	r1, [sp, #0x10]
 	ldr	r0, .L741
 	ldr	r0, [r0]
-	ldrb	r0, [r0, #0x16]
-	lsl	r6, r0, #0x1c
+	ldrh	r0, [r0, #0x16]
+	lsl	r6, r0, #0x17
 	lsr	r0, r6, #0x1c
 	cmp	r0, #0x9
 	bls	.L720	@cond_branch
@@ -7995,8 +7999,8 @@ MoveBattleBar:
 	str	r2, [sp, #0x10]
 	ldr	r0, .L743
 	ldr	r0, [r0]
-	ldrb	r0, [r0, #0x16]
-	lsl	r6, r0, #0x1c
+	ldrh	r0, [r0, #0x16]
+	lsl	r6, r0, #0x17
 	lsr	r0, r6, #0x1c
 	cmp	r0, #0x9
 	bls	.L722	@cond_branch
@@ -8014,7 +8018,8 @@ MoveBattleBar:
 	add	r1, r2, r1
 	lsl	r1, r1, #0x2
 	add	r1, r1, r0
-	lsr	r0, r6, #0x1b
+	lsr	r0, r6, #0x1c
+	lsl	r0, r0, #0x1
 	ldrb	r1, [r1, #0x1]
 	add	r0, r0, r1
 	add	r0, r0, r8
@@ -12824,7 +12829,7 @@ CanThrowLastUsedBall:
 	bne	.L985	@cond_branch
 	ldr	r0, .L986+0x4
 	ldr	r0, [r0]
-	ldrh	r0, [r0, #0x28]
+	ldrh	r0, [r0, #0x2c]
 	mov	r1, #0x1
 	bl	CheckBagHasItem
 	lsl	r0, r0, #0x18
@@ -12852,7 +12857,7 @@ TryAddLastUsedBallItemSprites:
 	push	{r4, r5, r6, r7, lr}
 	ldr	r5, .L995
 	ldr	r1, [r5]
-	ldrh	r0, [r1, #0x28]
+	ldrh	r0, [r1, #0x2c]
 	cmp	r0, #0
 	beq	.L989	@cond_branch
 	mov	r1, #0x1
@@ -12866,7 +12871,7 @@ TryAddLastUsedBallItemSprites:
 	ldr	r1, [r5]
 	ldr	r0, [r4]
 	ldrh	r0, [r0]
-	strh	r0, [r1, #0x28]
+	strh	r0, [r1, #0x2c]
 .L989:
 	bl	CanThrowBall
 	cmp	r0, #0
@@ -12879,7 +12884,7 @@ TryAddLastUsedBallItemSprites:
 	bne	.L988	@cond_branch
 	ldr	r6, .L995
 	ldr	r0, [r6]
-	ldrh	r0, [r0, #0x28]
+	ldrh	r0, [r0, #0x2c]
 	mov	r1, #0x1
 	bl	CheckBagHasItem
 	lsl	r0, r0, #0x18
@@ -12893,7 +12898,7 @@ TryAddLastUsedBallItemSprites:
 	cmp	r0, #0x40
 	bne	.L992	@cond_branch
 	ldr	r0, [r6]
-	ldrh	r2, [r0, #0x28]
+	ldrh	r2, [r0, #0x2c]
 	mov	r0, #0x66
 	mov	r1, #0x66
 	bl	AddItemIconSprite

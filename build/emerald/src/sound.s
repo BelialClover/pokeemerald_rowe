@@ -66,9 +66,9 @@ InitMapMusic:
 	ldr	r0, .L4+0x4
 	ldr	r0, [r0]
 	ldrb	r1, [r0, #0x15]
-	mov	r0, #0x3
+	mov	r0, #0x60
 	and	r0, r0, r1
-	cmp	r0, #0x2
+	cmp	r0, #0x40
 	bne	.L3	@cond_branch
 	mov	r2, #0x1
 .L3:
@@ -1529,7 +1529,11 @@ RestoreBGMVolumeAfterPokemonCry:
 	.type	 PlayBGM,function
 	.thumb_func
 PlayBGM:
-	push	{lr}
+	push	{r4, lr}
+	lsl	r0, r0, #0x10
+	lsr	r4, r0, #0x10
+	add	r0, r4, #0
+	bl	RegionalMusicHandler
 	lsl	r0, r0, #0x10
 	lsr	r1, r0, #0x10
 	ldr	r0, .L245
@@ -1537,11 +1541,12 @@ PlayBGM:
 	cmp	r0, #0
 	bne	.L242	@cond_branch
 	ldr	r0, .L245+0x4
-	cmp	r1, r0
+	cmp	r4, r0
 	beq	.L242	@cond_branch
 	add	r0, r1, #0
 	bl	m4aSongNumStart
 .L242:
+	pop	{r4}
 	pop	{r0}
 	bx	r0
 .L246:
@@ -1552,6 +1557,490 @@ PlayBGM:
 .Lfe39:
 	.size	 PlayBGM,.Lfe39-PlayBGM
 	.align	2, 0
+	.globl	RegionalMusicHandler
+	.type	 RegionalMusicHandler,function
+	.thumb_func
+RegionalMusicHandler:
+	push	{r4, r5, r6, lr}
+	lsl	r0, r0, #0x10
+	lsr	r4, r0, #0x10
+	ldr	r1, .L321
+	add	r0, r4, r1
+	cmp	r0, #0x6b
+	bls	.LCB1819
+	b	.L248	@long jump
+.LCB1819:
+	lsl	r0, r0, #0x2
+	ldr	r1, .L321+0x4
+	add	r0, r0, r1
+	ldr	r0, [r0]
+	mov	pc, r0
+.L322:
+	.align	2, 0
+.L321:
+	.word	-0x144
+	.word	.L318
+	.align	2, 0
+	.align	2, 0
+.L318:
+	.word	.L306
+	.word	.L301
+	.word	.L248
+	.word	.L248
+	.word	.L248
+	.word	.L248
+	.word	.L248
+	.word	.L248
+	.word	.L248
+	.word	.L248
+	.word	.L248
+	.word	.L282
+	.word	.L249
+	.word	.L248
+	.word	.L248
+	.word	.L248
+	.word	.L248
+	.word	.L248
+	.word	.L248
+	.word	.L248
+	.word	.L248
+	.word	.L248
+	.word	.L248
+	.word	.L248
+	.word	.L248
+	.word	.L248
+	.word	.L248
+	.word	.L248
+	.word	.L248
+	.word	.L248
+	.word	.L248
+	.word	.L248
+	.word	.L248
+	.word	.L248
+	.word	.L248
+	.word	.L248
+	.word	.L248
+	.word	.L248
+	.word	.L248
+	.word	.L248
+	.word	.L248
+	.word	.L248
+	.word	.L248
+	.word	.L248
+	.word	.L248
+	.word	.L248
+	.word	.L248
+	.word	.L256
+	.word	.L248
+	.word	.L248
+	.word	.L248
+	.word	.L248
+	.word	.L248
+	.word	.L248
+	.word	.L248
+	.word	.L248
+	.word	.L248
+	.word	.L248
+	.word	.L248
+	.word	.L296
+	.word	.L248
+	.word	.L265
+	.word	.L248
+	.word	.L248
+	.word	.L248
+	.word	.L248
+	.word	.L248
+	.word	.L248
+	.word	.L248
+	.word	.L248
+	.word	.L248
+	.word	.L248
+	.word	.L248
+	.word	.L248
+	.word	.L248
+	.word	.L248
+	.word	.L311
+	.word	.L248
+	.word	.L248
+	.word	.L248
+	.word	.L248
+	.word	.L248
+	.word	.L248
+	.word	.L248
+	.word	.L248
+	.word	.L248
+	.word	.L248
+	.word	.L248
+	.word	.L248
+	.word	.L248
+	.word	.L248
+	.word	.L248
+	.word	.L248
+	.word	.L248
+	.word	.L248
+	.word	.L248
+	.word	.L248
+	.word	.L248
+	.word	.L248
+	.word	.L248
+	.word	.L248
+	.word	.L248
+	.word	.L248
+	.word	.L248
+	.word	.L268
+	.word	.L248
+	.word	.L275
+	.word	.L289
+.L249:
+	ldr	r0, .L323
+	ldr	r0, [r0]
+	ldrb	r0, [r0, #0x15]
+	mov	r1, #0x1f
+	and	r1, r1, r0
+	cmp	r1, #0
+	bne	.L250	@cond_branch
+	ldr	r0, .L323+0x4
+	b	.L320
+.L324:
+	.align	2, 0
+.L323:
+	.word	gSaveBlock2Ptr
+	.word	0x1d7
+.L250:
+	cmp	r1, #0x1
+	bne	.L252	@cond_branch
+	ldr	r0, .L325
+	b	.L320
+.L326:
+	.align	2, 0
+.L325:
+	.word	0x311
+.L252:
+	cmp	r1, #0x3
+	beq	.LCB1872
+	b	.L248	@long jump
+.LCB1872:
+	mov	r0, #0x9e
+	lsl	r0, r0, #0x2
+	b	.L320
+.L256:
+	bl	RtcCalcLocalTime
+	ldr	r5, .L327
+	ldr	r0, [r5]
+	ldrb	r0, [r0, #0x15]
+	mov	r6, #0x1f
+	add	r1, r6, #0
+	and	r1, r1, r0
+	cmp	r1, #0
+	bne	.L257	@cond_branch
+	ldr	r0, .L327+0x4
+	b	.L320
+.L328:
+	.align	2, 0
+.L327:
+	.word	gSaveBlock2Ptr
+	.word	0x1d5
+.L257:
+	cmp	r1, #0x1
+	bne	.L259	@cond_branch
+	ldr	r0, .L329
+	b	.L320
+.L330:
+	.align	2, 0
+.L329:
+	.word	0x2d7
+.L259:
+	cmp	r1, #0x3
+	beq	.LCB1913
+	b	.L248	@long jump
+.LCB1913:
+	bl	IsCurrentlyDay
+	lsl	r0, r0, #0x18
+	cmp	r0, #0
+	beq	.L261	@cond_branch
+	mov	r0, #0x88
+	lsl	r0, r0, #0x2
+	b	.L320
+.L261:
+	ldr	r0, [r5]
+	ldrb	r1, [r0, #0x15]
+	add	r0, r6, #0
+	and	r0, r0, r1
+	cmp	r0, #0x3
+	beq	.LCB1932
+	b	.L248	@long jump
+.LCB1932:
+	bl	IsCurrentlyDay
+	lsl	r0, r0, #0x18
+	cmp	r0, #0
+	beq	.LCB1938
+	b	.L248	@long jump
+.LCB1938:
+	ldr	r0, .L331
+	b	.L320
+.L332:
+	.align	2, 0
+.L331:
+	.word	0x221
+.L265:
+	ldr	r0, .L333
+	ldr	r0, [r0]
+	ldrb	r1, [r0, #0x15]
+	mov	r0, #0x1f
+	and	r0, r0, r1
+	cmp	r0, #0x3
+	beq	.LCB1957
+	b	.L248	@long jump
+.LCB1957:
+	ldr	r0, .L333+0x4
+	b	.L320
+.L334:
+	.align	2, 0
+.L333:
+	.word	gSaveBlock2Ptr
+	.word	0x2a5
+.L268:
+	ldr	r0, .L335
+	ldr	r0, [r0]
+	ldrb	r0, [r0, #0x15]
+	mov	r1, #0x1f
+	and	r1, r1, r0
+	cmp	r1, #0
+	bne	.L269	@cond_branch
+	mov	r0, #0xe8
+	lsl	r0, r0, #0x1
+	b	.L320
+.L336:
+	.align	2, 0
+.L335:
+	.word	gSaveBlock2Ptr
+.L269:
+	cmp	r1, #0x1
+	bne	.L271	@cond_branch
+	ldr	r0, .L337
+	b	.L320
+.L338:
+	.align	2, 0
+.L337:
+	.word	0x2d1
+.L271:
+	cmp	r1, #0x3
+	beq	.LCB2002
+	b	.L248	@long jump
+.LCB2002:
+	ldr	r0, .L339
+	b	.L320
+.L340:
+	.align	2, 0
+.L339:
+	.word	0x217
+.L275:
+	ldr	r0, .L341
+	ldr	r0, [r0]
+	ldrb	r0, [r0, #0x15]
+	mov	r1, #0x1f
+	and	r1, r1, r0
+	cmp	r1, #0
+	bne	.L276	@cond_branch
+	ldr	r0, .L341+0x4
+	b	.L320
+.L342:
+	.align	2, 0
+.L341:
+	.word	gSaveBlock2Ptr
+	.word	0x1cf
+.L276:
+	cmp	r1, #0x1
+	bne	.L278	@cond_branch
+	ldr	r0, .L343
+	b	.L320
+.L344:
+	.align	2, 0
+.L343:
+	.word	0x2da
+.L278:
+	cmp	r1, #0x3
+	beq	.LCB2046
+	b	.L248	@long jump
+.LCB2046:
+	ldr	r0, .L345
+	b	.L320
+.L346:
+	.align	2, 0
+.L345:
+	.word	0x225
+.L282:
+	ldr	r0, .L347
+	ldr	r0, [r0]
+	ldrb	r0, [r0, #0x15]
+	mov	r1, #0x1f
+	and	r1, r1, r0
+	cmp	r1, #0
+	bne	.L283	@cond_branch
+	ldr	r0, .L347+0x4
+	b	.L320
+.L348:
+	.align	2, 0
+.L347:
+	.word	gSaveBlock2Ptr
+	.word	0x1b9
+.L283:
+	cmp	r1, #0x1
+	bne	.L285	@cond_branch
+	ldr	r0, .L349
+	b	.L320
+.L350:
+	.align	2, 0
+.L349:
+	.word	0x2f3
+.L285:
+	cmp	r1, #0x3
+	bne	.L248	@cond_branch
+	ldr	r0, .L351
+	b	.L320
+.L352:
+	.align	2, 0
+.L351:
+	.word	0x233
+.L289:
+	ldr	r0, .L353
+	ldr	r0, [r0]
+	ldrb	r0, [r0, #0x15]
+	mov	r1, #0x1f
+	and	r1, r1, r0
+	cmp	r1, #0
+	bne	.L290	@cond_branch
+	mov	r0, #0xe7
+	lsl	r0, r0, #0x1
+	b	.L320
+.L354:
+	.align	2, 0
+.L353:
+	.word	gSaveBlock2Ptr
+.L290:
+	cmp	r1, #0x1
+	bne	.L292	@cond_branch
+	mov	r0, #0xbd
+	lsl	r0, r0, #0x2
+	b	.L320
+.L292:
+	cmp	r1, #0x3
+	bne	.L248	@cond_branch
+	mov	r0, #0x8d
+	lsl	r0, r0, #0x2
+	b	.L320
+.L296:
+	ldr	r0, .L355
+	ldr	r0, [r0]
+	ldrb	r0, [r0, #0x15]
+	mov	r1, #0x1f
+	and	r1, r1, r0
+	cmp	r1, #0x1
+	bne	.L297	@cond_branch
+	ldr	r0, .L355+0x4
+	b	.L320
+.L356:
+	.align	2, 0
+.L355:
+	.word	gSaveBlock2Ptr
+	.word	0x2db
+.L297:
+	cmp	r1, #0x3
+	bne	.L248	@cond_branch
+	ldr	r0, .L357
+	b	.L320
+.L358:
+	.align	2, 0
+.L357:
+	.word	0x226
+.L301:
+	ldr	r0, .L359
+	ldr	r0, [r0]
+	ldrb	r0, [r0, #0x15]
+	mov	r1, #0x1f
+	and	r1, r1, r0
+	cmp	r1, #0x1
+	bne	.L302	@cond_branch
+	ldr	r0, .L359+0x4
+	b	.L320
+.L360:
+	.align	2, 0
+.L359:
+	.word	gSaveBlock2Ptr
+	.word	0x2f5
+.L302:
+	cmp	r1, #0x3
+	bne	.L248	@cond_branch
+	ldr	r0, .L361
+	b	.L320
+.L362:
+	.align	2, 0
+.L361:
+	.word	0x235
+.L306:
+	ldr	r0, .L363
+	ldr	r0, [r0]
+	ldrb	r0, [r0, #0x15]
+	mov	r1, #0x1f
+	and	r1, r1, r0
+	cmp	r1, #0x1
+	bne	.L307	@cond_branch
+	ldr	r0, .L363+0x4
+	b	.L320
+.L364:
+	.align	2, 0
+.L363:
+	.word	gSaveBlock2Ptr
+	.word	0x2d3
+.L307:
+	cmp	r1, #0x3
+	bne	.L248	@cond_branch
+	mov	r0, #0x86
+	lsl	r0, r0, #0x2
+	b	.L320
+.L311:
+	ldr	r0, .L365
+	ldr	r0, [r0]
+	ldrb	r0, [r0, #0x15]
+	mov	r1, #0x1f
+	and	r1, r1, r0
+	cmp	r1, #0
+	bne	.L312	@cond_branch
+	ldr	r0, .L365+0x4
+	b	.L320
+.L366:
+	.align	2, 0
+.L365:
+	.word	gSaveBlock2Ptr
+	.word	0x1cd
+.L312:
+	cmp	r1, #0x1
+	bne	.L314	@cond_branch
+	ldr	r0, .L367
+	b	.L320
+.L368:
+	.align	2, 0
+.L367:
+	.word	0x36d
+.L314:
+	cmp	r1, #0x3
+	bne	.L316	@cond_branch
+	ldr	r0, .L369
+	b	.L320
+.L370:
+	.align	2, 0
+.L369:
+	.word	0x26b
+.L316:
+.L248:
+	add	r0, r4, #0
+.L320:
+	pop	{r4, r5, r6}
+	pop	{r1}
+	bx	r1
+.Lfe40:
+	.size	 RegionalMusicHandler,.Lfe40-RegionalMusicHandler
+	.align	2, 0
 	.globl	PlaySE
 	.type	 PlaySE,function
 	.thumb_func
@@ -1559,21 +2048,21 @@ PlaySE:
 	push	{lr}
 	lsl	r0, r0, #0x10
 	lsr	r1, r0, #0x10
-	ldr	r0, .L249
+	ldr	r0, .L373
 	ldrb	r0, [r0]
 	cmp	r0, #0
-	bne	.L247	@cond_branch
+	bne	.L371	@cond_branch
 	add	r0, r1, #0
 	bl	m4aSongNumStart
-.L247:
+.L371:
 	pop	{r0}
 	bx	r0
-.L250:
+.L374:
 	.align	2, 0
-.L249:
+.L373:
 	.word	gDisableMusic
-.Lfe40:
-	.size	 PlaySE,.Lfe40-PlaySE
+.Lfe41:
+	.size	 PlaySE,.Lfe41-PlaySE
 	.align	2, 0
 	.globl	PlaySE12WithPanning
 	.type	 PlaySE12WithPanning,function
@@ -1586,19 +2075,19 @@ PlaySE12WithPanning:
 	lsr	r2, r0, #0x10
 	lsl	r1, r1, #0x18
 	lsr	r4, r1, #0x18
-	ldr	r0, .L253
+	ldr	r0, .L377
 	ldrb	r0, [r0]
 	cmp	r0, #0
-	bne	.L251	@cond_branch
+	bne	.L375	@cond_branch
 	add	r0, r2, #0
 	bl	m4aSongNumStart
-	ldr	r6, .L253+0x4
+	ldr	r6, .L377+0x4
 	add	r0, r6, #0
 	bl	m4aMPlayImmInit
-	ldr	r0, .L253+0x8
+	ldr	r0, .L377+0x8
 	mov	r8, r0
 	bl	m4aMPlayImmInit
-	ldr	r5, .L253+0xc
+	ldr	r5, .L377+0xc
 	lsl	r4, r4, #0x18
 	asr	r4, r4, #0x18
 	add	r0, r6, #0
@@ -1609,21 +2098,21 @@ PlaySE12WithPanning:
 	add	r1, r5, #0
 	add	r2, r4, #0
 	bl	m4aMPlayPanpotControl
-.L251:
+.L375:
 	pop	{r3}
 	mov	r8, r3
 	pop	{r4, r5, r6}
 	pop	{r0}
 	bx	r0
-.L254:
+.L378:
 	.align	2, 0
-.L253:
+.L377:
 	.word	gDisableMusic
 	.word	gMPlayInfo_SE1
 	.word	gMPlayInfo_SE2
 	.word	0xffff
-.Lfe41:
-	.size	 PlaySE12WithPanning,.Lfe41-PlaySE12WithPanning
+.Lfe42:
+	.size	 PlaySE12WithPanning,.Lfe42-PlaySE12WithPanning
 	.align	2, 0
 	.globl	PlaySE1WithPanning
 	.type	 PlaySE1WithPanning,function
@@ -1634,32 +2123,32 @@ PlaySE1WithPanning:
 	lsr	r2, r0, #0x10
 	lsl	r1, r1, #0x18
 	lsr	r5, r1, #0x18
-	ldr	r0, .L257
+	ldr	r0, .L381
 	ldrb	r0, [r0]
 	cmp	r0, #0
-	bne	.L255	@cond_branch
+	bne	.L379	@cond_branch
 	add	r0, r2, #0
 	bl	m4aSongNumStart
-	ldr	r4, .L257+0x4
+	ldr	r4, .L381+0x4
 	add	r0, r4, #0
 	bl	m4aMPlayImmInit
-	ldr	r1, .L257+0x8
+	ldr	r1, .L381+0x8
 	lsl	r2, r5, #0x18
 	asr	r2, r2, #0x18
 	add	r0, r4, #0
 	bl	m4aMPlayPanpotControl
-.L255:
+.L379:
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.L258:
+.L382:
 	.align	2, 0
-.L257:
+.L381:
 	.word	gDisableMusic
 	.word	gMPlayInfo_SE1
 	.word	0xffff
-.Lfe42:
-	.size	 PlaySE1WithPanning,.Lfe42-PlaySE1WithPanning
+.Lfe43:
+	.size	 PlaySE1WithPanning,.Lfe43-PlaySE1WithPanning
 	.align	2, 0
 	.globl	PlaySE2WithPanning
 	.type	 PlaySE2WithPanning,function
@@ -1670,32 +2159,32 @@ PlaySE2WithPanning:
 	lsr	r2, r0, #0x10
 	lsl	r1, r1, #0x18
 	lsr	r5, r1, #0x18
-	ldr	r0, .L261
+	ldr	r0, .L385
 	ldrb	r0, [r0]
 	cmp	r0, #0
-	bne	.L259	@cond_branch
+	bne	.L383	@cond_branch
 	add	r0, r2, #0
 	bl	m4aSongNumStart
-	ldr	r4, .L261+0x4
+	ldr	r4, .L385+0x4
 	add	r0, r4, #0
 	bl	m4aMPlayImmInit
-	ldr	r1, .L261+0x8
+	ldr	r1, .L385+0x8
 	lsl	r2, r5, #0x18
 	asr	r2, r2, #0x18
 	add	r0, r4, #0
 	bl	m4aMPlayPanpotControl
-.L259:
+.L383:
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.L262:
+.L386:
 	.align	2, 0
-.L261:
+.L385:
 	.word	gDisableMusic
 	.word	gMPlayInfo_SE2
 	.word	0xffff
-.Lfe43:
-	.size	 PlaySE2WithPanning,.Lfe43-PlaySE2WithPanning
+.Lfe44:
+	.size	 PlaySE2WithPanning,.Lfe44-PlaySE2WithPanning
 	.align	2, 0
 	.globl	SE12PanpotControl
 	.type	 SE12PanpotControl,function
@@ -1703,128 +2192,128 @@ PlaySE2WithPanning:
 SE12PanpotControl:
 	push	{r4, r5, lr}
 	add	r4, r0, #0
-	ldr	r0, .L264
-	ldr	r5, .L264+0x4
+	ldr	r0, .L388
+	ldr	r5, .L388+0x4
 	lsl	r4, r4, #0x18
 	asr	r4, r4, #0x18
 	add	r1, r5, #0
 	add	r2, r4, #0
 	bl	m4aMPlayPanpotControl
-	ldr	r0, .L264+0x8
+	ldr	r0, .L388+0x8
 	add	r1, r5, #0
 	add	r2, r4, #0
 	bl	m4aMPlayPanpotControl
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.L265:
+.L389:
 	.align	2, 0
-.L264:
+.L388:
 	.word	gMPlayInfo_SE1
 	.word	0xffff
 	.word	gMPlayInfo_SE2
-.Lfe44:
-	.size	 SE12PanpotControl,.Lfe44-SE12PanpotControl
+.Lfe45:
+	.size	 SE12PanpotControl,.Lfe45-SE12PanpotControl
 	.align	2, 0
 	.globl	IsSEPlaying
 	.type	 IsSEPlaying,function
 	.thumb_func
 IsSEPlaying:
 	push	{lr}
-	ldr	r0, .L271
+	ldr	r0, .L395
 	ldr	r1, [r0, #0x4]
 	mov	r2, #0x80
 	lsl	r2, r2, #0x18
 	add	r3, r0, #0
 	cmp	r1, #0
-	bge	.L267	@cond_branch
-	ldr	r0, .L271+0x4
+	bge	.L391	@cond_branch
+	ldr	r0, .L395+0x4
 	ldr	r0, [r0, #0x4]
 	and	r0, r0, r2
 	cmp	r0, #0
-	bne	.L270	@cond_branch
-.L267:
-	ldr	r1, .L271+0x8
+	bne	.L394	@cond_branch
+.L391:
+	ldr	r1, .L395+0x8
 	ldrh	r0, [r3, #0x4]
 	cmp	r0, #0
-	bne	.L268	@cond_branch
-	ldr	r0, .L271+0x4
+	bne	.L392	@cond_branch
+	ldr	r0, .L395+0x4
 	ldr	r0, [r0, #0x4]
 	and	r0, r0, r1
 	cmp	r0, #0
-	bne	.L268	@cond_branch
-.L270:
+	bne	.L392	@cond_branch
+.L394:
 	mov	r0, #0x0
-	b	.L269
-.L272:
+	b	.L393
+.L396:
 	.align	2, 0
-.L271:
+.L395:
 	.word	gMPlayInfo_SE1
 	.word	gMPlayInfo_SE2
 	.word	0xffff
-.L268:
+.L392:
 	mov	r0, #0x1
-.L269:
+.L393:
 	pop	{r1}
 	bx	r1
-.Lfe45:
-	.size	 IsSEPlaying,.Lfe45-IsSEPlaying
+.Lfe46:
+	.size	 IsSEPlaying,.Lfe46-IsSEPlaying
 	.align	2, 0
 	.globl	IsBGMPlaying
 	.type	 IsBGMPlaying,function
 	.thumb_func
 IsBGMPlaying:
 	push	{lr}
-	ldr	r0, .L277
+	ldr	r0, .L401
 	ldr	r1, [r0, #0x4]
 	cmp	r1, #0
-	blt	.L275	@cond_branch
-	ldr	r0, .L277+0x4
+	blt	.L399	@cond_branch
+	ldr	r0, .L401+0x4
 	and	r1, r1, r0
 	cmp	r1, #0
-	beq	.L275	@cond_branch
+	beq	.L399	@cond_branch
 	mov	r0, #0x1
-	b	.L276
-.L278:
+	b	.L400
+.L402:
 	.align	2, 0
-.L277:
+.L401:
 	.word	gMPlayInfo_BGM
 	.word	0xffff
-.L275:
+.L399:
 	mov	r0, #0x0
-.L276:
+.L400:
 	pop	{r1}
 	bx	r1
-.Lfe46:
-	.size	 IsBGMPlaying,.Lfe46-IsBGMPlaying
+.Lfe47:
+	.size	 IsBGMPlaying,.Lfe47-IsBGMPlaying
 	.align	2, 0
 	.globl	IsSpecialSEPlaying
 	.type	 IsSpecialSEPlaying,function
 	.thumb_func
 IsSpecialSEPlaying:
 	push	{lr}
-	ldr	r0, .L283
+	ldr	r0, .L407
 	ldr	r1, [r0, #0x4]
 	cmp	r1, #0
-	blt	.L281	@cond_branch
-	ldr	r0, .L283+0x4
+	blt	.L405	@cond_branch
+	ldr	r0, .L407+0x4
 	and	r1, r1, r0
 	cmp	r1, #0
-	beq	.L281	@cond_branch
+	beq	.L405	@cond_branch
 	mov	r0, #0x1
-	b	.L282
-.L284:
+	b	.L406
+.L408:
 	.align	2, 0
-.L283:
+.L407:
 	.word	gMPlayInfo_SE3
 	.word	0xffff
-.L281:
+.L405:
 	mov	r0, #0x0
-.L282:
+.L406:
 	pop	{r1}
 	bx	r1
-.Lfe47:
-	.size	 IsSpecialSEPlaying,.Lfe47-IsSpecialSEPlaying
+.Lfe48:
+	.size	 IsSpecialSEPlaying,.Lfe48-IsSpecialSEPlaying
 	.comm	gDisableMusic, 4	@ 1
 
 	.lcomm	sCurrentMapMusic,2

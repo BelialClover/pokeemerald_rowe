@@ -4178,7 +4178,7 @@ DebugAction_Util_CheckSaveBlock:
 	.word	gStringVar1
 	.word	0x3620
 	.word	gStringVar2
-	.word	0xf18
+	.word	0xf1c
 	.word	gStringVar3
 	.word	0x83d0
 	.word	gStringVar4

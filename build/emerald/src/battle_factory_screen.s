@@ -6450,7 +6450,7 @@ Select_InitMonsData:
 .L77:
 	.word	sFactorySelectScreen
 	.word	gSaveBlock2Ptr
-	.word	0xc31
+	.word	0xc35
 .L75:
 	mov	r0, #0x0
 	bl	CreateTentFactorySelectableMons
@@ -7983,11 +7983,11 @@ CreateFrontierFactorySelectableMons:
 .L312:
 	.word	0x40ce
 	.word	gSaveBlock2Ptr
-	.word	0xc31
-	.word	0xd6a
+	.word	0xc35
+	.word	0xd6e
 	.word	gFacilityTrainerMons
 	.word	gBattleFrontierMons
-	.word	0xdf8
+	.word	0xdfc
 	.word	sFactorySelectScreen
 .L303:
 	ldr	r0, [sp, #0x1c]
@@ -8238,7 +8238,7 @@ CreateTentFactorySelectableMons:
 	.word	gFacilityTrainerMons
 	.word	gSlateportBattleTentMons
 	.word	gSaveBlock2Ptr
-	.word	0xdf8
+	.word	0xdfc
 	.word	sFactorySelectScreen
 	.word	gBattleFrontierHeldItems
 .Lfe20:
@@ -8299,7 +8299,8 @@ Select_CopyMonsToPlayerParty:
 	bl	GetMonData
 	mov	r2, r8
 	ldr	r1, [r2]
-	ldr	r2, .L341+0x10
+	mov	r2, #0xe0
+	lsl	r2, r2, #0x4
 	add	r1, r1, r2
 	add	r1, r1, r4
 	str	r0, [r1]
@@ -8310,7 +8311,7 @@ Select_CopyMonsToPlayerParty:
 	mov	r2, r8
 	ldr	r1, [r2]
 	add	r1, r1, r4
-	ldr	r2, .L341+0x14
+	ldr	r2, .L341+0x10
 	add	r1, r1, r2
 	strb	r0, [r1]
 	add	r0, r5, #0
@@ -8320,8 +8321,7 @@ Select_CopyMonsToPlayerParty:
 	mov	r2, r8
 	ldr	r1, [r2]
 	add	r1, r1, r4
-	mov	r2, #0xe0
-	lsl	r2, r2, #0x4
+	ldr	r2, .L341+0x14
 	add	r1, r1, r2
 	strb	r0, [r1]
 	b	.L332
@@ -8331,9 +8331,9 @@ Select_CopyMonsToPlayerParty:
 	.word	sFactorySelectScreen
 	.word	gSaveBlock2Ptr
 	.word	gPlayerParty
-	.word	0xdf8
 	.word	0xdfc
-	.word	0xe01
+	.word	0xe05
+	.word	0xe04
 .L336:
 	add	r0, r2, #0x1
 	lsl	r0, r0, #0x18
@@ -10542,8 +10542,7 @@ CopySwappedMonData:
 	add	r0, r0, r1
 	lsl	r0, r0, #0x2
 	add	r3, r3, r0
-	mov	r0, #0xe0
-	lsl	r0, r0, #0x4
+	ldr	r0, .L533+0x14
 	add	r3, r3, r0
 	ldrb	r1, [r3]
 	add	r2, r2, r0
@@ -10562,7 +10561,8 @@ CopySwappedMonData:
 	lsl	r1, r3, #0x1
 	add	r1, r1, r3
 	lsl	r1, r1, #0x2
-	ldr	r3, .L533+0x14
+	mov	r3, #0xe0
+	lsl	r3, r3, #0x4
 	add	r2, r2, r3
 	add	r2, r2, r1
 	str	r0, [r2]
@@ -10597,9 +10597,9 @@ CopySwappedMonData:
 	.word	sFactorySwapScreen
 	.word	gEnemyParty
 	.word	gSaveBlock2Ptr
-	.word	0xdf8
 	.word	0xdfc
-	.word	0xe01
+	.word	0xe04
+	.word	0xe05
 .Lfe52:
 	.size	 CopySwappedMonData,.Lfe52-CopySwappedMonData
 	.align	2, 0

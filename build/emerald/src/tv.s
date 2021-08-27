@@ -3251,12 +3251,12 @@ InterviewAfter_BravoTrainerBattleTowerProfile:
 	add	r0, r6, #0
 	add	r0, r0, #0xc
 	ldr	r1, [r4]
-	mov	r2, #0xb6
-	lsl	r2, r2, #0x4
+	ldr	r2, .L330+0x10
 	add	r1, r1, r2
 	bl	StringCopy
 	ldr	r1, [r4]
-	ldr	r2, .L330+0x10
+	mov	r2, #0xb6
+	lsl	r2, r2, #0x4
 	add	r0, r1, r2
 	ldrh	r0, [r0]
 	strh	r0, [r6, #0xa]
@@ -3289,9 +3289,9 @@ InterviewAfter_BravoTrainerBattleTowerProfile:
 	.word	sCurTVShowSlot
 	.word	0x244c
 	.word	gSaveBlock2Ptr
-	.word	0xb5c
-	.word	0xc8f
-	.word	0xc8e
+	.word	0xb64
+	.word	0xc93
+	.word	0xc92
 .L324:
 	mov	r0, #0x64
 .L329:
@@ -3326,7 +3326,7 @@ InterviewAfter_BravoTrainerBattleTowerProfile:
 	.word	gSpecialVar_0x8004
 	.word	gGameLanguage
 	.word	gSaveBlock2Ptr
-	.word	0xb73
+	.word	0xb77
 .Lfe38:
 	.size	 InterviewAfter_BravoTrainerBattleTowerProfile,.Lfe38-InterviewAfter_BravoTrainerBattleTowerProfile
 	.align	2, 0
@@ -4622,8 +4622,7 @@ TryPutTodaysRivalTrainerOnAir:
 	bls	.L446	@cond_branch
 	ldr	r0, .L453+0xc
 	ldr	r1, [r0]
-	mov	r2, #0xe4
-	lsl	r2, r2, #0x4
+	ldr	r2, .L453+0x10
 	add	r0, r1, r2
 	ldrh	r0, [r0]
 	strh	r0, [r4, #0x8]
@@ -4631,7 +4630,7 @@ TryPutTodaysRivalTrainerOnAir:
 	bl	StringCopy
 	add	r0, r4, #0
 	bl	tv_store_id_3x
-	ldr	r0, .L453+0x10
+	ldr	r0, .L453+0x14
 	ldrb	r0, [r0]
 	strb	r0, [r4, #0xc]
 .L434:
@@ -4645,6 +4644,7 @@ TryPutTodaysRivalTrainerOnAir:
 	.word	sSilverSymbolFlags
 	.word	sGoldSymbolFlags
 	.word	gSaveBlock2Ptr
+	.word	0xe44
 	.word	gGameLanguage
 .Lfe57:
 	.size	 TryPutTodaysRivalTrainerOnAir,.Lfe57-TryPutTodaysRivalTrainerOnAir
@@ -6522,8 +6522,8 @@ TryPutFrontierTVShowOnAir:
 .L691:
 	.word	gSaveBlock1Ptr
 	.word	gSaveBlock2Ptr
-	.word	0xc32
-	.word	0xc34
+	.word	0xc36
+	.word	0xc38
 	.word	gGameLanguage
 .Lfe76:
 	.size	 TryPutFrontierTVShowOnAir,.Lfe76-TryPutFrontierTVShowOnAir

@@ -6098,7 +6098,7 @@ u16 GetEvolutionTargetSpecies(struct Pokemon *mon, u8 type, u16 evolutionItem, u
 	/*/if(FlagGet(FLAG_UNUSED_0x054))
 		return SPECIES_NONE;/*/
 
-    if (holdEffect == HOLD_EFFECT_PREVENT_EVOLVE && type != 3)
+    if ((holdEffect == HOLD_EFFECT_PREVENT_EVOLVE && type != 3) || heldItem == ITEM_EVIOLITE)
         return SPECIES_NONE;
 
     switch (type)

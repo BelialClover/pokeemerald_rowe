@@ -6214,7 +6214,7 @@ bool32 IsBattlerGrounded(u8 battlerId)
         return FALSE;
     else if (GetBattlerAbility(battlerId) == ABILITY_LEVITATE)
         return FALSE;
-    else if (IS_BATTLER_OF_TYPE(battlerId, TYPE_FLYING))
+    else if (IS_BATTLER_OF_TYPE(battlerId, TYPE_FLYING) && !FlagGet(B_FLAG_INVERSE_BATTLE))
         return FALSE;
 
     else
@@ -7415,7 +7415,7 @@ static void MulByTypeEffectiveness(u16 *modifier, u16 move, u8 moveType, u8 batt
 
 static void UpdateMoveResultFlags(u16 modifier)
 {
-    if (modifier == UQ_4_12(0.0))
+    if (modifier == UQ_4_12(0.0) && !FlagGet(B_FLAG_INVERSE_BATTLE))
     {
         gMoveResultFlags |= MOVE_RESULT_DOESNT_AFFECT_FOE;
         gMoveResultFlags &= ~(MOVE_RESULT_NOT_VERY_EFFECTIVE | MOVE_RESULT_SUPER_EFFECTIVE);

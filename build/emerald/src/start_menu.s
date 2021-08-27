@@ -560,7 +560,7 @@ ShowPyramidFloorWindow:
 	.align	2, 0
 .L52:
 	.word	gSaveBlock2Ptr
-	.word	0xc3a
+	.word	0xc3e
 	.word	sBattlePyramidFloorWindowId
 	.word	sPyramidFloorWindowTemplate_1
 .L49:
@@ -616,7 +616,7 @@ ShowPyramidFloorWindow:
 	.word	gStringVar1
 	.word	sPyramindFloorNames
 	.word	gSaveBlock2Ptr
-	.word	0xc3a
+	.word	0xc3e
 	.word	gStringVar4
 	.word	gText_BattlePyramidFloor
 .Lfe12:
@@ -3645,7 +3645,7 @@ ShowGameVersionWindow:
 	ldr	r0, .L529+0x8
 	ldr	r0, [r0]
 	ldrb	r1, [r0, #0x15]
-	mov	r0, #0x4
+	mov	r0, #0x80
 	and	r0, r0, r1
 	cmp	r0, #0
 	beq	.L527	@cond_branch

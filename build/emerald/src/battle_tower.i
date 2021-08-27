@@ -694,6 +694,7 @@ struct SaveBlock2
              u8 optionsButtonMode;
              u16 optionsTextSpeed:3;
              u16 optionsWindowFrameType:5;
+    u16 optionsMusicGame:5;
              u16 optionsSound:2;
              u16 optionsBattleStyle:1;
              u16 optionsBattleSceneOff:1;
@@ -755,7 +756,7 @@ struct SecretBase
 };
 
 # 1 "include/constants/game_stat.h" 1
-# 543 "include/global.h" 2
+# 544 "include/global.h" 2
 # 1 "include/global.fieldmap.h" 1
 # 13 "include/global.fieldmap.h"
 enum
@@ -1067,7 +1068,7 @@ extern u8 gSelectedObjectEvent;
 extern struct MapHeader gMapHeader;
 extern struct PlayerAvatar gPlayerAvatar;
 extern struct Camera gCamera;
-# 544 "include/global.h" 2
+# 545 "include/global.h" 2
 # 1 "include/global.berry.h" 1
 
 
@@ -1143,7 +1144,7 @@ struct BerryTree
     u8 watered3:1;
     u8 watered4:1;
 };
-# 545 "include/global.h" 2
+# 546 "include/global.h" 2
 # 1 "include/global.tv.h" 1
 
 
@@ -1637,7 +1638,7 @@ struct GabbyAndTyData
              u8 playerThrewABall2:1;
              u8 valB_4:4;
 };
-# 546 "include/global.h" 2
+# 547 "include/global.h" 2
 # 1 "include/pokemon.h" 1
 
 
@@ -2383,7 +2384,7 @@ u8 GetFormIdFromFormSpeciesId(u16 formSpeciesId);
 u16 GetBaseFormSpeciesId(u16 formSpeciesId);
 void CreateShinyMonWithNature(struct Pokemon *mon, u16 species, u8 level, u8 nature);
 u16 MonTryLearningNewMoveEvolution(struct Pokemon *mon, bool8 firstMove);
-# 547 "include/global.h" 2
+# 548 "include/global.h" 2
 
 struct WarpData
 {
@@ -8354,6 +8355,11 @@ extern const u8 gText_Lawnmower[];
 extern const u8 gText_Recall[];
 
 extern const u8 gText_AshQty[];
+
+extern const u8 gText_Region_Kanto[];
+extern const u8 gText_Region_Jotho[];
+extern const u8 gText_Region_Hoenn[];
+extern const u8 gText_Region_Sinnoh[];
 # 14 "src/battle_tower.c" 2
 # 1 "include/recorded_battle.h" 1
 
@@ -20035,509 +20041,361 @@ struct
 
 const u16 gSlateportBattleTentTrainerMons_Jolie[] =
 {
-    9,
-    10,
-    13,
-    27,
-    35,
-    37,
-    42,
-    44,
-    45,
-    46,
-    63,
+    0,
+ 1,
+    2,
+ 4,
+ 3,
+    5,
+ 6,
     -1
 };
 
 const u16 gSlateportBattleTentTrainerMons_Malachi[] =
 {
-    9,
-    16,
-    17,
-    27,
-    36,
-    39,
-    42,
-    45,
-    48,
-    49,
-    53,
+    0,
+ 1,
+    2,
+ 4,
+ 3,
+    5,
+ 6,
     -1
 };
 
 const u16 gSlateportBattleTentTrainerMons_Kelsie[] =
 {
-    4,
+    0,
+ 1,
+    2,
+ 4,
+ 3,
     5,
-    6,
-    11,
-    28,
-    34,
-    35,
-    37,
-    43,
-    51,
-    53,
+ 6,
     -1
 };
 
 const u16 gSlateportBattleTentTrainerMons_Davon[] =
 {
-    4,
+    0,
+ 1,
+    2,
+ 4,
+ 3,
     5,
-    6,
-    12,
-    26,
-    36,
-    37,
-    38,
-    40,
-    44,
-    46,
-    50,
+ 6,
     -1
 };
 
 const u16 gSlateportBattleTentTrainerMons_Glenda[] =
 {
     0,
-    1,
-    17,
-    18,
-    19,
-    22,
-    23,
-    33,
-    42,
-    61,
-    64,
-    65,
-    66,
+ 1,
+    2,
+ 4,
+ 3,
+    5,
+ 6,
     -1
 };
 
 const u16 gSlateportBattleTentTrainerMons_Helena[] =
 {
-    18,
-    19,
-    21,
-    38,
-    39,
-    41,
-    42,
-    52,
-    54,
-    58,
-    63,
+    0,
+ 1,
+    2,
+ 4,
+ 3,
+    5,
+ 6,
     -1
 };
 
 const u16 gSlateportBattleTentTrainerMons_Rodolfo[] =
 {
     0,
-    1,
-    4,
+ 1,
+    2,
+ 4,
+ 3,
     5,
-    7,
-    8,
-    18,
-    20,
-    21,
-    37,
-    38,
-    40,
-    62,
+ 6,
     -1
 };
 
 const u16 gSlateportBattleTentTrainerMons_Davion[] =
 {
-    17,
-    23,
-    24,
-    25,
-    31,
-    32,
-    33,
-    34,
-    39,
-    43,
-    44,
-    49,
-    57,
-    69,
+    0,
+ 1,
+    2,
+ 4,
+ 3,
+    5,
+ 6,
     -1
 };
 
 const u16 gSlateportBattleTentTrainerMons_Kendall[] =
 {
-    4,
-    7,
-    8,
-    9,
-    11,
-    12,
-    13,
-    27,
-    38,
-    40,
-    45,
-    46,
-    47,
-    63,
+    0,
+ 1,
+    2,
+ 4,
+ 3,
+    5,
+ 6,
     -1
 };
 
 const u16 gSlateportBattleTentTrainerMons_Colten[] =
 {
     0,
+ 1,
     2,
-    12,
-    22,
-    28,
-    30,
-    35,
-    38,
-    43,
-    44,
-    56,
-    57,
+ 4,
+ 3,
+    5,
+ 6,
     -1
 };
 
 const u16 gSlateportBattleTentTrainerMons_Irvin[] =
 {
     0,
-    1,
+ 1,
     2,
-    3,
-    14,
-    15,
-    24,
-    25,
-    32,
-    34,
-    39,
-    59,
-    60,
+ 4,
+ 3,
+    5,
+ 6,
     -1
 };
 
 const u16 gSlateportBattleTentTrainerMons_Shaun[] =
 {
-    17,
-    18,
-    19,
-    22,
-    29,
-    36,
-    42,
-    48,
-    61,
-    62,
-    66,
-    68,
-    69,
+    0,
+ 1,
+    2,
+ 4,
+ 3,
+    5,
+ 6,
     -1
 };
 
 const u16 gSlateportBattleTentTrainerMons_Kyler[] =
 {
-    22,
-    23,
-    28,
-    29,
-    31,
-    32,
-    34,
-    39,
-    55,
-    64,
-    65,
-    67,
+    0,
+ 1,
+    2,
+ 4,
+ 3,
+    5,
+ 6,
     -1
 };
 
 const u16 gSlateportBattleTentTrainerMons_Maggie[] =
 {
-    10,
-    13,
-    17,
-    27,
-    45,
-    46,
-    53,
-    56,
-    61,
-    62,
-    63,
+    0,
+ 1,
+    2,
+ 4,
+ 3,
+    5,
+ 6,
     -1
 };
 
 const u16 gSlateportBattleTentTrainerMons_Stephon[] =
 {
-    8,
-    10,
-    16,
-    23,
-    29,
-    43,
-    44,
-    60,
-    62,
-    63,
-    68,
+    0,
+ 1,
+    2,
+ 4,
+ 3,
+    5,
+ 6,
     -1
 };
 
 const u16 gSlateportBattleTentTrainerMons_Rebecca[] =
 {
-    8,
-    13,
-    21,
-    29,
-    33,
-    41,
-    48,
-    54,
-    59,
-    61,
-    68,
+    0,
+ 1,
+    2,
+ 4,
+ 3,
+    5,
+ 6,
     -1
 };
 
 const u16 gSlateportBattleTentTrainerMons_Reggie[] =
 {
-    6,
-    7,
-    17,
-    23,
-    24,
-    26,
-    32,
-    36,
-    52,
-    53,
-    57,
-    65,
+    0,
+ 1,
+    2,
+ 4,
+ 3,
+    5,
+ 6,
     -1
 };
 
 const u16 gSlateportBattleTentTrainerMons_Janae[] =
 {
     0,
-    1,
-    27,
-    28,
-    32,
-    34,
-    36,
-    37,
-    52,
-    53,
-    57,
-    65,
+ 1,
+    2,
+ 4,
+ 3,
+    5,
+ 6,
     -1
 };
 
 const u16 gSlateportBattleTentTrainerMons_Caiden[] =
 {
-    10,
-    14,
-    15,
-    16,
-    20,
-    21,
-    25,
-    30,
-    35,
-    47,
-    48,
-    50,
-    69,
+    0,
+ 1,
+    2,
+ 4,
+ 3,
+    5,
+ 6,
     -1
 };
 
 const u16 gSlateportBattleTentTrainerMons_Kirsten[] =
 {
-    10,
-    16,
-    18,
-    19,
-    20,
-    21,
-    25,
-    30,
-    35,
-    39,
-    41,
-    48,
-    69,
+    0,
+ 1,
+    2,
+ 4,
+ 3,
+    5,
+ 6,
     -1
 };
 
 const u16 gSlateportBattleTentTrainerMons_Kurtis[] =
 {
     0,
-    1,
-    36,
-    37,
-    40,
-    46,
-    49,
-    51,
-    64,
-    67,
-    68,
+ 1,
+    2,
+ 4,
+ 3,
+    5,
+ 6,
     -1
 };
 
 const u16 gSlateportBattleTentTrainerMons_Stefan[] =
 {
-    4,
+    0,
+ 1,
+    2,
+ 4,
+ 3,
     5,
-    21,
-    33,
-    37,
-    38,
-    40,
-    51,
-    52,
-    64,
-    65,
+ 6,
     -1
 };
 
 const u16 gSlateportBattleTentTrainerMons_Avery[] =
 {
+    0,
+ 1,
     2,
-    3,
-    7,
-    8,
-    22,
-    23,
-    28,
-    29,
-    30,
-    51,
-    67,
+ 4,
+ 3,
+    5,
+ 6,
     -1
 };
 
 const u16 gSlateportBattleTentTrainerMons_Dwane[] =
 {
-    14,
-    15,
-    30,
-    43,
-    44,
-    45,
-    46,
-    55,
-    58,
-    59,
-    63,
+    0,
+ 1,
+    2,
+ 4,
+ 3,
+    5,
+ 6,
     -1
 };
 
 const u16 gSlateportBattleTentTrainerMons_Mckenna[] =
 {
-    27,
-    29,
-    30,
-    32,
-    36,
-    48,
-    51,
-    52,
-    53,
-    57,
-    67,
+    0,
+ 1,
+    2,
+ 4,
+ 3,
+    5,
+ 6,
     -1
 };
 
 const u16 gSlateportBattleTentTrainerMons_Camryn[] =
 {
+    0,
+ 1,
+    2,
+ 4,
+ 3,
     5,
-    6,
-    7,
-    8,
-    10,
-    16,
-    17,
-    20,
-    21,
-    37,
-    43,
-    44,
+ 6,
     -1
 };
 
 const u16 gSlateportBattleTentTrainerMons_Natasha[] =
 {
-    1,
-    3,
-    4,
+    0,
+ 1,
+    2,
+ 4,
+ 3,
     5,
-    9,
-    11,
-    12,
-    20,
-    21,
-    22,
-    51,
+ 6,
     -1
 };
 
 const u16 gSlateportBattleTentTrainerMons_Austyn[] =
 {
-    25,
-    31,
-    35,
-    37,
-    38,
-    39,
-    50,
-    51,
-    52,
-    58,
-    68,
-    69,
+    0,
+ 1,
+    2,
+ 4,
+ 3,
+    5,
+ 6,
     -1
 };
 
 const u16 gSlateportBattleTentTrainerMons_Donovan[] =
 {
-    10,
-    16,
-    17,
-    24,
-    25,
-    43,
-    44,
-    47,
-    49,
-    53,
-    59,
-    60,
-    64,
-    65,
+    0,
+ 1,
+    2,
+ 4,
+ 3,
+    5,
+ 6,
     -1
 };
 
 const u16 gSlateportBattleTentTrainerMons_Tamia[] =
 {
+    0,
+ 1,
     2,
-    6,
-    9,
-    13,
-    17,
-    19,
-    20,
-    24,
-    27,
-    29,
-    30,
+ 4,
+ 3,
+    5,
+ 6,
     -1
 };
 
@@ -20557,7 +20415,7 @@ const struct BattleFrontierTrainer gSlateportBattleTentTrainers[30] =
         .speechBefore = {(0x9 << 9) | 0x2e, (0xc << 9) | 0x1f, (0x6 << 9) | 0x0, (0x5 << 9) | 0x31, (0x8 << 9) | 0x20, ((0x12 << 9) | 328)},
         .speechWin = {(0x14 << 9) | 0x5, -1, -1, (0x5 << 9) | 0x2a, (0x9 << 9) | 0x3c, (0x8 << 9) | 0x29},
         .speechLose = {(0x5 << 9) | 0x2a, (0x3 << 9) | 0x30, (0x8 << 9) | 0x37, (0xf << 9) | 0xf, ((0x12 << 9) | 328), (0x6 << 9) | 0x4},
-        .monSet = gSlateportBattleTentTrainerMons_Malachi
+        .monSet = gSlateportBattleTentTrainerMons_Jolie
     },
     [2] = {
         .facilityClass = 0x10,
@@ -20565,7 +20423,7 @@ const struct BattleFrontierTrainer gSlateportBattleTentTrainers[30] =
         .speechBefore = {(0x3 << 9) | 0x1, (0x6 << 9) | 0x1, (0x5 << 9) | 0x28, (0xc << 9) | 0x4, (0x1 << 9) | 0xe, (0x6 << 9) | 0x1},
         .speechWin = {(0x4 << 9) | 0x26, (0x6 << 9) | 0x1, (0x5 << 9) | 0x28, (0xc << 9) | 0x4, (0x1 << 9) | 0xe, (0x6 << 9) | 0x1},
         .speechLose = {(0x6 << 9) | 0x3d, (0x6 << 9) | 0x1, (0x5 << 9) | 0x28, (0xc << 9) | 0x4, (0x1 << 9) | 0xe, (0x6 << 9) | 0x1},
-        .monSet = gSlateportBattleTentTrainerMons_Kelsie
+        .monSet = gSlateportBattleTentTrainerMons_Jolie
     },
     [3] = {
         .facilityClass = 0x11,
@@ -20573,7 +20431,7 @@ const struct BattleFrontierTrainer gSlateportBattleTentTrainers[30] =
         .speechBefore = {(0x4 << 9) | 0x1f, (0x6 << 9) | 0x1, -1, (0x9 << 9) | 0x40, ((0x12 << 9) | 250), (0x8 << 9) | 0xc},
         .speechWin = {(0xf << 9) | 0x19, (0x8 << 9) | 0x3a, (0x8 << 9) | 0x20, ((0x12 << 9) | 250), (0x4 << 9) | 0x1f, (0x6 << 9) | 0x1},
         .speechLose = {(0x8 << 9) | 0x17, (0x1 << 9) | 0xf, ((0x13 << 9) | 251), (0x8 << 9) | 0x37, (0xf << 9) | 0x14, ((0x12 << 9) | 250)},
-        .monSet = gSlateportBattleTentTrainerMons_Davon
+        .monSet = gSlateportBattleTentTrainerMons_Jolie
     },
     [4] = {
         .facilityClass = 0x13,
@@ -20581,7 +20439,7 @@ const struct BattleFrontierTrainer gSlateportBattleTentTrainers[30] =
         .speechBefore = {(0xc << 9) | 0x5, (0x8 << 9) | 0x16, (0x9 << 9) | 0x37, (0x7 << 9) | 0x30, (0x5 << 9) | 0x1, (0x3 << 9) | 0x6},
         .speechWin = {(0xa << 9) | 0x23, (0x6 << 9) | 0x0, (0x5 << 9) | 0x29, (0xa << 9) | 0x8, (0x8 << 9) | 0x2f, (0x2 << 9) | 0xa},
         .speechLose = {(0x4 << 9) | 0x1d, (0x6 << 9) | 0x0, -1, (0x5 << 9) | 0x1, (0x8 << 9) | 0x1c, (0x3 << 9) | 0x2c},
-        .monSet = gSlateportBattleTentTrainerMons_Glenda
+        .monSet = gSlateportBattleTentTrainerMons_Jolie
     },
     [5] = {
         .facilityClass = 0x14,
@@ -20589,7 +20447,7 @@ const struct BattleFrontierTrainer gSlateportBattleTentTrainers[30] =
         .speechBefore = {(0x8 << 9) | 0x19, (0x5 << 9) | 0x28, (0x2 << 9) | 0xc, (0x2 << 9) | 0x6, (0x5 << 9) | 0x2, (0x6 << 9) | 0x3},
         .speechWin = {(0x5 << 9) | 0x29, (0x8 << 9) | 0x25, (0x4 << 9) | 0xb, (0x7 << 9) | 0xa, (0x5 << 9) | 0x6, (0x9 << 9) | 0x24},
         .speechLose = {(0x5 << 9) | 0x1, (0x8 << 9) | 0x18, (0x8 << 9) | 0x25, (0x9 << 9) | 0x2a, (0xf << 9) | 0xf, (0x6 << 9) | 0x0},
-        .monSet = gSlateportBattleTentTrainerMons_Helena
+        .monSet = gSlateportBattleTentTrainerMons_Jolie
     },
     [6] = {
         .facilityClass = 0x15,
@@ -20597,7 +20455,7 @@ const struct BattleFrontierTrainer gSlateportBattleTentTrainers[30] =
         .speechBefore = {(0x3 << 9) | 0x1, (0x1 << 9) | 0xf, (0x8 << 9) | 0x20, ((0x0 << 9) | 340), (0x8 << 9) | 0x2b, (0x5 << 9) | 0x14},
         .speechWin = {(0x6 << 9) | 0x3b, (0x5 << 9) | 0x2, (0x8 << 9) | 0x17, (0x8 << 9) | 0x1e, (0x8 << 9) | 0x20, ((0x0 << 9) | 340)},
         .speechLose = {(0xb << 9) | 0x11, (0x5 << 9) | 0x1, (0xa << 9) | 0xf, (0x8 << 9) | 0x20, ((0x0 << 9) | 340), (0xa << 9) | 0x44},
-        .monSet = gSlateportBattleTentTrainerMons_Rodolfo
+        .monSet = gSlateportBattleTentTrainerMons_Jolie
     },
     [7] = {
         .facilityClass = 0x17,
@@ -20605,7 +20463,7 @@ const struct BattleFrontierTrainer gSlateportBattleTentTrainers[30] =
         .speechBefore = {(0x6 << 9) | 0x21, (0x6 << 9) | 0x21, (0x6 << 9) | 0x1, (0x6 << 9) | 0x21, (0x6 << 9) | 0x21, (0x6 << 9) | 0x1},
         .speechWin = {((0x13 << 9) | 46), (0x6 << 9) | 0x0, -1, ((0x13 << 9) | 46), (0x6 << 9) | 0x1, -1},
         .speechLose = {(0x6 << 9) | 0xe, (0x6 << 9) | 0xa, (0x6 << 9) | 0x1, -1, -1, -1},
-        .monSet = gSlateportBattleTentTrainerMons_Davion
+        .monSet = gSlateportBattleTentTrainerMons_Jolie
     },
     [8] = {
         .facilityClass = 0x7,
@@ -20613,7 +20471,7 @@ const struct BattleFrontierTrainer gSlateportBattleTentTrainers[30] =
         .speechBefore = {(0x7 << 9) | 0x13, ((0x13 << 9) | 80), (0x8 << 9) | 0x2f, (0xb << 9) | 0x11, (0x5 << 9) | 0x2, (0x6 << 9) | 0x0},
         .speechWin = {(0x5 << 9) | 0x1, (0x8 << 9) | 0x18, (0xf << 9) | 0xf, (0x7 << 9) | 0x16, (0x8 << 9) | 0x2b, (0xc << 9) | 0xd},
         .speechLose = {(0x7 << 9) | 0xf, (0x8 << 9) | 0x8, (0x5 << 9) | 0x2, ((0x13 << 9) | 1), (0x5 << 9) | 0x14, (0x6 << 9) | 0x3},
-        .monSet = gSlateportBattleTentTrainerMons_Kendall
+        .monSet = gSlateportBattleTentTrainerMons_Jolie
     },
     [9] = {
         .facilityClass = 0x1b,
@@ -20621,7 +20479,7 @@ const struct BattleFrontierTrainer gSlateportBattleTentTrainers[30] =
         .speechBefore = {(0x5 << 9) | 0x1, (0x9 << 9) | 0x36, (0x8 << 9) | 0x2f, (0x3 << 9) | 0x1, (0xb << 9) | 0x38, (0x7 << 9) | 0x17},
         .speechWin = {(0x6 << 9) | 0x3a, (0x6 << 9) | 0x0, (0x9 << 9) | 0x36, (0x8 << 9) | 0x2f, (0xb << 9) | 0x38, (0x6 << 9) | 0x3},
         .speechLose = {(0x8 << 9) | 0x20, (0x2 << 9) | 0x2c, (0x8 << 9) | 0xa, (0x8 << 9) | 0x6, (0xa << 9) | 0x5, (0x8 << 9) | 0x39},
-        .monSet = gSlateportBattleTentTrainerMons_Colten
+        .monSet = gSlateportBattleTentTrainerMons_Jolie
     },
     [10] = {
         .facilityClass = 0x1d,
@@ -20629,7 +20487,7 @@ const struct BattleFrontierTrainer gSlateportBattleTentTrainers[30] =
         .speechBefore = {(0x8 << 9) | 0x1e, (0x8 << 9) | 0x20, (0xd << 9) | 0x35, (0x8 << 9) | 0x36, (0x5 << 9) | 0x28, ((0x12 << 9) | 109)},
         .speechWin = {(0x4 << 9) | 0x26, (0x5 << 9) | 0x28, ((0x12 << 9) | 109), (0x8 << 9) | 0xb, (0x7 << 9) | 0xd, (0xa << 9) | 0x3c},
         .speechLose = {(0x6 << 9) | 0x3d, (0x6 << 9) | 0x1, -1, (0x5 << 9) | 0x29, (0x4 << 9) | 0xb, (0x6 << 9) | 0x0},
-        .monSet = gSlateportBattleTentTrainerMons_Irvin
+        .monSet = gSlateportBattleTentTrainerMons_Jolie
     },
     [11] = {
         .facilityClass = 0x20,
@@ -20637,7 +20495,7 @@ const struct BattleFrontierTrainer gSlateportBattleTentTrainers[30] =
         .speechBefore = {(0x7 << 9) | 0x0, (0x6 << 9) | 0x4, (0x5 << 9) | 0x2, (0x5 << 9) | 0x1f, (0x7 << 9) | 0x1a, (0xa << 9) | 0x5},
         .speechWin = {(0x5 << 9) | 0x2, (0x9 << 9) | 0x39, (0x6 << 9) | 0x3, (0x5 << 9) | 0x1, (0x8 << 9) | 0x10, (0xf << 9) | 0x29},
         .speechLose = {(0x4 << 9) | 0x1, (0x4 << 9) | 0x1, (0x6 << 9) | 0x4, (0x5 << 9) | 0x6, (0x7 << 9) | 0x7, (0x7 << 9) | 0x26},
-        .monSet = gSlateportBattleTentTrainerMons_Shaun
+        .monSet = gSlateportBattleTentTrainerMons_Jolie
     },
     [12] = {
         .facilityClass = 0x19,
@@ -20645,7 +20503,7 @@ const struct BattleFrontierTrainer gSlateportBattleTentTrainers[30] =
         .speechBefore = {(0x6 << 9) | 0x6, (0x6 << 9) | 0x6, (0x6 << 9) | 0x6, (0x6 << 9) | 0x6, (0x6 << 9) | 0x6, (0x6 << 9) | 0x3},
         .speechWin = {(0x6 << 9) | 0x6, (0x6 << 9) | 0x6, (0x6 << 9) | 0x6, (0x6 << 9) | 0x6, (0x6 << 9) | 0x6, (0x6 << 9) | 0x3a},
         .speechLose = {(0x6 << 9) | 0x6, (0x6 << 9) | 0x6, (0x6 << 9) | 0x6, (0x6 << 9) | 0x6, (0x6 << 9) | 0x6, (0x6 << 9) | 0x12},
-        .monSet = gSlateportBattleTentTrainerMons_Kyler
+        .monSet = gSlateportBattleTentTrainerMons_Jolie
     },
     [13] = {
         .facilityClass = 0x27,
@@ -20653,7 +20511,7 @@ const struct BattleFrontierTrainer gSlateportBattleTentTrainers[30] =
         .speechBefore = {((0x0 << 9) | 37), ((0x0 << 9) | 178), ((0x15 << 9) | 197), (0x6 << 9) | 0x4, (0xf << 9) | 0x2, (0x6 << 9) | 0x4},
         .speechWin = {((0x0 << 9) | 299), (0x6 << 9) | 0x4, (0xf << 9) | 0x2, ((0x0 << 9) | 336), (0x6 << 9) | 0x0, -1},
         .speechLose = {((0x0 << 9) | 299), (0x6 << 9) | 0x4, (0xf << 9) | 0x2, ((0x15 << 9) | 143), (0x6 << 9) | 0x4, (0x6 << 9) | 0x9},
-        .monSet = gSlateportBattleTentTrainerMons_Maggie
+        .monSet = gSlateportBattleTentTrainerMons_Jolie
     },
     [14] = {
         .facilityClass = 0x3,
@@ -20661,7 +20519,7 @@ const struct BattleFrontierTrainer gSlateportBattleTentTrainers[30] =
         .speechBefore = {(0x5 << 9) | 0x29, (0xa << 9) | 0x8, (0x8 << 9) | 0x2f, (0x9 << 9) | 0x2a, (0x8 << 9) | 0x21, (0x1 << 9) | 0x8},
         .speechWin = {(0x5 << 9) | 0x1, (0x8 << 9) | 0x0, (0x9 << 9) | 0x2a, (0xf << 9) | 0xf, (0xa << 9) | 0x10, (0x3 << 9) | 0x19},
         .speechLose = {(0xa << 9) | 0x36, (0x6 << 9) | 0x1, -1, (0x7 << 9) | 0x1e, (0xa << 9) | 0x36, (0x6 << 9) | 0x1},
-        .monSet = gSlateportBattleTentTrainerMons_Stephon
+        .monSet = gSlateportBattleTentTrainerMons_Jolie
     },
     [15] = {
         .facilityClass = 0x12,
@@ -20669,7 +20527,7 @@ const struct BattleFrontierTrainer gSlateportBattleTentTrainers[30] =
         .speechBefore = {(0xf << 9) | 0x14, (0x1 << 9) | 0x8, (0xa << 9) | 0x4, (0x8 << 9) | 0x20, (0xa << 9) | 0x10, (0x2 << 9) | 0x4a},
         .speechWin = {(0x5 << 9) | 0x1, (0x8 << 9) | 0x15, (0x6 << 9) | 0x0, (0x4 << 9) | 0x23, (0xf << 9) | 0x14, (0x2 << 9) | 0x1},
         .speechLose = {(0x5 << 9) | 0x2, (0x8 << 9) | 0x15, (0xb << 9) | 0x1e, (0x5 << 9) | 0x14, (0xe << 9) | 0x19, (0x6 << 9) | 0x4},
-        .monSet = gSlateportBattleTentTrainerMons_Rebecca
+        .monSet = gSlateportBattleTentTrainerMons_Jolie
     },
     [16] = {
         .facilityClass = 0x29,
@@ -20677,7 +20535,7 @@ const struct BattleFrontierTrainer gSlateportBattleTentTrainers[30] =
         .speechBefore = {(0x1 << 9) | 0xe, (0xb << 9) | 0x1b, (0x8 << 9) | 0x40, (0xc << 9) | 0x2, (0x8 << 9) | 0x2, (0x5 << 9) | 0x17},
         .speechWin = {(0x7 << 9) | 0x1d, (0xf << 9) | 0x22, (0x8 << 9) | 0xb, (0xd << 9) | 0x1f, (0x5 << 9) | 0x14, (0x3 << 9) | 0x20},
         .speechLose = {(0x7 << 9) | 0x1d, (0xf << 9) | 0x25, (0x5 << 9) | 0x29, (0x8 << 9) | 0x25, (0x10 << 9) | 0x10, (0x6 << 9) | 0x4},
-        .monSet = gSlateportBattleTentTrainerMons_Reggie
+        .monSet = gSlateportBattleTentTrainerMons_Jolie
     },
     [17] = {
         .facilityClass = 0x2a,
@@ -20685,7 +20543,7 @@ const struct BattleFrontierTrainer gSlateportBattleTentTrainers[30] =
         .speechBefore = {(0x5 << 9) | 0x1, (0x7 << 9) | 0x1e, (0x9 << 9) | 0x28, (0x5 << 9) | 0x5, (0x2 << 9) | 0x33, (0xd << 9) | 0x35},
         .speechWin = {(0x5 << 9) | 0x1, (0x8 << 9) | 0x3a, (0x7 << 9) | 0xf, (0x5 << 9) | 0x2, ((0x13 << 9) | 165), -1},
         .speechLose = {(0x5 << 9) | 0x6, (0x8 << 9) | 0x20, (0x7 << 9) | 0x2, (0x7 << 9) | 0x15, (0xa << 9) | 0x36, (0x1 << 9) | 0xb},
-        .monSet = gSlateportBattleTentTrainerMons_Janae
+        .monSet = gSlateportBattleTentTrainerMons_Jolie
     },
     [18] = {
         .facilityClass = 0x9,
@@ -20693,7 +20551,7 @@ const struct BattleFrontierTrainer gSlateportBattleTentTrainers[30] =
         .speechBefore = {(0x5 << 9) | 0x28, ((0x13 << 9) | 174), (0x8 << 9) | 0x0, (0x10 << 9) | 0x14, (0x5 << 9) | 0x5, (0x3 << 9) | 0xd},
         .speechWin = {((0x13 << 9) | 174), (0x6 << 9) | 0x3, (0x5 << 9) | 0x31, (0x8 << 9) | 0x20, (0x7 << 9) | 0x3, (0x6 << 9) | 0x4},
         .speechLose = {(0x5 << 9) | 0x28, ((0x13 << 9) | 174), (0x8 << 9) | 0x0, (0xe << 9) | 0x3, (0xe << 9) | 0x8, -1},
-        .monSet = gSlateportBattleTentTrainerMons_Caiden
+        .monSet = gSlateportBattleTentTrainerMons_Jolie
     },
     [19] = {
         .facilityClass = 0x16,
@@ -20701,7 +20559,7 @@ const struct BattleFrontierTrainer gSlateportBattleTentTrainers[30] =
         .speechBefore = {(0x4 << 9) | 0x1c, (0x8 << 9) | 0x20, (0x3 << 9) | 0x28, (0x5 << 9) | 0x2, (0xb << 9) | 0xb, (0x6 << 9) | 0x3},
         .speechWin = {(0x4 << 9) | 0x1c, (0x3 << 9) | 0x20, (0x7 << 9) | 0xa, (0x8 << 9) | 0x22, (0x3 << 9) | 0x20, (0x7 << 9) | 0x11},
         .speechLose = {(0x4 << 9) | 0x1c, (0x5 << 9) | 0x1, (0x3 << 9) | 0x13, (0x8 << 9) | 0x2f, (0x5 << 9) | 0x5, ((0x12 << 9) | 70)},
-        .monSet = gSlateportBattleTentTrainerMons_Kirsten
+        .monSet = gSlateportBattleTentTrainerMons_Jolie
     },
     [20] = {
         .facilityClass = 0x2b,
@@ -20709,7 +20567,7 @@ const struct BattleFrontierTrainer gSlateportBattleTentTrainers[30] =
         .speechBefore = {(0x4 << 9) | 0xb, (0x5 << 9) | 0x6, (0xa << 9) | 0x8, (0x8 << 9) | 0x2f, (0x1 << 9) | 0xf, ((0x13 << 9) | 251)},
         .speechWin = {(0x5 << 9) | 0x1, (0xb << 9) | 0xb, (0x5 << 9) | 0x3d, (0x8 << 9) | 0xa, ((0x13 << 9) | 1), (0x5 << 9) | 0x2},
         .speechLose = {(0x7 << 9) | 0xf, (0x8 << 9) | 0x3b, (0x5 << 9) | 0x1, (0x1 << 9) | 0xf, ((0x13 << 9) | 251), (0x6 << 9) | 0x3},
-        .monSet = gSlateportBattleTentTrainerMons_Kurtis
+        .monSet = gSlateportBattleTentTrainerMons_Jolie
     },
     [21] = {
         .facilityClass = 0x2d,
@@ -20717,7 +20575,7 @@ const struct BattleFrontierTrainer gSlateportBattleTentTrainers[30] =
         .speechBefore = {(0x5 << 9) | 0x1, (0x7 << 9) | 0x16, (0x9 << 9) | 0x36, (0x2 << 9) | 0x18, (0x1 << 9) | 0xe, -1},
         .speechWin = {(0xf << 9) | 0x22, (0x8 << 9) | 0xb, (0x8 << 9) | 0x29, (0x8 << 9) | 0x2f, (0x5 << 9) | 0x2, (0x6 << 9) | 0x3},
         .speechLose = {(0x5 << 9) | 0x6, (0xa << 9) | 0x3f, (0x8 << 9) | 0x34, (0x10 << 9) | 0x17, (0x6 << 9) | 0x4, -1},
-        .monSet = gSlateportBattleTentTrainerMons_Stefan
+        .monSet = gSlateportBattleTentTrainerMons_Jolie
     },
     [22] = {
         .facilityClass = 0x4,
@@ -20725,7 +20583,7 @@ const struct BattleFrontierTrainer gSlateportBattleTentTrainers[30] =
         .speechBefore = {(0xd << 9) | 0x7, (0x6 << 9) | 0x0, (0x5 << 9) | 0x1, (0xa << 9) | 0xf, (0x7 << 9) | 0x36, (0xd << 9) | 0x7},
         .speechWin = {(0x5 << 9) | 0x1, (0xa << 9) | 0xf, (0x5 << 9) | 0x4a, (0x3 << 9) | 0x38, (0xc << 9) | 0x2, (0xa << 9) | 0x34},
         .speechLose = {(0x5 << 9) | 0x1, (0xa << 9) | 0xf, (0x8 << 9) | 0x2f, (0xc << 9) | 0xd, (0x8 << 9) | 0x2b, (0xc << 9) | 0x2},
-        .monSet = gSlateportBattleTentTrainerMons_Avery
+        .monSet = gSlateportBattleTentTrainerMons_Jolie
     },
     [23] = {
         .facilityClass = 0x35,
@@ -20733,7 +20591,7 @@ const struct BattleFrontierTrainer gSlateportBattleTentTrainers[30] =
         .speechBefore = {(0x6 << 9) | 0x36, (0xa << 9) | 0x10, (0x6 << 9) | 0x4, (0x8 << 9) | 0x4, (0xf << 9) | 0x22, (0x6 << 9) | 0x3},
         .speechWin = {(0x6 << 9) | 0x36, (0x6 << 9) | 0x36, (0x6 << 9) | 0x4, (0x5 << 9) | 0x2, (0x8 << 9) | 0x17, (0xb << 9) | 0x20},
         .speechLose = {(0x6 << 9) | 0x36, (0x6 << 9) | 0x36, (0x6 << 9) | 0x4, (0x6 << 9) | 0x1c, (0xf << 9) | 0xe, -1},
-        .monSet = gSlateportBattleTentTrainerMons_Dwane
+        .monSet = gSlateportBattleTentTrainerMons_Jolie
     },
     [24] = {
         .facilityClass = 0x37,
@@ -20741,7 +20599,7 @@ const struct BattleFrontierTrainer gSlateportBattleTentTrainers[30] =
         .speechBefore = {(0x5 << 9) | 0x1, (0x9 << 9) | 0x16, (0xa << 9) | 0x28, (0xb << 9) | 0x3c, (0x8 << 9) | 0xd, (0x3 << 9) | 0x1},
         .speechWin = {(0x6 << 9) | 0x27, (0x7 << 9) | 0x1d, (0xf << 9) | 0x14, -1, -1, -1},
         .speechLose = {(0x14 << 9) | 0x0, -1, -1, -1, -1, -1},
-        .monSet = gSlateportBattleTentTrainerMons_Mckenna
+        .monSet = gSlateportBattleTentTrainerMons_Jolie
     },
     [25] = {
         .facilityClass = 0x38,
@@ -20749,7 +20607,7 @@ const struct BattleFrontierTrainer gSlateportBattleTentTrainers[30] =
         .speechBefore = {(0x5 << 9) | 0x23, (0x11 << 9) | 0x6, (0x5 << 9) | 0x2, (0x8 << 9) | 0x1e, (0x5 << 9) | 0x40, (0xb << 9) | 0x15},
         .speechWin = {(0x14 << 9) | 0x1, (0x5 << 9) | 0x41, (0x3 << 9) | 0x2, (0x8 << 9) | 0x37, (0xf << 9) | 0xf, (0x11 << 9) | 0x4},
         .speechLose = {(0x5 << 9) | 0x1, (0x8 << 9) | 0x14, (0x3 << 9) | 0x2d, (0x5 << 9) | 0x28, (0xd << 9) | 0x0, (0xc << 9) | 0x27},
-        .monSet = gSlateportBattleTentTrainerMons_Camryn
+        .monSet = gSlateportBattleTentTrainerMons_Jolie
     },
     [26] = {
         .facilityClass = 0x1c,
@@ -20757,7 +20615,7 @@ const struct BattleFrontierTrainer gSlateportBattleTentTrainers[30] =
         .speechBefore = {(0x4 << 9) | 0x28, (0x8 << 9) | 0x2f, (0x5 << 9) | 0x28, (0x5 << 9) | 0x1b, (0x8 << 9) | 0x24, -1},
         .speechWin = {(0x3 << 9) | 0x11, (0x8 << 9) | 0x28, (0x8 << 9) | 0x29, (0x8 << 9) | 0x0, (0x8 << 9) | 0x6, (0x9 << 9) | 0x40},
         .speechLose = {(0x6 << 9) | 0x3b, (0x8 << 9) | 0x14, (0x5 << 9) | 0x2, (0x4 << 9) | 0x28, (0x6 << 9) | 0x3, -1},
-        .monSet = gSlateportBattleTentTrainerMons_Natasha
+        .monSet = gSlateportBattleTentTrainerMons_Jolie
     },
     [27] = {
         .facilityClass = 0x3a,
@@ -20765,7 +20623,7 @@ const struct BattleFrontierTrainer gSlateportBattleTentTrainers[30] =
         .speechBefore = {(0x5 << 9) | 0x1, (0x8 << 9) | 0x17, (0x9 << 9) | 0x25, (0x7 << 9) | 0xf, (0x5 << 9) | 0x3d, (0x3 << 9) | 0x0},
         .speechWin = {(0x6 << 9) | 0x26, (0xf << 9) | 0x8, (0x8 << 9) | 0x2f, (0xc << 9) | 0x6, (0x8 << 9) | 0x2b, (0x5 << 9) | 0x2},
         .speechLose = {(0x5 << 9) | 0x1, (0xa << 9) | 0xf, (0x8 << 9) | 0x2f, (0xc << 9) | 0x22, (0x5 << 9) | 0x28, (0xc << 9) | 0x11},
-        .monSet = gSlateportBattleTentTrainerMons_Austyn
+        .monSet = gSlateportBattleTentTrainerMons_Jolie
     },
     [28] = {
         .facilityClass = 0x5,
@@ -20773,7 +20631,7 @@ const struct BattleFrontierTrainer gSlateportBattleTentTrainers[30] =
         .speechBefore = {(0x6 << 9) | 0x1d, (0x5 << 9) | 0x29, (0x7 << 9) | 0x9, (0x10 << 9) | 0x12, (0x8 << 9) | 0x2a, (0x8 << 9) | 0x28},
         .speechWin = {(0x5 << 9) | 0x6, (0xa << 9) | 0x8, (0xf << 9) | 0x13, (0x7 << 9) | 0xd, ((0x13 << 9) | 72), (0x6 << 9) | 0x28},
         .speechLose = {(0x5 << 9) | 0x29, (0x7 << 9) | 0x21, (0x10 << 9) | 0x12, (0x7 << 9) | 0x1d, (0xf << 9) | 0x22, (0x5 << 9) | 0x29},
-        .monSet = gSlateportBattleTentTrainerMons_Donovan
+        .monSet = gSlateportBattleTentTrainerMons_Jolie
     },
     [29] = {
         .facilityClass = 0x47,
@@ -20781,502 +20639,68 @@ const struct BattleFrontierTrainer gSlateportBattleTentTrainers[30] =
         .speechBefore = {(0x5 << 9) | 0x29, (0x9 << 9) | 0x17, (0x8 << 9) | 0x30, (0x5 << 9) | 0x28, (0x5 << 9) | 0xb, (0x6 << 9) | 0x4},
         .speechWin = {(0x5 << 9) | 0x1, (0x7 << 9) | 0x2c, (0x9 << 9) | 0x16, (0x5 << 9) | 0x28, (0x5 << 9) | 0xb, (0x6 << 9) | 0x0},
         .speechLose = {(0x5 << 9) | 0x1, (0x7 << 9) | 0x1e, (0x8 << 9) | 0x25, (0x9 << 9) | 0x28, (0x5 << 9) | 0x28, (0x5 << 9) | 0xb},
-        .monSet = gSlateportBattleTentTrainerMons_Tamia
+        .monSet = gSlateportBattleTentTrainerMons_Jolie
     }
 };
 
-const struct FacilityMon gSlateportBattleTentMons[70] =
+const struct FacilityMon gSlateportBattleTentMons[7] =
 {
-    [0] = {
-        .species = 263,
-        .moves = {33, 204, 316, 42},
-        .itemTableId = 16,
-        .evSpread = (1 << 3) | (1 << 1),
-        .nature = 13
-    },
-    [1] = {
-        .species = 263,
-        .moves = {91, 300, 39, 156},
-        .itemTableId = 41,
-        .evSpread = (1 << 3) | (1 << 1),
-        .nature = 13
-    },
-    [2] = {
-        .species = 267,
-        .moves = {78, 72, 16, 106},
-        .itemTableId = 0,
-        .evSpread = (1 << 4) | (1 << 3),
-        .nature = 15
-    },
-    [3] = {
-        .species = 269,
-        .moves = {40, 236, 182, 16},
-        .itemTableId = 3,
-        .evSpread = (1 << 5) | (1 << 4) | (1 << 2) | (1 << 0),
-        .nature = 15
-    },
-    [4] = {
-        .species = 320,
-        .moves = {205, 174, 45, 250},
-        .itemTableId = 26,
-        .evSpread = (1 << 2) | (1 << 1) | (1 << 0),
-        .nature = 3
-    },
-    [5] = {
-        .species = 320,
-        .moves = {205, 45, 250, 352},
-        .itemTableId = 2,
-        .evSpread = (1 << 4) | (1 << 2) | (1 << 0),
-        .nature = 15
-    },
-    [6] = {
-        .species = 183,
-        .moves = {205, 111, 39, 61},
-        .itemTableId = 19,
-        .evSpread = (1 << 5) | (1 << 0),
-        .nature = 8
-    },
-    [7] = {
-        .species = 278,
-        .moves = {48, 45, 17, 211},
-        .itemTableId = 36,
-        .evSpread = (1 << 4) | (1 << 3) | (1 << 1),
-        .nature = 14
-    },
-    [8] = {
-        .species = 279,
-        .moves = {239, 346, 45, 17},
-        .itemTableId = 43,
-        .evSpread = (1 << 5) | (1 << 4) | (1 << 2),
-        .nature = 15
-    },
-    [9] = {
-        .species = 331,
-        .moves = {201, 43, 73, 42},
-        .itemTableId = 54,
-        .evSpread = (1 << 3),
-        .nature = 13
-    },
-    [10] = {
-        .species = 271,
-        .moves = {310, 55, 252, 71},
-        .itemTableId = 8,
-        .evSpread = (1 << 4) | (1 << 0),
-        .nature = 15
-    },
-    [11] = {
-        .species = 270,
-        .moves = {235, 267, 240, 72},
-        .itemTableId = 22,
-        .evSpread = (1 << 4) | (1 << 2) | (1 << 0),
-        .nature = 6
-    },
-    [12] = {
-        .species = 273,
-        .moves = {241, 235, 73, 117},
-        .itemTableId = 48,
-        .evSpread = (1 << 5) | (1 << 2) | (1 << 0),
+    [0] =
+ {
+        .species = 3,
+        .moves = {188, 202, 235, 414},
+        .itemTableId = 63,
+        .evSpread = (1 << 3) | (1 << 4),
         .nature = 10
-    },
-    [13] = {
-        .species = 274,
-        .moves = {252, 267, 106, 213},
-        .itemTableId = 0,
-        .evSpread = (1 << 1) | (1 << 0),
-        .nature = 1
-    },
-    [14] = {
-        .species = 291,
-        .moves = {210, 103, 14, 104},
-        .itemTableId = 0,
-        .evSpread = (1 << 5) | (1 << 4) | (1 << 3) | (1 << 2) | (1 << 0),
-        .nature = 24
-    },
-    [15] = {
-        .species = 291,
-        .moves = {210, 104, 103, 28},
-        .itemTableId = 11,
-        .evSpread = (1 << 2) | (1 << 1),
-        .nature = 4
-    },
-    [16] = {
-        .species = 75,
-        .moves = {300, 335, 317, 222},
-        .itemTableId = 0,
-        .evSpread = (1 << 5) | (1 << 1) | (1 << 0),
-        .nature = 2
-    },
-    [17] = {
-        .species = 343,
-        .moves = {120, 246, 60, 115},
-        .itemTableId = 0,
-        .evSpread = (1 << 4) | (1 << 1),
-        .nature = 14
-    },
-    [18] = {
-        .species = 262,
-        .moves = {44, 46, 207, 33},
-        .itemTableId = 13,
-        .evSpread = (1 << 4) | (1 << 3) | (1 << 0),
-        .nature = 20
-    },
-    [19] = {
-        .species = 262,
-        .moves = {316, 336, 28, 305},
-        .itemTableId = 47,
-        .evSpread = (1 << 1) | (1 << 0),
-        .nature = 1
-    },
-    [20] = {
-        .species = 264,
-        .moves = {29, 321, 39, 156},
-        .itemTableId = 37,
-        .evSpread = (1 << 5) | (1 << 1) | (1 << 0),
-        .nature = 13
-    },
-    [21] = {
-        .species = 118,
-        .moves = {346, 30, 127, 48},
-        .itemTableId = 34,
-        .evSpread = (1 << 5) | (1 << 4) | (1 << 2),
-        .nature = 20
-    },
-    [22] = {
-        .species = 309,
-        .moves = {44, 209, 46, 148},
-        .itemTableId = 17,
-        .evSpread = (1 << 3) | (1 << 2) | (1 << 1),
-        .nature = 15
-    },
-    [23] = {
-        .species = 100,
-        .moves = {209, 205, 268, 103},
-        .itemTableId = 0,
-        .evSpread = (1 << 5) | (1 << 4),
-        .nature = 16
-    },
-    [24] = {
-        .species = 304,
-        .moves = {91, 232, 334, 283},
-        .itemTableId = 0,
-        .evSpread = (1 << 2) | (1 << 1) | (1 << 0),
-        .nature = 4
-    },
-    [25] = {
-        .species = 304,
-        .moves = {189, 231, 106, 46},
-        .itemTableId = 33,
-        .evSpread = (1 << 5) | (1 << 4) | (1 << 0),
-        .nature = 15
-    },
-    [26] = {
-        .species = 328,
-        .moves = {34, 116, 328, 28},
-        .itemTableId = 0,
-        .evSpread = (1 << 1) | (1 << 0),
-        .nature = 2
-    },
-    [27] = {
-        .species = 331,
-        .moves = {275, 201, 40, 194},
-        .itemTableId = 32,
-        .evSpread = (1 << 3) | (1 << 0),
+ },
+ [1] =
+ {
+        .species = 3,
+        .moves = {188, 202, 235, 414},
+        .itemTableId = 64,
+        .evSpread = (1 << 3) | (1 << 4),
         .nature = 10
-    },
-    [28] = {
-        .species = 276,
-        .moves = {45, 332, 97, 283},
-        .itemTableId = 23,
-        .evSpread = (1 << 3) | (1 << 1),
-        .nature = 3
-    },
-    [29] = {
-        .species = 277,
-        .moves = {48, 45, 116, 64},
-        .itemTableId = 0,
-        .evSpread = (1 << 2) | (1 << 1) | (1 << 0),
-        .nature = 8
-    },
-    [30] = {
-        .species = 42,
-        .moves = {310, 16, 212, 109},
-        .itemTableId = 31,
-        .evSpread = (1 << 5) | (1 << 3) | (1 << 2),
+ },
+ [2] =
+ {
+        .species = 6,
+        .moves = {126, 406, 403, 355},
+        .itemTableId = 65,
+        .evSpread = (1 << 3) | (1 << 4),
         .nature = 10
-    },
-    [31] = {
-        .species = 294,
-        .moves = {310, 103, 253, 48},
-        .itemTableId = 0,
-        .evSpread = (1 << 2) | (1 << 1) | (1 << 0),
-        .nature = 3
-    },
-    [32] = {
-        .species = 327,
-        .moves = {146, 185, 95, 156},
-        .itemTableId = 4,
-        .evSpread = (1 << 5) | (1 << 2) | (1 << 1),
-        .nature = 3
-    },
-    [33] = {
-        .species = 81,
-        .moves = {319, 48, 86, 209},
-        .itemTableId = 24,
-        .evSpread = (1 << 4) | (1 << 3),
-        .nature = 12
-    },
-    [34] = {
-        .species = 293,
-        .moves = {156, 214, 336, 34},
-        .itemTableId = 18,
-        .evSpread = (1 << 5) | (1 << 2) | (1 << 1) | (1 << 0),
-        .nature = 3
-    },
-    [35] = {
-        .species = 296,
-        .moves = {28, 282, 292, 187},
-        .itemTableId = 6,
-        .evSpread = (1 << 1) | (1 << 0),
-        .nature = 3
-    },
-    [36] = {
-        .species = 322,
-        .moves = {52, 36, 45, 116},
-        .itemTableId = 0,
-        .evSpread = (1 << 4) | (1 << 1),
-        .nature = 15
-    },
-    [37] = {
-        .species = 339,
-        .moves = {222, 300, 346, 55},
-        .itemTableId = 46,
-        .evSpread = (1 << 1) | (1 << 0),
-        .nature = 13
-    },
-    [38] = {
-        .species = 72,
-        .moves = {103, 61, 51, 112},
-        .itemTableId = 28,
-        .evSpread = (1 << 1) | (1 << 0),
-        .nature = 3
-    },
-    [39] = {
-        .species = 288,
-        .moves = {116, 154, 203, 281},
-        .itemTableId = 55,
-        .evSpread = (1 << 1) | (1 << 0),
-        .nature = 3
-    },
-    [40] = {
-        .species = 129,
-        .moves = {33, 175, 150, 0},
-        .itemTableId = 42,
-        .evSpread = (1 << 1) | (1 << 0),
-        .nature = 3
-    },
-    [41] = {
-        .species = 336,
-        .moves = {122, 305, 137, 35},
-        .itemTableId = 0,
-        .evSpread = (1 << 4) | (1 << 1) | (1 << 0),
-        .nature = 3
-    },
-    [42] = {
-        .species = 338,
-        .moves = {88, 106, 149, 33},
-        .itemTableId = 5,
-        .evSpread = (1 << 5) | (1 << 2) | (1 << 1),
-        .nature = 3
-    },
-    [43] = {
-        .species = 352,
-        .moves = {60, 164, 168, 39},
-        .itemTableId = 0,
-        .evSpread = (1 << 4) | (1 << 3) | (1 << 0),
-        .nature = 15
-    },
-    [44] = {
-        .species = 352,
-        .moves = {185, 310, 122, 103},
-        .itemTableId = 44,
-        .evSpread = (1 << 5) | (1 << 0),
-        .nature = 20
-    },
-    [45] = {
-        .species = 285,
-        .moves = {78, 33, 73, 72},
-        .itemTableId = 7,
-        .evSpread = (1 << 4) | (1 << 3),
-        .nature = 15
-    },
-    [46] = {
-        .species = 285,
-        .moves = {71, 78, 147, 73},
-        .itemTableId = 56,
-        .evSpread = (1 << 1),
-        .nature = 2
-    },
-    [47] = {
-        .species = 271,
-        .moves = {267, 310, 45, 71},
-        .itemTableId = 0,
-        .evSpread = (1 << 3) | (1 << 1),
-        .nature = 1
-    },
-    [48] = {
-        .species = 322,
-        .moves = {52, 45, 89, 241},
-        .itemTableId = 38,
-        .evSpread = (1 << 5) | (1 << 4) | (1 << 2),
-        .nature = 15
-    },
-    [49] = {
-        .species = 328,
-        .moves = {185, 91, 44, 98},
-        .itemTableId = 30,
-        .evSpread = (1 << 2) | (1 << 1) | (1 << 0),
-        .nature = 2
-    },
-    [50] = {
-        .species = 279,
-        .moves = {17, 48, 54, 97},
-        .itemTableId = 45,
-        .evSpread = (1 << 5) | (1 << 3) | (1 << 2) | (1 << 0),
-        .nature = 3
-    },
-    [51] = {
-        .species = 278,
-        .moves = {55, 48, 45, 196},
-        .itemTableId = 29,
-        .evSpread = (1 << 3) | (1 << 1),
-        .nature = 3
-    },
-    [52] = {
-        .species = 183,
-        .moves = {38, 240, 39, 55},
-        .itemTableId = 62,
-        .evSpread = (1 << 4) | (1 << 0),
-        .nature = 15
-    },
-    [53] = {
-        .species = 300,
-        .moves = {274, 213, 47, 204},
-        .itemTableId = 60,
-        .evSpread = (1 << 2) | (1 << 1) | (1 << 0),
-        .nature = 23
-    },
-    [54] = {
-        .species = 336,
-        .moves = {207, 35, 342, 114},
-        .itemTableId = 0,
-        .evSpread = (1 << 5) | (1 << 4) | (1 << 2),
-        .nature = 2
-    },
-    [55] = {
-        .species = 42,
-        .moves = {44, 259, 103, 305},
+ },
+ [3] =
+ {
+        .species = 6,
+        .moves = {126, 406, 403, 76},
+        .itemTableId = 66,
+        .evSpread = (1 << 3) | (1 << 4),
+        .nature = 10
+ },
+ [4] =
+ {
+        .species = 6,
+        .moves = {337, 394, 349, 9},
+        .itemTableId = 67,
+        .evSpread = (1 << 3) | (1 << 4),
+        .nature = 10
+ },
+ [5] =
+ {
+        .species = 9,
+        .moves = {504, 503, 58, 182},
         .itemTableId = 25,
-        .evSpread = (1 << 3) | (1 << 0),
-        .nature = 0
-    },
-    [56] = {
-        .species = 280,
-        .moves = {95, 286, 94, 138},
-        .itemTableId = 58,
-        .evSpread = (1 << 4) | (1 << 3),
+        .evSpread = (1 << 0) | (1 << 4),
+        .nature = 5
+ },
+ [6] =
+ {
+        .species = 9,
+        .moves = {399, 352, 58, 396},
+        .itemTableId = 68,
+        .evSpread = (1 << 3) | (1 << 4),
         .nature = 10
-    },
-    [57] = {
-        .species = 27,
-        .moves = {163, 28, 328, 111},
-        .itemTableId = 40,
-        .evSpread = 0,
-        .nature = 0
-    },
-    [58] = {
-        .species = 317,
-        .moves = {281, 124, 227, 1},
-        .itemTableId = 0,
-        .evSpread = (1 << 5) | (1 << 2) | (1 << 1),
-        .nature = 8
-    },
-    [59] = {
-        .species = 313,
-        .moves = {33, 109, 98, 104},
-        .itemTableId = 0,
-        .evSpread = (1 << 5) | (1 << 1),
-        .nature = 0
-    },
-    [60] = {
-        .species = 314,
-        .moves = {204, 33, 227, 236},
-        .itemTableId = 12,
-        .evSpread = (1 << 3) | (1 << 1) | (1 << 0),
-        .nature = 3
-    },
-    [61] = {
-        .species = 64,
-        .moves = {50, 93, 115, 105},
-        .itemTableId = 0,
-        .evSpread = (1 << 4) | (1 << 3),
-        .nature = 24
-    },
-    [62] = {
-        .species = 281,
-        .moves = {347, 93, 104, 45},
-        .itemTableId = 35,
-        .evSpread = (1 << 5) | (1 << 2) | (1 << 1) | (1 << 0),
-        .nature = 23
-    },
-    [63] = {
-        .species = 286,
-        .moves = {71, 33, 78, 72},
-        .itemTableId = 0,
-        .evSpread = (1 << 2) | (1 << 1) | (1 << 0),
-        .nature = 14
-    },
-    [64] = {
-        .species = 311,
-        .moves = {209, 227, 86, 45},
-        .itemTableId = 52,
-        .evSpread = (1 << 3) | (1 << 1),
-        .nature = 1
-    },
-    [65] = {
-        .species = 311,
-        .moves = {209, 313, 164, 98},
-        .itemTableId = 39,
-        .evSpread = (1 << 4) | (1 << 0),
-        .nature = 16
-    },
-    [66] = {
-        .species = 309,
-        .moves = {209, 268, 46, 86},
-        .itemTableId = 50,
-        .evSpread = (1 << 3),
-        .nature = 10
-    },
-    [67] = {
-        .species = 333,
-        .moves = {47, 64, 211, 219},
-        .itemTableId = 0,
-        .evSpread = (1 << 3) | (1 << 1),
-        .nature = 13
-    },
-    [68] = {
-        .species = 66,
-        .moves = {116, 233, 69, 193},
-        .itemTableId = 14,
-        .evSpread = (1 << 3) | (1 << 1),
-        .nature = 3
-    },
-    [69] = {
-        .species = 67,
-        .moves = {116, 43, 2, 193},
-        .itemTableId = 0,
-        .evSpread = (1 << 5) | (1 << 2) | (1 << 0),
-        .nature = 15
-    }
+ },
 };
 
 

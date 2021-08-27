@@ -1,5 +1,15 @@
 MagmaHideout_3F_1R_MapScripts:: @ 823A1B2
+	map_script MAP_SCRIPT_ON_LOAD, MagmaHideout_3F_1R_OnLoad
 	.byte 0
+	
+MagmaHideout_3F_1R_OnLoad::
+	call_if_set FLAG_SYS_GAME_CLEAR, MagmaHideout_3F_1R_EventScript_OpenGroudonCave
+	end
+	
+MagmaHideout_3F_1R_EventScript_OpenGroudonCave:: @ 81EC3AE
+	setmetatile 13, 13, METATILE_Lavaridge_CaveEntrance_Top, 1
+	setmetatile 13, 14, METATILE_Lavaridge_CaveEntrance_Bottom, 0
+	return
 
 MagmaHideout_3F_1R_EventScript_Grunt9:: @ 823A1B3
 	msgbox MagmaHideout_3F_1R_Text_Grunt9Intro, MSGBOX_DEFAULT

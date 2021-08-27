@@ -22533,10 +22533,14 @@ LaunchBattleTransitionTask:
 	lsr	r4, r0, #0x18
 	ldr	r0, .L34
 	ldr	r0, [r0]
-	ldrb	r1, [r0, #0x17]
-	mov	r0, #0xc
+	ldrb	r2, [r0, #0x17]
+	lsr	r2, r2, #0x7
+	ldrb	r0, [r0, #0x18]
+	mov	r1, #0x1
 	and	r0, r0, r1
-	cmp	r0, #0x4
+	lsl	r0, r0, #0x1
+	orr	r0, r0, r2
+	cmp	r0, #0x1
 	beq	.L33	@cond_branch
 	ldr	r0, .L34+0x4
 	mov	r1, #0x2
@@ -28319,9 +28323,9 @@ Phase2_ShredSplit_Func2:
 	ldrsh	r0, [r1, r3]
 	ldr	r1, [sp, #0x8]
 	cmp	r1, r0
-	ble	.LCB7363
+	ble	.LCB7370
 	b	.L692	@long jump
-.LCB7363:
+.LCB7370:
 .L694:
 	mov	r7, #0x0
 	mov	r2, sl
@@ -28556,9 +28560,9 @@ Phase2_ShredSplit_Func2:
 	mov	r3, #0x12
 	ldrsh	r0, [r2, r3]
 	cmp	sl, r0
-	bgt	.LCB7682
+	bgt	.LCB7689
 	b	.L694	@long jump
-.LCB7682:
+.LCB7689:
 .L692:
 	mov	r1, r9
 	ldrh	r0, [r1, #0x10]
@@ -31853,9 +31857,9 @@ sub_814A014:
 	lsr	r1, r0, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, #0x3f
-	bgt	.LCB11822
+	bgt	.LCB11829
 	b	.L1125	@long jump
-.LCB11822:
+.LCB11829:
 	add	sp, sp, #0x14
 	pop	{r3, r4, r5}
 	mov	r8, r3

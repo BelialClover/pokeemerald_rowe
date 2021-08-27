@@ -1504,7 +1504,7 @@ TryBattleLinkup:
 	.align	2, 0
 .L228:
 	.word	gSaveBlock2Ptr
-	.word	0xc31
+	.word	0xc35
 	.word	gLinkType
 	.word	0x2266
 .L214:
@@ -1922,7 +1922,7 @@ CreateTask_ReestablishCableClubLink:
 	.align	2, 0
 .L306:
 	.word	gSaveBlock2Ptr
-	.word	0xc31
+	.word	0xc35
 	.word	gLinkType
 	.word	0x2266
 .L288:

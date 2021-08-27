@@ -344,10 +344,14 @@ HandleIntroSlide:
 	lsr	r4, r0, #0x18
 	ldr	r0, .L61
 	ldr	r0, [r0]
-	ldrb	r1, [r0, #0x17]
-	mov	r0, #0xc
+	ldrb	r2, [r0, #0x17]
+	lsr	r2, r2, #0x7
+	ldrb	r0, [r0, #0x18]
+	mov	r1, #0x1
 	and	r0, r0, r1
-	cmp	r0, #0x4
+	lsl	r0, r0, #0x1
+	orr	r0, r0, r2
+	cmp	r0, #0x1
 	bne	.L51	@cond_branch
 	ldr	r0, .L61+0x4
 	mov	r1, #0x0
@@ -524,9 +528,9 @@ BattleIntroSlide1:
 	ldrsh	r0, [r0, r2]
 	mov	r8, r1
 	cmp	r0, #0x4
-	bls	.LCB619
+	bls	.LCB626
 	b	.L75	@long jump
-.LCB619:
+.LCB626:
 	lsl	r0, r0, #0x2
 	ldr	r1, .L109+0x8
 	add	r0, r0, r1
@@ -586,9 +590,9 @@ BattleIntroSlide1:
 	strh	r0, [r1, #0xc]
 	lsl	r0, r0, #0x10
 	cmp	r0, #0
-	beq	.LCB689
+	beq	.LCB696
 	b	.L75	@long jump
-.LCB689:
+.LCB696:
 	ldrh	r0, [r1, #0x8]
 	add	r0, r0, #0x1
 	strh	r0, [r1, #0x8]
@@ -607,9 +611,9 @@ BattleIntroSlide1:
 	mov	r1, #0xc0
 	lsl	r1, r1, #0x6
 	cmp	r0, r1
-	beq	.LCB715
+	beq	.LCB722
 	b	.L75	@long jump
-.LCB715:
+.LCB722:
 	lsl	r1, r4, #0x2
 	add	r1, r1, r4
 	lsl	r1, r1, #0x3
@@ -910,9 +914,9 @@ BattleIntroSlide2:
 	mov	r1, #0x8
 	ldrsh	r0, [r0, r1]
 	cmp	r0, #0x4
-	bls	.LCB1097
+	bls	.LCB1104
 	b	.L132	@long jump
-.LCB1097:
+.LCB1104:
 	lsl	r0, r0, #0x2
 	ldr	r1, .L172+0x4
 	add	r0, r0, r1
@@ -969,9 +973,9 @@ BattleIntroSlide2:
 	strh	r0, [r1, #0xc]
 	lsl	r0, r0, #0x10
 	cmp	r0, #0
-	beq	.LCB1163
+	beq	.LCB1170
 	b	.L132	@long jump
-.LCB1163:
+.LCB1170:
 	ldrh	r0, [r1, #0x8]
 	add	r0, r0, #0x1
 	strh	r0, [r1, #0x8]
@@ -994,9 +998,9 @@ BattleIntroSlide2:
 	mov	r1, #0xc0
 	lsl	r1, r1, #0x6
 	cmp	r0, r1
-	beq	.LCB1195
+	beq	.LCB1202
 	b	.L132	@long jump
-.LCB1195:
+.LCB1202:
 	ldr	r0, .L178+0x4
 	add	r1, r6, r5
 	lsl	r1, r1, #0x3
@@ -1235,9 +1239,9 @@ BattleIntroSlide3:
 	ldrsh	r0, [r0, r2]
 	add	r4, r1, #0
 	cmp	r0, #0x4
-	bls	.LCB1492
+	bls	.LCB1499
 	b	.L187	@long jump
-.LCB1492:
+.LCB1499:
 	lsl	r0, r0, #0x2
 	ldr	r1, .L218+0x8
 	add	r0, r0, r1
@@ -1309,9 +1313,9 @@ BattleIntroSlide3:
 	strh	r0, [r1, #0xc]
 	lsl	r0, r0, #0x10
 	cmp	r0, #0
-	beq	.LCB1572
+	beq	.LCB1579
 	b	.L187	@long jump
-.LCB1572:
+.LCB1579:
 	ldrh	r0, [r1, #0x8]
 	add	r0, r0, #0x1
 	strh	r0, [r1, #0x8]
@@ -1334,9 +1338,9 @@ BattleIntroSlide3:
 	mov	r1, #0xc0
 	lsl	r1, r1, #0x6
 	cmp	r0, r1
-	beq	.LCB1604
+	beq	.LCB1611
 	b	.L187	@long jump
-.LCB1604:
+.LCB1611:
 	ldr	r0, .L224+0x4
 	lsl	r1, r5, #0x2
 	add	r1, r1, r5
@@ -1611,9 +1615,9 @@ BattleIntroSlideLink:
 	mov	r9, r0
 	add	r5, r2, #0
 	cmp	r1, #0x4
-	bls	.LCB1948
+	bls	.LCB1955
 	b	.L235	@long jump
-.LCB1948:
+.LCB1955:
 	lsl	r0, r1, #0x2
 	ldr	r1, .L261+0x10
 	add	r0, r0, r1
@@ -1655,9 +1659,9 @@ BattleIntroSlideLink:
 	strh	r0, [r1, #0xc]
 	lsl	r0, r0, #0x10
 	cmp	r0, #0
-	beq	.LCB1996
+	beq	.LCB2003
 	b	.L235	@long jump
-.LCB1996:
+.LCB2003:
 	ldrh	r0, [r1, #0x8]
 	add	r0, r0, #0x1
 	strh	r0, [r1, #0x8]
@@ -1737,9 +1741,9 @@ BattleIntroSlideLink:
 	mov	r1, #0xc0
 	lsl	r1, r1, #0x6
 	cmp	r0, r1
-	beq	.LCB2088
+	beq	.LCB2095
 	b	.L235	@long jump
-.LCB2088:
+.LCB2095:
 	add	r1, r5, r6
 	lsl	r1, r1, #0x3
 	add	r1, r1, r9
@@ -1899,9 +1903,9 @@ BattleIntroSlidePartner:
 	ldrsh	r0, [r0, r2]
 	add	r6, r1, #0
 	cmp	r0, #0x5
-	bls	.LCB2285
+	bls	.LCB2292
 	b	.L270	@long jump
-.LCB2285:
+.LCB2292:
 	lsl	r0, r0, #0x2
 	ldr	r1, .L288+0x4
 	add	r0, r0, r1
@@ -1939,9 +1943,9 @@ BattleIntroSlidePartner:
 	strh	r0, [r1, #0xc]
 	lsl	r0, r0, #0x10
 	cmp	r0, #0
-	beq	.LCB2326
+	beq	.LCB2333
 	b	.L270	@long jump
-.LCB2326:
+.LCB2333:
 	ldrh	r0, [r1, #0x8]
 	add	r0, r0, #0x1
 	strh	r0, [r1, #0x8]
@@ -2016,9 +2020,9 @@ BattleIntroSlidePartner:
 	mov	r0, #0x80
 	lsl	r0, r0, #0x6
 	cmp	r1, r0
-	beq	.LCB2417
+	beq	.LCB2424
 	b	.L270	@long jump
-.LCB2417:
+.LCB2424:
 	lsl	r1, r4, #0x2
 	add	r1, r1, r4
 	lsl	r1, r1, #0x3

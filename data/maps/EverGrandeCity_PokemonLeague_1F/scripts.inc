@@ -36,6 +36,31 @@ EverGrandeCity_PokemonLeague_1F_EventScript_Clerk:: @ 822960A
 	release
 	end
 	
+EverGrandeCity_PokemonLeague_1F_EventScript_Power_Candy::
+	lock
+	faceplayer
+	msgbox EverGrandeCity_PokemonLeague_1F_Text_PowerCandy, MSGBOX_YESNO
+	compare VAR_RESULT, NO
+	goto_if_eq EverGrandeCity_PokemonLeague_1F_EventScript_Power_Candy_Decline
+	checkmoney 5000, 0
+	compare VAR_RESULT, FALSE
+	goto_if_eq LilycoveCity_DepartmentStoreRooftop_EventScript_NotEnoughMoneyForDrink
+	removemoney 5000, 0
+	giveitem ITEM_POWER_CANDY
+	msgbox EverGrandeCity_PokemonLeague_1F_Text_PowerCandy_Bought, MSGBOX_DEFAULT
+	release
+	end
+	
+EverGrandeCity_PokemonLeague_1F_EventScript_Power_Candy_Decline::
+	msgbox EverGrandeCity_PokemonLeague_1F_Text_PowerCandy_Decline, MSGBOX_DEFAULT
+	release
+	end
+	
+EverGrandeCity_PokemonLeague_1F_EventScript_Power_Candy_no_Money::
+	msgbox EverGrandeCity_PokemonLeague_1F_Text_PowerCandy_no_Money, MSGBOX_DEFAULT
+	release
+	end
+	
 EverGrandeCity_PokemonLeague_Pokemart:
 	.2byte ITEM_POKE_BALL
 	.2byte ITEM_GREAT_BALL
@@ -53,7 +78,6 @@ EverGrandeCity_PokemonLeague_Pokemart:
 	.2byte ITEM_MAX_LURE	
 	.2byte ITEM_HEART_SCALE
 	.2byte ITEM_ABILITY_CAPSULE
-	.2byte ITEM_POWER_CANDY
 	.2byte ITEM_RARE_CANDY
 	.2byte ITEM_NONE
 	release
@@ -152,4 +176,21 @@ EverGrandeCity_PokemonLeague_1F_Text_HaventObtainedAllBadges: @ 8229787
 EverGrandeCity_PokemonLeague_1F_Text_GoForth: @ 82297EF
 	.string "Trainer! Believe in yourself and your\n"
 	.string "Pokémon, and go forth!$"
+	
+EverGrandeCity_PokemonLeague_1F_Text_PowerCandy:
+	.string "Hello, there! Have I got a deal just\n"
+	.string "you, I'll let you have a secret Item\p"
+	.string "for just 5000! So, you'll buy it,\n"
+	.string "am I right!$"
+	
+EverGrandeCity_PokemonLeague_1F_Text_PowerCandy_Decline:
+	.string "No? You say no? I'm only doing this!\n"
+	.string "as a favor to you!$"
 
+EverGrandeCity_PokemonLeague_1F_Text_PowerCandy_no_Money:
+	.string "Looks like you don't have enough\n"
+	.string "money!$"
+	
+EverGrandeCity_PokemonLeague_1F_Text_PowerCandy_Bought:
+	.string "Oh, yeah... Returns not accepted,\n"
+	.string " got that?$"

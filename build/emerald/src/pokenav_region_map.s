@@ -877,13 +877,13 @@ FreeRegionMapSubstruct1:
 	ldr	r3, [r1]
 	mov	r1, #0x1
 	and	r1, r1, r0
-	lsl	r1, r1, #0x4
-	ldrb	r2, [r3, #0x15]
-	mov	r0, #0x11
+	lsl	r1, r1, #0x1
+	ldrb	r2, [r3, #0x16]
+	mov	r0, #0x3
 	neg	r0, r0
 	and	r0, r0, r2
 	orr	r0, r0, r1
-	strb	r0, [r3, #0x15]
+	strb	r0, [r3, #0x16]
 	mov	r0, #0x10
 	bl	FreePokenavSubstruct
 	mov	r0, #0x3
@@ -1154,8 +1154,8 @@ ShouldOpenRegionMapZoomed:
 	bne	.L56	@cond_branch
 	ldr	r0, .L58
 	ldr	r0, [r0]
-	ldrb	r0, [r0, #0x15]
-	lsr	r0, r0, #0x4
+	ldrb	r0, [r0, #0x16]
+	lsr	r0, r0, #0x1
 	mov	r1, #0x1
 	and	r0, r0, r1
 	b	.L57

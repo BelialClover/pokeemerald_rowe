@@ -132,7 +132,7 @@ sHealLocations:
 	.space	2
 	.byte	0x0
 	.byte	0x13
-	.short	0x6
+	.short	0x5
 	.short	0x14
 	.space	2
 	.byte	0x0

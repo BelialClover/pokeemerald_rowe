@@ -13697,7 +13697,7 @@ StandardWildEncounter:
 .L317:
 	.word	0x169
 	.word	gSaveBlock2Ptr
-	.word	0xc3a
+	.word	0xc3e
 	.word	gBattlePyramidWildMonHeaders
 .L255:
 	lsl	r0, r6, #0x18
@@ -14260,7 +14260,7 @@ SweetScentWildEncounter:
 .L386:
 	.word	0x169
 	.word	gSaveBlock2Ptr
-	.word	0xc3a
+	.word	0xc3e
 	.word	gBattlePyramidWildMonHeaders
 .L362:
 	mov	r0, sp

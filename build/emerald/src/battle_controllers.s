@@ -4518,7 +4518,7 @@ BtlController_EmitCmd55:
 .L656:
 	.word	sBattleBuffersTransferData
 	.word	gSaveBlock2Ptr
-	.word	0xc31
+	.word	0xc35
 .Lfe68:
 	.size	 BtlController_EmitCmd55,.Lfe68-BtlController_EmitCmd55
 	.align	2, 0

@@ -694,6 +694,7 @@ struct SaveBlock2
              u8 optionsButtonMode;
              u16 optionsTextSpeed:3;
              u16 optionsWindowFrameType:5;
+    u16 optionsMusicGame:5;
              u16 optionsSound:2;
              u16 optionsBattleStyle:1;
              u16 optionsBattleSceneOff:1;
@@ -755,7 +756,7 @@ struct SecretBase
 };
 
 # 1 "include/constants/game_stat.h" 1
-# 543 "include/global.h" 2
+# 544 "include/global.h" 2
 # 1 "include/global.fieldmap.h" 1
 # 13 "include/global.fieldmap.h"
 enum
@@ -1067,7 +1068,7 @@ extern u8 gSelectedObjectEvent;
 extern struct MapHeader gMapHeader;
 extern struct PlayerAvatar gPlayerAvatar;
 extern struct Camera gCamera;
-# 544 "include/global.h" 2
+# 545 "include/global.h" 2
 # 1 "include/global.berry.h" 1
 
 
@@ -1143,7 +1144,7 @@ struct BerryTree
     u8 watered3:1;
     u8 watered4:1;
 };
-# 545 "include/global.h" 2
+# 546 "include/global.h" 2
 # 1 "include/global.tv.h" 1
 
 
@@ -1637,7 +1638,7 @@ struct GabbyAndTyData
              u8 playerThrewABall2:1;
              u8 valB_4:4;
 };
-# 546 "include/global.h" 2
+# 547 "include/global.h" 2
 # 1 "include/pokemon.h" 1
 
 
@@ -2383,7 +2384,7 @@ u8 GetFormIdFromFormSpeciesId(u16 formSpeciesId);
 u16 GetBaseFormSpeciesId(u16 formSpeciesId);
 void CreateShinyMonWithNature(struct Pokemon *mon, u16 species, u8 level, u8 nature);
 u16 MonTryLearningNewMoveEvolution(struct Pokemon *mon, bool8 firstMove);
-# 547 "include/global.h" 2
+# 548 "include/global.h" 2
 
 struct WarpData
 {
@@ -2889,10 +2890,59 @@ struct TradeRoomPlayer
 
 
 
-# 1 "include/constants/item.h" 1
+# 1 "include/item_use.h" 1
+
+
+
+void ItemUseOutOfBattle_Mail(u8);
+void ItemUseOutOfBattle_Bike(u8);
+void ItemUseOutOfBattle_Rod(u8);
+void ItemUseOutOfBattle_Itemfinder(u8);
+void ItemUseOutOfBattle_PokeblockCase(u8);
+void ItemUseOutOfBattle_CoinCase(u8);
+void ItemUseOutOfBattle_PowderJar(u8);
+void ItemUseOutOfBattle_SSTicket(u8);
+void ItemUseOutOfBattle_WailmerPail(u8);
+void ItemUseOutOfBattle_Medicine(u8);
+void ItemUseOutOfBattle_AbilityCapsule(u8);
+void ItemUseOutOfBattle_PowerCandy(u8);
+void ItemUseOutOfBattle_AbilityPatch(u8);
+void ItemUseOutOfBattle_ReduceEV(u8);
+void ItemUseOutOfBattle_SacredAsh(u8);
+void ItemUseOutOfBattle_PPRecovery(u8);
+void ItemUseOutOfBattle_PPUp(u8);
+void ItemUseOutOfBattle_RareCandy(u8);
+void ItemUseOutOfBattle_TMHM(u8);
+void ItemUseOutOfBattle_Repel(u8);
+void ItemUseOutOfBattle_Lure(u8);
+void ItemUseOutOfBattle_EscapeRope(u8);
+void ItemUseOutOfBattle_BlackWhiteFlute(u8);
+void ItemUseOutOfBattle_EvolutionStone(u8);
+void ItemUseOutOfBattle_Berry(u8);
+void ItemUseOutOfBattle_EnigmaBerry(u8);
+void ItemUseOutOfBattle_CannotUse(u8);
+void ItemUseOutOfBattle_ExpShare(u8);
+void ItemUseOutOfBattle_EonFlute(u8 taskId);
+void ItemUseInBattle_PokeBall(u8);
+void ItemUseInBattle_StatIncrease(u8);
+void ItemUseInBattle_Medicine(u8);
+void ItemUseInBattle_PPRecovery(u8);
+void ItemUseInBattle_Escape(u8);
+void ItemUseInBattle_EnigmaBerry(u8);
+void Task_UseDigEscapeRopeOnField(u8 taskId);
+u8 CanUseDigOrEscapeRopeOnCurMap(void);
+u8 CheckIfItemIsTMHMOrEvolutionStone(u16 itemId);
+u32 CanThrowBall(void);
+void ItemUseOutOfBattle_SootSack(u8);
+u16 GetAshCount(void);
+void ItemUseOutOfBattle_Mints(u8 taskId);
+void ItemUseOutOfBattle_Seal(u8 taskId);
+void ItemUseOutOfBattle_SinnohSounds(u8);
 # 5 "include/item.h" 2
-# 1 "include/constants/item_config.h" 1
+# 1 "include/constants/item.h" 1
 # 6 "include/item.h" 2
+# 1 "include/constants/item_config.h" 1
+# 7 "include/item.h" 2
 
 typedef void (*ItemUseFunc)(u8);
 
@@ -15597,52 +15647,6 @@ u8 CreateSpinningBerrySprite(u8 berryId, u8 x, u8 y, bool8 startAffine);
 u8 CreateBerryFlavorCircleSprite(s16 x);
 # 23 "src/item_menu.c" 2
 # 1 "include/item_use.h" 1
-
-
-
-void ItemUseOutOfBattle_Mail(u8);
-void ItemUseOutOfBattle_Bike(u8);
-void ItemUseOutOfBattle_Rod(u8);
-void ItemUseOutOfBattle_Itemfinder(u8);
-void ItemUseOutOfBattle_PokeblockCase(u8);
-void ItemUseOutOfBattle_CoinCase(u8);
-void ItemUseOutOfBattle_PowderJar(u8);
-void ItemUseOutOfBattle_SSTicket(u8);
-void ItemUseOutOfBattle_WailmerPail(u8);
-void ItemUseOutOfBattle_Medicine(u8);
-void ItemUseOutOfBattle_AbilityCapsule(u8);
-void ItemUseOutOfBattle_PowerCandy(u8);
-void ItemUseOutOfBattle_AbilityPatch(u8);
-void ItemUseOutOfBattle_ReduceEV(u8);
-void ItemUseOutOfBattle_SacredAsh(u8);
-void ItemUseOutOfBattle_PPRecovery(u8);
-void ItemUseOutOfBattle_PPUp(u8);
-void ItemUseOutOfBattle_RareCandy(u8);
-void ItemUseOutOfBattle_TMHM(u8);
-void ItemUseOutOfBattle_Repel(u8);
-void ItemUseOutOfBattle_Lure(u8);
-void ItemUseOutOfBattle_EscapeRope(u8);
-void ItemUseOutOfBattle_BlackWhiteFlute(u8);
-void ItemUseOutOfBattle_EvolutionStone(u8);
-void ItemUseOutOfBattle_Berry(u8);
-void ItemUseOutOfBattle_EnigmaBerry(u8);
-void ItemUseOutOfBattle_CannotUse(u8);
-void ItemUseOutOfBattle_ExpShare(u8);
-void ItemUseOutOfBattle_EonFlute(u8 taskId);
-void ItemUseInBattle_PokeBall(u8);
-void ItemUseInBattle_StatIncrease(u8);
-void ItemUseInBattle_Medicine(u8);
-void ItemUseInBattle_PPRecovery(u8);
-void ItemUseInBattle_Escape(u8);
-void ItemUseInBattle_EnigmaBerry(u8);
-void Task_UseDigEscapeRopeOnField(u8 taskId);
-u8 CanUseDigOrEscapeRopeOnCurMap(void);
-u8 CheckIfItemIsTMHMOrEvolutionStone(u16 itemId);
-u32 CanThrowBall(void);
-void ItemUseOutOfBattle_SootSack(u8);
-u16 GetAshCount(void);
-void ItemUseOutOfBattle_Mints(u8 taskId);
-void ItemUseOutOfBattle_Seal(u8 taskId);
 # 24 "src/item_menu.c" 2
 # 1 "include/lilycove_lady.h" 1
 
@@ -16660,6 +16664,7 @@ void StopCry(void);
 bool8 IsCryPlayingOrClearCrySongs(void);
 bool8 IsCryPlaying(void);
 void PlayBGM(u16 songNum);
+u16 RegionalMusicHandler(u16 songNum);
 void PlaySE(u16 songNum);
 void PlaySE12WithPanning(u16 songNum, s8 pan);
 void PlaySE1WithPanning(u16 songNum, s8 pan);
@@ -19821,6 +19826,11 @@ extern const u8 gText_Lawnmower[];
 extern const u8 gText_Recall[];
 
 extern const u8 gText_AshQty[];
+
+extern const u8 gText_Region_Kanto[];
+extern const u8 gText_Region_Jotho[];
+extern const u8 gText_Region_Hoenn[];
+extern const u8 gText_Region_Sinnoh[];
 # 46 "src/item_menu.c" 2
 # 1 "gflib/string_util.h" 1
 

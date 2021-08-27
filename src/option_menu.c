@@ -27,6 +27,7 @@ enum
     MENUITEM_BATTLESCENE,
     MENUITEM_BATTLESTYLE,
     MENUITEM_SOUND,
+	MENUITEM_MUSIC,
     MENUITEM_BUTTONMODE,
     MENUITEM_FRAMETYPE,
     MENUITEM_HP_BAR,
@@ -61,12 +62,14 @@ static void TextSpeed_DrawChoices(int selection, int y, u8 textSpeed);
 static void BattleScene_DrawChoices(int selection, int y, u8 textSpeed);
 static void BattleStyle_DrawChoices(int selection, int y, u8 textSpeed);
 static void HpBar_DrawChoices(int selection, int y, u8 textSpeed);
+static void Music_DrawChoices(int selection, int y, u8 textSpeed);
 static void Transition_DrawChoices(int selection, int y, u8 textSpeed);
 static void UnitSystem_DrawChoices(int selection, int y, u8 textSpeed);
 static void Sound_DrawChoices(int selection, int y, u8 textSpeed);
 static void FrameType_DrawChoices(int selection, int y, u8 textSpeed);
 static void ButtonMode_DrawChoices(int selection, int y, u8 textSpeed);
 static int FrameType_ProcessInput(int selection);
+static int Music_ProcessInput(int selection);
 static int FourOptions_ProcessInput(int selection);
 static int ThreeOptions_ProcessInput(int selection);
 static int TwoOptions_ProcessInput(int selection);
@@ -89,6 +92,7 @@ struct
     [MENUITEM_SOUND] = {Sound_DrawChoices, Sound_ProcessInput},
     [MENUITEM_BUTTONMODE] = {ButtonMode_DrawChoices, ThreeOptions_ProcessInput},
     [MENUITEM_FRAMETYPE] = {FrameType_DrawChoices, FrameType_ProcessInput},
+	[MENUITEM_MUSIC] = {Music_DrawChoices, Music_ProcessInput},
     [MENUITEM_HP_BAR] = {HpBar_DrawChoices, ElevenOptions_ProcessInput},
     [MENUITEM_EXP_BAR] = {HpBar_DrawChoices, ElevenOptions_ProcessInput},
     [MENUITEM_TRANSITION] = {Transition_DrawChoices, TwoOptions_ProcessInput},
@@ -107,6 +111,7 @@ static const u8 sText_HpBar[] = _("Hp Bar Speed");
 static const u8 sText_ExpBar[] = _("Exp Bar Speed");
 static const u8 sText_Transition[] = _("Transition");
 static const u8 sText_UnitSystem[] = _("Unit System");
+static const u8 sText_Music[] = _("Music");
 
 static const u8 *const sOptionMenuItemsNames[MENUITEM_COUNT] =
 {
@@ -114,6 +119,7 @@ static const u8 *const sOptionMenuItemsNames[MENUITEM_COUNT] =
     [MENUITEM_BATTLESCENE] = gText_BattleScene,
     [MENUITEM_BATTLESTYLE] = gText_BattleStyle,
     [MENUITEM_SOUND]       = gText_Sound,
+	[MENUITEM_MUSIC]       = sText_Music,
     [MENUITEM_BUTTONMODE]  = gText_ButtonMode,
     [MENUITEM_FRAMETYPE]   = gText_Frame,
     [MENUITEM_HP_BAR]      = sText_HpBar,
@@ -272,6 +278,7 @@ void CB2_InitOptionMenu(void)
         sOptions->sel[MENUITEM_BATTLESCENE] = gSaveBlock2Ptr->optionsBattleSceneOff;
         sOptions->sel[MENUITEM_BATTLESTYLE] = gSaveBlock2Ptr->optionsBattleStyle;
         sOptions->sel[MENUITEM_SOUND] = gSaveBlock2Ptr->optionsSound;
+		sOptions->sel[MENUITEM_MUSIC] = gSaveBlock2Ptr->optionsMusicGame;
         sOptions->sel[MENUITEM_BUTTONMODE] = gSaveBlock2Ptr->optionsButtonMode;
         sOptions->sel[MENUITEM_FRAMETYPE] = gSaveBlock2Ptr->optionsWindowFrameType;
         sOptions->sel[MENUITEM_HP_BAR] = gSaveBlock2Ptr->optionsHpBarSpeed;
@@ -433,6 +440,7 @@ static void Task_OptionMenuSave(u8 taskId)
     gSaveBlock2Ptr->optionsBattleSceneOff = sOptions->sel[MENUITEM_BATTLESCENE];
     gSaveBlock2Ptr->optionsBattleStyle = sOptions->sel[MENUITEM_BATTLESTYLE];
     gSaveBlock2Ptr->optionsSound = sOptions->sel[MENUITEM_SOUND];
+	gSaveBlock2Ptr->optionsMusicGame = sOptions->sel[MENUITEM_MUSIC];
     gSaveBlock2Ptr->optionsButtonMode = sOptions->sel[MENUITEM_BUTTONMODE];
     gSaveBlock2Ptr->optionsWindowFrameType = sOptions->sel[MENUITEM_FRAMETYPE];
     gSaveBlock2Ptr->optionsHpBarSpeed = sOptions->sel[MENUITEM_HP_BAR];
@@ -554,6 +562,25 @@ static int FrameType_ProcessInput(int selection)
     return selection;
 }
 
+static int Music_ProcessInput(int selection)
+{
+    if (gMain.newKeys & DPAD_RIGHT)
+    {
+        if (selection < 4)
+            selection++;
+        else
+            selection = 0;
+    }
+    if (gMain.newKeys & DPAD_LEFT)
+    {
+        if (selection != 0)
+            selection--;
+        else
+            selection = 3;
+    }
+    return selection;
+}
+
 static int GetMiddleX(const u8 *txt1, const u8 *txt2, const u8 *txt3)
 {
     int xMid;
@@ -597,6 +624,26 @@ static void HpBar_DrawChoices(int selection, int y, u8 textSpeed)
     {
         DrawOptionMenuChoice(sText_Instant, 104, y, 1, textSpeed);
     }
+}
+
+static void Music_DrawChoices(int selection, int y, u8 textSpeed)
+{
+	switch(selection){
+	case 0:
+        DrawOptionMenuChoice(gText_Region_Kanto, 104, y, 1, textSpeed);
+		break;
+    case 1:
+        DrawOptionMenuChoice(gText_Region_Jotho, 104, y, 1, textSpeed);
+		break;
+	case 2:
+        DrawOptionMenuChoice(gText_Region_Hoenn, 104, y, 1, textSpeed);
+		break;
+	case 3:
+        DrawOptionMenuChoice(gText_Region_Sinnoh, 104, y, 1, textSpeed);
+		break;
+	default:
+		DrawOptionMenuChoice(gText_Region_Hoenn, 104, y, 1, textSpeed);
+	}
 }
 
 static void BattleScene_DrawChoices(int selection, int y, u8 textSpeed)

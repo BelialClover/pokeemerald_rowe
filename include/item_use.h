@@ -44,5 +44,6 @@ void ItemUseOutOfBattle_SootSack(u8);
 u16 GetAshCount(void);
 void ItemUseOutOfBattle_Mints(u8 taskId);
 void ItemUseOutOfBattle_Seal(u8 taskId);
+void ItemUseOutOfBattle_SinnohSounds(u8);
 
 #endif // GUARD_ITEM_USE_H

@@ -1195,8 +1195,8 @@ MoveRecordedBattleToSaveData:
 	strb	r1, [r0]
 	mov	r5, r9
 	ldr	r0, [r5]
-	ldrb	r1, [r0, #0x15]
-	lsl	r1, r1, #0x1c
+	ldrb	r1, [r0, #0x16]
+	lsl	r1, r1, #0x1f
 	ldr	r0, .L239+0x30
 	add	r3, r7, r0
 	lsr	r1, r1, #0x1f
@@ -1240,7 +1240,8 @@ MoveRecordedBattleToSaveData:
 	mov	ip, r1
 	add	r2, r4, #0
 	mov	r8, r2
-	ldr	r4, .L239+0x40
+	mov	r4, #0xd9
+	lsl	r4, r4, #0x3
 .L157:
 	add	r2, r3, r6
 	mov	r5, sl
@@ -1267,18 +1268,18 @@ MoveRecordedBattleToSaveData:
 	mov	r1, #0xec
 	mul	r0, r0, r1
 	add	r2, r2, r0
-	ldr	r4, .L239+0x44
+	ldr	r4, .L239+0x40
 	add	r2, r2, r4
 	ldrb	r1, [r2]
-	ldr	r5, .L239+0x48
+	ldr	r5, .L239+0x44
 	add	r0, r7, r5
 	strb	r1, [r0]
-	ldr	r1, .L239+0x4c
+	ldr	r1, .L239+0x48
 	ldrb	r0, [r1]
 	cmp	r0, #0x1
 	bne	.L159	@cond_branch
 	mov	r6, #0x0
-	ldr	r2, .L239+0x50
+	ldr	r2, .L239+0x4c
 	add	r4, r7, r2
 	mov	sl, r9
 	ldr	r5, .L239+0x4
@@ -1294,8 +1295,7 @@ MoveRecordedBattleToSaveData:
 	mov	r1, #0xec
 	mul	r0, r0, r1
 	add	r3, r3, r0
-	mov	r0, #0xdd
-	lsl	r0, r0, #0x3
+	ldr	r0, .L239+0x50
 	add	r2, r2, r0
 	add	r2, r2, r3
 	ldrh	r0, [r2]
@@ -1315,7 +1315,7 @@ MoveRecordedBattleToSaveData:
 	.word	0x4f6
 	.word	gPartnerTrainerId
 	.word	gUnknown_0203C7B4
-	.word	0xc31
+	.word	0xc35
 	.word	0x4fc
 	.word	sFrontierFacility
 	.word	sFrontierBrainSymbol
@@ -1324,11 +1324,11 @@ MoveRecordedBattleToSaveData:
 	.word	sAI_Scripts
 	.word	-0x12c
 	.word	0x504
-	.word	0x6c4
-	.word	0x6c1
+	.word	0x6c5
 	.word	0x50c
 	.word	sBattleOutcome
 	.word	0x50e
+	.word	0x6ec
 .L159:
 	mov	r6, #0x0
 	ldr	r1, .L241
@@ -1347,7 +1347,8 @@ MoveRecordedBattleToSaveData:
 	mov	r1, #0xec
 	mul	r0, r0, r1
 	add	r3, r3, r0
-	ldr	r0, .L241+0x8
+	mov	r0, #0xdc
+	lsl	r0, r0, #0x3
 	add	r2, r2, r0
 	add	r2, r2, r3
 	ldrh	r0, [r2]
@@ -1361,12 +1362,13 @@ MoveRecordedBattleToSaveData:
 	ldr	r2, [r1]
 	ldr	r3, .L241+0x4
 	ldrh	r0, [r3]
-	ldr	r4, .L241+0xc
+	ldr	r4, .L241+0x8
 	add	r0, r0, r4
 	mov	r1, #0xec
 	mul	r0, r0, r1
 	add	r2, r2, r0
-	ldr	r5, .L241+0x10
+	mov	r5, #0xf5
+	lsl	r5, r5, #0x3
 	add	r2, r2, r5
 	ldrb	r1, [r2]
 	b	.L229
@@ -1375,9 +1377,7 @@ MoveRecordedBattleToSaveData:
 .L241:
 	.word	0x50e
 	.word	gTrainerBattleOpponent_A
-	.word	0x6dc
 	.word	-0x12c
-	.word	0x7a4
 .L153:
 	ldr	r3, .L243
 	ldrh	r3, [r3]
@@ -1396,7 +1396,8 @@ MoveRecordedBattleToSaveData:
 	mov	ip, r5
 	ldr	r0, .L243+0x8
 	mov	r8, r0
-	ldr	r4, .L243+0xc
+	mov	r4, #0xd9
+	lsl	r4, r4, #0x3
 .L176:
 	add	r2, r3, r6
 	mov	r5, sl
@@ -1423,18 +1424,18 @@ MoveRecordedBattleToSaveData:
 	mov	r1, #0xec
 	mul	r0, r0, r1
 	add	r2, r2, r0
-	ldr	r4, .L243+0x10
+	ldr	r4, .L243+0xc
 	add	r2, r2, r4
 	ldrb	r1, [r2]
-	ldr	r5, .L243+0x14
+	ldr	r5, .L243+0x10
 	add	r0, r7, r5
 	strb	r1, [r0]
-	ldr	r1, .L243+0x18
+	ldr	r1, .L243+0x14
 	ldrb	r0, [r1]
 	cmp	r0, #0x1
 	bne	.L178	@cond_branch
 	mov	r6, #0x0
-	ldr	r2, .L243+0x1c
+	ldr	r2, .L243+0x18
 	add	r4, r7, r2
 	mov	sl, r9
 	ldr	r5, .L243
@@ -1450,8 +1451,7 @@ MoveRecordedBattleToSaveData:
 	mov	r1, #0xec
 	mul	r0, r0, r1
 	add	r3, r3, r0
-	mov	r0, #0xdd
-	lsl	r0, r0, #0x3
+	ldr	r0, .L243+0x1c
 	add	r2, r2, r0
 	add	r2, r2, r3
 	ldrh	r0, [r2]
@@ -1467,11 +1467,11 @@ MoveRecordedBattleToSaveData:
 	.word	gTrainerBattleOpponent_B
 	.word	0x504
 	.word	-0x12c
-	.word	0x6c4
-	.word	0x6c1
+	.word	0x6c5
 	.word	0x50c
 	.word	sBattleOutcome
 	.word	0x50e
+	.word	0x6ec
 .L178:
 	mov	r6, #0x0
 	ldr	r1, .L245
@@ -1490,7 +1490,8 @@ MoveRecordedBattleToSaveData:
 	mov	r1, #0xec
 	mul	r0, r0, r1
 	add	r3, r3, r0
-	ldr	r0, .L245+0x8
+	mov	r0, #0xdc
+	lsl	r0, r0, #0x3
 	add	r2, r2, r0
 	add	r2, r2, r3
 	ldrh	r0, [r2]
@@ -1504,12 +1505,13 @@ MoveRecordedBattleToSaveData:
 	ldr	r2, [r1]
 	ldr	r3, .L245+0x4
 	ldrh	r0, [r3]
-	ldr	r4, .L245+0xc
+	ldr	r4, .L245+0x8
 	add	r0, r0, r4
 	mov	r1, #0xec
 	mul	r0, r0, r1
 	add	r2, r2, r0
-	ldr	r5, .L245+0x10
+	mov	r5, #0xf5
+	lsl	r5, r5, #0x3
 	add	r2, r2, r5
 	ldrb	r1, [r2]
 	b	.L229
@@ -1518,9 +1520,7 @@ MoveRecordedBattleToSaveData:
 .L245:
 	.word	0x50e
 	.word	gTrainerBattleOpponent_B
-	.word	0x6dc
 	.word	-0x12c
-	.word	0x7a4
 .L172:
 	ldr	r3, .L247
 	ldrh	r3, [r3]
@@ -1537,7 +1537,8 @@ MoveRecordedBattleToSaveData:
 	mov	ip, r5
 	ldr	r0, .L247+0x8
 	mov	r8, r0
-	ldr	r4, .L247+0xc
+	mov	r4, #0xd9
+	lsl	r4, r4, #0x3
 .L195:
 	add	r2, r3, r6
 	mov	r5, sl
@@ -1564,10 +1565,10 @@ MoveRecordedBattleToSaveData:
 	mov	r2, #0xec
 	mul	r0, r0, r2
 	add	r1, r1, r0
-	ldr	r4, .L247+0x10
+	ldr	r4, .L247+0xc
 	add	r1, r1, r4
 	ldrb	r1, [r1]
-	ldr	r5, .L247+0x14
+	ldr	r5, .L247+0x10
 	add	r0, r7, r5
 	strb	r1, [r0]
 	mov	r0, r9
@@ -1577,40 +1578,41 @@ MoveRecordedBattleToSaveData:
 	add	r0, r0, r3
 	mul	r0, r0, r2
 	add	r1, r1, r0
-	ldr	r5, .L247+0x18
+	mov	r5, #0xf5
+	lsl	r5, r5, #0x3
 	add	r1, r1, r5
 	ldrb	r1, [r1]
 .L229:
-	ldr	r2, .L247+0x1c
+	ldr	r2, .L247+0x14
 	add	r0, r7, r2
 	strb	r1, [r0]
 .L171:
-	ldr	r3, .L247+0x20
+	ldr	r3, .L247+0x18
 	ldrh	r0, [r3]
-	ldr	r1, .L247+0x24
+	ldr	r1, .L247+0x1c
 	cmp	r0, r1
 	bls	.L197	@cond_branch
 	mov	r4, r9
 	ldr	r2, [r4]
 	add	r1, r0, #0
-	ldr	r3, .L247+0x28
+	ldr	r3, .L247+0x20
 	add	r1, r1, r3
 	lsl	r0, r1, #0x4
 	add	r0, r0, r1
 	lsl	r0, r0, #0x2
 	add	r2, r2, r0
-	add	r2, r2, #0x74
+	add	r2, r2, #0x78
 	ldrb	r0, [r2]
 	lsl	r0, r0, #0x1b
 	lsr	r0, r0, #0x1b
-	ldr	r5, .L247+0x2c
+	ldr	r5, .L247+0x24
 	add	r1, r7, r5
 	strb	r0, [r1]
 	mov	r6, #0x0
-	ldr	r0, .L247+0x30
+	ldr	r0, .L247+0x28
 	add	r4, r7, r0
 	mov	sl, r9
-	ldr	r1, .L247+0x20
+	ldr	r1, .L247+0x18
 	mov	r8, r1
 	add	r5, r3, #0
 .L201:
@@ -1624,7 +1626,7 @@ MoveRecordedBattleToSaveData:
 	add	r0, r0, r1
 	lsl	r0, r0, #0x2
 	add	r3, r3, r0
-	add	r2, r2, #0x9c
+	add	r2, r2, #0xa0
 	add	r2, r2, r3
 	ldrh	r0, [r2]
 	strh	r0, [r4]
@@ -1634,17 +1636,17 @@ MoveRecordedBattleToSaveData:
 	ble	.L201	@cond_branch
 	mov	r1, r9
 	ldr	r2, [r1]
-	ldr	r3, .L247+0x20
+	ldr	r3, .L247+0x18
 	ldrh	r1, [r3]
-	ldr	r4, .L247+0x28
+	ldr	r4, .L247+0x20
 	add	r1, r1, r4
 	lsl	r0, r1, #0x4
 	add	r0, r0, r1
 	lsl	r0, r0, #0x2
 	add	r2, r2, r0
-	add	r2, r2, #0xb3
+	add	r2, r2, #0xb7
 	ldrb	r1, [r2]
-	ldr	r5, .L247+0x34
+	ldr	r5, .L247+0x2c
 	add	r0, r7, r5
 	b	.L230
 .L248:
@@ -1653,10 +1655,8 @@ MoveRecordedBattleToSaveData:
 	.word	gPartnerTrainerId
 	.word	0x504
 	.word	-0x12c
-	.word	0x6c4
-	.word	0x6c1
+	.word	0x6c5
 	.word	0x50c
-	.word	0x7a4
 	.word	0x51a
 	.word	gTrainerBattleOpponent_A
 	.word	0x18f
@@ -1679,7 +1679,7 @@ MoveRecordedBattleToSaveData:
 	add	r0, r0, r1
 	lsl	r0, r0, #0x2
 	add	r2, r2, r0
-	add	r2, r2, #0x74
+	add	r2, r2, #0x78
 	ldrb	r0, [r2]
 	lsl	r0, r0, #0x1b
 	lsr	r0, r0, #0x1b
@@ -1704,7 +1704,7 @@ MoveRecordedBattleToSaveData:
 	add	r0, r0, r1
 	lsl	r0, r0, #0x2
 	add	r3, r3, r0
-	add	r2, r2, #0x9c
+	add	r2, r2, #0xa0
 	add	r2, r2, r3
 	ldrh	r0, [r2]
 	strh	r0, [r4]
@@ -1722,7 +1722,7 @@ MoveRecordedBattleToSaveData:
 	add	r0, r0, r1
 	lsl	r0, r0, #0x2
 	add	r2, r2, r0
-	add	r2, r2, #0xb3
+	add	r2, r2, #0xb7
 	ldrb	r1, [r2]
 	ldr	r5, .L249+0x10
 	add	r0, r7, r5
@@ -1750,7 +1750,7 @@ MoveRecordedBattleToSaveData:
 	add	r0, r0, r1
 	lsl	r0, r0, #0x2
 	add	r2, r2, r0
-	add	r2, r2, #0x74
+	add	r2, r2, #0x78
 	ldrb	r0, [r2]
 	lsl	r0, r0, #0x1b
 	lsr	r0, r0, #0x1b
@@ -1765,7 +1765,7 @@ MoveRecordedBattleToSaveData:
 	add	r0, r0, r1
 	lsl	r0, r0, #0x2
 	add	r2, r2, r0
-	add	r2, r2, #0xb3
+	add	r2, r2, #0xb7
 	ldrb	r1, [r2]
 	ldr	r2, .L251+0xc
 	add	r0, r7, r2
@@ -1936,7 +1936,7 @@ CB2_RecordedBattleEnd:
 .L259:
 	.word	gSaveBlock2Ptr
 	.word	sLvlMode
-	.word	0xc31
+	.word	0xc35
 	.word	gBattleOutcome
 	.word	gBattleTypeFlags
 	.word	gTrainerBattleOpponent_A
@@ -2288,7 +2288,7 @@ SetVariablesForRecordedBattle:
 	.word	gUnknown_0203C7B4
 	.word	sLvlMode
 	.word	gSaveBlock2Ptr
-	.word	0xc31
+	.word	0xc35
 	.word	sFrontierFacility
 	.word	0x4fd
 	.word	sFrontierBrainSymbol

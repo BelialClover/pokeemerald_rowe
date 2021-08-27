@@ -15,9 +15,11 @@
 #include "event_scripts.h"
 #include "fieldmap.h"
 #include "field_effect.h"
+#include "field_control_avatar.h"
 #include "field_player_avatar.h"
 #include "field_screen_effect.h"
 #include "field_weather.h"
+#include "fldeff.h"
 #include "item.h"
 #include "item_menu.h"
 #include "item_use.h"
@@ -42,6 +44,7 @@
 #include "constants/item_effects.h"
 #include "constants/items.h"
 #include "constants/songs.h"
+#include "data/scripts/tv.inc"
 #include "soar.h"
 
 static void SetUpItemUseCallback(u8 taskId);
@@ -74,6 +77,7 @@ static void Task_UseLure(u8 taskId);
 static void Task_CloseCantUseKeyItemMessage(u8 taskId);
 static void SetDistanceOfClosestHiddenItem(u8 taskId, s16 x, s16 y);
 static void CB2_OpenPokeblockCaseOnField(void);
+static void ItemUseOnFieldCB_SinnohSounds(u8);
 
 // EWRAM variables
 EWRAM_DATA static void(*sItemUseOnFieldCB)(u8 taskId) = NULL;
@@ -1294,6 +1298,19 @@ void ItemUseOutOfBattle_Seal(u8 taskId)
 {
     gItemUseCB = ItemUseCB_Seal;
     SetUpItemUseCallback(taskId);
+}
+
+void ItemUseOutOfBattle_SinnohSounds(u8 taskId)
+{
+    sItemUseOnFieldCB = ItemUseOnFieldCB_SinnohSounds;
+    SetUpItemUseOnFieldCallback(taskId);
+}
+
+static void ItemUseOnFieldCB_SinnohSounds(u8 taskId)
+{
+	ScriptContext2_Enable();
+    ScriptContext1_SetupScript(EventScript_Sinnoh_Sounds);
+    DestroyTask(taskId);
 }
 
 #undef tUsingRegisteredKeyItem

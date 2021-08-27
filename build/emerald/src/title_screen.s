@@ -2649,6 +2649,13 @@ Task_TitleScreenPhase3:
 	cmp	r4, #0
 	beq	.L133	@cond_branch
 .L134:
+	mov	r0, #0xc0
+	lsl	r0, r0, #0x1
+	mov	r1, #0x0
+	str	r1, [sp]
+	mov	r2, #0x78
+	mov	r3, #0xa
+	bl	PlayCryInternal
 	mov	r0, #0x4
 	bl	FadeOutBGM
 	mov	r0, #0x1

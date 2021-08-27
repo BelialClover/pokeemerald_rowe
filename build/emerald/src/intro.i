@@ -694,6 +694,7 @@ struct SaveBlock2
              u8 optionsButtonMode;
              u16 optionsTextSpeed:3;
              u16 optionsWindowFrameType:5;
+    u16 optionsMusicGame:5;
              u16 optionsSound:2;
              u16 optionsBattleStyle:1;
              u16 optionsBattleSceneOff:1;
@@ -755,7 +756,7 @@ struct SecretBase
 };
 
 # 1 "include/constants/game_stat.h" 1
-# 543 "include/global.h" 2
+# 544 "include/global.h" 2
 # 1 "include/global.fieldmap.h" 1
 # 13 "include/global.fieldmap.h"
 enum
@@ -1067,7 +1068,7 @@ extern u8 gSelectedObjectEvent;
 extern struct MapHeader gMapHeader;
 extern struct PlayerAvatar gPlayerAvatar;
 extern struct Camera gCamera;
-# 544 "include/global.h" 2
+# 545 "include/global.h" 2
 # 1 "include/global.berry.h" 1
 
 
@@ -1143,7 +1144,7 @@ struct BerryTree
     u8 watered3:1;
     u8 watered4:1;
 };
-# 545 "include/global.h" 2
+# 546 "include/global.h" 2
 # 1 "include/global.tv.h" 1
 
 
@@ -1637,7 +1638,7 @@ struct GabbyAndTyData
              u8 playerThrewABall2:1;
              u8 valB_4:4;
 };
-# 546 "include/global.h" 2
+# 547 "include/global.h" 2
 # 1 "include/pokemon.h" 1
 
 
@@ -2383,7 +2384,7 @@ u8 GetFormIdFromFormSpeciesId(u16 formSpeciesId);
 u16 GetBaseFormSpeciesId(u16 formSpeciesId);
 void CreateShinyMonWithNature(struct Pokemon *mon, u16 species, u8 level, u8 nature);
 u16 MonTryLearningNewMoveEvolution(struct Pokemon *mon, bool8 firstMove);
-# 547 "include/global.h" 2
+# 548 "include/global.h" 2
 
 struct WarpData
 {
@@ -2957,6 +2958,61 @@ void SeedRngAndSetTrainerId(void);
 u16 GetGeneratedTrainerIdLower(void);
 void sub_819789C(void);
 # 3 "src/intro.c" 2
+# 1 "include/event_data.h" 1
+
+
+
+
+void InitEventData(void);
+void ClearTempFieldEventData(void);
+void ClearDailyFlags(void);
+void DisableNationalPokedex(void);
+void EnableNationalPokedex(void);
+bool32 IsNationalPokedexEnabled(void);
+void DisableMysteryEvent(void);
+void EnableMysteryEvent(void);
+bool32 IsMysteryEventEnabled(void);
+void DisableMysteryGift(void);
+void EnableMysteryGift(void);
+bool32 IsMysteryGiftEnabled(void);
+void ClearMysteryEventFlags(void);
+void ClearMysteryEventVars(void);
+void DisableResetRTC(void);
+void EnableResetRTC(void);
+bool32 CanResetRTC(void);
+u16 *GetVarPointer(u16 id);
+u16 VarGet(u16 id);
+u16 VarGetIfExist(u16 id);
+bool8 VarSet(u16 id, u16 value);
+u8 VarGetObjectEventGraphicsId(u8 id);
+u8 *GetFlagPointer(u16 id);
+u8 FlagSet(u16 id);
+u8 FlagToggle(u16 id);
+u8 FlagClear(u16 id);
+bool8 FlagGet(u16 id);
+
+extern u16 gSpecialVar_0x8000;
+extern u16 gSpecialVar_0x8001;
+extern u16 gSpecialVar_0x8002;
+extern u16 gSpecialVar_0x8003;
+extern u16 gSpecialVar_0x8004;
+extern u16 gSpecialVar_0x8005;
+extern u16 gSpecialVar_0x8006;
+extern u16 gSpecialVar_0x8007;
+extern u16 gSpecialVar_0x8008;
+extern u16 gSpecialVar_0x8009;
+extern u16 gSpecialVar_0x800A;
+extern u16 gSpecialVar_0x800B;
+extern u16 gSpecialVar_Result;
+extern u16 gSpecialVar_LastTalked;
+extern u16 gSpecialVar_Facing;
+extern u16 gSpecialVar_MonBoxId;
+extern u16 gSpecialVar_MonBoxPos;
+extern u16 gSpecialVar_Unused_0x8014;
+
+extern const u16 sLevelCapFlags[9];
+extern const u16 sLevelCaps[9];
+# 4 "src/intro.c" 2
 # 1 "include/palette.h" 1
 # 17 "include/palette.h"
 enum
@@ -3021,7 +3077,7 @@ void TintPalette_GrayScale2(u16 *palette, u16 count);
 void TintPalette_SepiaTone(u16 *palette, u16 count);
 void TintPalette_CustomTone(u16 *palette, u16 count, u16 rTone, u16 gTone, u16 bTone);
 void TintPalette_CustomToneWithCopy(const u16 *src, u16 *dest, u16 count, u16 rTone, u16 gTone, u16 bTone, bool8 excludeZeroes);
-# 4 "src/intro.c" 2
+# 5 "src/intro.c" 2
 # 1 "include/scanline_effect.h" 1
 # 17 "include/scanline_effect.h"
 struct ScanlineEffectParams
@@ -3054,7 +3110,7 @@ void ScanlineEffect_Clear(void);
 void ScanlineEffect_SetParams(struct ScanlineEffectParams);
 void ScanlineEffect_InitHBlankDmaTransfer(void);
 u8 ScanlineEffect_InitWave(u8 startLine, u8 endLine, u8 frequency, u8 amplitude, u8 delayInterval, u8 regOffset, bool8 a7);
-# 5 "src/intro.c" 2
+# 6 "src/intro.c" 2
 # 1 "include/task.h" 1
 # 10 "include/task.h"
 typedef void (*TaskFunc)(u8 taskId);
@@ -3083,7 +3139,7 @@ u8 FindTaskIdByFunc(TaskFunc func);
 u8 GetTaskCount(void);
 void SetWordTaskArg(u8 taskId, u8 dataElem, u32 value);
 u32 GetWordTaskArg(u8 taskId, u8 dataElem);
-# 6 "src/intro.c" 2
+# 7 "src/intro.c" 2
 # 1 "include/title_screen.h" 1
 
 
@@ -3091,7 +3147,7 @@ u32 GetWordTaskArg(u8 taskId, u8 dataElem);
 extern const u16 gIntroWaterDropAlphaBlend[];
 
 void CB2_InitTitleScreen(void);
-# 7 "src/intro.c" 2
+# 8 "src/intro.c" 2
 # 1 "include/libgcnmultiboot.h" 1
 
 
@@ -3108,7 +3164,7 @@ void GameCubeMultiBoot_ExecuteProgram(struct GcmbStruct *pStruct);
 void GameCubeMultiBoot_Init(struct GcmbStruct *pStruct);
 void GameCubeMultiBoot_HandleSerialInterrupt(struct GcmbStruct *pStruct);
 void GameCubeMultiBoot_Quit(void);
-# 8 "src/intro.c" 2
+# 9 "src/intro.c" 2
 # 1 "gflib/malloc.h" 1
 # 15 "gflib/malloc.h"
 extern u8 gHeap[];
@@ -3117,7 +3173,7 @@ void *Alloc(u32 size);
 void *AllocZeroed(u32 size);
 void Free(void *pointer);
 void InitHeap(void *pointer, u32 size);
-# 9 "src/intro.c" 2
+# 10 "src/intro.c" 2
 # 1 "gflib/gpu_regs.h" 1
 # 9 "gflib/gpu_regs.h"
 void InitGpuRegManager(void);
@@ -3129,7 +3185,7 @@ void SetGpuRegBits(u8 regOffset, u16 mask);
 void ClearGpuRegBits(u8 regOffset, u16 mask);
 void EnableInterrupts(u16 mask);
 void DisableInterrupts(u16 mask);
-# 10 "src/intro.c" 2
+# 11 "src/intro.c" 2
 # 1 "include/link.h" 1
 # 106 "include/link.h"
 struct LinkStatus
@@ -3382,13 +3438,13 @@ bool8 DoesLinkPlayerCountMatchSaved(void);
 void SetCloseLinkCallbackAndType(u16 type);
 bool32 IsSendingKeysToLink(void);
 u32 GetLinkRecvQueueLength(void);
-# 11 "src/intro.c" 2
+# 12 "src/intro.c" 2
 # 1 "include/multiboot_pokemon_colosseum.h" 1
 
 
 
 extern const u16 gMultiBootProgram_PokemonColosseum_Start[0x14000];
-# 12 "src/intro.c" 2
+# 13 "src/intro.c" 2
 # 1 "include/load_save.h" 1
 
 
@@ -3422,7 +3478,7 @@ void LoadPlayerBag(void);
 void SavePlayerBag(void);
 void ApplyNewEncryptionKeyToHword(u16 *hWord, u32 newKey);
 void ApplyNewEncryptionKeyToWord(u32 *word, u32 newKey);
-# 13 "src/intro.c" 2
+# 14 "src/intro.c" 2
 # 1 "include/save.h" 1
 
 
@@ -3506,7 +3562,7 @@ void Task_LinkSave(u8 taskId);
 
 
 void DoSaveFailedScreen(u8 saveType);
-# 14 "src/intro.c" 2
+# 15 "src/intro.c" 2
 # 1 "include/new_game.h" 1
 
 
@@ -3522,7 +3578,7 @@ void CopyTrainerId(u8 *dst, u8 *src);
 void NewGameInitData(void);
 void ResetMenuAndMonGlobals(void);
 void Sav2_ClearSetDefault(void);
-# 15 "src/intro.c" 2
+# 16 "src/intro.c" 2
 # 1 "include/m4a.h" 1
 
 
@@ -3959,7 +4015,7 @@ extern struct MusicPlayerInfo gMPlayInfo_SE1;
 extern struct MusicPlayerInfo gMPlayInfo_SE2;
 extern struct MusicPlayerInfo gMPlayInfo_SE3;
 extern struct SoundInfo gSoundInfo;
-# 16 "src/intro.c" 2
+# 17 "src/intro.c" 2
 # 1 "include/random.h" 1
 
 
@@ -3974,7 +4030,7 @@ u16 RandRange(u16 min, u16 max);
 # 21 "include/random.h"
 void SeedRng(u16 seed);
 void SeedRng2(u16 seed);
-# 17 "src/intro.c" 2
+# 18 "src/intro.c" 2
 # 1 "include/decompress.h" 1
 
 
@@ -4007,9 +4063,9 @@ void LoadSpecialPokePic_2(const struct CompressedSpriteSheet *src, void *dest, s
 void LoadSpecialPokePic_DontHandleDeoxys(const struct CompressedSpriteSheet *src, void *dest, s32 species, u32 personality, bool8 isFrontPic);
 
 u32 GetDecompressedDataSize(const u32 *ptr);
-# 18 "src/intro.c" 2
-# 1 "include/constants/songs.h" 1
 # 19 "src/intro.c" 2
+# 1 "include/constants/songs.h" 1
+# 20 "src/intro.c" 2
 # 1 "include/intro_credits_graphics.h" 1
 
 
@@ -4039,7 +4095,7 @@ void sub_817B540(u8);
 u8 intro_create_brendan_sprite(s16 a, s16 b);
 u8 intro_create_may_sprite(s16 a, s16 b);
 u8 intro_create_flygon_sprite(s16 a, s16 b);
-# 20 "src/intro.c" 2
+# 21 "src/intro.c" 2
 # 1 "include/trig.h" 1
 
 
@@ -4050,14 +4106,14 @@ s16 Sin(s16 index, s16 amplitude);
 s16 Cos(s16 index, s16 amplitude);
 s16 Sin2(u16 angle);
 s16 Cos2(u16 angle);
-# 21 "src/intro.c" 2
+# 22 "src/intro.c" 2
 # 1 "include/intro.h" 1
 # 9 "include/intro.h"
 void CB2_InitCopyrightScreenAfterBootup(void);
 void CB2_InitCopyrightScreenAfterBootup(void);
 void CB2_InitCopyrightScreenAfterTitleScreen(void);
 void PanFadeAndZoomScreen(u16, u16, u16, u16);
-# 22 "src/intro.c" 2
+# 23 "src/intro.c" 2
 # 1 "include/graphics.h" 1
 
 
@@ -13587,7 +13643,7 @@ extern const u32 gItemIconPalette_PinkMint[];
 extern const u32 gItemIconPalette_GreenMint[];
 extern const u32 gItemIconPalette_LightBlueMint[];
 extern const u32 gItemIconPalette_YellowMint[];
-# 23 "src/intro.c" 2
+# 24 "src/intro.c" 2
 # 1 "include/sound.h" 1
 
 
@@ -13629,6 +13685,7 @@ void StopCry(void);
 bool8 IsCryPlayingOrClearCrySongs(void);
 bool8 IsCryPlaying(void);
 void PlayBGM(u16 songNum);
+u16 RegionalMusicHandler(u16 songNum);
 void PlaySE(u16 songNum);
 void PlaySE12WithPanning(u16 songNum, s8 pan);
 void PlaySE1WithPanning(u16 songNum, s8 pan);
@@ -13637,7 +13694,7 @@ void SE12PanpotControl(s8 pan);
 bool8 IsSEPlaying(void);
 bool8 IsBGMPlaying(void);
 bool8 IsSpecialSEPlaying(void);
-# 24 "src/intro.c" 2
+# 25 "src/intro.c" 2
 # 1 "include/util.h" 1
 
 
@@ -13657,13 +13714,15 @@ u32 CalcByteArraySum(const u8* data, u32 length);
 void BlendPalette(u16 palOffset, u16 numEntries, u8 coeff, u16 blendColor);
 void DoBgAffineSet(struct BgAffineDstData *dest, u32 texX, u32 texY, s16 scrX, s16 scrY, s16 sx, s16 sy, u16 alpha);
 void CopySpriteTiles(u8 shape, u8 size, u8 *tiles, u16 *tilemap, u8 *output);
-# 25 "src/intro.c" 2
+# 26 "src/intro.c" 2
 
 # 1 "include/constants/rgb.h" 1
-# 27 "src/intro.c" 2
-# 1 "include/constants/battle_anim.h" 1
 # 28 "src/intro.c" 2
-# 90 "src/intro.c"
+# 1 "include/constants/battle_anim.h" 1
+# 29 "src/intro.c" 2
+# 1 "include/constants/flags.h" 1
+# 30 "src/intro.c" 2
+# 92 "src/intro.c"
 extern const struct CompressedSpriteSheet gBattleAnimPicTable[];
 extern const struct CompressedSpritePalette gBattleAnimPaletteTable[];
 extern const struct SpriteTemplate gAncientPowerRockSpriteTemplate[];
@@ -14705,7 +14764,11 @@ static void Task_IntroFadeIn(u8 taskId)
     SetGpuReg(0x0, 0x0000 | 0x0040 | 0x0F00 | 0x1000);
     gTasks[taskId].func = Task_IntroWaterDrops;
     gIntroFrameCounter = 0;
-    m4aSongNumStart(385);
+    ;
+
+
+
+  m4aSongNumStart(385);
     ResetSerial();
 }
 

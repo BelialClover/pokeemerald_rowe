@@ -848,7 +848,7 @@ RtcCalcLocalTime:
 	ldr	r1, .L94+0x4
 	ldr	r0, .L94+0x8
 	ldr	r2, [r0]
-	add	r2, r2, #0x30
+	add	r2, r2, #0x34
 	add	r0, r4, #0
 	bl	RtcCalcTimeDifference
 	pop	{r4}
@@ -874,7 +874,7 @@ RtcCalcLocalTimeFast:
 	ldr	r1, .L97+0x4
 	ldr	r0, .L97+0x8
 	ldr	r2, [r0]
-	add	r2, r2, #0x30
+	add	r2, r2, #0x34
 	add	r0, r4, #0
 	bl	RtcCalcTimeDifference
 	pop	{r4}
@@ -920,7 +920,7 @@ RtcCalcLocalTimeOffset:
 	bl	RtcGetInfo
 	ldr	r0, .L101+0x8
 	ldr	r1, [r0]
-	add	r1, r1, #0x30
+	add	r1, r1, #0x34
 	add	r0, r5, #0
 	add	r2, r4, #0
 	bl	RtcCalcTimeDifference
@@ -952,7 +952,7 @@ RtcSetDayOfWeek:
 	bl	RtcGetInfo
 	ldr	r0, .L104+0x8
 	ldr	r1, [r0]
-	add	r1, r1, #0x30
+	add	r1, r1, #0x34
 	add	r0, r4, #0
 	add	r2, r5, #0
 	bl	RtcCalcTimeDifference
@@ -1183,7 +1183,7 @@ SwitchDSTMode:
 	bl	RtcGetInfo
 	ldr	r0, .L124+0xc
 	ldr	r1, [r0]
-	add	r1, r1, #0x30
+	add	r1, r1, #0x34
 	add	r0, r4, #0
 	add	r2, r5, #0
 	bl	RtcCalcTimeDifference
@@ -1212,7 +1212,7 @@ SwitchDSTMode:
 	bl	RtcGetInfo
 	ldr	r0, .L126+0x8
 	ldr	r1, [r0]
-	add	r1, r1, #0x30
+	add	r1, r1, #0x34
 	add	r0, r4, #0
 	add	r2, r5, #0
 	bl	RtcCalcTimeDifference

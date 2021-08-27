@@ -4,7 +4,7 @@
 	.section .rodata
 	.align	2, 0
 	.type	 sItemFunctions,object
-	.size	 sItemFunctions,88
+	.size	 sItemFunctions,96
 sItemFunctions:
 	.word	TextSpeed_DrawChoices
 	.word	FourOptions_ProcessInput
@@ -14,6 +14,8 @@ sItemFunctions:
 	.word	BattleStyle_ProcessInput
 	.word	Sound_DrawChoices
 	.word	Sound_ProcessInput
+	.word	Music_DrawChoices
+	.word	Music_ProcessInput
 	.word	ButtonMode_DrawChoices
 	.word	ThreeOptions_ProcessInput
 	.word	FrameType_DrawChoices
@@ -184,14 +186,24 @@ sText_UnitSystem:
 	.byte	0xe1
 	.byte	0xff
 	.size	 sText_UnitSystem,12
+	.type	 sText_Music,object
+sText_Music:
+	.byte	0xc7
+	.byte	0xe9
+	.byte	0xe7
+	.byte	0xdd
+	.byte	0xd7
+	.byte	0xff
+	.size	 sText_Music,6
 	.align	2, 0
 	.type	 sOptionMenuItemsNames,object
-	.size	 sOptionMenuItemsNames,44
+	.size	 sOptionMenuItemsNames,48
 sOptionMenuItemsNames:
 	.word	gText_TextSpeed
 	.word	gText_BattleScene
 	.word	gText_BattleStyle
 	.word	gText_Sound
+	.word	sText_Music
 	.word	gText_ButtonMode
 	.word	gText_Frame
 	.word	sText_HpBar
@@ -612,62 +624,72 @@ CB2_InitOptionMenu:
 	mov	r0, #0x14
 	bl	AllocZeroed
 	str	r0, [r4]
-	ldr	r2, .L52+0x8
-	ldr	r1, [r2]
+	ldr	r3, .L52+0x8
+	ldr	r1, [r3]
 	ldrb	r1, [r1, #0x14]
 	lsl	r1, r1, #0x1d
 	lsr	r1, r1, #0x1d
 	strb	r1, [r0]
 	ldr	r1, [r4]
-	ldr	r0, [r2]
-	ldrb	r0, [r0, #0x15]
-	lsl	r0, r0, #0x1c
+	ldr	r0, [r3]
+	ldrb	r0, [r0, #0x16]
+	lsl	r0, r0, #0x1f
 	lsr	r0, r0, #0x1f
 	strb	r0, [r1, #0x1]
 	ldr	r1, [r4]
-	ldr	r0, [r2]
+	ldr	r0, [r3]
 	ldrb	r0, [r0, #0x15]
-	lsl	r0, r0, #0x1d
-	lsr	r0, r0, #0x1f
+	lsr	r0, r0, #0x7
 	strb	r0, [r1, #0x2]
 	ldr	r1, [r4]
-	ldr	r0, [r2]
+	ldr	r0, [r3]
 	ldrb	r0, [r0, #0x15]
-	lsl	r0, r0, #0x1e
+	lsl	r0, r0, #0x19
 	lsr	r0, r0, #0x1e
 	strb	r0, [r1, #0x3]
 	ldr	r1, [r4]
-	ldr	r0, [r2]
-	ldrb	r0, [r0, #0x13]
+	ldr	r0, [r3]
+	ldrb	r0, [r0, #0x15]
+	lsl	r0, r0, #0x1b
+	lsr	r0, r0, #0x1b
 	strb	r0, [r1, #0x4]
 	ldr	r1, [r4]
-	ldr	r0, [r2]
-	ldrb	r0, [r0, #0x14]
-	lsr	r0, r0, #0x3
+	ldr	r0, [r3]
+	ldrb	r0, [r0, #0x13]
 	strb	r0, [r1, #0x5]
 	ldr	r1, [r4]
-	ldr	r0, [r2]
-	ldrb	r0, [r0, #0x16]
-	lsl	r0, r0, #0x1c
-	lsr	r0, r0, #0x1c
+	ldr	r0, [r3]
+	ldrb	r0, [r0, #0x14]
+	lsr	r0, r0, #0x3
 	strb	r0, [r1, #0x6]
 	ldr	r1, [r4]
-	ldr	r0, [r2]
-	ldrb	r0, [r0, #0x16]
-	lsr	r0, r0, #0x4
+	ldr	r0, [r3]
+	ldrh	r0, [r0, #0x16]
+	lsl	r0, r0, #0x17
+	lsr	r0, r0, #0x1c
 	strb	r0, [r1, #0x7]
 	ldr	r1, [r4]
-	ldr	r0, [r2]
-	ldrb	r0, [r0, #0x17]
-	lsl	r0, r0, #0x1c
-	lsr	r0, r0, #0x1e
-	strb	r0, [r1, #0x8]
-	ldr	r1, [r4]
-	ldr	r0, [r2]
+	ldr	r0, [r3]
 	ldrb	r0, [r0, #0x17]
 	lsl	r0, r0, #0x1b
+	lsr	r0, r0, #0x1c
+	strb	r0, [r1, #0x8]
+	ldr	r5, [r4]
+	ldr	r0, [r3]
+	ldrb	r2, [r0, #0x17]
+	lsr	r2, r2, #0x7
+	ldrb	r0, [r0, #0x18]
+	mov	r1, #0x1
+	and	r0, r0, r1
+	lsl	r0, r0, #0x1
+	orr	r0, r0, r2
+	strb	r0, [r5, #0x9]
+	ldr	r1, [r4]
+	ldr	r0, [r3]
+	ldrb	r0, [r0, #0x18]
+	lsl	r0, r0, #0x1e
 	lsr	r0, r0, #0x1f
-	strb	r0, [r1, #0x9]
+	strb	r0, [r1, #0xa]
 	mov	r4, #0x0
 .L30:
 	lsl	r1, r4, #0x4
@@ -843,21 +865,23 @@ ScrollAll:
 	push	{r7}
 	add	sp, sp, #-0xc
 	add	r7, r0, #0
-	mov	r0, #0x4
+	mov	r0, #0x5
 	mov	r8, r0
 	lsl	r1, r7, #0x18
 	lsr	r1, r1, #0x18
 	mov	r0, #0x1
-	mov	r2, #0x40
+	mov	r2, #0x50
 	mov	r3, #0x0
 	bl	ScrollWindow
 	cmp	r7, #0
 	bne	.L68	@cond_branch
-	mov	r3, #0x30
+	mov	r3, #0x20
 	b	.L70
 .L68:
 	mov	r3, #0x0
 .L70:
+	lsl	r3, r3, #0x10
+	lsr	r3, r3, #0x10
 	mov	r0, #0xd0
 	str	r0, [sp]
 	mov	r1, r8
@@ -873,7 +897,7 @@ ScrollAll:
 .L74:
 	cmp	r7, #0
 	bne	.L75	@cond_branch
-	mov	r0, #0xa
+	mov	r0, #0xb
 	sub	r5, r0, r6
 	mov	r0, #0x6
 	sub	r0, r0, r6
@@ -939,10 +963,10 @@ Task_OptionMenuProcessInput:
 	ldr	r0, .L108+0x4
 	ldr	r0, [r0]
 	ldr	r0, [r0, #0xc]
-	cmp	r0, #0xa
-	beq	.LCB819
+	cmp	r0, #0xb
+	beq	.LCB832
 	b	.L83	@long jump
-.LCB819:
+.LCB832:
 	ldr	r0, .L108+0x8
 	lsl	r1, r2, #0x2
 	add	r1, r1, r2
@@ -1010,7 +1034,7 @@ Task_OptionMenuProcessInput:
 	ldr	r1, [r4]
 	mov	r0, #0x6
 	str	r0, [r1, #0x10]
-	mov	r0, #0xa
+	mov	r0, #0xb
 	str	r0, [r1, #0xc]
 	b	.L98
 .L91:
@@ -1029,7 +1053,7 @@ Task_OptionMenuProcessInput:
 	ldr	r0, [r1, #0xc]
 	add	r0, r0, #0x1
 	str	r0, [r1, #0xc]
-	cmp	r0, #0x8
+	cmp	r0, #0x9
 	bne	.L96	@cond_branch
 	mov	r0, #0x4
 	b	.L107
@@ -1045,11 +1069,11 @@ Task_OptionMenuProcessInput:
 	ldr	r0, [r1, #0xc]
 	add	r0, r0, #0x1
 	str	r0, [r1, #0xc]
-	cmp	r0, #0xa
+	cmp	r0, #0xb
 	ble	.L99	@cond_branch
 	mov	r0, #0x3
 	str	r0, [r1, #0x10]
-	mov	r0, #0x7
+	mov	r0, #0x8
 	str	r0, [r1, #0xc]
 	mov	r0, #0x1
 	bl	ScrollAll
@@ -1119,147 +1143,174 @@ Task_OptionMenuProcessInput:
 	.type	 Task_OptionMenuSave,function
 	.thumb_func
 Task_OptionMenuSave:
-	push	{r4, r5, r6, lr}
-	mov	r6, sl
-	mov	r5, r9
-	mov	r4, r8
-	push	{r4, r5, r6}
+	push	{r4, r5, r6, r7, lr}
+	mov	r7, sl
+	mov	r6, r9
+	mov	r5, r8
+	push	{r5, r6, r7}
 	add	sp, sp, #-0x4
-	add	r6, r0, #0
-	lsl	r6, r6, #0x18
-	lsr	r6, r6, #0x18
-	ldr	r4, .L121
-	ldr	r5, [r4]
-	ldr	r3, .L121+0x4
-	ldr	r0, [r3]
+	mov	sl, r0
+	lsl	r0, r0, #0x18
+	lsr	r0, r0, #0x18
+	mov	sl, r0
+	ldr	r1, .L121
+	mov	r8, r1
+	ldr	r3, [r1]
+	ldr	r6, .L121+0x4
+	ldr	r0, [r6]
 	mov	r2, #0x7
 	ldrb	r1, [r0]
 	and	r1, r1, r2
-	ldrb	r2, [r5, #0x14]
+	ldrb	r2, [r3, #0x14]
 	mov	r0, #0x8
 	neg	r0, r0
 	and	r0, r0, r2
 	orr	r0, r0, r1
-	strb	r0, [r5, #0x14]
-	ldr	r5, [r4]
-	ldr	r0, [r3]
-	mov	r1, #0x1
-	mov	r8, r1
-	ldrb	r1, [r0, #0x1]
+	strb	r0, [r3, #0x14]
 	mov	r2, r8
+	ldr	r3, [r2]
+	ldr	r0, [r6]
+	mov	r1, #0x1
+	mov	ip, r1
+	ldrb	r1, [r0, #0x1]
+	mov	r2, ip
 	and	r1, r1, r2
-	lsl	r1, r1, #0x3
-	ldrb	r2, [r5, #0x15]
-	mov	r0, #0x9
+	ldrb	r2, [r3, #0x16]
+	mov	r0, #0x2
 	neg	r0, r0
+	mov	r9, r0
 	and	r0, r0, r2
 	orr	r0, r0, r1
-	strb	r0, [r5, #0x15]
-	ldr	r5, [r4]
-	ldr	r0, [r3]
+	strb	r0, [r3, #0x16]
+	mov	r1, r8
+	ldr	r3, [r1]
+	ldr	r0, [r6]
 	ldrb	r1, [r0, #0x2]
-	mov	r0, r8
-	and	r1, r1, r0
-	lsl	r1, r1, #0x2
-	ldrb	r2, [r5, #0x15]
-	mov	r0, #0x5
-	neg	r0, r0
+	lsl	r1, r1, #0x7
+	ldrb	r2, [r3, #0x15]
+	mov	r4, #0x7f
+	add	r0, r4, #0
 	and	r0, r0, r2
 	orr	r0, r0, r1
-	strb	r0, [r5, #0x15]
-	ldr	r5, [r4]
-	ldr	r0, [r3]
-	mov	r1, #0x3
-	mov	r9, r1
+	strb	r0, [r3, #0x15]
+	mov	r2, r8
+	ldr	r3, [r2]
+	ldr	r0, [r6]
+	mov	r2, #0x3
 	ldrb	r1, [r0, #0x3]
-	mov	r2, r9
 	and	r1, r1, r2
-	ldrb	r2, [r5, #0x15]
-	mov	r0, #0x4
+	lsl	r1, r1, #0x5
+	ldrb	r2, [r3, #0x15]
+	mov	r0, #0x61
 	neg	r0, r0
 	and	r0, r0, r2
 	orr	r0, r0, r1
-	strb	r0, [r5, #0x15]
-	ldr	r1, [r4]
-	ldr	r0, [r3]
-	ldrb	r0, [r0, #0x4]
-	mov	r2, #0x0
-	mov	sl, r2
+	strb	r0, [r3, #0x15]
+	mov	r0, r8
+	ldr	r3, [r0]
+	ldr	r0, [r6]
+	mov	r2, #0x1f
+	ldrb	r1, [r0, #0x4]
+	and	r1, r1, r2
+	ldrb	r2, [r3, #0x15]
+	mov	r0, #0x20
+	neg	r0, r0
+	and	r0, r0, r2
+	orr	r0, r0, r1
+	strb	r0, [r3, #0x15]
+	mov	r2, r8
+	ldr	r1, [r2]
+	ldr	r0, [r6]
+	ldrb	r0, [r0, #0x5]
+	mov	r7, #0x0
 	strb	r0, [r1, #0x13]
-	ldr	r5, [r4]
-	ldr	r0, [r3]
-	ldrb	r1, [r0, #0x5]
+	ldr	r3, [r2]
+	ldr	r0, [r6]
+	ldrb	r1, [r0, #0x6]
 	lsl	r1, r1, #0x3
-	ldrb	r2, [r5, #0x14]
+	ldrb	r2, [r3, #0x14]
 	mov	r0, #0x7
 	and	r0, r0, r2
 	orr	r0, r0, r1
-	strb	r0, [r5, #0x14]
-	ldr	r5, [r4]
-	ldr	r0, [r3]
-	mov	r2, #0xf
-	ldrb	r1, [r0, #0x6]
-	and	r1, r1, r2
-	ldrb	r2, [r5, #0x16]
-	mov	r0, #0x10
-	neg	r0, r0
-	and	r0, r0, r2
-	orr	r0, r0, r1
-	strb	r0, [r5, #0x16]
-	ldr	r5, [r4]
-	ldr	r0, [r3]
-	ldrb	r1, [r0, #0x7]
-	lsl	r1, r1, #0x4
-	ldrb	r2, [r5, #0x16]
+	strb	r0, [r3, #0x14]
+	mov	r0, r8
+	ldr	r3, [r0]
+	ldr	r5, [r6]
+	ldrb	r1, [r5, #0x7]
 	mov	r0, #0xf
-	and	r0, r0, r2
-	orr	r0, r0, r1
-	strb	r0, [r5, #0x16]
-	ldr	r5, [r4]
-	ldr	r0, [r3]
-	ldrb	r1, [r0, #0x8]
-	mov	r0, r9
 	and	r1, r1, r0
-	lsl	r1, r1, #0x2
-	ldrb	r2, [r5, #0x17]
-	mov	r0, #0xd
+	lsl	r1, r1, #0x5
+	ldrh	r2, [r3, #0x16]
+	ldr	r0, .L121+0x8
+	and	r0, r0, r2
+	orr	r0, r0, r1
+	strh	r0, [r3, #0x16]
+	mov	r0, #0xf
+	ldrb	r1, [r5, #0x8]
+	and	r1, r1, r0
+	lsl	r1, r1, #0x1
+	ldrb	r2, [r3, #0x17]
+	mov	r0, #0x1f
 	neg	r0, r0
 	and	r0, r0, r2
 	orr	r0, r0, r1
-	strb	r0, [r5, #0x17]
-	ldr	r4, [r4]
-	ldr	r0, [r3]
-	ldrb	r1, [r0, #0x9]
-	mov	r2, r8
+	strb	r0, [r3, #0x17]
+	mov	r1, r8
+	ldr	r3, [r1]
+	ldr	r0, [r6]
+	ldrb	r0, [r0, #0x9]
+	lsl	r0, r0, #0x10
+	lsr	r1, r0, #0x10
+	mov	r5, #0x1
+	and	r1, r1, r5
+	lsl	r1, r1, #0x7
+	ldrb	r2, [r3, #0x17]
+	and	r4, r4, r2
+	orr	r4, r4, r1
+	strb	r4, [r3, #0x17]
+	lsr	r0, r0, #0x11
+	and	r0, r0, r5
+	mov	r2, ip
+	and	r0, r0, r2
+	ldrb	r1, [r3, #0x18]
+	mov	r2, r9
+	and	r2, r2, r1
+	orr	r2, r2, r0
+	strb	r2, [r3, #0x18]
+	mov	r0, r8
+	ldr	r3, [r0]
+	ldr	r0, [r6]
+	ldrb	r1, [r0, #0xa]
+	mov	r2, ip
 	and	r1, r1, r2
-	lsl	r1, r1, #0x4
-	ldrb	r2, [r4, #0x17]
-	mov	r0, #0x11
+	lsl	r1, r1, #0x1
+	ldrb	r2, [r3, #0x18]
+	mov	r0, #0x3
 	neg	r0, r0
 	and	r0, r0, r2
 	orr	r0, r0, r1
-	strb	r0, [r4, #0x17]
+	strb	r0, [r3, #0x18]
 	mov	r0, #0x1
 	neg	r0, r0
-	mov	r1, sl
-	str	r1, [sp]
+	str	r7, [sp]
 	mov	r1, #0x0
 	mov	r2, #0x0
 	mov	r3, #0x10
 	bl	BeginNormalPaletteFade
-	ldr	r1, .L121+0x8
-	lsl	r0, r6, #0x2
-	add	r0, r0, r6
+	ldr	r1, .L121+0xc
+	mov	r2, sl
+	lsl	r0, r2, #0x2
+	add	r0, r0, sl
 	lsl	r0, r0, #0x3
 	add	r0, r0, r1
-	ldr	r1, .L121+0xc
+	ldr	r1, .L121+0x10
 	str	r1, [r0]
 	add	sp, sp, #0x4
 	pop	{r3, r4, r5}
 	mov	r8, r3
 	mov	r9, r4
 	mov	sl, r5
-	pop	{r4, r5, r6}
+	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
 .L122:
@@ -1267,6 +1318,7 @@ Task_OptionMenuSave:
 .L121:
 	.word	gSaveBlock2Ptr
 	.word	sOptions
+	.word	-0x1e1
 	.word	gTasks
 	.word	Task_OptionMenuFadeOut
 .Lfe9:
@@ -1584,6 +1636,46 @@ FrameType_ProcessInput:
 .Lfe19:
 	.size	 FrameType_ProcessInput,.Lfe19-FrameType_ProcessInput
 	.align	2, 0
+	.type	 Music_ProcessInput,function
+	.thumb_func
+Music_ProcessInput:
+	push	{lr}
+	add	r3, r0, #0
+	ldr	r2, .L172
+	ldrh	r1, [r2, #0x2e]
+	mov	r0, #0x10
+	and	r0, r0, r1
+	cmp	r0, #0
+	beq	.L166	@cond_branch
+	cmp	r3, #0x3
+	bgt	.L167	@cond_branch
+	add	r3, r3, #0x1
+	b	.L166
+.L173:
+	.align	2, 0
+.L172:
+	.word	gMain
+.L167:
+	mov	r3, #0x0
+.L166:
+	ldrh	r1, [r2, #0x2e]
+	mov	r0, #0x20
+	and	r0, r0, r1
+	cmp	r0, #0
+	beq	.L169	@cond_branch
+	cmp	r3, #0
+	beq	.L170	@cond_branch
+	sub	r3, r3, #0x1
+	b	.L169
+.L170:
+	mov	r3, #0x3
+.L169:
+	add	r0, r3, #0
+	pop	{r1}
+	bx	r1
+.Lfe20:
+	.size	 Music_ProcessInput,.Lfe20-Music_ProcessInput
+	.align	2, 0
 	.type	 GetMiddleX,function
 	.thumb_func
 GetMiddleX:
@@ -1616,8 +1708,8 @@ GetMiddleX:
 	pop	{r4, r5, r6}
 	pop	{r1}
 	bx	r1
-.Lfe20:
-	.size	 GetMiddleX,.Lfe20-GetMiddleX
+.Lfe21:
+	.size	 GetMiddleX,.Lfe21-GetMiddleX
 	.align	2, 0
 	.type	 DrawOptionMenuChoice,function
 	.thumb_func
@@ -1638,8 +1730,8 @@ DrawOptionMenuChoice:
 	ldrb	r1, [r4]
 	add	r0, r1, #0
 	cmp	r0, #0xff
-	beq	.L168	@cond_branch
-.L170:
+	beq	.L177	@cond_branch
+.L179:
 	mov	r0, sp
 	add	r0, r0, r2
 	add	r0, r0, #0xc
@@ -1649,18 +1741,18 @@ DrawOptionMenuChoice:
 	ldrb	r1, [r4]
 	add	r0, r1, #0
 	cmp	r0, #0xff
-	beq	.L168	@cond_branch
+	beq	.L177	@cond_branch
 	cmp	r2, #0xe
-	bls	.L170	@cond_branch
-.L168:
+	bls	.L179	@cond_branch
+.L177:
 	cmp	r3, #0
-	beq	.L173	@cond_branch
+	beq	.L182	@cond_branch
 	add	r1, sp, #0xc
 	mov	r0, #0x4
 	strb	r0, [r1, #0x2]
 	mov	r0, #0x5
 	strb	r0, [r1, #0x5]
-.L173:
+.L182:
 	mov	r1, sp
 	add	r1, r1, r2
 	add	r1, r1, #0xc
@@ -1682,10 +1774,10 @@ DrawOptionMenuChoice:
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.Lfe21:
-	.size	 DrawOptionMenuChoice,.Lfe21-DrawOptionMenuChoice
+.Lfe22:
+	.size	 DrawOptionMenuChoice,.Lfe22-DrawOptionMenuChoice
 	.section .rodata
-.LC46:
+.LC48:
 	.byte	0xfc
 	.byte	0x1
 	.byte	0x6
@@ -1712,8 +1804,8 @@ HpBar_DrawChoices:
 	lsl	r2, r2, #0x18
 	lsr	r6, r2, #0x18
 	cmp	r4, #0x9
-	bgt	.L175	@cond_branch
-	ldr	r1, .L177
+	bgt	.L184	@cond_branch
+	ldr	r1, .L186
 	add	r0, sp, #0x4
 	mov	r2, #0xe
 	bl	memcpy
@@ -1728,30 +1820,104 @@ HpBar_DrawChoices:
 	mov	r1, #0x68
 	mov	r3, #0x1
 	bl	DrawOptionMenuChoice
-	b	.L176
-.L178:
+	b	.L185
+.L187:
 	.align	2, 0
-.L177:
-	.word	.LC46
-.L175:
-	ldr	r0, .L179
+.L186:
+	.word	.LC48
+.L184:
+	ldr	r0, .L188
 	lsl	r2, r5, #0x18
 	lsr	r2, r2, #0x18
 	str	r6, [sp]
 	mov	r1, #0x68
 	mov	r3, #0x1
 	bl	DrawOptionMenuChoice
-.L176:
+.L185:
 	add	sp, sp, #0x14
 	pop	{r4, r5, r6}
 	pop	{r0}
 	bx	r0
-.L180:
+.L189:
 	.align	2, 0
-.L179:
+.L188:
 	.word	sText_Instant
-.Lfe22:
-	.size	 HpBar_DrawChoices,.Lfe22-HpBar_DrawChoices
+.Lfe23:
+	.size	 HpBar_DrawChoices,.Lfe23-HpBar_DrawChoices
+	.align	2, 0
+	.type	 Music_DrawChoices,function
+	.thumb_func
+Music_DrawChoices:
+	push	{lr}
+	add	sp, sp, #-0x4
+	lsl	r2, r2, #0x18
+	lsr	r3, r2, #0x18
+	cmp	r0, #0x1
+	beq	.L193	@cond_branch
+	cmp	r0, #0x1
+	bgt	.L198	@cond_branch
+	cmp	r0, #0
+	beq	.L192	@cond_branch
+	b	.L196
+.L198:
+	cmp	r0, #0x2
+	beq	.L194	@cond_branch
+	cmp	r0, #0x3
+	beq	.L195	@cond_branch
+	b	.L196
+.L192:
+	ldr	r0, .L200
+	b	.L199
+.L201:
+	.align	2, 0
+.L200:
+	.word	gText_Region_Kanto
+.L193:
+	ldr	r0, .L202
+	b	.L199
+.L203:
+	.align	2, 0
+.L202:
+	.word	gText_Region_Jotho
+.L194:
+	ldr	r0, .L204
+	b	.L199
+.L205:
+	.align	2, 0
+.L204:
+	.word	gText_Region_Hoenn
+.L195:
+	ldr	r0, .L206
+.L199:
+	lsl	r2, r1, #0x18
+	lsr	r2, r2, #0x18
+	str	r3, [sp]
+	mov	r1, #0x68
+	mov	r3, #0x1
+	bl	DrawOptionMenuChoice
+	b	.L191
+.L207:
+	.align	2, 0
+.L206:
+	.word	gText_Region_Sinnoh
+.L196:
+	ldr	r0, .L208
+	lsl	r2, r1, #0x18
+	lsr	r2, r2, #0x18
+	str	r3, [sp]
+	mov	r1, #0x68
+	mov	r3, #0x1
+	bl	DrawOptionMenuChoice
+.L191:
+	add	sp, sp, #0x4
+	pop	{r0}
+	bx	r0
+.L209:
+	.align	2, 0
+.L208:
+	.word	gText_Region_Hoenn
+.Lfe24:
+	.size	 Music_DrawChoices,.Lfe24-Music_DrawChoices
 	.align	2, 0
 	.type	 BattleScene_DrawChoices,function
 	.thumb_func
@@ -1771,7 +1937,7 @@ BattleScene_DrawChoices:
 	add	r1, r1, #0x4
 	mov	r0, #0x1
 	strb	r0, [r1]
-	ldr	r0, .L182
+	ldr	r0, .L211
 	lsl	r4, r4, #0x18
 	lsr	r4, r4, #0x18
 	add	r1, sp, #0x4
@@ -1780,7 +1946,7 @@ BattleScene_DrawChoices:
 	mov	r1, #0x68
 	add	r2, r4, #0
 	bl	DrawOptionMenuChoice
-	ldr	r6, .L182+0x4
+	ldr	r6, .L211+0x4
 	mov	r0, #0x1
 	add	r1, r6, #0
 	mov	r2, #0xc6
@@ -1798,13 +1964,13 @@ BattleScene_DrawChoices:
 	pop	{r4, r5, r6}
 	pop	{r0}
 	bx	r0
-.L183:
+.L212:
 	.align	2, 0
-.L182:
+.L211:
 	.word	gText_BattleSceneOn
 	.word	gText_BattleSceneOff
-.Lfe23:
-	.size	 BattleScene_DrawChoices,.Lfe23-BattleScene_DrawChoices
+.Lfe25:
+	.size	 BattleScene_DrawChoices,.Lfe25-BattleScene_DrawChoices
 	.align	2, 0
 	.type	 BattleStyle_DrawChoices,function
 	.thumb_func
@@ -1824,7 +1990,7 @@ BattleStyle_DrawChoices:
 	add	r1, r1, #0x4
 	mov	r0, #0x1
 	strb	r0, [r1]
-	ldr	r0, .L185
+	ldr	r0, .L214
 	lsl	r4, r4, #0x18
 	lsr	r4, r4, #0x18
 	add	r1, sp, #0x4
@@ -1833,7 +1999,7 @@ BattleStyle_DrawChoices:
 	mov	r1, #0x68
 	add	r2, r4, #0
 	bl	DrawOptionMenuChoice
-	ldr	r6, .L185+0x4
+	ldr	r6, .L214+0x4
 	mov	r0, #0x1
 	add	r1, r6, #0
 	mov	r2, #0xc6
@@ -1851,13 +2017,13 @@ BattleStyle_DrawChoices:
 	pop	{r4, r5, r6}
 	pop	{r0}
 	bx	r0
-.L186:
+.L215:
 	.align	2, 0
-.L185:
+.L214:
 	.word	gText_BattleStyleShift
 	.word	gText_BattleStyleSet
-.Lfe24:
-	.size	 BattleStyle_DrawChoices,.Lfe24-BattleStyle_DrawChoices
+.Lfe26:
+	.size	 BattleStyle_DrawChoices,.Lfe26-BattleStyle_DrawChoices
 	.align	2, 0
 	.type	 Transition_DrawChoices,function
 	.thumb_func
@@ -1877,7 +2043,7 @@ Transition_DrawChoices:
 	add	r1, r1, #0x4
 	mov	r0, #0x1
 	strb	r0, [r1]
-	ldr	r0, .L188
+	ldr	r0, .L217
 	lsl	r4, r4, #0x18
 	lsr	r4, r4, #0x18
 	add	r1, sp, #0x4
@@ -1886,7 +2052,7 @@ Transition_DrawChoices:
 	mov	r1, #0x68
 	add	r2, r4, #0
 	bl	DrawOptionMenuChoice
-	ldr	r6, .L188+0x4
+	ldr	r6, .L217+0x4
 	mov	r0, #0x1
 	add	r1, r6, #0
 	mov	r2, #0xc6
@@ -1904,13 +2070,13 @@ Transition_DrawChoices:
 	pop	{r4, r5, r6}
 	pop	{r0}
 	bx	r0
-.L189:
+.L218:
 	.align	2, 0
-.L188:
+.L217:
 	.word	gText_TransitionStyleNormal
 	.word	gText_TransitionStyleInstant
-.Lfe25:
-	.size	 Transition_DrawChoices,.Lfe25-Transition_DrawChoices
+.Lfe27:
+	.size	 Transition_DrawChoices,.Lfe27-Transition_DrawChoices
 	.align	2, 0
 	.type	 UnitSystem_DrawChoices,function
 	.thumb_func
@@ -1930,7 +2096,7 @@ UnitSystem_DrawChoices:
 	add	r1, r1, #0x4
 	mov	r0, #0x1
 	strb	r0, [r1]
-	ldr	r0, .L191
+	ldr	r0, .L220
 	lsl	r4, r4, #0x18
 	lsr	r4, r4, #0x18
 	add	r1, sp, #0x4
@@ -1939,14 +2105,14 @@ UnitSystem_DrawChoices:
 	mov	r1, #0x68
 	add	r2, r4, #0
 	bl	DrawOptionMenuChoice
-	ldr	r1, .L191+0x4
+	ldr	r1, .L220+0x4
 	mov	r0, #0x1
 	mov	r2, #0xc6
 	bl	GetStringRightAlignXOffset
 	add	r1, r0, #0
 	lsl	r1, r1, #0x18
 	lsr	r1, r1, #0x18
-	ldr	r0, .L191+0x8
+	ldr	r0, .L220+0x8
 	add	r2, sp, #0x4
 	ldrb	r3, [r2, #0x1]
 	str	r5, [sp]
@@ -1956,17 +2122,17 @@ UnitSystem_DrawChoices:
 	pop	{r4, r5, r6}
 	pop	{r0}
 	bx	r0
-.L192:
+.L221:
 	.align	2, 0
-.L191:
+.L220:
 	.word	gText_UnitSystemMetric
 	.word	gText_TransitionStyleInstant
 	.word	gText_UnitSystemImperial
-.Lfe26:
-	.size	 UnitSystem_DrawChoices,.Lfe26-UnitSystem_DrawChoices
+.Lfe28:
+	.size	 UnitSystem_DrawChoices,.Lfe28-UnitSystem_DrawChoices
 	.section .rodata
-	.type	 choiceOrders.81,object
-choiceOrders.81:
+	.type	 choiceOrders.87,object
+choiceOrders.87:
 	.byte	0x0
 	.byte	0x1
 	.byte	0x2
@@ -2003,7 +2169,7 @@ FourOptions_DrawChoices:
 	bl	memset
 	lsl	r5, r4, #0x1
 	add	r5, r5, r4
-	ldr	r0, .L194
+	ldr	r0, .L223
 	add	r5, r5, r0
 	mov	r1, sp
 	add	r1, r1, r4
@@ -2093,12 +2259,12 @@ FourOptions_DrawChoices:
 	pop	{r4, r5, r6}
 	pop	{r0}
 	bx	r0
-.L195:
+.L224:
 	.align	2, 0
-.L194:
-	.word	choiceOrders.81
-.Lfe27:
-	.size	 FourOptions_DrawChoices,.Lfe27-FourOptions_DrawChoices
+.L223:
+	.word	choiceOrders.87
+.Lfe29:
+	.size	 FourOptions_DrawChoices,.Lfe29-FourOptions_DrawChoices
 	.align	2, 0
 	.type	 TextSpeed_DrawChoices,function
 	.thumb_func
@@ -2108,19 +2274,19 @@ TextSpeed_DrawChoices:
 	add	r5, r1, #0
 	lsl	r3, r2, #0x18
 	lsr	r3, r3, #0x18
-	ldr	r0, .L197
+	ldr	r0, .L226
 	add	r1, r4, #0
 	add	r2, r5, #0
 	bl	FourOptions_DrawChoices
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.L198:
+.L227:
 	.align	2, 0
-.L197:
+.L226:
 	.word	sTextSpeedStrings
-.Lfe28:
-	.size	 TextSpeed_DrawChoices,.Lfe28-TextSpeed_DrawChoices
+.Lfe30:
+	.size	 TextSpeed_DrawChoices,.Lfe30-TextSpeed_DrawChoices
 	.align	2, 0
 	.type	 Sound_DrawChoices,function
 	.thumb_func
@@ -2139,10 +2305,10 @@ Sound_DrawChoices:
 	mov	r1, #0x0
 	mov	r2, #0x3
 	bl	memset
-	ldr	r0, .L200
+	ldr	r0, .L229
 	mov	r9, r0
-	ldr	r7, .L200+0x4
-	ldr	r0, .L200+0x8
+	ldr	r7, .L229+0x4
+	ldr	r0, .L229+0x8
 	mov	r8, r0
 	mov	r0, r9
 	add	r1, r7, #0
@@ -2193,14 +2359,14 @@ Sound_DrawChoices:
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L201:
+.L230:
 	.align	2, 0
-.L200:
+.L229:
 	.word	gText_SoundMono
 	.word	gText_SoundStereo
 	.word	gText_BattleSceneOff
-.Lfe29:
-	.size	 Sound_DrawChoices,.Lfe29-Sound_DrawChoices
+.Lfe31:
+	.size	 Sound_DrawChoices,.Lfe31-Sound_DrawChoices
 	.align	2, 0
 	.type	 FrameType_DrawChoices,function
 	.thumb_func
@@ -2215,14 +2381,14 @@ FrameType_DrawChoices:
 	lsr	r7, r2, #0x18
 	add	r6, r0, #0x1
 	mov	r5, #0x0
-	ldr	r1, .L212
+	ldr	r1, .L241
 	ldrb	r0, [r1]
-	ldr	r2, .L212+0x4
+	ldr	r2, .L241+0x4
 	mov	r9, r2
 	cmp	r0, #0xff
-	beq	.L204	@cond_branch
+	beq	.L233	@cond_branch
 	add	r2, r1, #0
-.L206:
+.L235:
 	mov	r0, sp
 	add	r0, r0, r5
 	add	r0, r0, #0x4
@@ -2232,15 +2398,15 @@ FrameType_DrawChoices:
 	add	r5, r5, #0x1
 	ldrb	r0, [r2]
 	cmp	r0, #0xff
-	beq	.L204	@cond_branch
+	beq	.L233	@cond_branch
 	cmp	r5, #0x5
-	bls	.L206	@cond_branch
-.L204:
+	bls	.L235	@cond_branch
+.L233:
 	add	r0, r6, #0
 	mov	r1, #0xa
 	bl	__udivsi3
 	cmp	r0, #0
-	beq	.L209	@cond_branch
+	beq	.L238	@cond_branch
 	mov	r1, sp
 	add	r1, r1, r5
 	add	r1, r1, #0x4
@@ -2255,13 +2421,13 @@ FrameType_DrawChoices:
 	bl	__umodsi3
 	add	r0, r0, #0xa1
 	strb	r0, [r4]
-	b	.L211
-.L213:
+	b	.L240
+.L242:
 	.align	2, 0
-.L212:
+.L241:
 	.word	gText_FrameTypeNumber
 	.word	gText_FrameType
-.L209:
+.L238:
 	mov	r4, sp
 	add	r4, r4, r5
 	add	r4, r4, #0x4
@@ -2276,7 +2442,7 @@ FrameType_DrawChoices:
 	add	r1, r1, #0x4
 	mov	r0, #0x77
 	strb	r0, [r1]
-.L211:
+.L240:
 	add	r5, r5, #0x1
 	mov	r0, sp
 	add	r0, r0, r5
@@ -2305,8 +2471,8 @@ FrameType_DrawChoices:
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.Lfe30:
-	.size	 FrameType_DrawChoices,.Lfe30-FrameType_DrawChoices
+.Lfe32:
+	.size	 FrameType_DrawChoices,.Lfe32-FrameType_DrawChoices
 	.align	2, 0
 	.type	 ButtonMode_DrawChoices,function
 	.thumb_func
@@ -2325,10 +2491,10 @@ ButtonMode_DrawChoices:
 	mov	r1, #0x0
 	mov	r2, #0x3
 	bl	memset
-	ldr	r0, .L215
+	ldr	r0, .L244
 	mov	r9, r0
-	ldr	r7, .L215+0x4
-	ldr	r0, .L215+0x8
+	ldr	r7, .L244+0x4
+	ldr	r0, .L244+0x8
 	mov	r8, r0
 	mov	r0, r9
 	add	r1, r7, #0
@@ -2379,14 +2545,14 @@ ButtonMode_DrawChoices:
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L216:
+.L245:
 	.align	2, 0
-.L215:
+.L244:
 	.word	gText_ButtonTypeNormal
 	.word	gText_ButtonTypeLR
 	.word	gText_ButtonTypeLEqualsA
-.Lfe31:
-	.size	 ButtonMode_DrawChoices,.Lfe31-ButtonMode_DrawChoices
+.Lfe33:
+	.size	 ButtonMode_DrawChoices,.Lfe33-ButtonMode_DrawChoices
 	.align	2, 0
 	.type	 DrawTextOption,function
 	.thumb_func
@@ -2396,7 +2562,7 @@ DrawTextOption:
 	mov	r0, #0x0
 	mov	r1, #0x11
 	bl	FillWindowPixelBuffer
-	ldr	r2, .L218
+	ldr	r2, .L247
 	mov	r0, #0x1
 	str	r0, [sp]
 	mov	r0, #0x0
@@ -2411,12 +2577,12 @@ DrawTextOption:
 	add	sp, sp, #0xc
 	pop	{r0}
 	bx	r0
-.L219:
+.L248:
 	.align	2, 0
-.L218:
+.L247:
 	.word	gText_Option
-.Lfe32:
-	.size	 DrawTextOption,.Lfe32-DrawTextOption
+.Lfe34:
+	.size	 DrawTextOption,.Lfe34-DrawTextOption
 	.align	2, 0
 	.type	 DrawOptionMenuTexts,function
 	.thumb_func
@@ -2430,8 +2596,8 @@ DrawOptionMenuTexts:
 	mov	r6, #0x0
 	mov	r4, #0x80
 	lsl	r4, r4, #0x11
-	ldr	r7, .L226
-.L224:
+	ldr	r7, .L255
+.L253:
 	ldmia	r7!, {r2}
 	lsr	r0, r4, #0x18
 	str	r0, [sp]
@@ -2446,7 +2612,7 @@ DrawOptionMenuTexts:
 	add	r4, r4, r0
 	add	r5, r5, #0x1
 	cmp	r5, #0x6
-	bls	.L224	@cond_branch
+	bls	.L253	@cond_branch
 	mov	r0, #0x1
 	mov	r1, #0x3
 	bl	CopyWindowToVram
@@ -2454,12 +2620,12 @@ DrawOptionMenuTexts:
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L227:
+.L256:
 	.align	2, 0
-.L226:
+.L255:
 	.word	sOptionMenuItemsNames
-.Lfe33:
-	.size	 DrawOptionMenuTexts,.Lfe33-DrawOptionMenuTexts
+.Lfe35:
+	.size	 DrawOptionMenuTexts,.Lfe35-DrawOptionMenuTexts
 	.align	2, 0
 	.type	 sub_80BB154,function
 	.thumb_func
@@ -2487,7 +2653,7 @@ sub_80BB154:
 	str	r4, [sp, #0x4]
 	str	r5, [sp, #0x8]
 	mov	r0, #0x1
-	ldr	r1, .L229
+	ldr	r1, .L258
 	mov	r2, #0x2
 	mov	r3, #0x0
 	bl	FillBgTilemapBufferRect
@@ -2505,7 +2671,7 @@ sub_80BB154:
 	str	r6, [sp, #0x4]
 	str	r5, [sp, #0x8]
 	mov	r0, #0x1
-	ldr	r1, .L229+0x4
+	ldr	r1, .L258+0x4
 	mov	r2, #0x1
 	mov	r3, #0x1
 	bl	FillBgTilemapBufferRect
@@ -2513,7 +2679,7 @@ sub_80BB154:
 	str	r6, [sp, #0x4]
 	str	r5, [sp, #0x8]
 	mov	r0, #0x1
-	ldr	r1, .L229+0x8
+	ldr	r1, .L258+0x8
 	mov	r2, #0x1c
 	mov	r3, #0x1
 	bl	FillBgTilemapBufferRect
@@ -2527,7 +2693,7 @@ sub_80BB154:
 	mov	r2, #0x1
 	mov	r3, #0x3
 	bl	FillBgTilemapBufferRect
-	ldr	r0, .L229+0xc
+	ldr	r0, .L258+0xc
 	mov	sl, r0
 	mov	r0, r8
 	str	r0, [sp]
@@ -2564,7 +2730,7 @@ sub_80BB154:
 	str	r4, [sp, #0x4]
 	str	r5, [sp, #0x8]
 	mov	r0, #0x1
-	ldr	r1, .L229
+	ldr	r1, .L258
 	mov	r2, #0x2
 	mov	r3, #0x4
 	bl	FillBgTilemapBufferRect
@@ -2582,7 +2748,7 @@ sub_80BB154:
 	str	r6, [sp, #0x4]
 	str	r5, [sp, #0x8]
 	mov	r0, #0x1
-	ldr	r1, .L229+0x4
+	ldr	r1, .L258+0x4
 	mov	r2, #0x1
 	mov	r3, #0x5
 	bl	FillBgTilemapBufferRect
@@ -2590,7 +2756,7 @@ sub_80BB154:
 	str	r6, [sp, #0x4]
 	str	r5, [sp, #0x8]
 	mov	r0, #0x1
-	ldr	r1, .L229+0x8
+	ldr	r1, .L258+0x8
 	mov	r2, #0x1c
 	mov	r3, #0x5
 	bl	FillBgTilemapBufferRect
@@ -2629,15 +2795,15 @@ sub_80BB154:
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L230:
+.L259:
 	.align	2, 0
-.L229:
+.L258:
 	.word	0x1a3
 	.word	0x1a5
 	.word	0x1a7
 	.word	0x1a9
-.Lfe34:
-	.size	 sub_80BB154,.Lfe34-sub_80BB154
+.Lfe36:
+	.size	 sub_80BB154,.Lfe36-sub_80BB154
 .text
 	.align	2, 0
 

@@ -511,11 +511,11 @@
 #define FLAG_DEFEATED_LUGIA                  0x1DD
 
 #define FLAG_UNUSED_0x1DE                    0x1DE // Forced Double Wild Battles
-#define FLAG_UNUSED_0x1DF                    0x1DF // Unused Flag
-#define FLAG_UNUSED_0x1E0                    0x1E0 // Unused Flag
+#define FLAG_KANTO_SOUNDS                    0x1DF
+#define FLAG_JOTHO_SOUNDS                    0x1E0
 #define FLAG_SCORCHED_SLAB_TYRANITARITE      0x1E1
-#define FLAG_UNUSED_0x1E2                    0x1E2 // Unused Flag
-#define FLAG_UNUSED_0x1E3                    0x1E3 // Unused Flag
+#define FLAG_HOENN_SOUNDS                    0x1E2
+#define FLAG_SINNOH_SOUNDS                   0x1E3
 
 // Mystery Gift Flags (Unknown)
 #define FLAG_MYSTERY_EVENT_DONE              0x1E4
@@ -1592,8 +1592,8 @@
 #define FLAG_UNUSED_0x937                           (DAILY_FLAGS_START + 0x17) // Fire Starter
 #define FLAG_UNUSED_0x938                           (DAILY_FLAGS_START + 0x18) // Water Starter
 #define FLAG_UNUSED_0x939                           (DAILY_FLAGS_START + 0x19) // Ability Patch
-#define FLAG_UNUSED_0x93A                           (DAILY_FLAGS_START + 0x1A) // Unused Flag
-#define FLAG_UNUSED_0x93B                           (DAILY_FLAGS_START + 0x1B) // Unused Flag
+#define FLAG_NATURE_MINT                            (DAILY_FLAGS_START + 0x1A) // Wally Rematch
+#define FLAG_WALLY_REMATCH                          (DAILY_FLAGS_START + 0x1B) // FLAG_WALLY_REMATCH
 #define FLAG_UNUSED_0x93C                           (DAILY_FLAGS_START + 0x1C) // Unused Flag
 #define FLAG_UNUSED_0x93D                           (DAILY_FLAGS_START + 0x1D) // Unused Flag
 #define FLAG_UNUSED_0x93E                           (DAILY_FLAGS_START + 0x1E) // Unused Flag

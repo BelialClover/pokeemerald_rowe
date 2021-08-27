@@ -1,3 +1,5 @@
+#include "item_use.h"
+
 const struct Item gItems[] =
 {
     [ITEM_NONE] =
@@ -7503,19 +7505,15 @@ const struct Item gItems[] =
 
     [ITEM_TRI_PASS] =
     {
-#if GAME_LANGUAGE == LANGUAGE_SPANISH
-        .name = _("Tri-Ticket"),
-#else
-        .name = _("Tri-Pass"),
-#endif
+        .name = _("Sinnoh Sounds"),
         .itemId = ITEM_TRI_PASS,
         .price = 0,
         .description = sTriPassDesc,
         .importance = 1,
         .unk19 = 1,
         .pocket = POCKET_KEY_ITEMS,
-        .type = 4,
-        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .type = 2,
+        .fieldUseFunc = ItemUseOutOfBattle_Seal,
         .secondaryId = 0,
     },
 

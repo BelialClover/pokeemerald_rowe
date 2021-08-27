@@ -4460,6 +4460,36 @@
       "secondary_tileset": "gTileset_Viridian_Forest",
       "border_filepath": "data/layouts/Petalburg_Woods_2/border.bin",
       "blockdata_filepath": "data/layouts/Petalburg_Woods_2/map.bin"
+    },
+    {
+      "id": "LAYOUT_PETALBURG_WOODS_HOUSE",
+      "name": "PetalburgWoods_House_Layout",
+      "width": 14,
+      "height": 9,
+      "primary_tileset": "gTileset_Building",
+      "secondary_tileset": "gTileset_GenericBuilding",
+      "border_filepath": "data/layouts/PetalburgWoods_House/border.bin",
+      "blockdata_filepath": "data/layouts/PetalburgWoods_House/map.bin"
+    },
+    {
+      "id": "LAYOUT_SECRET_ISLET",
+      "name": "SecretIslet_Layout",
+      "width": 42,
+      "height": 42,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Lilycove",
+      "border_filepath": "data/layouts/SecretIslet/border.bin",
+      "blockdata_filepath": "data/layouts/SecretIslet/map.bin"
+    },
+    {
+      "id": "LAYOUT_SECRET_SHORE",
+      "name": "SecretShore_Layout",
+      "width": 40,
+      "height": 40,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Mossdeep",
+      "border_filepath": "data/layouts/SecretShore/border.bin",
+      "blockdata_filepath": "data/layouts/SecretShore/map.bin"
     }
   ]
 }

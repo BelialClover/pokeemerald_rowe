@@ -270,7 +270,7 @@ DewfordTown_Hall_EventScript_SludgeBombMan:: @ 81FD7DA
 DewfordTown_Hall_EventScript_MintMan:: @ 81FD7DA
 	lock
 	faceplayer
-	goto_if_set FLAG_UNUSED_0x93A, DewfordTown_Hall_EventScript_ReceivedMint
+	goto_if_set FLAG_NATURE_MINT, DewfordTown_Hall_EventScript_ReceivedMint
 	call Common_EventScript_BufferTrendyPhrase
 	msgbox DewfordTown_Hall_Text_Mouth_Mints, MSGBOX_YESNO
 	compare VAR_RESULT, NO
@@ -306,7 +306,7 @@ DewfordTown_Hall_EventScript_MintMan:: @ 81FD7DA
 DewfordTown_Hall_EventScript_LonelyMint::
 	msgbox Route114_FossilManiacsTunnel_Text_HereYoGo, MSGBOX_DEFAULT
 	giveitem ITEM_LONELY_MINT
-	setflag FLAG_UNUSED_0x93A
+	setflag FLAG_NATURE_MINT
 	waitfanfare
 	msgbox DewfordTown_Hall_Text_LoveMintsButTrendInToo, MSGBOX_DEFAULT
 	release
@@ -316,7 +316,7 @@ DewfordTown_Hall_EventScript_LonelyMint::
 DewfordTown_Hall_EventScript_AdamantMint::
 	msgbox Route114_FossilManiacsTunnel_Text_HereYoGo, MSGBOX_DEFAULT
 	giveitem ITEM_ADAMANT_MINT
-	setflag FLAG_UNUSED_0x93A
+	setflag FLAG_NATURE_MINT
 	waitfanfare
 	msgbox DewfordTown_Hall_Text_LoveMintsButTrendInToo, MSGBOX_DEFAULT
 	release
@@ -326,7 +326,7 @@ DewfordTown_Hall_EventScript_AdamantMint::
 DewfordTown_Hall_EventScript_NaughtyMint::
 	msgbox Route114_FossilManiacsTunnel_Text_HereYoGo, MSGBOX_DEFAULT
 	giveitem ITEM_NAUGHTY_MINT
-	setflag FLAG_UNUSED_0x93A
+	setflag FLAG_NATURE_MINT
 	waitfanfare
 	msgbox DewfordTown_Hall_Text_LoveMintsButTrendInToo, MSGBOX_DEFAULT
 	release
@@ -336,7 +336,7 @@ DewfordTown_Hall_EventScript_NaughtyMint::
 DewfordTown_Hall_EventScript_BraveMint::
 	msgbox Route114_FossilManiacsTunnel_Text_HereYoGo, MSGBOX_DEFAULT
 	giveitem ITEM_BRAVE_MINT
-	setflag FLAG_UNUSED_0x93A
+	setflag FLAG_NATURE_MINT
 	waitfanfare
 	msgbox DewfordTown_Hall_Text_LoveMintsButTrendInToo, MSGBOX_DEFAULT
 	release
@@ -346,7 +346,7 @@ DewfordTown_Hall_EventScript_BraveMint::
 DewfordTown_Hall_EventScript_BoldMint::
 	msgbox Route114_FossilManiacsTunnel_Text_HereYoGo, MSGBOX_DEFAULT
 	giveitem ITEM_BOLD_MINT
-	setflag FLAG_UNUSED_0x93A
+	setflag FLAG_NATURE_MINT
 	waitfanfare
 	msgbox DewfordTown_Hall_Text_LoveMintsButTrendInToo, MSGBOX_DEFAULT
 	release
@@ -356,7 +356,7 @@ DewfordTown_Hall_EventScript_BoldMint::
 DewfordTown_Hall_EventScript_ImpishMint::
 	msgbox Route114_FossilManiacsTunnel_Text_HereYoGo, MSGBOX_DEFAULT
 	giveitem ITEM_IMPISH_MINT
-	setflag FLAG_UNUSED_0x93A
+	setflag FLAG_NATURE_MINT
 	waitfanfare
 	msgbox DewfordTown_Hall_Text_LoveMintsButTrendInToo, MSGBOX_DEFAULT
 	release
@@ -366,7 +366,7 @@ DewfordTown_Hall_EventScript_ImpishMint::
 DewfordTown_Hall_EventScript_LaxMint::
 	msgbox Route114_FossilManiacsTunnel_Text_HereYoGo, MSGBOX_DEFAULT
 	giveitem ITEM_LAX_MINT
-	setflag FLAG_UNUSED_0x93A
+	setflag FLAG_NATURE_MINT
 	waitfanfare
 	msgbox DewfordTown_Hall_Text_LoveMintsButTrendInToo, MSGBOX_DEFAULT
 	release
@@ -376,7 +376,7 @@ DewfordTown_Hall_EventScript_LaxMint::
 DewfordTown_Hall_EventScript_RelaxedMint::
 	msgbox Route114_FossilManiacsTunnel_Text_HereYoGo, MSGBOX_DEFAULT
 	giveitem ITEM_RELAXED_MINT
-	setflag FLAG_UNUSED_0x93A
+	setflag FLAG_NATURE_MINT
 	waitfanfare
 	msgbox DewfordTown_Hall_Text_LoveMintsButTrendInToo, MSGBOX_DEFAULT
 	release
@@ -386,7 +386,7 @@ DewfordTown_Hall_EventScript_RelaxedMint::
 DewfordTown_Hall_EventScript_ModestMint::
 	msgbox Route114_FossilManiacsTunnel_Text_HereYoGo, MSGBOX_DEFAULT
 	giveitem ITEM_MODEST_MINT
-	setflag FLAG_UNUSED_0x93A
+	setflag FLAG_NATURE_MINT
 	waitfanfare
 	msgbox DewfordTown_Hall_Text_LoveMintsButTrendInToo, MSGBOX_DEFAULT
 	release
@@ -396,7 +396,7 @@ DewfordTown_Hall_EventScript_ModestMint::
 DewfordTown_Hall_EventScript_MildMint::
 	msgbox Route114_FossilManiacsTunnel_Text_HereYoGo, MSGBOX_DEFAULT
 	giveitem ITEM_MILD_MINT
-	setflag FLAG_UNUSED_0x93A
+	setflag FLAG_NATURE_MINT
 	waitfanfare
 	msgbox DewfordTown_Hall_Text_LoveMintsButTrendInToo, MSGBOX_DEFAULT
 	release
@@ -406,7 +406,7 @@ DewfordTown_Hall_EventScript_MildMint::
 DewfordTown_Hall_EventScript_RashMint::
 	msgbox Route114_FossilManiacsTunnel_Text_HereYoGo, MSGBOX_DEFAULT
 	giveitem ITEM_RASH_MINT
-	setflag FLAG_UNUSED_0x93A
+	setflag FLAG_NATURE_MINT
 	waitfanfare
 	msgbox DewfordTown_Hall_Text_LoveMintsButTrendInToo, MSGBOX_DEFAULT
 	release
@@ -416,7 +416,7 @@ DewfordTown_Hall_EventScript_RashMint::
 DewfordTown_Hall_EventScript_QuietMint::
 	msgbox Route114_FossilManiacsTunnel_Text_HereYoGo, MSGBOX_DEFAULT
 	giveitem ITEM_QUIET_MINT
-	setflag FLAG_UNUSED_0x93A
+	setflag FLAG_NATURE_MINT
 	waitfanfare
 	msgbox DewfordTown_Hall_Text_LoveMintsButTrendInToo, MSGBOX_DEFAULT
 	release
@@ -426,7 +426,7 @@ DewfordTown_Hall_EventScript_QuietMint::
 DewfordTown_Hall_EventScript_CalmMint::
 	msgbox Route114_FossilManiacsTunnel_Text_HereYoGo, MSGBOX_DEFAULT
 	giveitem ITEM_CALM_MINT
-	setflag FLAG_UNUSED_0x93A
+	setflag FLAG_NATURE_MINT
 	waitfanfare
 	msgbox DewfordTown_Hall_Text_LoveMintsButTrendInToo, MSGBOX_DEFAULT
 	release
@@ -436,7 +436,7 @@ DewfordTown_Hall_EventScript_CalmMint::
 DewfordTown_Hall_EventScript_GentleMint::
 	msgbox Route114_FossilManiacsTunnel_Text_HereYoGo, MSGBOX_DEFAULT
 	giveitem ITEM_GENTLE_MINT
-	setflag FLAG_UNUSED_0x93A
+	setflag FLAG_NATURE_MINT
 	waitfanfare
 	msgbox DewfordTown_Hall_Text_LoveMintsButTrendInToo, MSGBOX_DEFAULT
 	release
@@ -446,7 +446,7 @@ DewfordTown_Hall_EventScript_GentleMint::
 DewfordTown_Hall_EventScript_CarefulMint::
 	msgbox Route114_FossilManiacsTunnel_Text_HereYoGo, MSGBOX_DEFAULT
 	giveitem ITEM_CAREFUL_MINT
-	setflag FLAG_UNUSED_0x93A
+	setflag FLAG_NATURE_MINT
 	waitfanfare
 	msgbox DewfordTown_Hall_Text_LoveMintsButTrendInToo, MSGBOX_DEFAULT
 	release
@@ -456,7 +456,7 @@ DewfordTown_Hall_EventScript_CarefulMint::
 DewfordTown_Hall_EventScript_SassyMint::
 	msgbox Route114_FossilManiacsTunnel_Text_HereYoGo, MSGBOX_DEFAULT
 	giveitem ITEM_SASSY_MINT
-	setflag FLAG_UNUSED_0x93A
+	setflag FLAG_NATURE_MINT
 	waitfanfare
 	msgbox DewfordTown_Hall_Text_LoveMintsButTrendInToo, MSGBOX_DEFAULT
 	release
@@ -466,7 +466,7 @@ DewfordTown_Hall_EventScript_SassyMint::
 DewfordTown_Hall_EventScript_TimidMint::
 	msgbox Route114_FossilManiacsTunnel_Text_HereYoGo, MSGBOX_DEFAULT
 	giveitem ITEM_TIMID_MINT
-	setflag FLAG_UNUSED_0x93A
+	setflag FLAG_NATURE_MINT
 	waitfanfare
 	msgbox DewfordTown_Hall_Text_LoveMintsButTrendInToo, MSGBOX_DEFAULT
 	release
@@ -476,7 +476,7 @@ DewfordTown_Hall_EventScript_TimidMint::
 DewfordTown_Hall_EventScript_HastyMint::
 	msgbox Route114_FossilManiacsTunnel_Text_HereYoGo, MSGBOX_DEFAULT
 	giveitem ITEM_HASTY_MINT
-	setflag FLAG_UNUSED_0x93A
+	setflag FLAG_NATURE_MINT
 	waitfanfare
 	msgbox DewfordTown_Hall_Text_LoveMintsButTrendInToo, MSGBOX_DEFAULT
 	release
@@ -486,7 +486,7 @@ DewfordTown_Hall_EventScript_HastyMint::
 DewfordTown_Hall_EventScript_JollyMint::
 	msgbox Route114_FossilManiacsTunnel_Text_HereYoGo, MSGBOX_DEFAULT
 	giveitem ITEM_JOLLY_MINT
-	setflag FLAG_UNUSED_0x93A
+	setflag FLAG_NATURE_MINT
 	waitfanfare
 	msgbox DewfordTown_Hall_Text_LoveMintsButTrendInToo, MSGBOX_DEFAULT
 	release
@@ -496,7 +496,7 @@ DewfordTown_Hall_EventScript_JollyMint::
 DewfordTown_Hall_EventScript_NaiveMint::
 	msgbox Route114_FossilManiacsTunnel_Text_HereYoGo, MSGBOX_DEFAULT
 	giveitem ITEM_NAIVE_MINT
-	setflag FLAG_UNUSED_0x93A
+	setflag FLAG_NATURE_MINT
 	waitfanfare
 	msgbox DewfordTown_Hall_Text_LoveMintsButTrendInToo, MSGBOX_DEFAULT
 	release
@@ -506,7 +506,7 @@ DewfordTown_Hall_EventScript_NaiveMint::
 DewfordTown_Hall_EventScript_SeriousMint::
 	msgbox Route114_FossilManiacsTunnel_Text_HereYoGo, MSGBOX_DEFAULT
 	giveitem ITEM_SERIOUS_MINT
-	setflag FLAG_UNUSED_0x93A
+	setflag FLAG_NATURE_MINT
 	waitfanfare
 	msgbox DewfordTown_Hall_Text_LoveMintsButTrendInToo, MSGBOX_DEFAULT
 	release

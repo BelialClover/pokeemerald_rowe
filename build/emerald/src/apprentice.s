@@ -1763,7 +1763,7 @@ BufferApprenticeChallengeText:
 	add	r0, r0, r5
 	lsl	r0, r0, #0x2
 	add	r1, r1, r0
-	add	r1, r1, #0x76
+	add	r1, r1, #0x7a
 	ldrb	r1, [r1]
 	mov	r6, #0x0
 	add	r7, r2, #0
@@ -1790,19 +1790,19 @@ BufferApprenticeChallengeText:
 	lsl	r4, r4, #0x2
 	ldr	r1, [r7]
 	add	r1, r4, r1
-	add	r1, r1, #0xac
+	add	r1, r1, #0xb0
 	mov	r0, r8
 	bl	StringCopy7
 	ldr	r0, [r7]
 	add	r0, r0, r4
-	add	r0, r0, #0xb3
+	add	r0, r0, #0xb7
 	ldrb	r1, [r0]
 	mov	r0, r8
 	bl	ConvertInternationalString
 	ldr	r0, .L9+0x8
 	ldr	r1, [r7]
 	add	r1, r1, r4
-	add	r1, r1, #0x76
+	add	r1, r1, #0x7a
 	ldrb	r1, [r1]
 	mov	r2, #0x1
 	add	r3, r6, #0
@@ -1810,7 +1810,7 @@ BufferApprenticeChallengeText:
 	ldr	r1, .L9+0xc
 	ldr	r0, [r7]
 	add	r0, r0, r4
-	add	r0, r0, #0x74
+	add	r0, r0, #0x78
 	ldrb	r0, [r0]
 	lsl	r0, r0, #0x1b
 	lsr	r0, r0, #0x19
@@ -1899,7 +1899,7 @@ ResetAllApprenticeData:
 	push	{r5, r6, r7}
 	ldr	r3, .L36
 	ldr	r1, [r3]
-	add	r1, r1, #0x4a
+	add	r1, r1, #0x4e
 	ldrb	r2, [r1]
 	mov	r0, #0x19
 	neg	r0, r0
@@ -1925,7 +1925,7 @@ ResetAllApprenticeData:
 	ldr	r1, [r4]
 	lsl	r0, r2, #0x1
 	add	r0, r0, r3
-	add	r1, r1, #0x9c
+	add	r1, r1, #0xa0
 	add	r1, r1, r0
 	ldrh	r0, [r1]
 	mov	r5, r9
@@ -1940,7 +1940,7 @@ ResetAllApprenticeData:
 	add	r3, r6, r7
 	lsl	r3, r3, #0x2
 	add	r2, r2, r3
-	add	r2, r2, #0x74
+	add	r2, r2, #0x78
 	ldrb	r1, [r2]
 	mov	r0, sl
 	and	r0, r0, r1
@@ -1949,12 +1949,12 @@ ResetAllApprenticeData:
 	strb	r0, [r2]
 	ldr	r0, [r4]
 	add	r0, r0, r3
-	add	r0, r0, #0xac
+	add	r0, r0, #0xb0
 	mov	r1, #0xff
 	strb	r1, [r0]
 	ldr	r1, [r4]
 	add	r1, r1, r3
-	add	r1, r1, #0x74
+	add	r1, r1, #0x78
 	ldrb	r2, [r1]
 	mov	r0, #0x61
 	neg	r0, r0
@@ -1962,19 +1962,19 @@ ResetAllApprenticeData:
 	strb	r0, [r1]
 	ldr	r0, [r4]
 	add	r0, r0, r3
-	add	r0, r0, #0x76
+	add	r0, r0, #0x7a
 	mov	r1, ip
 	strb	r1, [r0]
 	ldr	r0, [r4]
 	add	r0, r0, r3
-	add	r0, r0, #0x75
+	add	r0, r0, #0x79
 	strb	r1, [r0]
 	mov	r2, #0x0
 	ldr	r5, .L36
 .L33:
 	ldr	r0, [r5]
 	add	r1, r2, r3
-	add	r0, r0, #0xa8
+	add	r0, r0, #0xac
 	add	r0, r0, r1
 	mov	r1, ip
 	strb	r1, [r0]
@@ -1989,10 +1989,10 @@ ResetAllApprenticeData:
 	add	r0, r0, r2
 	ldr	r3, .L36+0x8
 	ldrb	r1, [r3]
-	add	r0, r0, #0xb3
+	add	r0, r0, #0xb7
 	strb	r1, [r0]
 	ldr	r0, [r4]
-	add	r0, r0, #0xb4
+	add	r0, r0, #0xb8
 	add	r0, r0, r2
 	mov	r5, ip
 	str	r5, [r0]
@@ -2023,7 +2023,7 @@ ResetAllApprenticeData:
 GivenApprenticeLvlMode:
 	ldr	r0, .L40
 	ldr	r0, [r0]
-	add	r0, r0, #0x49
+	add	r0, r0, #0x4d
 	ldrb	r0, [r0]
 	mov	r1, #0x3
 	and	r1, r1, r0
@@ -2044,7 +2044,7 @@ SetApprenticeId:
 	push	{r4, r5, lr}
 	ldr	r2, .L55
 	ldr	r0, [r2]
-	add	r0, r0, #0x76
+	add	r0, r0, #0x7a
 	ldrb	r0, [r0]
 	cmp	r0, #0
 	bne	.L43	@cond_branch
@@ -2060,12 +2060,12 @@ SetApprenticeId:
 	lsr	r1, r1, #0x10
 	add	r1, r1, r5
 	ldrb	r0, [r1]
-	add	r2, r2, #0x48
+	add	r2, r2, #0x4c
 	strb	r0, [r2]
 	ldr	r0, [r4]
 	add	r1, r0, #0
-	add	r1, r1, #0x48
-	add	r0, r0, #0x74
+	add	r1, r1, #0x4c
+	add	r0, r0, #0x78
 	ldrb	r0, [r0]
 	lsl	r0, r0, #0x1b
 	ldrb	r1, [r1]
@@ -2087,12 +2087,12 @@ SetApprenticeId:
 	lsr	r0, r0, #0x10
 	mov	r1, #0xf
 	and	r0, r0, r1
-	add	r2, r2, #0x48
+	add	r2, r2, #0x4c
 	strb	r0, [r2]
 	ldr	r0, [r4]
 	add	r1, r0, #0
-	add	r1, r1, #0x48
-	add	r0, r0, #0x74
+	add	r1, r1, #0x4c
+	add	r0, r0, #0x78
 	ldrb	r0, [r0]
 	lsl	r0, r0, #0x1b
 	ldrb	r1, [r1]
@@ -2113,7 +2113,7 @@ SetPlayersApprenticeLvlMode:
 	lsr	r0, r0, #0x18
 	ldr	r1, .L58
 	ldr	r2, [r1]
-	add	r2, r2, #0x49
+	add	r2, r2, #0x4d
 	mov	r1, #0x3
 	and	r0, r0, r1
 	ldrb	r3, [r2]
@@ -2178,7 +2178,7 @@ ShuffleApprenticeSpecies:
 	mov	r4, #0xf
 .L74:
 	ldr	r3, [r6]
-	add	r3, r3, #0x4c
+	add	r3, r3, #0x50
 	add	r3, r3, r5
 	lsl	r2, r5, #0x1
 	mov	r1, sp
@@ -2409,7 +2409,7 @@ SetRandomQuestionData:
 	mov	r1, sp
 	add	r6, r1, r5
 	ldrb	r0, [r6]
-	add	r3, r3, #0x50
+	add	r3, r3, #0x54
 	mov	r2, #0x3
 	and	r2, r2, r0
 	ldrb	r0, [r3]
@@ -2432,7 +2432,7 @@ SetRandomQuestionData:
 	ldr	r1, .L144+0x8
 	ldr	r3, [r1]
 	add	r3, r3, r8
-	add	r3, r3, #0x50
+	add	r3, r3, #0x54
 	mov	r2, #0x3
 	and	r2, r2, r0
 	lsl	r2, r2, #0x2
@@ -2446,7 +2446,7 @@ SetRandomQuestionData:
 	ldr	r7, .L144+0x8
 	ldr	r0, [r7]
 	add	r0, r0, r8
-	add	r0, r0, #0x50
+	add	r0, r0, #0x54
 	ldrb	r0, [r0]
 	lsl	r0, r0, #0x1c
 	lsr	r7, r0, #0x1e
@@ -2509,7 +2509,7 @@ SetRandomQuestionData:
 	ldr	r6, .L144+0x8
 	ldr	r2, [r6]
 	add	r2, r2, r8
-	add	r2, r2, #0x50
+	add	r2, r2, #0x54
 	mov	r7, #0x3
 	and	r4, r4, r7
 	lsl	r3, r4, #0x4
@@ -2522,14 +2522,14 @@ SetRandomQuestionData:
 	strb	r0, [r2]
 	ldr	r0, [r6]
 	add	r0, r0, r8
-	add	r0, r0, #0x50
+	add	r0, r0, #0x54
 	ldrb	r0, [r0]
 	lsl	r0, r0, #0x1c
 	lsr	r0, r0, #0x1e
 	bl	GetRandomAlternateMove
 	ldr	r1, [r6]
 	add	r1, r1, r8
-	add	r1, r1, #0x52
+	add	r1, r1, #0x56
 	strh	r0, [r1]
 .L128:
 	ldr	r6, [sp, #0x1c]
@@ -2582,10 +2582,10 @@ GetRandomAlternateMove:
 	ldr	r2, .L205
 	ldr	r1, [r2]
 	add	r0, r1, #0
-	add	r0, r0, #0x4c
+	add	r0, r0, #0x50
 	add	r0, r0, sl
 	ldrb	r4, [r0]
-	add	r1, r1, #0x4a
+	add	r1, r1, #0x4e
 	ldrb	r0, [r1]
 	lsl	r0, r0, #0x1d
 	lsr	r0, r0, #0x1d
@@ -2610,7 +2610,7 @@ GetRandomAlternateMove:
 	lsl	r1, r4, #0x1
 	ldr	r4, [r2]
 	add	r0, r4, #0
-	add	r0, r0, #0x48
+	add	r0, r0, #0x4c
 	ldrb	r2, [r0]
 	mov	r0, #0x58
 	mul	r0, r0, r2
@@ -2625,7 +2625,7 @@ GetRandomAlternateMove:
 	add	r0, r0, r1
 	ldr	r6, [r0]
 	mov	r3, #0x0
-	add	r4, r4, #0x49
+	add	r4, r4, #0x4d
 	ldrb	r1, [r4]
 	mov	r0, #0x3
 	and	r0, r0, r1
@@ -2869,7 +2869,7 @@ GetLatestLearnedMoves:
 	lsr	r2, r0, #0x10
 	ldr	r0, .L236
 	ldr	r0, [r0]
-	add	r0, r0, #0x49
+	add	r0, r0, #0x4d
 	ldrb	r1, [r0]
 	mov	r0, #0x3
 	and	r0, r0, r1
@@ -2958,7 +2958,7 @@ GetDefaultMove:
 	ldr	r1, .L254
 	ldr	r2, [r1]
 	add	r0, r2, #0
-	add	r0, r0, #0x49
+	add	r0, r0, #0x4d
 	ldrb	r0, [r0]
 	lsl	r0, r0, #0x1a
 	lsr	r0, r0, #0x1c
@@ -2975,7 +2975,7 @@ GetDefaultMove:
 	mov	r4, #0x0
 	mov	r3, #0x0
 	add	r0, r2, #0
-	add	r0, r0, #0x50
+	add	r0, r0, #0x54
 	ldrb	r0, [r0]
 	lsl	r0, r0, #0x1e
 	ldr	r1, .L256
@@ -2998,14 +2998,14 @@ GetDefaultMove:
 	ldr	r0, [r2]
 	lsl	r1, r3, #0x2
 	add	r0, r0, r1
-	add	r0, r0, #0x50
+	add	r0, r0, #0x54
 	ldrb	r0, [r0]
 	lsl	r0, r0, #0x1e
 	cmp	r0, #0
 	bne	.L243	@cond_branch
 .L241:
 	ldr	r0, [r7]
-	add	r0, r0, #0x48
+	add	r0, r0, #0x4c
 	ldrb	r1, [r0]
 	mov	r0, #0x58
 	mul	r0, r0, r1
@@ -3021,7 +3021,7 @@ GetDefaultMove:
 	bcs	.L247	@cond_branch
 	ldr	r1, [r7]
 	add	r0, r1, #0
-	add	r0, r0, #0x49
+	add	r0, r0, #0x4d
 	ldrb	r0, [r0]
 	lsl	r0, r0, #0x1a
 	lsr	r0, r0, #0x1c
@@ -3034,7 +3034,7 @@ GetDefaultMove:
 	lsl	r0, r3, #0x2
 	add	r2, r5, r0
 	add	r0, r2, #0
-	add	r0, r0, #0x50
+	add	r0, r0, #0x54
 	ldrb	r1, [r0]
 	lsl	r0, r1, #0x1e
 	lsr	r0, r0, #0x1e
@@ -3053,7 +3053,7 @@ GetDefaultMove:
 	mov	r7, sp
 	add	r1, r7, r0
 	add	r0, r2, #0
-	add	r0, r0, #0x52
+	add	r0, r0, #0x56
 	ldrh	r0, [r0]
 	strh	r0, [r1]
 .L248:
@@ -3063,7 +3063,7 @@ GetDefaultMove:
 	cmp	r3, r4
 	bcs	.L247	@cond_branch
 	ldr	r0, [r6]
-	add	r0, r0, #0x49
+	add	r0, r0, #0x4d
 	ldrb	r0, [r0]
 	lsl	r0, r0, #0x1a
 	lsr	r0, r0, #0x1c
@@ -3110,16 +3110,16 @@ SaveApprenticeParty:
 	lsl	r2, r2, #0x2
 	add	r0, r0, r2
 	add	r1, r0, #0
-	add	r1, r1, #0x78
+	add	r1, r1, #0x7c
 	strh	r4, [r1]
-	add	r0, r0, #0x82
+	add	r0, r0, #0x86
 	strh	r4, [r0]
 	mov	r3, #0x0
 .L266:
 	ldr	r0, [r6]
 	lsl	r1, r3, #0x1
 	add	r1, r1, r2
-	add	r0, r0, #0x7a
+	add	r0, r0, #0x7e
 	add	r0, r0, r1
 	strh	r4, [r0]
 	add	r0, r3, #0x1
@@ -3133,7 +3133,7 @@ SaveApprenticeParty:
 	cmp	r5, #0x2
 	bls	.L262	@cond_branch
 	ldr	r0, [r7]
-	add	r0, r0, #0x49
+	add	r0, r0, #0x4d
 	ldrb	r0, [r0]
 	lsr	r3, r0, #0x6
 	mov	r5, #0x0
@@ -3144,7 +3144,7 @@ SaveApprenticeParty:
 	lsl	r0, r5, #0x1
 	add	r0, r0, r5
 	lsl	r0, r0, #0x2
-	add	r0, r0, #0x78
+	add	r0, r0, #0x7c
 	ldr	r1, [r7]
 	add	r1, r1, r0
 	str	r1, [r2]
@@ -3164,11 +3164,11 @@ SaveApprenticeParty:
 .L277:
 	ldr	r0, [r7]
 	mov	ip, r0
-	add	r0, r0, #0x4c
+	add	r0, r0, #0x50
 	add	r0, r0, r5
 	ldrb	r2, [r0]
 	mov	r0, ip
-	add	r0, r0, #0x4a
+	add	r0, r0, #0x4e
 	ldrb	r0, [r0]
 	lsl	r0, r0, #0x1d
 	lsr	r0, r0, #0x1d
@@ -3185,7 +3185,7 @@ SaveApprenticeParty:
 	ldr	r4, [r3]
 	lsl	r2, r2, #0x1
 	mov	r0, ip
-	add	r0, r0, #0x48
+	add	r0, r0, #0x4c
 	ldrb	r1, [r0]
 	mov	r0, #0x58
 	mul	r0, r0, r1
@@ -3211,7 +3211,7 @@ SaveApprenticeParty:
 	lsl	r0, r5, #0x2
 	add	r4, r1, r0
 	add	r0, r4, #0
-	add	r0, r0, #0x50
+	add	r0, r0, #0x54
 	ldrb	r2, [r0]
 	lsl	r0, r2, #0x1e
 	lsr	r1, r0, #0x1e
@@ -3227,7 +3227,7 @@ SaveApprenticeParty:
 	add	r0, r0, sp
 	ldr	r1, [r0]
 	add	r0, r4, #0
-	add	r0, r0, #0x52
+	add	r0, r0, #0x56
 	ldrh	r0, [r0]
 	strh	r0, [r1, #0xa]
 	b	.L286
@@ -3252,7 +3252,7 @@ SaveApprenticeParty:
 	add	r1, r1, #0x2
 	add	r1, r1, r2
 	add	r0, r4, #0
-	add	r0, r0, #0x52
+	add	r0, r0, #0x56
 	ldrh	r0, [r0]
 	strh	r0, [r1]
 .L286:
@@ -3330,16 +3330,16 @@ CreateApprenticeMenu:
 	mov	r9, r0
 	ldr	r0, .L332+0x4
 	ldr	r3, [r0]
-	mov	r1, #0x4a
+	mov	r1, #0x4e
 	add	r1, r1, r3
 	mov	ip, r1
 	add	r5, r3, #0
-	add	r5, r5, #0x48
+	add	r5, r5, #0x4c
 	ldr	r0, .L332+0x8
 	mov	r8, r0
 .L303:
 	add	r0, r3, #0
-	add	r0, r0, #0x4c
+	add	r0, r0, #0x50
 	add	r0, r0, r4
 	ldrb	r2, [r0]
 	mov	r1, ip
@@ -3386,7 +3386,7 @@ CreateApprenticeMenu:
 	mov	r6, #0x8
 	ldr	r0, .L334
 	ldr	r0, [r0]
-	add	r0, r0, #0x49
+	add	r0, r0, #0x4d
 	ldrb	r0, [r0]
 	lsl	r0, r0, #0x1a
 	lsr	r0, r0, #0x1c
@@ -3782,27 +3782,27 @@ Script_ResetPlayerApprentice:
 	bl	SetApprenticeId
 	ldr	r3, .L382
 	ldr	r1, [r3]
-	add	r1, r1, #0x49
+	add	r1, r1, #0x4d
 	ldrb	r2, [r1]
 	mov	r0, #0x4
 	neg	r0, r0
 	and	r0, r0, r2
 	strb	r0, [r1]
 	ldr	r1, [r3]
-	add	r1, r1, #0x49
+	add	r1, r1, #0x4d
 	ldrb	r2, [r1]
 	mov	r0, #0x3d
 	neg	r0, r0
 	and	r0, r0, r2
 	strb	r0, [r1]
 	ldr	r1, [r3]
-	add	r1, r1, #0x49
+	add	r1, r1, #0x4d
 	ldrb	r2, [r1]
 	mov	r0, #0x3f
 	and	r0, r0, r2
 	strb	r0, [r1]
 	ldr	r1, [r3]
-	add	r1, r1, #0x4a
+	add	r1, r1, #0x4e
 	ldrb	r2, [r1]
 	mov	r0, #0x8
 	neg	r0, r0
@@ -3812,7 +3812,7 @@ Script_ResetPlayerApprentice:
 	mov	r1, #0x0
 .L375:
 	ldr	r0, [r3]
-	add	r0, r0, #0x4c
+	add	r0, r0, #0x50
 	add	r0, r0, r4
 	strb	r1, [r0]
 	add	r0, r4, #0x1
@@ -3833,35 +3833,35 @@ Script_ResetPlayerApprentice:
 	ldr	r1, [r5]
 	lsl	r3, r4, #0x2
 	add	r1, r1, r3
-	add	r1, r1, #0x50
+	add	r1, r1, #0x54
 	ldrb	r2, [r1]
 	mov	r0, ip
 	and	r0, r0, r2
 	strb	r0, [r1]
 	ldr	r1, [r5]
 	add	r1, r1, r3
-	add	r1, r1, #0x50
+	add	r1, r1, #0x54
 	ldrb	r2, [r1]
 	add	r0, r7, #0
 	and	r0, r0, r2
 	strb	r0, [r1]
 	ldr	r1, [r5]
 	add	r1, r1, r3
-	add	r1, r1, #0x50
+	add	r1, r1, #0x54
 	ldrb	r2, [r1]
 	add	r0, r6, #0
 	and	r0, r0, r2
 	strb	r0, [r1]
 	ldr	r1, [r5]
 	add	r1, r1, r3
-	add	r1, r1, #0x50
+	add	r1, r1, #0x54
 	ldrb	r2, [r1]
 	mov	r0, #0x3f
 	and	r0, r0, r2
 	strb	r0, [r1]
 	ldr	r0, [r5]
 	add	r0, r0, r3
-	add	r0, r0, #0x52
+	add	r0, r0, #0x56
 	mov	r1, #0x0
 	strh	r1, [r0]
 	add	r0, r4, #0x1
@@ -3950,7 +3950,7 @@ Script_SetRandomQuestionData:
 IncrementQuestionsAnswered:
 	ldr	r0, .L397
 	ldr	r2, [r0]
-	add	r2, r2, #0x49
+	add	r2, r2, #0x4d
 	ldrb	r3, [r2]
 	lsl	r1, r3, #0x1a
 	lsr	r1, r1, #0x1c
@@ -3977,7 +3977,7 @@ GetNumApprenticePartyMonsAssigned:
 	ldr	r1, .L400
 	ldr	r0, .L400+0x4
 	ldr	r0, [r0]
-	add	r0, r0, #0x49
+	add	r0, r0, #0x4d
 	ldrb	r0, [r0]
 	lsl	r0, r0, #0x1a
 	lsr	r0, r0, #0x1c
@@ -3997,7 +3997,7 @@ IsFinalQuestion:
 	push	{lr}
 	ldr	r3, .L409
 	ldr	r0, [r3]
-	add	r0, r0, #0x49
+	add	r0, r0, #0x4d
 	ldrb	r0, [r0]
 	lsl	r0, r0, #0x1a
 	lsr	r0, r0, #0x1c
@@ -4023,7 +4023,7 @@ IsFinalQuestion:
 	ldr	r0, [r3]
 	lsl	r1, r1, #0x2
 	add	r0, r0, r1
-	add	r0, r0, #0x50
+	add	r0, r0, #0x54
 	ldrb	r0, [r0]
 	lsl	r0, r0, #0x1e
 	cmp	r0, #0
@@ -4104,7 +4104,7 @@ PrintApprenticeMessage:
 	ldr	r1, .L459+0x4
 	ldr	r0, .L459+0x8
 	ldr	r0, [r0]
-	add	r0, r0, #0x48
+	add	r0, r0, #0x4c
 	ldrb	r0, [r0]
 	lsl	r0, r0, #0x3
 	b	.L457
@@ -4120,7 +4120,7 @@ PrintApprenticeMessage:
 	ldr	r1, .L461
 	ldr	r0, .L461+0x4
 	ldr	r0, [r0]
-	add	r0, r0, #0x48
+	add	r0, r0, #0x4c
 	ldrb	r0, [r0]
 	lsl	r0, r0, #0x3
 	add	r1, r1, #0x4
@@ -4136,7 +4136,7 @@ PrintApprenticeMessage:
 	ldr	r1, .L463
 	ldr	r0, .L463+0x4
 	ldr	r0, [r0]
-	add	r0, r0, #0x48
+	add	r0, r0, #0x4c
 	ldrb	r0, [r0]
 	lsl	r0, r0, #0x3
 	b	.L457
@@ -4151,7 +4151,7 @@ PrintApprenticeMessage:
 	ldr	r1, .L465
 	ldr	r0, .L465+0x4
 	ldr	r0, [r0]
-	add	r0, r0, #0x48
+	add	r0, r0, #0x4c
 	ldrb	r0, [r0]
 	lsl	r0, r0, #0x3
 	add	r1, r1, #0x4
@@ -4167,7 +4167,7 @@ PrintApprenticeMessage:
 	ldr	r1, .L467
 	ldr	r0, .L467+0x4
 	ldr	r0, [r0]
-	add	r0, r0, #0x48
+	add	r0, r0, #0x4c
 	ldrb	r0, [r0]
 	lsl	r0, r0, #0x3
 	b	.L457
@@ -4182,7 +4182,7 @@ PrintApprenticeMessage:
 	ldr	r1, .L469
 	ldr	r0, .L469+0x4
 	ldr	r0, [r0]
-	add	r0, r0, #0x48
+	add	r0, r0, #0x4c
 	ldrb	r0, [r0]
 	lsl	r0, r0, #0x3
 	add	r1, r1, #0x4
@@ -4198,7 +4198,7 @@ PrintApprenticeMessage:
 	ldr	r2, .L471
 	ldr	r0, .L471+0x4
 	ldr	r0, [r0]
-	add	r0, r0, #0x48
+	add	r0, r0, #0x4c
 	ldrb	r1, [r0]
 	lsl	r0, r1, #0x2
 	add	r0, r0, r1
@@ -4215,7 +4215,7 @@ PrintApprenticeMessage:
 	ldr	r1, .L473
 	ldr	r0, .L473+0x4
 	ldr	r0, [r0]
-	add	r0, r0, #0x48
+	add	r0, r0, #0x4c
 	ldrb	r0, [r0]
 	lsl	r0, r0, #0x3
 	b	.L457
@@ -4230,7 +4230,7 @@ PrintApprenticeMessage:
 	ldr	r2, .L475
 	ldr	r0, .L475+0x4
 	ldr	r0, [r0]
-	add	r0, r0, #0x48
+	add	r0, r0, #0x4c
 	ldrb	r1, [r0]
 	lsl	r0, r1, #0x2
 	add	r0, r0, r1
@@ -4248,7 +4248,7 @@ PrintApprenticeMessage:
 	ldr	r2, .L477
 	ldr	r0, .L477+0x4
 	ldr	r0, [r0]
-	add	r0, r0, #0x48
+	add	r0, r0, #0x4c
 	ldrb	r1, [r0]
 	lsl	r0, r1, #0x2
 	add	r0, r0, r1
@@ -4267,7 +4267,7 @@ PrintApprenticeMessage:
 	ldr	r2, .L479
 	ldr	r0, .L479+0x4
 	ldr	r0, [r0]
-	add	r0, r0, #0x48
+	add	r0, r0, #0x4c
 	ldrb	r1, [r0]
 	lsl	r0, r1, #0x2
 	add	r0, r0, r1
@@ -4285,7 +4285,7 @@ PrintApprenticeMessage:
 	ldr	r2, .L481
 	ldr	r0, .L481+0x4
 	ldr	r0, [r0]
-	add	r0, r0, #0x48
+	add	r0, r0, #0x4c
 	ldrb	r1, [r0]
 	lsl	r0, r1, #0x2
 	add	r0, r0, r1
@@ -4306,7 +4306,7 @@ PrintApprenticeMessage:
 	ldr	r1, .L483
 	ldr	r0, .L483+0x4
 	ldr	r0, [r0]
-	add	r0, r0, #0x48
+	add	r0, r0, #0x4c
 	ldrb	r0, [r0]
 	lsl	r0, r0, #0x3
 	add	r1, r1, #0x4
@@ -4322,7 +4322,7 @@ PrintApprenticeMessage:
 	ldr	r1, .L485
 	ldr	r0, .L485+0x4
 	ldr	r0, [r0]
-	add	r0, r0, #0x48
+	add	r0, r0, #0x4c
 	ldrb	r0, [r0]
 	lsl	r0, r0, #0x4
 	b	.L457
@@ -4337,7 +4337,7 @@ PrintApprenticeMessage:
 	ldr	r1, .L487
 	ldr	r0, .L487+0x4
 	ldr	r0, [r0]
-	add	r0, r0, #0x48
+	add	r0, r0, #0x4c
 	ldrb	r0, [r0]
 	lsl	r0, r0, #0x4
 	add	r1, r1, #0x4
@@ -4353,7 +4353,7 @@ PrintApprenticeMessage:
 	ldr	r1, .L489
 	ldr	r0, .L489+0x4
 	ldr	r0, [r0]
-	add	r0, r0, #0x48
+	add	r0, r0, #0x4c
 	ldrb	r0, [r0]
 	lsl	r0, r0, #0x4
 	add	r1, r1, #0x8
@@ -4369,7 +4369,7 @@ PrintApprenticeMessage:
 	ldr	r1, .L491
 	ldr	r0, .L491+0x4
 	ldr	r0, [r0]
-	add	r0, r0, #0x48
+	add	r0, r0, #0x4c
 	ldrb	r0, [r0]
 	lsl	r0, r0, #0x4
 	add	r1, r1, #0xc
@@ -4428,7 +4428,7 @@ ApprenticeGetQuestion:
 	ldr	r0, .L509
 	ldr	r2, [r0]
 	add	r0, r2, #0
-	add	r0, r0, #0x49
+	add	r0, r0, #0x4d
 	ldrb	r0, [r0]
 	lsl	r1, r0, #0x1a
 	lsr	r0, r1, #0x1c
@@ -4450,7 +4450,7 @@ ApprenticeGetQuestion:
 	sub	r0, r0, #0x3
 	lsl	r0, r0, #0x2
 	add	r0, r2, r0
-	add	r0, r0, #0x50
+	add	r0, r0, #0x54
 	ldrb	r0, [r0]
 	lsl	r0, r0, #0x1e
 	lsr	r0, r0, #0x1e
@@ -4514,7 +4514,7 @@ SetApprenticePartyMon:
 	ldr	r4, .L521+0x4
 	ldr	r0, .L521+0x8
 	ldr	r2, [r0]
-	add	r2, r2, #0x4a
+	add	r2, r2, #0x4e
 	ldrb	r3, [r2]
 	lsl	r0, r3, #0x1d
 	lsr	r0, r0, #0x1d
@@ -4549,7 +4549,7 @@ SetApprenticeMonMove:
 	ldr	r0, .L527
 	ldr	r3, [r0]
 	add	r0, r3, #0
-	add	r0, r0, #0x49
+	add	r0, r0, #0x4d
 	ldrb	r0, [r0]
 	lsl	r1, r0, #0x1a
 	lsr	r0, r1, #0x1c
@@ -4564,7 +4564,7 @@ SetApprenticeMonMove:
 	beq	.L525	@cond_branch
 	lsl	r2, r2, #0x2
 	add	r2, r3, r2
-	add	r2, r2, #0x50
+	add	r2, r2, #0x54
 	ldrb	r1, [r2]
 	mov	r0, #0x3f
 	and	r0, r0, r1
@@ -4580,7 +4580,7 @@ SetApprenticeMonMove:
 .L525:
 	lsl	r0, r2, #0x2
 	add	r0, r3, r0
-	add	r0, r0, #0x50
+	add	r0, r0, #0x54
 	ldrb	r2, [r0]
 	mov	r1, #0x3f
 	and	r1, r1, r2
@@ -4602,7 +4602,7 @@ InitQuestionData:
 	mov	r2, #0x0
 	ldr	r1, .L545
 	ldr	r0, [r1]
-	add	r0, r0, #0x50
+	add	r0, r0, #0x54
 	ldrb	r0, [r0]
 	lsl	r0, r0, #0x1e
 	ldr	r3, .L545+0x4
@@ -4622,7 +4622,7 @@ InitQuestionData:
 	ldr	r0, [r3]
 	lsl	r1, r2, #0x2
 	add	r0, r0, r1
-	add	r0, r0, #0x50
+	add	r0, r0, #0x54
 	ldrb	r0, [r0]
 	lsl	r0, r0, #0x1e
 	cmp	r0, #0
@@ -4640,7 +4640,7 @@ InitQuestionData:
 	ldr	r0, .L545
 	ldr	r5, [r0]
 	add	r6, r5, #0
-	add	r6, r6, #0x49
+	add	r6, r6, #0x4d
 	ldrb	r0, [r6]
 	lsl	r1, r0, #0x1a
 	lsr	r0, r1, #0x1c
@@ -4649,13 +4649,13 @@ InitQuestionData:
 	b	.L538	@long jump
 .LCB3755:
 	add	r2, r5, #0
-	add	r2, r2, #0x4c
+	add	r2, r2, #0x50
 	add	r0, r2, r0
 	ldrb	r0, [r0]
 	lsr	r4, r0, #0x4
 	ldr	r3, .L545+0xc
 	lsl	r1, r4, #0x1
-	add	r5, r5, #0x48
+	add	r5, r5, #0x4c
 	ldrb	r0, [r5]
 	mov	r4, #0x58
 	mul	r0, r0, r4
@@ -4690,7 +4690,7 @@ InitQuestionData:
 	ldr	r0, .L547
 	mov	r8, r0
 	ldr	r5, [r0]
-	mov	r1, #0x49
+	mov	r1, #0x4d
 	add	r1, r1, r5
 	mov	ip, r1
 	ldrb	r0, [r1]
@@ -4710,7 +4710,7 @@ InitQuestionData:
 	sub	r0, r0, #0x3
 	lsl	r0, r0, #0x2
 	add	r0, r5, r0
-	add	r0, r0, #0x50
+	add	r0, r0, #0x54
 	ldrb	r0, [r0]
 	lsl	r0, r0, #0x1e
 	lsr	r0, r0, #0x1e
@@ -4722,12 +4722,12 @@ InitQuestionData:
 	sub	r0, r0, #0x3
 	lsl	r0, r0, #0x2
 	add	r0, r5, r0
-	add	r0, r0, #0x50
+	add	r0, r0, #0x54
 	ldrb	r0, [r0]
 	lsl	r0, r0, #0x1c
 	lsr	r6, r0, #0x1e
 	add	r0, r5, #0
-	add	r0, r0, #0x4a
+	add	r0, r0, #0x4e
 	ldrb	r1, [r0]
 	lsl	r1, r1, #0x1d
 	lsr	r1, r1, #0x1d
@@ -4735,7 +4735,7 @@ InitQuestionData:
 	mov	r0, #0x1
 	and	r1, r1, r0
 	add	r0, r5, #0
-	add	r0, r0, #0x4c
+	add	r0, r0, #0x50
 	add	r0, r0, r6
 	ldrb	r4, [r0]
 	lsl	r1, r1, #0x2
@@ -4745,7 +4745,7 @@ InitQuestionData:
 	ldr	r2, .L547+0x4
 	lsl	r1, r4, #0x1
 	add	r0, r5, #0
-	add	r0, r0, #0x48
+	add	r0, r0, #0x4c
 	ldrb	r3, [r0]
 	mov	r0, #0x58
 	mul	r0, r0, r3
@@ -4761,7 +4761,7 @@ InitQuestionData:
 	sub	r0, r0, #0x3
 	lsl	r0, r0, #0x2
 	add	r0, r5, r0
-	add	r0, r0, #0x50
+	add	r0, r0, #0x54
 	ldrb	r2, [r0]
 	lsl	r2, r2, #0x1a
 	lsr	r2, r2, #0x1e
@@ -4774,14 +4774,14 @@ InitQuestionData:
 	mov	r3, r8
 	ldr	r1, [r3]
 	add	r0, r1, #0
-	add	r0, r0, #0x49
+	add	r0, r0, #0x4d
 	ldrb	r0, [r0]
 	lsl	r0, r0, #0x1a
 	lsr	r0, r0, #0x1c
 	sub	r0, r0, #0x3
 	lsl	r0, r0, #0x2
 	add	r1, r1, r0
-	add	r1, r1, #0x52
+	add	r1, r1, #0x56
 	ldrh	r0, [r1]
 	strh	r0, [r2, #0x6]
 	b	.L538
@@ -4796,7 +4796,7 @@ InitQuestionData:
 	ldr	r0, .L549
 	ldr	r3, [r0]
 	add	r0, r3, #0
-	add	r0, r0, #0x49
+	add	r0, r0, #0x4d
 	ldrb	r0, [r0]
 	lsl	r2, r0, #0x1a
 	lsr	r0, r2, #0x1c
@@ -4810,7 +4810,7 @@ InitQuestionData:
 	sub	r0, r0, #0x3
 	lsl	r0, r0, #0x2
 	add	r0, r3, r0
-	add	r0, r0, #0x50
+	add	r0, r0, #0x54
 	ldrb	r0, [r0]
 	lsl	r0, r0, #0x1e
 	lsr	r0, r0, #0x1e
@@ -4820,12 +4820,12 @@ InitQuestionData:
 	sub	r0, r0, #0x3
 	lsl	r0, r0, #0x2
 	add	r0, r3, r0
-	add	r0, r0, #0x50
+	add	r0, r0, #0x54
 	ldrb	r0, [r0]
 	lsl	r0, r0, #0x1c
 	lsr	r6, r0, #0x1e
 	add	r0, r3, #0
-	add	r0, r0, #0x4a
+	add	r0, r0, #0x4e
 	ldrb	r1, [r0]
 	lsl	r1, r1, #0x1d
 	lsr	r1, r1, #0x1d
@@ -4833,7 +4833,7 @@ InitQuestionData:
 	mov	r0, #0x1
 	and	r1, r1, r0
 	add	r0, r3, #0
-	add	r0, r0, #0x4c
+	add	r0, r0, #0x50
 	add	r0, r0, r6
 	ldrb	r0, [r0]
 	lsl	r1, r1, #0x2
@@ -4843,7 +4843,7 @@ InitQuestionData:
 	ldr	r2, .L549+0x4
 	lsl	r0, r0, #0x1
 	add	r1, r3, #0
-	add	r1, r1, #0x48
+	add	r1, r1, #0x4c
 	ldrb	r3, [r1]
 	mov	r1, #0x58
 	mul	r1, r1, r3
@@ -5030,14 +5030,14 @@ ApprenticeBufferString:
 	ldr	r0, .L603
 	ldr	r1, [r0]
 	add	r0, r1, #0
-	add	r0, r0, #0x49
+	add	r0, r0, #0x4d
 	ldrb	r0, [r0]
 	lsl	r0, r0, #0x1a
 	lsr	r0, r0, #0x1c
 	sub	r0, r0, #0x3
 	lsl	r0, r0, #0x2
 	add	r1, r1, r0
-	add	r1, r1, #0x52
+	add	r1, r1, #0x56
 	ldrh	r0, [r1]
 	bl	ItemId_GetName
 	add	r1, r0, #0
@@ -5049,7 +5049,7 @@ ApprenticeBufferString:
 .L569:
 	ldr	r0, .L605
 	ldr	r0, [r0]
-	add	r0, r0, #0x48
+	add	r0, r0, #0x4c
 	ldrb	r0, [r0]
 	mov	r1, #0x2
 	bl	GetApprenticeNameInLanguage
@@ -5068,7 +5068,7 @@ ApprenticeBufferString:
 .L570:
 	ldr	r0, .L607
 	ldr	r0, [r0]
-	add	r0, r0, #0x49
+	add	r0, r0, #0x4d
 	ldrb	r1, [r0]
 	mov	r0, #0x3
 	and	r0, r0, r1
@@ -5091,7 +5091,7 @@ ApprenticeBufferString:
 .L573:
 	ldr	r0, .L611
 	ldr	r0, [r0]
-	add	r0, r0, #0x9c
+	add	r0, r0, #0xa0
 	bl	FrontierSpeechToString
 	ldr	r1, .L611+0x4
 .L584:
@@ -5107,7 +5107,7 @@ ApprenticeBufferString:
 	ldr	r0, .L613
 	ldr	r3, [r0]
 	add	r1, r3, #0
-	add	r1, r1, #0x49
+	add	r1, r1, #0x4d
 	ldrb	r1, [r1]
 	lsl	r4, r1, #0x18
 	lsr	r1, r4, #0x1e
@@ -5115,11 +5115,11 @@ ApprenticeBufferString:
 	cmp	r1, #0x2
 	bhi	.L575	@cond_branch
 	add	r0, r3, #0
-	add	r0, r0, #0x4c
+	add	r0, r0, #0x50
 	add	r0, r0, r1
 	ldrb	r2, [r0]
 	add	r0, r3, #0
-	add	r0, r0, #0x4a
+	add	r0, r0, #0x4e
 	ldrb	r0, [r0]
 	lsl	r0, r0, #0x1d
 	lsr	r0, r0, #0x1d
@@ -5141,7 +5141,7 @@ ApprenticeBufferString:
 	ldr	r3, .L615
 	lsl	r1, r2, #0x1
 	ldr	r0, [r6]
-	add	r0, r0, #0x48
+	add	r0, r0, #0x4c
 	ldrb	r2, [r0]
 	mov	r0, #0x58
 	mul	r0, r0, r2
@@ -5175,7 +5175,7 @@ SetLeadApprenticeMon:
 	ldr	r2, [r0]
 	ldr	r0, .L618+0x4
 	ldrb	r1, [r0]
-	add	r2, r2, #0x49
+	add	r2, r2, #0x4d
 	lsl	r1, r1, #0x6
 	ldrb	r3, [r2]
 	mov	r0, #0x3f
@@ -5211,7 +5211,7 @@ TrySetApprenticeHeldItem:
 	ldr	r1, .L641
 	ldr	r3, [r1]
 	add	r0, r3, #0
-	add	r0, r0, #0x49
+	add	r0, r0, #0x4d
 	ldrb	r0, [r0]
 	lsl	r0, r0, #0x1a
 	lsr	r0, r0, #0x1c
@@ -5223,7 +5223,7 @@ TrySetApprenticeHeldItem:
 	mov	r5, #0x0
 	mov	r2, #0x0
 	add	r0, r3, #0
-	add	r0, r0, #0x50
+	add	r0, r0, #0x54
 	ldrb	r0, [r0]
 	lsl	r0, r0, #0x1e
 	ldr	r1, .L641+0x4
@@ -5245,7 +5245,7 @@ TrySetApprenticeHeldItem:
 	ldr	r0, [r3]
 	lsl	r1, r2, #0x2
 	add	r0, r0, r1
-	add	r0, r0, #0x50
+	add	r0, r0, #0x54
 	ldrb	r0, [r0]
 	lsl	r0, r0, #0x1e
 	cmp	r0, #0
@@ -5255,7 +5255,7 @@ TrySetApprenticeHeldItem:
 	cmp	r4, r5
 	bcs	.L630	@cond_branch
 	ldr	r0, [r7]
-	add	r0, r0, #0x49
+	add	r0, r0, #0x4d
 	ldrb	r0, [r0]
 	lsl	r0, r0, #0x1a
 	lsr	r0, r0, #0x1c
@@ -5269,7 +5269,7 @@ TrySetApprenticeHeldItem:
 	lsl	r0, r4, #0x2
 	add	r2, r3, r0
 	add	r0, r2, #0
-	add	r0, r0, #0x50
+	add	r0, r0, #0x54
 	ldrb	r1, [r0]
 	lsl	r0, r1, #0x1e
 	lsr	r0, r0, #0x1e
@@ -5279,28 +5279,28 @@ TrySetApprenticeHeldItem:
 	cmp	r0, #0
 	beq	.L631	@cond_branch
 	add	r0, r2, #0
-	add	r0, r0, #0x52
+	add	r0, r0, #0x56
 	ldrh	r0, [r0]
 	mov	r2, ip
 	ldrh	r2, [r2]
 	cmp	r0, r2
 	bne	.L631	@cond_branch
 	add	r0, r3, #0
-	add	r0, r0, #0x49
+	add	r0, r0, #0x4d
 	ldrb	r0, [r0]
 	lsl	r0, r0, #0x1a
 	lsr	r0, r0, #0x1c
 	sub	r0, r0, #0x3
 	lsl	r0, r0, #0x2
 	add	r0, r3, r0
-	add	r0, r0, #0x50
+	add	r0, r0, #0x54
 	ldrb	r2, [r0]
 	mov	r1, #0x3f
 	and	r1, r1, r2
 	strb	r1, [r0]
 	ldr	r1, [r6]
 	add	r0, r1, #0
-	add	r0, r0, #0x49
+	add	r0, r0, #0x4d
 	ldrb	r0, [r0]
 	lsl	r0, r0, #0x1a
 	lsr	r0, r0, #0x1c
@@ -5309,7 +5309,7 @@ TrySetApprenticeHeldItem:
 	add	r1, r1, r0
 	mov	r2, ip
 	ldrh	r0, [r2]
-	add	r1, r1, #0x52
+	add	r1, r1, #0x56
 	strh	r0, [r1]
 	mov	r1, r9
 	mov	r0, r8
@@ -5328,7 +5328,7 @@ TrySetApprenticeHeldItem:
 	cmp	r4, r5
 	bcs	.L630	@cond_branch
 	ldr	r0, [r6]
-	add	r0, r0, #0x49
+	add	r0, r0, #0x4d
 	ldrb	r0, [r0]
 	lsl	r0, r0, #0x1a
 	lsr	r0, r0, #0x1c
@@ -5338,14 +5338,14 @@ TrySetApprenticeHeldItem:
 .L630:
 	ldr	r2, [r7]
 	add	r0, r2, #0
-	add	r0, r0, #0x49
+	add	r0, r0, #0x4d
 	ldrb	r0, [r0]
 	lsl	r0, r0, #0x1a
 	lsr	r0, r0, #0x1c
 	sub	r0, r0, #0x3
 	lsl	r0, r0, #0x2
 	add	r2, r2, r0
-	add	r2, r2, #0x50
+	add	r2, r2, #0x54
 	ldrb	r1, [r2]
 	mov	r0, #0x3f
 	and	r0, r0, r1
@@ -5354,7 +5354,7 @@ TrySetApprenticeHeldItem:
 	strb	r0, [r2]
 	ldr	r1, [r7]
 	add	r0, r1, #0
-	add	r0, r0, #0x49
+	add	r0, r0, #0x4d
 	ldrb	r0, [r0]
 	lsl	r0, r0, #0x1a
 	lsr	r0, r0, #0x1c
@@ -5363,7 +5363,7 @@ TrySetApprenticeHeldItem:
 	add	r1, r1, r0
 	mov	r2, ip
 	ldrh	r0, [r2]
-	add	r1, r1, #0x52
+	add	r1, r1, #0x56
 	strh	r0, [r1]
 	mov	r0, #0x1
 	mov	r1, r8
@@ -5388,7 +5388,7 @@ ShiftSavedApprentices:
 	push	{r5, r6, r7}
 	ldr	r0, .L658
 	ldr	r1, [r0]
-	add	r1, r1, #0xac
+	add	r1, r1, #0xb0
 	ldrb	r1, [r1]
 	add	r4, r0, #0
 	cmp	r1, #0xff
@@ -5402,13 +5402,13 @@ ShiftSavedApprentices:
 	lsl	r0, r0, #0x2
 	add	r3, r1, r0
 	add	r0, r3, #0
-	add	r0, r0, #0xac
+	add	r0, r0, #0xb0
 	ldrb	r0, [r0]
 	cmp	r0, #0xff
 	bne	.L647	@cond_branch
 	add	r0, r3, #0
-	add	r0, r0, #0x74
-	add	r1, r1, #0x74
+	add	r0, r0, #0x78
+	add	r1, r1, #0x78
 	mov	r2, #0x44
 	bl	memcpy
 	b	.L643
@@ -5427,7 +5427,7 @@ ShiftSavedApprentices:
 	mov	r9, r2
 	mov	r5, #0x1
 	ldr	r7, .L660+0x4
-	mov	r0, #0xb8
+	mov	r0, #0xbc
 	mov	r8, r0
 	mov	r6, #0x44
 .L654:
@@ -5443,7 +5443,7 @@ ShiftSavedApprentices:
 	bne	.L653	@cond_branch
 	ldr	r0, [r7]
 	add	r0, r0, r6
-	add	r0, r0, #0x76
+	add	r0, r0, #0x7a
 	ldrb	r0, [r0]
 	cmp	r0, sl
 	bge	.L653	@cond_branch
@@ -5466,8 +5466,8 @@ ShiftSavedApprentices:
 	add	r0, r0, r9
 	lsl	r0, r0, #0x2
 	add	r0, r1, r0
-	add	r0, r0, #0x74
-	add	r1, r1, #0x74
+	add	r0, r0, #0x78
+	add	r1, r1, #0x78
 	mov	r2, #0x44
 	bl	memcpy
 .L643:
@@ -5493,9 +5493,9 @@ SaveApprentice:
 	ldr	r4, .L676
 	ldr	r2, [r4]
 	add	r0, r2, #0
-	add	r0, r0, #0x48
+	add	r0, r0, #0x4c
 	ldrb	r0, [r0]
-	add	r2, r2, #0x74
+	add	r2, r2, #0x78
 	mov	r1, #0x1f
 	and	r1, r1, r0
 	ldrb	r3, [r2]
@@ -5506,10 +5506,10 @@ SaveApprentice:
 	strb	r0, [r2]
 	ldr	r2, [r4]
 	add	r0, r2, #0
-	add	r0, r0, #0x49
+	add	r0, r0, #0x4d
 	ldrb	r1, [r0]
 	lsl	r1, r1, #0x1e
-	add	r2, r2, #0x74
+	add	r2, r2, #0x78
 	lsr	r1, r1, #0x19
 	ldrb	r3, [r2]
 	mov	r0, #0x61
@@ -5534,7 +5534,7 @@ SaveApprentice:
 	lsl	r1, r2, #0x2
 	add	r0, r0, r1
 .L675:
-	add	r0, r0, #0x50
+	add	r0, r0, #0x54
 	ldrb	r0, [r0]
 	lsl	r0, r0, #0x1e
 	cmp	r0, #0
@@ -5542,11 +5542,11 @@ SaveApprentice:
 .L664:
 	ldr	r4, .L678
 	ldr	r0, [r4]
-	add	r0, r0, #0x75
+	add	r0, r0, #0x79
 	strb	r2, [r0]
 	ldr	r0, [r4]
 	add	r1, r0, #0
-	add	r1, r1, #0x76
+	add	r1, r1, #0x7a
 	ldrb	r0, [r1]
 	cmp	r0, #0xfe
 	bhi	.L669	@cond_branch
@@ -5554,7 +5554,7 @@ SaveApprentice:
 	strb	r0, [r1]
 .L669:
 	ldr	r0, [r4]
-	add	r0, r0, #0x75
+	add	r0, r0, #0x79
 	ldrb	r0, [r0]
 	bl	SaveApprenticeParty
 	mov	r2, #0x0
@@ -5562,7 +5562,7 @@ SaveApprentice:
 .L673:
 	ldr	r0, [r3]
 	add	r1, r0, #0
-	add	r1, r1, #0xa8
+	add	r1, r1, #0xac
 	add	r1, r1, r2
 	add	r0, r0, #0xa
 	add	r0, r0, r2
@@ -5575,15 +5575,15 @@ SaveApprentice:
 	bls	.L673	@cond_branch
 	ldr	r1, [r4]
 	add	r0, r1, #0
-	add	r0, r0, #0xac
+	add	r0, r0, #0xb0
 	bl	StringCopy
 	ldr	r0, [r4]
 	ldr	r1, .L678+0x4
 	ldrb	r1, [r1]
-	add	r0, r0, #0xb3
+	add	r0, r0, #0xb7
 	strb	r1, [r0]
 	ldr	r0, [r4]
-	add	r0, r0, #0x74
+	add	r0, r0, #0x78
 	bl	CalcApprenticeChecksum
 	pop	{r4}
 	pop	{r0}
@@ -5603,7 +5603,7 @@ SetSavedApprenticeTrainerGfxId:
 	ldr	r2, .L695
 	ldr	r0, .L695+0x4
 	ldr	r0, [r0]
-	add	r0, r0, #0x74
+	add	r0, r0, #0x78
 	ldrb	r0, [r0]
 	lsl	r0, r0, #0x1b
 	lsr	r0, r0, #0x1b
@@ -5687,7 +5687,7 @@ SetPlayerApprenticeTrainerGfxId:
 	ldr	r2, .L714
 	ldr	r0, .L714+0x4
 	ldr	r0, [r0]
-	add	r0, r0, #0x48
+	add	r0, r0, #0x4c
 	ldrb	r1, [r0]
 	mov	r0, #0x58
 	mul	r0, r0, r1

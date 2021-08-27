@@ -1,6 +1,7 @@
 #ifndef GUARD_ITEM_H
 #define GUARD_ITEM_H
 
+#include "item_use.h"
 #include "constants/item.h"
 #include "constants/item_config.h"
 

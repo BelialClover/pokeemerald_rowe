@@ -6750,7 +6750,7 @@ CB2_InitCopyrightScreenAfterBootup:
 	ldr	r0, .L50+0x4
 	ldr	r0, [r0]
 	ldrb	r0, [r0, #0x15]
-	lsl	r0, r0, #0x1e
+	lsl	r0, r0, #0x19
 	lsr	r0, r0, #0x1e
 	bl	SetPokemonCryStereo
 	ldr	r0, .L50+0x8

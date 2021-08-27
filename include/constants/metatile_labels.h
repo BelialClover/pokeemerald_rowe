@@ -112,6 +112,8 @@
 #define METATILE_Building_PC_On   0x005
 
 // gTileset_Cave
+#define METATILE_Cave_CaveEntrance_Bottom                0x306
+#define METATILE_Cave_CaveEntrance_Top                   0x2FE
 #define METATILE_Cave_EntranceCover                      0x229
 #define METATILE_Cave_SealedChamberBraille_Mid           0x235
 #define METATILE_Cave_SealedChamberEntrance_BottomLeft   0x232

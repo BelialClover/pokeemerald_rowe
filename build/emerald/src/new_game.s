@@ -126,30 +126,29 @@ SetDefaultOptions:
 	strb	r0, [r2, #0x14]
 	ldr	r2, [r3]
 	ldrb	r1, [r2, #0x15]
-	mov	r0, #0x4
+	mov	r0, #0x61
 	neg	r0, r0
 	and	r0, r0, r1
-	mov	r1, #0x1
+	mov	r1, #0x20
 	orr	r0, r0, r1
 	strb	r0, [r2, #0x15]
 	ldr	r2, [r3]
 	ldrb	r1, [r2, #0x15]
-	mov	r0, #0x5
-	neg	r0, r0
+	mov	r0, #0x7f
 	and	r0, r0, r1
 	strb	r0, [r2, #0x15]
 	ldr	r2, [r3]
-	ldrb	r1, [r2, #0x15]
-	mov	r0, #0x9
+	ldrb	r1, [r2, #0x16]
+	mov	r0, #0x2
 	neg	r0, r0
 	and	r0, r0, r1
-	strb	r0, [r2, #0x15]
+	strb	r0, [r2, #0x16]
 	ldr	r2, [r3]
-	ldrb	r1, [r2, #0x15]
-	mov	r0, #0x11
+	ldrb	r1, [r2, #0x16]
+	mov	r0, #0x3
 	neg	r0, r0
 	and	r0, r0, r1
-	strb	r0, [r2, #0x15]
+	strb	r0, [r2, #0x16]
 	bx	lr
 .L15:
 	.align	2, 0
@@ -239,18 +238,19 @@ ClearFrontierRecord:
 	str	r0, [sp]
 	ldr	r4, .L28
 	ldr	r1, [r4]
-	ldr	r0, .L28+0x4
+	mov	r0, #0xbb
+	lsl	r0, r0, #0x3
 	add	r1, r1, r0
-	ldr	r2, .L28+0x8
+	ldr	r2, .L28+0x4
 	mov	r0, sp
 	bl	CpuSet
 	ldr	r0, [r4]
-	ldr	r1, .L28+0xc
+	ldr	r1, .L28+0x8
 	add	r0, r0, r1
 	mov	r1, #0xff
 	strb	r1, [r0]
 	ldr	r0, [r4]
-	ldr	r1, .L28+0x10
+	ldr	r1, .L28+0xc
 	add	r0, r0, r1
 	mov	r1, #0x1
 	neg	r1, r1
@@ -263,10 +263,9 @@ ClearFrontierRecord:
 	.align	2, 0
 .L28:
 	.word	gSaveBlock2Ptr
-	.word	0x5d4
 	.word	0x5000238
-	.word	0xe69
-	.word	0xe71
+	.word	0xe6d
+	.word	0xe75
 .Lfe8:
 	.size	 ClearFrontierRecord,.Lfe8-ClearFrontierRecord
 	.align	2, 0
@@ -346,7 +345,7 @@ NewGameInitData:
 	ldr	r6, .L38+0x8
 	ldr	r0, [r6]
 	mov	r4, #0x0
-	str	r4, [r0, #0x44]
+	str	r4, [r0, #0x48]
 	bl	ZeroPlayerPartyMons
 	bl	ZeroEnemyPartyMons
 	bl	ResetPokedex
@@ -356,7 +355,7 @@ NewGameInitData:
 	ldr	r0, [r6]
 	strb	r4, [r0, #0x9]
 	ldr	r0, [r6]
-	str	r4, [r0, #0x40]
+	str	r4, [r0, #0x44]
 	bl	InitPlayerTrainerId
 	bl	PlayTimeCounter_Reset
 	bl	ClearPokedexFlags
@@ -439,7 +438,7 @@ NewGameInitData:
 	strb	r5, [r0]
 	ldr	r1, [r6]
 	mov	r0, #0x4
-	strh	r0, [r1, #0x28]
+	strh	r0, [r1, #0x2c]
 	pop	{r3}
 	mov	r8, r3
 	pop	{r4, r5, r6}
@@ -455,7 +454,7 @@ NewGameInitData:
 	.word	0xbb8
 	.word	gPlayerPartyCount
 	.word	EventScript_ResetAllMapFlags
-	.word	0xeb4
+	.word	0xeb8
 	.word	0x496
 	.word	0x361c
 	.word	0x3164
@@ -474,7 +473,7 @@ ResetMiniGamesResults:
 	strh	r5, [r0]
 	ldr	r4, .L41
 	ldr	r1, [r4]
-	mov	r0, #0xc2
+	mov	r0, #0xc4
 	lsl	r0, r0, #0x1
 	add	r1, r1, r0
 	ldr	r6, .L41+0x4
@@ -482,7 +481,7 @@ ResetMiniGamesResults:
 	add	r2, r6, #0
 	bl	CpuSet
 	ldr	r0, [r4]
-	mov	r1, #0xc6
+	mov	r1, #0xc8
 	lsl	r1, r1, #0x1
 	add	r0, r0, r1
 	mov	r1, #0x0
@@ -492,7 +491,7 @@ ResetMiniGamesResults:
 	add	r0, r0, #0x2
 	strh	r5, [r0]
 	ldr	r1, [r4]
-	mov	r2, #0xca
+	mov	r2, #0xcc
 	lsl	r2, r2, #0x1
 	add	r1, r1, r2
 	add	r2, r6, #0

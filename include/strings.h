@@ -3148,4 +3148,9 @@ extern const u8 gText_Recall[];
 
 extern const u8 gText_AshQty[];
 
+extern const u8 gText_Region_Kanto[];
+extern const u8 gText_Region_Jotho[];
+extern const u8 gText_Region_Hoenn[];
+extern const u8 gText_Region_Sinnoh[];
+
 #endif // GUARD_STRINGS_H

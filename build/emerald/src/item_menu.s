@@ -9933,13 +9933,17 @@ SortItemsInBag:
 	ldr	r4, .L1026
 	mov	r5, #0xd0
 	ldr	r0, .L1026+0x4
-	ldr	r2, [r0]
-	lsl	r3, r6, #0x6
-	ldrb	r1, [r2, #0x15]
-	mov	r0, #0x3f
-	and	r0, r0, r1
-	orr	r0, r0, r3
-	strb	r0, [r2, #0x15]
+	ldr	r3, [r0]
+	mov	r0, #0x3
+	add	r1, r6, #0
+	and	r1, r1, r0
+	lsl	r1, r1, #0x3
+	ldrb	r2, [r3, #0x16]
+	mov	r0, #0x19
+	neg	r0, r0
+	and	r0, r0, r2
+	orr	r0, r0, r1
+	strb	r0, [r3, #0x16]
 	b	.L984
 .L1027:
 	.align	2, 0

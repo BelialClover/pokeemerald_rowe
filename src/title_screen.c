@@ -640,7 +640,7 @@ static void Task_TitleScreenPhase1(u8 taskId)
     // Skip to next phase when A, B, Start, or Select is pressed
     if ((gMain.newKeys & A_B_START_SELECT) || gTasks[taskId].data[1] != 0)
     {
-        gTasks[taskId].tSkipToNext = TRUE;
+		gTasks[taskId].tSkipToNext = TRUE;
         gTasks[taskId].tCounter = 0;
     }
 
@@ -732,6 +732,8 @@ static void Task_TitleScreenPhase3(u8 taskId)
 {
     if ((JOY_NEW(A_BUTTON)) || (JOY_NEW(START_BUTTON)))
     {
+		PlayCryInternal(SPECIES_RAYQUAZA, 0, 120, 10, 0);
+	
         FadeOutBGM(4);
         BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 0x10, RGB_WHITEALPHA);
         SetMainCallback2(CB2_GoToMainMenu);

@@ -10983,7 +10983,7 @@ GetPkmnExpMultiplier:
 	ldr	r0, .L1249+0x8
 	ldr	r0, [r0]
 	ldrb	r1, [r0, #0x15]
-	mov	r0, #0x4
+	mov	r0, #0x80
 	and	r0, r0, r1
 	cmp	r0, #0
 	beq	.L1244	@cond_branch
@@ -11179,7 +11179,7 @@ Cmd_getexp:
 	strh	r4, [r1]
 	ldr	r0, [r0]
 	ldrb	r1, [r0, #0x15]
-	mov	r0, #0x4
+	mov	r0, #0x80
 	and	r0, r0, r1
 	cmp	r0, #0
 	beq	.L1272	@cond_branch
@@ -11272,8 +11272,8 @@ Cmd_getexp:
 .L1279:
 	ldr	r0, .L1336
 	ldr	r0, [r0]
-	ldrb	r1, [r0, #0x15]
-	mov	r0, #0x20
+	ldrb	r1, [r0, #0x16]
+	mov	r0, #0x4
 	and	r0, r0, r1
 	ldr	r5, .L1336+0x4
 	cmp	r0, #0
@@ -11429,8 +11429,8 @@ Cmd_getexp:
 .L1288:
 	ldr	r0, .L1342+0x4
 	ldr	r0, [r0]
-	ldrb	r1, [r0, #0x15]
-	mov	r0, #0x20
+	ldrb	r1, [r0, #0x16]
+	mov	r0, #0x4
 	and	r0, r0, r1
 	cmp	r0, #0
 	bne	.L1290	@cond_branch
@@ -44833,7 +44833,7 @@ Cmd_handleballthrow:
 	ldr	r1, [r0]
 	ldr	r2, .L5698+0x4
 	ldrh	r0, [r2]
-	strh	r0, [r1, #0x28]
+	strh	r0, [r1, #0x2c]
 	lsl	r0, r0, #0x10
 	lsr	r0, r0, #0x10
 	add	r4, r2, #0

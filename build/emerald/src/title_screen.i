@@ -694,6 +694,7 @@ struct SaveBlock2
              u8 optionsButtonMode;
              u16 optionsTextSpeed:3;
              u16 optionsWindowFrameType:5;
+    u16 optionsMusicGame:5;
              u16 optionsSound:2;
              u16 optionsBattleStyle:1;
              u16 optionsBattleSceneOff:1;
@@ -755,7 +756,7 @@ struct SecretBase
 };
 
 # 1 "include/constants/game_stat.h" 1
-# 543 "include/global.h" 2
+# 544 "include/global.h" 2
 # 1 "include/global.fieldmap.h" 1
 # 13 "include/global.fieldmap.h"
 enum
@@ -1067,7 +1068,7 @@ extern u8 gSelectedObjectEvent;
 extern struct MapHeader gMapHeader;
 extern struct PlayerAvatar gPlayerAvatar;
 extern struct Camera gCamera;
-# 544 "include/global.h" 2
+# 545 "include/global.h" 2
 # 1 "include/global.berry.h" 1
 
 
@@ -1143,7 +1144,7 @@ struct BerryTree
     u8 watered3:1;
     u8 watered4:1;
 };
-# 545 "include/global.h" 2
+# 546 "include/global.h" 2
 # 1 "include/global.tv.h" 1
 
 
@@ -1637,7 +1638,7 @@ struct GabbyAndTyData
              u8 playerThrewABall2:1;
              u8 valB_4:4;
 };
-# 546 "include/global.h" 2
+# 547 "include/global.h" 2
 # 1 "include/pokemon.h" 1
 
 
@@ -2383,7 +2384,7 @@ u8 GetFormIdFromFormSpeciesId(u16 formSpeciesId);
 u16 GetBaseFormSpeciesId(u16 formSpeciesId);
 void CreateShinyMonWithNature(struct Pokemon *mon, u16 species, u8 level, u8 nature);
 u16 MonTryLearningNewMoveEvolution(struct Pokemon *mon, bool8 firstMove);
-# 547 "include/global.h" 2
+# 548 "include/global.h" 2
 
 struct WarpData
 {
@@ -4878,6 +4879,7 @@ void StopCry(void);
 bool8 IsCryPlayingOrClearCrySongs(void);
 bool8 IsCryPlaying(void);
 void PlayBGM(u16 songNum);
+u16 RegionalMusicHandler(u16 songNum);
 void PlaySE(u16 songNum);
 void PlaySE12WithPanning(u16 songNum, s8 pan);
 void PlaySE1WithPanning(u16 songNum, s8 pan);
@@ -15111,7 +15113,7 @@ static void Task_TitleScreenPhase1(u8 taskId)
 
     if ((gMain.newKeys & (0x0001 | 0x0002 | 0x0008 | 0x0004)) || gTasks[taskId].data[1] != 0)
     {
-        gTasks[taskId].data[1] = 1;
+  gTasks[taskId].data[1] = 1;
         gTasks[taskId].data[0] = 0;
     }
 
@@ -15203,6 +15205,8 @@ static void Task_TitleScreenPhase3(u8 taskId)
 {
     if ((({(gMain.newKeys) & (0x0001);})) || (({(gMain.newKeys) & (0x0008);})))
     {
+  PlayCryInternal(384, 0, 120, 10, 0);
+
         FadeOutBGM(4);
         BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 0x10, (((31) | ((31) << 5) | ((31) << 10)) | 0x8000));
         SetMainCallback2(CB2_GoToMainMenu);
