@@ -4485,6 +4485,7 @@ struct FacilityMon
     u8 itemTableId;
     u8 evSpread;
     u8 nature;
+ u8 abilityNum;
 };
 
 extern const u8 gTowerMaleFacilityClasses[30];

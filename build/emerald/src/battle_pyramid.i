@@ -4616,6 +4616,7 @@ struct FacilityMon
     u8 itemTableId;
     u8 evSpread;
     u8 nature;
+ u8 abilityNum;
 };
 
 extern const u8 gTowerMaleFacilityClasses[30];
@@ -5113,6 +5114,7 @@ extern const u8 gText_Birch_WhatsYourName[];
 extern const u8 gText_Birch_SoItsPlayer[];
 extern const u8 gText_Birch_YourePlayer[];
 extern const u8 gText_Birch_AreYouReady[];
+extern const u8 gText_Birch_ChoseDifficulty[];
 extern const u8 gText_ContinueMenuPlayer[];
 extern const u8 gText_ContinueMenuTime[];
 extern const u8 gText_ContinueMenuPokedex[];

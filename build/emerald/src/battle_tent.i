@@ -4709,6 +4709,7 @@ struct FacilityMon
     u8 itemTableId;
     u8 evSpread;
     u8 nature;
+ u8 abilityNum;
 };
 
 extern const u8 gTowerMaleFacilityClasses[30];
@@ -5097,7 +5098,43 @@ void static (*const sSlateportTentFuncs[])(void) =
     [9] = GenerateInitialRentalMons
 };
 
-static const u16 sSlateportTentRewards[] = {38};
+static const u16 sSlateportTentRewards[] = {
+ 38,
+ 749,
+ 746,
+ 748,
+ 152,
+ 150,
+ 254,
+ 28,
+ 4,
+ 29,
+ 32,
+ 212,
+ 229,
+ 125,
+ 69,
+ 68,
+ 66,
+ 67,
+ 124,
+ 149,
+ 37,
+ 90,
+ 454,
+ 453,
+ 695,
+ 290,
+ 304,
+ 725,
+ 726,
+ 733,
+ 737,
+ 745,
+ 93,
+ 690,
+ 691,
+};
 
 
 void CallVerdanturfTentFunction(void)
@@ -5308,7 +5345,7 @@ static void GenerateInitialRentalMons(void)
     while (i != 6)
     {
 
-        monSetId = Random() % 7;
+        monSetId = Random() % 70;
         for (j = firstMonId; j < firstMonId + i; j++)
         {
             u16 monId = monIds[j];

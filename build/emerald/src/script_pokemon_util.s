@@ -115,59 +115,100 @@ ScriptGiveMon:
 	push	{r6, r7}
 	add	sp, sp, #-0x80
 	add	r4, r0, #0
-	add	r6, r1, #0
-	mov	r8, r2
 	str	r3, [sp, #0x7c]
 	lsl	r4, r4, #0x10
 	lsr	r4, r4, #0x10
-	lsl	r6, r6, #0x18
-	lsr	r6, r6, #0x18
-	mov	r0, r8
-	lsl	r0, r0, #0x10
-	mov	r8, r0
-	lsr	r0, r0, #0x10
-	mov	r9, r0
+	lsl	r1, r1, #0x18
+	lsr	r5, r1, #0x18
+	lsl	r2, r2, #0x10
+	lsr	r2, r2, #0x10
+	mov	r9, r2
 	add	r0, r4, #0
 	bl	GetFormIdFromFormSpeciesId
-	add	r5, r0, #0
-	lsl	r5, r5, #0x18
-	lsr	r5, r5, #0x18
+	lsl	r0, r0, #0x18
+	lsr	r0, r0, #0x18
+	mov	r8, r0
 	add	r0, r4, #0
 	mov	r1, #0x0
 	bl	GetFormSpeciesId
 	lsl	r0, r0, #0x10
+	lsr	r7, r0, #0x10
+	mov	r0, #0x0
+	bl	getWildLevel
+	lsl	r0, r0, #0x18
+	lsr	r6, r0, #0x18
+	bl	CreateWonderTradePokemon
+	lsl	r0, r0, #0x10
 	lsr	r0, r0, #0x10
-	add	r7, r0, #0
+	bl	WonderTradeGetFirstStage
+	lsl	r0, r0, #0x10
+	lsr	r4, r0, #0x10
+	add	r0, r4, #0
+	add	r1, r5, #0
+	bl	WonderTradeGetEvolvedForm
+	lsl	r0, r0, #0x10
+	lsr	r1, r0, #0x10
+	cmp	r5, #0x1
+	beq	.L16	@cond_branch
+	add	r6, r5, #0
+	b	.L17
+.L16:
+	add	r0, r4, #0
+	add	r1, r6, #0
+	bl	WonderTradeGetEvolvedForm
+	lsl	r0, r0, #0x10
+	lsr	r1, r0, #0x10
+.L17:
+	cmp	r7, #0x97
+	beq	.L18	@cond_branch
 	add	r4, sp, #0x18
 	mov	r0, #0x0
 	str	r0, [sp]
 	str	r0, [sp, #0x4]
 	str	r0, [sp, #0x8]
 	str	r0, [sp, #0xc]
-	str	r5, [sp, #0x10]
+	mov	r0, r8
+	str	r0, [sp, #0x10]
 	add	r0, r4, #0
 	add	r1, r7, #0
 	add	r2, r6, #0
 	mov	r3, #0x20
 	bl	CreateMon
+	b	.L19
+.L18:
+	add	r4, sp, #0x18
+	mov	r0, #0x0
+	str	r0, [sp]
+	str	r0, [sp, #0x4]
+	str	r0, [sp, #0x8]
+	str	r0, [sp, #0xc]
+	mov	r2, r8
+	str	r2, [sp, #0x10]
+	add	r0, r4, #0
+	add	r2, r6, #0
+	mov	r3, #0x20
+	bl	CreateMon
+.L19:
 	add	r0, sp, #0x14
 	mov	r1, r9
 	strb	r1, [r0]
-	mov	r1, r8
-	lsr	r1, r1, #0x18
-	strb	r1, [r0, #0x1]
-	add	r0, r4, #0
+	add	r1, r0, #0
+	mov	r2, r9
+	lsr	r0, r2, #0x8
+	strb	r0, [r1, #0x1]
+	add	r5, r4, #0
+	add	r0, r5, #0
 	mov	r1, #0xc
 	add	r2, sp, #0x14
 	bl	SetMonData
 	ldr	r0, [sp, #0x7c]
 	cmp	r0, #0x3
-	beq	.L16	@cond_branch
+	beq	.L20	@cond_branch
 	add	r2, sp, #0x7c
-	add	r0, r4, #0
+	add	r0, r5, #0
 	mov	r1, #0x2e
 	bl	SetMonData
-.L16:
+.L20:
 	add	r0, r4, #0
 	bl	GiveMonToPlayer
 	lsl	r0, r0, #0x18
@@ -177,16 +218,16 @@ ScriptGiveMon:
 	lsl	r0, r0, #0x10
 	lsr	r5, r0, #0x10
 	cmp	r4, #0x1
-	bgt	.L17	@cond_branch
+	bgt	.L21	@cond_branch
 	cmp	r4, #0
-	blt	.L17	@cond_branch
+	blt	.L21	@cond_branch
 	add	r0, r5, #0
 	mov	r1, #0x2
 	bl	GetSetPokedexFlag
 	add	r0, r5, #0
 	mov	r1, #0x3
 	bl	GetSetPokedexFlag
-.L17:
+.L21:
 	add	r0, r4, #0
 	add	sp, sp, #0x80
 	pop	{r3, r4}
@@ -235,25 +276,25 @@ HasEnoughMonsForDoubleBattle:
 	lsl	r0, r0, #0x18
 	lsr	r1, r0, #0x18
 	cmp	r1, #0x1
-	beq	.L26	@cond_branch
+	beq	.L30	@cond_branch
 	cmp	r1, #0x1
-	bgt	.L30	@cond_branch
+	bgt	.L34	@cond_branch
 	cmp	r1, #0
-	beq	.L27	@cond_branch
-	b	.L24
-.L30:
+	beq	.L31	@cond_branch
+	b	.L28
+.L34:
 	cmp	r1, #0x2
-	bne	.L24	@cond_branch
-.L26:
-.L27:
-	ldr	r0, .L31
+	bne	.L28	@cond_branch
+.L30:
+.L31:
+	ldr	r0, .L35
 	strh	r1, [r0]
-.L24:
+.L28:
 	pop	{r0}
 	bx	r0
-.L32:
+.L36:
 	.align	2, 0
-.L31:
+.L35:
 	.word	gSpecialVar_Result
 .Lfe4:
 	.size	 HasEnoughMonsForDoubleBattle,.Lfe4-HasEnoughMonsForDoubleBattle
@@ -265,12 +306,12 @@ CheckPartyMonHasHeldItem:
 	lsl	r0, r0, #0x10
 	lsr	r6, r0, #0x10
 	mov	r5, #0x0
-	ldr	r7, .L41
-.L37:
+	ldr	r7, .L45
+.L41:
 	mov	r0, #0x64
 	mov	r1, r5
 	mul	r1, r1, r0
-	ldr	r0, .L41+0x4
+	ldr	r0, .L45+0x4
 	add	r4, r1, r0
 	add	r0, r4, #0
 	mov	r1, #0x41
@@ -278,27 +319,27 @@ CheckPartyMonHasHeldItem:
 	lsl	r0, r0, #0x10
 	lsr	r0, r0, #0x10
 	cmp	r0, #0
-	beq	.L36	@cond_branch
+	beq	.L40	@cond_branch
 	cmp	r0, r7
-	beq	.L36	@cond_branch
+	beq	.L40	@cond_branch
 	add	r0, r4, #0
 	mov	r1, #0xc
 	bl	GetMonData
 	cmp	r0, r6
-	bne	.L36	@cond_branch
+	bne	.L40	@cond_branch
 	mov	r0, #0x1
-	b	.L40
-.L42:
+	b	.L44
+.L46:
 	.align	2, 0
-.L41:
+.L45:
 	.word	0x4b7
 	.word	gPlayerParty
-.L36:
+.L40:
 	add	r5, r5, #0x1
 	cmp	r5, #0x5
-	ble	.L37	@cond_branch
+	ble	.L41	@cond_branch
 	mov	r0, #0x0
-.L40:
+.L44:
 	pop	{r4, r5, r6, r7}
 	pop	{r1}
 	bx	r1
@@ -316,21 +357,21 @@ DoesPartyHaveEnigmaBerry:
 	lsr	r0, r0, #0x18
 	add	r4, r0, #0
 	cmp	r4, #0x1
-	bne	.L44	@cond_branch
+	bne	.L48	@cond_branch
 	mov	r0, #0xcd
 	bl	ItemIdToBerryType
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
-	ldr	r1, .L45
+	ldr	r1, .L49
 	bl	GetBerryNameByBerryType
-.L44:
+.L48:
 	add	r0, r4, #0
 	pop	{r4}
 	pop	{r1}
 	bx	r1
-.L46:
+.L50:
 	.align	2, 0
-.L45:
+.L49:
 	.word	gStringVar1
 .Lfe6:
 	.size	 DoesPartyHaveEnigmaBerry,.Lfe6-DoesPartyHaveEnigmaBerry
@@ -352,7 +393,7 @@ CreateScriptedWildMon:
 	lsl	r7, r2, #0x10
 	lsr	r6, r7, #0x10
 	bl	ZeroEnemyPartyMons
-	ldr	r0, .L49
+	ldr	r0, .L53
 	mov	r8, r0
 	mov	r0, #0x0
 	str	r0, [sp]
@@ -366,7 +407,7 @@ CreateScriptedWildMon:
 	mov	r3, #0x20
 	bl	CreateMon
 	cmp	r6, #0
-	beq	.L48	@cond_branch
+	beq	.L52	@cond_branch
 	add	r0, sp, #0x14
 	strb	r6, [r0]
 	add	r1, r0, #0
@@ -376,16 +417,16 @@ CreateScriptedWildMon:
 	mov	r1, #0xc
 	add	r2, sp, #0x14
 	bl	SetMonData
-.L48:
+.L52:
 	add	sp, sp, #0x18
 	pop	{r3}
 	mov	r8, r3
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L50:
+.L54:
 	.align	2, 0
-.L49:
+.L53:
 	.word	gEnemyParty
 .Lfe7:
 	.size	 CreateScriptedWildMon,.Lfe7-CreateScriptedWildMon
@@ -423,7 +464,7 @@ CreateScriptedDoubleWildMon:
 	lsr	r1, r1, #0x10
 	mov	sl, r1
 	bl	ZeroEnemyPartyMons
-	ldr	r7, .L54
+	ldr	r7, .L58
 	mov	r6, #0x0
 	str	r6, [sp]
 	str	r6, [sp, #0x4]
@@ -437,7 +478,7 @@ CreateScriptedDoubleWildMon:
 	bl	CreateMon
 	mov	r0, r8
 	cmp	r0, #0
-	beq	.L52	@cond_branch
+	beq	.L56	@cond_branch
 	add	r0, sp, #0x14
 	mov	r1, r8
 	strb	r1, [r0]
@@ -449,7 +490,7 @@ CreateScriptedDoubleWildMon:
 	mov	r1, #0xc
 	add	r2, sp, #0x14
 	bl	SetMonData
-.L52:
+.L56:
 	mov	r0, #0x96
 	lsl	r0, r0, #0x1
 	add	r4, r7, r0
@@ -465,7 +506,7 @@ CreateScriptedDoubleWildMon:
 	bl	CreateMon
 	mov	r1, sl
 	cmp	r1, #0
-	beq	.L53	@cond_branch
+	beq	.L57	@cond_branch
 	add	r2, sp, #0x18
 	strb	r1, [r2]
 	ldr	r1, [sp, #0x24]
@@ -474,7 +515,7 @@ CreateScriptedDoubleWildMon:
 	add	r0, r4, #0
 	mov	r1, #0xc
 	bl	SetMonData
-.L53:
+.L57:
 	add	sp, sp, #0x28
 	pop	{r3, r4, r5}
 	mov	r8, r3
@@ -483,9 +524,9 @@ CreateScriptedDoubleWildMon:
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L55:
+.L59:
 	.align	2, 0
-.L54:
+.L58:
 	.word	gEnemyParty
 .Lfe8:
 	.size	 CreateScriptedDoubleWildMon,.Lfe8-CreateScriptedDoubleWildMon
@@ -502,25 +543,25 @@ ScriptSetMonMoveSlot:
 	lsl	r2, r2, #0x18
 	lsr	r2, r2, #0x18
 	cmp	r3, #0x6
-	bls	.L57	@cond_branch
-	ldr	r0, .L58
+	bls	.L61	@cond_branch
+	ldr	r0, .L62
 	ldrb	r0, [r0]
 	sub	r0, r0, #0x1
 	lsl	r0, r0, #0x18
 	lsr	r3, r0, #0x18
-.L57:
+.L61:
 	mov	r0, #0x64
 	mul	r0, r0, r3
-	ldr	r1, .L58+0x4
+	ldr	r1, .L62+0x4
 	add	r0, r0, r1
 	add	r1, r4, #0
 	bl	SetMonMoveSlot
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L59:
+.L63:
 	.align	2, 0
-.L58:
+.L62:
 	.word	gPlayerPartyCount
 	.word	gPlayerParty
 .Lfe9:
@@ -531,19 +572,19 @@ ScriptSetMonMoveSlot:
 	.thumb_func
 ChooseHalfPartyForBattle:
 	push	{lr}
-	ldr	r0, .L61
-	ldr	r1, .L61+0x4
+	ldr	r0, .L65
+	ldr	r1, .L65+0x4
 	str	r1, [r0, #0x8]
-	ldr	r0, .L61+0x8
+	ldr	r0, .L65+0x8
 	mov	r1, #0x9
 	bl	VarSet
 	mov	r0, #0x0
 	bl	InitChooseHalfPartyForBattle
 	pop	{r0}
 	bx	r0
-.L62:
+.L66:
 	.align	2, 0
-.L61:
+.L65:
 	.word	gMain
 	.word	CB2_ReturnFromChooseHalfParty
 	.word	0x40cf
@@ -554,30 +595,30 @@ ChooseHalfPartyForBattle:
 	.thumb_func
 CB2_ReturnFromChooseHalfParty:
 	push	{lr}
-	ldr	r0, .L68
+	ldr	r0, .L72
 	ldrb	r1, [r0]
 	cmp	r1, #0
-	bne	.L66	@cond_branch
-	ldr	r0, .L68+0x4
+	bne	.L70	@cond_branch
+	ldr	r0, .L72+0x4
 	strh	r1, [r0]
-	b	.L64
-.L69:
+	b	.L68
+.L73:
 	.align	2, 0
-.L68:
+.L72:
 	.word	gSelectedOrderFromParty
 	.word	gSpecialVar_Result
-.L66:
-	ldr	r1, .L70
+.L70:
+	ldr	r1, .L74
 	mov	r0, #0x1
 	strh	r0, [r1]
-.L64:
-	ldr	r0, .L70+0x4
+.L68:
+	ldr	r0, .L74+0x4
 	bl	SetMainCallback2
 	pop	{r0}
 	bx	r0
-.L71:
+.L75:
 	.align	2, 0
-.L70:
+.L74:
 	.word	gSpecialVar_Result
 	.word	CB2_ReturnToFieldContinueScriptPlayMapMusic
 .Lfe11:
@@ -588,10 +629,10 @@ CB2_ReturnFromChooseHalfParty:
 	.thumb_func
 ChoosePartyForBattleFrontier:
 	push	{lr}
-	ldr	r1, .L73
-	ldr	r0, .L73+0x4
+	ldr	r1, .L77
+	ldr	r0, .L77+0x4
 	str	r0, [r1, #0x8]
-	ldr	r0, .L73+0x8
+	ldr	r0, .L77+0x8
 	ldrb	r0, [r0]
 	add	r0, r0, #0x1
 	lsl	r0, r0, #0x18
@@ -599,9 +640,9 @@ ChoosePartyForBattleFrontier:
 	bl	InitChooseHalfPartyForBattle
 	pop	{r0}
 	bx	r0
-.L74:
+.L78:
 	.align	2, 0
-.L73:
+.L77:
 	.word	gMain
 	.word	CB2_ReturnFromChooseBattleFrontierParty
 	.word	gSpecialVar_0x8004
@@ -612,30 +653,30 @@ ChoosePartyForBattleFrontier:
 	.thumb_func
 CB2_ReturnFromChooseBattleFrontierParty:
 	push	{lr}
-	ldr	r0, .L80
+	ldr	r0, .L84
 	ldrb	r1, [r0]
 	cmp	r1, #0
-	bne	.L78	@cond_branch
-	ldr	r0, .L80+0x4
+	bne	.L82	@cond_branch
+	ldr	r0, .L84+0x4
 	strh	r1, [r0]
-	b	.L76
-.L81:
+	b	.L80
+.L85:
 	.align	2, 0
-.L80:
+.L84:
 	.word	gSelectedOrderFromParty
 	.word	gSpecialVar_Result
-.L78:
-	ldr	r1, .L82
+.L82:
+	ldr	r1, .L86
 	mov	r0, #0x1
 	strh	r0, [r1]
-.L76:
-	ldr	r0, .L82+0x4
+.L80:
+	ldr	r0, .L86+0x4
 	bl	SetMainCallback2
 	pop	{r0}
 	bx	r0
-.L83:
+.L87:
 	.align	2, 0
-.L82:
+.L86:
 	.word	gSpecialVar_Result
 	.word	CB2_ReturnToFieldContinueScriptPlayMapMusic
 .Lfe13:
@@ -650,19 +691,19 @@ ReducePlayerPartyToSelectedMons:
 	add	r0, sp, #0x190
 	mov	r1, #0x0
 	str	r1, [r0]
-	ldr	r2, .L96
+	ldr	r2, .L100
 	mov	r1, sp
 	bl	CpuSet
 	mov	r5, #0x0
 	mov	r7, #0x64
-	ldr	r6, .L96+0x4
+	ldr	r6, .L100+0x4
 	mov	r4, sp
-.L88:
-	ldr	r0, .L96+0x8
+.L92:
+	ldr	r0, .L100+0x8
 	add	r1, r5, r0
 	ldrb	r0, [r1]
 	cmp	r0, #0
-	beq	.L87	@cond_branch
+	beq	.L91	@cond_branch
 	sub	r0, r0, #0x1
 	mov	r1, r0
 	mul	r1, r1, r7
@@ -670,21 +711,21 @@ ReducePlayerPartyToSelectedMons:
 	add	r0, r4, #0
 	mov	r2, #0x64
 	bl	memcpy
-.L87:
+.L91:
 	add	r4, r4, #0x64
 	add	r5, r5, #0x1
 	cmp	r5, #0x3
-	ble	.L88	@cond_branch
+	ble	.L92	@cond_branch
 	add	r0, sp, #0x194
 	mov	r1, #0x0
 	str	r1, [r0]
-	ldr	r4, .L96+0x4
-	ldr	r2, .L96+0xc
+	ldr	r4, .L100+0x4
+	ldr	r2, .L100+0xc
 	add	r1, r4, #0
 	bl	CpuSet
 	mov	r5, sp
 	add	r6, sp, #0x12c
-.L94:
+.L98:
 	add	r0, r4, #0
 	add	r1, r5, #0
 	mov	r2, #0x64
@@ -692,15 +733,15 @@ ReducePlayerPartyToSelectedMons:
 	add	r5, r5, #0x64
 	add	r4, r4, #0x64
 	cmp	r5, r6
-	ble	.L94	@cond_branch
+	ble	.L98	@cond_branch
 	bl	CalculatePlayerPartyCount
 	add	sp, sp, #0x198
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L97:
+.L101:
 	.align	2, 0
-.L96:
+.L100:
 	.word	0x5000064
 	.word	gPlayerParty
 	.word	gSelectedOrderFromParty
@@ -741,10 +782,10 @@ ScriptGiveCustomMon:
 	mov	r6, #0x0
 	mov	r9, r0
 	cmp	r3, #0x19
-	beq	.L100	@cond_branch
+	beq	.L104	@cond_branch
 	cmp	r3, #0xff
-	bne	.L99	@cond_branch
-.L100:
+	bne	.L103	@cond_branch
+.L104:
 	bl	Random
 	lsl	r0, r0, #0x10
 	lsr	r0, r0, #0x10
@@ -752,16 +793,16 @@ ScriptGiveCustomMon:
 	bl	__umodsi3
 	lsl	r0, r0, #0x18
 	lsr	r3, r0, #0x18
-.L99:
+.L103:
 	cmp	r5, #0
-	beq	.L101	@cond_branch
+	beq	.L105	@cond_branch
 	add	r4, sp, #0xc
 	add	r0, r4, #0
 	mov	r1, r8
 	add	r2, r7, #0
 	bl	CreateShinyMonWithNature
-	b	.L141
-.L101:
+	b	.L145
+.L105:
 	add	r4, sp, #0xc
 	str	r3, [sp]
 	str	r5, [sp, #0x4]
@@ -770,27 +811,27 @@ ScriptGiveCustomMon:
 	add	r2, r7, #0
 	mov	r3, #0x20
 	bl	CreateMonWithNature
-.L141:
+.L145:
 	add	r7, r4, #0
 	mov	r5, #0x0
 	mov	r0, sl
 	lsr	r0, r0, #0x8
 	str	r0, [sp, #0x74]
-.L106:
+.L110:
 	ldr	r1, [sp, #0xa0]
 	add	r2, r1, r5
 	ldrb	r0, [r2]
 	cmp	r0, #0xff
-	beq	.L107	@cond_branch
+	beq	.L111	@cond_branch
 	add	r0, r6, r0
 	mov	r1, #0xff
 	lsl	r1, r1, #0x1
 	cmp	r0, r1
-	ble	.L108	@cond_branch
+	ble	.L112	@cond_branch
 	mov	r0, #0xfe
 	sub	r0, r0, r6
 	strb	r0, [r2]
-.L108:
+.L112:
 	ldrb	r0, [r2]
 	add	r0, r6, r0
 	lsl	r0, r0, #0x18
@@ -799,61 +840,61 @@ ScriptGiveCustomMon:
 	add	r1, r1, #0x1a
 	add	r0, r7, #0
 	bl	SetMonData
-.L107:
+.L111:
 	ldr	r4, [sp, #0xa4]
 	add	r2, r4, r5
 	ldrb	r0, [r2]
 	cmp	r0, #0x20
-	beq	.L105	@cond_branch
+	beq	.L109	@cond_branch
 	cmp	r0, #0xff
-	beq	.L105	@cond_branch
+	beq	.L109	@cond_branch
 	add	r1, r5, #0
 	add	r1, r1, #0x27
 	add	r0, r7, #0
 	bl	SetMonData
-.L105:
+.L109:
 	add	r0, r5, #0x1
 	lsl	r0, r0, #0x18
 	lsr	r5, r0, #0x18
 	cmp	r5, #0x5
-	bls	.L106	@cond_branch
+	bls	.L110	@cond_branch
 	add	r0, r7, #0
 	bl	CalculateMonStats
 	mov	r5, #0x0
-	ldr	r4, .L142
-.L114:
+	ldr	r4, .L146
+.L118:
 	lsl	r0, r5, #0x1
 	ldr	r1, [sp, #0xa8]
 	add	r0, r0, r1
 	ldrh	r1, [r0]
 	cmp	r1, #0
-	beq	.L113	@cond_branch
+	beq	.L117	@cond_branch
 	cmp	r1, #0xff
-	beq	.L113	@cond_branch
+	beq	.L117	@cond_branch
 	cmp	r1, r4
-	bhi	.L113	@cond_branch
+	bhi	.L117	@cond_branch
 	add	r0, r7, #0
 	add	r2, r5, #0
 	bl	SetMonMoveSlot
-.L113:
+.L117:
 	add	r0, r5, #0x1
 	lsl	r0, r0, #0x18
 	lsr	r5, r0, #0x18
 	cmp	r5, #0x3
-	bls	.L114	@cond_branch
+	bls	.L118	@cond_branch
 	mov	r2, r9
 	ldrb	r1, [r2]
 	cmp	r1, #0xff
-	beq	.L119	@cond_branch
+	beq	.L123	@cond_branch
 	mov	r0, r8
 	mov	r2, #0x0
 	bl	GetAbilityBySpecies
 	lsl	r0, r0, #0x10
 	cmp	r0, #0
-	bne	.L118	@cond_branch
-.L119:
+	bne	.L122	@cond_branch
+.L123:
 	mov	r4, r9
-.L120:
+.L124:
 	bl	Random
 	lsl	r0, r0, #0x10
 	lsr	r0, r0, #0x10
@@ -866,8 +907,8 @@ ScriptGiveCustomMon:
 	bl	GetAbilityBySpecies
 	lsl	r0, r0, #0x10
 	cmp	r0, #0
-	beq	.L120	@cond_branch
-.L118:
+	beq	.L124	@cond_branch
+.L122:
 	add	r0, r7, #0
 	mov	r1, #0x2e
 	mov	r2, r9
@@ -876,13 +917,13 @@ ScriptGiveCustomMon:
 	add	r4, r4, sp
 	ldrb	r0, [r4]
 	cmp	r0, #0x1b
-	bhi	.L125	@cond_branch
+	bhi	.L129	@cond_branch
 	add	r0, r7, #0
 	mov	r1, #0x26
 	mov	r2, sp
 	add	r2, r2, #0x71
 	bl	SetMonData
-.L125:
+.L129:
 	add	r0, sp, #0x8
 	mov	r1, sl
 	strb	r1, [r0]
@@ -893,7 +934,7 @@ ScriptGiveCustomMon:
 	mov	r1, #0xc
 	add	r2, sp, #0x8
 	bl	SetMonData
-	ldr	r4, .L142+0x4
+	ldr	r4, .L146+0x4
 	ldr	r2, [r4]
 	add	r0, r7, #0
 	mov	r1, #0x7
@@ -904,65 +945,65 @@ ScriptGiveCustomMon:
 	mov	r1, #0x31
 	bl	SetMonData
 	mov	r5, #0x0
-	b	.L126
-.L143:
+	b	.L130
+.L147:
 	.align	2, 0
-.L142:
+.L146:
 	.word	0x2f3
 	.word	gSaveBlock2Ptr
-.L128:
+.L132:
 	add	r0, r5, #0x1
 	lsl	r0, r0, #0x18
 	lsr	r5, r0, #0x18
-.L126:
+.L130:
 	cmp	r5, #0x5
-	bhi	.L140	@cond_branch
+	bhi	.L144	@cond_branch
 	mov	r0, #0x64
 	mov	r1, r5
 	mul	r1, r1, r0
-	ldr	r0, .L144
+	ldr	r0, .L148
 	add	r4, r1, r0
 	add	r0, r4, #0
 	mov	r1, #0xb
 	mov	r2, #0x0
 	bl	GetMonData
 	cmp	r0, #0
-	bne	.L128	@cond_branch
+	bne	.L132	@cond_branch
 	mov	r6, #0x0
 	add	r0, r4, #0
 	add	r1, r7, #0
 	mov	r2, #0x64
 	bl	CopyMon
-	ldr	r1, .L144+0x4
+	ldr	r1, .L148+0x4
 	add	r0, r5, #0x1
 	strb	r0, [r1]
-	b	.L133
-.L145:
+	b	.L137
+.L149:
 	.align	2, 0
-.L144:
+.L148:
 	.word	gPlayerParty
 	.word	gPlayerPartyCount
-.L140:
+.L144:
 	add	r0, r7, #0
 	bl	SendMonToPC
 	lsl	r0, r0, #0x18
 	lsr	r6, r0, #0x18
-.L133:
+.L137:
 	mov	r0, r8
 	bl	SpeciesToNationalPokedexNum
 	lsl	r0, r0, #0x10
 	lsr	r4, r0, #0x10
 	cmp	r6, #0
-	blt	.L134	@cond_branch
+	blt	.L138	@cond_branch
 	cmp	r6, #0x1
-	bgt	.L134	@cond_branch
+	bgt	.L138	@cond_branch
 	add	r0, r4, #0
 	mov	r1, #0x2
 	bl	GetSetPokedexFlag
 	add	r0, r4, #0
 	mov	r1, #0x3
 	bl	GetSetPokedexFlag
-.L134:
+.L138:
 	add	r0, r6, #0
 	add	sp, sp, #0x78
 	pop	{r3, r4, r5}

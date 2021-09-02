@@ -696,8 +696,8 @@ static const u16 sMeowsticFormSpeciesIdTable[] = {
 };
 
 static const u16 sAegislashFormSpeciesIdTable[] = {
-    SPECIES_AEGISLASH,
-    SPECIES_AEGISLASH_BLADE,
+    //SPECIES_AEGISLASH,
+    //SPECIES_AEGISLASH_BLADE,
     0xFFFF,
 };
 

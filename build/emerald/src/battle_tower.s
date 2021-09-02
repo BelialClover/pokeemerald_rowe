@@ -82,7 +82,25 @@ gBattleFrontierHeldItems:
 	.short	0xc8
 	.short	0x168
 	.short	0xc6
-	.size	 gBattleFrontierHeldItems,126
+	.short	0x11e
+	.short	0x1bb
+	.short	0x11a
+	.short	0x19b
+	.short	0x19a
+	.short	0x197
+	.short	0x10b
+	.short	0x10a
+	.short	0x10c
+	.short	0x15f
+	.short	0x130
+	.short	0x109
+	.short	0x123
+	.short	0x126
+	.short	0x112
+	.short	0x11c
+	.short	0x11b
+	.short	0x116
+	.size	 gBattleFrontierHeldItems,162
 	.globl	gBattleFrontierTrainerMons_Brady
 	.align	1, 0
 	.type	 gBattleFrontierTrainerMons_Brady,object
@@ -33104,132 +33122,184 @@ sStevenMons:
 	.align	1, 0
 	.type	 gSlateportBattleTentTrainerMons_Jolie,object
 gSlateportBattleTentTrainerMons_Jolie:
-	.short	0x0
-	.short	0x1
-	.short	0x2
-	.short	0x4
-	.short	0x3
-	.short	0x5
-	.short	0x6
+	.short	0x9
+	.short	0xa
+	.short	0xd
+	.short	0x1b
+	.short	0x23
+	.short	0x25
+	.short	0x2a
+	.short	0x2c
+	.short	0x2d
+	.short	0x2e
+	.short	0x3f
 	.short	0xffff
-	.size	 gSlateportBattleTentTrainerMons_Jolie,16
+	.size	 gSlateportBattleTentTrainerMons_Jolie,24
 	.globl	gSlateportBattleTentTrainerMons_Malachi
 	.align	1, 0
 	.type	 gSlateportBattleTentTrainerMons_Malachi,object
 gSlateportBattleTentTrainerMons_Malachi:
-	.short	0x0
-	.short	0x1
-	.short	0x2
-	.short	0x4
-	.short	0x3
-	.short	0x5
-	.short	0x6
+	.short	0x9
+	.short	0x10
+	.short	0x11
+	.short	0x1b
+	.short	0x24
+	.short	0x27
+	.short	0x2a
+	.short	0x2d
+	.short	0x30
+	.short	0x31
+	.short	0x35
 	.short	0xffff
-	.size	 gSlateportBattleTentTrainerMons_Malachi,16
+	.size	 gSlateportBattleTentTrainerMons_Malachi,24
 	.globl	gSlateportBattleTentTrainerMons_Kelsie
 	.align	1, 0
 	.type	 gSlateportBattleTentTrainerMons_Kelsie,object
 gSlateportBattleTentTrainerMons_Kelsie:
-	.short	0x0
-	.short	0x1
-	.short	0x2
 	.short	0x4
-	.short	0x3
 	.short	0x5
 	.short	0x6
+	.short	0xb
+	.short	0x1c
+	.short	0x22
+	.short	0x23
+	.short	0x25
+	.short	0x2b
+	.short	0x33
+	.short	0x35
 	.short	0xffff
-	.size	 gSlateportBattleTentTrainerMons_Kelsie,16
+	.size	 gSlateportBattleTentTrainerMons_Kelsie,24
 	.globl	gSlateportBattleTentTrainerMons_Davon
 	.align	1, 0
 	.type	 gSlateportBattleTentTrainerMons_Davon,object
 gSlateportBattleTentTrainerMons_Davon:
-	.short	0x0
-	.short	0x1
-	.short	0x2
 	.short	0x4
-	.short	0x3
 	.short	0x5
 	.short	0x6
+	.short	0xc
+	.short	0x1a
+	.short	0x24
+	.short	0x25
+	.short	0x26
+	.short	0x28
+	.short	0x2c
+	.short	0x2e
+	.short	0x32
 	.short	0xffff
-	.size	 gSlateportBattleTentTrainerMons_Davon,16
+	.size	 gSlateportBattleTentTrainerMons_Davon,26
 	.globl	gSlateportBattleTentTrainerMons_Glenda
 	.align	1, 0
 	.type	 gSlateportBattleTentTrainerMons_Glenda,object
 gSlateportBattleTentTrainerMons_Glenda:
 	.short	0x0
 	.short	0x1
-	.short	0x2
-	.short	0x4
-	.short	0x3
-	.short	0x5
-	.short	0x6
+	.short	0x11
+	.short	0x12
+	.short	0x13
+	.short	0x16
+	.short	0x17
+	.short	0x21
+	.short	0x2a
+	.short	0x3d
+	.short	0x40
+	.short	0x41
+	.short	0x42
 	.short	0xffff
-	.size	 gSlateportBattleTentTrainerMons_Glenda,16
+	.size	 gSlateportBattleTentTrainerMons_Glenda,28
 	.globl	gSlateportBattleTentTrainerMons_Helena
 	.align	1, 0
 	.type	 gSlateportBattleTentTrainerMons_Helena,object
 gSlateportBattleTentTrainerMons_Helena:
-	.short	0x0
-	.short	0x1
-	.short	0x2
-	.short	0x4
-	.short	0x3
-	.short	0x5
-	.short	0x6
+	.short	0x12
+	.short	0x13
+	.short	0x15
+	.short	0x26
+	.short	0x27
+	.short	0x29
+	.short	0x2a
+	.short	0x34
+	.short	0x36
+	.short	0x3a
+	.short	0x3f
 	.short	0xffff
-	.size	 gSlateportBattleTentTrainerMons_Helena,16
+	.size	 gSlateportBattleTentTrainerMons_Helena,24
 	.globl	gSlateportBattleTentTrainerMons_Rodolfo
 	.align	1, 0
 	.type	 gSlateportBattleTentTrainerMons_Rodolfo,object
 gSlateportBattleTentTrainerMons_Rodolfo:
 	.short	0x0
 	.short	0x1
-	.short	0x2
 	.short	0x4
-	.short	0x3
 	.short	0x5
-	.short	0x6
+	.short	0x7
+	.short	0x8
+	.short	0x12
+	.short	0x14
+	.short	0x15
+	.short	0x25
+	.short	0x26
+	.short	0x28
+	.short	0x3e
 	.short	0xffff
-	.size	 gSlateportBattleTentTrainerMons_Rodolfo,16
+	.size	 gSlateportBattleTentTrainerMons_Rodolfo,28
 	.globl	gSlateportBattleTentTrainerMons_Davion
 	.align	1, 0
 	.type	 gSlateportBattleTentTrainerMons_Davion,object
 gSlateportBattleTentTrainerMons_Davion:
-	.short	0x0
-	.short	0x1
-	.short	0x2
-	.short	0x4
-	.short	0x3
-	.short	0x5
-	.short	0x6
+	.short	0x11
+	.short	0x17
+	.short	0x18
+	.short	0x19
+	.short	0x1f
+	.short	0x20
+	.short	0x21
+	.short	0x22
+	.short	0x27
+	.short	0x2b
+	.short	0x2c
+	.short	0x31
+	.short	0x39
+	.short	0x45
 	.short	0xffff
-	.size	 gSlateportBattleTentTrainerMons_Davion,16
+	.size	 gSlateportBattleTentTrainerMons_Davion,30
 	.globl	gSlateportBattleTentTrainerMons_Kendall
 	.align	1, 0
 	.type	 gSlateportBattleTentTrainerMons_Kendall,object
 gSlateportBattleTentTrainerMons_Kendall:
-	.short	0x0
-	.short	0x1
-	.short	0x2
 	.short	0x4
-	.short	0x3
-	.short	0x5
-	.short	0x6
+	.short	0x7
+	.short	0x8
+	.short	0x9
+	.short	0xb
+	.short	0xc
+	.short	0xd
+	.short	0x1b
+	.short	0x26
+	.short	0x28
+	.short	0x2d
+	.short	0x2e
+	.short	0x2f
+	.short	0x3f
 	.short	0xffff
-	.size	 gSlateportBattleTentTrainerMons_Kendall,16
+	.size	 gSlateportBattleTentTrainerMons_Kendall,30
 	.globl	gSlateportBattleTentTrainerMons_Colten
 	.align	1, 0
 	.type	 gSlateportBattleTentTrainerMons_Colten,object
 gSlateportBattleTentTrainerMons_Colten:
 	.short	0x0
-	.short	0x1
 	.short	0x2
-	.short	0x4
-	.short	0x3
-	.short	0x5
-	.short	0x6
+	.short	0xc
+	.short	0x16
+	.short	0x1c
+	.short	0x1e
+	.short	0x23
+	.short	0x26
+	.short	0x2b
+	.short	0x2c
+	.short	0x38
+	.short	0x39
 	.short	0xffff
-	.size	 gSlateportBattleTentTrainerMons_Colten,16
+	.size	 gSlateportBattleTentTrainerMons_Colten,26
 	.globl	gSlateportBattleTentTrainerMons_Irvin
 	.align	1, 0
 	.type	 gSlateportBattleTentTrainerMons_Irvin,object
@@ -33237,259 +33307,355 @@ gSlateportBattleTentTrainerMons_Irvin:
 	.short	0x0
 	.short	0x1
 	.short	0x2
-	.short	0x4
 	.short	0x3
-	.short	0x5
-	.short	0x6
+	.short	0xe
+	.short	0xf
+	.short	0x18
+	.short	0x19
+	.short	0x20
+	.short	0x22
+	.short	0x27
+	.short	0x3b
+	.short	0x3c
 	.short	0xffff
-	.size	 gSlateportBattleTentTrainerMons_Irvin,16
+	.size	 gSlateportBattleTentTrainerMons_Irvin,28
 	.globl	gSlateportBattleTentTrainerMons_Shaun
 	.align	1, 0
 	.type	 gSlateportBattleTentTrainerMons_Shaun,object
 gSlateportBattleTentTrainerMons_Shaun:
-	.short	0x0
-	.short	0x1
-	.short	0x2
-	.short	0x4
-	.short	0x3
-	.short	0x5
-	.short	0x6
+	.short	0x11
+	.short	0x12
+	.short	0x13
+	.short	0x16
+	.short	0x1d
+	.short	0x24
+	.short	0x2a
+	.short	0x30
+	.short	0x3d
+	.short	0x3e
+	.short	0x42
+	.short	0x44
+	.short	0x45
 	.short	0xffff
-	.size	 gSlateportBattleTentTrainerMons_Shaun,16
+	.size	 gSlateportBattleTentTrainerMons_Shaun,28
 	.globl	gSlateportBattleTentTrainerMons_Kyler
 	.align	1, 0
 	.type	 gSlateportBattleTentTrainerMons_Kyler,object
 gSlateportBattleTentTrainerMons_Kyler:
-	.short	0x0
-	.short	0x1
-	.short	0x2
-	.short	0x4
-	.short	0x3
-	.short	0x5
-	.short	0x6
+	.short	0x16
+	.short	0x17
+	.short	0x1c
+	.short	0x1d
+	.short	0x1f
+	.short	0x20
+	.short	0x22
+	.short	0x27
+	.short	0x37
+	.short	0x40
+	.short	0x41
+	.short	0x43
 	.short	0xffff
-	.size	 gSlateportBattleTentTrainerMons_Kyler,16
+	.size	 gSlateportBattleTentTrainerMons_Kyler,26
 	.globl	gSlateportBattleTentTrainerMons_Maggie
 	.align	1, 0
 	.type	 gSlateportBattleTentTrainerMons_Maggie,object
 gSlateportBattleTentTrainerMons_Maggie:
-	.short	0x0
-	.short	0x1
-	.short	0x2
-	.short	0x4
-	.short	0x3
-	.short	0x5
-	.short	0x6
+	.short	0xa
+	.short	0xd
+	.short	0x11
+	.short	0x1b
+	.short	0x2d
+	.short	0x2e
+	.short	0x35
+	.short	0x38
+	.short	0x3d
+	.short	0x3e
+	.short	0x3f
 	.short	0xffff
-	.size	 gSlateportBattleTentTrainerMons_Maggie,16
+	.size	 gSlateportBattleTentTrainerMons_Maggie,24
 	.globl	gSlateportBattleTentTrainerMons_Stephon
 	.align	1, 0
 	.type	 gSlateportBattleTentTrainerMons_Stephon,object
 gSlateportBattleTentTrainerMons_Stephon:
-	.short	0x0
-	.short	0x1
-	.short	0x2
-	.short	0x4
-	.short	0x3
-	.short	0x5
-	.short	0x6
+	.short	0x8
+	.short	0xa
+	.short	0x10
+	.short	0x17
+	.short	0x1d
+	.short	0x2b
+	.short	0x2c
+	.short	0x3c
+	.short	0x3e
+	.short	0x3f
+	.short	0x44
 	.short	0xffff
-	.size	 gSlateportBattleTentTrainerMons_Stephon,16
+	.size	 gSlateportBattleTentTrainerMons_Stephon,24
 	.globl	gSlateportBattleTentTrainerMons_Rebecca
 	.align	1, 0
 	.type	 gSlateportBattleTentTrainerMons_Rebecca,object
 gSlateportBattleTentTrainerMons_Rebecca:
-	.short	0x0
-	.short	0x1
-	.short	0x2
-	.short	0x4
-	.short	0x3
-	.short	0x5
-	.short	0x6
+	.short	0x8
+	.short	0xd
+	.short	0x15
+	.short	0x1d
+	.short	0x21
+	.short	0x29
+	.short	0x30
+	.short	0x36
+	.short	0x3b
+	.short	0x3d
+	.short	0x44
 	.short	0xffff
-	.size	 gSlateportBattleTentTrainerMons_Rebecca,16
+	.size	 gSlateportBattleTentTrainerMons_Rebecca,24
 	.globl	gSlateportBattleTentTrainerMons_Reggie
 	.align	1, 0
 	.type	 gSlateportBattleTentTrainerMons_Reggie,object
 gSlateportBattleTentTrainerMons_Reggie:
-	.short	0x0
-	.short	0x1
-	.short	0x2
-	.short	0x4
-	.short	0x3
-	.short	0x5
 	.short	0x6
+	.short	0x7
+	.short	0x11
+	.short	0x17
+	.short	0x18
+	.short	0x1a
+	.short	0x20
+	.short	0x24
+	.short	0x34
+	.short	0x35
+	.short	0x39
+	.short	0x41
 	.short	0xffff
-	.size	 gSlateportBattleTentTrainerMons_Reggie,16
+	.size	 gSlateportBattleTentTrainerMons_Reggie,26
 	.globl	gSlateportBattleTentTrainerMons_Janae
 	.align	1, 0
 	.type	 gSlateportBattleTentTrainerMons_Janae,object
 gSlateportBattleTentTrainerMons_Janae:
 	.short	0x0
 	.short	0x1
-	.short	0x2
-	.short	0x4
-	.short	0x3
-	.short	0x5
-	.short	0x6
+	.short	0x1b
+	.short	0x1c
+	.short	0x20
+	.short	0x22
+	.short	0x24
+	.short	0x25
+	.short	0x34
+	.short	0x35
+	.short	0x39
+	.short	0x41
 	.short	0xffff
-	.size	 gSlateportBattleTentTrainerMons_Janae,16
+	.size	 gSlateportBattleTentTrainerMons_Janae,26
 	.globl	gSlateportBattleTentTrainerMons_Caiden
 	.align	1, 0
 	.type	 gSlateportBattleTentTrainerMons_Caiden,object
 gSlateportBattleTentTrainerMons_Caiden:
-	.short	0x0
-	.short	0x1
-	.short	0x2
-	.short	0x4
-	.short	0x3
-	.short	0x5
-	.short	0x6
+	.short	0xa
+	.short	0xe
+	.short	0xf
+	.short	0x10
+	.short	0x14
+	.short	0x15
+	.short	0x19
+	.short	0x1e
+	.short	0x23
+	.short	0x2f
+	.short	0x30
+	.short	0x32
+	.short	0x45
 	.short	0xffff
-	.size	 gSlateportBattleTentTrainerMons_Caiden,16
+	.size	 gSlateportBattleTentTrainerMons_Caiden,28
 	.globl	gSlateportBattleTentTrainerMons_Kirsten
 	.align	1, 0
 	.type	 gSlateportBattleTentTrainerMons_Kirsten,object
 gSlateportBattleTentTrainerMons_Kirsten:
-	.short	0x0
-	.short	0x1
-	.short	0x2
-	.short	0x4
-	.short	0x3
-	.short	0x5
-	.short	0x6
+	.short	0xa
+	.short	0x10
+	.short	0x12
+	.short	0x13
+	.short	0x14
+	.short	0x15
+	.short	0x19
+	.short	0x1e
+	.short	0x23
+	.short	0x27
+	.short	0x29
+	.short	0x30
+	.short	0x45
 	.short	0xffff
-	.size	 gSlateportBattleTentTrainerMons_Kirsten,16
+	.size	 gSlateportBattleTentTrainerMons_Kirsten,28
 	.globl	gSlateportBattleTentTrainerMons_Kurtis
 	.align	1, 0
 	.type	 gSlateportBattleTentTrainerMons_Kurtis,object
 gSlateportBattleTentTrainerMons_Kurtis:
 	.short	0x0
 	.short	0x1
-	.short	0x2
-	.short	0x4
-	.short	0x3
-	.short	0x5
-	.short	0x6
+	.short	0x24
+	.short	0x25
+	.short	0x28
+	.short	0x2e
+	.short	0x31
+	.short	0x33
+	.short	0x40
+	.short	0x43
+	.short	0x44
 	.short	0xffff
-	.size	 gSlateportBattleTentTrainerMons_Kurtis,16
+	.size	 gSlateportBattleTentTrainerMons_Kurtis,24
 	.globl	gSlateportBattleTentTrainerMons_Stefan
 	.align	1, 0
 	.type	 gSlateportBattleTentTrainerMons_Stefan,object
 gSlateportBattleTentTrainerMons_Stefan:
-	.short	0x0
-	.short	0x1
-	.short	0x2
 	.short	0x4
-	.short	0x3
 	.short	0x5
-	.short	0x6
+	.short	0x15
+	.short	0x21
+	.short	0x25
+	.short	0x26
+	.short	0x28
+	.short	0x33
+	.short	0x34
+	.short	0x40
+	.short	0x41
 	.short	0xffff
-	.size	 gSlateportBattleTentTrainerMons_Stefan,16
+	.size	 gSlateportBattleTentTrainerMons_Stefan,24
 	.globl	gSlateportBattleTentTrainerMons_Avery
 	.align	1, 0
 	.type	 gSlateportBattleTentTrainerMons_Avery,object
 gSlateportBattleTentTrainerMons_Avery:
-	.short	0x0
-	.short	0x1
 	.short	0x2
-	.short	0x4
 	.short	0x3
-	.short	0x5
-	.short	0x6
+	.short	0x7
+	.short	0x8
+	.short	0x16
+	.short	0x17
+	.short	0x1c
+	.short	0x1d
+	.short	0x1e
+	.short	0x33
+	.short	0x43
 	.short	0xffff
-	.size	 gSlateportBattleTentTrainerMons_Avery,16
+	.size	 gSlateportBattleTentTrainerMons_Avery,24
 	.globl	gSlateportBattleTentTrainerMons_Dwane
 	.align	1, 0
 	.type	 gSlateportBattleTentTrainerMons_Dwane,object
 gSlateportBattleTentTrainerMons_Dwane:
-	.short	0x0
-	.short	0x1
-	.short	0x2
-	.short	0x4
-	.short	0x3
-	.short	0x5
-	.short	0x6
+	.short	0xe
+	.short	0xf
+	.short	0x1e
+	.short	0x2b
+	.short	0x2c
+	.short	0x2d
+	.short	0x2e
+	.short	0x37
+	.short	0x3a
+	.short	0x3b
+	.short	0x3f
 	.short	0xffff
-	.size	 gSlateportBattleTentTrainerMons_Dwane,16
+	.size	 gSlateportBattleTentTrainerMons_Dwane,24
 	.globl	gSlateportBattleTentTrainerMons_Mckenna
 	.align	1, 0
 	.type	 gSlateportBattleTentTrainerMons_Mckenna,object
 gSlateportBattleTentTrainerMons_Mckenna:
-	.short	0x0
-	.short	0x1
-	.short	0x2
-	.short	0x4
-	.short	0x3
-	.short	0x5
-	.short	0x6
+	.short	0x1b
+	.short	0x1d
+	.short	0x1e
+	.short	0x20
+	.short	0x24
+	.short	0x30
+	.short	0x33
+	.short	0x34
+	.short	0x35
+	.short	0x39
+	.short	0x43
 	.short	0xffff
-	.size	 gSlateportBattleTentTrainerMons_Mckenna,16
+	.size	 gSlateportBattleTentTrainerMons_Mckenna,24
 	.globl	gSlateportBattleTentTrainerMons_Camryn
 	.align	1, 0
 	.type	 gSlateportBattleTentTrainerMons_Camryn,object
 gSlateportBattleTentTrainerMons_Camryn:
-	.short	0x0
-	.short	0x1
-	.short	0x2
-	.short	0x4
-	.short	0x3
 	.short	0x5
 	.short	0x6
+	.short	0x7
+	.short	0x8
+	.short	0xa
+	.short	0x10
+	.short	0x11
+	.short	0x14
+	.short	0x15
+	.short	0x25
+	.short	0x2b
+	.short	0x2c
 	.short	0xffff
-	.size	 gSlateportBattleTentTrainerMons_Camryn,16
+	.size	 gSlateportBattleTentTrainerMons_Camryn,26
 	.globl	gSlateportBattleTentTrainerMons_Natasha
 	.align	1, 0
 	.type	 gSlateportBattleTentTrainerMons_Natasha,object
 gSlateportBattleTentTrainerMons_Natasha:
-	.short	0x0
 	.short	0x1
-	.short	0x2
-	.short	0x4
 	.short	0x3
+	.short	0x4
 	.short	0x5
-	.short	0x6
+	.short	0x9
+	.short	0xb
+	.short	0xc
+	.short	0x14
+	.short	0x15
+	.short	0x16
+	.short	0x33
 	.short	0xffff
-	.size	 gSlateportBattleTentTrainerMons_Natasha,16
+	.size	 gSlateportBattleTentTrainerMons_Natasha,24
 	.globl	gSlateportBattleTentTrainerMons_Austyn
 	.align	1, 0
 	.type	 gSlateportBattleTentTrainerMons_Austyn,object
 gSlateportBattleTentTrainerMons_Austyn:
-	.short	0x0
-	.short	0x1
-	.short	0x2
-	.short	0x4
-	.short	0x3
-	.short	0x5
-	.short	0x6
+	.short	0x19
+	.short	0x1f
+	.short	0x23
+	.short	0x25
+	.short	0x26
+	.short	0x27
+	.short	0x32
+	.short	0x33
+	.short	0x34
+	.short	0x3a
+	.short	0x44
+	.short	0x45
 	.short	0xffff
-	.size	 gSlateportBattleTentTrainerMons_Austyn,16
+	.size	 gSlateportBattleTentTrainerMons_Austyn,26
 	.globl	gSlateportBattleTentTrainerMons_Donovan
 	.align	1, 0
 	.type	 gSlateportBattleTentTrainerMons_Donovan,object
 gSlateportBattleTentTrainerMons_Donovan:
-	.short	0x0
-	.short	0x1
-	.short	0x2
-	.short	0x4
-	.short	0x3
-	.short	0x5
-	.short	0x6
+	.short	0xa
+	.short	0x10
+	.short	0x11
+	.short	0x18
+	.short	0x19
+	.short	0x2b
+	.short	0x2c
+	.short	0x2f
+	.short	0x31
+	.short	0x35
+	.short	0x3b
+	.short	0x3c
+	.short	0x40
+	.short	0x41
 	.short	0xffff
-	.size	 gSlateportBattleTentTrainerMons_Donovan,16
+	.size	 gSlateportBattleTentTrainerMons_Donovan,30
 	.globl	gSlateportBattleTentTrainerMons_Tamia
 	.align	1, 0
 	.type	 gSlateportBattleTentTrainerMons_Tamia,object
 gSlateportBattleTentTrainerMons_Tamia:
-	.short	0x0
-	.short	0x1
 	.short	0x2
-	.short	0x4
-	.short	0x3
-	.short	0x5
 	.short	0x6
+	.short	0x9
+	.short	0xd
+	.short	0x11
+	.short	0x13
+	.short	0x14
+	.short	0x18
+	.short	0x1b
+	.short	0x1d
+	.short	0x1e
 	.short	0xffff
-	.size	 gSlateportBattleTentTrainerMons_Tamia,16
+	.size	 gSlateportBattleTentTrainerMons_Tamia,24
 	.globl	gSlateportBattleTentTrainers
 	.align	2, 0
 	.type	 gSlateportBattleTentTrainers,object
@@ -33551,7 +33717,7 @@ gSlateportBattleTentTrainers:
 	.short	0x1e0f
 	.short	0x2548
 	.short	0xc04
-	.word	gSlateportBattleTentTrainerMons_Jolie
+	.word	gSlateportBattleTentTrainerMons_Malachi
 	.byte	0x10
 	.space	3
 	.byte	0xc5
@@ -33580,7 +33746,7 @@ gSlateportBattleTentTrainers:
 	.short	0x1804
 	.short	0x20e
 	.short	0xc01
-	.word	gSlateportBattleTentTrainerMons_Jolie
+	.word	gSlateportBattleTentTrainerMons_Kelsie
 	.byte	0x11
 	.space	3
 	.byte	0xbe
@@ -33608,7 +33774,7 @@ gSlateportBattleTentTrainers:
 	.short	0x1037
 	.short	0x1e14
 	.short	0x24fa
-	.word	gSlateportBattleTentTrainerMons_Jolie
+	.word	gSlateportBattleTentTrainerMons_Davon
 	.byte	0x13
 	.space	3
 	.byte	0xc1
@@ -33637,7 +33803,7 @@ gSlateportBattleTentTrainers:
 	.short	0xa01
 	.short	0x101c
 	.short	0x62c
-	.word	gSlateportBattleTentTrainerMons_Jolie
+	.word	gSlateportBattleTentTrainerMons_Glenda
 	.byte	0x14
 	.space	3
 	.byte	0xc2
@@ -33666,7 +33832,7 @@ gSlateportBattleTentTrainers:
 	.short	0x122a
 	.short	0x1e0f
 	.short	0xc00
-	.word	gSlateportBattleTentTrainerMons_Jolie
+	.word	gSlateportBattleTentTrainerMons_Helena
 	.byte	0x15
 	.space	3
 	.byte	0xcc
@@ -33695,7 +33861,7 @@ gSlateportBattleTentTrainers:
 	.short	0x1020
 	.short	0x154
 	.short	0x1444
-	.word	gSlateportBattleTentTrainerMons_Jolie
+	.word	gSlateportBattleTentTrainerMons_Rodolfo
 	.byte	0x17
 	.space	3
 	.byte	0xbe
@@ -33724,7 +33890,7 @@ gSlateportBattleTentTrainers:
 	.short	0xffff
 	.short	0xffff
 	.short	0xffff
-	.word	gSlateportBattleTentTrainerMons_Jolie
+	.word	gSlateportBattleTentTrainerMons_Davion
 	.byte	0x7
 	.space	3
 	.byte	0xc5
@@ -33753,7 +33919,7 @@ gSlateportBattleTentTrainers:
 	.short	0x2601
 	.short	0xa14
 	.short	0xc03
-	.word	gSlateportBattleTentTrainerMons_Jolie
+	.word	gSlateportBattleTentTrainerMons_Kendall
 	.byte	0x1b
 	.space	3
 	.byte	0xbd
@@ -33782,7 +33948,7 @@ gSlateportBattleTentTrainers:
 	.short	0x1006
 	.short	0x1405
 	.short	0x1039
-	.word	gSlateportBattleTentTrainerMons_Jolie
+	.word	gSlateportBattleTentTrainerMons_Colten
 	.byte	0x1d
 	.space	3
 	.byte	0xc3
@@ -33810,7 +33976,7 @@ gSlateportBattleTentTrainers:
 	.short	0xa29
 	.short	0x80b
 	.short	0xc00
-	.word	gSlateportBattleTentTrainerMons_Jolie
+	.word	gSlateportBattleTentTrainerMons_Irvin
 	.byte	0x20
 	.space	3
 	.byte	0xcd
@@ -33838,7 +34004,7 @@ gSlateportBattleTentTrainers:
 	.short	0xa06
 	.short	0xe07
 	.short	0xe26
-	.word	gSlateportBattleTentTrainerMons_Jolie
+	.word	gSlateportBattleTentTrainerMons_Shaun
 	.byte	0x19
 	.space	3
 	.byte	0xc5
@@ -33866,7 +34032,7 @@ gSlateportBattleTentTrainers:
 	.short	0xc06
 	.short	0xc06
 	.short	0xc12
-	.word	gSlateportBattleTentTrainerMons_Jolie
+	.word	gSlateportBattleTentTrainerMons_Kyler
 	.byte	0x27
 	.space	3
 	.byte	0xc7
@@ -33895,7 +34061,7 @@ gSlateportBattleTentTrainers:
 	.short	0x2a8f
 	.short	0xc04
 	.short	0xc09
-	.word	gSlateportBattleTentTrainerMons_Jolie
+	.word	gSlateportBattleTentTrainerMons_Maggie
 	.byte	0x3
 	.space	3
 	.byte	0xcd
@@ -33924,7 +34090,7 @@ gSlateportBattleTentTrainers:
 	.short	0xe1e
 	.short	0x1436
 	.short	0xc01
-	.word	gSlateportBattleTentTrainerMons_Jolie
+	.word	gSlateportBattleTentTrainerMons_Stephon
 	.byte	0x12
 	.space	3
 	.byte	0xcc
@@ -33953,7 +34119,7 @@ gSlateportBattleTentTrainers:
 	.short	0xa14
 	.short	0x1c19
 	.short	0xc04
-	.word	gSlateportBattleTentTrainerMons_Jolie
+	.word	gSlateportBattleTentTrainerMons_Rebecca
 	.byte	0x29
 	.space	3
 	.byte	0xcc
@@ -33982,7 +34148,7 @@ gSlateportBattleTentTrainers:
 	.short	0x1025
 	.short	0x2010
 	.short	0xc04
-	.word	gSlateportBattleTentTrainerMons_Jolie
+	.word	gSlateportBattleTentTrainerMons_Reggie
 	.byte	0x2a
 	.space	3
 	.byte	0xc4
@@ -34010,7 +34176,7 @@ gSlateportBattleTentTrainers:
 	.short	0xe15
 	.short	0x1436
 	.short	0x20b
-	.word	gSlateportBattleTentTrainerMons_Jolie
+	.word	gSlateportBattleTentTrainerMons_Janae
 	.byte	0x9
 	.space	3
 	.byte	0xbd
@@ -34039,7 +34205,7 @@ gSlateportBattleTentTrainers:
 	.short	0x1c03
 	.short	0x1c08
 	.short	0xffff
-	.word	gSlateportBattleTentTrainerMons_Jolie
+	.word	gSlateportBattleTentTrainerMons_Caiden
 	.byte	0x16
 	.space	3
 	.byte	0xc5
@@ -34068,7 +34234,7 @@ gSlateportBattleTentTrainers:
 	.short	0x102f
 	.short	0xa05
 	.short	0x2446
-	.word	gSlateportBattleTentTrainerMons_Jolie
+	.word	gSlateportBattleTentTrainerMons_Kirsten
 	.byte	0x2b
 	.space	3
 	.byte	0xc5
@@ -34097,7 +34263,7 @@ gSlateportBattleTentTrainers:
 	.short	0x20f
 	.short	0x26fb
 	.short	0xc03
-	.word	gSlateportBattleTentTrainerMons_Jolie
+	.word	gSlateportBattleTentTrainerMons_Kurtis
 	.byte	0x2d
 	.space	3
 	.byte	0xcd
@@ -34126,7 +34292,7 @@ gSlateportBattleTentTrainers:
 	.short	0x2017
 	.short	0xc04
 	.short	0xffff
-	.word	gSlateportBattleTentTrainerMons_Jolie
+	.word	gSlateportBattleTentTrainerMons_Stefan
 	.byte	0x4
 	.space	3
 	.byte	0xbb
@@ -34154,7 +34320,7 @@ gSlateportBattleTentTrainers:
 	.short	0x180d
 	.short	0x102b
 	.short	0x1802
-	.word	gSlateportBattleTentTrainerMons_Jolie
+	.word	gSlateportBattleTentTrainerMons_Avery
 	.byte	0x35
 	.space	3
 	.byte	0xbe
@@ -34182,7 +34348,7 @@ gSlateportBattleTentTrainers:
 	.short	0xc1c
 	.short	0x1e0e
 	.short	0xffff
-	.word	gSlateportBattleTentTrainerMons_Jolie
+	.word	gSlateportBattleTentTrainerMons_Dwane
 	.byte	0x37
 	.space	3
 	.byte	0xc7
@@ -34211,7 +34377,7 @@ gSlateportBattleTentTrainers:
 	.short	0xffff
 	.short	0xffff
 	.short	0xffff
-	.word	gSlateportBattleTentTrainerMons_Jolie
+	.word	gSlateportBattleTentTrainerMons_Mckenna
 	.byte	0x38
 	.space	3
 	.byte	0xbd
@@ -34240,7 +34406,7 @@ gSlateportBattleTentTrainers:
 	.short	0xa28
 	.short	0x1a00
 	.short	0x1827
-	.word	gSlateportBattleTentTrainerMons_Jolie
+	.word	gSlateportBattleTentTrainerMons_Camryn
 	.byte	0x1c
 	.space	3
 	.byte	0xc8
@@ -34269,7 +34435,7 @@ gSlateportBattleTentTrainers:
 	.short	0x828
 	.short	0xc03
 	.short	0xffff
-	.word	gSlateportBattleTentTrainerMons_Jolie
+	.word	gSlateportBattleTentTrainerMons_Natasha
 	.byte	0x3a
 	.space	3
 	.byte	0xbb
@@ -34298,7 +34464,7 @@ gSlateportBattleTentTrainers:
 	.short	0x1822
 	.short	0xa28
 	.short	0x1811
-	.word	gSlateportBattleTentTrainerMons_Jolie
+	.word	gSlateportBattleTentTrainerMons_Austyn
 	.byte	0x5
 	.space	3
 	.byte	0xbe
@@ -34327,7 +34493,7 @@ gSlateportBattleTentTrainers:
 	.short	0xe1d
 	.short	0x1e22
 	.short	0xa29
-	.word	gSlateportBattleTentTrainerMons_Jolie
+	.word	gSlateportBattleTentTrainerMons_Donovan
 	.byte	0x47
 	.space	3
 	.byte	0xce
@@ -34355,75 +34521,712 @@ gSlateportBattleTentTrainers:
 	.short	0x1228
 	.short	0xa28
 	.short	0xa0b
-	.word	gSlateportBattleTentTrainerMons_Jolie
+	.word	gSlateportBattleTentTrainerMons_Tamia
 	.globl	gSlateportBattleTentMons
 	.align	2, 0
 	.type	 gSlateportBattleTentMons,object
-	.size	 gSlateportBattleTentMons,112
+	.size	 gSlateportBattleTentMons,1120
 gSlateportBattleTentMons:
-	.short	0x3
-	.short	0xbc
-	.short	0xca
-	.short	0xeb
-	.short	0x19e
+	.short	0x3e
+	.short	0x298
+	.short	0x8
+	.short	0x59
+	.short	0x114
 	.byte	0x3f
-	.byte	0x18
 	.byte	0xa
-	.space	3
-	.short	0x3
-	.short	0xbc
-	.short	0xca
-	.short	0xeb
+	.byte	0xd
+	.byte	0x0
+	.space	2
+	.short	0x2a3
+	.short	0x199
+	.short	0xf2
+	.short	0x59
+	.short	0x8
+	.byte	0x3f
+	.byte	0xa
+	.byte	0xd
+	.byte	0x0
+	.space	2
+	.short	0xf1
+	.short	0xd8
+	.short	0x59
+	.short	0xd0
+	.short	0xcd
+	.byte	0x3f
+	.byte	0xa
+	.byte	0x3
+	.byte	0x0
+	.space	2
+	.short	0x11e
+	.short	0x192
+	.short	0x93
+	.short	0xa4
+	.short	0x108
+	.byte	0x4f
+	.byte	0xa
+	.byte	0xd
+	.byte	0x1
+	.space	2
+	.short	0x1dc
+	.short	0x198
+	.short	0x1ae
+	.short	0x55
 	.short	0x19e
-	.byte	0x40
+	.byte	0x4c
+	.byte	0x15
+	.byte	0xf
+	.byte	0x0
+	.space	2
+	.short	0x233
+	.short	0x105
+	.short	0xb6
+	.short	0xf7
+	.short	0xc2
+	.byte	0x19
+	.byte	0x15
+	.byte	0x5
+	.byte	0x0
+	.space	2
+	.short	0x14a
+	.short	0x59
+	.short	0x15d
+	.short	0x151
+	.short	0xc8
+	.byte	0x41
+	.byte	0xa
+	.byte	0xd
+	.byte	0x0
+	.space	2
+	.short	0x1a
+	.short	0x55
+	.short	0x1bf
+	.short	0x39
+	.short	0x261
+	.byte	0x4c
 	.byte	0x18
 	.byte	0xa
-	.space	3
-	.short	0x6
-	.short	0x7e
+	.byte	0x0
+	.space	2
+	.short	0x9a
+	.short	0xca
+	.short	0x19e
 	.short	0x196
-	.short	0x193
-	.short	0x163
+	.short	0xeb
+	.byte	0x19
+	.byte	0x18
+	.byte	0xa
+	.byte	0x2
+	.space	2
+	.short	0x127
+	.short	0x24a
+	.short	0x7e
+	.short	0x3a
+	.short	0x39
 	.byte	0x41
 	.byte	0x18
 	.byte	0xa
-	.space	3
-	.short	0x6
-	.short	0x7e
-	.short	0x196
-	.short	0x193
-	.short	0x4c
-	.byte	0x42
-	.byte	0x18
-	.byte	0xa
-	.space	3
-	.short	0x6
-	.short	0x151
-	.short	0x18a
-	.short	0x15d
-	.short	0x9
-	.byte	0x43
-	.byte	0x18
-	.byte	0xa
-	.space	3
-	.short	0x9
-	.short	0x1f8
+	.byte	0x2
+	.space	2
+	.short	0x1c9
 	.short	0x1f7
 	.short	0x3a
-	.short	0xb6
-	.byte	0x19
+	.short	0x144
+	.short	0x16e
+	.byte	0x0
 	.byte	0x11
-	.byte	0x5
-	.space	3
-	.short	0x9
-	.short	0x18f
-	.short	0x160
-	.short	0x3a
-	.short	0x18c
-	.byte	0x44
+	.byte	0xf
+	.byte	0x0
+	.space	2
+	.short	0x266
+	.short	0x22c
+	.short	0x1c5
+	.short	0x172
+	.short	0x247
+	.byte	0x47
+	.byte	0xa
+	.byte	0xd
+	.byte	0x0
+	.space	2
+	.short	0xa0
+	.short	0x298
+	.short	0x8
+	.short	0x15d
+	.short	0x59
+	.byte	0x41
+	.byte	0xa
+	.byte	0xd
+	.byte	0x2
+	.space	2
+	.short	0x26
+	.short	0xf7
+	.short	0x7e
+	.short	0x105
+	.short	0x4c
+	.byte	0x50
 	.byte	0x18
 	.byte	0xa
-	.space	3
+	.byte	0x2
+	.space	2
+	.short	0x371
+	.short	0x2bc
+	.short	0x22c
+	.short	0x1bc
+	.short	0x43
+	.byte	0x0
+	.byte	0xa
+	.byte	0xd
+	.byte	0x0
+	.space	2
+	.short	0x1f4
+	.short	0x217
+	.short	0x114
+	.short	0x59
+	.short	0x9
+	.byte	0x49
+	.byte	0xa
+	.byte	0x3
+	.byte	0x2
+	.space	2
+	.short	0x261
+	.short	0x101
+	.short	0xf7
+	.short	0x19c
+	.short	0x13b
+	.byte	0x41
+	.byte	0x18
+	.byte	0xa
+	.byte	0x0
+	.space	2
+	.short	0x1d2
+	.short	0x9
+	.short	0x59
+	.short	0x8
+	.short	0x264
+	.byte	0x47
+	.byte	0xa
+	.byte	0xd
+	.byte	0x0
+	.space	2
+	.short	0x144
+	.short	0x13b
+	.short	0x1f8
+	.short	0x4c
+	.short	0x19e
+	.byte	0x50
+	.byte	0x15
+	.byte	0x14
+	.byte	0x1
+	.space	2
+	.short	0x229
+	.short	0x59
+	.short	0xf2
+	.short	0x1bc
+	.short	0x1a8
+	.byte	0x4d
+	.byte	0xa
+	.byte	0x1
+	.byte	0x2
+	.space	2
+	.short	0x121
+	.short	0x167
+	.short	0x59
+	.short	0x1a0
+	.short	0x1b9
+	.byte	0x19
+	.byte	0xa
+	.byte	0xd
+	.byte	0x0
+	.space	2
+	.short	0x302
+	.short	0xca
+	.short	0x19e
+	.short	0xf7
+	.short	0x26e
+	.byte	0x19
+	.byte	0x34
+	.byte	0x14
+	.byte	0x0
+	.space	2
+	.short	0x1f
+	.short	0x19e
+	.short	0xbc
+	.short	0x3a
+	.short	0x55
+	.byte	0x41
+	.byte	0x18
+	.byte	0xa
+	.byte	0x2
+	.space	2
+	.short	0x1de
+	.short	0x3a
+	.short	0xf7
+	.short	0xbf
+	.short	0xc2
+	.byte	0x47
+	.byte	0x18
+	.byte	0xa
+	.byte	0x2
+	.space	2
+	.short	0x30a
+	.short	0x247
+	.short	0x1c4
+	.short	0x1a5
+	.short	0xa4
+	.byte	0x47
+	.byte	0xa
+	.byte	0xd
+	.byte	0x0
+	.space	2
+	.short	0x2b9
+	.short	0x1c9
+	.short	0x1a8
+	.short	0xc8
+	.short	0x15d
+	.byte	0x41
+	.byte	0xa
+	.byte	0xd
+	.byte	0x2
+	.space	2
+	.short	0x2b3
+	.short	0x196
+	.short	0xbc
+	.short	0x39
+	.short	0x55
+	.byte	0x46
+	.byte	0x18
+	.byte	0xa
+	.byte	0x2
+	.space	2
+	.short	0x18b
+	.short	0x1f7
+	.short	0x1ae
+	.short	0x3a
+	.short	0x1bf
+	.byte	0x4d
+	.byte	0x18
+	.byte	0xa
+	.byte	0x0
+	.space	2
+	.short	0x1d3
+	.short	0x55
+	.short	0x7e
+	.short	0x5e
+	.short	0x19b
+	.byte	0x0
+	.byte	0x18
+	.byte	0xa
+	.byte	0x0
+	.space	2
+	.short	0x115
+	.short	0x19d
+	.short	0x107
+	.short	0xd3
+	.short	0x163
+	.byte	0x4e
+	.byte	0xa
+	.byte	0xd
+	.byte	0x0
+	.space	2
+	.short	0x33
+	.short	0x59
+	.short	0x185
+	.short	0xb3
+	.short	0x9d
+	.byte	0x47
+	.byte	0xa
+	.byte	0xd
+	.byte	0x1
+	.space	2
+	.short	0x167
+	.short	0x185
+	.short	0x247
+	.short	0x11a
+	.short	0x114
+	.byte	0x41
+	.byte	0xa
+	.byte	0x3
+	.byte	0x1
+	.space	2
+	.short	0x29a
+	.short	0x21e
+	.short	0x195
+	.short	0xca
+	.short	0x1e3
+	.byte	0x47
+	.byte	0x18
+	.byte	0xa
+	.byte	0x1
+	.space	2
+	.short	0x1ce
+	.short	0x1ae
+	.short	0x55
+	.short	0x56
+	.short	0xed
+	.byte	0x0
+	.byte	0x18
+	.byte	0xa
+	.byte	0x0
+	.space	2
+	.short	0x1b3
+	.short	0x18f
+	.short	0xbc
+	.short	0x7e
+	.short	0x5c
+	.byte	0x0
+	.byte	0x18
+	.byte	0xa
+	.byte	0x0
+	.space	2
+	.short	0x29c
+	.short	0x7e
+	.short	0x18f
+	.short	0x130
+	.short	0x1a1
+	.byte	0x0
+	.byte	0x18
+	.byte	0xa
+	.byte	0x0
+	.space	2
+	.short	0xe6
+	.short	0x196
+	.short	0x38
+	.short	0x3a
+	.short	0x74
+	.byte	0x0
+	.byte	0x18
+	.byte	0xa
+	.byte	0x0
+	.space	2
+	.short	0x1da
+	.short	0xa1
+	.short	0x3a
+	.short	0x55
+	.short	0x61
+	.byte	0x0
+	.byte	0x18
+	.byte	0xa
+	.byte	0x0
+	.space	2
+	.short	0x49
+	.short	0xbc
+	.short	0x1f7
+	.short	0x186
+	.short	0xca
+	.byte	0x0
+	.byte	0x11
+	.byte	0xf
+	.byte	0x0
+	.space	2
+	.short	0x27d
+	.short	0x228
+	.short	0x195
+	.short	0xca
+	.short	0x1e3
+	.byte	0x0
+	.byte	0x18
+	.byte	0xa
+	.byte	0x0
+	.space	2
+	.short	0x15c
+	.short	0x9d
+	.short	0x194
+	.short	0x298
+	.short	0x172
+	.byte	0x0
+	.byte	0xa
+	.byte	0x3
+	.byte	0x0
+	.space	2
+	.short	0x150
+	.short	0x1b9
+	.short	0xf2
+	.short	0x89
+	.short	0x1e9
+	.byte	0x0
+	.byte	0xa
+	.byte	0x3
+	.byte	0x0
+	.space	2
+	.short	0x152
+	.short	0x5e
+	.short	0x198
+	.short	0xca
+	.short	0x7e
+	.byte	0x0
+	.byte	0x18
+	.byte	0xa
+	.byte	0x0
+	.space	2
+	.short	0x160
+	.short	0xfc
+	.short	0xa4
+	.short	0x185
+	.short	0xda
+	.byte	0x0
+	.byte	0xa
+	.byte	0x3
+	.byte	0x0
+	.space	2
+	.short	0x199
+	.short	0x1c9
+	.short	0x15d
+	.short	0x59
+	.short	0x1a8
+	.byte	0x0
+	.byte	0xa
+	.byte	0x3
+	.byte	0x0
+	.space	2
+	.short	0x86
+	.short	0x1f7
+	.short	0x3a
+	.short	0x9c
+	.short	0x5c
+	.byte	0x0
+	.byte	0x18
+	.byte	0xa
+	.byte	0x0
+	.space	2
+	.short	0xa9
+	.short	0x19d
+	.short	0x131
+	.short	0x163
+	.short	0xd3
+	.byte	0x0
+	.byte	0xa
+	.byte	0x3
+	.byte	0x0
+	.space	2
+	.short	0x110
+	.short	0x3a
+	.short	0x1f7
+	.short	0xf0
+	.short	0xca
+	.byte	0x0
+	.byte	0x18
+	.byte	0xa
+	.byte	0x0
+	.space	2
+	.short	0x2a1
+	.short	0xd0
+	.short	0x214
+	.short	0x59
+	.short	0x1bc
+	.byte	0x0
+	.byte	0xa
+	.byte	0x3
+	.byte	0x0
+	.space	2
+	.short	0x2bb
+	.short	0x198
+	.short	0x3a
+	.short	0x25d
+	.short	0x1ae
+	.byte	0x0
+	.byte	0x18
+	.byte	0xa
+	.byte	0x0
+	.space	2
+	.short	0xe8
+	.short	0x247
+	.short	0x59
+	.short	0x1a4
+	.short	0x1c9
+	.byte	0x0
+	.byte	0xa
+	.byte	0x3
+	.byte	0x0
+	.space	2
+	.short	0x12e
+	.short	0xb6
+	.short	0x105
+	.short	0x1ec
+	.short	0x69
+	.byte	0x0
+	.byte	0x5
+	.byte	0x5
+	.byte	0x0
+	.space	2
+	.short	0xb8
+	.short	0x247
+	.short	0x7f
+	.short	0x1c5
+	.short	0x8
+	.byte	0x0
+	.byte	0xa
+	.byte	0x3
+	.byte	0x0
+	.space	2
+	.short	0x1f1
+	.short	0x1b5
+	.short	0x196
+	.short	0xca
+	.short	0xed
+	.byte	0x0
+	.byte	0x18
+	.byte	0xa
+	.byte	0x0
+	.space	2
+	.short	0x254
+	.short	0x57
+	.short	0xca
+	.short	0x195
+	.short	0x234
+	.byte	0x0
+	.byte	0x18
+	.byte	0xa
+	.byte	0x0
+	.space	2
+	.short	0x6a
+	.short	0x88
+	.short	0xfc
+	.short	0x59
+	.short	0x1bc
+	.byte	0x0
+	.byte	0xa
+	.byte	0xd
+	.byte	0x0
+	.space	2
+	.short	0x11a
+	.short	0x1d9
+	.short	0x249
+	.short	0x55
+	.short	0xf7
+	.byte	0x0
+	.byte	0x18
+	.byte	0xa
+	.byte	0x0
+	.space	2
+	.short	0x18e
+	.short	0x172
+	.short	0x19d
+	.short	0x26
+	.short	0x163
+	.byte	0x0
+	.byte	0xa
+	.byte	0xd
+	.byte	0x0
+	.space	2
+	.short	0x13d
+	.short	0x119
+	.short	0xbc
+	.short	0xca
+	.short	0x6d
+	.byte	0x0
+	.byte	0x26
+	.byte	0x8
+	.byte	0x0
+	.space	2
+	.short	0xf2
+	.short	0x111
+	.short	0x5c
+	.short	0xb6
+	.short	0x45
+	.byte	0x0
+	.byte	0x24
+	.byte	0x5
+	.byte	0x0
+	.space	2
+	.short	0x2b5
+	.short	0x160
+	.short	0x196
+	.short	0x18f
+	.short	0x18c
+	.byte	0x0
+	.byte	0x18
+	.byte	0xa
+	.byte	0x0
+	.space	2
+	.short	0x95
+	.short	0xc8
+	.short	0x1ba
+	.short	0x15d
+	.short	0x163
+	.byte	0x0
+	.byte	0xa
+	.byte	0xd
+	.byte	0x0
+	.space	2
+	.short	0x297
+	.short	0x19d
+	.short	0xd3
+	.short	0x18a
+	.short	0x163
+	.byte	0x0
+	.byte	0xa
+	.byte	0xd
+	.byte	0x0
+	.space	2
+	.short	0x2f4
+	.short	0x277
+	.short	0x49
+	.short	0x249
+	.short	0xca
+	.byte	0x0
+	.byte	0x15
+	.byte	0x5
+	.byte	0x0
+	.space	2
+	.short	0x307
+	.short	0x1c4
+	.short	0xd8
+	.short	0x185
+	.short	0x119
+	.byte	0x0
+	.byte	0xa
+	.byte	0xd
+	.byte	0x0
+	.space	2
+	.short	0x26f
+	.short	0xdf
+	.short	0x59
+	.short	0x145
+	.short	0x1bc
+	.byte	0x0
+	.byte	0xa
+	.byte	0xd
+	.byte	0x0
+	.space	2
+	.short	0x23b
+	.short	0xbc
+	.short	0x18f
+	.short	0x35
+	.short	0xf7
+	.byte	0x0
+	.byte	0x18
+	.byte	0xa
+	.byte	0x0
+	.space	2
+	.short	0xdb
+	.short	0x1f8
+	.short	0x198
+	.short	0x7e
+	.short	0xca
+	.byte	0x0
+	.byte	0x18
+	.byte	0xa
+	.byte	0x0
+	.space	2
+	.short	0x44
+	.short	0xdf
+	.short	0x1bc
+	.short	0x59
+	.short	0x5a
+	.byte	0xe
+	.byte	0xa
+	.byte	0x3
+	.byte	0x0
+	.space	2
+	.short	0x84
+	.short	0x90
+	.short	0x0
+	.short	0x0
+	.short	0x0
+	.byte	0x0
+	.byte	0x1a
+	.byte	0xa
+	.byte	0x0
+	.space	2
 	.globl	gVerdanturfBattleTentTrainerMons_Brenna
 	.align	1, 0
 	.type	 gVerdanturfBattleTentTrainerMons_Brenna,object
@@ -35648,7 +36451,8 @@ gVerdanturfBattleTentMons:
 	.byte	0xd
 	.byte	0x2f
 	.byte	0x4
-	.space	3
+	.byte	0x0
+	.space	2
 	.short	0x107
 	.short	0x157
 	.short	0x2d
@@ -35657,16 +36461,18 @@ gVerdanturfBattleTentMons:
 	.byte	0x2
 	.byte	0x3
 	.byte	0x3
-	.space	3
+	.byte	0x0
+	.space	2
 	.short	0x10d
 	.short	0x5d
 	.short	0xec
 	.short	0xb6
 	.short	0x94
-	.byte	0xb
+	.byte	0x3f
 	.byte	0x1c
 	.byte	0xf
-	.space	3
+	.byte	0x0
+	.space	2
 	.short	0x114
 	.short	0x61
 	.short	0x68
@@ -35675,7 +36481,8 @@ gVerdanturfBattleTentMons:
 	.byte	0x3
 	.byte	0xb
 	.byte	0x7
-	.space	3
+	.byte	0x0
+	.space	2
 	.short	0x11d
 	.short	0x1d
 	.short	0x4e
@@ -35684,7 +36491,8 @@ gVerdanturfBattleTentMons:
 	.byte	0x29
 	.byte	0x9
 	.byte	0x13
-	.space	3
+	.byte	0x0
+	.space	2
 	.short	0x42
 	.short	0x43
 	.short	0x2b
@@ -35693,7 +36501,8 @@ gVerdanturfBattleTentMons:
 	.byte	0x7
 	.byte	0xe
 	.byte	0x1
-	.space	3
+	.byte	0x0
+	.space	2
 	.short	0x81
 	.short	0x96
 	.short	0xaf
@@ -35702,7 +36511,8 @@ gVerdanturfBattleTentMons:
 	.byte	0x12
 	.byte	0x2
 	.byte	0x0
-	.space	3
+	.byte	0x0
+	.space	2
 	.short	0x153
 	.short	0xbd
 	.short	0x37
@@ -35711,7 +36521,8 @@ gVerdanturfBattleTentMons:
 	.byte	0x1e
 	.byte	0x8
 	.byte	0xb
-	.space	3
+	.byte	0x0
+	.space	2
 	.short	0x116
 	.short	0xd5
 	.short	0xef
@@ -35720,7 +36531,8 @@ gVerdanturfBattleTentMons:
 	.byte	0x2b
 	.byte	0x26
 	.byte	0x8
-	.space	3
+	.byte	0x0
+	.space	2
 	.short	0x130
 	.short	0x11b
 	.short	0xe8
@@ -35729,7 +36541,8 @@ gVerdanturfBattleTentMons:
 	.byte	0x27
 	.byte	0x6
 	.byte	0x0
-	.space	3
+	.byte	0x0
+	.space	2
 	.short	0x142
 	.short	0x34
 	.short	0x9d
@@ -35738,7 +36551,8 @@ gVerdanturfBattleTentMons:
 	.byte	0x26
 	.byte	0x12
 	.byte	0x16
-	.space	3
+	.byte	0x0
+	.space	2
 	.short	0x13d
 	.short	0x119
 	.short	0x7c
@@ -35747,7 +36561,8 @@ gVerdanturfBattleTentMons:
 	.byte	0x1c
 	.byte	0x3
 	.byte	0x5
-	.space	3
+	.byte	0x0
+	.space	2
 	.short	0x160
 	.short	0xa4
 	.short	0xb9
@@ -35756,7 +36571,8 @@ gVerdanturfBattleTentMons:
 	.byte	0x36
 	.byte	0x18
 	.byte	0x11
-	.space	3
+	.byte	0x0
+	.space	2
 	.short	0x157
 	.short	0xc9
 	.short	0x94
@@ -35765,7 +36581,8 @@ gVerdanturfBattleTentMons:
 	.byte	0x19
 	.byte	0x26
 	.byte	0x4
-	.space	3
+	.byte	0x0
+	.space	2
 	.short	0x123
 	.short	0x5b
 	.short	0x67
@@ -35774,7 +36591,8 @@ gVerdanturfBattleTentMons:
 	.byte	0x3c
 	.byte	0x3d
 	.byte	0x16
-	.space	3
+	.byte	0x0
+	.space	2
 	.short	0x128
 	.short	0x153
 	.short	0x124
@@ -35783,7 +36601,8 @@ gVerdanturfBattleTentMons:
 	.byte	0x30
 	.byte	0x6
 	.byte	0x4
-	.space	3
+	.byte	0x0
+	.space	2
 	.short	0x14d
 	.short	0x11f
 	.short	0xdb
@@ -35792,7 +36611,8 @@ gVerdanturfBattleTentMons:
 	.byte	0x20
 	.byte	0x18
 	.byte	0x10
-	.space	3
+	.byte	0x0
+	.space	2
 	.short	0x76
 	.short	0x7f
 	.short	0x12c
@@ -35801,7 +36621,8 @@ gVerdanturfBattleTentMons:
 	.byte	0x16
 	.byte	0x18
 	.byte	0x15
-	.space	3
+	.byte	0x0
+	.space	2
 	.short	0x10e
 	.short	0x2d
 	.short	0x37
@@ -35810,7 +36631,8 @@ gVerdanturfBattleTentMons:
 	.byte	0x2c
 	.byte	0x25
 	.byte	0x18
-	.space	3
+	.byte	0x0
+	.space	2
 	.short	0x142
 	.short	0xde
 	.short	0x34
@@ -35819,7 +36641,8 @@ gVerdanturfBattleTentMons:
 	.byte	0x26
 	.byte	0x12
 	.byte	0x7
-	.space	3
+	.byte	0x0
+	.space	2
 	.short	0x108
 	.short	0x1d
 	.short	0x141
@@ -35828,7 +36651,8 @@ gVerdanturfBattleTentMons:
 	.byte	0x18
 	.byte	0x27
 	.byte	0x8
-	.space	3
+	.byte	0x0
+	.space	2
 	.short	0x150
 	.short	0x23
 	.short	0x89
@@ -35837,7 +36661,8 @@ gVerdanturfBattleTentMons:
 	.byte	0x1e
 	.byte	0x31
 	.byte	0x1
-	.space	3
+	.byte	0x0
+	.space	2
 	.short	0xe3
 	.short	0x13a
 	.short	0xc9
@@ -35846,7 +36671,8 @@ gVerdanturfBattleTentMons:
 	.byte	0xa
 	.byte	0x22
 	.byte	0x12
-	.space	3
+	.byte	0x0
+	.space	2
 	.short	0x115
 	.short	0x61
 	.short	0x11
@@ -35855,7 +36681,8 @@ gVerdanturfBattleTentMons:
 	.byte	0x17
 	.byte	0xa
 	.byte	0x4
-	.space	3
+	.byte	0x0
+	.space	2
 	.short	0x76
 	.short	0x40
 	.short	0x30
@@ -35864,7 +36691,8 @@ gVerdanturfBattleTentMons:
 	.byte	0x1
 	.byte	0x19
 	.byte	0x15
-	.space	3
+	.byte	0x0
+	.space	2
 	.short	0x135
 	.short	0x15f
 	.short	0x21
@@ -35873,7 +36701,8 @@ gVerdanturfBattleTentMons:
 	.byte	0x6
 	.byte	0x25
 	.byte	0x10
-	.space	3
+	.byte	0x0
+	.space	2
 	.short	0x112
 	.short	0xf1
 	.short	0x103
@@ -35882,7 +36711,8 @@ gVerdanturfBattleTentMons:
 	.byte	0xd
 	.byte	0x35
 	.byte	0x5
-	.space	3
+	.byte	0x0
+	.space	2
 	.short	0x130
 	.short	0x24
 	.short	0xe8
@@ -35891,7 +36721,8 @@ gVerdanturfBattleTentMons:
 	.byte	0x18
 	.byte	0x3
 	.byte	0xf
-	.space	3
+	.byte	0x0
+	.space	2
 	.short	0x106
 	.short	0x150
 	.short	0x24
@@ -35900,7 +36731,8 @@ gVerdanturfBattleTentMons:
 	.byte	0x1
 	.byte	0x7
 	.byte	0x18
-	.space	3
+	.byte	0x0
+	.space	2
 	.short	0x152
 	.short	0x6a
 	.short	0x53
@@ -35909,7 +36741,8 @@ gVerdanturfBattleTentMons:
 	.byte	0x23
 	.byte	0x36
 	.byte	0x3
-	.space	3
+	.byte	0x0
+	.space	2
 	.short	0x4b
 	.short	0xcd
 	.short	0xf9
@@ -35918,7 +36751,8 @@ gVerdanturfBattleTentMons:
 	.byte	0x6
 	.byte	0x6
 	.byte	0x8
-	.space	3
+	.byte	0x0
+	.space	2
 	.short	0x40
 	.short	0xe3
 	.short	0x3c
@@ -35927,7 +36761,8 @@ gVerdanturfBattleTentMons:
 	.byte	0x6
 	.byte	0x19
 	.byte	0x11
-	.space	3
+	.byte	0x0
+	.space	2
 	.short	0x64
 	.short	0xb6
 	.short	0x78
@@ -35936,7 +36771,8 @@ gVerdanturfBattleTentMons:
 	.byte	0x22
 	.byte	0xa
 	.byte	0x12
-	.space	3
+	.byte	0x0
+	.space	2
 	.short	0x51
 	.short	0x13f
 	.short	0x30
@@ -35945,7 +36781,8 @@ gVerdanturfBattleTentMons:
 	.byte	0x11
 	.byte	0x3f
 	.byte	0xc
-	.space	3
+	.byte	0x0
+	.space	2
 	.short	0x117
 	.short	0x11
 	.short	0x36
@@ -35954,7 +36791,8 @@ gVerdanturfBattleTentMons:
 	.byte	0x38
 	.byte	0x0
 	.byte	0x2
-	.space	3
+	.byte	0x0
+	.space	2
 	.short	0x126
 	.short	0x150
 	.short	0xfd
@@ -35963,7 +36801,8 @@ gVerdanturfBattleTentMons:
 	.byte	0x19
 	.byte	0x25
 	.byte	0x14
-	.space	3
+	.byte	0x0
+	.space	2
 	.short	0xb7
 	.short	0xcd
 	.short	0x6f
@@ -35972,7 +36811,8 @@ gVerdanturfBattleTentMons:
 	.byte	0x1a
 	.byte	0x25
 	.byte	0xd
-	.space	3
+	.byte	0x0
+	.space	2
 	.short	0x148
 	.short	0x5b
 	.short	0x13d
@@ -35981,7 +36821,8 @@ gVerdanturfBattleTentMons:
 	.byte	0x0
 	.byte	0xb
 	.byte	0x4
-	.space	3
+	.byte	0x0
+	.space	2
 	.short	0x48
 	.short	0x67
 	.short	0x6d
@@ -35990,7 +36831,8 @@ gVerdanturfBattleTentMons:
 	.byte	0x20
 	.byte	0x3
 	.byte	0x7
-	.space	3
+	.byte	0x0
+	.space	2
 	.short	0x120
 	.short	0xe3
 	.short	0x12f
@@ -35999,7 +36841,8 @@ gVerdanturfBattleTentMons:
 	.byte	0x25
 	.byte	0x26
 	.byte	0x18
-	.space	3
+	.byte	0x0
+	.space	2
 	.short	0x140
 	.short	0x160
 	.short	0xcd
@@ -36008,7 +36851,8 @@ gVerdanturfBattleTentMons:
 	.byte	0x13
 	.byte	0x1
 	.byte	0x7
-	.space	3
+	.byte	0x0
+	.space	2
 	.short	0x13a
 	.short	0x21
 	.short	0xe6
@@ -36017,7 +36861,8 @@ gVerdanturfBattleTentMons:
 	.byte	0x20
 	.byte	0x25
 	.byte	0x18
-	.space	3
+	.byte	0x0
+	.space	2
 	.short	0x43
 	.short	0x2b
 	.short	0x2
@@ -36026,7 +36871,8 @@ gVerdanturfBattleTentMons:
 	.byte	0x4
 	.byte	0xa
 	.byte	0x14
-	.space	3
+	.byte	0x0
+	.space	2
 	.short	0x125
 	.short	0x122
 	.short	0x30
@@ -36035,7 +36881,8 @@ gVerdanturfBattleTentMons:
 	.byte	0x1a
 	.byte	0x18
 	.byte	0x18
-	.space	3
+	.byte	0x0
+	.space	2
 	.short	0x14b
 	.short	0x113
 	.short	0x49
@@ -36044,7 +36891,8 @@ gVerdanturfBattleTentMons:
 	.byte	0x22
 	.byte	0x25
 	.byte	0xc
-	.space	3
+	.byte	0x0
+	.space	2
 	.globl	gFallarborBattleTentTrainerMons_Amber
 	.align	1, 0
 	.type	 gFallarborBattleTentTrainerMons_Amber,object
@@ -37271,7 +38119,8 @@ gFallarborBattleTentMons:
 	.byte	0x26
 	.byte	0x11
 	.byte	0x11
-	.space	3
+	.byte	0x0
+	.space	2
 	.short	0x108
 	.short	0x13c
 	.short	0x157
@@ -37280,7 +38129,8 @@ gFallarborBattleTentMons:
 	.byte	0x12
 	.byte	0x24
 	.byte	0x16
-	.space	3
+	.byte	0x0
+	.space	2
 	.short	0x137
 	.short	0xd1
 	.short	0x2d
@@ -37289,7 +38139,8 @@ gFallarborBattleTentMons:
 	.byte	0x25
 	.byte	0x18
 	.byte	0xf
-	.space	3
+	.byte	0x0
+	.space	2
 	.short	0x105
 	.short	0x119
 	.short	0x13c
@@ -37298,7 +38149,8 @@ gFallarborBattleTentMons:
 	.byte	0x21
 	.byte	0xa
 	.byte	0x4
-	.space	3
+	.byte	0x0
+	.space	2
 	.short	0x160
 	.short	0x7a
 	.short	0xa3
@@ -37307,7 +38159,8 @@ gFallarborBattleTentMons:
 	.byte	0x2d
 	.byte	0x1a
 	.byte	0xf
-	.space	3
+	.byte	0x0
+	.space	2
 	.short	0x81
 	.short	0x96
 	.short	0x21
@@ -37316,7 +38169,8 @@ gFallarborBattleTentMons:
 	.byte	0x2a
 	.byte	0x3
 	.byte	0x18
-	.space	3
+	.byte	0x0
+	.space	2
 	.short	0x152
 	.short	0x58
 	.short	0x94
@@ -37325,7 +38179,8 @@ gFallarborBattleTentMons:
 	.byte	0x5
 	.byte	0x25
 	.byte	0x16
-	.space	3
+	.byte	0x0
+	.space	2
 	.short	0x128
 	.short	0xc5
 	.short	0x124
@@ -37334,7 +38189,8 @@ gFallarborBattleTentMons:
 	.byte	0xe
 	.byte	0x11
 	.byte	0x3
-	.space	3
+	.byte	0x0
+	.space	2
 	.short	0x43
 	.short	0x44
 	.short	0x117
@@ -37343,7 +38199,8 @@ gFallarborBattleTentMons:
 	.byte	0x22
 	.byte	0x1a
 	.byte	0xe
-	.space	3
+	.byte	0x0
+	.space	2
 	.short	0x122
 	.short	0x9a
 	.short	0xcb
@@ -37352,7 +38209,8 @@ gFallarborBattleTentMons:
 	.byte	0x29
 	.byte	0xa
 	.byte	0xc
-	.space	3
+	.byte	0x0
+	.space	2
 	.short	0x10b
 	.short	0x94
 	.short	0xea
@@ -37361,7 +38219,8 @@ gFallarborBattleTentMons:
 	.byte	0x20
 	.byte	0x2e
 	.byte	0x18
-	.space	3
+	.byte	0x0
+	.space	2
 	.short	0x10d
 	.short	0xec
 	.short	0x6a
@@ -37370,7 +38229,8 @@ gFallarborBattleTentMons:
 	.byte	0x6
 	.byte	0x2c
 	.byte	0x6
-	.space	3
+	.byte	0x0
+	.space	2
 	.short	0x13a
 	.short	0x76
 	.short	0x104
@@ -37379,7 +38239,8 @@ gFallarborBattleTentMons:
 	.byte	0x30
 	.byte	0x6
 	.byte	0x3
-	.space	3
+	.byte	0x0
+	.space	2
 	.short	0x139
 	.short	0x21
 	.short	0xec
@@ -37388,7 +38249,8 @@ gFallarborBattleTentMons:
 	.byte	0x21
 	.byte	0x23
 	.byte	0x3
-	.space	3
+	.byte	0x0
+	.space	2
 	.short	0x123
 	.short	0x68
 	.short	0xb6
@@ -37397,7 +38259,8 @@ gFallarborBattleTentMons:
 	.byte	0x3c
 	.byte	0x2d
 	.byte	0xa
-	.space	3
+	.byte	0x0
+	.space	2
 	.short	0x123
 	.short	0xe
 	.short	0xf
@@ -37406,7 +38269,8 @@ gFallarborBattleTentMons:
 	.byte	0xb
 	.byte	0x3
 	.byte	0x3
-	.space	3
+	.byte	0x0
+	.space	2
 	.short	0x130
 	.short	0xe8
 	.short	0xb6
@@ -37415,7 +38279,8 @@ gFallarborBattleTentMons:
 	.byte	0x22
 	.byte	0x13
 	.byte	0x1
-	.space	3
+	.byte	0x0
+	.space	2
 	.short	0x130
 	.short	0x122
 	.short	0xe8
@@ -37424,7 +38289,8 @@ gFallarborBattleTentMons:
 	.byte	0x2
 	.byte	0x18
 	.byte	0x15
-	.space	3
+	.byte	0x0
+	.space	2
 	.short	0x135
 	.short	0xf2
 	.short	0x56
@@ -37433,7 +38299,8 @@ gFallarborBattleTentMons:
 	.byte	0x2e
 	.byte	0x1a
 	.byte	0xb
-	.space	3
+	.byte	0x0
+	.space	2
 	.short	0x51
 	.short	0x56
 	.short	0x30
@@ -37442,7 +38309,8 @@ gFallarborBattleTentMons:
 	.byte	0x11
 	.byte	0x11
 	.byte	0x11
-	.space	3
+	.byte	0x0
+	.space	2
 	.short	0x64
 	.short	0x10c
 	.short	0xd1
@@ -37451,7 +38319,8 @@ gFallarborBattleTentMons:
 	.byte	0x1e
 	.byte	0x18
 	.byte	0xf
-	.space	3
+	.byte	0x0
+	.space	2
 	.short	0x125
 	.short	0x9c
 	.short	0xd6
@@ -37460,7 +38329,8 @@ gFallarborBattleTentMons:
 	.byte	0x36
 	.byte	0xb
 	.byte	0x3
-	.space	3
+	.byte	0x0
+	.space	2
 	.short	0x126
 	.short	0x17
 	.short	0x9c
@@ -37469,7 +38339,8 @@ gFallarborBattleTentMons:
 	.byte	0x4
 	.byte	0x3
 	.byte	0x3
-	.space	3
+	.byte	0x0
+	.space	2
 	.short	0x108
 	.short	0x9a
 	.short	0x1c
@@ -37478,7 +38349,8 @@ gFallarborBattleTentMons:
 	.byte	0x11
 	.byte	0x11
 	.byte	0xf
-	.space	3
+	.byte	0x0
+	.space	2
 	.short	0x106
 	.short	0x1c
 	.short	0x150
@@ -37487,7 +38359,8 @@ gFallarborBattleTentMons:
 	.byte	0x1
 	.byte	0xb
 	.byte	0xd
-	.space	3
+	.byte	0x0
+	.space	2
 	.short	0x14d
 	.short	0x24
 	.short	0x2f
@@ -37496,7 +38369,8 @@ gFallarborBattleTentMons:
 	.byte	0x6
 	.byte	0x25
 	.byte	0x18
-	.space	3
+	.byte	0x0
+	.space	2
 	.short	0xe3
 	.short	0x61
 	.short	0xd3
@@ -37505,7 +38379,8 @@ gFallarborBattleTentMons:
 	.byte	0x24
 	.byte	0x23
 	.byte	0x5
-	.space	3
+	.byte	0x0
+	.space	2
 	.short	0x2a
 	.short	0x6d
 	.short	0x2c
@@ -37514,7 +38389,8 @@ gFallarborBattleTentMons:
 	.byte	0x3c
 	.byte	0x25
 	.byte	0x5
-	.space	3
+	.byte	0x0
+	.space	2
 	.short	0x116
 	.short	0x11
 	.short	0x102
@@ -37523,7 +38399,8 @@ gFallarborBattleTentMons:
 	.byte	0x1a
 	.byte	0x18
 	.byte	0xf
-	.space	3
+	.byte	0x0
+	.space	2
 	.short	0x117
 	.short	0xef
 	.short	0xc4
@@ -37532,7 +38409,8 @@ gFallarborBattleTentMons:
 	.byte	0x2b
 	.byte	0xa
 	.byte	0x3
-	.space	3
+	.byte	0x0
+	.space	2
 	.short	0x153
 	.short	0xd1
 	.short	0x37
@@ -37541,7 +38419,8 @@ gFallarborBattleTentMons:
 	.byte	0x34
 	.byte	0x11
 	.byte	0xf
-	.space	3
+	.byte	0x0
+	.space	2
 	.short	0x140
 	.short	0x160
 	.short	0xf0
@@ -37550,7 +38429,8 @@ gFallarborBattleTentMons:
 	.byte	0x1
 	.byte	0x12
 	.byte	0x11
-	.space	3
+	.byte	0x0
+	.space	2
 	.short	0xb7
 	.short	0x6f
 	.short	0xcd
@@ -37559,7 +38439,8 @@ gFallarborBattleTentMons:
 	.byte	0x5
 	.byte	0x3
 	.byte	0x3
-	.space	3
+	.byte	0x0
+	.space	2
 	.short	0x76
 	.short	0x7f
 	.short	0xf0
@@ -37568,7 +38449,8 @@ gFallarborBattleTentMons:
 	.byte	0x3e
 	.byte	0x12
 	.byte	0xb
-	.space	3
+	.byte	0x0
+	.space	2
 	.short	0x76
 	.short	0xd6
 	.short	0x20
@@ -37577,7 +38459,8 @@ gFallarborBattleTentMons:
 	.byte	0x25
 	.byte	0x25
 	.byte	0x17
-	.space	3
+	.byte	0x0
+	.space	2
 	.short	0x148
 	.short	0xd8
 	.short	0x1c
@@ -37586,7 +38469,8 @@ gFallarborBattleTentMons:
 	.byte	0x3a
 	.byte	0xa
 	.byte	0x3
-	.space	3
+	.byte	0x0
+	.space	2
 	.short	0x157
 	.short	0x78
 	.short	0xc9
@@ -37595,7 +38479,8 @@ gFallarborBattleTentMons:
 	.byte	0x22
 	.byte	0x2a
 	.byte	0xd
-	.space	3
+	.byte	0x0
+	.space	2
 	.short	0x4b
 	.short	0x15e
 	.short	0x6f
@@ -37604,7 +38489,8 @@ gFallarborBattleTentMons:
 	.byte	0x5
 	.byte	0x21
 	.byte	0x3
-	.space	3
+	.byte	0x0
+	.space	2
 	.short	0x1b
 	.short	0x148
 	.short	0xc9
@@ -37613,7 +38499,8 @@ gFallarborBattleTentMons:
 	.byte	0x28
 	.byte	0xa
 	.byte	0xd
-	.space	3
+	.byte	0x0
+	.space	2
 	.short	0x13d
 	.short	0x119
 	.short	0xe3
@@ -37622,7 +38509,8 @@ gFallarborBattleTentMons:
 	.byte	0x22
 	.byte	0x3
 	.byte	0x2
-	.space	3
+	.byte	0x0
+	.space	2
 	.short	0x11d
 	.short	0x1d
 	.short	0x93
@@ -37631,7 +38519,8 @@ gFallarborBattleTentMons:
 	.byte	0x18
 	.byte	0x25
 	.byte	0x8
-	.space	3
+	.byte	0x0
+	.space	2
 	.short	0x119
 	.short	0x5f
 	.short	0x2d
@@ -37640,7 +38529,8 @@ gFallarborBattleTentMons:
 	.byte	0x2
 	.byte	0x22
 	.byte	0x3
-	.space	3
+	.byte	0x0
+	.space	2
 	.short	0x10f
 	.short	0x10b
 	.short	0x37
@@ -37649,7 +38539,8 @@ gFallarborBattleTentMons:
 	.byte	0x19
 	.byte	0x25
 	.byte	0x12
-	.space	3
+	.byte	0x0
+	.space	2
 	.short	0x112
 	.short	0x10b
 	.short	0x103
@@ -37658,7 +38549,8 @@ gFallarborBattleTentMons:
 	.byte	0x4
 	.byte	0xa
 	.byte	0x3
-	.space	3
+	.byte	0x0
+	.space	2
 	.short	0x14b
 	.short	0xc9
 	.short	0x12e
@@ -37667,7 +38559,8 @@ gFallarborBattleTentMons:
 	.byte	0x20
 	.byte	0x2d
 	.byte	0x3
-	.space	3
+	.byte	0x0
+	.space	2
 	.align	2, 0
 	.type	 sBattleTowerFuncs,object
 sBattleTowerFuncs:
@@ -40290,9 +41183,9 @@ FillTrainerParty:
 	mov	r6, r9
 	mov	r5, r8
 	push	{r5, r6, r7}
-	add	sp, sp, #-0x44
+	add	sp, sp, #-0x40
 	lsl	r0, r0, #0x10
-	lsr	r5, r0, #0x10
+	lsr	r7, r0, #0x10
 	lsl	r1, r1, #0x18
 	lsr	r1, r1, #0x18
 	str	r1, [sp, #0x1c]
@@ -40307,9 +41200,9 @@ FillTrainerParty:
 	lsr	r0, r0, #0x18
 	str	r0, [sp, #0x24]
 	ldr	r0, .L550
-	cmp	r5, r0
+	cmp	r7, r0
 	bhi	.L488	@cond_branch
-	add	r0, r5, #0
+	add	r0, r7, #0
 	bl	GetFrontierTrainerFixedIvs
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
@@ -40343,33 +41236,33 @@ FillTrainerParty:
 .L488:
 	mov	r0, #0xfa
 	lsl	r0, r0, #0x1
-	cmp	r5, r0
-	bne	.L490	@cond_branch
-	ldr	r7, [sp, #0x1c]
-	add	r0, r7, #0x3
 	cmp	r7, r0
+	bne	.L490	@cond_branch
+	ldr	r6, [sp, #0x1c]
+	add	r0, r6, #0x3
+	cmp	r6, r0
 	blt	.LCB3378
 	b	.L487	@long jump
 .LCB3378:
 	ldr	r4, .L552
 .L494:
 	mov	r0, #0x64
-	mul	r0, r0, r7
+	mul	r0, r0, r6
 	ldr	r1, .L552+0x4
 	add	r0, r0, r1
 	ldr	r5, [sp, #0x1c]
-	sub	r2, r7, r5
+	sub	r2, r6, r5
 	mov	r1, #0x2c
 	mul	r2, r2, r1
-	ldr	r6, .L552+0x8
-	add	r2, r2, r6
+	ldr	r7, .L552+0x8
+	add	r2, r2, r7
 	ldr	r1, [r4]
 	add	r1, r1, r2
 	bl	CreateBattleTowerMon
-	add	r7, r7, #0x1
+	add	r6, r6, #0x1
 	add	r0, r5, #0
 	add	r0, r0, #0x3
-	cmp	r7, r0
+	cmp	r6, r0
 	blt	.L494	@cond_branch
 	b	.L487
 .L553:
@@ -40380,7 +41273,7 @@ FillTrainerParty:
 	.word	0xbac
 .L490:
 	ldr	r0, .L554
-	cmp	r5, r0
+	cmp	r7, r0
 	bne	.L497	@cond_branch
 	bl	CreateFrontierBrainPokemon
 	b	.L487
@@ -40390,48 +41283,48 @@ FillTrainerParty:
 	.word	0x3fe
 .L497:
 	ldr	r0, .L556
-	cmp	r5, r0
-	bhi	.L499	@cond_branch
-	mov	r6, #0x0
-	ldr	r7, [sp, #0x1c]
-	ldr	r1, [sp, #0x20]
-	add	r0, r7, r1
 	cmp	r7, r0
+	bhi	.L499	@cond_branch
+	mov	r5, #0x0
+	ldr	r6, [sp, #0x1c]
+	ldr	r1, [sp, #0x20]
+	add	r0, r6, r1
+	cmp	r6, r0
 	blt	.LCB3444
 	b	.L487	@long jump
 .LCB3444:
 	ldr	r2, .L556+0x4
-	add	r1, r5, r2
+	add	r1, r7, r2
 	mov	r0, #0xec
 	mov	r2, r1
 	mul	r2, r2, r0
 	mov	r8, r2
-	mul	r0, r0, r5
-	ldr	r5, .L556+0x8
-	add	r4, r0, r5
+	mul	r0, r0, r7
+	ldr	r7, .L556+0x8
+	add	r4, r0, r7
 .L503:
 	ldr	r0, .L556+0xc
 	ldr	r3, [r0]
 	mov	r0, #0x2c
-	mov	r2, r6
+	mov	r2, r5
 	mul	r2, r2, r0
 	mov	r1, r8
 	add	r0, r2, r1
 	add	r1, r3, r0
-	mov	r5, #0xdf
-	lsl	r5, r5, #0x3
-	add	r0, r1, r5
+	mov	r7, #0xdf
+	lsl	r7, r7, #0x3
+	add	r0, r1, r7
 	ldrh	r0, [r0]
 	cmp	r0, #0
 	beq	.L502	@cond_branch
-	add	r5, r5, #0xc
-	add	r0, r1, r5
+	add	r7, r7, #0xc
+	add	r0, r1, r7
 	ldrb	r0, [r0]
 	ldr	r1, [sp, #0x24]
 	cmp	r0, r1
 	bhi	.L502	@cond_branch
 	mov	r0, #0x64
-	mul	r0, r0, r7
+	mul	r0, r0, r6
 	ldr	r1, .L556+0x10
 	add	r0, r0, r1
 	add	r1, r3, r4
@@ -40440,12 +41333,12 @@ FillTrainerParty:
 	mov	r2, #0x0
 	bl	CreateBattleTowerMon2
 .L502:
+	add	r5, r5, #0x1
 	add	r6, r6, #0x1
-	add	r7, r7, #0x1
 	ldr	r2, [sp, #0x1c]
-	ldr	r5, [sp, #0x20]
-	add	r0, r2, r5
-	cmp	r7, r0
+	ldr	r7, [sp, #0x20]
+	add	r0, r2, r7
+	cmp	r6, r0
 	blt	.L503	@cond_branch
 	b	.L487
 .L557:
@@ -40457,35 +41350,37 @@ FillTrainerParty:
 	.word	gSaveBlock2Ptr
 	.word	gEnemyParty
 .L499:
-	ldr	r7, [sp, #0x1c]
-	add	r0, r7, #0x3
-	cmp	r7, r0
+	ldr	r6, [sp, #0x1c]
+	add	r0, r6, #0x3
+	cmp	r6, r0
 	blt	.LCB3524
 	b	.L487	@long jump
 .LCB3524:
-	ldr	r6, .L558
-	lsl	r0, r5, #0x4
-	add	r0, r0, r5
+	ldr	r0, .L558
+	mov	r8, r0
+	lsl	r0, r7, #0x4
+	add	r0, r0, r7
 	lsl	r0, r0, #0x2
 	ldr	r1, .L558+0x4
 	add	r5, r0, r1
 	mov	r4, #0x0
 .L510:
 	mov	r0, #0x64
-	mul	r0, r0, r7
+	mul	r0, r0, r6
 	ldr	r1, .L558+0x8
 	add	r0, r0, r1
-	ldr	r1, [r6]
+	mov	r2, r8
+	ldr	r1, [r2]
 	add	r1, r1, r5
 	lsr	r2, r4, #0x18
 	bl	CreateApprenticeMon
-	mov	r2, #0x80
-	lsl	r2, r2, #0x11
-	add	r4, r4, r2
-	add	r7, r7, #0x1
+	mov	r7, #0x80
+	lsl	r7, r7, #0x11
+	add	r4, r4, r7
+	add	r6, r6, #0x1
 	ldr	r0, [sp, #0x1c]
 	add	r0, r0, #0x3
-	cmp	r7, r0
+	cmp	r6, r0
 	blt	.L510	@cond_branch
 	b	.L487
 .L559:
@@ -40501,14 +41396,14 @@ FillTrainerParty:
 	lsr	r0, r0, #0x18
 	str	r0, [sp, #0x2c]
 	lsl	r0, r0, #0x1
-	ldr	r5, [sp, #0x30]
-	add	r0, r0, r5
+	ldr	r1, [sp, #0x30]
+	add	r0, r0, r1
 	ldrh	r1, [r0]
 	ldr	r0, .L560
 	cmp	r1, r0
 	bne	.L514	@cond_branch
 .L513:
-	mov	r7, #0x0
+	mov	r6, #0x0
 	bl	Random
 	add	r4, r0, #0
 	bl	Random
@@ -40517,11 +41412,11 @@ FillTrainerParty:
 	lsl	r0, r0, #0x10
 	orr	r4, r4, r0
 	str	r4, [sp, #0x34]
-	ldr	r6, [sp, #0x20]
-	cmp	r7, r6
-	bne	.LCB3606
+	ldr	r2, [sp, #0x20]
+	cmp	r6, r2
+	bne	.LCB3608
 	b	.L487	@long jump
-.LCB3606:
+.LCB3608:
 .L519:
 	bl	Random
 	lsl	r0, r0, #0x10
@@ -40529,25 +41424,25 @@ FillTrainerParty:
 	ldr	r1, [sp, #0x2c]
 	bl	__modsi3
 	lsl	r0, r0, #0x1
-	ldr	r1, [sp, #0x30]
-	add	r0, r0, r1
-	ldrh	r4, [r0]
-	ldr	r2, [sp, #0x24]
-	cmp	r2, #0x32
+	ldr	r5, [sp, #0x30]
+	add	r0, r0, r5
+	ldrh	r7, [r0]
+	ldr	r0, [sp, #0x24]
+	cmp	r0, #0x32
 	beq	.L521	@cond_branch
-	cmp	r2, #0x14
+	cmp	r0, #0x14
 	bne	.L520	@cond_branch
 .L521:
 	ldr	r0, .L560+0x4
-	cmp	r4, r0
-	bls	.LCB3635
+	cmp	r7, r0
+	bls	.LCB3638
 	b	.L517	@long jump
-.LCB3635:
+.LCB3638:
 .L520:
-	mov	r6, #0x0
-	ldr	r5, [sp, #0x1c]
-	add	r5, r5, r7
-	mov	r8, r5
+	mov	r5, #0x0
+	ldr	r1, [sp, #0x1c]
+	add	r1, r1, r6
+	mov	r8, r1
 	b	.L522
 .L561:
 	.align	2, 0
@@ -40555,40 +41450,40 @@ FillTrainerParty:
 	.word	0xffff
 	.word	0x351
 .L524:
-	add	r6, r6, #0x1
+	add	r5, r5, #0x1
 .L522:
-	cmp	r6, r8
+	cmp	r5, r8
 	bge	.L523	@cond_branch
-	mov	r1, #0x64
-	mov	r0, r6
-	mul	r0, r0, r1
-	ldr	r2, .L562
-	add	r0, r0, r2
+	mov	r2, #0x64
+	mov	r0, r5
+	mul	r0, r0, r2
+	ldr	r1, .L562
+	add	r0, r0, r1
 	mov	r1, #0xb
 	mov	r2, #0x0
 	bl	GetMonData
 	ldr	r1, .L562+0x4
 	ldr	r2, [r1]
-	lsl	r1, r4, #0x4
+	lsl	r1, r7, #0x4
 	add	r1, r1, r2
 	ldrh	r1, [r1]
 	cmp	r0, r1
 	bne	.L524	@cond_branch
 .L523:
-	cmp	r6, r8
-	beq	.LCB3679
+	cmp	r5, r8
+	beq	.LCB3682
 	b	.L517	@long jump
-.LCB3679:
-	mov	r6, #0x0
-	cmp	r6, r8
+.LCB3682:
+	mov	r5, #0x0
+	cmp	r5, r8
 	bge	.L530	@cond_branch
-	ldr	r5, .L562+0x8
-	mov	r9, r5
+	ldr	r2, .L562+0x8
+	mov	r9, r2
 	mov	r3, #0x0
 .L532:
 	ldr	r0, .L562
-	add	r5, r3, r0
-	add	r0, r5, #0
+	add	r4, r3, r0
+	add	r0, r4, #0
 	mov	r1, #0xc
 	mov	r2, #0x0
 	str	r3, [sp, #0x3c]
@@ -40596,13 +41491,13 @@ FillTrainerParty:
 	ldr	r3, [sp, #0x3c]
 	cmp	r0, #0
 	beq	.L531	@cond_branch
-	add	r0, r5, #0
+	add	r0, r4, #0
 	mov	r1, #0xc
 	mov	r2, #0x0
 	bl	GetMonData
 	ldr	r1, .L562+0x4
 	ldr	r2, [r1]
-	lsl	r1, r4, #0x4
+	lsl	r1, r7, #0x4
 	add	r1, r1, r2
 	ldrb	r1, [r1, #0xa]
 	lsl	r1, r1, #0x1
@@ -40613,111 +41508,111 @@ FillTrainerParty:
 	beq	.L530	@cond_branch
 .L531:
 	add	r3, r3, #0x64
-	add	r6, r6, #0x1
-	cmp	r6, r8
+	add	r5, r5, #0x1
+	cmp	r5, r8
 	blt	.L532	@cond_branch
 .L530:
-	cmp	r6, r8
+	cmp	r5, r8
 	bne	.L517	@cond_branch
-	mov	r6, #0x0
-	cmp	r6, r7
+	mov	r5, #0x0
+	cmp	r5, r6
 	bge	.L537	@cond_branch
 	add	r0, sp, #0x10
 	ldrh	r0, [r0]
-	cmp	r0, r4
+	cmp	r0, r7
 	beq	.L537	@cond_branch
 	add	r1, sp, #0x10
 .L538:
 	add	r1, r1, #0x2
-	add	r6, r6, #0x1
-	cmp	r6, r7
+	add	r5, r5, #0x1
+	cmp	r5, r6
 	bge	.L537	@cond_branch
 	ldrh	r0, [r1]
-	cmp	r0, r4
+	cmp	r0, r7
 	bne	.L538	@cond_branch
 .L537:
-	cmp	r6, r7
+	cmp	r5, r6
 	bne	.L517	@cond_branch
-	lsl	r0, r7, #0x1
+	lsl	r0, r6, #0x1
 	add	r0, r0, sp
 	add	r0, r0, #0x10
-	strh	r4, [r0]
-	mov	r1, #0x64
+	strh	r7, [r0]
+	mov	r2, #0x64
 	mov	r0, r8
-	mul	r0, r0, r1
-	ldr	r2, .L562
-	add	r0, r0, r2
-	ldr	r5, .L562+0x4
-	ldr	r2, [r5]
-	lsl	r4, r4, #0x4
+	mul	r0, r0, r2
+	ldr	r5, .L562
+	add	r0, r0, r5
+	ldr	r1, .L562+0x4
+	ldr	r2, [r1]
+	lsl	r4, r7, #0x4
 	add	r2, r4, r2
 	ldrh	r1, [r2]
 	ldrb	r3, [r2, #0xc]
-	ldr	r6, [sp, #0x28]
-	str	r6, [sp]
+	ldr	r5, [sp, #0x28]
+	str	r5, [sp]
 	ldrb	r2, [r2, #0xb]
 	str	r2, [sp, #0x4]
-	ldr	r2, [sp, #0x34]
-	str	r2, [sp, #0x8]
-	mov	r6, #0x0
-	str	r6, [sp, #0xc]
+	ldr	r7, [sp, #0x34]
+	str	r7, [sp, #0x8]
+	mov	r2, #0x0
+	str	r2, [sp, #0xc]
 	ldr	r2, [sp, #0x24]
 	bl	CreateMonWithEVSpreadNatureOTID
 	mov	r0, #0xff
-	mov	r1, sp
-	strb	r0, [r1, #0x18]
-	add	r2, r7, #0x1
-	str	r2, [sp, #0x38]
-	mov	r9, r4
+	mov	r5, sp
+	strb	r0, [r5, #0x18]
+	mov	r5, #0x0
+	add	r6, r6, #0x1
+	str	r6, [sp, #0x38]
+	add	r7, r4, #0
 	mov	r0, #0x64
-	mov	r3, r8
-	mul	r3, r3, r0
-	mov	r7, r9
-	str	r7, [sp, #0x40]
-	ldr	r0, .L562
-	mov	sl, r0
+	mov	r1, r8
+	mul	r1, r1, r0
+	mov	r9, r1
+	ldr	r3, .L562+0x4
+	add	r6, r7, #0
+	ldr	r2, .L562
+	mov	sl, r2
 .L546:
-	ldr	r0, [r5]
-	ldr	r1, [sp, #0x40]
-	add	r0, r1, r0
-	lsl	r4, r6, #0x1
+	ldr	r0, [r3]
+	add	r0, r6, r0
+	lsl	r4, r5, #0x1
 	add	r0, r0, #0x2
 	add	r0, r0, r4
 	ldrh	r1, [r0]
-	lsl	r2, r6, #0x18
+	lsl	r2, r5, #0x18
 	lsr	r2, r2, #0x18
-	mov	r7, sl
-	add	r0, r3, r7
+	mov	r0, r9
+	add	r0, r0, sl
 	str	r3, [sp, #0x3c]
 	bl	SetMonMoveSlot
-	ldr	r0, [r5]
-	ldr	r1, [sp, #0x40]
-	add	r0, r1, r0
+	ldr	r3, [sp, #0x3c]
+	ldr	r0, [r3]
+	add	r0, r6, r0
 	add	r0, r0, #0x2
 	add	r0, r0, r4
 	ldrh	r0, [r0]
-	ldr	r3, [sp, #0x3c]
 	cmp	r0, #0xda
 	bne	.L545	@cond_branch
-	mov	r7, #0x0
-	mov	r2, sp
-	strb	r7, [r2, #0x18]
+	mov	r1, #0x0
+	mov	r0, sp
+	strb	r1, [r0, #0x18]
 .L545:
-	add	r6, r6, #0x1
-	cmp	r6, #0x3
+	add	r5, r5, #0x1
+	cmp	r5, #0x3
 	ble	.L546	@cond_branch
-	mov	r0, #0x64
+	mov	r2, #0x64
 	mov	r4, r8
-	mul	r4, r4, r0
-	ldr	r1, .L562
-	add	r4, r4, r1
+	mul	r4, r4, r2
+	ldr	r5, .L562
+	add	r4, r4, r5
 	add	r0, r4, #0
 	mov	r1, #0x20
 	add	r2, sp, #0x18
 	bl	SetMonData
-	ldr	r0, .L562+0x4
-	ldr	r0, [r0]
-	add	r0, r0, r9
+	ldr	r1, .L562+0x4
+	ldr	r0, [r1]
+	add	r0, r7, r0
 	ldrb	r2, [r0, #0xa]
 	lsl	r2, r2, #0x1
 	ldr	r0, .L562+0x8
@@ -40725,15 +41620,22 @@ FillTrainerParty:
 	add	r0, r4, #0
 	mov	r1, #0xc
 	bl	SetMonData
-	ldr	r7, [sp, #0x38]
+	ldr	r5, .L562+0x4
+	ldr	r2, [r5]
+	add	r2, r2, r7
+	add	r2, r2, #0xd
+	add	r0, r4, #0
+	mov	r1, #0x2e
+	bl	SetMonData
+	ldr	r6, [sp, #0x38]
 .L517:
-	ldr	r2, [sp, #0x20]
-	cmp	r7, r2
-	beq	.LCB3875
+	ldr	r7, [sp, #0x20]
+	cmp	r6, r7
+	beq	.LCB3884
 	b	.L519	@long jump
-.LCB3875:
+.LCB3884:
 .L487:
-	add	sp, sp, #0x44
+	add	sp, sp, #0x40
 	pop	{r3, r4, r5}
 	mov	r8, r3
 	mov	r9, r4
@@ -41042,9 +41944,9 @@ FillFactoryFrontierTrainerParty:
 	ldr	r6, [sp, #0x14]
 	add	r0, r6, #0x3
 	cmp	r6, r0
-	blt	.LCB4278
+	blt	.LCB4287
 	b	.L608	@long jump
-.LCB4278:
+.LCB4287:
 	ldr	r4, .L635
 .L617:
 	mov	r0, #0x64
@@ -41501,9 +42403,9 @@ HandleSpecialTrainerBattleEnd:
 	add	r0, r0, #0x26
 	ldrb	r0, [r0]
 	cmp	r0, #0xb
-	bls	.LCB4868
+	bls	.LCB4877
 	b	.L688	@long jump
-.LCB4868:
+.LCB4877:
 	lsl	r0, r0, #0x2
 	ldr	r1, .L716+0x4
 	add	r0, r0, r1
@@ -41680,9 +42582,9 @@ DoSpecialTrainerBattle:
 	strb	r1, [r0]
 	ldrh	r0, [r2]
 	cmp	r0, #0xb
-	bls	.LCB5085
+	bls	.LCB5094
 	b	.L731	@long jump
-.LCB5085:
+.LCB5094:
 	lsl	r0, r0, #0x2
 	ldr	r1, .L782+0x8
 	add	r0, r0, r1
@@ -43236,9 +44138,9 @@ LoadMultiPartnerCandidatesData:
 	ldr	r0, [sp, #0x2c]
 	mov	r9, r0
 	cmp	r0, #0x4
-	bgt	.LCB7134
+	bgt	.LCB7143
 	b	.L939	@long jump
-.LCB7134:
+.LCB7143:
 	mov	r1, sl
 	cmp	r1, #0
 	beq	.L954	@cond_branch
@@ -43518,9 +44420,9 @@ ShowPartnerCandidateMessage:
 	ldr	r0, .L1034
 	ldrh	r0, [r0]
 	cmp	r0, #0x4
-	bls	.LCB7473
+	bls	.LCB7482
 	b	.L984	@long jump
-.LCB7473:
+.LCB7482:
 	lsl	r0, r0, #0x2
 	ldr	r1, .L1034+0x4
 	add	r0, r0, r1
@@ -43543,9 +44445,9 @@ ShowPartnerCandidateMessage:
 	mov	r0, #0xfa
 	lsl	r0, r0, #0x1
 	cmp	r7, r0
-	bne	.LCB7496
+	bne	.LCB7505
 	b	.L977	@long jump
-.LCB7496:
+.LCB7505:
 	sub	r0, r0, #0xc9
 	cmp	r7, r0
 	ble	.L1028	@cond_branch
@@ -43904,9 +44806,9 @@ LoadLinkMultiOpponentsData:
 	ldr	r0, .L1096+0x10
 	ldrh	r0, [r0]
 	cmp	r0, #0x6
-	bls	.LCB7980
+	bls	.LCB7989
 	b	.L1054	@long jump
-.LCB7980:
+.LCB7989:
 	lsl	r0, r0, #0x2
 	ldr	r1, .L1096+0x14
 	add	r0, r0, r1
@@ -43933,9 +44835,9 @@ LoadLinkMultiOpponentsData:
 	.word	.L1054
 .L1056:
 	cmp	r5, #0x3
-	beq	.LCB8005
+	beq	.LCB8014
 	b	.L1094	@long jump
-.LCB8005:
+.LCB8014:
 	ldr	r0, .L1098
 	ldr	r0, [r0]
 	lsl	r1, r7, #0x1
@@ -43951,9 +44853,9 @@ LoadLinkMultiOpponentsData:
 	bl	IsLinkTaskFinished
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	bne	.LCB8028
+	bne	.LCB8037
 	b	.L1054	@long jump
-.LCB8028:
+.LCB8037:
 	bl	bitmask_all_link_players_but_self
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
@@ -43974,9 +44876,9 @@ LoadLinkMultiOpponentsData:
 	mov	r1, #0x3
 	and	r1, r1, r0
 	cmp	r1, #0x3
-	beq	.LCB8060
+	beq	.LCB8069
 	b	.L1054	@long jump
-.LCB8060:
+.LCB8069:
 	bl	ResetBlockReceivedFlags
 	ldr	r1, .L1100
 	mov	r0, #0x80
@@ -45094,9 +45996,9 @@ FillPartnerParty:
 	ldr	r0, .L1372
 	ldr	r1, [sp, #0x60]
 	cmp	r1, r0
-	beq	.LCB9531
+	beq	.LCB9540
 	b	.L1277	@long jump
-.LCB9531:
+.LCB9540:
 	mov	r2, #0x0
 	mov	r9, r2
 	mov	r3, sp
@@ -45228,9 +46130,9 @@ FillPartnerParty:
 	ldr	r1, [sp, #0x78]
 	mov	r9, r1
 	cmp	r1, #0x2
-	bgt	.LCB9718
+	bgt	.LCB9727
 	b	.L1281	@long jump
-.LCB9718:
+.LCB9727:
 	b	.L1298
 .L1373:
 	.align	2, 0
@@ -45245,9 +46147,9 @@ FillPartnerParty:
 .L1277:
 	ldr	r2, [sp, #0x60]
 	cmp	r2, r0
-	bhi	.LCB9737
+	bhi	.LCB9746
 	b	.L1299	@long jump
-.LCB9737:
+.LCB9746:
 	bl	Random
 	add	r4, r0, #0
 	bl	Random
@@ -45278,9 +46180,9 @@ FillPartnerParty:
 	add	r0, r0, #0x20
 	ldrb	r0, [r0]
 	cmp	r9, r0
-	blt	.LCB9790
+	blt	.LCB9799
 	b	.L1298	@long jump
-.LCB9790:
+.LCB9799:
 	lsl	r0, r4, #0x2
 	str	r0, [sp, #0x7c]
 	add	r1, r7, #0
@@ -45331,9 +46233,9 @@ FillPartnerParty:
 	cmp	r7, #0x2
 	beq	.L1323	@cond_branch
 	cmp	r7, #0x3
-	bne	.LCB9860
+	bne	.LCB9869
 	b	.L1324	@long jump
-.LCB9860:
+.LCB9869:
 	b	.L1315
 .L1316:
 	add	r0, r2, #0
@@ -45594,9 +46496,9 @@ FillPartnerParty:
 	ldr	r3, [sp, #0x78]
 	mov	r9, r3
 	cmp	r3, #0x2
-	ble	.LCB10192
+	ble	.LCB10201
 	b	.L1298	@long jump
-.LCB10192:
+.LCB10201:
 	ldr	r7, [sp, #0x74]
 	lsl	r0, r7, #0x2
 	add	r0, r0, r7
@@ -45606,9 +46508,9 @@ FillPartnerParty:
 	add	r0, r0, r1
 	ldrb	r0, [r0]
 	cmp	r9, r0
-	bge	.LCB10205
+	bge	.LCB10214
 	b	.L1308	@long jump
-.LCB10205:
+.LCB10214:
 	b	.L1298
 .L1383:
 	.align	2, 0
@@ -45636,9 +46538,9 @@ FillPartnerParty:
 	ldr	r0, .L1386
 	ldr	r3, [sp, #0x60]
 	cmp	r3, r0
-	bls	.LCB10245
+	bls	.LCB10254
 	b	.L1337	@long jump
-.LCB10245:
+.LCB10254:
 	bl	SetFacilityPtrsGetLevel
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
@@ -45813,9 +46715,9 @@ FillPartnerParty:
 	ldr	r1, [sp, #0x78]
 	mov	r9, r1
 	cmp	r1, #0x1
-	bgt	.LCB10463
+	bgt	.LCB10472
 	b	.L1341	@long jump
-.LCB10463:
+.LCB10472:
 	b	.L1298
 .L1387:
 	.align	2, 0
@@ -45830,9 +46732,9 @@ FillPartnerParty:
 	ldr	r0, .L1388
 	ldr	r2, [sp, #0x60]
 	cmp	r2, r0
-	bls	.LCB10484
+	bls	.LCB10493
 	b	.L1355	@long jump
-.LCB10484:
+.LCB10493:
 	ldr	r3, .L1388+0x4
 	add	r0, r2, r3
 	lsl	r0, r0, #0x10
@@ -47036,9 +47938,9 @@ FillTentTrainerParty_:
 	bne	.L1634	@cond_branch
 .L1633:
 	cmp	r6, r7
-	beq	.LCB12111
+	beq	.LCB12120
 	b	.L1629	@long jump
-.LCB12111:
+.LCB12120:
 	mov	r6, #0x0
 	cmp	r6, r7
 	bge	.L1640	@cond_branch
@@ -47190,9 +48092,9 @@ FillTentTrainerParty_:
 .L1629:
 	ldr	r1, [sp, #0x20]
 	cmp	r8, r1
-	beq	.LCB12307
+	beq	.LCB12316
 	b	.L1631	@long jump
-.LCB12307:
+.LCB12316:
 	add	sp, sp, #0x3c
 	pop	{r3, r4, r5}
 	mov	r8, r3

@@ -19263,6 +19263,7 @@ extern const u8 gText_Birch_WhatsYourName[];
 extern const u8 gText_Birch_SoItsPlayer[];
 extern const u8 gText_Birch_YourePlayer[];
 extern const u8 gText_Birch_AreYouReady[];
+extern const u8 gText_Birch_ChoseDifficulty[];
 extern const u8 gText_ContinueMenuPlayer[];
 extern const u8 gText_ContinueMenuTime[];
 extern const u8 gText_ContinueMenuPokedex[];
@@ -22121,6 +22122,9 @@ void InitTradeSequenceBgGpuRegs(void);
 void LinkTradeDrawWindow(void);
 void InitTradeBg(void);
 void DrawTextOnTradeWindow(u8, const u8 *, u8);
+u16 CreateWonderTradePokemon(void);
+u16 WonderTradeGetFirstStage(u16 species);
+u16 WonderTradeGetEvolvedForm(u16 species,u8 level);
 # 64 "src/party_menu.c" 2
 # 1 "include/union_room.h" 1
 

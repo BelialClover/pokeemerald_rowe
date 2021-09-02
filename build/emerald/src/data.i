@@ -31162,6 +31162,9 @@ const u8 gEnemyMonElevation[898 + 308 + 1] =
     [353] = 14,
     [354] = 8,
     [351] = 16,
+ [898 + 132] = 16,
+ [898 + 131] = 16,
+ [898 + 130] = 16,
     [374] = 8,
     [384] = 6,
     [380] = 12,
@@ -35443,7 +35446,7 @@ static const union AnimCmd sAnim_CASTFORM_0[] =
     {.frame = {0, 1}},
     {.type = -1},
 };
-
+# 4220 "src/data/pokemon_graphics/front_pic_anims.h"
 static const union AnimCmd sAnim_CASTFORM_1[] =
 {
     {.frame = {1, 1}},
@@ -42223,10 +42226,35 @@ static const union AnimCmd *const sAnims_AGGRON[] ={
 };
 
 static const union AnimCmd *const sAnims_CASTFORM[] ={
-    sAnim_CASTFORM_0,
-    sAnim_CASTFORM_1,
-    sAnim_CASTFORM_2,
-    sAnim_CASTFORM_3,
+    sAnim_GeneralFrame0,
+ sAnim_CASTFORM_0,
+
+
+
+};
+
+static const union AnimCmd *const sAnims_CASTFORM_SUNNY[] ={
+    sAnim_GeneralFrame0,
+ sAnim_CASTFORM_0,
+
+
+
+};
+
+static const union AnimCmd *const sAnims_CASTFORM_SNOWY[] ={
+    sAnim_GeneralFrame0,
+ sAnim_CASTFORM_0,
+
+
+
+};
+
+static const union AnimCmd *const sAnims_CASTFORM_RAINY[] ={
+    sAnim_GeneralFrame0,
+ sAnim_CASTFORM_0,
+
+
+
 };
 
 static const union AnimCmd *const sAnims_VOLBEAT[] ={
@@ -46674,9 +46702,9 @@ const union AnimCmd *const *const gMonFrontAnimsPtrTable[] =
     [898 + 127] = sAnims_UNOWN_Z,
     [898 + 128] = sAnims_UNOWN_EMARK,
     [898 + 129] = sAnims_UNOWN_QMARK,
-    [898 + 130] = sAnims_CASTFORM,
-    [898 + 131] = sAnims_CASTFORM,
-    [898 + 132] = sAnims_CASTFORM,
+    [898 + 130] = sAnims_CASTFORM_SUNNY,
+    [898 + 131] = sAnims_CASTFORM_RAINY,
+    [898 + 132] = sAnims_CASTFORM_SNOWY,
     [898 + 133] = sAnims_DEOXYS_ATTACK,
     [898 + 134] = sAnims_DEOXYS_DEFENSE,
     [898 + 135] = sAnims_DEOXYS_SPEED,

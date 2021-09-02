@@ -398,7 +398,7 @@ static void SetPlayerAndOpponentParties(void)
     if (gSaveBlock2Ptr->frontier.lvlMode == FRONTIER_LVL_TENT)
     {
         gFacilityTrainerMons = gSlateportBattleTentMons;
-        monLevel = 30;
+        monLevel = 50;
     }
     else
     {
@@ -446,6 +446,8 @@ static void SetPlayerAndOpponentParties(void)
             SetMonData(&gPlayerParty[i], MON_DATA_FRIENDSHIP, &friendship);
             SetMonData(&gPlayerParty[i], MON_DATA_HELD_ITEM, &gBattleFrontierHeldItems[gFacilityTrainerMons[monId].itemTableId]);
             SetMonData(&gPlayerParty[i], MON_DATA_ABILITY_NUM, &gSaveBlock2Ptr->frontier.rentalMons[i].abilityNum);
+			if (gSaveBlock2Ptr->frontier.lvlMode == FRONTIER_LVL_TENT)
+			SetMonData(&gPlayerParty[i], MON_DATA_ABILITY_NUM, &gFacilityTrainerMons[monId].abilityNum);
         }
     }
 
@@ -840,7 +842,8 @@ u32 GetAiScriptsInBattleFactory(void)
 {
     int lvlMode = gSaveBlock2Ptr->frontier.lvlMode;
 
-    if (lvlMode == FRONTIER_LVL_TENT)
+    //if (lvlMode == FRONTIER_LVL_TENT)
+	if (FALSE)	
     {
         return 0;
     }

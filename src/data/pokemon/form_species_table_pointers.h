@@ -52,7 +52,7 @@ const u16 *const gFormSpeciesIdTables[NUM_SPECIES] =
     [SPECIES_SHARPEDO] = sSharpedoFormSpeciesIdTable,
     [SPECIES_CAMERUPT] = sCameruptFormSpeciesIdTable,
     [SPECIES_ALTARIA] = sAltariaFormSpeciesIdTable,
-    [SPECIES_CASTFORM] = sCastformFormSpeciesIdTable,
+    //[SPECIES_CASTFORM] = sCastformFormSpeciesIdTable,
     [SPECIES_BANETTE] = sBanetteFormSpeciesIdTable,
     [SPECIES_ABSOL] = sAbsolFormSpeciesIdTable,
     [SPECIES_GLALIE] = sGlalieFormSpeciesIdTable,
@@ -97,7 +97,7 @@ const u16 *const gFormSpeciesIdTables[NUM_SPECIES] =
     [SPECIES_FLORGES] = sFlorgesFormSpeciesIdTable,
     [SPECIES_FURFROU] = sFurfrouFormSpeciesIdTable,
     [SPECIES_MEOWSTIC] = sMeowsticFormSpeciesIdTable,
-    [SPECIES_AEGISLASH] = sAegislashFormSpeciesIdTable,
+   // [SPECIES_AEGISLASH] = sAegislashFormSpeciesIdTable,
     [SPECIES_PUMPKABOO] = sPumpkabooFormSpeciesIdTable,
     [SPECIES_GOURGEIST] = sGourgeistFormSpeciesIdTable,
     [SPECIES_XERNEAS] = sXerneasFormSpeciesIdTable,
@@ -107,7 +107,7 @@ const u16 *const gFormSpeciesIdTables[NUM_SPECIES] =
     [SPECIES_ORICORIO] = sOricorioFormSpeciesIdTable,
     [SPECIES_ROCKRUFF] = sRockruffFormSpeciesIdTable,
     [SPECIES_LYCANROC] = sLycanrocFormSpeciesIdTable,
-    [SPECIES_WISHIWASHI] = sWishiwashiFormSpeciesIdTable,
+    //[SPECIES_WISHIWASHI] = sWishiwashiFormSpeciesIdTable,
     [SPECIES_SILVALLY] = sSilvallyFormSpeciesIdTable,
     [SPECIES_MINIOR] = sMiniorFormSpeciesIdTable,
     [SPECIES_MIMIKYU] = sMimikyuFormSpeciesIdTable,
@@ -231,9 +231,9 @@ const u16 *const gFormSpeciesIdTables[NUM_SPECIES] =
     [SPECIES_UNOWN_EMARK] = sUnownFormSpeciesIdTable,
     [SPECIES_UNOWN_QMARK] = sUnownFormSpeciesIdTable,
     // Castform
-    [SPECIES_CASTFORM_SUNNY] = sCastformFormSpeciesIdTable,
-    [SPECIES_CASTFORM_RAINY] = sCastformFormSpeciesIdTable,
-    [SPECIES_CASTFORM_SNOWY] = sCastformFormSpeciesIdTable,
+    //[SPECIES_CASTFORM_SUNNY] = sCastformFormSpeciesIdTable,
+    //[SPECIES_CASTFORM_RAINY] = sCastformFormSpeciesIdTable,
+    //[SPECIES_CASTFORM_SNOWY] = sCastformFormSpeciesIdTable,
     // Deoxys
     [SPECIES_DEOXYS_ATTACK] = sDeoxysFormSpeciesIdTable,
     [SPECIES_DEOXYS_DEFENSE] = sDeoxysFormSpeciesIdTable,
@@ -358,7 +358,7 @@ const u16 *const gFormSpeciesIdTables[NUM_SPECIES] =
     // Meowstic
     [SPECIES_MEOWSTIC_FEMALE] = sMeowsticFormSpeciesIdTable,
     // Aegislash
-    [SPECIES_AEGISLASH_BLADE] = sAegislashFormSpeciesIdTable,
+    //[SPECIES_AEGISLASH_BLADE] = sAegislashFormSpeciesIdTable,
     // Pumpkaboo
     [SPECIES_PUMPKABOO_SMALL] = sPumpkabooFormSpeciesIdTable,
     [SPECIES_PUMPKABOO_LARGE] = sPumpkabooFormSpeciesIdTable,
@@ -386,7 +386,7 @@ const u16 *const gFormSpeciesIdTables[NUM_SPECIES] =
     [SPECIES_LYCANROC_MIDNIGHT] = sLycanrocFormSpeciesIdTable,
     [SPECIES_LYCANROC_DUSK] = sLycanrocFormSpeciesIdTable,
     // Wishiwashi
-    [SPECIES_WISHIWASHI_SCHOOL] = sWishiwashiFormSpeciesIdTable,
+    //[SPECIES_WISHIWASHI_SCHOOL] = sWishiwashiFormSpeciesIdTable,
     // Silvally
     [SPECIES_SILVALLY_FIGHTING] = sSilvallyFormSpeciesIdTable,
     [SPECIES_SILVALLY_FLYING] = sSilvallyFormSpeciesIdTable,

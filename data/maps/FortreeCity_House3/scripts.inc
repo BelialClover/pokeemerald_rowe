@@ -89,7 +89,7 @@ FortreeCity_House3_EventScript_Give_Bulbasaur_Mega::
 	bufferspeciesname 1, SPECIES_BULBASAUR
 	playfanfare MUS_OBTAIN_ITEM
 	message FortreeCity_House3_Text_ReceivedMonFromOldMan
-	givemon SPECIES_BULBASAUR, 30, ITEM_VENUSAURITE
+	givemon SPECIES_BULBASAUR, 1, ITEM_VENUSAURITE
 	setflag FLAG_UNUSED_0x279
 	waitfanfare
 	msgbox FortreeCity_House3_Text_ComeAgain_Starter, MSGBOX_DEFAULT
@@ -101,7 +101,7 @@ FortreeCity_House3_EventScript_Give_Chikorita::
 	bufferspeciesname 1, SPECIES_CHIKORITA
 	playfanfare MUS_OBTAIN_ITEM
 	message FortreeCity_House3_Text_ReceivedMonFromOldMan
-	givemon SPECIES_CHIKORITA, 10, ITEM_NONE
+	givemon SPECIES_CHIKORITA, 1, ITEM_NONE
 	waitfanfare
 	msgbox FortreeCity_House3_Text_ComeAgain_Starter, MSGBOX_DEFAULT
 	release
@@ -112,7 +112,7 @@ FortreeCity_House3_EventScript_Give_Treecko::
 	bufferspeciesname 1, SPECIES_TREECKO
 	playfanfare MUS_OBTAIN_ITEM
 	message FortreeCity_House3_Text_ReceivedMonFromOldMan
-	givemon SPECIES_TREECKO, 10, ITEM_NONE
+	givemon SPECIES_TREECKO, 1, ITEM_NONE
 	waitfanfare
 	msgbox FortreeCity_House3_Text_ComeAgain_Starter, MSGBOX_DEFAULT
 	release
@@ -124,7 +124,7 @@ FortreeCity_House3_EventScript_Give_Treecko_Mega::
 	bufferspeciesname 1, SPECIES_TREECKO
 	playfanfare MUS_OBTAIN_ITEM
 	message FortreeCity_House3_Text_ReceivedMonFromOldMan
-	givemon SPECIES_TREECKO, 30, ITEM_SCEPTILITE
+	givemon SPECIES_TREECKO, 1, ITEM_SCEPTILITE
 	setflag FLAG_UNUSED_0x269
 	waitfanfare
 	msgbox FortreeCity_House3_Text_ComeAgain_Starter, MSGBOX_DEFAULT
@@ -136,7 +136,7 @@ FortreeCity_House3_EventScript_Give_Turtwig::
 	bufferspeciesname 1, SPECIES_TURTWIG
 	playfanfare MUS_OBTAIN_ITEM
 	message FortreeCity_House3_Text_ReceivedMonFromOldMan
-	givemon SPECIES_TURTWIG, 10, ITEM_NONE
+	givemon SPECIES_TURTWIG, 1, ITEM_NONE
 	waitfanfare
 	msgbox FortreeCity_House3_Text_ComeAgain_Starter, MSGBOX_DEFAULT
 	release
@@ -147,7 +147,7 @@ FortreeCity_House3_EventScript_Give_Snivy::
 	bufferspeciesname 1, SPECIES_SNIVY
 	playfanfare MUS_OBTAIN_ITEM
 	message FortreeCity_House3_Text_ReceivedMonFromOldMan
-	givemon SPECIES_SNIVY, 10, ITEM_NONE
+	givemon SPECIES_SNIVY, 1, ITEM_NONE
 	waitfanfare
 	msgbox FortreeCity_House3_Text_ComeAgain_Starter, MSGBOX_DEFAULT
 	release
@@ -158,7 +158,7 @@ FortreeCity_House3_EventScript_Give_Chespin::
 	bufferspeciesname 1, SPECIES_CHESPIN
 	playfanfare MUS_OBTAIN_ITEM
 	message FortreeCity_House3_Text_ReceivedMonFromOldMan
-	givemon SPECIES_CHESPIN, 10, ITEM_NONE
+	givemon SPECIES_CHESPIN, 1, ITEM_NONE
 	waitfanfare
 	msgbox FortreeCity_House3_Text_ComeAgain_Starter, MSGBOX_DEFAULT
 	release
@@ -169,7 +169,7 @@ FortreeCity_House3_EventScript_Give_Rowlet::
 	bufferspeciesname 1, SPECIES_ROWLET
 	playfanfare MUS_OBTAIN_ITEM
 	message FortreeCity_House3_Text_ReceivedMonFromOldMan
-	givemon SPECIES_ROWLET, 10, ITEM_NONE
+	givemon SPECIES_ROWLET, 1, ITEM_NONE
 	waitfanfare
 	msgbox FortreeCity_House3_Text_ComeAgain_Starter, MSGBOX_DEFAULT
 	release
@@ -180,7 +180,7 @@ FortreeCity_House3_EventScript_Give_Grookey::
 	bufferspeciesname 1, SPECIES_GROOKEY
 	playfanfare MUS_OBTAIN_ITEM
 	message FortreeCity_House3_Text_ReceivedMonFromOldMan
-	givemon SPECIES_GROOKEY, 10, ITEM_NONE
+	givemon SPECIES_GROOKEY, 1, ITEM_NONE
 	waitfanfare
 	msgbox FortreeCity_House3_Text_ComeAgain_Starter, MSGBOX_DEFAULT
 	release

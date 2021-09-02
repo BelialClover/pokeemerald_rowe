@@ -53,7 +53,41 @@ sSlateportTentFuncs:
 	.type	 sSlateportTentRewards,object
 sSlateportTentRewards:
 	.short	0x26
-	.size	 sSlateportTentRewards,2
+	.short	0x2ed
+	.short	0x2ea
+	.short	0x2ec
+	.short	0x98
+	.short	0x96
+	.short	0xfe
+	.short	0x1c
+	.short	0x4
+	.short	0x1d
+	.short	0x20
+	.short	0xd4
+	.short	0xe5
+	.short	0x7d
+	.short	0x45
+	.short	0x44
+	.short	0x42
+	.short	0x43
+	.short	0x7c
+	.short	0x95
+	.short	0x25
+	.short	0x5a
+	.short	0x1c6
+	.short	0x1c5
+	.short	0x2b7
+	.short	0x122
+	.short	0x130
+	.short	0x2d5
+	.short	0x2d6
+	.short	0x2dd
+	.short	0x2e1
+	.short	0x2e9
+	.short	0x5d
+	.short	0x2b2
+	.short	0x2b3
+	.size	 sSlateportTentRewards,70
 .text
 	.align	2, 0
 	.globl	CallVerdanturfTentFunction
@@ -711,11 +745,18 @@ SaveSlateportTentChallenge:
 	.thumb_func
 SetRandomSlateportTentPrize:
 	push	{r4, r5, lr}
-	ldr	r0, .L78
-	ldr	r4, [r0]
-	ldr	r5, .L78+0x4
 	bl	Random
-	ldrh	r0, [r5]
+	ldr	r1, .L78
+	ldr	r4, [r1]
+	ldr	r5, .L78+0x4
+	lsl	r0, r0, #0x10
+	lsr	r0, r0, #0x10
+	mov	r1, #0x23
+	bl	__umodsi3
+	lsl	r0, r0, #0x10
+	lsr	r0, r0, #0xf
+	add	r0, r0, r5
+	ldrh	r0, [r0]
 	ldr	r1, .L78+0x8
 	add	r4, r4, r1
 	strh	r0, [r4]
@@ -889,7 +930,7 @@ GenerateInitialRentalMons:
 	bl	Random
 	lsl	r0, r0, #0x10
 	lsr	r0, r0, #0x10
-	mov	r1, #0x7
+	mov	r1, #0x46
 	bl	__umodsi3
 	lsl	r0, r0, #0x10
 	lsr	r5, r0, #0x10
@@ -1016,9 +1057,9 @@ GenerateInitialRentalMons:
 .L99:
 	mov	r7, r8
 	cmp	r7, #0x6
-	beq	.LCB1159
+	beq	.LCB1170
 	b	.L101	@long jump
-.LCB1159:
+.LCB1170:
 	add	sp, sp, #0x3c
 	pop	{r3, r4, r5}
 	mov	r8, r3

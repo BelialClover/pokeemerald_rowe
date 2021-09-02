@@ -127892,10 +127892,8 @@ sMeowsticFormSpeciesIdTable:
 	.align	1, 0
 	.type	 sAegislashFormSpeciesIdTable,object
 sAegislashFormSpeciesIdTable:
-	.short	0x2a9
-	.short	0x469
 	.short	0xffff
-	.size	 sAegislashFormSpeciesIdTable,6
+	.size	 sAegislashFormSpeciesIdTable,2
 	.align	1, 0
 	.type	 sPumpkabooFormSpeciesIdTable,object
 sPumpkabooFormSpeciesIdTable:
@@ -128268,9 +128266,7 @@ gFormSpeciesIdTables:
 	.word	sCameruptFormSpeciesIdTable
 	.space	40
 	.word	sAltariaFormSpeciesIdTable
-	.space	64
-	.word	sCastformFormSpeciesIdTable
-	.space	8
+	.space	76
 	.word	sBanetteFormSpeciesIdTable
 	.space	16
 	.word	sAbsolFormSpeciesIdTable
@@ -128347,9 +128343,7 @@ gFormSpeciesIdTables:
 	.word	sFurfrouFormSpeciesIdTable
 	.space	4
 	.word	sMeowsticFormSpeciesIdTable
-	.space	8
-	.word	sAegislashFormSpeciesIdTable
-	.space	112
+	.space	124
 	.word	sPumpkabooFormSpeciesIdTable
 	.word	sGourgeistFormSpeciesIdTable
 	.space	16
@@ -128363,8 +128357,7 @@ gFormSpeciesIdTables:
 	.space	8
 	.word	sRockruffFormSpeciesIdTable
 	.word	sLycanrocFormSpeciesIdTable
-	.word	sWishiwashiFormSpeciesIdTable
-	.space	104
+	.space	108
 	.word	sSilvallyFormSpeciesIdTable
 	.word	sMiniorFormSpeciesIdTable
 	.space	12
@@ -128502,9 +128495,7 @@ gFormSpeciesIdTables:
 	.word	sUnownFormSpeciesIdTable
 	.word	sUnownFormSpeciesIdTable
 	.word	sUnownFormSpeciesIdTable
-	.word	sCastformFormSpeciesIdTable
-	.word	sCastformFormSpeciesIdTable
-	.word	sCastformFormSpeciesIdTable
+	.space	12
 	.word	sDeoxysFormSpeciesIdTable
 	.word	sDeoxysFormSpeciesIdTable
 	.word	sDeoxysFormSpeciesIdTable
@@ -128603,7 +128594,7 @@ gFormSpeciesIdTables:
 	.word	sFurfrouFormSpeciesIdTable
 	.word	sFurfrouFormSpeciesIdTable
 	.word	sMeowsticFormSpeciesIdTable
-	.word	sAegislashFormSpeciesIdTable
+	.space	4
 	.word	sPumpkabooFormSpeciesIdTable
 	.word	sPumpkabooFormSpeciesIdTable
 	.word	sPumpkabooFormSpeciesIdTable
@@ -128622,7 +128613,7 @@ gFormSpeciesIdTables:
 	.word	sRockruffFormSpeciesIdTable
 	.word	sLycanrocFormSpeciesIdTable
 	.word	sLycanrocFormSpeciesIdTable
-	.word	sWishiwashiFormSpeciesIdTable
+	.space	4
 	.word	sSilvallyFormSpeciesIdTable
 	.word	sSilvallyFormSpeciesIdTable
 	.word	sSilvallyFormSpeciesIdTable
@@ -146567,10 +146558,8 @@ HasTwoFramesAnimation:
 	lsl	r0, r0, #0x10
 	lsr	r2, r0, #0x10
 	mov	r1, #0x0
-	ldr	r0, .L2638
-	cmp	r2, r0
-	beq	.L2637	@cond_branch
-	add	r0, r0, #0x23
+	mov	r0, #0xc1
+	lsl	r0, r0, #0x1
 	cmp	r2, r0
 	beq	.L2637	@cond_branch
 	sub	r0, r0, #0x3b
@@ -146578,7 +146567,7 @@ HasTwoFramesAnimation:
 	beq	.L2637	@cond_branch
 	cmp	r2, #0xc9
 	beq	.L2637	@cond_branch
-	ldr	r1, .L2638+0x4
+	ldr	r1, .L2638
 	eor	r1, r1, r2
 	neg	r0, r1
 	orr	r0, r0, r1
@@ -146590,7 +146579,6 @@ HasTwoFramesAnimation:
 .L2639:
 	.align	2, 0
 .L2638:
-	.word	0x15f
 	.word	0x1a5
 .Lfe159:
 	.size	 HasTwoFramesAnimation,.Lfe159-HasTwoFramesAnimation

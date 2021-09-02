@@ -23,5 +23,8 @@ void InitTradeSequenceBgGpuRegs(void);
 void LinkTradeDrawWindow(void);
 void InitTradeBg(void);
 void DrawTextOnTradeWindow(u8, const u8 *, u8);
+u16 CreateWonderTradePokemon(void);
+u16 WonderTradeGetFirstStage(u16 species);
+u16 WonderTradeGetEvolvedForm(u16 species,u8 level);
 
 #endif //GUARD_TRADE_H

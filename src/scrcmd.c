@@ -23,6 +23,7 @@
 #include "field_weather.h"
 #include "fieldmap.h"
 #include "item.h"
+#include "level_scale.h"
 #include "lilycove_lady.h"
 #include "main.h"
 #include "menu.h"
@@ -1688,7 +1689,10 @@ bool8 ScrCmd_givemon(struct ScriptContext *ctx)
     u32 unkParam2 = ScriptReadWord(ctx);
     u8 unkParam3 = ScriptReadByte(ctx);
 
-    gSpecialVar_Result = ScriptGiveMon(species, level, item, ability, unkParam2, unkParam3);
+    if(ability== 4)
+		gSpecialVar_Result = ScriptGiveMon(species, level, item, ability, unkParam2, unkParam3);
+	else
+		gSpecialVar_Result = ScriptGiveMon(Specie, level, item, ability, unkParam2, unkParam3);
     return FALSE;
 }
 

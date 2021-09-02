@@ -3241,6 +3241,7 @@ extern const u8 gText_Birch_WhatsYourName[];
 extern const u8 gText_Birch_SoItsPlayer[];
 extern const u8 gText_Birch_YourePlayer[];
 extern const u8 gText_Birch_AreYouReady[];
+extern const u8 gText_Birch_ChoseDifficulty[];
 extern const u8 gText_ContinueMenuPlayer[];
 extern const u8 gText_ContinueMenuTime[];
 extern const u8 gText_ContinueMenuPokedex[];
@@ -8049,6 +8050,6 @@ const u8 gText_FORMS_NONE[] = _("{STR_VAR_1} has no alternate forms.");
 
 
 const u8 gText_Region_Kanto[] = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}Kanto  ");
-const u8 gText_Region_Jotho[] = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}Jotho  ");
+const u8 gText_Region_Jotho[] = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}Johto  ");
 const u8 gText_Region_Hoenn[] = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}Hoenn  ");
 const u8 gText_Region_Sinnoh[] = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}Sinnoh");

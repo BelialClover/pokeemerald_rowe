@@ -4921,6 +4921,28 @@ void sub_81DB5AC(u8 *);
 int sub_81DB604(u8 *);
 void sub_81DB620(int windowId, int columnStart, int rowStart, int numFillTiles, int numRows);
 # 10 "src/script_pokemon_util.c" 2
+# 1 "include/level_scaling.h" 1
+
+
+
+u8 IsHardMode(void);
+u8 GetNumBadges(void);
+u8 getLevelBoost(void);
+u8 GetPlayerUsableMons(void);
+u8 getTrainerLevel(u8 Level);
+u8 getWildLevel(u8 Ability);
+u8 getTrainerPokemonNum(void);
+u8 getLeaderPokemonNum(void);
+u8 getDoubleTrainerPokemonNum(void);
+u16 GetWildPokemon(u16 basespecies, u8 level, u16 heldItem);
+u16 GetTrainerPokemon(u16 basespecies, u8 level);
+u16 GetBaseSpecie(u16 basespecies);
+u16 GetHeldItem(u16 baseitem);
+u16 GetFirstEvolution(u16 species);
+u8 GetEvsfromPokemon(u8 evs);
+bool8 IsMoveUsable(u8 movepower);
+u16 GetMapRandomPokemon(u16 TrainerClass, u16 species);
+# 11 "src/script_pokemon_util.c" 2
 # 1 "include/link.h" 1
 # 106 "include/link.h"
 struct LinkStatus
@@ -5173,7 +5195,7 @@ bool8 DoesLinkPlayerCountMatchSaved(void);
 void SetCloseLinkCallbackAndType(u16 type);
 bool32 IsSendingKeysToLink(void);
 u32 GetLinkRecvQueueLength(void);
-# 11 "src/script_pokemon_util.c" 2
+# 12 "src/script_pokemon_util.c" 2
 # 1 "include/link_rfu.h" 1
 
 
@@ -5947,11 +5969,11 @@ void InitHostRFUtgtGname(struct GFtgtGname *data, u8 activity, bool32 started, s
 void CreateWirelessStatusIndicatorSprite(u8 x, u8 y);
 void DestroyWirelessStatusIndicatorSprite(void);
 void LoadWirelessStatusIndicatorSpriteGfx(void);
-# 12 "src/script_pokemon_util.c" 2
-# 1 "include/main.h" 1
 # 13 "src/script_pokemon_util.c" 2
-# 1 "include/menu.h" 1
+# 1 "include/main.h" 1
 # 14 "src/script_pokemon_util.c" 2
+# 1 "include/menu.h" 1
+# 15 "src/script_pokemon_util.c" 2
 # 1 "include/overworld.h" 1
 # 29 "include/overworld.h"
 struct InitialPlayerAvatarState
@@ -6086,7 +6108,7 @@ bool32 sub_80875C8(void);
 bool32 sub_8087634(void);
 bool32 sub_808766C(void);
 void ClearLinkPlayerObjectEvents(void);
-# 15 "src/script_pokemon_util.c" 2
+# 16 "src/script_pokemon_util.c" 2
 # 1 "include/palette.h" 1
 # 17 "include/palette.h"
 enum
@@ -6151,7 +6173,7 @@ void TintPalette_GrayScale2(u16 *palette, u16 count);
 void TintPalette_SepiaTone(u16 *palette, u16 count);
 void TintPalette_CustomTone(u16 *palette, u16 count, u16 rTone, u16 gTone, u16 bTone);
 void TintPalette_CustomToneWithCopy(const u16 *src, u16 *dest, u16 count, u16 rTone, u16 gTone, u16 bTone, bool8 excludeZeroes);
-# 16 "src/script_pokemon_util.c" 2
+# 17 "src/script_pokemon_util.c" 2
 # 1 "include/party_menu.h" 1
 # 9 "include/party_menu.h"
 struct PartyMenu
@@ -6252,9 +6274,9 @@ void MoveDeleterChooseMoveToForget(void);
 bool8 CanLearnTutorMove(u16, u8);
 void ItemUseCB_Mints(u8 taskId, TaskFunc task);
 void ItemUseCB_Seal(u8 taskId, TaskFunc task);
-# 17 "src/script_pokemon_util.c" 2
-# 1 "include/pokeball.h" 1
 # 18 "src/script_pokemon_util.c" 2
+# 1 "include/pokeball.h" 1
+# 19 "src/script_pokemon_util.c" 2
 # 1 "include/pokedex.h" 1
 
 
@@ -6300,9 +6322,9 @@ bool16 HasAllHoennMons(void);
 void ResetPokedexScrollPositions(void);
 bool16 HasAllMons(void);
 void CB2_OpenPokedex(void);
-# 19 "src/script_pokemon_util.c" 2
-# 1 "include/pokemon.h" 1
 # 20 "src/script_pokemon_util.c" 2
+# 1 "include/pokemon.h" 1
+# 21 "src/script_pokemon_util.c" 2
 # 1 "include/random.h" 1
 
 
@@ -6317,7 +6339,7 @@ u16 RandRange(u16 min, u16 max);
 # 21 "include/random.h"
 void SeedRng(u16 seed);
 void SeedRng2(u16 seed);
-# 21 "src/script_pokemon_util.c" 2
+# 22 "src/script_pokemon_util.c" 2
 # 1 "include/script.h" 1
 
 
@@ -6384,7 +6406,7 @@ void InitRamScript_NoObjectEvent(u8 *script, u16 scriptSize);
 
 
 void SetMovingNpcId(u16 npcId);
-# 22 "src/script_pokemon_util.c" 2
+# 23 "src/script_pokemon_util.c" 2
 
 # 1 "gflib/string_util.h" 1
 
@@ -6433,7 +6455,7 @@ void ConvertInternationalString(u8 *s, u8 language);
 void StripExtCtrlCodes(u8 *str);
 
 char *ConvertToAscii(const u8 *str);
-# 24 "src/script_pokemon_util.c" 2
+# 25 "src/script_pokemon_util.c" 2
 # 1 "include/tv.h" 1
 
 
@@ -6502,13 +6524,45 @@ void ContestLiveUpdates_SetWinnerAppealFlag(u8 flag);
 void ContestLiveUpdates_SetWinnerMoveUsed(u16 move);
 void ContestLiveUpdates_SetLoserData(u8 flag, u8 loser);
 void ResetGabbyAndTy(void);
-# 25 "src/script_pokemon_util.c" 2
-# 1 "include/constants/items.h" 1
 # 26 "src/script_pokemon_util.c" 2
-# 1 "include/constants/tv.h" 1
+# 1 "include/trade.h" 1
+
+
+
+# 1 "include/link_rfu.h" 1
+# 5 "include/trade.h" 2
+# 1 "include/constants/trade.h" 1
+# 6 "include/trade.h" 2
+
+
+
+
+extern struct MailStruct gTradeMail[6];
+extern u8 gSelectedTradeMonPositions[2];
+
+
+extern const struct WindowTemplate gTradeEvolutionSceneYesNoWindowTemplate;
+
+s32 GetGameProgressForLinkTrade(void);
+void CB2_StartCreateTradeMenu(void);
+void CB2_LinkTrade(void);
+int CanRegisterMonForTradingBoard(struct GFtgtGnameSub a0, u16, u16, u8);
+int GetUnionRoomTradeMessageId(struct GFtgtGnameSub a0, struct GFtgtGnameSub a1, u16 a2, u16 a3, u8 a4, u16 a5, u8 a6);
+int CanSpinTradeMon(struct Pokemon*, u16);
+void InitTradeSequenceBgGpuRegs(void);
+void LinkTradeDrawWindow(void);
+void InitTradeBg(void);
+void DrawTextOnTradeWindow(u8, const u8 *, u8);
+u16 CreateWonderTradePokemon(void);
+u16 WonderTradeGetFirstStage(u16 species);
+u16 WonderTradeGetEvolvedForm(u16 species,u8 level);
 # 27 "src/script_pokemon_util.c" 2
-# 1 "include/constants/battle_frontier.h" 1
+# 1 "include/constants/items.h" 1
 # 28 "src/script_pokemon_util.c" 2
+# 1 "include/constants/tv.h" 1
+# 29 "src/script_pokemon_util.c" 2
+# 1 "include/constants/battle_frontier.h" 1
+# 30 "src/script_pokemon_util.c" 2
 
 static void CB2_ReturnFromChooseHalfParty(void);
 static void CB2_ReturnFromChooseBattleFrontierParty(void);
@@ -6552,8 +6606,19 @@ u8 ScriptGiveMon(u16 species, u8 level, u16 item, u32 ability, u32 unused2, u8 u
     struct Pokemon mon;
     u8 formId = GetFormIdFromFormSpeciesId(species);
     u16 baseSpecies = GetFormSpeciesId(species, 0);
+ u8 scaledlevel = getWildLevel(0);
+ u16 WonderTradeSpecie = CreateWonderTradePokemon();
+ u16 FirstStage = WonderTradeGetFirstStage(WonderTradeSpecie);
+ u16 Specie = WonderTradeGetEvolvedForm(FirstStage, level);
+ if (level != 1)
+  scaledlevel = level;
+ else
+  Specie = WonderTradeGetEvolvedForm(FirstStage, scaledlevel);
 
-    CreateMon(&mon, baseSpecies, level, 32, 0, 0, 0, 0, formId);
+ if(baseSpecies != 151)
+  CreateMon(&mon, baseSpecies, scaledlevel, 32, 0, 0, 0, 0, formId);
+ else
+  CreateMon(&mon, Specie, scaledlevel, 32, 0, 0, 0, 0, formId);
     heldItem[0] = item;
     heldItem[1] = item >> 8;
     SetMonData(&mon, 12, heldItem);

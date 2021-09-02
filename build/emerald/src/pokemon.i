@@ -5163,6 +5163,7 @@ struct FacilityMon
     u8 itemTableId;
     u8 evSpread;
     u8 nature;
+ u8 abilityNum;
 };
 
 extern const u8 gTowerMaleFacilityClasses[30];
@@ -7762,6 +7763,7 @@ extern const u8 gText_Birch_WhatsYourName[];
 extern const u8 gText_Birch_SoItsPlayer[];
 extern const u8 gText_Birch_YourePlayer[];
 extern const u8 gText_Birch_AreYouReady[];
+extern const u8 gText_Birch_ChoseDifficulty[];
 extern const u8 gText_ContinueMenuPlayer[];
 extern const u8 gText_ContinueMenuTime[];
 extern const u8 gText_ContinueMenuPokedex[];
@@ -121544,8 +121546,8 @@ static const u16 sMeowsticFormSpeciesIdTable[] = {
 };
 
 static const u16 sAegislashFormSpeciesIdTable[] = {
-    681,
-    898 + 231,
+
+
     0xFFFF,
 };
 
@@ -121830,7 +121832,7 @@ const u16 *const gFormSpeciesIdTables[898 + 308 + 1] =
     [319] = sSharpedoFormSpeciesIdTable,
     [323] = sCameruptFormSpeciesIdTable,
     [334] = sAltariaFormSpeciesIdTable,
-    [351] = sCastformFormSpeciesIdTable,
+
     [354] = sBanetteFormSpeciesIdTable,
     [359] = sAbsolFormSpeciesIdTable,
     [362] = sGlalieFormSpeciesIdTable,
@@ -121875,7 +121877,7 @@ const u16 *const gFormSpeciesIdTables[898 + 308 + 1] =
     [671] = sFlorgesFormSpeciesIdTable,
     [676] = sFurfrouFormSpeciesIdTable,
     [678] = sMeowsticFormSpeciesIdTable,
-    [681] = sAegislashFormSpeciesIdTable,
+
     [710] = sPumpkabooFormSpeciesIdTable,
     [711] = sGourgeistFormSpeciesIdTable,
     [716] = sXerneasFormSpeciesIdTable,
@@ -121885,7 +121887,7 @@ const u16 *const gFormSpeciesIdTables[898 + 308 + 1] =
     [741] = sOricorioFormSpeciesIdTable,
     [744] = sRockruffFormSpeciesIdTable,
     [745] = sLycanrocFormSpeciesIdTable,
-    [746] = sWishiwashiFormSpeciesIdTable,
+
     [773] = sSilvallyFormSpeciesIdTable,
     [774] = sMiniorFormSpeciesIdTable,
     [778] = sMimikyuFormSpeciesIdTable,
@@ -122009,9 +122011,9 @@ const u16 *const gFormSpeciesIdTables[898 + 308 + 1] =
     [898 + 128] = sUnownFormSpeciesIdTable,
     [898 + 129] = sUnownFormSpeciesIdTable,
 
-    [898 + 130] = sCastformFormSpeciesIdTable,
-    [898 + 131] = sCastformFormSpeciesIdTable,
-    [898 + 132] = sCastformFormSpeciesIdTable,
+
+
+
 
     [898 + 133] = sDeoxysFormSpeciesIdTable,
     [898 + 134] = sDeoxysFormSpeciesIdTable,
@@ -122136,7 +122138,7 @@ const u16 *const gFormSpeciesIdTables[898 + 308 + 1] =
 
     [898 + 230] = sMeowsticFormSpeciesIdTable,
 
-    [898 + 231] = sAegislashFormSpeciesIdTable,
+
 
     [898 + 232] = sPumpkabooFormSpeciesIdTable,
     [898 + 233] = sPumpkabooFormSpeciesIdTable,
@@ -122164,7 +122166,7 @@ const u16 *const gFormSpeciesIdTables[898 + 308 + 1] =
     [898 + 248] = sLycanrocFormSpeciesIdTable,
     [898 + 249] = sLycanrocFormSpeciesIdTable,
 
-    [898 + 250] = sWishiwashiFormSpeciesIdTable,
+
 
     [898 + 251] = sSilvallyFormSpeciesIdTable,
     [898 + 252] = sSilvallyFormSpeciesIdTable,
@@ -128089,8 +128091,7 @@ const u8 *GetTrainerNameFromId(u16 trainerId)
 
 bool8 HasTwoFramesAnimation(u16 species)
 {
-    return (species != 351
-            && species != 386
+    return (species != 386
             && species != 327
             && species != 201
             && species != 421);

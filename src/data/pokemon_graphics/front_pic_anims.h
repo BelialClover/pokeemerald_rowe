@@ -4198,6 +4198,24 @@ static const union AnimCmd sAnim_CASTFORM_0[] =
     ANIMCMD_FRAME(0, 1),
     ANIMCMD_END,
 };
+/*/
+static const union AnimCmd sAnim_CASTFORM_SUNNY_1[] =
+{
+    ANIMCMD_FRAME(1, 1),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sAnim_CASTFORM_RAINY_1[] =
+{
+    ANIMCMD_FRAME(1, 1),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sAnim_CASTFORM_SNOWY_1[] =
+{
+    ANIMCMD_FRAME(1, 1),
+    ANIMCMD_END,
+};/*/
 
 static const union AnimCmd sAnim_CASTFORM_1[] =
 {
@@ -10978,10 +10996,35 @@ static const union AnimCmd *const sAnims_AGGRON[] ={
 };
 
 static const union AnimCmd *const sAnims_CASTFORM[] ={
-    sAnim_CASTFORM_0,
-    sAnim_CASTFORM_1,
-    sAnim_CASTFORM_2,
-    sAnim_CASTFORM_3,
+    sAnim_GeneralFrame0,
+	sAnim_CASTFORM_0,
+    //sAnim_CASTFORM_1,
+    //sAnim_CASTFORM_2,
+    //sAnim_CASTFORM_3,
+};
+
+static const union AnimCmd *const sAnims_CASTFORM_SUNNY[] ={
+    sAnim_GeneralFrame0,
+	sAnim_CASTFORM_0,
+    //sAnim_CASTFORM_1,
+    //sAnim_CASTFORM_2,
+    //sAnim_CASTFORM_3,
+};
+
+static const union AnimCmd *const sAnims_CASTFORM_SNOWY[] ={
+    sAnim_GeneralFrame0,
+	sAnim_CASTFORM_0,
+    //sAnim_CASTFORM_1,
+    //sAnim_CASTFORM_2,
+    //sAnim_CASTFORM_3,
+};
+
+static const union AnimCmd *const sAnims_CASTFORM_RAINY[] ={
+    sAnim_GeneralFrame0,
+	sAnim_CASTFORM_0,
+    //sAnim_CASTFORM_1,
+    //sAnim_CASTFORM_2,
+    //sAnim_CASTFORM_3,
 };
 
 static const union AnimCmd *const sAnims_VOLBEAT[] ={
@@ -15429,9 +15472,9 @@ const union AnimCmd *const *const gMonFrontAnimsPtrTable[] =
     ANIM_CMD(UNOWN_Z),
     ANIM_CMD(UNOWN_EMARK),
     ANIM_CMD(UNOWN_QMARK),
-    ANIM_CMD_FULL(CASTFORM_SUNNY, sAnims_CASTFORM),
-    ANIM_CMD_FULL(CASTFORM_RAINY, sAnims_CASTFORM),
-    ANIM_CMD_FULL(CASTFORM_SNOWY, sAnims_CASTFORM),
+    ANIM_CMD(CASTFORM_SUNNY),
+    ANIM_CMD(CASTFORM_RAINY),
+    ANIM_CMD(CASTFORM_SNOWY),
     ANIM_CMD(DEOXYS_ATTACK),
     ANIM_CMD(DEOXYS_DEFENSE),
     ANIM_CMD(DEOXYS_SPEED),

@@ -66,17 +66,6 @@ Start_EventScript_SetUpclock::
 	faceplayer
 	msgbox Text_SetClock, MSGBOX_SIGN
 	end
-
-Start_EventScript_Starter_Chose::
-	lock
-	faceplayer
-	call_if_unset FLAG_SET_WALL_CLOCK, Start_EventScript_WallClock
-	call_if_set FLAG_SYS_POKEMON_GET, Start_Flagset
-	msgbox Start_Text_Starter_Chose, MSGBOX_SIGN
-	setflag FLAG_RESCUED_BIRCH
-	removeobject LOCALID_ZIGZAGOON
-	goto Start_Chose_Starter
-	end
 	
 Start_EventScript_WallClock::
 	msgbox Text_Set_Up_Clock, MSGBOX_DEFAULT
@@ -89,7 +78,18 @@ Start_EventScript_WallClock::
 	goto Start_EventScript_Starter_Chose
 	end
 	
+Start_EventScript_Starter_Chose::
+	lock
+	faceplayer
+	call_if_unset FLAG_SET_WALL_CLOCK, Start_EventScript_WallClock
+	call_if_set FLAG_SYS_POKEMON_GET, Start_Flagset
+	msgbox Start_Text_Starter_Chose, MSGBOX_SIGN
+	setflag FLAG_RESCUED_BIRCH
+	goto Start_Chose_Starter
+	end
+	
 Start_Chose_Starter::
+	goto_if_set FLAG_TEMP_1, Script_Give_Starter10
 	msgbox Start_Text_Starter_Text, MSGBOX_SIGN
 	scrollingmultichoice 1, 2, 3, 5, FALSE
 	switch VAR_RESULT
@@ -102,59 +102,14 @@ Start_Chose_Starter::
 	case 6, Script_Give_Starter7
 	case 7, Script_Give_Starter8
 	case 8, Script_Give_Starter9
-	case 9, Start_Chose_Starter_Surprise
-	end	
-	
-Start_Chose_Starter_Surprise::
-	random 10
-	switch VAR_RESULT
-	case 0, Script_Give_Starter1_Rnd
-	case 1, Script_Give_Starter2_Rnd
-	case 2, Script_Give_Starter3_Rnd
-	case 3, Script_Give_Starter4_Rnd
-	case 4, Script_Give_Starter5_Rnd
-	case 5, Script_Give_Starter6_Rnd
-	case 6, Script_Give_Starter7_Rnd
-	case 7, Script_Give_Starter8_Rnd
-	case 8, Script_Give_Starter9_Rnd
-	case 9, Start_Chose_Starter_Surprise_2
-	end	
-	
-Start_Chose_Starter_Surprise_2::
-	random 10
-	switch VAR_RESULT
-	case 0, Script_Give_Starter1_Rnd
-	case 1, Script_Give_Starter2_Rnd
-	case 2, Script_Give_Starter3_Rnd
-	case 3, Script_Give_Starter4_Rnd
-	case 4, Script_Give_Starter5_Rnd
-	case 5, Script_Give_Starter6_Rnd
-	case 6, Script_Give_Starter7_Rnd
-	case 7, Script_Give_Starter8_Rnd
-	case 8, Script_Give_Starter9_Rnd
-	case 9, Start_Chose_Starter_Surprise_3
-	end	
-	
-Start_Chose_Starter_Surprise_3::
-	random 10
-	switch VAR_RESULT
-	case 0, Script_Give_Starter1_Rnd
-	case 1, Script_Give_Starter2_Rnd
-	case 2, Script_Give_Starter3_Rnd
-	case 3, Script_Give_Starter4_Rnd
-	case 4, Script_Give_Starter5_Rnd
-	case 5, Script_Give_Starter6_Rnd
-	case 6, Script_Give_Starter7_Rnd
-	case 7, Script_Give_Starter8_Rnd
-	case 8, Script_Give_Starter9_Rnd
-	case 9, Script_Give_Starter10_Rnd
+	case 9, Script_Give_Starter10
 	end	
 
 Start_Flagset::
 	//Pokeballs and Hardmode
 	goto_if_unset FLAG_SYS_POKEDEX_GET, Script_PokeballGet
 	//Flags Start
-	setflag FLAG_RECEIVED_POKEDEX_FROM_BIRCH
+	//setflag FLAG_RECEIVED_POKEDEX_FROM_BIRCH
 	setflag FLAG_HIDE_ROUTE_101_ZIGZAGOON
 	setflag FLAG_HIDE_ROUTE_101_BIRCH_ZIGZAGOON_BATTLE
 	setflag FLAG_HIDE_ROUTE_101_BIRCH_STARTERS_BAG
@@ -302,6 +257,7 @@ Start_NPC_Normal_Mode::
 	end
 
 Start_Chose_City::
+	call_if_unset FLAG_RECEIVED_POKEDEX_FROM_BIRCH, EventScript_FirstSave
 	msgbox Start_Text_City_Chose, MSGBOX_SIGN
 	scrollingmultichoice 0, 2, 3, 5, FALSE
 	switch VAR_RESULT
@@ -361,6 +317,18 @@ Script_PokeballGet::
 	waitfanfare
 	goto Start_Flagset
 	end
+
+EventScript_FirstSave::
+	call_if_unset FLAG_RECEIVED_POKEDEX_FROM_BIRCH, EventScript_ForceSave
+	setflag FLAG_RECEIVED_POKEDEX_FROM_BIRCH
+	return
+
+EventScript_ForceSave::
+	call Common_EventScript_SaveGame
+	setvar VAR_TEMP_0, 255
+	compare VAR_RESULT, 0
+	call_if_eq EventScript_ForceSave
+	return
 
 //Littleroot Town 01
 Start_City_Littleroot_Town::
@@ -994,10 +962,10 @@ Text_Take_Starter9:
 Text_Received_Starter9:
 	.string "{PLAYER} received a Smeargle!$"
 	
-Script_Give_Starter10_Rnd::
+Script_Give_Starter10::
 	lock
 	faceplayer
-	givecustommon SPECIES_MAGIKARP, 10, ITEM_POTION, ITEM_CHERISH_BALL, NATURE_MODEST, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, MOVE_SPLASH, MOVE_TACKLE, MOVE_CELEBRATE, MOVE_NONE
+	givemon SPECIES_MEW, 10, ITEM_NONE
 	playfanfare MUS_OBTAIN_ITEM
 	msgbox Text_Received_Starter10, MSGBOX_DEFAULT
 	setflag FLAG_SYS_POKEMON_GET
@@ -1007,7 +975,7 @@ Script_Give_Starter10_Rnd::
 	end
 	
 Text_Received_Starter10:
-	.string "{PLAYER} received a Magikarp!$"
+	.string "{PLAYER} received a Pokemon!$"
 	
 Text_SetClock:
 	.string "Please set up the clock\n"

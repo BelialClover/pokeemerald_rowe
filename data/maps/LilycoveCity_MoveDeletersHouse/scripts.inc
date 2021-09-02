@@ -74,7 +74,7 @@ LilycoveCity_MoveDeletersHouse_EventScript_Give_Squirtle::
 	bufferspeciesname 1, SPECIES_SQUIRTLE
 	playfanfare MUS_OBTAIN_ITEM
 	message LilycoveCity_MoveDeletersHouse_Text_ReceivedMonFromOldMan
-	givemon SPECIES_SQUIRTLE, 10, ITEM_NONE
+	givemon SPECIES_SQUIRTLE, 1, ITEM_NONE
 	waitfanfare
 	msgbox LilycoveCity_MoveDeletersHouse_Text_ComeAgain_Starter, MSGBOX_DEFAULT
 	release
@@ -86,7 +86,7 @@ LilycoveCity_MoveDeletersHouse_EventScript_Give_Squirtle_Mega::
 	bufferspeciesname 1, SPECIES_SQUIRTLE
 	playfanfare MUS_OBTAIN_ITEM
 	message LilycoveCity_MoveDeletersHouse_Text_ReceivedMonFromOldMan
-	givemon SPECIES_SQUIRTLE, 30, ITEM_BLASTOISINITE
+	givemon SPECIES_SQUIRTLE, 1, ITEM_BLASTOISINITE
 	setflag FLAG_UNUSED_0x27C
 	waitfanfare
 	msgbox LilycoveCity_MoveDeletersHouse_Text_ComeAgain_Starter, MSGBOX_DEFAULT
@@ -98,7 +98,7 @@ LilycoveCity_MoveDeletersHouse_EventScript_Give_Totodile::
 	bufferspeciesname 1, SPECIES_TOTODILE
 	playfanfare MUS_OBTAIN_ITEM
 	message LilycoveCity_MoveDeletersHouse_Text_ReceivedMonFromOldMan
-	givemon SPECIES_TOTODILE, 10, ITEM_NONE
+	givemon SPECIES_TOTODILE, 1, ITEM_NONE
 	waitfanfare
 	msgbox LilycoveCity_MoveDeletersHouse_Text_ComeAgain_Starter, MSGBOX_DEFAULT
 	release
@@ -109,7 +109,7 @@ LilycoveCity_MoveDeletersHouse_EventScript_Give_Mudkip::
 	bufferspeciesname 1, SPECIES_MUDKIP
 	playfanfare MUS_OBTAIN_ITEM
 	message LilycoveCity_MoveDeletersHouse_Text_ReceivedMonFromOldMan
-	givemon SPECIES_MUDKIP, 10, ITEM_NONE
+	givemon SPECIES_MUDKIP, 1, ITEM_NONE
 	waitfanfare
 	msgbox LilycoveCity_MoveDeletersHouse_Text_ComeAgain_Starter, MSGBOX_DEFAULT
 	release
@@ -121,7 +121,7 @@ LilycoveCity_MoveDeletersHouse_EventScript_Give_Mudkip_Mega::
 	bufferspeciesname 1, SPECIES_MUDKIP
 	playfanfare MUS_OBTAIN_ITEM
 	message LilycoveCity_MoveDeletersHouse_Text_ReceivedMonFromOldMan
-	givemon SPECIES_MUDKIP, 30, ITEM_SWAMPERTITE
+	givemon SPECIES_MUDKIP, 1, ITEM_SWAMPERTITE
 	setflag FLAG_UNUSED_0x26A
 	waitfanfare
 	msgbox LilycoveCity_MoveDeletersHouse_Text_ComeAgain_Starter, MSGBOX_DEFAULT
@@ -133,7 +133,7 @@ LilycoveCity_MoveDeletersHouse_EventScript_Give_Piplup::
 	bufferspeciesname 1, SPECIES_PIPLUP
 	playfanfare MUS_OBTAIN_ITEM
 	message LilycoveCity_MoveDeletersHouse_Text_ReceivedMonFromOldMan
-	givemon SPECIES_PIPLUP, 10, ITEM_NONE
+	givemon SPECIES_PIPLUP, 1, ITEM_NONE
 	waitfanfare
 	msgbox LilycoveCity_MoveDeletersHouse_Text_ComeAgain_Starter, MSGBOX_DEFAULT
 	release
@@ -144,7 +144,7 @@ LilycoveCity_MoveDeletersHouse_EventScript_Give_Oshawott::
 	bufferspeciesname 1, SPECIES_OSHAWOTT
 	playfanfare MUS_OBTAIN_ITEM
 	message LilycoveCity_MoveDeletersHouse_Text_ReceivedMonFromOldMan
-	givemon SPECIES_OSHAWOTT, 10, ITEM_NONE
+	givemon SPECIES_OSHAWOTT, 1, ITEM_NONE
 	waitfanfare
 	msgbox LilycoveCity_MoveDeletersHouse_Text_ComeAgain_Starter, MSGBOX_DEFAULT
 	release
@@ -155,7 +155,7 @@ LilycoveCity_MoveDeletersHouse_EventScript_Give_Froakie::
 	bufferspeciesname 1, SPECIES_FROAKIE
 	playfanfare MUS_OBTAIN_ITEM
 	message LilycoveCity_MoveDeletersHouse_Text_ReceivedMonFromOldMan
-	givemon SPECIES_FROAKIE, 10, ITEM_NONE
+	givemon SPECIES_FROAKIE, 1, ITEM_NONE
 	waitfanfare
 	msgbox LilycoveCity_MoveDeletersHouse_Text_ComeAgain_Starter, MSGBOX_DEFAULT
 	release
@@ -167,7 +167,7 @@ LilycoveCity_MoveDeletersHouse_EventScript_Give_Froakie_Ash::
 	bufferspeciesname 1, SPECIES_GRENINJA
 	playfanfare MUS_OBTAIN_ITEM
 	message LilycoveCity_MoveDeletersHouse_Text_ReceivedMonFromOldMan
-	givemon SPECIES_GRENINJA_BATTLE_BOND, 36, ITEM_NONE
+	givemon SPECIES_GRENINJA_BATTLE_BOND, 1, ITEM_NONE
 	setflag FLAG_UNUSED_0x2A1
 	waitfanfare
 	msgbox LilycoveCity_MoveDeletersHouse_Text_ComeAgain_Starter, MSGBOX_DEFAULT
@@ -179,7 +179,7 @@ LilycoveCity_MoveDeletersHouse_EventScript_Give_Popplio::
 	bufferspeciesname 1, SPECIES_POPPLIO
 	playfanfare MUS_OBTAIN_ITEM
 	message LilycoveCity_MoveDeletersHouse_Text_ReceivedMonFromOldMan
-	givemon SPECIES_POPPLIO, 10, ITEM_NONE
+	givemon SPECIES_POPPLIO, 1, ITEM_NONE
 	waitfanfare
 	msgbox LilycoveCity_MoveDeletersHouse_Text_ComeAgain_Starter, MSGBOX_DEFAULT
 	release
@@ -190,7 +190,7 @@ LilycoveCity_MoveDeletersHouse_EventScript_Give_Sobble::
 	bufferspeciesname 1, SPECIES_SOBBLE
 	playfanfare MUS_OBTAIN_ITEM
 	message LilycoveCity_MoveDeletersHouse_Text_ReceivedMonFromOldMan
-	givemon SPECIES_SOBBLE, 10, ITEM_NONE
+	givemon SPECIES_SOBBLE, 1, ITEM_NONE
 	waitfanfare
 	msgbox LilycoveCity_MoveDeletersHouse_Text_ComeAgain_Starter, MSGBOX_DEFAULT
 	release

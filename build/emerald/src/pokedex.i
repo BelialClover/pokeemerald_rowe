@@ -15184,6 +15184,7 @@ extern const u8 gText_Birch_WhatsYourName[];
 extern const u8 gText_Birch_SoItsPlayer[];
 extern const u8 gText_Birch_YourePlayer[];
 extern const u8 gText_Birch_AreYouReady[];
+extern const u8 gText_Birch_ChoseDifficulty[];
 extern const u8 gText_ContinueMenuPlayer[];
 extern const u8 gText_ContinueMenuTime[];
 extern const u8 gText_ContinueMenuPokedex[];
@@ -38878,6 +38879,9 @@ const u8 *const gMonFootprintTable[] =
     [305] = gMonFootprint_Lairon,
     [306] = gMonFootprint_Aggron,
     [351] = gMonFootprint_Castform,
+ [898 + 130] = gMonFootprint_Castform,
+ [898 + 132] = gMonFootprint_Castform,
+ [898 + 131] = gMonFootprint_Castform,
     [313] = gMonFootprint_Volbeat,
     [314] = gMonFootprint_Illumise,
     [345] = gMonFootprint_Lileep,

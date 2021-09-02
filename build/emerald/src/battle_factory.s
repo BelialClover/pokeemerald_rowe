@@ -1179,9 +1179,9 @@ SetPlayerAndOpponentParties:
 	mov	r5, r8
 	push	{r5, r6, r7}
 	add	sp, sp, #-0x28
-	ldr	r0, .L181
+	ldr	r0, .L182
 	ldr	r0, [r0]
-	ldr	r1, .L181+0x4
+	ldr	r1, .L182+0x4
 	add	r2, r0, r1
 	ldrb	r1, [r2]
 	mov	r3, #0x3
@@ -1189,22 +1189,22 @@ SetPlayerAndOpponentParties:
 	and	r0, r0, r1
 	cmp	r0, #0x2
 	bne	.L127	@cond_branch
-	ldr	r1, .L181+0x8
-	ldr	r0, .L181+0xc
+	ldr	r1, .L182+0x8
+	ldr	r0, .L182+0xc
 	str	r0, [r1]
-	mov	r2, #0x1e
+	mov	r2, #0x32
 	str	r2, [sp, #0x18]
 	b	.L128
-.L182:
+.L183:
 	.align	2, 0
-.L181:
+.L182:
 	.word	gSaveBlock2Ptr
 	.word	0xc35
 	.word	gFacilityTrainerMons
 	.word	gSlateportBattleTentMons
 .L127:
-	ldr	r1, .L183
-	ldr	r0, .L183+0x4
+	ldr	r1, .L184
+	ldr	r0, .L184+0x4
 	str	r0, [r1]
 	ldrb	r1, [r2]
 	add	r0, r3, #0
@@ -1216,7 +1216,7 @@ SetPlayerAndOpponentParties:
 	mov	r5, #0x64
 	str	r5, [sp, #0x18]
 .L128:
-	ldr	r0, .L183+0x8
+	ldr	r0, .L184+0x8
 	ldrh	r0, [r0]
 	cmp	r0, #0x1
 	bls	.LCB1156
@@ -1227,11 +1227,11 @@ SetPlayerAndOpponentParties:
 	mov	r8, r0
 	mov	r1, sp
 	add	r1, r1, #0x16
-	str	r1, [sp, #0x20]
-	ldr	r2, .L183
+	str	r1, [sp, #0x1c]
+	ldr	r2, .L184
 	mov	r9, r2
 .L135:
-	ldr	r4, .L183+0xc
+	ldr	r4, .L184+0xc
 	ldr	r2, [r4]
 	mov	r5, r8
 	lsl	r5, r5, #0x1
@@ -1240,16 +1240,16 @@ SetPlayerAndOpponentParties:
 	add	r3, r3, r8
 	lsl	r3, r3, #0x2
 	add	r1, r2, r3
-	ldr	r4, .L183+0x10
+	ldr	r4, .L184+0x10
 	add	r0, r1, r4
 	ldrh	r7, [r0]
-	ldr	r5, .L183+0x14
+	ldr	r5, .L184+0x14
 	add	r1, r1, r5
 	ldrb	r6, [r1]
 	mov	r1, #0x64
 	mov	r0, r8
 	mul	r0, r0, r1
-	ldr	r1, .L183+0x18
+	ldr	r1, .L184+0x18
 	add	r0, r0, r1
 	mov	r4, r9
 	ldr	r1, [r4]
@@ -1278,7 +1278,7 @@ SetPlayerAndOpponentParties:
 	ldrb	r4, [r4, #0xb]
 	mov	r5, r8
 	add	r5, r5, #0x1
-	str	r5, [sp, #0x1c]
+	str	r5, [sp, #0x20]
 	mov	r5, #0x5
 .L139:
 	add	r0, r4, #0
@@ -1303,7 +1303,7 @@ SetPlayerAndOpponentParties:
 	mov	r0, #0x64
 	mov	r6, r8
 	mul	r6, r6, r0
-	ldr	r3, .L183+0x18
+	ldr	r3, .L184+0x18
 .L145:
 	mov	r1, r9
 	ldr	r0, [r1]
@@ -1328,11 +1328,11 @@ SetPlayerAndOpponentParties:
 	mov	r2, #0x64
 	mov	r4, r8
 	mul	r4, r4, r2
-	ldr	r5, .L183+0x18
+	ldr	r5, .L184+0x18
 	add	r0, r4, r5
 	bl	CalculateMonStats
 	mov	r0, #0x0
-	ldr	r1, [sp, #0x20]
+	ldr	r1, [sp, #0x1c]
 	strb	r0, [r1]
 	mov	r6, #0x0
 .L151:
@@ -1350,21 +1350,21 @@ SetPlayerAndOpponentParties:
 	add	r6, r6, #0x1
 	cmp	r6, #0x3
 	ble	.L151	@cond_branch
-	mov	r5, #0x64
-	mov	r4, r8
-	mul	r4, r4, r5
-	ldr	r0, .L183+0x18
-	add	r4, r4, r0
+	mov	r4, #0x64
+	mov	r1, r8
+	mul	r1, r1, r4
+	ldr	r0, .L184+0x18
+	add	r4, r1, r0
 	add	r0, r4, #0
 	mov	r1, #0x20
-	ldr	r2, [sp, #0x20]
+	ldr	r2, [sp, #0x1c]
 	bl	SetMonData
-	mov	r1, r9
-	ldr	r0, [r1]
+	ldr	r5, .L184
+	ldr	r0, [r5]
 	add	r0, r7, r0
 	ldrb	r2, [r0, #0xa]
 	lsl	r2, r2, #0x1
-	ldr	r0, .L183+0x1c
+	ldr	r0, .L184+0x1c
 	add	r2, r2, r0
 	add	r0, r4, #0
 	mov	r1, #0xc
@@ -1372,53 +1372,69 @@ SetPlayerAndOpponentParties:
 	mov	r2, sl
 	add	r2, r2, r8
 	lsl	r2, r2, #0x2
-	ldr	r5, .L183+0xc
-	ldr	r0, [r5]
+	ldr	r1, .L184+0xc
+	ldr	r0, [r1]
 	add	r2, r2, r0
-	ldr	r0, .L183+0x20
+	ldr	r0, .L184+0x20
 	add	r2, r2, r0
 	add	r0, r4, #0
 	mov	r1, #0x2e
 	bl	SetMonData
-	ldr	r1, [sp, #0x1c]
-	mov	r8, r1
-	cmp	r1, #0x2
-	bgt	.LCB1384
+	ldr	r1, .L184+0xc
+	ldr	r0, [r1]
+	ldr	r2, .L184+0x24
+	add	r0, r0, r2
+	ldrb	r1, [r0]
+	mov	r0, #0x3
+	and	r0, r0, r1
+	cmp	r0, #0x2
+	bne	.L134	@cond_branch
+	ldr	r2, [r5]
+	add	r2, r2, r7
+	add	r2, r2, #0xd
+	add	r0, r4, #0
+	mov	r1, #0x2e
+	bl	SetMonData
+.L134:
+	ldr	r4, [sp, #0x20]
+	mov	r8, r4
+	cmp	r4, #0x2
+	bgt	.LCB1405
 	b	.L135	@long jump
-.LCB1384:
+.LCB1405:
 .L131:
-	ldr	r0, .L183+0x8
+	ldr	r0, .L184+0x8
 	ldrh	r0, [r0]
 	cmp	r0, #0
-	beq	.L156	@cond_branch
+	beq	.L157	@cond_branch
 	cmp	r0, #0x2
-	beq	.LCB1393
-	b	.L154	@long jump
-.LCB1393:
-.L156:
-	mov	r2, #0x0
-	mov	r8, r2
-	ldr	r4, .L183
-	mov	r9, r4
-.L160:
-	ldr	r5, .L183+0xc
-	ldr	r3, [r5]
+	beq	.LCB1414
+	b	.L155	@long jump
+.LCB1414:
+.L157:
+	mov	r5, #0x0
+	mov	r8, r5
+	ldr	r0, .L184
+	mov	r9, r0
+.L161:
+	ldr	r1, .L184+0xc
+	ldr	r3, [r1]
 	mov	r0, r8
 	add	r0, r0, #0x3
 	lsl	r2, r0, #0x1
 	add	r2, r2, r0
 	lsl	r2, r2, #0x2
 	add	r1, r3, r2
-	ldr	r4, .L183+0x10
+	ldr	r4, .L184+0x10
 	add	r0, r1, r4
 	ldrh	r7, [r0]
-	ldr	r5, .L183+0x14
+	ldr	r5, .L184+0x14
 	add	r1, r1, r5
 	ldrb	r6, [r1]
 	mov	r1, #0x64
 	mov	r0, r8
 	mul	r0, r0, r1
-	ldr	r1, .L183+0x24
+	ldr	r1, .L184+0x28
 	add	r0, r0, r1
 	mov	r4, r9
 	ldr	r1, [r4]
@@ -1450,20 +1466,20 @@ SetPlayerAndOpponentParties:
 	mov	sl, r5
 	mov	r0, r8
 	add	r0, r0, #0x1
-	str	r0, [sp, #0x1c]
+	str	r0, [sp, #0x20]
 	mov	r5, #0x5
-.L164:
+.L165:
 	add	r0, r4, #0
 	mov	r2, #0x1
 	and	r0, r0, r2
 	cmp	r0, #0
-	beq	.L163	@cond_branch
+	beq	.L164	@cond_branch
 	add	r1, r1, #0x1
-.L163:
+.L164:
 	lsr	r4, r4, #0x1
 	sub	r5, r5, #0x1
 	cmp	r5, #0
-	bge	.L164	@cond_branch
+	bge	.L165	@cond_branch
 	add	r4, sp, #0x14
 	mov	r0, #0xff
 	lsl	r0, r0, #0x1
@@ -1475,15 +1491,15 @@ SetPlayerAndOpponentParties:
 	mov	r0, #0x64
 	mov	r6, r8
 	mul	r6, r6, r0
-	ldr	r3, .L183+0x24
-.L170:
+	ldr	r3, .L184+0x28
+.L171:
 	mov	r1, r9
 	ldr	r0, [r1]
 	add	r0, r7, r0
 	ldrb	r0, [r0, #0xb]
 	and	r0, r0, r4
 	cmp	r0, #0
-	beq	.L169	@cond_branch
+	beq	.L170	@cond_branch
 	add	r1, r5, #0
 	add	r1, r1, #0x1a
 	add	r0, r6, r3
@@ -1491,20 +1507,20 @@ SetPlayerAndOpponentParties:
 	str	r3, [sp, #0x24]
 	bl	SetMonData
 	ldr	r3, [sp, #0x24]
-.L169:
+.L170:
 	lsl	r0, r4, #0x19
 	lsr	r4, r0, #0x18
 	add	r5, r5, #0x1
 	cmp	r5, #0x5
-	ble	.L170	@cond_branch
+	ble	.L171	@cond_branch
 	mov	r2, #0x64
 	mov	r4, r8
 	mul	r4, r4, r2
-	ldr	r5, .L183+0x24
+	ldr	r5, .L184+0x28
 	add	r0, r4, r5
 	bl	CalculateMonStats
 	mov	r6, #0x0
-.L176:
+.L177:
 	mov	r1, r9
 	ldr	r0, [r1]
 	add	r0, r7, r0
@@ -1518,18 +1534,18 @@ SetPlayerAndOpponentParties:
 	bl	SetMonMoveAvoidReturn
 	add	r6, r6, #0x1
 	cmp	r6, #0x3
-	ble	.L176	@cond_branch
+	ble	.L177	@cond_branch
 	mov	r2, #0x64
 	mov	r4, r8
 	mul	r4, r4, r2
-	ldr	r0, .L183+0x24
+	ldr	r0, .L184+0x28
 	add	r4, r4, r0
 	mov	r5, r9
 	ldr	r0, [r5]
 	add	r0, r7, r0
 	ldrb	r2, [r0, #0xa]
 	lsl	r2, r2, #0x1
-	ldr	r0, .L183+0x1c
+	ldr	r0, .L184+0x1c
 	add	r2, r2, r0
 	add	r0, r4, #0
 	mov	r1, #0xc
@@ -1537,21 +1553,21 @@ SetPlayerAndOpponentParties:
 	mov	r2, sl
 	add	r2, r2, r8
 	lsl	r2, r2, #0x2
-	ldr	r1, .L183+0xc
+	ldr	r1, .L184+0xc
 	ldr	r0, [r1]
 	add	r2, r2, r0
-	ldr	r5, .L183+0x28
+	ldr	r5, .L184+0x2c
 	add	r2, r2, r5
 	add	r0, r4, #0
 	mov	r1, #0x2e
 	bl	SetMonData
-	ldr	r0, [sp, #0x1c]
+	ldr	r0, [sp, #0x20]
 	mov	r8, r0
 	cmp	r0, #0x2
-	bgt	.LCB1610
-	b	.L160	@long jump
-.LCB1610:
-.L154:
+	bgt	.LCB1631
+	b	.L161	@long jump
+.LCB1631:
+.L155:
 	add	sp, sp, #0x28
 	pop	{r3, r4, r5}
 	mov	r8, r3
@@ -1560,9 +1576,9 @@ SetPlayerAndOpponentParties:
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L184:
+.L185:
 	.align	2, 0
-.L183:
+.L184:
 	.word	gFacilityTrainerMons
 	.word	gBattleFrontierMons
 	.word	gSpecialVar_0x8005
@@ -1572,6 +1588,7 @@ SetPlayerAndOpponentParties:
 	.word	gPlayerParty
 	.word	gBattleFrontierHeldItems
 	.word	0xe05
+	.word	0xc35
 	.word	gEnemyParty
 	.word	0xe29
 .Lfe14:
@@ -1586,8 +1603,8 @@ GenerateInitialRentalMons:
 	mov	r5, r8
 	push	{r5, r6, r7}
 	add	sp, sp, #-0x4c
-	ldr	r1, .L221
-	ldr	r0, .L221+0x4
+	ldr	r1, .L222
+	ldr	r0, .L222+0x4
 	str	r0, [r1]
 	mov	r0, sp
 	add	r0, r0, #0xc
@@ -1595,7 +1612,7 @@ GenerateInitialRentalMons:
 	mov	r1, sp
 	add	r1, r1, #0x18
 	str	r1, [sp, #0x3c]
-	ldr	r2, .L221+0x8
+	ldr	r2, .L222+0x8
 	mov	r9, r2
 	mov	r2, #0x0
 	add	r3, r1, #0
@@ -1603,7 +1620,7 @@ GenerateInitialRentalMons:
 	mov	r0, sp
 	mov	r4, #0x5
 	mov	r8, r4
-.L189:
+.L190:
 	strh	r2, [r0]
 	strh	r2, [r1]
 	strh	r2, [r3]
@@ -1615,15 +1632,15 @@ GenerateInitialRentalMons:
 	add	r8, r8, r5
 	mov	r4, r8
 	cmp	r4, #0
-	bge	.L189	@cond_branch
+	bge	.L190	@cond_branch
 	mov	r5, r9
 	ldr	r0, [r5]
-	ldr	r7, .L221+0xc
+	ldr	r7, .L222+0xc
 	add	r0, r0, r7
 	ldrb	r4, [r0]
 	lsl	r4, r4, #0x1e
 	lsr	r4, r4, #0x1e
-	ldr	r6, .L221+0x10
+	ldr	r6, .L222+0x10
 	add	r0, r6, #0
 	bl	VarGet
 	lsl	r0, r0, #0x18
@@ -1631,7 +1648,7 @@ GenerateInitialRentalMons:
 	lsl	r4, r4, #0x1
 	lsr	r0, r0, #0x16
 	add	r4, r4, r0
-	ldr	r5, .L221+0x14
+	ldr	r5, .L222+0x14
 	add	r1, r1, r5
 	add	r1, r1, r4
 	ldrh	r0, [r1]
@@ -1646,11 +1663,11 @@ GenerateInitialRentalMons:
 	lsr	r0, r0, #0x10
 	mov	r2, #0x0
 	cmp	r0, #0x1
-	bne	.L191	@cond_branch
+	bne	.L192	@cond_branch
 	mov	r2, #0x1
-.L191:
-	ldr	r1, .L221+0x18
-	ldr	r0, .L221+0x1c
+.L192:
+	ldr	r1, .L222+0x18
+	ldr	r0, .L222+0x1c
 	str	r0, [r1]
 	mov	r1, r9
 	ldr	r0, [r1]
@@ -1659,13 +1676,13 @@ GenerateInitialRentalMons:
 	mov	r0, #0x3
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L193	@cond_branch
+	beq	.L194	@cond_branch
 	mov	r4, #0x1
 	str	r4, [sp, #0x28]
-	b	.L194
-.L222:
+	b	.L195
+.L223:
 	.align	2, 0
-.L221:
+.L222:
 	.word	gFacilityTrainers
 	.word	gBattleFrontierTrainers
 	.word	gSaveBlock2Ptr
@@ -1674,10 +1691,10 @@ GenerateInitialRentalMons:
 	.word	0xd6e
 	.word	gFacilityTrainerMons
 	.word	gBattleFrontierMons
-.L193:
+.L194:
 	mov	r5, #0x0
 	str	r5, [sp, #0x28]
-.L194:
+.L195:
 	add	r0, r2, #0
 	ldr	r1, [sp, #0x28]
 	bl	GetNumPastRentalsRank
@@ -1696,83 +1713,83 @@ GenerateInitialRentalMons:
 	ldr	r5, [sp, #0x38]
 	add	r5, r5, r4
 	str	r5, [sp, #0x34]
-.L197:
+.L198:
 	ldr	r0, [sp, #0x2c]
 	cmp	r8, r0
-	bge	.L198	@cond_branch
+	bge	.L199	@cond_branch
 	ldr	r0, [sp, #0x28]
 	ldr	r1, [sp, #0x24]
 	mov	r2, #0x1
-	b	.L220
-.L198:
+	b	.L221
+.L199:
 	ldr	r0, [sp, #0x28]
 	ldr	r1, [sp, #0x24]
 	mov	r2, #0x0
-.L220:
+.L221:
 	bl	GetFactoryMonId
 	lsl	r0, r0, #0x10
 	lsr	r7, r0, #0x10
-	ldr	r0, .L223
+	ldr	r0, .L224
 	ldr	r1, [r0]
 	lsl	r2, r7, #0x4
 	add	r4, r2, r1
 	ldrh	r1, [r4]
 	mov	r9, r2
 	cmp	r1, #0xc9
-	beq	.L195	@cond_branch
+	beq	.L196	@cond_branch
 	mov	r3, #0x0
 	mov	r2, r8
 	add	r6, r3, r2
 	cmp	r3, r6
-	bge	.L202	@cond_branch
+	bge	.L203	@cond_branch
 	ldr	r5, [sp, #0x34]
 	ldrh	r0, [r5]
 	cmp	r0, r7
-	beq	.L202	@cond_branch
+	beq	.L203	@cond_branch
 	mov	ip, r4
 	add	r2, r1, #0
 	lsl	r4, r3, #0x1
 	ldr	r1, [sp, #0x30]
 	add	r1, r1, sp
 	str	r6, [sp, #0x48]
-.L205:
+.L206:
 	ldrh	r0, [r1]
 	cmp	r0, r2
-	bne	.L203	@cond_branch
+	bne	.L204	@cond_branch
 	mov	r0, sl
 	cmp	r0, #0
-	bne	.L202	@cond_branch
+	bne	.L203	@cond_branch
 	mov	r5, ip
 	ldrh	r5, [r5]
 	mov	sl, r5
-.L203:
+.L204:
 	add	r4, r4, #0x2
 	add	r1, r1, #0x2
 	add	r3, r3, #0x1
 	ldr	r0, [sp, #0x48]
 	cmp	r3, r0
-	bge	.L202	@cond_branch
+	bge	.L203	@cond_branch
 	ldr	r5, [sp, #0x38]
 	add	r0, r5, r4
 	ldrh	r0, [r0]
 	cmp	r0, r7
-	bne	.L205	@cond_branch
-.L202:
+	bne	.L206	@cond_branch
+.L203:
 	cmp	r3, r6
-	bne	.L195	@cond_branch
+	bne	.L196	@cond_branch
 	mov	r3, #0x0
 	cmp	r3, r6
-	bge	.L212	@cond_branch
-	ldr	r0, .L223+0x4
+	bge	.L213	@cond_branch
+	ldr	r0, .L224+0x4
 	mov	ip, r0
 	ldr	r1, [sp, #0x30]
 	ldr	r2, [sp, #0x3c]
 	add	r5, r1, r2
-.L214:
+.L215:
 	ldrh	r4, [r5]
 	cmp	r4, #0
-	beq	.L213	@cond_branch
-	ldr	r1, .L223
+	beq	.L214	@cond_branch
+	ldr	r1, .L224
 	ldr	r0, [r1]
 	mov	r2, r9
 	add	r1, r2, r0
@@ -1781,43 +1798,43 @@ GenerateInitialRentalMons:
 	add	r0, r0, ip
 	ldrh	r0, [r0]
 	cmp	r4, r0
-	bne	.L213	@cond_branch
+	bne	.L214	@cond_branch
 	ldrh	r0, [r1]
 	cmp	r0, sl
-	bne	.L212	@cond_branch
+	bne	.L213	@cond_branch
 	mov	r4, #0x0
 	mov	sl, r4
-	b	.L212
-.L224:
+	b	.L213
+.L225:
 	.align	2, 0
-.L223:
+.L224:
 	.word	gFacilityTrainerMons
 	.word	gBattleFrontierHeldItems
-.L213:
+.L214:
 	add	r5, r5, #0x2
 	add	r3, r3, #0x1
 	cmp	r3, r6
-	blt	.L214	@cond_branch
-.L212:
+	blt	.L215	@cond_branch
+.L213:
 	cmp	r3, r6
-	bne	.L195	@cond_branch
-	ldr	r0, .L225
+	bne	.L196	@cond_branch
+	ldr	r0, .L226
 	ldr	r1, [r0]
 	mov	r5, r8
 	lsl	r3, r5, #0x1
 	add	r0, r3, r5
 	lsl	r0, r0, #0x2
 	add	r1, r1, r0
-	ldr	r0, .L225+0x4
+	ldr	r0, .L226+0x4
 	add	r1, r1, r0
 	strh	r7, [r1]
-	ldr	r2, .L225+0x8
+	ldr	r2, .L226+0x8
 	ldr	r1, [r2]
 	add	r1, r1, r9
 	ldrh	r0, [r1]
 	ldr	r4, [sp, #0x44]
 	strh	r0, [r4]
-	ldr	r2, .L225+0xc
+	ldr	r2, .L226+0xc
 	ldrb	r0, [r1, #0xa]
 	lsl	r0, r0, #0x1
 	add	r0, r0, r2
@@ -1833,12 +1850,12 @@ GenerateInitialRentalMons:
 	str	r4, [sp, #0x44]
 	mov	r1, #0x1
 	add	r8, r8, r1
-.L195:
+.L196:
 	mov	r2, r8
 	cmp	r2, #0x6
-	beq	.LCB1984
-	b	.L197	@long jump
-.LCB1984:
+	beq	.LCB2006
+	b	.L198	@long jump
+.LCB2006:
 	add	sp, sp, #0x4c
 	pop	{r3, r4, r5}
 	mov	r8, r3
@@ -1847,9 +1864,9 @@ GenerateInitialRentalMons:
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L226:
+.L227:
 	.align	2, 0
-.L225:
+.L226:
 	.word	gSaveBlock2Ptr
 	.word	0xdfc
 	.word	gFacilityTrainerMons
@@ -1864,14 +1881,14 @@ GetOpponentMostCommonMonType:
 	mov	r7, r8
 	push	{r7}
 	add	sp, sp, #-0x18
-	ldr	r1, .L250
-	ldr	r0, .L250+0x4
+	ldr	r1, .L251
+	ldr	r0, .L251+0x4
 	str	r0, [r1]
 	mov	r4, #0x0
 	add	r5, sp, #0x14
-	ldr	r7, .L250+0x8
+	ldr	r7, .L251+0x8
 	mov	r1, #0x0
-.L231:
+.L232:
 	mov	r2, sp
 	add	r0, r2, r4
 	strb	r1, [r0]
@@ -1879,15 +1896,15 @@ GetOpponentMostCommonMonType:
 	lsl	r0, r0, #0x18
 	lsr	r4, r0, #0x18
 	cmp	r4, #0x12
-	bls	.L231	@cond_branch
+	bls	.L232	@cond_branch
 	mov	r4, #0x0
-	ldr	r0, .L250+0xc
+	ldr	r0, .L251+0xc
 	mov	r8, r0
-	ldr	r0, .L250
+	ldr	r0, .L251
 	ldr	r6, [r0]
-	ldr	r1, .L250+0x10
+	ldr	r1, .L251+0x10
 	mov	ip, r1
-.L236:
+.L237:
 	lsl	r0, r4, #0x1
 	add	r0, r0, r8
 	ldrh	r0, [r0]
@@ -1907,25 +1924,25 @@ GetOpponentMostCommonMonType:
 	strb	r0, [r1]
 	ldrb	r1, [r3, #0x7]
 	cmp	r2, r1
-	beq	.L235	@cond_branch
+	beq	.L236	@cond_branch
 	ldrb	r0, [r3, #0x7]
 	mov	r2, sp
 	add	r1, r2, r0
 	ldrb	r0, [r1]
 	add	r0, r0, #0x1
 	strb	r0, [r1]
-.L235:
+.L236:
 	add	r0, r4, #0x1
 	lsl	r0, r0, #0x18
 	lsr	r4, r0, #0x18
 	cmp	r4, #0x2
-	bls	.L236	@cond_branch
+	bls	.L237	@cond_branch
 	mov	r0, #0x0
 	strb	r0, [r5]
 	strb	r0, [r5, #0x1]
 	mov	r4, #0x1
 	add	r3, r5, #0
-.L242:
+.L243:
 	ldrb	r0, [r3]
 	add	r0, r0, sp
 	mov	r2, sp
@@ -1933,47 +1950,47 @@ GetOpponentMostCommonMonType:
 	ldrb	r2, [r0]
 	ldrb	r0, [r1]
 	cmp	r2, r0
-	bcs	.L243	@cond_branch
+	bcs	.L244	@cond_branch
 	strb	r4, [r5]
-	b	.L241
-.L251:
+	b	.L242
+.L252:
 	.align	2, 0
-.L250:
+.L251:
 	.word	gFacilityTrainerMons
 	.word	gBattleFrontierMons
 	.word	gSpecialVar_Result
 	.word	gFrontierTempParty
 	.word	gBaseStats
-.L243:
+.L244:
 	cmp	r2, r0
-	bne	.L241	@cond_branch
+	bne	.L242	@cond_branch
 	strb	r4, [r3, #0x1]
-.L241:
+.L242:
 	add	r0, r4, #0x1
 	lsl	r0, r0, #0x18
 	lsr	r4, r0, #0x18
 	cmp	r4, #0x12
-	bls	.L242	@cond_branch
+	bls	.L243	@cond_branch
 	ldrb	r1, [r5]
 	mov	r4, sp
 	add	r0, r4, r1
 	ldrb	r2, [r0]
 	cmp	r2, #0
-	beq	.L247	@cond_branch
+	beq	.L248	@cond_branch
 	ldrb	r3, [r5, #0x1]
 	add	r0, r4, r3
 	ldrb	r0, [r0]
 	cmp	r2, r0
-	bhi	.L248	@cond_branch
+	bhi	.L249	@cond_branch
 	cmp	r1, r3
-	bne	.L247	@cond_branch
-.L248:
+	bne	.L248	@cond_branch
+.L249:
 	strh	r1, [r7]
-	b	.L249
-.L247:
+	b	.L250
+.L248:
 	mov	r0, #0x13
 	strh	r0, [r7]
-.L249:
+.L250:
 	add	sp, sp, #0x18
 	pop	{r3}
 	mov	r8, r3
@@ -1989,12 +2006,12 @@ GetOpponentBattleStyle:
 	push	{r4, r5, r6, r7, lr}
 	add	sp, sp, #-0x8
 	mov	r7, #0x0
-	ldr	r1, .L275
-	ldr	r0, .L275+0x4
+	ldr	r1, .L276
+	ldr	r0, .L276+0x4
 	str	r0, [r1]
 	mov	r4, #0x0
 	mov	r1, #0x0
-.L256:
+.L257:
 	mov	r2, sp
 	add	r0, r2, r4
 	strb	r1, [r0]
@@ -2002,16 +2019,16 @@ GetOpponentBattleStyle:
 	lsl	r0, r0, #0x18
 	lsr	r4, r0, #0x18
 	cmp	r4, #0x7
-	bls	.L256	@cond_branch
+	bls	.L257	@cond_branch
 	mov	r4, #0x0
-.L261:
-	ldr	r1, .L275+0x8
+.L262:
+	ldr	r1, .L276+0x8
 	lsl	r0, r4, #0x1
 	add	r0, r0, r1
 	ldrh	r6, [r0]
 	mov	r5, #0x0
-.L265:
-	ldr	r0, .L275
+.L266:
+	ldr	r0, .L276
 	ldr	r1, [r0]
 	lsl	r0, r6, #0x4
 	add	r0, r0, r1
@@ -2031,20 +2048,20 @@ GetOpponentBattleStyle:
 	lsl	r0, r0, #0x18
 	lsr	r5, r0, #0x18
 	cmp	r5, #0x3
-	bls	.L265	@cond_branch
+	bls	.L266	@cond_branch
 	add	r0, r4, #0x1
 	lsl	r0, r0, #0x18
 	lsr	r4, r0, #0x18
 	cmp	r4, #0x2
-	bls	.L261	@cond_branch
-	ldr	r1, .L275+0xc
+	bls	.L262	@cond_branch
+	ldr	r1, .L276+0xc
 	mov	r0, #0x0
 	strh	r0, [r1]
 	mov	r4, #0x1
 	add	r5, r1, #0
-	ldr	r3, .L275+0x10
+	ldr	r3, .L276+0x10
 	add	r2, r5, #0
-.L271:
+.L272:
 	mov	r1, sp
 	add	r0, r1, r4
 	sub	r1, r4, #0x1
@@ -2052,29 +2069,29 @@ GetOpponentBattleStyle:
 	ldrb	r0, [r0]
 	ldrb	r1, [r1]
 	cmp	r0, r1
-	bcc	.L270	@cond_branch
+	bcc	.L271	@cond_branch
 	strh	r4, [r2]
 	add	r0, r7, #0x1
 	lsl	r0, r0, #0x18
 	lsr	r7, r0, #0x18
-.L270:
+.L271:
 	add	r0, r4, #0x1
 	lsl	r0, r0, #0x18
 	lsr	r4, r0, #0x18
 	cmp	r4, #0x7
-	bls	.L271	@cond_branch
+	bls	.L272	@cond_branch
 	cmp	r7, #0x2
-	bls	.L274	@cond_branch
+	bls	.L275	@cond_branch
 	mov	r0, #0x8
 	strh	r0, [r5]
-.L274:
+.L275:
 	add	sp, sp, #0x8
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L276:
+.L277:
 	.align	2, 0
-.L275:
+.L276:
 	.word	gFacilityTrainerMons
 	.word	gBattleFrontierMons
 	.word	gFrontierTempParty
@@ -2090,8 +2107,8 @@ GetMoveBattleStyle:
 	lsl	r0, r0, #0x10
 	lsr	r5, r0, #0x10
 	mov	r2, #0x0
-	ldr	r6, .L290
-.L281:
+	ldr	r6, .L291
+.L282:
 	mov	r3, #0x0
 	lsl	r0, r2, #0x2
 	add	r0, r0, r6
@@ -2099,22 +2116,22 @@ GetMoveBattleStyle:
 	ldrh	r0, [r1]
 	add	r4, r2, #0x1
 	cmp	r0, #0
-	beq	.L280	@cond_branch
+	beq	.L281	@cond_branch
 	lsl	r0, r4, #0x18
 	lsr	r2, r0, #0x18
-.L285:
+.L286:
 	lsl	r0, r3, #0x1
 	add	r0, r0, r1
 	ldrh	r0, [r0]
 	cmp	r0, r5
-	bne	.L284	@cond_branch
+	bne	.L285	@cond_branch
 	add	r0, r2, #0
-	b	.L289
-.L291:
+	b	.L290
+.L292:
 	.align	2, 0
-.L290:
+.L291:
 	.word	sMoveStyles
-.L284:
+.L285:
 	add	r0, r3, #0x1
 	lsl	r0, r0, #0x18
 	lsr	r3, r0, #0x18
@@ -2122,14 +2139,14 @@ GetMoveBattleStyle:
 	add	r0, r0, r1
 	ldrh	r0, [r0]
 	cmp	r0, #0
-	bne	.L285	@cond_branch
-.L280:
+	bne	.L286	@cond_branch
+.L281:
 	lsl	r0, r4, #0x18
 	lsr	r2, r0, #0x18
 	cmp	r2, #0x6
-	bls	.L281	@cond_branch
+	bls	.L282	@cond_branch
 	mov	r0, #0x0
-.L289:
+.L290:
 	pop	{r4, r5, r6}
 	pop	{r1}
 	bx	r1
@@ -2142,23 +2159,23 @@ GetMoveBattleStyle:
 InBattleFactory:
 	push	{lr}
 	mov	r2, #0x0
-	ldr	r1, .L294
-	ldr	r3, .L294+0x4
+	ldr	r1, .L295
+	ldr	r3, .L295+0x4
 	add	r0, r3, #0
 	ldrh	r1, [r1, #0x12]
 	add	r0, r0, r1
 	lsl	r0, r0, #0x10
 	lsr	r0, r0, #0x10
 	cmp	r0, #0x1
-	bhi	.L293	@cond_branch
+	bhi	.L294	@cond_branch
 	mov	r2, #0x1
-.L293:
+.L294:
 	add	r0, r2, #0
 	pop	{r1}
 	bx	r1
-.L295:
+.L296:
 	.align	2, 0
-.L294:
+.L295:
 	.word	gMapHeader
 	.word	-0x15b
 .Lfe19:
@@ -2168,52 +2185,52 @@ InBattleFactory:
 	.thumb_func
 RestorePlayerPartyHeldItems:
 	push	{r4, lr}
-	ldr	r0, .L305
+	ldr	r0, .L306
 	ldr	r0, [r0]
-	ldr	r1, .L305+0x4
+	ldr	r1, .L306+0x4
 	add	r0, r0, r1
 	ldrb	r1, [r0]
 	mov	r0, #0x3
 	and	r0, r0, r1
 	cmp	r0, #0x2
-	beq	.L297	@cond_branch
-	ldr	r1, .L305+0x8
-	ldr	r0, .L305+0xc
-	b	.L304
-.L306:
+	beq	.L298	@cond_branch
+	ldr	r1, .L306+0x8
+	ldr	r0, .L306+0xc
+	b	.L305
+.L307:
 	.align	2, 0
-.L305:
+.L306:
 	.word	gSaveBlock2Ptr
 	.word	0xc35
 	.word	gFacilityTrainerMons
 	.word	gBattleFrontierMons
-.L297:
-	ldr	r1, .L307
-	ldr	r0, .L307+0x4
-.L304:
+.L298:
+	ldr	r1, .L308
+	ldr	r0, .L308+0x4
+.L305:
 	str	r0, [r1]
 	mov	r4, #0x0
-.L302:
+.L303:
 	mov	r0, #0x64
 	mul	r0, r0, r4
-	ldr	r1, .L307+0x8
+	ldr	r1, .L308+0x8
 	add	r0, r0, r1
-	ldr	r1, .L307+0xc
+	ldr	r1, .L308+0xc
 	ldr	r2, [r1]
 	lsl	r1, r4, #0x1
 	add	r1, r1, r4
 	lsl	r1, r1, #0x2
 	add	r2, r2, r1
-	ldr	r1, .L307+0x10
+	ldr	r1, .L308+0x10
 	add	r2, r2, r1
 	ldrh	r2, [r2]
-	ldr	r1, .L307
+	ldr	r1, .L308
 	ldr	r1, [r1]
 	lsl	r2, r2, #0x4
 	add	r2, r2, r1
 	ldrb	r2, [r2, #0xa]
 	lsl	r2, r2, #0x1
-	ldr	r1, .L307+0x14
+	ldr	r1, .L308+0x14
 	add	r2, r2, r1
 	mov	r1, #0xc
 	bl	SetMonData
@@ -2221,13 +2238,13 @@ RestorePlayerPartyHeldItems:
 	lsl	r0, r0, #0x18
 	lsr	r4, r0, #0x18
 	cmp	r4, #0x2
-	bls	.L302	@cond_branch
+	bls	.L303	@cond_branch
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L308:
+.L309:
 	.align	2, 0
-.L307:
+.L308:
 	.word	gFacilityTrainerMons
 	.word	gSlateportBattleTentMons
 	.word	gPlayerParty
@@ -2250,19 +2267,19 @@ GetFactoryMonFixedIV:
 	lsr	r2, r2, #0x1f
 	lsr	r1, r0, #0x18
 	cmp	r1, #0x8
-	bls	.L311	@cond_branch
+	bls	.L312	@cond_branch
 	mov	r1, #0x7
-.L311:
-	ldr	r0, .L313
+.L312:
+	ldr	r0, .L314
 	lsl	r1, r1, #0x1
 	add	r1, r2, r1
 	add	r1, r1, r0
 	ldrb	r0, [r1]
 	pop	{r1}
 	bx	r1
-.L314:
+.L315:
 	.align	2, 0
-.L313:
+.L314:
 	.word	sFixedIVTable
 .Lfe21:
 	.size	 GetFactoryMonFixedIV,.Lfe21-GetFactoryMonFixedIV
@@ -2277,15 +2294,15 @@ FillFactoryBrainParty:
 	mov	r5, r8
 	push	{r5, r6, r7}
 	add	sp, sp, #-0x38
-	ldr	r4, .L348
+	ldr	r4, .L349
 	ldr	r0, [r4]
-	ldr	r1, .L348+0x4
+	ldr	r1, .L349+0x4
 	add	r0, r0, r1
 	ldrb	r0, [r0]
 	lsl	r0, r0, #0x1e
 	lsr	r0, r0, #0x1e
 	str	r0, [sp, #0x30]
-	ldr	r0, .L348+0x8
+	ldr	r0, .L349+0x8
 	bl	VarGet
 	lsl	r0, r0, #0x18
 	ldr	r1, [r4]
@@ -2293,7 +2310,7 @@ FillFactoryBrainParty:
 	lsl	r2, r3, #0x1
 	lsr	r0, r0, #0x16
 	add	r2, r2, r0
-	ldr	r7, .L348+0xc
+	ldr	r7, .L349+0xc
 	add	r1, r1, r7
 	add	r1, r1, r2
 	ldrh	r0, [r1]
@@ -2329,62 +2346,62 @@ FillFactoryBrainParty:
 	lsl	r0, r0, #0x18
 	orr	r4, r4, r0
 	str	r4, [sp, #0x2c]
-.L318:
+.L319:
 	ldr	r0, [sp, #0x30]
 	ldr	r1, [sp, #0x34]
 	mov	r2, #0x0
 	bl	GetFactoryMonId
 	lsl	r0, r0, #0x10
 	lsr	r5, r0, #0x10
-	ldr	r7, .L348+0x10
+	ldr	r7, .L349+0x10
 	ldr	r1, [r7]
 	lsl	r0, r5, #0x4
 	add	r0, r0, r1
 	ldrh	r0, [r0]
 	cmp	r0, #0xc9
-	bne	.LCB2657
-	b	.L316	@long jump
-.LCB2657:
+	bne	.LCB2679
+	b	.L317	@long jump
+.LCB2679:
 	ldr	r0, [sp, #0x24]
 	cmp	r0, #0x32
-	bne	.L320	@cond_branch
-	ldr	r0, .L348+0x14
+	bne	.L321	@cond_branch
+	ldr	r0, .L349+0x14
 	cmp	r5, r0
-	bls	.LCB2665
-	b	.L316	@long jump
-.LCB2665:
-.L320:
+	bls	.LCB2687
+	b	.L317	@long jump
+.LCB2687:
+.L321:
 	mov	r2, #0x0
-	ldr	r1, .L348
+	ldr	r1, .L349
 	ldr	r0, [r1]
-	ldr	r3, .L348+0x18
+	ldr	r3, .L349+0x18
 	add	r0, r0, r3
 	ldrh	r0, [r0]
 	cmp	r5, r0
-	beq	.L322	@cond_branch
+	beq	.L323	@cond_branch
 	add	r4, r1, #0
 	mov	r1, #0x0
-.L323:
+.L324:
 	add	r1, r1, #0xc
 	add	r2, r2, #0x1
 	cmp	r2, #0x5
-	bgt	.L322	@cond_branch
+	bgt	.L323	@cond_branch
 	ldr	r0, [r4]
 	add	r0, r0, r1
 	add	r0, r0, r3
 	ldrh	r0, [r0]
 	cmp	r5, r0
-	bne	.L323	@cond_branch
-.L322:
+	bne	.L324	@cond_branch
+.L323:
 	cmp	r2, #0x6
-	beq	.LCB2705
-	b	.L316	@long jump
-.LCB2705:
+	beq	.LCB2727
+	b	.L317	@long jump
+.LCB2727:
 	mov	r4, #0x0
 	cmp	r4, r9
-	bge	.L329	@cond_branch
+	bge	.L330	@cond_branch
 	add	r2, sp, #0x10
-	ldr	r7, .L348+0x10
+	ldr	r7, .L349+0x10
 	ldr	r0, [r7]
 	lsl	r1, r5, #0x4
 	add	r0, r1, r0
@@ -2392,35 +2409,35 @@ FillFactoryBrainParty:
 	add	r7, r1, #0
 	ldrh	r0, [r0]
 	cmp	r2, r0
-	beq	.L329	@cond_branch
-	ldr	r6, .L348+0x10
+	beq	.L330	@cond_branch
+	ldr	r6, .L349+0x10
 	add	r3, r7, #0
 	add	r2, sp, #0x10
-.L330:
+.L331:
 	add	r2, r2, #0x2
 	add	r4, r4, #0x1
 	cmp	r4, r9
-	bge	.L329	@cond_branch
+	bge	.L330	@cond_branch
 	ldr	r0, [r6]
 	add	r0, r3, r0
 	ldrh	r1, [r2]
 	ldrh	r0, [r0]
 	cmp	r1, r0
-	bne	.L330	@cond_branch
-.L329:
+	bne	.L331	@cond_branch
+.L330:
 	cmp	r4, r9
-	bne	.L316	@cond_branch
+	bne	.L317	@cond_branch
 	mov	r4, #0x0
 	cmp	r4, r9
-	bge	.L336	@cond_branch
-	ldr	r7, .L348+0x1c
-	ldr	r6, .L348+0x10
+	bge	.L337	@cond_branch
+	ldr	r7, .L349+0x1c
+	ldr	r6, .L349+0x10
 	add	r2, sp, #0x18
 	lsl	r3, r5, #0x4
-.L338:
+.L339:
 	ldrh	r1, [r2]
 	cmp	r1, #0
-	beq	.L337	@cond_branch
+	beq	.L338	@cond_branch
 	ldr	r0, [r6]
 	add	r0, r3, r0
 	ldrb	r0, [r0, #0xa]
@@ -2428,21 +2445,21 @@ FillFactoryBrainParty:
 	add	r0, r0, r7
 	ldrh	r0, [r0]
 	cmp	r1, r0
-	beq	.L336	@cond_branch
-.L337:
+	beq	.L337	@cond_branch
+.L338:
 	add	r2, r2, #0x2
 	add	r4, r4, #0x1
 	cmp	r4, r9
-	blt	.L338	@cond_branch
-.L336:
+	blt	.L339	@cond_branch
+.L337:
 	cmp	r4, r9
-	bne	.L316	@cond_branch
+	bne	.L317	@cond_branch
 	mov	r0, r9
 	lsl	r2, r0, #0x1
 	mov	r1, sp
 	add	r1, r1, r2
 	add	r1, r1, #0x10
-	ldr	r3, .L348+0x10
+	ldr	r3, .L349+0x10
 	ldr	r4, [r3]
 	lsl	r5, r5, #0x4
 	mov	r8, r5
@@ -2451,7 +2468,7 @@ FillFactoryBrainParty:
 	strh	r0, [r1]
 	add	r1, sp, #0x18
 	add	r1, r1, r2
-	ldr	r2, .L348+0x1c
+	ldr	r2, .L349+0x1c
 	ldrb	r0, [r4, #0xa]
 	lsl	r0, r0, #0x1
 	add	r0, r0, r2
@@ -2460,7 +2477,7 @@ FillFactoryBrainParty:
 	mov	r0, #0x64
 	mov	r5, r9
 	mul	r5, r5, r0
-	ldr	r6, .L348+0x20
+	ldr	r6, .L349+0x20
 	add	r0, r5, r6
 	ldrh	r1, [r4]
 	ldr	r7, [sp, #0x24]
@@ -2485,8 +2502,8 @@ FillFactoryBrainParty:
 	mov	r2, #0x1
 	add	r2, r2, r9
 	mov	r8, r2
-.L345:
-	ldr	r3, .L348+0x10
+.L346:
+	ldr	r3, .L349+0x10
 	ldr	r0, [r3]
 	add	r0, r7, r0
 	lsl	r1, r4, #0x1
@@ -2499,33 +2516,33 @@ FillFactoryBrainParty:
 	bl	SetMonMoveAvoidReturn
 	add	r4, r4, #0x1
 	cmp	r4, #0x3
-	ble	.L345	@cond_branch
+	ble	.L346	@cond_branch
 	mov	r0, #0x64
 	mov	r4, r9
 	mul	r4, r4, r0
-	ldr	r0, .L348+0x20
+	ldr	r0, .L349+0x20
 	add	r4, r4, r0
 	add	r0, r4, #0
 	mov	r1, #0x20
 	mov	r2, sl
 	bl	SetMonData
-	ldr	r1, .L348+0x10
+	ldr	r1, .L349+0x10
 	ldr	r0, [r1]
 	add	r0, r7, r0
 	ldrb	r2, [r0, #0xa]
 	lsl	r2, r2, #0x1
-	ldr	r0, .L348+0x1c
+	ldr	r0, .L349+0x1c
 	add	r2, r2, r0
 	add	r0, r4, #0
 	mov	r1, #0xc
 	bl	SetMonData
 	mov	r9, r8
-.L316:
+.L317:
 	mov	r2, r9
 	cmp	r2, #0x3
-	beq	.LCB2896
-	b	.L318	@long jump
-.LCB2896:
+	beq	.LCB2918
+	b	.L319	@long jump
+.LCB2918:
 	add	sp, sp, #0x38
 	pop	{r3, r4, r5}
 	mov	r8, r3
@@ -2534,9 +2551,9 @@ FillFactoryBrainParty:
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L349:
+.L350:
 	.align	2, 0
-.L348:
+.L349:
 	.word	gSaveBlock2Ptr
 	.word	0xc35
 	.word	0x40ce
@@ -2566,34 +2583,34 @@ GetFactoryMonId:
 	and	r1, r1, r4
 	add	r4, r1, #0
 	cmp	r3, #0x6
-	bhi	.L353	@cond_branch
+	bhi	.L354	@cond_branch
 	cmp	r2, #0
-	beq	.L354	@cond_branch
-	ldr	r2, .L359
+	beq	.L355	@cond_branch
+	ldr	r2, .L360
 	add	r1, r1, r3
 	add	r1, r1, #0x1
-	b	.L358
-.L360:
+	b	.L359
+.L361:
 	.align	2, 0
-.L359:
+.L360:
+	.word	sInitialRentalMonRanges
+.L355:
+	ldr	r2, .L362
+	add	r1, r1, r3
+	b	.L359
+.L363:
+	.align	2, 0
+.L362:
 	.word	sInitialRentalMonRanges
 .L354:
-	ldr	r2, .L361
-	add	r1, r1, r3
-	b	.L358
-.L362:
-	.align	2, 0
-.L361:
-	.word	sInitialRentalMonRanges
-.L353:
 	add	r1, r3, #0
 	cmp	r1, #0x7
-	beq	.L357	@cond_branch
+	beq	.L358	@cond_branch
 	mov	r1, #0x7
-.L357:
-	ldr	r2, .L363
-	add	r1, r4, r1
 .L358:
+	ldr	r2, .L364
+	add	r1, r4, r1
+.L359:
 	lsl	r1, r1, #0x2
 	add	r0, r2, #0x2
 	add	r0, r1, r0
@@ -2617,9 +2634,9 @@ GetFactoryMonId:
 	pop	{r4, r5}
 	pop	{r1}
 	bx	r1
-.L364:
+.L365:
 	.align	2, 0
-.L363:
+.L364:
 	.word	sInitialRentalMonRanges
 .Lfe23:
 	.size	 GetFactoryMonId,.Lfe23-GetFactoryMonId
@@ -2631,37 +2648,37 @@ GetNumPastRentalsRank:
 	push	{lr}
 	lsl	r0, r0, #0x18
 	lsl	r1, r1, #0x18
-	ldr	r2, .L376
+	ldr	r2, .L377
 	ldr	r2, [r2]
 	lsr	r1, r1, #0x17
 	lsr	r0, r0, #0x16
 	add	r1, r1, r0
-	ldr	r0, .L376+0x4
+	ldr	r0, .L377+0x4
 	add	r2, r2, r0
 	add	r2, r2, r1
 	ldrb	r1, [r2]
 	mov	r0, #0x0
 	cmp	r1, #0xe
-	bls	.L367	@cond_branch
+	bls	.L368	@cond_branch
 	mov	r0, #0x1
 	cmp	r1, #0x15
-	bls	.L367	@cond_branch
+	bls	.L368	@cond_branch
 	mov	r0, #0x2
 	cmp	r1, #0x1c
-	bls	.L367	@cond_branch
+	bls	.L368	@cond_branch
 	mov	r0, #0x3
 	cmp	r1, #0x23
-	bls	.L367	@cond_branch
+	bls	.L368	@cond_branch
 	mov	r0, #0x5
 	cmp	r1, #0x2a
-	bhi	.L367	@cond_branch
+	bhi	.L368	@cond_branch
 	mov	r0, #0x4
-.L367:
+.L368:
 	pop	{r1}
 	bx	r1
-.L377:
+.L378:
 	.align	2, 0
-.L376:
+.L377:
 	.word	gSaveBlock2Ptr
 	.word	0xd7e
 .Lfe24:
@@ -2676,21 +2693,19 @@ GetAiScriptsInBattleFactory:
 	ldr	r0, [r5]
 	ldr	r1, .L390+0x4
 	add	r0, r0, r1
-	ldrb	r0, [r0]
-	lsl	r0, r0, #0x1e
-	lsr	r4, r0, #0x1e
-	cmp	r4, #0x2
-	beq	.L388	@cond_branch
+	ldrb	r4, [r0]
+	lsl	r4, r4, #0x1e
+	lsr	r4, r4, #0x1e
 	ldr	r0, .L390+0x8
 	bl	VarGet
 	lsl	r0, r0, #0x10
 	ldr	r1, [r5]
-	lsl	r2, r4, #0x1
+	lsl	r4, r4, #0x1
 	lsr	r0, r0, #0xe
-	add	r2, r2, r0
+	add	r4, r4, r0
 	ldr	r0, .L390+0xc
 	add	r1, r1, r0
-	add	r1, r1, r2
+	add	r1, r1, r4
 	ldrh	r0, [r1]
 	mov	r1, #0x7
 	bl	__udivsi3
@@ -2702,10 +2717,9 @@ GetAiScriptsInBattleFactory:
 	cmp	r1, r0
 	beq	.L389	@cond_branch
 	cmp	r2, #0x1
-	bgt	.L383	@cond_branch
-.L388:
+	bgt	.L384	@cond_branch
 	mov	r0, #0x0
-	b	.L387
+	b	.L388
 .L391:
 	.align	2, 0
 .L390:
@@ -2715,15 +2729,15 @@ GetAiScriptsInBattleFactory:
 	.word	0xd6e
 	.word	gTrainerBattleOpponent_A
 	.word	0x3fe
-.L383:
+.L384:
 	cmp	r2, #0x3
-	ble	.L385	@cond_branch
+	ble	.L386	@cond_branch
 .L389:
 	mov	r0, #0x7
-	b	.L387
-.L385:
+	b	.L388
+.L386:
 	mov	r0, #0x1
-.L387:
+.L388:
 	pop	{r4, r5}
 	pop	{r1}
 	bx	r1

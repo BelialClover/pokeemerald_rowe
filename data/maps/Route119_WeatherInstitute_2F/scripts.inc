@@ -89,7 +89,7 @@ Route119_WeatherInstitute_2F_EventScript_ShellyDefeated:: @ 826FFC8
 Route119_WeatherInstitute_2F_EventScript_ReceiveCastform:: @ 827004D
 	msgbox Route119_WeatherInstitute_2F_Text_ThanksPleaseTakePokemon, MSGBOX_DEFAULT
 	setvar VAR_TEMP_1, SPECIES_CASTFORM
-	givemon SPECIES_CASTFORM, 10, ITEM_MYSTIC_WATER
+	givemon SPECIES_CASTFORM, 1, ITEM_MYSTIC_WATER
 	compare VAR_RESULT, 0
 	goto_if_eq Route119_WeatherInstitute_2F_EventScript_ReceiveCastformParty
 	compare VAR_RESULT, 1

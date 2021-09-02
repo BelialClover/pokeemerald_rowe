@@ -145,7 +145,25 @@ const u16 gBattleFrontierHeldItems[] =
     ITEM_METAL_POWDER,
     ITEM_PETAYA_BERRY,
     ITEM_LUCKY_PUNCH,
-    ITEM_GANLON_BERRY
+    ITEM_GANLON_BERRY,
+	ITEM_BLACK_SLUDGE,
+	ITEM_VENUSAURITE,
+	ITEM_LIFE_ORB,
+	ITEM_CHARIZARDITE_Y,
+	ITEM_CHARIZARDITE_X,
+	ITEM_BLASTOISINITE,
+	ITEM_CHOICE_SPECS,
+	ITEM_CHOICE_SCARF,
+	ITEM_FOCUS_SASH,
+	ITEM_NORMAL_GEM,
+	ITEM_ASSAULT_VEST,
+	ITEM_POWER_HERB,
+	ITEM_EVIOLITE,
+	ITEM_AIR_BALLOON,
+	ITEM_EXPERT_BELT,
+	ITEM_FLAME_ORB,
+	ITEM_TOXIC_ORB,
+	ITEM_HEAT_ROCK
 };
 
 #include "data/battle_frontier/battle_frontier_trainer_mons.h"
@@ -1755,7 +1773,7 @@ static void FillTrainerParty(u16 trainerId, u8 firstMonId, u8 monCount)
 
         SetMonData(&gEnemyParty[i + firstMonId], MON_DATA_FRIENDSHIP, &friendship);
         SetMonData(&gEnemyParty[i + firstMonId], MON_DATA_HELD_ITEM, &gBattleFrontierHeldItems[gFacilityTrainerMons[monId].itemTableId]);
-
+		SetMonData(&gEnemyParty[i + firstMonId], MON_DATA_ABILITY_NUM, &gFacilityTrainerMons[monId].abilityNum);
         // The pokemon was successfully added to the trainer's party, so it's safe to move on to
         // the next party slot.
         i++;

@@ -3382,7 +3382,7 @@ u8 TryWeatherFormChange(u8 battler)
     u8 ret = 0;
     bool32 weatherEffect = WEATHER_HAS_EFFECT;
 
-    if (gBattleMons[battler].species == SPECIES_CASTFORM)
+    /*/if (gBattleMons[battler].species == SPECIES_CASTFORM)
     {
         if (gBattleMons[battler].ability != ABILITY_FORECAST || gBattleMons[battler].hp == 0)
         {
@@ -3426,7 +3426,7 @@ u8 TryWeatherFormChange(u8 battler)
             ret = 2;
         else if (gBattleMonForms[battler] != 0 && (!weatherEffect || !(gBattleWeather & WEATHER_SUN_ANY)))
             ret = 1;
-    }
+    }/*/
 
     return ret;
 }
@@ -7687,7 +7687,10 @@ void UndoFormChange(u32 monId, u32 side)
     struct Pokemon *party = (side == B_SIDE_PLAYER) ? gPlayerParty : gEnemyParty;
     static const u16 species[][2] = // changed form id, default form id
     {
-        {SPECIES_AEGISLASH_BLADE, SPECIES_AEGISLASH},
+        {SPECIES_CASTFORM_SUNNY, SPECIES_CASTFORM},
+		{SPECIES_CASTFORM_SNOWY, SPECIES_CASTFORM},
+		{SPECIES_CASTFORM_RAINY, SPECIES_CASTFORM},
+		{SPECIES_AEGISLASH_BLADE, SPECIES_AEGISLASH},
         {SPECIES_MIMIKYU_BUSTED, SPECIES_MIMIKYU},
         {SPECIES_DARMANITAN_ZEN_MODE, SPECIES_DARMANITAN},
         {SPECIES_MINIOR, SPECIES_MINIOR_CORE_RED},

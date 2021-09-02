@@ -9738,14 +9738,13 @@ static bool32 TryAegiFormChange(void)
 {
 
     if ((GetBattlerAbility(gBattlerAttacker) != 176
-  && GetBattlerAbility(gBattlerAttacker) != 258)
+  && GetBattlerAbility(gBattlerAttacker) != 258
+  && GetBattlerAbility(gBattlerAttacker) != 59)
         || gBattleMons[gBattlerAttacker].status2 & (1 << 21))
         return 0;
 
     switch (gBattleMons[gBattlerAttacker].species)
     {
-    default:
-        return 0;
     case 681:
         if (gBattleMoves[gCurrentMove].power == 0)
             return 0;
@@ -9768,6 +9767,18 @@ static bool32 TryAegiFormChange(void)
             return 0;
         gBattleMons[gBattlerAttacker].species = 898 + 301;
         break;
+ case 351:
+  if (gBattleMoves[gCurrentMove].type == 10)
+  gBattleMons[gBattlerAttacker].species = 898 + 130;
+        else if (gBattleMoves[gCurrentMove].type == 15)
+  gBattleMons[gBattlerAttacker].species = 898 + 132;
+        else if (gBattleMoves[gCurrentMove].type == 11)
+  gBattleMons[gBattlerAttacker].species = 898 + 131;
+  else
+   return 0;
+        break;
+    default:
+        return 0;
     }
 
     BattleScriptPushCursor();
@@ -10893,7 +10904,7 @@ static void CheckSetUnburden(u8 battlerId)
         RecordAbilityBattle(battlerId, 84);
     }
 }
-# 2484 "src/battle_script_commands.c"
+# 2495 "src/battle_script_commands.c"
 void SetMoveEffect(bool32 primary, u32 certain)
 {
     s32 i, byTwo, affectsUser = 0;
@@ -12219,7 +12230,7 @@ static void Cmd_getexp(void)
 
             if (gSaveBlock2Ptr->expShare)
                 viaExpShare = gSaveBlock1Ptr->playerPartyCount;
-# 3829 "src/battle_script_commands.c"
+# 3840 "src/battle_script_commands.c"
                 *exp = calculatedExp;
     if(gSaveBlock2Ptr->optionsBattleStyle == 0 || FlagGet((((0x500 + 864 - 1) + 1) + 0x4))|| GetPlayerUsableMons() < 3){
                 gExpShareExp = calculatedExp / 2;
@@ -15598,7 +15609,7 @@ bool32 CanUseLastResort(u8 battlerId)
 
     return (knownMovesCount >= 2 && usedMovesCount >= knownMovesCount - 1);
 }
-# 7225 "src/battle_script_commands.c"
+# 7236 "src/battle_script_commands.c"
 static bool32 ClearDefogHazards(u8 battlerAtk, bool32 clear)
 {
     s32 i;
@@ -20564,7 +20575,7 @@ static void Cmd_handleballthrow(void)
 
                     if (gBattleMons[gBattlerTarget].level < 30)
                         ballMultiplier = 41 - gBattleMons[gBattlerTarget].level;
-# 12203 "src/battle_script_commands.c"
+# 12214 "src/battle_script_commands.c"
                 break;
             case 9:
                 if (GetSetPokedexFlag(SpeciesToNationalPokedexNum(gBattleMons[gBattlerTarget].species), FLAG_GET_CAUGHT))
@@ -20638,7 +20649,7 @@ static void Cmd_handleballthrow(void)
                         ballAddition = 20;
                     else
                         ballAddition = 30;
-# 12297 "src/battle_script_commands.c"
+# 12308 "src/battle_script_commands.c"
                 break;
             case 17:
                 if (gBaseStats[gBattleMons[gBattlerTarget].species].baseSpeed >= 100)

@@ -4547,6 +4547,7 @@ struct FacilityMon
     u8 itemTableId;
     u8 evSpread;
     u8 nature;
+ u8 abilityNum;
 };
 
 extern const u8 gTowerMaleFacilityClasses[30];
@@ -5020,7 +5021,7 @@ static void SetPlayerAndOpponentParties(void)
     if (gSaveBlock2Ptr->frontier.lvlMode == 2)
     {
         gFacilityTrainerMons = gSlateportBattleTentMons;
-        monLevel = 30;
+        monLevel = 50;
     }
     else
     {
@@ -5068,6 +5069,8 @@ static void SetPlayerAndOpponentParties(void)
             SetMonData(&gPlayerParty[i], 32, &friendship);
             SetMonData(&gPlayerParty[i], 12, &gBattleFrontierHeldItems[gFacilityTrainerMons[monId].itemTableId]);
             SetMonData(&gPlayerParty[i], 46, &gSaveBlock2Ptr->frontier.rentalMons[i].abilityNum);
+   if (gSaveBlock2Ptr->frontier.lvlMode == 2)
+   SetMonData(&gPlayerParty[i], 46, &gFacilityTrainerMons[monId].abilityNum);
         }
     }
 
@@ -5462,7 +5465,8 @@ u32 GetAiScriptsInBattleFactory(void)
 {
     int lvlMode = gSaveBlock2Ptr->frontier.lvlMode;
 
-    if (lvlMode == 2)
+
+ if (0)
     {
         return 0;
     }

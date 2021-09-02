@@ -20750,7 +20750,11 @@ gEnemyMonElevation:
 	.byte	0x3
 	.space	10
 	.byte	0x4
-	.space	61
+	.space	43
+	.byte	0x10
+	.byte	0x10
+	.byte	0x10
+	.space	15
 	.byte	0x7
 	.space	28
 	.byte	0x7
@@ -40401,11 +40405,27 @@ sAnims_AGGRON:
 	.align	2, 0
 	.type	 sAnims_CASTFORM,object
 sAnims_CASTFORM:
+	.word	sAnim_GeneralFrame0
 	.word	sAnim_CASTFORM_0
-	.word	sAnim_CASTFORM_1
-	.word	sAnim_CASTFORM_2
-	.word	sAnim_CASTFORM_3
-	.size	 sAnims_CASTFORM,16
+	.size	 sAnims_CASTFORM,8
+	.align	2, 0
+	.type	 sAnims_CASTFORM_SUNNY,object
+sAnims_CASTFORM_SUNNY:
+	.word	sAnim_GeneralFrame0
+	.word	sAnim_CASTFORM_0
+	.size	 sAnims_CASTFORM_SUNNY,8
+	.align	2, 0
+	.type	 sAnims_CASTFORM_SNOWY,object
+sAnims_CASTFORM_SNOWY:
+	.word	sAnim_GeneralFrame0
+	.word	sAnim_CASTFORM_0
+	.size	 sAnims_CASTFORM_SNOWY,8
+	.align	2, 0
+	.type	 sAnims_CASTFORM_RAINY,object
+sAnims_CASTFORM_RAINY:
+	.word	sAnim_GeneralFrame0
+	.word	sAnim_CASTFORM_0
+	.size	 sAnims_CASTFORM_RAINY,8
 	.align	2, 0
 	.type	 sAnims_VOLBEAT,object
 sAnims_VOLBEAT:
@@ -45530,9 +45550,9 @@ gMonFrontAnimsPtrTable:
 	.word	sAnims_UNOWN_Z
 	.word	sAnims_UNOWN_EMARK
 	.word	sAnims_UNOWN_QMARK
-	.word	sAnims_CASTFORM
-	.word	sAnims_CASTFORM
-	.word	sAnims_CASTFORM
+	.word	sAnims_CASTFORM_SUNNY
+	.word	sAnims_CASTFORM_RAINY
+	.word	sAnims_CASTFORM_SNOWY
 	.word	sAnims_DEOXYS_ATTACK
 	.word	sAnims_DEOXYS_DEFENSE
 	.word	sAnims_DEOXYS_SPEED

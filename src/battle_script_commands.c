@@ -1312,14 +1312,13 @@ static bool32 TryAegiFormChange(void)
 {
    // Only Aegislash with Stance Change can transform, transformed mons cannot.
     if ((GetBattlerAbility(gBattlerAttacker) != ABILITY_STANCE_CHANGE
-		&& GetBattlerAbility(gBattlerAttacker) != ABILITY_HUNGER_SWITCH)
+		&& GetBattlerAbility(gBattlerAttacker) != ABILITY_HUNGER_SWITCH
+		&& GetBattlerAbility(gBattlerAttacker) != ABILITY_FORECAST)
         || gBattleMons[gBattlerAttacker].status2 & STATUS2_TRANSFORMED)
         return FALSE;
 
     switch (gBattleMons[gBattlerAttacker].species)
     {
-    default:
-        return FALSE;
     case SPECIES_AEGISLASH: // Shield -> Blade
         if (gBattleMoves[gCurrentMove].power == 0)
             return FALSE;
@@ -1342,6 +1341,18 @@ static bool32 TryAegiFormChange(void)
             return FALSE;
         gBattleMons[gBattlerAttacker].species = SPECIES_MORPEKO_HANGRY;
         break;
+	case SPECIES_CASTFORM:
+		if (gBattleMoves[gCurrentMove].type == TYPE_FIRE)
+		gBattleMons[gBattlerAttacker].species = SPECIES_CASTFORM_SUNNY;
+        else if (gBattleMoves[gCurrentMove].type == TYPE_ICE)
+		gBattleMons[gBattlerAttacker].species = SPECIES_CASTFORM_SNOWY;
+        else if (gBattleMoves[gCurrentMove].type == TYPE_WATER)
+		gBattleMons[gBattlerAttacker].species = SPECIES_CASTFORM_RAINY;
+		else
+			return FALSE;
+        break;
+    default:
+        return FALSE;
     }
 
     BattleScriptPushCursor();

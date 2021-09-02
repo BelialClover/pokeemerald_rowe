@@ -3023,6 +3023,161 @@ Task_NewGameBirchSpeech_MainSpeech:
 .Lfe22:
 	.size	 Task_NewGameBirchSpeech_MainSpeech,.Lfe22-Task_NewGameBirchSpeech_MainSpeech
 	.align	2, 0
+	.type	 Task_NewGameBirchSpeech_ChoseDifficulty,function
+	.thumb_func
+Task_NewGameBirchSpeech_ChoseDifficulty:
+	push	{r4, lr}
+	add	r4, r0, #0
+	lsl	r4, r4, #0x18
+	lsr	r4, r4, #0x18
+	mov	r0, #0x0
+	bl	NewGameBirchSpeech_ClearWindow
+	ldr	r0, .L348
+	ldr	r1, .L348+0x4
+	bl	StringExpandPlaceholders
+	mov	r0, #0x1
+	bl	AddTextPrinterForMessage
+	ldr	r1, .L348+0x8
+	lsl	r0, r4, #0x2
+	add	r0, r0, r4
+	lsl	r0, r0, #0x3
+	add	r0, r0, r1
+	ldr	r1, .L348+0xc
+	str	r1, [r0]
+	pop	{r4}
+	pop	{r0}
+	bx	r0
+.L349:
+	.align	2, 0
+.L348:
+	.word	gStringVar4
+	.word	gText_Birch_ChoseDifficulty
+	.word	gTasks
+	.word	Task_NewGameBirchSpeech_YesNoDifficulty
+.Lfe23:
+	.size	 Task_NewGameBirchSpeech_ChoseDifficulty,.Lfe23-Task_NewGameBirchSpeech_ChoseDifficulty
+	.align	2, 0
+	.type	 Task_NewGameBirchSpeech_YesNoDifficulty,function
+	.thumb_func
+Task_NewGameBirchSpeech_YesNoDifficulty:
+	push	{r4, lr}
+	add	sp, sp, #-0x8
+	lsl	r0, r0, #0x18
+	lsr	r4, r0, #0x18
+	bl	RunTextPrintersAndIsPrinter0Active
+	lsl	r0, r0, #0x10
+	cmp	r0, #0
+	bne	.L351	@cond_branch
+	mov	r0, #0x2
+	str	r0, [sp]
+	mov	r0, #0xf
+	str	r0, [sp, #0x4]
+	mov	r0, #0x2
+	mov	r1, #0x1
+	mov	r2, #0xf3
+	mov	r3, #0xdf
+	bl	CreateYesNoMenuParameterized
+	ldr	r1, .L352
+	lsl	r0, r4, #0x2
+	add	r0, r0, r4
+	lsl	r0, r0, #0x3
+	add	r0, r0, r1
+	ldr	r1, .L352+0x4
+	str	r1, [r0]
+.L351:
+	add	sp, sp, #0x8
+	pop	{r4}
+	pop	{r0}
+	bx	r0
+.L353:
+	.align	2, 0
+.L352:
+	.word	gTasks
+	.word	Task_NewGameBirchSpeech_ProcessDifficultyYesNoMenu
+.Lfe24:
+	.size	 Task_NewGameBirchSpeech_YesNoDifficulty,.Lfe24-Task_NewGameBirchSpeech_YesNoDifficulty
+	.align	2, 0
+	.type	 Task_NewGameBirchSpeech_ProcessDifficultyYesNoMenu,function
+	.thumb_func
+Task_NewGameBirchSpeech_ProcessDifficultyYesNoMenu:
+	push	{r4, r5, lr}
+	lsl	r0, r0, #0x18
+	lsr	r5, r0, #0x18
+	bl	Menu_ProcessInputNoWrapClearOnChoose
+	lsl	r0, r0, #0x18
+	asr	r1, r0, #0x18
+	cmp	r1, #0
+	beq	.L356	@cond_branch
+	cmp	r1, #0
+	bgt	.L361	@cond_branch
+	mov	r0, #0x1
+	neg	r0, r0
+	cmp	r1, r0
+	beq	.L358	@cond_branch
+	b	.L355
+.L361:
+	cmp	r1, #0x1
+	beq	.L358	@cond_branch
+	b	.L355
+.L356:
+	mov	r0, #0x5
+	bl	PlaySE
+	ldr	r2, .L362
+	ldr	r0, .L362+0x4
+	lsl	r4, r5, #0x2
+	add	r4, r4, r5
+	lsl	r4, r4, #0x3
+	add	r4, r4, r0
+	mov	r0, #0xc
+	ldrsh	r1, [r4, r0]
+	lsl	r0, r1, #0x4
+	add	r0, r0, r1
+	lsl	r0, r0, #0x2
+	add	r0, r0, r2
+	ldrb	r2, [r0, #0x1]
+	mov	r1, #0xd
+	neg	r1, r1
+	and	r1, r1, r2
+	mov	r2, #0x4
+	orr	r1, r1, r2
+	strb	r1, [r0, #0x1]
+	add	r0, r5, #0
+	mov	r1, #0x2
+	bl	NewGameBirchSpeech_StartFadeOutTarget1InTarget2
+	add	r0, r5, #0
+	mov	r1, #0x1
+	bl	NewGameBirchSpeech_StartFadePlatformIn
+	ldr	r0, .L362+0x8
+	str	r0, [r4]
+	b	.L355
+.L363:
+	.align	2, 0
+.L362:
+	.word	gSprites
+	.word	gTasks
+	.word	Task_NewGameBirchSpeech_AndYouAre
+.L358:
+	mov	r0, #0x5
+	bl	PlaySE
+	ldr	r0, .L364
+	lsl	r1, r5, #0x2
+	add	r1, r1, r5
+	lsl	r1, r1, #0x3
+	add	r1, r1, r0
+	ldr	r0, .L364+0x4
+	str	r0, [r1]
+.L355:
+	pop	{r4, r5}
+	pop	{r0}
+	bx	r0
+.L365:
+	.align	2, 0
+.L364:
+	.word	gTasks
+	.word	Task_NewGameBirchSpeech_BoyOrGirl
+.Lfe25:
+	.size	 Task_NewGameBirchSpeech_ProcessDifficultyYesNoMenu,.Lfe25-Task_NewGameBirchSpeech_ProcessDifficultyYesNoMenu
+	.align	2, 0
 	.type	 Task_NewGameBirchSpeechSub_InitPokeBall,function
 	.thumb_func
 Task_NewGameBirchSpeechSub_InitPokeBall:
@@ -3033,8 +3188,8 @@ Task_NewGameBirchSpeechSub_InitPokeBall:
 	add	r4, r0, #0
 	lsl	r4, r4, #0x18
 	lsr	r4, r4, #0x18
-	ldr	r6, .L348
-	ldr	r0, .L348+0x4
+	ldr	r6, .L367
+	ldr	r0, .L367+0x4
 	mov	r8, r0
 	ldrb	r1, [r0]
 	lsl	r0, r1, #0x2
@@ -3042,7 +3197,7 @@ Task_NewGameBirchSpeechSub_InitPokeBall:
 	lsl	r0, r0, #0x3
 	add	r0, r0, r6
 	ldrb	r0, [r0, #0x1a]
-	ldr	r1, .L348+0x8
+	ldr	r1, .L367+0x8
 	lsl	r2, r0, #0x4
 	add	r2, r2, r0
 	lsl	r2, r2, #0x2
@@ -3068,7 +3223,7 @@ Task_NewGameBirchSpeechSub_InitPokeBall:
 	str	r5, [sp, #0x4]
 	mov	r2, #0x20
 	str	r2, [sp, #0x8]
-	ldr	r2, .L348+0xc
+	ldr	r2, .L367+0xc
 	str	r2, [sp, #0xc]
 	mov	r2, #0x1
 	str	r2, [sp, #0x10]
@@ -3079,7 +3234,7 @@ Task_NewGameBirchSpeechSub_InitPokeBall:
 	add	r0, r0, r4
 	lsl	r0, r0, #0x3
 	add	r0, r0, r6
-	ldr	r1, .L348+0x10
+	ldr	r1, .L367+0x10
 	str	r1, [r0]
 	mov	r0, r8
 	ldrb	r1, [r0]
@@ -3094,16 +3249,16 @@ Task_NewGameBirchSpeechSub_InitPokeBall:
 	pop	{r4, r5, r6}
 	pop	{r0}
 	bx	r0
-.L349:
+.L368:
 	.align	2, 0
-.L348:
+.L367:
 	.word	gTasks
 	.word	sBirchSpeechMainTaskId
 	.word	gSprites
 	.word	0xffff
 	.word	Task_NewGameBirchSpeechSub_WaitForLotad
-.Lfe23:
-	.size	 Task_NewGameBirchSpeechSub_InitPokeBall,.Lfe23-Task_NewGameBirchSpeechSub_InitPokeBall
+.Lfe26:
+	.size	 Task_NewGameBirchSpeechSub_InitPokeBall,.Lfe26-Task_NewGameBirchSpeechSub_InitPokeBall
 	.align	2, 0
 	.type	 Task_NewGameBirchSpeechSub_WaitForLotad,function
 	.thumb_func
@@ -3116,11 +3271,11 @@ Task_NewGameBirchSpeechSub_WaitForLotad:
 	lsl	r0, r4, #0x2
 	add	r0, r0, r4
 	lsl	r0, r0, #0x3
-	ldr	r1, .L362
+	ldr	r1, .L381
 	add	r5, r0, r1
 	sub	r1, r1, #0x8
 	mov	r8, r1
-	ldr	r2, .L362+0x4
+	ldr	r2, .L381+0x4
 	ldrb	r1, [r2]
 	lsl	r0, r1, #0x2
 	add	r0, r0, r1
@@ -3132,42 +3287,42 @@ Task_NewGameBirchSpeechSub_WaitForLotad:
 	lsl	r0, r1, #0x4
 	add	r0, r0, r1
 	lsl	r0, r0, #0x2
-	ldr	r1, .L362+0x8
+	ldr	r1, .L381+0x8
 	add	r3, r0, r1
 	mov	r1, #0x0
 	ldrsh	r0, [r5, r1]
 	add	r7, r2, #0
 	cmp	r0, #0
-	beq	.L352	@cond_branch
+	beq	.L371	@cond_branch
 	cmp	r0, #0x1
-	beq	.L355	@cond_branch
-	b	.L358
-.L363:
+	beq	.L374	@cond_branch
+	b	.L377
+.L382:
 	.align	2, 0
-.L362:
+.L381:
 	.word	gTasks+0x8
 	.word	sBirchSpeechMainTaskId
 	.word	gSprites
-.L352:
+.L371:
 	ldr	r1, [r3, #0x1c]
-	ldr	r0, .L364
+	ldr	r0, .L383
 	cmp	r1, r0
-	bne	.L351	@cond_branch
+	bne	.L370	@cond_branch
 	ldrb	r1, [r3, #0x1]
 	mov	r0, #0x4
 	neg	r0, r0
 	and	r0, r0, r1
 	strb	r0, [r3, #0x1]
-	b	.L358
-.L365:
+	b	.L377
+.L384:
 	.align	2, 0
-.L364:
+.L383:
 	.word	SpriteCallbackDummy
-.L355:
+.L374:
 	mov	r1, #0x16
 	ldrsh	r0, [r6, r1]
 	cmp	r0, #0x5f
-	ble	.L351	@cond_branch
+	ble	.L370	@cond_branch
 	add	r0, r4, #0
 	bl	DestroyTask
 	ldrb	r1, [r7]
@@ -3176,39 +3331,39 @@ Task_NewGameBirchSpeechSub_WaitForLotad:
 	lsl	r0, r0, #0x3
 	mov	r1, r8
 	add	r2, r0, r1
-	b	.L361
-.L358:
+	b	.L380
+.L377:
 	ldrh	r0, [r5]
 	add	r0, r0, #0x1
 	strh	r0, [r5]
-	ldr	r2, .L366
+	ldr	r2, .L385
 	ldrb	r1, [r7]
 	lsl	r0, r1, #0x2
 	add	r0, r0, r1
 	lsl	r0, r0, #0x3
 	add	r2, r0, r2
-.L361:
+.L380:
 	ldrh	r3, [r2, #0x16]
 	mov	r0, #0x16
 	ldrsh	r1, [r2, r0]
-	ldr	r0, .L366+0x4
+	ldr	r0, .L385+0x4
 	cmp	r1, r0
-	bgt	.L351	@cond_branch
+	bgt	.L370	@cond_branch
 	add	r0, r3, #0x1
 	strh	r0, [r2, #0x16]
-.L351:
+.L370:
 	pop	{r3}
 	mov	r8, r3
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L367:
+.L386:
 	.align	2, 0
-.L366:
+.L385:
 	.word	gTasks
 	.word	0x3fff
-.Lfe24:
-	.size	 Task_NewGameBirchSpeechSub_WaitForLotad,.Lfe24-Task_NewGameBirchSpeechSub_WaitForLotad
+.Lfe27:
+	.size	 Task_NewGameBirchSpeechSub_WaitForLotad,.Lfe27-Task_NewGameBirchSpeechSub_WaitForLotad
 	.align	2, 0
 	.type	 Task_NewGameBirchSpeech_AndYouAre,function
 	.thumb_func
@@ -3220,35 +3375,35 @@ Task_NewGameBirchSpeech_AndYouAre:
 	lsl	r0, r0, #0x10
 	lsr	r1, r0, #0x10
 	cmp	r1, #0
-	bne	.L369	@cond_branch
-	ldr	r0, .L370
+	bne	.L388	@cond_branch
+	ldr	r0, .L389
 	strb	r1, [r0]
-	ldr	r0, .L370+0x4
-	ldr	r1, .L370+0x8
+	ldr	r0, .L389+0x4
+	ldr	r1, .L389+0x8
 	bl	StringExpandPlaceholders
 	mov	r0, #0x1
 	bl	AddTextPrinterForMessage
-	ldr	r1, .L370+0xc
+	ldr	r1, .L389+0xc
 	lsl	r0, r4, #0x2
 	add	r0, r0, r4
 	lsl	r0, r0, #0x3
 	add	r0, r0, r1
-	ldr	r1, .L370+0x10
+	ldr	r1, .L389+0x10
 	str	r1, [r0]
-.L369:
+.L388:
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L371:
+.L390:
 	.align	2, 0
-.L370:
+.L389:
 	.word	gUnknown_02022D04
 	.word	gStringVar4
 	.word	gText_Birch_AndYouAre
 	.word	gTasks
 	.word	Task_NewGameBirchSpeech_StartBirchLotadPlatformFade
-.Lfe25:
-	.size	 Task_NewGameBirchSpeech_AndYouAre,.Lfe25-Task_NewGameBirchSpeech_AndYouAre
+.Lfe28:
+	.size	 Task_NewGameBirchSpeech_AndYouAre,.Lfe28-Task_NewGameBirchSpeech_AndYouAre
 	.align	2, 0
 	.type	 Task_NewGameBirchSpeech_StartBirchLotadPlatformFade,function
 	.thumb_func
@@ -3259,9 +3414,9 @@ Task_NewGameBirchSpeech_StartBirchLotadPlatformFade:
 	bl	RunTextPrintersAndIsPrinter0Active
 	lsl	r0, r0, #0x10
 	cmp	r0, #0
-	bne	.L373	@cond_branch
-	ldr	r5, .L374
-	ldr	r0, .L374+0x4
+	bne	.L392	@cond_branch
+	ldr	r5, .L393
+	ldr	r0, .L393+0x4
 	lsl	r4, r6, #0x2
 	add	r4, r4, r6
 	lsl	r4, r4, #0x3
@@ -3298,20 +3453,20 @@ Task_NewGameBirchSpeech_StartBirchLotadPlatformFade:
 	bl	NewGameBirchSpeech_StartFadePlatformIn
 	mov	r0, #0x40
 	strh	r0, [r4, #0x16]
-	ldr	r0, .L374+0x8
+	ldr	r0, .L393+0x8
 	str	r0, [r4]
-.L373:
+.L392:
 	pop	{r4, r5, r6}
 	pop	{r0}
 	bx	r0
-.L375:
+.L394:
 	.align	2, 0
-.L374:
+.L393:
 	.word	gSprites
 	.word	gTasks
 	.word	Task_NewGameBirchSpeech_SlidePlatformAway
-.Lfe26:
-	.size	 Task_NewGameBirchSpeech_StartBirchLotadPlatformFade,.Lfe26-Task_NewGameBirchSpeech_StartBirchLotadPlatformFade
+.Lfe29:
+	.size	 Task_NewGameBirchSpeech_StartBirchLotadPlatformFade,.Lfe29-Task_NewGameBirchSpeech_StartBirchLotadPlatformFade
 	.align	2, 0
 	.type	 Task_NewGameBirchSpeech_SlidePlatformAway,function
 	.thumb_func
@@ -3319,7 +3474,7 @@ Task_NewGameBirchSpeech_SlidePlatformAway:
 	push	{lr}
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
-	ldr	r2, .L379
+	ldr	r2, .L398
 	lsl	r1, r0, #0x2
 	add	r1, r1, r0
 	lsl	r1, r1, #0x3
@@ -3330,32 +3485,32 @@ Task_NewGameBirchSpeech_SlidePlatformAway:
 	mov	r0, #0x3c
 	neg	r0, r0
 	cmp	r1, r0
-	beq	.L377	@cond_branch
+	beq	.L396	@cond_branch
 	sub	r0, r3, #0x2
 	strh	r0, [r2, #0x10]
 	ldrh	r1, [r2, #0x10]
 	mov	r0, #0x14
 	bl	SetGpuReg
-	b	.L378
-.L380:
+	b	.L397
+.L399:
 	.align	2, 0
-.L379:
+.L398:
 	.word	gTasks
-.L377:
-	ldr	r0, .L381
+.L396:
+	ldr	r0, .L400
 	strh	r0, [r2, #0x10]
-	ldr	r0, .L381+0x4
+	ldr	r0, .L400+0x4
 	str	r0, [r2]
-.L378:
+.L397:
 	pop	{r0}
 	bx	r0
-.L382:
+.L401:
 	.align	2, 0
-.L381:
+.L400:
 	.word	0xffc4
 	.word	Task_NewGameBirchSpeech_StartPlayerFadeIn
-.Lfe27:
-	.size	 Task_NewGameBirchSpeech_SlidePlatformAway,.Lfe27-Task_NewGameBirchSpeech_SlidePlatformAway
+.Lfe30:
+	.size	 Task_NewGameBirchSpeech_SlidePlatformAway,.Lfe30-Task_NewGameBirchSpeech_SlidePlatformAway
 	.align	2, 0
 	.type	 Task_NewGameBirchSpeech_StartPlayerFadeIn,function
 	.thumb_func
@@ -3364,7 +3519,7 @@ Task_NewGameBirchSpeech_StartPlayerFadeIn:
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	add	r5, r0, #0
-	ldr	r1, .L387
+	ldr	r1, .L406
 	lsl	r0, r5, #0x2
 	add	r0, r0, r5
 	lsl	r0, r0, #0x3
@@ -3372,8 +3527,8 @@ Task_NewGameBirchSpeech_StartPlayerFadeIn:
 	mov	r1, #0x12
 	ldrsh	r0, [r4, r1]
 	cmp	r0, #0
-	beq	.L384	@cond_branch
-	ldr	r2, .L387+0x4
+	beq	.L403	@cond_branch
+	ldr	r2, .L406+0x4
 	mov	r0, #0x18
 	ldrsh	r1, [r4, r0]
 	lsl	r0, r1, #0x4
@@ -3399,16 +3554,16 @@ Task_NewGameBirchSpeech_StartPlayerFadeIn:
 	mov	r1, #0x16
 	ldrsh	r6, [r4, r1]
 	cmp	r6, #0
-	beq	.L385	@cond_branch
+	beq	.L404	@cond_branch
 	sub	r0, r0, #0x1
 	strh	r0, [r4, #0x16]
-	b	.L384
-.L388:
+	b	.L403
+.L407:
 	.align	2, 0
-.L387:
+.L406:
 	.word	gTasks
 	.word	gSprites
-.L385:
+.L404:
 	ldrb	r3, [r4, #0x1c]
 	lsl	r1, r3, #0x4
 	add	r1, r1, r3
@@ -3440,18 +3595,18 @@ Task_NewGameBirchSpeech_StartPlayerFadeIn:
 	add	r0, r5, #0
 	mov	r1, #0x1
 	bl	NewGameBirchSpeech_StartFadePlatformOut
-	ldr	r0, .L389
+	ldr	r0, .L408
 	str	r0, [r4]
-.L384:
+.L403:
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L390:
+.L409:
 	.align	2, 0
-.L389:
+.L408:
 	.word	Task_NewGameBirchSpeech_WaitForPlayerFadeIn
-.Lfe28:
-	.size	 Task_NewGameBirchSpeech_StartPlayerFadeIn,.Lfe28-Task_NewGameBirchSpeech_StartPlayerFadeIn
+.Lfe31:
+	.size	 Task_NewGameBirchSpeech_StartPlayerFadeIn,.Lfe31-Task_NewGameBirchSpeech_StartPlayerFadeIn
 	.align	2, 0
 	.type	 Task_NewGameBirchSpeech_WaitForPlayerFadeIn,function
 	.thumb_func
@@ -3459,7 +3614,7 @@ Task_NewGameBirchSpeech_WaitForPlayerFadeIn:
 	push	{lr}
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
-	ldr	r2, .L393
+	ldr	r2, .L412
 	lsl	r1, r0, #0x2
 	add	r1, r1, r0
 	lsl	r1, r1, #0x3
@@ -3467,8 +3622,8 @@ Task_NewGameBirchSpeech_WaitForPlayerFadeIn:
 	mov	r1, #0x12
 	ldrsh	r0, [r3, r1]
 	cmp	r0, #0
-	beq	.L392	@cond_branch
-	ldr	r2, .L393+0x4
+	beq	.L411	@cond_branch
+	ldr	r2, .L412+0x4
 	mov	r1, #0xc
 	ldrsh	r0, [r3, r1]
 	lsl	r1, r0, #0x4
@@ -3480,19 +3635,19 @@ Task_NewGameBirchSpeech_WaitForPlayerFadeIn:
 	neg	r0, r0
 	and	r0, r0, r2
 	strb	r0, [r1, #0x1]
-	ldr	r0, .L393+0x8
+	ldr	r0, .L412+0x8
 	str	r0, [r3]
-.L392:
+.L411:
 	pop	{r0}
 	bx	r0
-.L394:
+.L413:
 	.align	2, 0
-.L393:
+.L412:
 	.word	gTasks
 	.word	gSprites
 	.word	Task_NewGameBirchSpeech_BoyOrGirl
-.Lfe29:
-	.size	 Task_NewGameBirchSpeech_WaitForPlayerFadeIn,.Lfe29-Task_NewGameBirchSpeech_WaitForPlayerFadeIn
+.Lfe32:
+	.size	 Task_NewGameBirchSpeech_WaitForPlayerFadeIn,.Lfe32-Task_NewGameBirchSpeech_WaitForPlayerFadeIn
 	.align	2, 0
 	.type	 Task_NewGameBirchSpeech_BoyOrGirl,function
 	.thumb_func
@@ -3503,30 +3658,30 @@ Task_NewGameBirchSpeech_BoyOrGirl:
 	lsr	r4, r4, #0x18
 	mov	r0, #0x0
 	bl	NewGameBirchSpeech_ClearWindow
-	ldr	r0, .L396
-	ldr	r1, .L396+0x4
+	ldr	r0, .L415
+	ldr	r1, .L415+0x4
 	bl	StringExpandPlaceholders
 	mov	r0, #0x1
 	bl	AddTextPrinterForMessage
-	ldr	r1, .L396+0x8
+	ldr	r1, .L415+0x8
 	lsl	r0, r4, #0x2
 	add	r0, r0, r4
 	lsl	r0, r0, #0x3
 	add	r0, r0, r1
-	ldr	r1, .L396+0xc
+	ldr	r1, .L415+0xc
 	str	r1, [r0]
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L397:
+.L416:
 	.align	2, 0
-.L396:
+.L415:
 	.word	gStringVar4
 	.word	gText_Birch_BoyOrGirl
 	.word	gTasks
 	.word	Task_NewGameBirchSpeech_WaitToShowGenderMenu
-.Lfe30:
-	.size	 Task_NewGameBirchSpeech_BoyOrGirl,.Lfe30-Task_NewGameBirchSpeech_BoyOrGirl
+.Lfe33:
+	.size	 Task_NewGameBirchSpeech_BoyOrGirl,.Lfe33-Task_NewGameBirchSpeech_BoyOrGirl
 	.align	2, 0
 	.type	 Task_NewGameBirchSpeech_WaitToShowGenderMenu,function
 	.thumb_func
@@ -3537,26 +3692,26 @@ Task_NewGameBirchSpeech_WaitToShowGenderMenu:
 	bl	RunTextPrintersAndIsPrinter0Active
 	lsl	r0, r0, #0x10
 	cmp	r0, #0
-	bne	.L399	@cond_branch
+	bne	.L418	@cond_branch
 	bl	NewGameBirchSpeech_ShowGenderMenu
-	ldr	r0, .L400
+	ldr	r0, .L419
 	lsl	r1, r4, #0x2
 	add	r1, r1, r4
 	lsl	r1, r1, #0x3
 	add	r1, r1, r0
-	ldr	r0, .L400+0x4
+	ldr	r0, .L419+0x4
 	str	r0, [r1]
-.L399:
+.L418:
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L401:
+.L420:
 	.align	2, 0
-.L400:
+.L419:
 	.word	gTasks
 	.word	Task_NewGameBirchSpeech_ChooseGender
-.Lfe31:
-	.size	 Task_NewGameBirchSpeech_WaitToShowGenderMenu,.Lfe31-Task_NewGameBirchSpeech_WaitToShowGenderMenu
+.Lfe34:
+	.size	 Task_NewGameBirchSpeech_WaitToShowGenderMenu,.Lfe34-Task_NewGameBirchSpeech_WaitToShowGenderMenu
 	.align	2, 0
 	.type	 Task_NewGameBirchSpeech_ChooseGender,function
 	.thumb_func
@@ -3568,43 +3723,43 @@ Task_NewGameBirchSpeech_ChooseGender:
 	lsl	r0, r0, #0x18
 	asr	r4, r0, #0x18
 	cmp	r4, #0
-	beq	.L404	@cond_branch
+	beq	.L423	@cond_branch
 	cmp	r4, #0x1
-	beq	.L405	@cond_branch
+	beq	.L424	@cond_branch
 	lsl	r4, r5, #0x2
-	b	.L403
-.L404:
-.L405:
+	b	.L422
+.L423:
+.L424:
 	mov	r0, #0x5
 	bl	PlaySE
-	ldr	r0, .L409
+	ldr	r0, .L428
 	ldr	r0, [r0]
 	strb	r4, [r0, #0x8]
 	mov	r0, #0x1
 	mov	r1, #0x1
 	bl	NewGameBirchSpeech_ClearGenderWindow
-	ldr	r1, .L409+0x4
+	ldr	r1, .L428+0x4
 	lsl	r2, r5, #0x2
 	add	r0, r2, r5
 	lsl	r0, r0, #0x3
 	add	r0, r0, r1
-	ldr	r1, .L409+0x8
+	ldr	r1, .L428+0x8
 	str	r1, [r0]
 	add	r4, r2, #0
-.L403:
+.L422:
 	bl	Menu_GetCursorPos
 	lsl	r0, r0, #0x18
 	lsr	r3, r0, #0x18
-	ldr	r1, .L409+0x4
+	ldr	r1, .L428+0x4
 	add	r0, r4, r5
 	lsl	r0, r0, #0x3
 	add	r4, r0, r1
 	mov	r1, #0x14
 	ldrsh	r0, [r4, r1]
 	cmp	r3, r0
-	beq	.L408	@cond_branch
+	beq	.L427	@cond_branch
 	strh	r3, [r4, #0x14]
-	ldr	r2, .L409+0xc
+	ldr	r2, .L428+0xc
 	mov	r0, #0xc
 	ldrsh	r1, [r4, r0]
 	lsl	r0, r1, #0x4
@@ -3621,22 +3776,22 @@ Task_NewGameBirchSpeech_ChooseGender:
 	add	r0, r5, #0
 	mov	r1, #0x0
 	bl	NewGameBirchSpeech_StartFadeOutTarget1InTarget2
-	ldr	r0, .L409+0x10
+	ldr	r0, .L428+0x10
 	str	r0, [r4]
-.L408:
+.L427:
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.L410:
+.L429:
 	.align	2, 0
-.L409:
+.L428:
 	.word	gSaveBlock2Ptr
 	.word	gTasks
 	.word	Task_NewGameBirchSpeech_WhatsYourName
 	.word	gSprites
 	.word	Task_NewGameBirchSpeech_SlideOutOldGenderSprite
-.Lfe32:
-	.size	 Task_NewGameBirchSpeech_ChooseGender,.Lfe32-Task_NewGameBirchSpeech_ChooseGender
+.Lfe35:
+	.size	 Task_NewGameBirchSpeech_ChooseGender,.Lfe35-Task_NewGameBirchSpeech_ChooseGender
 	.align	2, 0
 	.type	 Task_NewGameBirchSpeech_SlideOutOldGenderSprite,function
 	.thumb_func
@@ -3644,7 +3799,7 @@ Task_NewGameBirchSpeech_SlideOutOldGenderSprite:
 	push	{r4, r5, r6, r7, lr}
 	lsl	r0, r0, #0x18
 	lsr	r6, r0, #0x18
-	ldr	r1, .L416
+	ldr	r1, .L435
 	lsl	r0, r6, #0x2
 	add	r0, r0, r6
 	lsl	r0, r0, #0x3
@@ -3654,8 +3809,8 @@ Task_NewGameBirchSpeech_SlideOutOldGenderSprite:
 	ldrsh	r0, [r4, r2]
 	add	r7, r1, #0
 	cmp	r0, #0
-	bne	.L412	@cond_branch
-	ldr	r0, .L416+0x4
+	bne	.L431	@cond_branch
+	ldr	r0, .L435+0x4
 	lsl	r1, r5, #0x4
 	add	r1, r1, r5
 	lsl	r1, r1, #0x2
@@ -3663,14 +3818,14 @@ Task_NewGameBirchSpeech_SlideOutOldGenderSprite:
 	ldrh	r0, [r1, #0x20]
 	add	r0, r0, #0x4
 	strh	r0, [r1, #0x20]
-	b	.L413
-.L417:
+	b	.L432
+.L436:
 	.align	2, 0
-.L416:
+.L435:
 	.word	gTasks
 	.word	gSprites
-.L412:
-	ldr	r3, .L418
+.L431:
+	ldr	r3, .L437
 	lsl	r0, r5, #0x4
 	add	r0, r0, r5
 	lsl	r0, r0, #0x2
@@ -3683,16 +3838,16 @@ Task_NewGameBirchSpeech_SlideOutOldGenderSprite:
 	mov	r1, #0x14
 	ldrsh	r0, [r4, r1]
 	cmp	r0, #0
-	beq	.L414	@cond_branch
+	beq	.L433	@cond_branch
 	ldrb	r5, [r4, #0x1e]
-	b	.L415
-.L419:
+	b	.L434
+.L438:
 	.align	2, 0
-.L418:
+.L437:
 	.word	gSprites
-.L414:
+.L433:
 	ldrb	r5, [r4, #0x1c]
-.L415:
+.L434:
 	lsl	r2, r5, #0x4
 	add	r2, r2, r5
 	lsl	r2, r2, #0x2
@@ -3722,18 +3877,18 @@ Task_NewGameBirchSpeech_SlideOutOldGenderSprite:
 	add	r0, r6, #0
 	mov	r1, #0x0
 	bl	NewGameBirchSpeech_StartFadeInTarget1OutTarget2
-	ldr	r0, .L420
+	ldr	r0, .L439
 	str	r0, [r4]
-.L413:
+.L432:
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L421:
+.L440:
 	.align	2, 0
-.L420:
+.L439:
 	.word	Task_NewGameBirchSpeech_SlideInNewGenderSprite
-.Lfe33:
-	.size	 Task_NewGameBirchSpeech_SlideOutOldGenderSprite,.Lfe33-Task_NewGameBirchSpeech_SlideOutOldGenderSprite
+.Lfe36:
+	.size	 Task_NewGameBirchSpeech_SlideOutOldGenderSprite,.Lfe36-Task_NewGameBirchSpeech_SlideOutOldGenderSprite
 	.align	2, 0
 	.type	 Task_NewGameBirchSpeech_SlideInNewGenderSprite,function
 	.thumb_func
@@ -3741,13 +3896,13 @@ Task_NewGameBirchSpeech_SlideInNewGenderSprite:
 	push	{r4, lr}
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
-	ldr	r2, .L426
+	ldr	r2, .L445
 	lsl	r1, r0, #0x2
 	add	r1, r1, r0
 	lsl	r1, r1, #0x3
 	add	r3, r1, r2
 	ldrb	r1, [r3, #0xc]
-	ldr	r2, .L426+0x4
+	ldr	r2, .L445+0x4
 	lsl	r0, r1, #0x4
 	add	r0, r0, r1
 	lsl	r0, r0, #0x2
@@ -3756,39 +3911,39 @@ Task_NewGameBirchSpeech_SlideInNewGenderSprite:
 	mov	r4, #0x20
 	ldrsh	r0, [r2, r4]
 	cmp	r0, #0xb4
-	ble	.L423	@cond_branch
+	ble	.L442	@cond_branch
 	sub	r0, r1, #0x4
 	strh	r0, [r2, #0x20]
-	b	.L424
-.L427:
+	b	.L443
+.L446:
 	.align	2, 0
-.L426:
+.L445:
 	.word	gTasks
 	.word	gSprites
-.L423:
+.L442:
 	mov	r0, #0xb4
 	strh	r0, [r2, #0x20]
 	mov	r1, #0x12
 	ldrsh	r0, [r3, r1]
 	cmp	r0, #0
-	beq	.L424	@cond_branch
+	beq	.L443	@cond_branch
 	ldrb	r0, [r2, #0x1]
 	mov	r1, #0xd
 	neg	r1, r1
 	and	r1, r1, r0
 	strb	r1, [r2, #0x1]
-	ldr	r0, .L428
+	ldr	r0, .L447
 	str	r0, [r3]
-.L424:
+.L443:
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L429:
+.L448:
 	.align	2, 0
-.L428:
+.L447:
 	.word	Task_NewGameBirchSpeech_ChooseGender
-.Lfe34:
-	.size	 Task_NewGameBirchSpeech_SlideInNewGenderSprite,.Lfe34-Task_NewGameBirchSpeech_SlideInNewGenderSprite
+.Lfe37:
+	.size	 Task_NewGameBirchSpeech_SlideInNewGenderSprite,.Lfe37-Task_NewGameBirchSpeech_SlideInNewGenderSprite
 	.align	2, 0
 	.type	 Task_NewGameBirchSpeech_WhatsYourName,function
 	.thumb_func
@@ -3799,30 +3954,30 @@ Task_NewGameBirchSpeech_WhatsYourName:
 	lsr	r4, r4, #0x18
 	mov	r0, #0x0
 	bl	NewGameBirchSpeech_ClearWindow
-	ldr	r0, .L431
-	ldr	r1, .L431+0x4
+	ldr	r0, .L450
+	ldr	r1, .L450+0x4
 	bl	StringExpandPlaceholders
 	mov	r0, #0x1
 	bl	AddTextPrinterForMessage
-	ldr	r1, .L431+0x8
+	ldr	r1, .L450+0x8
 	lsl	r0, r4, #0x2
 	add	r0, r0, r4
 	lsl	r0, r0, #0x3
 	add	r0, r0, r1
-	ldr	r1, .L431+0xc
+	ldr	r1, .L450+0xc
 	str	r1, [r0]
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L432:
+.L451:
 	.align	2, 0
-.L431:
+.L450:
 	.word	gStringVar4
 	.word	gText_Birch_WhatsYourName
 	.word	gTasks
 	.word	Task_NewGameBirchSpeech_WaitForWhatsYourNameToPrint
-.Lfe35:
-	.size	 Task_NewGameBirchSpeech_WhatsYourName,.Lfe35-Task_NewGameBirchSpeech_WhatsYourName
+.Lfe38:
+	.size	 Task_NewGameBirchSpeech_WhatsYourName,.Lfe38-Task_NewGameBirchSpeech_WhatsYourName
 	.align	2, 0
 	.type	 Task_NewGameBirchSpeech_WaitForWhatsYourNameToPrint,function
 	.thumb_func
@@ -3833,25 +3988,25 @@ Task_NewGameBirchSpeech_WaitForWhatsYourNameToPrint:
 	bl	RunTextPrintersAndIsPrinter0Active
 	lsl	r0, r0, #0x10
 	cmp	r0, #0
-	bne	.L434	@cond_branch
-	ldr	r0, .L435
+	bne	.L453	@cond_branch
+	ldr	r0, .L454
 	lsl	r1, r4, #0x2
 	add	r1, r1, r4
 	lsl	r1, r1, #0x3
 	add	r1, r1, r0
-	ldr	r0, .L435+0x4
+	ldr	r0, .L454+0x4
 	str	r0, [r1]
-.L434:
+.L453:
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L436:
+.L455:
 	.align	2, 0
-.L435:
+.L454:
 	.word	gTasks
 	.word	Task_NewGameBirchSpeech_WaitPressBeforeNameChoice
-.Lfe36:
-	.size	 Task_NewGameBirchSpeech_WaitForWhatsYourNameToPrint,.Lfe36-Task_NewGameBirchSpeech_WaitForWhatsYourNameToPrint
+.Lfe39:
+	.size	 Task_NewGameBirchSpeech_WaitForWhatsYourNameToPrint,.Lfe39-Task_NewGameBirchSpeech_WaitForWhatsYourNameToPrint
 	.align	2, 0
 	.type	 Task_NewGameBirchSpeech_WaitPressBeforeNameChoice,function
 	.thumb_func
@@ -3860,17 +4015,17 @@ Task_NewGameBirchSpeech_WaitPressBeforeNameChoice:
 	add	sp, sp, #-0x4
 	lsl	r0, r0, #0x18
 	lsr	r4, r0, #0x18
-	ldr	r0, .L440
+	ldr	r0, .L459
 	ldrh	r1, [r0, #0x2e]
 	mov	r0, #0x1
 	and	r0, r0, r1
 	cmp	r0, #0
-	bne	.L439	@cond_branch
+	bne	.L458	@cond_branch
 	mov	r0, #0x2
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L438	@cond_branch
-.L439:
+	beq	.L457	@cond_branch
+.L458:
 	mov	r0, #0x1
 	neg	r0, r0
 	mov	r1, #0x0
@@ -3878,26 +4033,26 @@ Task_NewGameBirchSpeech_WaitPressBeforeNameChoice:
 	mov	r2, #0x0
 	mov	r3, #0x10
 	bl	BeginNormalPaletteFade
-	ldr	r1, .L440+0x4
+	ldr	r1, .L459+0x4
 	lsl	r0, r4, #0x2
 	add	r0, r0, r4
 	lsl	r0, r0, #0x3
 	add	r0, r0, r1
-	ldr	r1, .L440+0x8
+	ldr	r1, .L459+0x8
 	str	r1, [r0]
-.L438:
+.L457:
 	add	sp, sp, #0x4
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L441:
+.L460:
 	.align	2, 0
-.L440:
+.L459:
 	.word	gMain
 	.word	gTasks
 	.word	Task_NewGameBirchSpeech_StartNamingScreen
-.Lfe37:
-	.size	 Task_NewGameBirchSpeech_WaitPressBeforeNameChoice,.Lfe37-Task_NewGameBirchSpeech_WaitPressBeforeNameChoice
+.Lfe40:
+	.size	 Task_NewGameBirchSpeech_WaitPressBeforeNameChoice,.Lfe40-Task_NewGameBirchSpeech_WaitPressBeforeNameChoice
 	.align	2, 0
 	.type	 Task_NewGameBirchSpeech_StartNamingScreen,function
 	.thumb_func
@@ -3906,16 +4061,16 @@ Task_NewGameBirchSpeech_StartNamingScreen:
 	add	sp, sp, #-0xc
 	lsl	r0, r0, #0x18
 	lsr	r4, r0, #0x18
-	ldr	r0, .L444
+	ldr	r0, .L463
 	ldrb	r1, [r0, #0x7]
 	mov	r0, #0x80
 	and	r0, r0, r1
 	lsl	r0, r0, #0x18
 	lsr	r5, r0, #0x18
 	cmp	r5, #0
-	bne	.L443	@cond_branch
+	bne	.L462	@cond_branch
 	bl	FreeAllWindowBuffers
-	ldr	r1, .L444+0x4
+	ldr	r1, .L463+0x4
 	lsl	r0, r4, #0x2
 	add	r0, r0, r4
 	lsl	r0, r0, #0x3
@@ -3932,30 +4087,30 @@ Task_NewGameBirchSpeech_StartNamingScreen:
 	bl	NewGameBirchSpeech_SetDefaultPlayerName
 	add	r0, r4, #0
 	bl	DestroyTask
-	ldr	r0, .L444+0x8
+	ldr	r0, .L463+0x8
 	ldr	r1, [r0]
 	ldrb	r2, [r1, #0x8]
 	str	r5, [sp]
-	ldr	r0, .L444+0xc
+	ldr	r0, .L463+0xc
 	str	r0, [sp, #0x4]
 	str	r5, [sp, #0x8]
 	mov	r0, #0x0
 	mov	r3, #0x0
 	bl	DoNamingScreen
-.L443:
+.L462:
 	add	sp, sp, #0xc
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.L445:
+.L464:
 	.align	2, 0
-.L444:
+.L463:
 	.word	gPaletteFade
 	.word	gTasks
 	.word	gSaveBlock2Ptr
 	.word	CB2_NewGameBirchSpeech_ReturnFromNamingScreen
-.Lfe38:
-	.size	 Task_NewGameBirchSpeech_StartNamingScreen,.Lfe38-Task_NewGameBirchSpeech_StartNamingScreen
+.Lfe41:
+	.size	 Task_NewGameBirchSpeech_StartNamingScreen,.Lfe41-Task_NewGameBirchSpeech_StartNamingScreen
 	.align	2, 0
 	.type	 Task_NewGameBirchSpeech_SoItsPlayerName,function
 	.thumb_func
@@ -3966,30 +4121,30 @@ Task_NewGameBirchSpeech_SoItsPlayerName:
 	lsr	r4, r4, #0x18
 	mov	r0, #0x0
 	bl	NewGameBirchSpeech_ClearWindow
-	ldr	r0, .L447
-	ldr	r1, .L447+0x4
+	ldr	r0, .L466
+	ldr	r1, .L466+0x4
 	bl	StringExpandPlaceholders
 	mov	r0, #0x1
 	bl	AddTextPrinterForMessage
-	ldr	r1, .L447+0x8
+	ldr	r1, .L466+0x8
 	lsl	r0, r4, #0x2
 	add	r0, r0, r4
 	lsl	r0, r0, #0x3
 	add	r0, r0, r1
-	ldr	r1, .L447+0xc
+	ldr	r1, .L466+0xc
 	str	r1, [r0]
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L448:
+.L467:
 	.align	2, 0
-.L447:
+.L466:
 	.word	gStringVar4
 	.word	gText_Birch_SoItsPlayer
 	.word	gTasks
 	.word	Task_NewGameBirchSpeech_CreateNameYesNo
-.Lfe39:
-	.size	 Task_NewGameBirchSpeech_SoItsPlayerName,.Lfe39-Task_NewGameBirchSpeech_SoItsPlayerName
+.Lfe42:
+	.size	 Task_NewGameBirchSpeech_SoItsPlayerName,.Lfe42-Task_NewGameBirchSpeech_SoItsPlayerName
 	.align	2, 0
 	.type	 Task_NewGameBirchSpeech_CreateNameYesNo,function
 	.thumb_func
@@ -4001,7 +4156,7 @@ Task_NewGameBirchSpeech_CreateNameYesNo:
 	bl	RunTextPrintersAndIsPrinter0Active
 	lsl	r0, r0, #0x10
 	cmp	r0, #0
-	bne	.L450	@cond_branch
+	bne	.L469	@cond_branch
 	mov	r0, #0x2
 	str	r0, [sp]
 	mov	r0, #0xf
@@ -4011,25 +4166,25 @@ Task_NewGameBirchSpeech_CreateNameYesNo:
 	mov	r2, #0xf3
 	mov	r3, #0xdf
 	bl	CreateYesNoMenuParameterized
-	ldr	r1, .L451
+	ldr	r1, .L470
 	lsl	r0, r4, #0x2
 	add	r0, r0, r4
 	lsl	r0, r0, #0x3
 	add	r0, r0, r1
-	ldr	r1, .L451+0x4
+	ldr	r1, .L470+0x4
 	str	r1, [r0]
-.L450:
+.L469:
 	add	sp, sp, #0x8
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L452:
+.L471:
 	.align	2, 0
-.L451:
+.L470:
 	.word	gTasks
 	.word	Task_NewGameBirchSpeech_ProcessNameYesNoMenu
-.Lfe40:
-	.size	 Task_NewGameBirchSpeech_CreateNameYesNo,.Lfe40-Task_NewGameBirchSpeech_CreateNameYesNo
+.Lfe43:
+	.size	 Task_NewGameBirchSpeech_CreateNameYesNo,.Lfe43-Task_NewGameBirchSpeech_CreateNameYesNo
 	.align	2, 0
 	.type	 Task_NewGameBirchSpeech_ProcessNameYesNoMenu,function
 	.thumb_func
@@ -4041,23 +4196,23 @@ Task_NewGameBirchSpeech_ProcessNameYesNoMenu:
 	lsl	r0, r0, #0x18
 	asr	r1, r0, #0x18
 	cmp	r1, #0
-	beq	.L455	@cond_branch
+	beq	.L474	@cond_branch
 	cmp	r1, #0
-	bgt	.L460	@cond_branch
+	bgt	.L479	@cond_branch
 	mov	r0, #0x1
 	neg	r0, r0
 	cmp	r1, r0
-	beq	.L457	@cond_branch
-	b	.L454
-.L460:
+	beq	.L476	@cond_branch
+	b	.L473
+.L479:
 	cmp	r1, #0x1
-	beq	.L457	@cond_branch
-	b	.L454
-.L455:
+	beq	.L476	@cond_branch
+	b	.L473
+.L474:
 	mov	r0, #0x5
 	bl	PlaySE
-	ldr	r2, .L461
-	ldr	r0, .L461+0x4
+	ldr	r2, .L480
+	ldr	r0, .L480+0x4
 	lsl	r4, r5, #0x2
 	add	r4, r4, r5
 	lsl	r4, r4, #0x3
@@ -4081,36 +4236,36 @@ Task_NewGameBirchSpeech_ProcessNameYesNoMenu:
 	add	r0, r5, #0
 	mov	r1, #0x1
 	bl	NewGameBirchSpeech_StartFadePlatformIn
-	ldr	r0, .L461+0x8
+	ldr	r0, .L480+0x8
 	str	r0, [r4]
-	b	.L454
-.L462:
+	b	.L473
+.L481:
 	.align	2, 0
-.L461:
+.L480:
 	.word	gSprites
 	.word	gTasks
 	.word	Task_NewGameBirchSpeech_SlidePlatformAway2
-.L457:
+.L476:
 	mov	r0, #0x5
 	bl	PlaySE
-	ldr	r0, .L463
+	ldr	r0, .L482
 	lsl	r1, r5, #0x2
 	add	r1, r1, r5
 	lsl	r1, r1, #0x3
 	add	r1, r1, r0
-	ldr	r0, .L463+0x4
+	ldr	r0, .L482+0x4
 	str	r0, [r1]
-.L454:
+.L473:
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.L464:
+.L483:
 	.align	2, 0
-.L463:
+.L482:
 	.word	gTasks
 	.word	Task_NewGameBirchSpeech_BoyOrGirl
-.Lfe41:
-	.size	 Task_NewGameBirchSpeech_ProcessNameYesNoMenu,.Lfe41-Task_NewGameBirchSpeech_ProcessNameYesNoMenu
+.Lfe44:
+	.size	 Task_NewGameBirchSpeech_ProcessNameYesNoMenu,.Lfe44-Task_NewGameBirchSpeech_ProcessNameYesNoMenu
 	.align	2, 0
 	.type	 Task_NewGameBirchSpeech_SlidePlatformAway2,function
 	.thumb_func
@@ -4118,7 +4273,7 @@ Task_NewGameBirchSpeech_SlidePlatformAway2:
 	push	{lr}
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
-	ldr	r2, .L468
+	ldr	r2, .L487
 	lsl	r1, r0, #0x2
 	add	r1, r1, r0
 	lsl	r1, r1, #0x3
@@ -4127,29 +4282,29 @@ Task_NewGameBirchSpeech_SlidePlatformAway2:
 	mov	r3, #0x10
 	ldrsh	r0, [r1, r3]
 	cmp	r0, #0
-	beq	.L466	@cond_branch
+	beq	.L485	@cond_branch
 	add	r0, r2, #0x2
 	strh	r0, [r1, #0x10]
 	ldrh	r1, [r1, #0x10]
 	mov	r0, #0x14
 	bl	SetGpuReg
-	b	.L467
-.L469:
+	b	.L486
+.L488:
 	.align	2, 0
-.L468:
+.L487:
 	.word	gTasks
-.L466:
-	ldr	r0, .L470
+.L485:
+	ldr	r0, .L489
 	str	r0, [r1]
-.L467:
+.L486:
 	pop	{r0}
 	bx	r0
-.L471:
+.L490:
 	.align	2, 0
-.L470:
+.L489:
 	.word	Task_NewGameBirchSpeech_ReshowBirchLotad
-.Lfe42:
-	.size	 Task_NewGameBirchSpeech_SlidePlatformAway2,.Lfe42-Task_NewGameBirchSpeech_SlidePlatformAway2
+.Lfe45:
+	.size	 Task_NewGameBirchSpeech_SlidePlatformAway2,.Lfe45-Task_NewGameBirchSpeech_SlidePlatformAway2
 	.align	2, 0
 	.type	 Task_NewGameBirchSpeech_ReshowBirchLotad,function
 	.thumb_func
@@ -4157,7 +4312,7 @@ Task_NewGameBirchSpeech_ReshowBirchLotad:
 	push	{r4, r5, r6, r7, lr}
 	lsl	r0, r0, #0x18
 	lsr	r7, r0, #0x18
-	ldr	r1, .L474
+	ldr	r1, .L493
 	lsl	r0, r7, #0x2
 	add	r0, r0, r7
 	lsl	r0, r0, #0x3
@@ -4165,8 +4320,8 @@ Task_NewGameBirchSpeech_ReshowBirchLotad:
 	mov	r1, #0x12
 	ldrsh	r0, [r6, r1]
 	cmp	r0, #0
-	beq	.L473	@cond_branch
-	ldr	r5, .L474+0x4
+	beq	.L492	@cond_branch
+	ldr	r5, .L493+0x4
 	mov	r0, #0x1c
 	ldrsh	r1, [r6, r0]
 	lsl	r0, r1, #0x4
@@ -4236,27 +4391,27 @@ Task_NewGameBirchSpeech_ReshowBirchLotad:
 	bl	NewGameBirchSpeech_StartFadePlatformOut
 	mov	r0, #0x0
 	bl	NewGameBirchSpeech_ClearWindow
-	ldr	r0, .L474+0x8
-	ldr	r1, .L474+0xc
+	ldr	r0, .L493+0x8
+	ldr	r1, .L493+0xc
 	bl	StringExpandPlaceholders
 	mov	r0, #0x1
 	bl	AddTextPrinterForMessage
-	ldr	r0, .L474+0x10
+	ldr	r0, .L493+0x10
 	str	r0, [r6]
-.L473:
+.L492:
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L475:
+.L494:
 	.align	2, 0
-.L474:
+.L493:
 	.word	gTasks
 	.word	gSprites
 	.word	gStringVar4
 	.word	gText_Birch_YourePlayer
 	.word	Task_NewGameBirchSpeech_WaitForSpriteFadeInAndTextPrinter
-.Lfe43:
-	.size	 Task_NewGameBirchSpeech_ReshowBirchLotad,.Lfe43-Task_NewGameBirchSpeech_ReshowBirchLotad
+.Lfe46:
+	.size	 Task_NewGameBirchSpeech_ReshowBirchLotad,.Lfe46-Task_NewGameBirchSpeech_ReshowBirchLotad
 	.align	2, 0
 	.type	 Task_NewGameBirchSpeech_WaitForSpriteFadeInAndTextPrinter,function
 	.thumb_func
@@ -4264,7 +4419,7 @@ Task_NewGameBirchSpeech_WaitForSpriteFadeInAndTextPrinter:
 	push	{r4, r5, r6, r7, lr}
 	lsl	r0, r0, #0x18
 	lsr	r5, r0, #0x18
-	ldr	r1, .L479
+	ldr	r1, .L498
 	lsl	r0, r5, #0x2
 	add	r0, r0, r5
 	lsl	r0, r0, #0x3
@@ -4272,8 +4427,8 @@ Task_NewGameBirchSpeech_WaitForSpriteFadeInAndTextPrinter:
 	mov	r1, #0x12
 	ldrsh	r0, [r4, r1]
 	cmp	r0, #0
-	beq	.L477	@cond_branch
-	ldr	r7, .L479+0x4
+	beq	.L496	@cond_branch
+	ldr	r7, .L498+0x4
 	mov	r1, #0x18
 	ldrsh	r0, [r4, r1]
 	lsl	r1, r0, #0x4
@@ -4299,7 +4454,7 @@ Task_NewGameBirchSpeech_WaitForSpriteFadeInAndTextPrinter:
 	bl	RunTextPrintersAndIsPrinter0Active
 	lsl	r0, r0, #0x10
 	cmp	r0, #0
-	bne	.L477	@cond_branch
+	bne	.L496	@cond_branch
 	mov	r0, #0x18
 	ldrsh	r1, [r4, r0]
 	lsl	r0, r1, #0x4
@@ -4331,20 +4486,20 @@ Task_NewGameBirchSpeech_WaitForSpriteFadeInAndTextPrinter:
 	bl	NewGameBirchSpeech_StartFadePlatformIn
 	mov	r0, #0x40
 	strh	r0, [r4, #0x16]
-	ldr	r0, .L479+0x8
+	ldr	r0, .L498+0x8
 	str	r0, [r4]
-.L477:
+.L496:
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L480:
+.L499:
 	.align	2, 0
-.L479:
+.L498:
 	.word	gTasks
 	.word	gSprites
 	.word	Task_NewGameBirchSpeech_AreYouReady
-.Lfe44:
-	.size	 Task_NewGameBirchSpeech_WaitForSpriteFadeInAndTextPrinter,.Lfe44-Task_NewGameBirchSpeech_WaitForSpriteFadeInAndTextPrinter
+.Lfe47:
+	.size	 Task_NewGameBirchSpeech_WaitForSpriteFadeInAndTextPrinter,.Lfe47-Task_NewGameBirchSpeech_WaitForSpriteFadeInAndTextPrinter
 	.align	2, 0
 	.type	 Task_NewGameBirchSpeech_AreYouReady,function
 	.thumb_func
@@ -4352,7 +4507,7 @@ Task_NewGameBirchSpeech_AreYouReady:
 	push	{r4, r5, r6, r7, lr}
 	lsl	r0, r0, #0x18
 	lsr	r6, r0, #0x18
-	ldr	r1, .L486
+	ldr	r1, .L505
 	lsl	r0, r6, #0x2
 	add	r0, r0, r6
 	lsl	r0, r0, #0x3
@@ -4361,8 +4516,8 @@ Task_NewGameBirchSpeech_AreYouReady:
 	ldrsh	r0, [r4, r2]
 	add	r7, r1, #0
 	cmp	r0, #0
-	beq	.L481	@cond_branch
-	ldr	r2, .L486+0x4
+	beq	.L500	@cond_branch
+	ldr	r2, .L505+0x4
 	mov	r3, #0x18
 	ldrsh	r1, [r4, r3]
 	lsl	r0, r1, #0x4
@@ -4388,30 +4543,30 @@ Task_NewGameBirchSpeech_AreYouReady:
 	mov	r3, #0x16
 	ldrsh	r0, [r4, r3]
 	cmp	r0, #0
-	beq	.L483	@cond_branch
+	beq	.L502	@cond_branch
 	sub	r0, r1, #0x1
 	strh	r0, [r4, #0x16]
-	b	.L481
-.L487:
+	b	.L500
+.L506:
 	.align	2, 0
-.L486:
+.L505:
 	.word	gTasks
 	.word	gSprites
-.L483:
-	ldr	r0, .L488
+.L502:
+	ldr	r0, .L507
 	ldr	r0, [r0]
 	ldrb	r0, [r0, #0x8]
 	cmp	r0, #0
-	beq	.L484	@cond_branch
+	beq	.L503	@cond_branch
 	ldrb	r5, [r4, #0x1e]
-	b	.L485
-.L489:
+	b	.L504
+.L508:
 	.align	2, 0
-.L488:
+.L507:
 	.word	gSaveBlock2Ptr
-.L484:
+.L503:
 	ldrb	r5, [r4, #0x1c]
-.L485:
+.L504:
 	lsl	r1, r5, #0x4
 	add	r1, r1, r5
 	lsl	r1, r1, #0x2
@@ -4444,25 +4599,25 @@ Task_NewGameBirchSpeech_AreYouReady:
 	add	r0, r6, #0
 	mov	r1, #0x1
 	bl	NewGameBirchSpeech_StartFadePlatformOut
-	ldr	r0, .L490
-	ldr	r1, .L490+0x4
+	ldr	r0, .L509
+	ldr	r1, .L509+0x4
 	bl	StringExpandPlaceholders
 	mov	r0, #0x1
 	bl	AddTextPrinterForMessage
-	ldr	r0, .L490+0x8
+	ldr	r0, .L509+0x8
 	str	r0, [r4]
-.L481:
+.L500:
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L491:
+.L510:
 	.align	2, 0
-.L490:
+.L509:
 	.word	gStringVar4
 	.word	gText_Birch_AreYouReady
 	.word	Task_NewGameBirchSpeech_ShrinkPlayer
-.Lfe45:
-	.size	 Task_NewGameBirchSpeech_AreYouReady,.Lfe45-Task_NewGameBirchSpeech_AreYouReady
+.Lfe48:
+	.size	 Task_NewGameBirchSpeech_AreYouReady,.Lfe48-Task_NewGameBirchSpeech_AreYouReady
 	.align	2, 0
 	.type	 Task_NewGameBirchSpeech_ShrinkPlayer,function
 	.thumb_func
@@ -4473,7 +4628,7 @@ Task_NewGameBirchSpeech_ShrinkPlayer:
 	add	sp, sp, #-0x4
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
-	ldr	r2, .L495
+	ldr	r2, .L514
 	lsl	r1, r0, #0x2
 	add	r1, r1, r0
 	lsl	r1, r1, #0x3
@@ -4481,8 +4636,8 @@ Task_NewGameBirchSpeech_ShrinkPlayer:
 	mov	r1, #0x12
 	ldrsh	r0, [r6, r1]
 	cmp	r0, #0
-	beq	.L493	@cond_branch
-	ldr	r7, .L495+0x4
+	beq	.L512	@cond_branch
+	ldr	r7, .L514+0x4
 	mov	r1, #0xc
 	ldrsh	r0, [r6, r1]
 	lsl	r1, r0, #0x4
@@ -4499,7 +4654,7 @@ Task_NewGameBirchSpeech_ShrinkPlayer:
 	lsr	r0, r0, #0x10
 	mov	r8, r0
 	cmp	r0, #0
-	bne	.L493	@cond_branch
+	bne	.L512	@cond_branch
 	ldrb	r0, [r6, #0xc]
 	lsl	r4, r0, #0x4
 	add	r4, r4, r0
@@ -4515,7 +4670,7 @@ Task_NewGameBirchSpeech_ShrinkPlayer:
 	add	r0, r7, #0
 	add	r0, r0, #0x10
 	add	r0, r4, r0
-	ldr	r1, .L495+0x8
+	ldr	r1, .L514+0x8
 	str	r1, [r0]
 	add	r0, r5, #0
 	bl	InitSpriteAffineAnim
@@ -4525,9 +4680,9 @@ Task_NewGameBirchSpeech_ShrinkPlayer:
 	add	r0, r7, #0
 	add	r0, r0, #0x1c
 	add	r4, r4, r0
-	ldr	r0, .L495+0xc
+	ldr	r0, .L514+0xc
 	str	r0, [r4]
-	ldr	r0, .L495+0x10
+	ldr	r0, .L514+0x10
 	mov	r1, r8
 	str	r1, [sp]
 	mov	r1, #0x0
@@ -4536,26 +4691,26 @@ Task_NewGameBirchSpeech_ShrinkPlayer:
 	bl	BeginNormalPaletteFade
 	mov	r0, #0x4
 	bl	FadeOutBGM
-	ldr	r0, .L495+0x14
+	ldr	r0, .L514+0x14
 	str	r0, [r6]
-.L493:
+.L512:
 	add	sp, sp, #0x4
 	pop	{r3}
 	mov	r8, r3
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L496:
+.L515:
 	.align	2, 0
-.L495:
+.L514:
 	.word	gTasks
 	.word	gSprites
 	.word	sSpriteAffineAnimTable_PlayerShrink
 	.word	SpriteCB_MovePlayerDownWhileShrinking
 	.word	0xffff
 	.word	Task_NewGameBirchSpeech_WaitForPlayerShrink
-.Lfe46:
-	.size	 Task_NewGameBirchSpeech_ShrinkPlayer,.Lfe46-Task_NewGameBirchSpeech_ShrinkPlayer
+.Lfe49:
+	.size	 Task_NewGameBirchSpeech_ShrinkPlayer,.Lfe49-Task_NewGameBirchSpeech_ShrinkPlayer
 	.align	2, 0
 	.type	 Task_NewGameBirchSpeech_WaitForPlayerShrink,function
 	.thumb_func
@@ -4563,13 +4718,13 @@ Task_NewGameBirchSpeech_WaitForPlayerShrink:
 	push	{lr}
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
-	ldr	r2, .L499
+	ldr	r2, .L518
 	lsl	r1, r0, #0x2
 	add	r1, r1, r0
 	lsl	r1, r1, #0x3
 	add	r3, r1, r2
 	ldrb	r1, [r3, #0xc]
-	ldr	r2, .L499+0x4
+	ldr	r2, .L518+0x4
 	lsl	r0, r1, #0x4
 	add	r0, r0, r1
 	lsl	r0, r0, #0x2
@@ -4578,20 +4733,20 @@ Task_NewGameBirchSpeech_WaitForPlayerShrink:
 	ldrb	r0, [r0]
 	lsl	r0, r0, #0x1a
 	cmp	r0, #0
-	bge	.L498	@cond_branch
-	ldr	r0, .L499+0x8
+	bge	.L517	@cond_branch
+	ldr	r0, .L518+0x8
 	str	r0, [r3]
-.L498:
+.L517:
 	pop	{r0}
 	bx	r0
-.L500:
+.L519:
 	.align	2, 0
-.L499:
+.L518:
 	.word	gTasks
 	.word	gSprites
 	.word	Task_NewGameBirchSpeech_FadePlayerToWhite
-.Lfe47:
-	.size	 Task_NewGameBirchSpeech_WaitForPlayerShrink,.Lfe47-Task_NewGameBirchSpeech_WaitForPlayerShrink
+.Lfe50:
+	.size	 Task_NewGameBirchSpeech_WaitForPlayerShrink,.Lfe50-Task_NewGameBirchSpeech_WaitForPlayerShrink
 	.align	2, 0
 	.type	 Task_NewGameBirchSpeech_FadePlayerToWhite,function
 	.thumb_func
@@ -4600,47 +4755,47 @@ Task_NewGameBirchSpeech_FadePlayerToWhite:
 	add	sp, sp, #-0x4
 	lsl	r0, r0, #0x18
 	lsr	r2, r0, #0x18
-	ldr	r0, .L503
+	ldr	r0, .L522
 	ldrb	r1, [r0, #0x7]
 	mov	r0, #0x80
 	and	r0, r0, r1
 	cmp	r0, #0
-	bne	.L502	@cond_branch
-	ldr	r0, .L503+0x4
+	bne	.L521	@cond_branch
+	ldr	r0, .L522+0x4
 	lsl	r4, r2, #0x2
 	add	r4, r4, r2
 	lsl	r4, r4, #0x3
 	add	r4, r4, r0
 	ldrb	r2, [r4, #0xc]
-	ldr	r1, .L503+0x8
+	ldr	r1, .L522+0x8
 	lsl	r0, r2, #0x4
 	add	r0, r0, r2
 	lsl	r0, r0, #0x2
 	add	r1, r1, #0x1c
 	add	r0, r0, r1
-	ldr	r1, .L503+0xc
+	ldr	r1, .L522+0xc
 	str	r1, [r0]
 	mov	r1, #0x82
 	lsl	r1, r1, #0x5
 	mov	r0, #0x0
 	bl	SetGpuReg
-	ldr	r0, .L503+0x10
-	ldr	r1, .L503+0x14
+	ldr	r0, .L522+0x10
+	ldr	r1, .L522+0x14
 	str	r1, [sp]
 	mov	r1, #0x0
 	mov	r2, #0x0
 	mov	r3, #0x10
 	bl	BeginNormalPaletteFade
-	ldr	r0, .L503+0x18
+	ldr	r0, .L522+0x18
 	str	r0, [r4]
-.L502:
+.L521:
 	add	sp, sp, #0x4
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L504:
+.L523:
 	.align	2, 0
-.L503:
+.L522:
 	.word	gPaletteFade
 	.word	gTasks
 	.word	gSprites
@@ -4648,8 +4803,8 @@ Task_NewGameBirchSpeech_FadePlayerToWhite:
 	.word	-0x10000
 	.word	0xffff
 	.word	Task_NewGameBirchSpeech_Cleanup
-.Lfe48:
-	.size	 Task_NewGameBirchSpeech_FadePlayerToWhite,.Lfe48-Task_NewGameBirchSpeech_FadePlayerToWhite
+.Lfe51:
+	.size	 Task_NewGameBirchSpeech_FadePlayerToWhite,.Lfe51-Task_NewGameBirchSpeech_FadePlayerToWhite
 	.align	2, 0
 	.type	 Task_NewGameBirchSpeech_Cleanup,function
 	.thumb_func
@@ -4657,14 +4812,14 @@ Task_NewGameBirchSpeech_Cleanup:
 	push	{r4, lr}
 	lsl	r0, r0, #0x18
 	lsr	r4, r0, #0x18
-	ldr	r0, .L507
+	ldr	r0, .L526
 	ldrb	r1, [r0, #0x7]
 	mov	r0, #0x80
 	and	r0, r0, r1
 	cmp	r0, #0
-	bne	.L506	@cond_branch
+	bne	.L525	@cond_branch
 	bl	FreeAllWindowBuffers
-	ldr	r1, .L507+0x4
+	ldr	r1, .L526+0x4
 	lsl	r0, r4, #0x2
 	add	r0, r0, r4
 	lsl	r0, r0, #0x3
@@ -4672,22 +4827,22 @@ Task_NewGameBirchSpeech_Cleanup:
 	ldrh	r0, [r0, #0x1a]
 	bl	FreeAndDestroyMonPicSprite
 	bl	ResetAllPicSprites
-	ldr	r0, .L507+0x8
+	ldr	r0, .L526+0x8
 	bl	SetMainCallback2
 	add	r0, r4, #0
 	bl	DestroyTask
-.L506:
+.L525:
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L508:
+.L527:
 	.align	2, 0
-.L507:
+.L526:
 	.word	gPaletteFade
 	.word	gTasks
 	.word	CB2_NewGame
-.Lfe49:
-	.size	 Task_NewGameBirchSpeech_Cleanup,.Lfe49-Task_NewGameBirchSpeech_Cleanup
+.Lfe52:
+	.size	 Task_NewGameBirchSpeech_Cleanup,.Lfe52-Task_NewGameBirchSpeech_Cleanup
 	.align	2, 0
 	.type	 CB2_NewGameBirchSpeech_ReturnFromNamingScreen,function
 	.thumb_func
@@ -4703,11 +4858,11 @@ CB2_NewGameBirchSpeech_ReturnFromNamingScreen:
 	lsl	r1, r1, #0x5
 	mov	r0, #0x0
 	bl	SetGpuReg
-	ldr	r1, .L512
+	ldr	r1, .L531
 	mov	r0, #0x0
 	mov	r2, #0x2
 	bl	InitBgsFromTemplates
-	ldr	r0, .L512+0x4
+	ldr	r0, .L531+0x4
 	bl	InitBgFromTemplate
 	mov	r0, #0x0
 	bl	SetVBlankCallback
@@ -4744,8 +4899,8 @@ CB2_NewGameBirchSpeech_ReturnFromNamingScreen:
 	mov	r4, #0xc0
 	lsl	r4, r4, #0x13
 	add	r1, r4, #0
-	ldr	r2, .L512+0x8
-	ldr	r3, .L512+0xc
+	ldr	r2, .L531+0x8
+	ldr	r3, .L531+0xc
 	stmia r3!, {r0, r1, r2}
 	.code	16
 	mov	r3, #0x0
@@ -4753,47 +4908,47 @@ CB2_NewGameBirchSpeech_ReturnFromNamingScreen:
 	add	r0, sp, #0x8
 	mov	r1, #0xe0
 	lsl	r1, r1, #0x13
-	ldr	r2, .L512+0x10
-	ldr	r5, .L512+0xc
+	ldr	r2, .L531+0x10
+	ldr	r5, .L531+0xc
 	stmia r5!, {r0, r1, r2}
 	.code	16
 	add	r0, sp, #0x4
 	strh	r3, [r0]
 	mov	r1, #0xa0
 	lsl	r1, r1, #0x13
-	ldr	r2, .L512+0x14
-	ldr	r3, .L512+0xc
+	ldr	r2, .L531+0x14
+	ldr	r3, .L531+0xc
 	stmia r3!, {r0, r1, r2}
 	.code	16
 	bl	ResetPaletteFade
-	ldr	r0, .L512+0x18
+	ldr	r0, .L531+0x18
 	add	r1, r4, #0
 	bl	LZ77UnCompVram
-	ldr	r0, .L512+0x1c
-	ldr	r1, .L512+0x20
+	ldr	r0, .L531+0x1c
+	ldr	r1, .L531+0x20
 	bl	LZ77UnCompVram
-	ldr	r0, .L512+0x24
+	ldr	r0, .L531+0x24
 	mov	r1, #0x0
 	mov	r2, #0x40
 	bl	LoadPalette
-	ldr	r0, .L512+0x28
+	ldr	r0, .L531+0x28
 	mov	r1, #0x1
 	mov	r2, #0x10
 	bl	LoadPalette
 	bl	ResetTasks
-	ldr	r0, .L512+0x2c
+	ldr	r0, .L531+0x2c
 	mov	r1, #0x0
 	bl	CreateTask
 	lsl	r0, r0, #0x18
 	lsr	r5, r0, #0x18
-	ldr	r1, .L512+0x30
+	ldr	r1, .L531+0x30
 	lsl	r0, r5, #0x2
 	add	r0, r0, r5
 	lsl	r0, r0, #0x3
 	add	r4, r0, r1
 	mov	r0, #0x5
 	strh	r0, [r4, #0x16]
-	ldr	r0, .L512+0x34
+	ldr	r0, .L531+0x34
 	strh	r0, [r4, #0x10]
 	bl	ScanlineEffect_Stop
 	bl	ResetSpriteData
@@ -4801,18 +4956,18 @@ CB2_NewGameBirchSpeech_ReturnFromNamingScreen:
 	bl	ResetAllPicSprites
 	add	r0, r5, #0
 	bl	AddBirchSpeechObjects
-	ldr	r0, .L512+0x38
+	ldr	r0, .L531+0x38
 	ldr	r0, [r0]
 	ldrb	r0, [r0, #0x8]
 	cmp	r0, #0
-	beq	.L510	@cond_branch
+	beq	.L529	@cond_branch
 	mov	r0, #0x1
 	strh	r0, [r4, #0x14]
 	ldrb	r3, [r4, #0x1e]
-	b	.L511
-.L513:
+	b	.L530
+.L532:
 	.align	2, 0
-.L512:
+.L531:
 	.word	sMainMenuBgTemplates
 	.word	sBirchBgTemplate
 	.word	-0x7eff4000
@@ -4828,11 +4983,11 @@ CB2_NewGameBirchSpeech_ReturnFromNamingScreen:
 	.word	gTasks
 	.word	0xffc4
 	.word	gSaveBlock2Ptr
-.L510:
+.L529:
 	strh	r0, [r4, #0x14]
 	ldrb	r3, [r4, #0x1c]
-.L511:
-	ldr	r0, .L514
+.L530:
+	ldr	r0, .L533
 	lsl	r1, r3, #0x4
 	add	r1, r1, r3
 	lsl	r1, r1, #0x2
@@ -4847,13 +5002,13 @@ CB2_NewGameBirchSpeech_ReturnFromNamingScreen:
 	sub	r0, r0, #0x41
 	and	r0, r0, r2
 	strb	r0, [r1]
-	ldr	r1, .L514+0x4
+	ldr	r1, .L533+0x4
 	lsl	r0, r5, #0x2
 	add	r0, r0, r5
 	lsl	r0, r0, #0x3
 	add	r0, r0, r1
 	strh	r3, [r0, #0xc]
-	ldr	r1, .L514+0x8
+	ldr	r1, .L533+0x8
 	mov	r0, #0x14
 	bl	SetGpuReg
 	mov	r0, #0x1
@@ -4888,20 +5043,20 @@ CB2_NewGameBirchSpeech_ReturnFromNamingScreen:
 	bl	ShowBg
 	mov	r0, #0x1
 	bl	ShowBg
-	ldr	r3, .L514+0xc
+	ldr	r3, .L533+0xc
 	ldrh	r2, [r3]
 	strh	r4, [r3]
-	ldr	r4, .L514+0x10
+	ldr	r4, .L533+0x10
 	ldrh	r0, [r4]
 	mov	r1, #0x1
 	orr	r0, r0, r1
 	strh	r0, [r4]
 	strh	r2, [r3]
-	ldr	r0, .L514+0x14
+	ldr	r0, .L533+0x14
 	bl	SetVBlankCallback
-	ldr	r0, .L514+0x18
+	ldr	r0, .L533+0x18
 	bl	SetMainCallback2
-	ldr	r0, .L514+0x1c
+	ldr	r0, .L533+0x1c
 	bl	InitWindows
 	mov	r0, #0x0
 	mov	r1, #0xf3
@@ -4919,9 +5074,9 @@ CB2_NewGameBirchSpeech_ReturnFromNamingScreen:
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.L515:
+.L534:
 	.align	2, 0
-.L514:
+.L533:
 	.word	gSprites
 	.word	gTasks
 	.word	0xffc4
@@ -4930,15 +5085,15 @@ CB2_NewGameBirchSpeech_ReturnFromNamingScreen:
 	.word	VBlankCB_MainMenu
 	.word	CB2_MainMenu
 	.word	gNewGameBirchSpeechTextWindows
-.Lfe50:
-	.size	 CB2_NewGameBirchSpeech_ReturnFromNamingScreen,.Lfe50-CB2_NewGameBirchSpeech_ReturnFromNamingScreen
+.Lfe53:
+	.size	 CB2_NewGameBirchSpeech_ReturnFromNamingScreen,.Lfe53-CB2_NewGameBirchSpeech_ReturnFromNamingScreen
 	.align	2, 0
 	.type	 SpriteCB_Null,function
 	.thumb_func
 SpriteCB_Null:
 	bx	lr
-.Lfe51:
-	.size	 SpriteCB_Null,.Lfe51-SpriteCB_Null
+.Lfe54:
+	.size	 SpriteCB_Null,.Lfe54-SpriteCB_Null
 	.align	2, 0
 	.type	 SpriteCB_MovePlayerDownWhileShrinking,function
 	.thumb_func
@@ -4956,8 +5111,8 @@ SpriteCB_MovePlayerDownWhileShrinking:
 	strh	r2, [r0, #0x22]
 	strh	r1, [r0, #0x2e]
 	bx	lr
-.Lfe52:
-	.size	 SpriteCB_MovePlayerDownWhileShrinking,.Lfe52-SpriteCB_MovePlayerDownWhileShrinking
+.Lfe55:
+	.size	 SpriteCB_MovePlayerDownWhileShrinking,.Lfe55-SpriteCB_MovePlayerDownWhileShrinking
 	.align	2, 0
 	.type	 NewGameBirchSpeech_CreateLotadSprite,function
 	.thumb_func
@@ -4972,7 +5127,7 @@ NewGameBirchSpeech_CreateLotadSprite:
 	str	r1, [sp, #0x4]
 	mov	r0, #0xe
 	str	r0, [sp, #0x8]
-	ldr	r0, .L519
+	ldr	r0, .L538
 	str	r0, [sp, #0xc]
 	mov	r0, #0x0
 	str	r0, [sp, #0x10]
@@ -4986,12 +5141,12 @@ NewGameBirchSpeech_CreateLotadSprite:
 	add	sp, sp, #0x14
 	pop	{r1}
 	bx	r1
-.L520:
+.L539:
 	.align	2, 0
-.L519:
+.L538:
 	.word	0xffff
-.Lfe53:
-	.size	 NewGameBirchSpeech_CreateLotadSprite,.Lfe53-NewGameBirchSpeech_CreateLotadSprite
+.Lfe56:
+	.size	 NewGameBirchSpeech_CreateLotadSprite,.Lfe56-NewGameBirchSpeech_CreateLotadSprite
 	.align	2, 0
 	.type	 AddBirchSpeechObjects,function
 	.thumb_func
@@ -5011,7 +5166,7 @@ AddBirchSpeechObjects:
 	bl	AddNewGameBirchObject
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
-	ldr	r1, .L522
+	ldr	r1, .L541
 	mov	r9, r1
 	lsl	r2, r0, #0x4
 	add	r2, r2, r0
@@ -5020,7 +5175,7 @@ AddBirchSpeechObjects:
 	add	r3, r3, r9
 	mov	r8, r3
 	add	r1, r2, r3
-	ldr	r7, .L522+0x4
+	ldr	r7, .L541+0x4
 	str	r7, [r1]
 	add	r2, r2, r9
 	ldrb	r3, [r2, #0x5]
@@ -5036,7 +5191,7 @@ AddBirchSpeechObjects:
 	mov	r3, sl
 	orr	r1, r1, r3
 	strb	r1, [r2]
-	ldr	r1, .L522+0x8
+	ldr	r1, .L541+0x8
 	lsl	r5, r4, #0x2
 	add	r5, r5, r4
 	lsl	r5, r5, #0x3
@@ -5068,7 +5223,7 @@ AddBirchSpeechObjects:
 	bl	FacilityClassToPicIndex
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
-	ldr	r4, .L522+0xc
+	ldr	r4, .L541+0xc
 	str	r4, [sp]
 	mov	r1, #0x78
 	mov	r2, #0x3c
@@ -5098,7 +5253,7 @@ AddBirchSpeechObjects:
 	bl	FacilityClassToPicIndex
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
-	ldr	r1, .L522+0xc
+	ldr	r1, .L541+0xc
 	mov	r2, #0x80
 	lsl	r2, r2, #0x4
 	add	r4, r1, r2
@@ -5134,15 +5289,15 @@ AddBirchSpeechObjects:
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L523:
+.L542:
 	.align	2, 0
-.L522:
+.L541:
 	.word	gSprites
 	.word	SpriteCB_Null
 	.word	gTasks
 	.word	gDecompressionBuffer
-.Lfe54:
-	.size	 AddBirchSpeechObjects,.Lfe54-AddBirchSpeechObjects
+.Lfe57:
+	.size	 AddBirchSpeechObjects,.Lfe57-AddBirchSpeechObjects
 	.align	2, 0
 	.type	 Task_NewGameBirchSpeech_FadeOutTarget1InTarget2,function
 	.thumb_func
@@ -5150,7 +5305,7 @@ Task_NewGameBirchSpeech_FadeOutTarget1InTarget2:
 	push	{r4, r5, lr}
 	lsl	r0, r0, #0x18
 	lsr	r3, r0, #0x18
-	ldr	r4, .L529
+	ldr	r4, .L548
 	lsl	r0, r3, #0x2
 	add	r0, r0, r3
 	lsl	r0, r0, #0x3
@@ -5159,7 +5314,7 @@ Task_NewGameBirchSpeech_FadeOutTarget1InTarget2:
 	mov	r5, #0xa
 	ldrsh	r0, [r2, r5]
 	cmp	r0, #0
-	bne	.L525	@cond_branch
+	bne	.L544	@cond_branch
 	mov	r1, #0x8
 	ldrsh	r0, [r2, r1]
 	lsl	r1, r0, #0x2
@@ -5170,21 +5325,21 @@ Task_NewGameBirchSpeech_FadeOutTarget1InTarget2:
 	strh	r0, [r1, #0x12]
 	add	r0, r3, #0
 	bl	DestroyTask
-	b	.L526
-.L530:
+	b	.L545
+.L549:
 	.align	2, 0
-.L529:
+.L548:
 	.word	gTasks
-.L525:
+.L544:
 	ldrh	r3, [r2, #0x10]
 	mov	r4, #0x10
 	ldrsh	r0, [r2, r4]
 	cmp	r0, #0
-	beq	.L527	@cond_branch
+	beq	.L546	@cond_branch
 	sub	r0, r3, #0x1
 	strh	r0, [r2, #0x10]
-	b	.L526
-.L527:
+	b	.L545
+.L546:
 	ldrh	r0, [r2, #0xe]
 	strh	r0, [r2, #0x10]
 	sub	r1, r1, #0x1
@@ -5200,12 +5355,12 @@ Task_NewGameBirchSpeech_FadeOutTarget1InTarget2:
 	lsr	r1, r1, #0x10
 	mov	r0, #0x52
 	bl	SetGpuReg
-.L526:
+.L545:
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.Lfe55:
-	.size	 Task_NewGameBirchSpeech_FadeOutTarget1InTarget2,.Lfe55-Task_NewGameBirchSpeech_FadeOutTarget1InTarget2
+.Lfe58:
+	.size	 Task_NewGameBirchSpeech_FadeOutTarget1InTarget2,.Lfe58-Task_NewGameBirchSpeech_FadeOutTarget1InTarget2
 	.align	2, 0
 	.type	 NewGameBirchSpeech_StartFadeOutTarget1InTarget2,function
 	.thumb_func
@@ -5229,7 +5384,7 @@ NewGameBirchSpeech_StartFadeOutTarget1InTarget2:
 	mov	r0, #0x54
 	mov	r1, #0x0
 	bl	SetGpuReg
-	ldr	r0, .L532
+	ldr	r0, .L551
 	mov	r8, r0
 	lsl	r0, r4, #0x2
 	add	r0, r0, r4
@@ -5237,7 +5392,7 @@ NewGameBirchSpeech_StartFadeOutTarget1InTarget2:
 	add	r0, r0, r8
 	mov	r6, #0x0
 	strh	r6, [r0, #0x12]
-	ldr	r0, .L532+0x4
+	ldr	r0, .L551+0x4
 	mov	r1, #0x0
 	bl	CreateTask
 	lsl	r0, r0, #0x18
@@ -5257,13 +5412,13 @@ NewGameBirchSpeech_StartFadeOutTarget1InTarget2:
 	pop	{r4, r5, r6}
 	pop	{r0}
 	bx	r0
-.L533:
+.L552:
 	.align	2, 0
-.L532:
+.L551:
 	.word	gTasks
 	.word	Task_NewGameBirchSpeech_FadeOutTarget1InTarget2
-.Lfe56:
-	.size	 NewGameBirchSpeech_StartFadeOutTarget1InTarget2,.Lfe56-NewGameBirchSpeech_StartFadeOutTarget1InTarget2
+.Lfe59:
+	.size	 NewGameBirchSpeech_StartFadeOutTarget1InTarget2,.Lfe59-NewGameBirchSpeech_StartFadeOutTarget1InTarget2
 	.align	2, 0
 	.type	 Task_NewGameBirchSpeech_FadeInTarget1OutTarget2,function
 	.thumb_func
@@ -5271,7 +5426,7 @@ Task_NewGameBirchSpeech_FadeInTarget1OutTarget2:
 	push	{r4, r5, lr}
 	lsl	r0, r0, #0x18
 	lsr	r3, r0, #0x18
-	ldr	r4, .L539
+	ldr	r4, .L558
 	lsl	r0, r3, #0x2
 	add	r0, r0, r3
 	lsl	r0, r0, #0x3
@@ -5280,7 +5435,7 @@ Task_NewGameBirchSpeech_FadeInTarget1OutTarget2:
 	mov	r5, #0xa
 	ldrsh	r0, [r2, r5]
 	cmp	r0, #0x10
-	bne	.L535	@cond_branch
+	bne	.L554	@cond_branch
 	mov	r1, #0x8
 	ldrsh	r0, [r2, r1]
 	lsl	r1, r0, #0x2
@@ -5291,21 +5446,21 @@ Task_NewGameBirchSpeech_FadeInTarget1OutTarget2:
 	strh	r0, [r1, #0x12]
 	add	r0, r3, #0
 	bl	DestroyTask
-	b	.L536
-.L540:
+	b	.L555
+.L559:
 	.align	2, 0
-.L539:
+.L558:
 	.word	gTasks
-.L535:
+.L554:
 	ldrh	r3, [r2, #0x10]
 	mov	r4, #0x10
 	ldrsh	r0, [r2, r4]
 	cmp	r0, #0
-	beq	.L537	@cond_branch
+	beq	.L556	@cond_branch
 	sub	r0, r3, #0x1
 	strh	r0, [r2, #0x10]
-	b	.L536
-.L537:
+	b	.L555
+.L556:
 	ldrh	r0, [r2, #0xe]
 	strh	r0, [r2, #0x10]
 	add	r1, r1, #0x1
@@ -5321,12 +5476,12 @@ Task_NewGameBirchSpeech_FadeInTarget1OutTarget2:
 	lsr	r1, r1, #0x10
 	mov	r0, #0x52
 	bl	SetGpuReg
-.L536:
+.L555:
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.Lfe57:
-	.size	 Task_NewGameBirchSpeech_FadeInTarget1OutTarget2,.Lfe57-Task_NewGameBirchSpeech_FadeInTarget1OutTarget2
+.Lfe60:
+	.size	 Task_NewGameBirchSpeech_FadeInTarget1OutTarget2,.Lfe60-Task_NewGameBirchSpeech_FadeInTarget1OutTarget2
 	.align	2, 0
 	.type	 NewGameBirchSpeech_StartFadeInTarget1OutTarget2,function
 	.thumb_func
@@ -5351,7 +5506,7 @@ NewGameBirchSpeech_StartFadeInTarget1OutTarget2:
 	mov	r0, #0x54
 	mov	r1, #0x0
 	bl	SetGpuReg
-	ldr	r0, .L542
+	ldr	r0, .L561
 	mov	r8, r0
 	lsl	r0, r4, #0x2
 	add	r0, r0, r4
@@ -5359,7 +5514,7 @@ NewGameBirchSpeech_StartFadeInTarget1OutTarget2:
 	add	r0, r0, r8
 	mov	r6, #0x0
 	strh	r6, [r0, #0x12]
-	ldr	r0, .L542+0x4
+	ldr	r0, .L561+0x4
 	mov	r1, #0x0
 	bl	CreateTask
 	lsl	r0, r0, #0x18
@@ -5379,13 +5534,13 @@ NewGameBirchSpeech_StartFadeInTarget1OutTarget2:
 	pop	{r4, r5, r6}
 	pop	{r0}
 	bx	r0
-.L543:
+.L562:
 	.align	2, 0
-.L542:
+.L561:
 	.word	gTasks
 	.word	Task_NewGameBirchSpeech_FadeInTarget1OutTarget2
-.Lfe58:
-	.size	 NewGameBirchSpeech_StartFadeInTarget1OutTarget2,.Lfe58-NewGameBirchSpeech_StartFadeInTarget1OutTarget2
+.Lfe61:
+	.size	 NewGameBirchSpeech_StartFadeInTarget1OutTarget2,.Lfe61-NewGameBirchSpeech_StartFadeInTarget1OutTarget2
 	.align	2, 0
 	.type	 Task_NewGameBirchSpeech_FadePlatformIn,function
 	.thumb_func
@@ -5393,7 +5548,7 @@ Task_NewGameBirchSpeech_FadePlatformIn:
 	push	{r4, lr}
 	lsl	r0, r0, #0x18
 	lsr	r2, r0, #0x18
-	ldr	r1, .L551
+	ldr	r1, .L570
 	lsl	r0, r2, #0x2
 	add	r0, r0, r2
 	lsl	r0, r0, #0x3
@@ -5402,33 +5557,33 @@ Task_NewGameBirchSpeech_FadePlatformIn:
 	mov	r4, #0xc
 	ldrsh	r0, [r1, r4]
 	cmp	r0, #0
-	beq	.L545	@cond_branch
+	beq	.L564	@cond_branch
 	sub	r0, r3, #0x1
 	strh	r0, [r1, #0xc]
-	b	.L546
-.L552:
+	b	.L565
+.L571:
 	.align	2, 0
-.L551:
+.L570:
 	.word	gTasks
-.L545:
+.L564:
 	ldrh	r3, [r1, #0xa]
 	mov	r4, #0xa
 	ldrsh	r0, [r1, r4]
 	cmp	r0, #0x8
-	bne	.L547	@cond_branch
+	bne	.L566	@cond_branch
 	add	r0, r2, #0
 	bl	DestroyTask
-	b	.L546
-.L547:
+	b	.L565
+.L566:
 	ldrh	r2, [r1, #0x10]
 	mov	r4, #0x10
 	ldrsh	r0, [r1, r4]
 	cmp	r0, #0
-	beq	.L549	@cond_branch
+	beq	.L568	@cond_branch
 	sub	r0, r2, #0x1
 	strh	r0, [r1, #0x10]
-	b	.L546
-.L549:
+	b	.L565
+.L568:
 	ldrh	r0, [r1, #0xe]
 	strh	r0, [r1, #0x10]
 	add	r0, r3, #0x1
@@ -5436,21 +5591,21 @@ Task_NewGameBirchSpeech_FadePlatformIn:
 	mov	r2, #0xa
 	ldrsh	r0, [r1, r2]
 	lsl	r0, r0, #0x1
-	ldr	r1, .L553
+	ldr	r1, .L572
 	add	r0, r0, r1
 	mov	r1, #0x1
 	mov	r2, #0x10
 	bl	LoadPalette
-.L546:
+.L565:
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L554:
+.L573:
 	.align	2, 0
-.L553:
+.L572:
 	.word	sBirchSpeechBgGradientPal
-.Lfe59:
-	.size	 Task_NewGameBirchSpeech_FadePlatformIn,.Lfe59-Task_NewGameBirchSpeech_FadePlatformIn
+.Lfe62:
+	.size	 Task_NewGameBirchSpeech_FadePlatformIn,.Lfe62-Task_NewGameBirchSpeech_FadePlatformIn
 	.align	2, 0
 	.type	 NewGameBirchSpeech_StartFadePlatformIn,function
 	.thumb_func
@@ -5462,12 +5617,12 @@ NewGameBirchSpeech_StartFadePlatformIn:
 	lsr	r4, r4, #0x18
 	lsl	r5, r5, #0x18
 	lsr	r5, r5, #0x18
-	ldr	r0, .L556
+	ldr	r0, .L575
 	mov	r1, #0x0
 	bl	CreateTask
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
-	ldr	r2, .L556+0x4
+	ldr	r2, .L575+0x4
 	lsl	r1, r0, #0x2
 	add	r1, r1, r0
 	lsl	r1, r1, #0x3
@@ -5482,13 +5637,13 @@ NewGameBirchSpeech_StartFadePlatformIn:
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.L557:
+.L576:
 	.align	2, 0
-.L556:
+.L575:
 	.word	Task_NewGameBirchSpeech_FadePlatformIn
 	.word	gTasks
-.Lfe60:
-	.size	 NewGameBirchSpeech_StartFadePlatformIn,.Lfe60-NewGameBirchSpeech_StartFadePlatformIn
+.Lfe63:
+	.size	 NewGameBirchSpeech_StartFadePlatformIn,.Lfe63-NewGameBirchSpeech_StartFadePlatformIn
 	.align	2, 0
 	.type	 Task_NewGameBirchSpeech_FadePlatformOut,function
 	.thumb_func
@@ -5496,7 +5651,7 @@ Task_NewGameBirchSpeech_FadePlatformOut:
 	push	{r4, lr}
 	lsl	r0, r0, #0x18
 	lsr	r2, r0, #0x18
-	ldr	r1, .L565
+	ldr	r1, .L584
 	lsl	r0, r2, #0x2
 	add	r0, r0, r2
 	lsl	r0, r0, #0x3
@@ -5505,33 +5660,33 @@ Task_NewGameBirchSpeech_FadePlatformOut:
 	mov	r4, #0xc
 	ldrsh	r0, [r1, r4]
 	cmp	r0, #0
-	beq	.L559	@cond_branch
+	beq	.L578	@cond_branch
 	sub	r0, r3, #0x1
 	strh	r0, [r1, #0xc]
-	b	.L560
-.L566:
+	b	.L579
+.L585:
 	.align	2, 0
-.L565:
+.L584:
 	.word	gTasks
-.L559:
+.L578:
 	ldrh	r3, [r1, #0xa]
 	mov	r4, #0xa
 	ldrsh	r0, [r1, r4]
 	cmp	r0, #0
-	bne	.L561	@cond_branch
+	bne	.L580	@cond_branch
 	add	r0, r2, #0
 	bl	DestroyTask
-	b	.L560
-.L561:
+	b	.L579
+.L580:
 	ldrh	r2, [r1, #0x10]
 	mov	r4, #0x10
 	ldrsh	r0, [r1, r4]
 	cmp	r0, #0
-	beq	.L563	@cond_branch
+	beq	.L582	@cond_branch
 	sub	r0, r2, #0x1
 	strh	r0, [r1, #0x10]
-	b	.L560
-.L563:
+	b	.L579
+.L582:
 	ldrh	r0, [r1, #0xe]
 	strh	r0, [r1, #0x10]
 	sub	r0, r3, #0x1
@@ -5539,21 +5694,21 @@ Task_NewGameBirchSpeech_FadePlatformOut:
 	mov	r2, #0xa
 	ldrsh	r0, [r1, r2]
 	lsl	r0, r0, #0x1
-	ldr	r1, .L567
+	ldr	r1, .L586
 	add	r0, r0, r1
 	mov	r1, #0x1
 	mov	r2, #0x10
 	bl	LoadPalette
-.L560:
+.L579:
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L568:
+.L587:
 	.align	2, 0
-.L567:
+.L586:
 	.word	sBirchSpeechBgGradientPal
-.Lfe61:
-	.size	 Task_NewGameBirchSpeech_FadePlatformOut,.Lfe61-Task_NewGameBirchSpeech_FadePlatformOut
+.Lfe64:
+	.size	 Task_NewGameBirchSpeech_FadePlatformOut,.Lfe64-Task_NewGameBirchSpeech_FadePlatformOut
 	.align	2, 0
 	.type	 NewGameBirchSpeech_StartFadePlatformOut,function
 	.thumb_func
@@ -5565,12 +5720,12 @@ NewGameBirchSpeech_StartFadePlatformOut:
 	lsr	r4, r4, #0x18
 	lsl	r5, r5, #0x18
 	lsr	r5, r5, #0x18
-	ldr	r0, .L570
+	ldr	r0, .L589
 	mov	r1, #0x0
 	bl	CreateTask
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
-	ldr	r2, .L570+0x4
+	ldr	r2, .L589+0x4
 	lsl	r1, r0, #0x2
 	add	r1, r1, r0
 	lsl	r1, r1, #0x3
@@ -5584,25 +5739,25 @@ NewGameBirchSpeech_StartFadePlatformOut:
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.L571:
+.L590:
 	.align	2, 0
-.L570:
+.L589:
 	.word	Task_NewGameBirchSpeech_FadePlatformOut
 	.word	gTasks
-.Lfe62:
-	.size	 NewGameBirchSpeech_StartFadePlatformOut,.Lfe62-NewGameBirchSpeech_StartFadePlatformOut
+.Lfe65:
+	.size	 NewGameBirchSpeech_StartFadePlatformOut,.Lfe65-NewGameBirchSpeech_StartFadePlatformOut
 	.align	2, 0
 	.type	 NewGameBirchSpeech_ShowGenderMenu,function
 	.thumb_func
 NewGameBirchSpeech_ShowGenderMenu:
 	push	{lr}
-	ldr	r0, .L573
+	ldr	r0, .L592
 	mov	r1, #0xf3
 	bl	DrawMainMenuWindowBorder
 	mov	r0, #0x1
 	mov	r1, #0x11
 	bl	FillWindowPixelBuffer
-	ldr	r2, .L573+0x4
+	ldr	r2, .L592+0x4
 	mov	r0, #0x1
 	mov	r1, #0x2
 	bl	PrintMenuTable
@@ -5617,13 +5772,13 @@ NewGameBirchSpeech_ShowGenderMenu:
 	bl	CopyWindowToVram
 	pop	{r0}
 	bx	r0
-.L574:
+.L593:
 	.align	2, 0
-.L573:
+.L592:
 	.word	gNewGameBirchSpeechTextWindows+0x8
 	.word	sMenuActions_Gender
-.Lfe63:
-	.size	 NewGameBirchSpeech_ShowGenderMenu,.Lfe63-NewGameBirchSpeech_ShowGenderMenu
+.Lfe66:
+	.size	 NewGameBirchSpeech_ShowGenderMenu,.Lfe66-NewGameBirchSpeech_ShowGenderMenu
 	.align	2, 0
 	.type	 NewGameBirchSpeech_ProcessGenderMenuInput,function
 	.thumb_func
@@ -5634,8 +5789,8 @@ NewGameBirchSpeech_ProcessGenderMenuInput:
 	asr	r0, r0, #0x18
 	pop	{r1}
 	bx	r1
-.Lfe64:
-	.size	 NewGameBirchSpeech_ProcessGenderMenuInput,.Lfe64-NewGameBirchSpeech_ProcessGenderMenuInput
+.Lfe67:
+	.size	 NewGameBirchSpeech_ProcessGenderMenuInput,.Lfe67-NewGameBirchSpeech_ProcessGenderMenuInput
 	.align	2, 0
 	.globl	NewGameBirchSpeech_SetDefaultPlayerName
 	.type	 NewGameBirchSpeech_SetDefaultPlayerName,function
@@ -5644,28 +5799,28 @@ NewGameBirchSpeech_SetDefaultPlayerName:
 	push	{r4, r5, lr}
 	lsl	r0, r0, #0x18
 	lsr	r2, r0, #0x18
-	ldr	r1, .L585
+	ldr	r1, .L604
 	ldr	r0, [r1]
 	ldrb	r0, [r0, #0x8]
 	add	r5, r1, #0
 	cmp	r0, #0
-	bne	.L577	@cond_branch
-	ldr	r1, .L585+0x4
-	b	.L584
-.L586:
+	bne	.L596	@cond_branch
+	ldr	r1, .L604+0x4
+	b	.L603
+.L605:
 	.align	2, 0
-.L585:
+.L604:
 	.word	gSaveBlock2Ptr
 	.word	gMalePresetNames
-.L577:
-	ldr	r1, .L587
-.L584:
+.L596:
+	ldr	r1, .L606
+.L603:
 	lsl	r0, r2, #0x2
 	add	r0, r0, r1
 	ldr	r3, [r0]
 	mov	r2, #0x0
-	ldr	r4, .L587+0x4
-.L582:
+	ldr	r4, .L606+0x4
+.L601:
 	ldr	r1, [r4]
 	add	r1, r1, r2
 	add	r0, r3, r2
@@ -5675,20 +5830,20 @@ NewGameBirchSpeech_SetDefaultPlayerName:
 	lsl	r0, r0, #0x18
 	lsr	r2, r0, #0x18
 	cmp	r2, #0x6
-	bls	.L582	@cond_branch
+	bls	.L601	@cond_branch
 	ldr	r1, [r5]
 	mov	r0, #0xff
 	strb	r0, [r1, #0x7]
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.L588:
+.L607:
 	.align	2, 0
-.L587:
+.L606:
 	.word	gFemalePresetNames
 	.word	gSaveBlock2Ptr
-.Lfe65:
-	.size	 NewGameBirchSpeech_SetDefaultPlayerName,.Lfe65-NewGameBirchSpeech_SetDefaultPlayerName
+.Lfe68:
+	.size	 NewGameBirchSpeech_SetDefaultPlayerName,.Lfe68-NewGameBirchSpeech_SetDefaultPlayerName
 	.align	2, 0
 	.type	 CreateMainMenuErrorWindow,function
 	.thumb_func
@@ -5715,28 +5870,28 @@ CreateMainMenuErrorWindow:
 	mov	r0, #0x7
 	mov	r1, #0x2
 	bl	CopyWindowToVram
-	ldr	r0, .L590
-	ldr	r1, .L590+0x4
+	ldr	r0, .L609
+	ldr	r1, .L609+0x4
 	bl	DrawMainMenuWindowBorder
-	ldr	r1, .L590+0x8
+	ldr	r1, .L609+0x8
 	mov	r0, #0x40
 	bl	SetGpuReg
-	ldr	r1, .L590+0xc
+	ldr	r1, .L609+0xc
 	mov	r0, #0x44
 	bl	SetGpuReg
 	add	sp, sp, #0xc
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L591:
+.L610:
 	.align	2, 0
-.L590:
+.L609:
 	.word	sWindowTemplates_MainMenu+0x38
 	.word	0x1d5
 	.word	0x9e7
 	.word	0x719f
-.Lfe66:
-	.size	 CreateMainMenuErrorWindow,.Lfe66-CreateMainMenuErrorWindow
+.Lfe69:
+	.size	 CreateMainMenuErrorWindow,.Lfe69-CreateMainMenuErrorWindow
 	.align	2, 0
 	.type	 MainMenu_FormatSavegameText,function
 	.thumb_func
@@ -5748,19 +5903,19 @@ MainMenu_FormatSavegameText:
 	bl	MainMenu_FormatSavegameBadges
 	pop	{r0}
 	bx	r0
-.Lfe67:
-	.size	 MainMenu_FormatSavegameText,.Lfe67-MainMenu_FormatSavegameText
+.Lfe70:
+	.size	 MainMenu_FormatSavegameText,.Lfe70-MainMenu_FormatSavegameText
 	.align	2, 0
 	.type	 MainMenu_FormatSavegamePlayer,function
 	.thumb_func
 MainMenu_FormatSavegamePlayer:
 	push	{r4, r5, r6, lr}
 	add	sp, sp, #-0xc
-	ldr	r4, .L594
-	ldr	r1, .L594+0x4
+	ldr	r4, .L613
+	ldr	r1, .L613+0x4
 	add	r0, r4, #0
 	bl	StringExpandPlaceholders
-	ldr	r6, .L594+0x8
+	ldr	r6, .L613+0x8
 	str	r6, [sp]
 	mov	r5, #0x1
 	neg	r5, r5
@@ -5771,7 +5926,7 @@ MainMenu_FormatSavegamePlayer:
 	mov	r2, #0x0
 	mov	r3, #0x11
 	bl	AddTextPrinterParameterized3
-	ldr	r4, .L594+0xc
+	ldr	r4, .L613+0xc
 	ldr	r1, [r4]
 	mov	r0, #0x1
 	mov	r2, #0x64
@@ -5791,26 +5946,26 @@ MainMenu_FormatSavegamePlayer:
 	pop	{r4, r5, r6}
 	pop	{r0}
 	bx	r0
-.L595:
+.L614:
 	.align	2, 0
-.L594:
+.L613:
 	.word	gStringVar4
 	.word	gText_ContinueMenuPlayer
 	.word	sTextColor_MenuInfo
 	.word	gSaveBlock2Ptr
-.Lfe68:
-	.size	 MainMenu_FormatSavegamePlayer,.Lfe68-MainMenu_FormatSavegamePlayer
+.Lfe71:
+	.size	 MainMenu_FormatSavegamePlayer,.Lfe71-MainMenu_FormatSavegamePlayer
 	.align	2, 0
 	.type	 MainMenu_FormatSavegameTime,function
 	.thumb_func
 MainMenu_FormatSavegameTime:
 	push	{r4, r5, r6, lr}
 	add	sp, sp, #-0x2c
-	ldr	r4, .L597
-	ldr	r1, .L597+0x4
+	ldr	r4, .L616
+	ldr	r1, .L616+0x4
 	add	r0, r4, #0
 	bl	StringExpandPlaceholders
-	ldr	r6, .L597+0x8
+	ldr	r6, .L616+0x8
 	str	r6, [sp]
 	mov	r5, #0x1
 	neg	r5, r5
@@ -5821,7 +5976,7 @@ MainMenu_FormatSavegameTime:
 	mov	r2, #0x6c
 	mov	r3, #0x11
 	bl	AddTextPrinterParameterized3
-	ldr	r4, .L597+0xc
+	ldr	r4, .L616+0xc
 	ldr	r0, [r4]
 	ldrh	r1, [r0, #0xe]
 	add	r0, sp, #0xc
@@ -5855,48 +6010,48 @@ MainMenu_FormatSavegameTime:
 	pop	{r4, r5, r6}
 	pop	{r0}
 	bx	r0
-.L598:
+.L617:
 	.align	2, 0
-.L597:
+.L616:
 	.word	gStringVar4
 	.word	gText_ContinueMenuTime
 	.word	sTextColor_MenuInfo
 	.word	gSaveBlock2Ptr
-.Lfe69:
-	.size	 MainMenu_FormatSavegameTime,.Lfe69-MainMenu_FormatSavegameTime
+.Lfe72:
+	.size	 MainMenu_FormatSavegameTime,.Lfe72-MainMenu_FormatSavegameTime
 	.align	2, 0
 	.type	 MainMenu_FormatSavegamePokedex,function
 	.thumb_func
 MainMenu_FormatSavegamePokedex:
 	push	{r4, r5, r6, r7, lr}
 	add	sp, sp, #-0x2c
-	ldr	r0, .L604
+	ldr	r0, .L623
 	bl	FlagGet
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	cmp	r0, #0x1
-	bne	.L600	@cond_branch
+	bne	.L619	@cond_branch
 	bl	IsNationalPokedexEnabled
 	cmp	r0, #0
-	beq	.L601	@cond_branch
+	beq	.L620	@cond_branch
 	mov	r0, #0x1
 	bl	GetNationalPokedexCount
-	b	.L603
-.L605:
+	b	.L622
+.L624:
 	.align	2, 0
-.L604:
+.L623:
 	.word	0x861
-.L601:
+.L620:
 	mov	r0, #0x1
 	bl	GetHoennPokedexCount
-.L603:
+.L622:
 	lsl	r0, r0, #0x10
 	lsr	r7, r0, #0x10
-	ldr	r4, .L606
-	ldr	r1, .L606+0x4
+	ldr	r4, .L625
+	ldr	r1, .L625+0x4
 	add	r0, r4, #0
 	bl	StringExpandPlaceholders
-	ldr	r6, .L606+0x8
+	ldr	r6, .L625+0x8
 	str	r6, [sp]
 	mov	r5, #0x1
 	neg	r5, r5
@@ -5927,19 +6082,19 @@ MainMenu_FormatSavegamePokedex:
 	mov	r1, #0x1
 	mov	r3, #0x21
 	bl	AddTextPrinterParameterized3
-.L600:
+.L619:
 	add	sp, sp, #0x2c
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L607:
+.L626:
 	.align	2, 0
-.L606:
+.L625:
 	.word	gStringVar4
 	.word	gText_ContinueMenuPokedex
 	.word	sTextColor_MenuInfo
-.Lfe70:
-	.size	 MainMenu_FormatSavegamePokedex,.Lfe70-MainMenu_FormatSavegamePokedex
+.Lfe73:
+	.size	 MainMenu_FormatSavegamePokedex,.Lfe73-MainMenu_FormatSavegamePokedex
 	.align	2, 0
 	.type	 MainMenu_FormatSavegameBadges,function
 	.thumb_func
@@ -5947,27 +6102,27 @@ MainMenu_FormatSavegameBadges:
 	push	{r4, r5, r6, r7, lr}
 	add	sp, sp, #-0x2c
 	mov	r7, #0x0
-	ldr	r4, .L615
-.L612:
+	ldr	r4, .L634
+.L631:
 	lsl	r0, r4, #0x10
 	lsr	r0, r0, #0x10
 	bl	FlagGet
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.L611	@cond_branch
+	beq	.L630	@cond_branch
 	add	r0, r7, #0x1
 	lsl	r0, r0, #0x18
 	lsr	r7, r0, #0x18
-.L611:
+.L630:
 	add	r4, r4, #0x1
-	ldr	r0, .L615+0x4
+	ldr	r0, .L634+0x4
 	cmp	r4, r0
-	bls	.L612	@cond_branch
-	ldr	r4, .L615+0x8
-	ldr	r1, .L615+0xc
+	bls	.L631	@cond_branch
+	ldr	r4, .L634+0x8
+	ldr	r1, .L634+0xc
 	add	r0, r4, #0
 	bl	StringExpandPlaceholders
-	ldr	r6, .L615+0x10
+	ldr	r6, .L634+0x10
 	str	r6, [sp]
 	mov	r5, #0x1
 	neg	r5, r5
@@ -6002,16 +6157,16 @@ MainMenu_FormatSavegameBadges:
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L616:
+.L635:
 	.align	2, 0
-.L615:
+.L634:
 	.word	0x867
 	.word	0x86e
 	.word	gStringVar4
 	.word	gText_ContinueMenuBadges
 	.word	sTextColor_MenuInfo
-.Lfe71:
-	.size	 MainMenu_FormatSavegameBadges,.Lfe71-MainMenu_FormatSavegameBadges
+.Lfe74:
+	.size	 MainMenu_FormatSavegameBadges,.Lfe74-MainMenu_FormatSavegameBadges
 	.align	2, 0
 	.type	 LoadMainMenuWindowFrameTiles,function
 	.thumb_func
@@ -6023,7 +6178,7 @@ LoadMainMenuWindowFrameTiles:
 	lsr	r4, r4, #0x18
 	lsl	r5, r5, #0x10
 	lsr	r5, r5, #0x10
-	ldr	r6, .L618
+	ldr	r6, .L637
 	ldr	r0, [r6]
 	ldrb	r0, [r0, #0x14]
 	lsr	r0, r0, #0x3
@@ -6045,12 +6200,12 @@ LoadMainMenuWindowFrameTiles:
 	pop	{r4, r5, r6}
 	pop	{r0}
 	bx	r0
-.L619:
+.L638:
 	.align	2, 0
-.L618:
+.L637:
 	.word	gSaveBlock2Ptr
-.Lfe72:
-	.size	 LoadMainMenuWindowFrameTiles,.Lfe72-LoadMainMenuWindowFrameTiles
+.Lfe75:
+	.size	 LoadMainMenuWindowFrameTiles,.Lfe75-LoadMainMenuWindowFrameTiles
 	.align	2, 0
 	.type	 DrawMainMenuWindowBorder,function
 	.thumb_func
@@ -6224,8 +6379,8 @@ DrawMainMenuWindowBorder:
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.Lfe73:
-	.size	 DrawMainMenuWindowBorder,.Lfe73-DrawMainMenuWindowBorder
+.Lfe76:
+	.size	 DrawMainMenuWindowBorder,.Lfe76-DrawMainMenuWindowBorder
 	.align	2, 0
 	.type	 ClearMainMenuWindowTilemap,function
 	.thumb_func
@@ -6264,8 +6419,8 @@ ClearMainMenuWindowTilemap:
 	pop	{r4, r5, r6}
 	pop	{r0}
 	bx	r0
-.Lfe74:
-	.size	 ClearMainMenuWindowTilemap,.Lfe74-ClearMainMenuWindowTilemap
+.Lfe77:
+	.size	 ClearMainMenuWindowTilemap,.Lfe77-ClearMainMenuWindowTilemap
 	.align	2, 0
 	.type	 NewGameBirchSpeech_ClearGenderWindowTilemap,function
 	.thumb_func
@@ -6305,8 +6460,8 @@ NewGameBirchSpeech_ClearGenderWindowTilemap:
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.Lfe75:
-	.size	 NewGameBirchSpeech_ClearGenderWindowTilemap,.Lfe75-NewGameBirchSpeech_ClearGenderWindowTilemap
+.Lfe78:
+	.size	 NewGameBirchSpeech_ClearGenderWindowTilemap,.Lfe78-NewGameBirchSpeech_ClearGenderWindowTilemap
 	.align	2, 0
 	.type	 NewGameBirchSpeech_ClearGenderWindow,function
 	.thumb_func
@@ -6317,7 +6472,7 @@ NewGameBirchSpeech_ClearGenderWindow:
 	lsr	r5, r0, #0x18
 	lsl	r4, r4, #0x18
 	lsr	r4, r4, #0x18
-	ldr	r1, .L625
+	ldr	r1, .L644
 	add	r0, r5, #0
 	bl	CallWindowFunction
 	add	r0, r5, #0
@@ -6326,20 +6481,20 @@ NewGameBirchSpeech_ClearGenderWindow:
 	add	r0, r5, #0
 	bl	ClearWindowTilemap
 	cmp	r4, #0x1
-	bne	.L624	@cond_branch
+	bne	.L643	@cond_branch
 	add	r0, r5, #0
 	mov	r1, #0x3
 	bl	CopyWindowToVram
-.L624:
+.L643:
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.L626:
+.L645:
 	.align	2, 0
-.L625:
+.L644:
 	.word	NewGameBirchSpeech_ClearGenderWindowTilemap
-.Lfe76:
-	.size	 NewGameBirchSpeech_ClearGenderWindow,.Lfe76-NewGameBirchSpeech_ClearGenderWindow
+.Lfe79:
+	.size	 NewGameBirchSpeech_ClearGenderWindow,.Lfe79-NewGameBirchSpeech_ClearGenderWindow
 	.align	2, 0
 	.type	 NewGameBirchSpeech_ClearWindow,function
 	.thumb_func
@@ -6405,8 +6560,8 @@ NewGameBirchSpeech_ClearWindow:
 	pop	{r4, r5, r6}
 	pop	{r0}
 	bx	r0
-.Lfe77:
-	.size	 NewGameBirchSpeech_ClearWindow,.Lfe77-NewGameBirchSpeech_ClearWindow
+.Lfe80:
+	.size	 NewGameBirchSpeech_ClearWindow,.Lfe80-NewGameBirchSpeech_ClearWindow
 	.align	2, 0
 	.type	 NewGameBirchSpeech_ShowPokeBallPrinterCallback,function
 	.thumb_func
@@ -6416,26 +6571,26 @@ NewGameBirchSpeech_ShowPokeBallPrinterCallback:
 	sub	r0, r0, #0x2
 	ldrb	r0, [r0]
 	cmp	r0, #0x8
-	bne	.L629	@cond_branch
-	ldr	r1, .L630
+	bne	.L648	@cond_branch
+	ldr	r1, .L649
 	ldrb	r0, [r1]
 	cmp	r0, #0
-	bne	.L629	@cond_branch
+	bne	.L648	@cond_branch
 	mov	r0, #0x1
 	strb	r0, [r1]
-	ldr	r0, .L630+0x4
+	ldr	r0, .L649+0x4
 	mov	r1, #0x0
 	bl	CreateTask
-.L629:
+.L648:
 	pop	{r0}
 	bx	r0
-.L631:
+.L650:
 	.align	2, 0
-.L630:
+.L649:
 	.word	gUnknown_02022D04
 	.word	Task_NewGameBirchSpeechSub_InitPokeBall
-.Lfe78:
-	.size	 NewGameBirchSpeech_ShowPokeBallPrinterCallback,.Lfe78-NewGameBirchSpeech_ShowPokeBallPrinterCallback
+.Lfe81:
+	.size	 NewGameBirchSpeech_ShowPokeBallPrinterCallback,.Lfe81-NewGameBirchSpeech_ShowPokeBallPrinterCallback
 	.align	2, 0
 	.globl	CreateYesNoMenuParameterized
 	.type	 CreateYesNoMenuParameterized,function
@@ -6494,8 +6649,8 @@ CreateYesNoMenuParameterized:
 	pop	{r4, r5, r6}
 	pop	{r0}
 	bx	r0
-.Lfe79:
-	.size	 CreateYesNoMenuParameterized,.Lfe79-CreateYesNoMenuParameterized
+.Lfe82:
+	.size	 CreateYesNoMenuParameterized,.Lfe82-CreateYesNoMenuParameterized
 	.align	2, 0
 	.type	 NewGameBirchSpeech_ShowDialogueWindow,function
 	.thumb_func
@@ -6506,7 +6661,7 @@ NewGameBirchSpeech_ShowDialogueWindow:
 	lsr	r5, r0, #0x18
 	lsl	r4, r4, #0x18
 	lsr	r4, r4, #0x18
-	ldr	r1, .L635
+	ldr	r1, .L654
 	add	r0, r5, #0
 	bl	CallWindowFunction
 	add	r0, r5, #0
@@ -6515,20 +6670,20 @@ NewGameBirchSpeech_ShowDialogueWindow:
 	add	r0, r5, #0
 	bl	PutWindowTilemap
 	cmp	r4, #0x1
-	bne	.L634	@cond_branch
+	bne	.L653	@cond_branch
 	add	r0, r5, #0
 	mov	r1, #0x3
 	bl	CopyWindowToVram
-.L634:
+.L653:
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.L636:
+.L655:
 	.align	2, 0
-.L635:
+.L654:
 	.word	NewGameBirchSpeech_CreateDialogueWindowBorder
-.Lfe80:
-	.size	 NewGameBirchSpeech_ShowDialogueWindow,.Lfe80-NewGameBirchSpeech_ShowDialogueWindow
+.Lfe83:
+	.size	 NewGameBirchSpeech_ShowDialogueWindow,.Lfe83-NewGameBirchSpeech_ShowDialogueWindow
 	.align	2, 0
 	.type	 NewGameBirchSpeech_CreateDialogueWindowBorder,function
 	.thumb_func
@@ -6603,7 +6758,7 @@ NewGameBirchSpeech_CreateDialogueWindowBorder:
 	ldr	r2, [sp, #0xc]
 	add	r3, r5, #0
 	bl	FillBgTilemapBufferRect
-	ldr	r1, .L638
+	ldr	r1, .L657
 	ldr	r7, [sp, #0xc]
 	add	r7, r7, r9
 	sub	r0, r7, #0x1
@@ -6627,7 +6782,7 @@ NewGameBirchSpeech_CreateDialogueWindowBorder:
 	add	r2, r7, #0
 	add	r3, r5, #0
 	bl	FillBgTilemapBufferRect
-	ldr	r1, .L638+0x4
+	ldr	r1, .L657+0x4
 	str	r4, [sp]
 	mov	r5, #0x5
 	str	r5, [sp, #0x4]
@@ -6636,7 +6791,7 @@ NewGameBirchSpeech_CreateDialogueWindowBorder:
 	ldr	r2, [sp, #0x14]
 	mov	r3, sl
 	bl	FillBgTilemapBufferRect
-	ldr	r1, .L638+0x8
+	ldr	r1, .L657+0x8
 	mov	r0, r9
 	add	r0, r0, #0x1
 	lsl	r0, r0, #0x18
@@ -6657,7 +6812,7 @@ NewGameBirchSpeech_CreateDialogueWindowBorder:
 	add	r2, r7, #0
 	mov	r3, sl
 	bl	FillBgTilemapBufferRect
-	ldr	r1, .L638+0xc
+	ldr	r1, .L657+0xc
 	ldr	r2, [sp, #0x10]
 	add	sl, sl, r2
 	mov	r0, sl
@@ -6671,7 +6826,7 @@ NewGameBirchSpeech_CreateDialogueWindowBorder:
 	ldr	r2, [sp, #0x14]
 	mov	r3, sl
 	bl	FillBgTilemapBufferRect
-	ldr	r1, .L638+0x10
+	ldr	r1, .L657+0x10
 	str	r4, [sp]
 	str	r4, [sp, #0x4]
 	str	r6, [sp, #0x8]
@@ -6694,7 +6849,7 @@ NewGameBirchSpeech_CreateDialogueWindowBorder:
 	ldr	r2, [sp, #0xc]
 	mov	r3, sl
 	bl	FillBgTilemapBufferRect
-	ldr	r1, .L638+0x14
+	ldr	r1, .L657+0x14
 	str	r4, [sp]
 	str	r4, [sp, #0x4]
 	str	r6, [sp, #0x8]
@@ -6702,7 +6857,7 @@ NewGameBirchSpeech_CreateDialogueWindowBorder:
 	ldr	r2, [sp, #0x1c]
 	mov	r3, sl
 	bl	FillBgTilemapBufferRect
-	ldr	r1, .L638+0x18
+	ldr	r1, .L657+0x18
 	str	r4, [sp]
 	str	r4, [sp, #0x4]
 	str	r6, [sp, #0x8]
@@ -6718,9 +6873,9 @@ NewGameBirchSpeech_CreateDialogueWindowBorder:
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L639:
+.L658:
 	.align	2, 0
-.L638:
+.L657:
 	.word	0x101
 	.word	0x103
 	.word	0x105
@@ -6728,8 +6883,8 @@ NewGameBirchSpeech_CreateDialogueWindowBorder:
 	.word	0x8ff
 	.word	0x901
 	.word	0x902
-.Lfe81:
-	.size	 NewGameBirchSpeech_CreateDialogueWindowBorder,.Lfe81-NewGameBirchSpeech_CreateDialogueWindowBorder
+.Lfe84:
+	.size	 NewGameBirchSpeech_CreateDialogueWindowBorder,.Lfe84-NewGameBirchSpeech_CreateDialogueWindowBorder
 	.align	2, 0
 	.type	 Task_NewGameBirchSpeech_ReturnFromNamingScreenShowTextbox,function
 	.thumb_func
@@ -6737,7 +6892,7 @@ Task_NewGameBirchSpeech_ReturnFromNamingScreenShowTextbox:
 	push	{r4, lr}
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
-	ldr	r2, .L642
+	ldr	r2, .L661
 	lsl	r1, r0, #0x2
 	add	r1, r1, r0
 	lsl	r1, r1, #0x3
@@ -6747,23 +6902,23 @@ Task_NewGameBirchSpeech_ReturnFromNamingScreenShowTextbox:
 	strh	r1, [r4, #0x16]
 	lsl	r0, r0, #0x10
 	cmp	r0, #0
-	bgt	.L641	@cond_branch
+	bgt	.L660	@cond_branch
 	mov	r0, #0x0
 	mov	r1, #0x1
 	bl	NewGameBirchSpeech_ShowDialogueWindow
-	ldr	r0, .L642+0x4
+	ldr	r0, .L661+0x4
 	str	r0, [r4]
-.L641:
+.L660:
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L643:
+.L662:
 	.align	2, 0
-.L642:
+.L661:
 	.word	gTasks
 	.word	Task_NewGameBirchSpeech_SoItsPlayerName
-.Lfe82:
-	.size	 Task_NewGameBirchSpeech_ReturnFromNamingScreenShowTextbox,.Lfe82-Task_NewGameBirchSpeech_ReturnFromNamingScreenShowTextbox
+.Lfe85:
+	.size	 Task_NewGameBirchSpeech_ReturnFromNamingScreenShowTextbox,.Lfe85-Task_NewGameBirchSpeech_ReturnFromNamingScreenShowTextbox
 
 	.lcomm	sBirchSpeechMainTaskId,1
 .text

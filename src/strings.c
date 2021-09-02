@@ -3908,7 +3908,7 @@ const u8 gText_FORMS_NONE[]                         = _("{STR_VAR_1} has no alte
 
 //Music Expansion
 const u8 gText_Region_Kanto[] = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}Kanto  ");
-const u8 gText_Region_Jotho[] = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}Jotho  ");
+const u8 gText_Region_Jotho[] = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}Johto  ");
 const u8 gText_Region_Hoenn[] = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}Hoenn  ");
 const u8 gText_Region_Sinnoh[] = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}Sinnoh");
 

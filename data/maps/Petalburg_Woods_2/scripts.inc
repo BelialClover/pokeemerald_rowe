@@ -1,5 +1,15 @@
 Petalburg_Woods_2_MapScripts::
+map_script MAP_SCRIPT_ON_LOAD, Petalburg_Woods_2_OnLoad
 	.byte 0
+	
+Petalburg_Woods_2_OnLoad::
+	call_if_set FLAG_RECEIVED_TM03, Petalburg_Woods_2_EventScript_RemoveMegastone
+	end
+	
+Petalburg_Woods_2_EventScript_RemoveMegastone::
+	//applymovement 1, Common_Movement_FacePlayer
+	setobjectxyperm 1, 31,26
+	return
 
 LittleWoodsIndoor_House1_EventScript_PsyduckPokeBall::
 	lockall

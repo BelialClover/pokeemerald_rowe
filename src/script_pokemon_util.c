@@ -7,6 +7,7 @@
 #include "decompress.h"
 #include "event_data.h"
 #include "international_string_util.h"
+#include "level_scaling.h"
 #include "link.h"
 #include "link_rfu.h"
 #include "main.h"
@@ -22,6 +23,7 @@
 #include "sprite.h"
 #include "string_util.h"
 #include "tv.h"
+#include "trade.h"
 #include "constants/items.h"
 #include "constants/tv.h"
 #include "constants/battle_frontier.h"
@@ -68,8 +70,19 @@ u8 ScriptGiveMon(u16 species, u8 level, u16 item, u32 ability, u32 unused2, u8 u
     struct Pokemon mon;
     u8 formId = GetFormIdFromFormSpeciesId(species);
     u16 baseSpecies = GetFormSpeciesId(species, 0);
+	u8 scaledlevel = getWildLevel(0);
+	u16 WonderTradeSpecie = CreateWonderTradePokemon();
+	u16 FirstStage = WonderTradeGetFirstStage(WonderTradeSpecie);
+	u16 Specie = WonderTradeGetEvolvedForm(FirstStage, level);
+	if (level != 1)
+		scaledlevel = level;
+	else
+		Specie = WonderTradeGetEvolvedForm(FirstStage, scaledlevel);
 
-    CreateMon(&mon, baseSpecies, level, 32, 0, 0, OT_ID_PLAYER_ID, 0, formId);
+	if(baseSpecies != SPECIES_MEW)
+		CreateMon(&mon, baseSpecies, scaledlevel, 32, 0, 0, OT_ID_PLAYER_ID, 0, formId);
+	else
+		CreateMon(&mon, Specie, scaledlevel, 32, 0, 0, OT_ID_PLAYER_ID, 0, formId);
     heldItem[0] = item;
     heldItem[1] = item >> 8;
     SetMonData(&mon, MON_DATA_HELD_ITEM, heldItem);

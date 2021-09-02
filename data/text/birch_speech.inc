@@ -121,4 +121,8 @@ gText_Birch_AreYouReady:: @ 82C8C7A
 	.string "I'll be expecting them on\l"
 	.string "Pokecommunity.$"
 
+gText_Birch_ChoseDifficulty::
+	.string "What Difficulty do you want\n"
+	.string "to play with?$"
+
 #endif

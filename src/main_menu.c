@@ -203,6 +203,9 @@ static void NewGameBirchSpeech_ShowDialogueWindow(u8, u8);
 static void NewGameBirchSpeech_ClearWindow(u8);
 static void Task_NewGameBirchSpeech_ThisIsAPokemon(u8);
 static void Task_NewGameBirchSpeech_MainSpeech(u8);
+static void Task_NewGameBirchSpeech_ChoseDifficulty(u8);
+static void Task_NewGameBirchSpeech_YesNoDifficulty(u8);
+static void Task_NewGameBirchSpeech_ProcessDifficultyYesNoMenu(u8);
 static void NewGameBirchSpeech_ShowPokeBallPrinterCallback(struct TextPrinterTemplate *printer, u16 a);
 static void Task_NewGameBirchSpeech_AndYouAre(u8);
 static void Task_NewGameBirchSpeechSub_WaitForLotad(u8);
@@ -1362,10 +1365,50 @@ static void Task_NewGameBirchSpeech_MainSpeech(u8 taskId)
         StringExpandPlaceholders(gStringVar4, gText_Birch_MainSpeech);
         AddTextPrinterForMessage(1);
         gTasks[taskId].func = Task_NewGameBirchSpeech_AndYouAre;
+		//gTasks[taskId].func = Task_NewGameBirchSpeech_ChoseDifficulty;
     }
 }
 
 #define tState data[0]
+
+//static void Task_NewGameBirchSpeech_ChoseDifficulty(u8 taskId)
+//static void Task_NewGameBirchSpeech_YesNoDifficulty(u8 taskId)
+//static void Task_NewGameBirchSpeech_ProcessDifficultyYesNoMenu(u8 taskId)
+
+static void Task_NewGameBirchSpeech_ChoseDifficulty(u8 taskId)
+{
+    NewGameBirchSpeech_ClearWindow(0);
+    StringExpandPlaceholders(gStringVar4, gText_Birch_ChoseDifficulty);
+    AddTextPrinterForMessage(1);
+    gTasks[taskId].func = Task_NewGameBirchSpeech_YesNoDifficulty;
+}
+
+static void Task_NewGameBirchSpeech_YesNoDifficulty(u8 taskId)
+{
+    if (!RunTextPrintersAndIsPrinter0Active())
+    {
+        CreateYesNoMenuParameterized(2, 1, 0xF3, 0xDF, 2, 15);
+        gTasks[taskId].func = Task_NewGameBirchSpeech_ProcessDifficultyYesNoMenu;
+    }
+}
+
+static void Task_NewGameBirchSpeech_ProcessDifficultyYesNoMenu(u8 taskId)
+{
+    switch (Menu_ProcessInputNoWrapClearOnChoose())
+    {
+        case 0:
+            PlaySE(SE_SELECT);
+            gSprites[gTasks[taskId].tPlayerSpriteId].oam.objMode = ST_OAM_OBJ_BLEND;
+            NewGameBirchSpeech_StartFadeOutTarget1InTarget2(taskId, 2);
+            NewGameBirchSpeech_StartFadePlatformIn(taskId, 1);
+            gTasks[taskId].func = Task_NewGameBirchSpeech_AndYouAre;
+            break;
+        case -1:
+        case 1:
+            PlaySE(SE_SELECT);
+            gTasks[taskId].func = Task_NewGameBirchSpeech_BoyOrGirl;
+    }
+}
 
 static void Task_NewGameBirchSpeechSub_InitPokeBall(u8 taskId)
 {

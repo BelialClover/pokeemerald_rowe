@@ -10513,53 +10513,7 @@ u8 TryWeatherFormChange(u8 battler)
 {
     u8 ret = 0;
     bool32 weatherEffect = ((!IsAbilityOnField(13) && !IsAbilityOnField(76)));
-
-    if (gBattleMons[battler].species == 351)
-    {
-        if (gBattleMons[battler].ability != 59 || gBattleMons[battler].hp == 0)
-        {
-            ret = 0;
-        }
-        else if (!weatherEffect && !((gBattleMons[battler].type1 == 0 || gBattleMons[battler].type2 == 0 || gBattleMons[battler].type3 == 0)))
-        {
-            { gBattleMons[battler].type1 = 0; gBattleMons[battler].type2 = 0; gBattleMons[battler].type3 = 9; };
-            ret = 1;
-        }
-        else if (!weatherEffect)
-        {
-            ret = 0;
-        }
-        else if (!(gBattleWeather & (((1 << 0) | (1 << 1) | (1 << 2)) | ((1 << 5) | (1 << 6)) | ((1 << 7) | (1 << 8)))) && !((gBattleMons[battler].type1 == 0 || gBattleMons[battler].type2 == 0 || gBattleMons[battler].type3 == 0)))
-        {
-            { gBattleMons[battler].type1 = 0; gBattleMons[battler].type2 = 0; gBattleMons[battler].type3 = 9; };
-            ret = 1;
-        }
-        else if (gBattleWeather & ((1 << 5) | (1 << 6)) && !((gBattleMons[battler].type1 == 10 || gBattleMons[battler].type2 == 10 || gBattleMons[battler].type3 == 10)))
-        {
-            { gBattleMons[battler].type1 = 10; gBattleMons[battler].type2 = 10; gBattleMons[battler].type3 = 9; };
-            ret = 2;
-        }
-        else if (gBattleWeather & ((1 << 0) | (1 << 1) | (1 << 2)) && !((gBattleMons[battler].type1 == 11 || gBattleMons[battler].type2 == 11 || gBattleMons[battler].type3 == 11)))
-        {
-            { gBattleMons[battler].type1 = 11; gBattleMons[battler].type2 = 11; gBattleMons[battler].type3 = 9; };
-            ret = 3;
-        }
-        else if (gBattleWeather & ((1 << 7) | (1 << 8)) && !((gBattleMons[battler].type1 == 15 || gBattleMons[battler].type2 == 15 || gBattleMons[battler].type3 == 15)))
-        {
-            { gBattleMons[battler].type1 = 15; gBattleMons[battler].type2 = 15; gBattleMons[battler].type3 = 9; };
-            ret = 4;
-        }
-    }
-    else if (gBattleMons[battler].species == 421)
-    {
-        if (gBattleMons[battler].ability != 122 || gBattleMons[battler].hp == 0)
-            ret = 0;
-        else if (gBattleMonForms[battler] == 0 && weatherEffect && gBattleWeather & ((1 << 5) | (1 << 6)))
-            ret = 2;
-        else if (gBattleMonForms[battler] != 0 && (!weatherEffect || !(gBattleWeather & ((1 << 5) | (1 << 6)))))
-            ret = 1;
-    }
-
+# 3431 "src/battle_util.c"
     return ret;
 }
 static const u16 sWeatherFlagsInfo[][3] =
@@ -14711,7 +14665,10 @@ void UndoFormChange(u32 monId, u32 side)
     struct Pokemon *party = (side == 0) ? gPlayerParty : gEnemyParty;
     static const u16 species[][2] =
     {
-        {898 + 231, 681},
+        {898 + 130, 351},
+  {898 + 132, 351},
+  {898 + 131, 351},
+  {898 + 231, 681},
         {898 + 281, 778},
         {898 + 168, 555},
         {774, 898 + 274},

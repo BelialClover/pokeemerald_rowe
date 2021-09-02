@@ -14484,6 +14484,7 @@ extern const u8 gText_Birch_WhatsYourName[];
 extern const u8 gText_Birch_SoItsPlayer[];
 extern const u8 gText_Birch_YourePlayer[];
 extern const u8 gText_Birch_AreYouReady[];
+extern const u8 gText_Birch_ChoseDifficulty[];
 extern const u8 gText_ContinueMenuPlayer[];
 extern const u8 gText_ContinueMenuTime[];
 extern const u8 gText_ContinueMenuPokedex[];
@@ -17421,6 +17422,9 @@ static void NewGameBirchSpeech_ShowDialogueWindow(u8, u8);
 static void NewGameBirchSpeech_ClearWindow(u8);
 static void Task_NewGameBirchSpeech_ThisIsAPokemon(u8);
 static void Task_NewGameBirchSpeech_MainSpeech(u8);
+static void Task_NewGameBirchSpeech_ChoseDifficulty(u8);
+static void Task_NewGameBirchSpeech_YesNoDifficulty(u8);
+static void Task_NewGameBirchSpeech_ProcessDifficultyYesNoMenu(u8);
 static void NewGameBirchSpeech_ShowPokeBallPrinterCallback(struct TextPrinterTemplate *printer, u16 a);
 static void Task_NewGameBirchSpeech_AndYouAre(u8);
 static void Task_NewGameBirchSpeechSub_WaitForLotad(u8);
@@ -17477,7 +17481,7 @@ static const u32 sBirchSpeechShadowGfx[] = INCBIN_U32("graphics/birch_speech/sha
 static const u32 sBirchSpeechBgMap[] = INCBIN_U32("graphics/birch_speech/map.bin.lz");
 static const u16 sBirchSpeechBgGradientPal[] = INCBIN_U16("graphics/birch_speech/bg2.gbapal");
 static const u16 sBirchSpeechPlatformBlackPal[] = {((0) | ((0) << 5) | ((0) << 10)), ((0) | ((0) << 5) | ((0) << 10)), ((0) | ((0) << 5) | ((0) << 10)), ((0) | ((0) << 5) | ((0) << 10)), ((0) | ((0) << 5) | ((0) << 10)), ((0) | ((0) << 5) | ((0) << 10)), ((0) | ((0) << 5) | ((0) << 10)), ((0) | ((0) << 5) | ((0) << 10))};
-# 291 "src/main_menu.c"
+# 294 "src/main_menu.c"
 static const struct WindowTemplate sWindowTemplates_MainMenu[] =
 {
 
@@ -17803,7 +17807,7 @@ static u32 InitMainMenu(bool8 returningFromOptionsMenu)
 
     return 0;
 }
-# 626 "src/main_menu.c"
+# 629 "src/main_menu.c"
 static void Task_MainMenuCheckSaveFile(u8 taskId)
 {
     s16* data = gTasks[taskId].data;
@@ -18339,7 +18343,7 @@ static void Task_DisplayMainMenuInvalidActionError(u8 taskId)
             }
     }
 }
-# 1171 "src/main_menu.c"
+# 1174 "src/main_menu.c"
 static void HighlightSelectedMainMenuItem(u8 menuType, u8 selectedMenuItem, s16 isScrolled)
 {
     SetGpuReg(0x40, (((((2 - 1) * 8) + 1) << 8) | ((2 + 26 + 1) * 8 - 1)));
@@ -18424,7 +18428,7 @@ static void HighlightSelectedMainMenuItem(u8 menuType, u8 selectedMenuItem, s16 
             break;
     }
 }
-# 1266 "src/main_menu.c"
+# 1269 "src/main_menu.c"
 static void Task_NewGameBirchSpeech_Init(u8 taskId)
 {
     SetGpuReg(0x0, 0);
@@ -18524,10 +18528,50 @@ static void Task_NewGameBirchSpeech_MainSpeech(u8 taskId)
         StringExpandPlaceholders(gStringVar4, gText_Birch_MainSpeech);
         AddTextPrinterForMessage(1);
         gTasks[taskId].func = Task_NewGameBirchSpeech_AndYouAre;
+
     }
 }
 
 
+
+
+
+
+
+static void Task_NewGameBirchSpeech_ChoseDifficulty(u8 taskId)
+{
+    NewGameBirchSpeech_ClearWindow(0);
+    StringExpandPlaceholders(gStringVar4, gText_Birch_ChoseDifficulty);
+    AddTextPrinterForMessage(1);
+    gTasks[taskId].func = Task_NewGameBirchSpeech_YesNoDifficulty;
+}
+
+static void Task_NewGameBirchSpeech_YesNoDifficulty(u8 taskId)
+{
+    if (!RunTextPrintersAndIsPrinter0Active())
+    {
+        CreateYesNoMenuParameterized(2, 1, 0xF3, 0xDF, 2, 15);
+        gTasks[taskId].func = Task_NewGameBirchSpeech_ProcessDifficultyYesNoMenu;
+    }
+}
+
+static void Task_NewGameBirchSpeech_ProcessDifficultyYesNoMenu(u8 taskId)
+{
+    switch (Menu_ProcessInputNoWrapClearOnChoose())
+    {
+        case 0:
+            PlaySE(5);
+            gSprites[gTasks[taskId].data[2]].oam.objMode = 1;
+            NewGameBirchSpeech_StartFadeOutTarget1InTarget2(taskId, 2);
+            NewGameBirchSpeech_StartFadePlatformIn(taskId, 1);
+            gTasks[taskId].func = Task_NewGameBirchSpeech_AndYouAre;
+            break;
+        case -1:
+        case 1:
+            PlaySE(5);
+            gTasks[taskId].func = Task_NewGameBirchSpeech_BoyOrGirl;
+    }
+}
 
 static void Task_NewGameBirchSpeechSub_InitPokeBall(u8 taskId)
 {
@@ -19076,7 +19120,7 @@ static void AddBirchSpeechObjects(u8 taskId)
     gSprites[maySpriteId].oam.priority = 0;
     gTasks[taskId].data[11] = maySpriteId;
 }
-# 1932 "src/main_menu.c"
+# 1975 "src/main_menu.c"
 static void Task_NewGameBirchSpeech_FadeOutTarget1InTarget2(u8 taskId)
 {
     int alphaCoeff2;
@@ -19154,7 +19198,7 @@ static void NewGameBirchSpeech_StartFadeInTarget1OutTarget2(u8 taskId, u8 delay)
     gTasks[taskId2].data[3] = delay;
     gTasks[taskId2].data[4] = delay;
 }
-# 2024 "src/main_menu.c"
+# 2067 "src/main_menu.c"
 static void Task_NewGameBirchSpeech_FadePlatformIn(u8 taskId)
 {
     if (gTasks[taskId].data[2])

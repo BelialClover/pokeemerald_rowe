@@ -289,7 +289,7 @@ LavaridgeTown_EventScript_Give_Charmander_Mega_Y::
 	bufferspeciesname 1, SPECIES_CHARMANDER
 	playfanfare MUS_OBTAIN_ITEM
 	message LavaridgeTown_Text_ReceivedMonFromOldMan
-	givemon SPECIES_CHARMANDER, 30, ITEM_CHARIZARDITE_Y
+	givemon SPECIES_CHARMANDER, 1, ITEM_CHARIZARDITE_Y
 	setflag FLAG_UNUSED_0x27A
 	waitfanfare
 	msgbox LavaridgeTown_Text_ComeAgain_Starter, MSGBOX_DEFAULT
@@ -301,7 +301,7 @@ LavaridgeTown_EventScript_Give_Charmander_Mega_X::
 	bufferspeciesname 1, SPECIES_CHARMANDER
 	playfanfare MUS_OBTAIN_ITEM
 	message LavaridgeTown_Text_ReceivedMonFromOldMan
-	givemon SPECIES_CHARMANDER, 30, ITEM_CHARIZARDITE_X
+	givemon SPECIES_CHARMANDER, 1, ITEM_CHARIZARDITE_X
 	setflag FLAG_UNUSED_0x27B
 	waitfanfare
 	msgbox LavaridgeTown_Text_ComeAgain_Starter, MSGBOX_DEFAULT
@@ -313,7 +313,7 @@ LavaridgeTown_EventScript_Give_Cyndaquil::
 	bufferspeciesname 1, SPECIES_CYNDAQUIL
 	playfanfare MUS_OBTAIN_ITEM
 	message LavaridgeTown_Text_ReceivedMonFromOldMan
-	givemon SPECIES_CYNDAQUIL, 10, ITEM_NONE
+	givemon SPECIES_CYNDAQUIL, 1, ITEM_NONE
 	waitfanfare
 	msgbox LavaridgeTown_Text_ComeAgain_Starter, MSGBOX_DEFAULT
 	release
@@ -324,7 +324,7 @@ LavaridgeTown_EventScript_Give_Torchic::
 	bufferspeciesname 1, SPECIES_TORCHIC
 	playfanfare MUS_OBTAIN_ITEM
 	message LavaridgeTown_Text_ReceivedMonFromOldMan
-	givemon SPECIES_TORCHIC, 10, ITEM_NONE
+	givemon SPECIES_TORCHIC, 1, ITEM_NONE
 	waitfanfare
 	msgbox LavaridgeTown_Text_ComeAgain_Starter, MSGBOX_DEFAULT
 	release
@@ -336,7 +336,7 @@ LavaridgeTown_EventScript_Give_Torchic_Mega::
 	bufferspeciesname 1, SPECIES_TORCHIC
 	playfanfare MUS_OBTAIN_ITEM
 	message LavaridgeTown_Text_ReceivedMonFromOldMan
-	givemon SPECIES_TORCHIC, 30, ITEM_BLAZIKENITE
+	givemon SPECIES_TORCHIC, 1, ITEM_BLAZIKENITE
 	waitfanfare
 	setflag FLAG_UNUSED_0x26B
 	msgbox LavaridgeTown_Text_ComeAgain_Starter, MSGBOX_DEFAULT
@@ -348,7 +348,7 @@ LavaridgeTown_EventScript_Give_Chimchar::
 	bufferspeciesname 1, SPECIES_CHIMCHAR
 	playfanfare MUS_OBTAIN_ITEM
 	message LavaridgeTown_Text_ReceivedMonFromOldMan
-	givemon SPECIES_CHIMCHAR, 10, ITEM_NONE
+	givemon SPECIES_CHIMCHAR, 1, ITEM_NONE
 	waitfanfare
 	msgbox LavaridgeTown_Text_ComeAgain_Starter, MSGBOX_DEFAULT
 	release
@@ -359,7 +359,7 @@ LavaridgeTown_EventScript_Give_Tepig::
 	bufferspeciesname 1, SPECIES_TEPIG
 	playfanfare MUS_OBTAIN_ITEM
 	message LavaridgeTown_Text_ReceivedMonFromOldMan
-	givemon SPECIES_TEPIG, 10, ITEM_NONE
+	givemon SPECIES_TEPIG, 1, ITEM_NONE
 	waitfanfare
 	msgbox LavaridgeTown_Text_ComeAgain_Starter, MSGBOX_DEFAULT
 	release
@@ -370,7 +370,7 @@ LavaridgeTown_EventScript_Give_Fennekin::
 	bufferspeciesname 1, SPECIES_FENNEKIN
 	playfanfare MUS_OBTAIN_ITEM
 	message LavaridgeTown_Text_ReceivedMonFromOldMan
-	givemon SPECIES_FENNEKIN, 10, ITEM_NONE
+	givemon SPECIES_FENNEKIN, 1, ITEM_NONE
 	waitfanfare
 	msgbox LavaridgeTown_Text_ComeAgain_Starter, MSGBOX_DEFAULT
 	release
@@ -381,7 +381,7 @@ LavaridgeTown_EventScript_Give_Litten::
 	bufferspeciesname 1, SPECIES_LITTEN
 	playfanfare MUS_OBTAIN_ITEM
 	message LavaridgeTown_Text_ReceivedMonFromOldMan
-	givemon SPECIES_LITTEN, 10, ITEM_NONE
+	givemon SPECIES_LITTEN, 1, ITEM_NONE
 	waitfanfare
 	msgbox LavaridgeTown_Text_ComeAgain_Starter, MSGBOX_DEFAULT
 	release
@@ -392,7 +392,7 @@ LavaridgeTown_EventScript_Give_Scorbunny::
 	bufferspeciesname 1, SPECIES_SCORBUNNY
 	playfanfare MUS_OBTAIN_ITEM
 	message LavaridgeTown_Text_ReceivedMonFromOldMan
-	givemon SPECIES_SCORBUNNY, 10, ITEM_NONE
+	givemon SPECIES_SCORBUNNY, 1, ITEM_NONE
 	waitfanfare
 	msgbox LavaridgeTown_Text_ComeAgain_Starter, MSGBOX_DEFAULT
 	release

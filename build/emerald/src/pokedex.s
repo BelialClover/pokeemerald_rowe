@@ -159215,7 +159215,11 @@ gMonFootprintTable:
 	.word	gMonFootprint_Keldeo
 	.word	gMonFootprint_Meloetta
 	.word	gMonFootprint_Genesect
-	.space	2228
+	.space	1512
+	.word	gMonFootprint_Castform
+	.word	gMonFootprint_Castform
+	.word	gMonFootprint_Castform
+	.space	704
 	.word	gMonFootprint_Bulbasaur
 	.size	 gMonFootprintTable,4832
 	.type	 sLetterSearchRanges,object
