@@ -12,7 +12,7 @@ sMrStoneTextScripts:
 	.short	0x158
 	.short	0xffff
 	.word	MatchCall_Text_MrStone3
-	.short	0xbd
+	.short	0x33
 	.short	0xffff
 	.word	MatchCall_Text_MrStone4
 	.short	0x110
@@ -30,7 +30,7 @@ sMrStoneTextScripts:
 	.short	0x6f
 	.short	0xffff
 	.word	MatchCall_Text_MrStone9
-	.short	0x70
+	.short	0x33
 	.short	0xffff
 	.word	MatchCall_Text_MrStone10
 	.short	0x4f7
@@ -56,7 +56,7 @@ sMrStoneMatchCallHeader:
 	.type	 sNormanTextScripts,object
 sNormanTextScripts:
 	.word	MatchCall_Text_Norman1
-	.short	0x132
+	.short	0x33
 	.short	0xffff
 	.word	MatchCall_Text_Norman2
 	.short	0x4f1
@@ -92,7 +92,7 @@ sNormanTextScripts:
 sNormanMatchCallHeader:
 	.byte	0x5
 	.byte	0x7
-	.short	0x132
+	.short	0x33
 	.short	0x45
 	.space	2
 	.word	gText_NormanMatchCallDesc
@@ -104,7 +104,7 @@ sNormanMatchCallHeader:
 sProfBirchMatchCallHeader:
 	.byte	0x3
 	.byte	0x0
-	.short	0x119
+	.short	0x33
 	.word	gText_ProfBirchMatchCallDesc
 	.word	gText_ProfBirchMatchCallName
 	.align	2, 0
@@ -146,13 +146,13 @@ sStevenTextScripts:
 	.short	0xd4
 	.short	0xffff
 	.word	MatchCall_Text_Steven4
-	.short	0x70
+	.short	0x33
 	.short	0xffff
 	.word	MatchCall_Text_Steven5
 	.short	0x4f6
 	.short	0xffff
 	.word	MatchCall_Text_Steven6
-	.short	0x81
+	.short	0x33
 	.short	0xffff
 	.word	MatchCall_Text_Steven7
 	.short	0x864
@@ -181,7 +181,7 @@ sMayTextScripts:
 	.short	0x4f1
 	.short	0xffff
 	.word	MatchCall_Text_May3
-	.short	0x95
+	.short	0x33
 	.short	0xffff
 	.word	MatchCall_Text_May4
 	.short	0x324
@@ -208,10 +208,10 @@ sMayTextScripts:
 	.short	0x61
 	.short	0xffff
 	.word	MatchCall_Text_May12
-	.short	0x70
+	.short	0x33
 	.short	0xffff
 	.word	MatchCall_Text_May13
-	.short	0x81
+	.short	0x33
 	.short	0xffff
 	.word	MatchCall_Text_May14
 	.short	0x4f7
@@ -229,7 +229,7 @@ sMayTextScripts:
 sMayMatchCallHeader:
 	.byte	0x4
 	.byte	0x0
-	.short	0xfd
+	.short	0x33
 	.word	gText_MayBrendanMatchCallDesc
 	.word	gText_ExpandedPlaceholder_May
 	.word	sMayTextScripts
@@ -243,7 +243,7 @@ sBrendanTextScripts:
 	.short	0x4f1
 	.short	0xffff
 	.word	MatchCall_Text_Brendan3
-	.short	0x95
+	.short	0x33
 	.short	0xffff
 	.word	MatchCall_Text_Brendan4
 	.short	0x324
@@ -270,10 +270,10 @@ sBrendanTextScripts:
 	.short	0x61
 	.short	0xffff
 	.word	MatchCall_Text_Brendan12
-	.short	0x70
+	.short	0x33
 	.short	0xffff
 	.word	MatchCall_Text_Brendan13
-	.short	0x81
+	.short	0x33
 	.short	0xffff
 	.word	MatchCall_Text_Brendan14
 	.short	0x4f7
@@ -291,7 +291,7 @@ sBrendanTextScripts:
 sBrendanMatchCallHeader:
 	.byte	0x4
 	.byte	0x1
-	.short	0xfd
+	.short	0x33
 	.word	gText_MayBrendanMatchCallDesc
 	.word	gText_ExpandedPlaceholder_Brendan
 	.word	sBrendanTextScripts
@@ -314,7 +314,7 @@ sWallyTextScripts:
 	.short	0x6f
 	.short	0xffff
 	.word	MatchCall_Text_Wally6
-	.short	0x81
+	.short	0x33
 	.short	0xffff
 	.word	MatchCall_Text_Wally7
 	.short	0x7e
@@ -359,7 +359,7 @@ sScottTextScripts:
 	.short	0xffff
 	.short	0xffff
 	.word	MatchCall_Text_Scott2
-	.short	0x8b
+	.short	0x33
 	.short	0xffff
 	.word	MatchCall_Text_Scott3
 	.short	0x97
@@ -368,7 +368,7 @@ sScottTextScripts:
 	.short	0xd4
 	.short	0xffff
 	.word	MatchCall_Text_Scott5
-	.short	0x70
+	.short	0x33
 	.short	0xffff
 	.word	MatchCall_Text_Scott6
 	.short	0x4f7
@@ -386,7 +386,7 @@ sScottTextScripts:
 sScottMatchCallHeader:
 	.byte	0x0
 	.byte	0xd5
-	.short	0xd7
+	.short	0x33
 	.word	gText_ScottMatchCallDesc
 	.word	gText_ScottMatchCallName
 	.word	sScottTextScripts

@@ -15556,6 +15556,10 @@ extern const u32 gItemIconPalette_PinkMint[];
 extern const u32 gItemIconPalette_GreenMint[];
 extern const u32 gItemIconPalette_LightBlueMint[];
 extern const u32 gItemIconPalette_YellowMint[];
+
+
+extern const u32 gItemIcon_SweetApple[];
+extern const u32 gItemIcon_SourApple[];
 # 24 "src/battle_main.c" 2
 # 1 "gflib/gpu_regs.h" 1
 # 9 "gflib/gpu_regs.h"
@@ -17702,13 +17706,16 @@ extern struct SoundInfo gSoundInfo;
 
 
 u8 IsHardMode(void);
+u8 GetGameDifficultyLevel(void);;
 u8 GetNumBadges(void);
 u8 getLevelBoost(void);
 u8 GetPlayerUsableMons(void);
-u8 getTrainerLevel(u8 Level);
-u8 getWildLevel(u8 Ability);
+u8 getTrainerMinLevel(void);
 u8 getTrainerPokemonNum(void);
+u8 getGymLeaderMinLevel(void);
 u8 getLeaderPokemonNum(void);
+u8 getWildPokemonLevel(void);
+u8 getMinWildPokemonLevel(void);
 u8 getDoubleTrainerPokemonNum(void);
 u16 GetWildPokemon(u16 basespecies, u8 level, u16 heldItem);
 u16 GetTrainerPokemon(u16 basespecies, u8 level);
@@ -17718,6 +17725,7 @@ u16 GetFirstEvolution(u16 species);
 u8 GetEvsfromPokemon(u8 evs);
 bool8 IsMoveUsable(u8 movepower);
 u16 GetMapRandomPokemon(u16 TrainerClass, u16 species);
+u16 GetScaledItem(u16 itemId);
 # 34 "src/battle_main.c" 2
 # 1 "include/palette.h" 1
 # 17 "include/palette.h"
@@ -21318,6 +21326,23 @@ extern const u8 gText_Region_Kanto[];
 extern const u8 gText_Region_Jotho[];
 extern const u8 gText_Region_Hoenn[];
 extern const u8 gText_Region_Sinnoh[];
+
+extern const u8 gText_Difficulty_Level[];
+extern const u8 gText_Game_Modes[];
+extern const u8 gText_Start_Game[];
+extern const u8 gText_Difficulty_Easy[];
+extern const u8 gText_Difficulty_Normal[];
+extern const u8 gText_Difficulty_Hard[];
+extern const u8 gText_Game_Modes_Random[];
+extern const u8 gText_Game_Modes_Double[];
+extern const u8 gText_Game_Modes_Inverse[];
+extern const u8 gText_Game_Modes_Perfect_Iv[];
+extern const u8 gText_Game_Modes_No_Evs[];
+extern const u8 gText_Game_Modes_Default[];
+extern const u8 gText_Game_Modes_Save[];
+extern const u8 gText_Game_Modes_Enable[];
+extern const u8 gText_Game_Modes_Disable[];
+extern const u8 gText_Game_Modes_Info[];
 # 48 "src/battle_main.c" 2
 # 1 "include/task.h" 1
 # 49 "src/battle_main.c" 2
@@ -24028,13 +24053,12 @@ static u8 CreateNPCTrainerParty(struct Pokemon *party, u16 trainerNum, bool8 fir
     s32 i, j;
     u8 monsCount;
  u8 numBadges = GetNumBadges();
- u8 rand = Random() % (numBadges + 3);
  u8 TrainerMonsCount = getTrainerPokemonNum();
  u8 DoubleTrainerMonsCount = getDoubleTrainerPokemonNum();
  u8 LeaderMonsCount = getLeaderPokemonNum();
- u8 TrainerMinLevel = getTrainerLevel(0);
- u8 TrainerMaxLevel = getTrainerLevel(2);
- u8 LeaderMinLevel = getTrainerLevel(5);
+ u8 TrainerMinLevel = getTrainerMinLevel();
+ u8 TrainerMaxLevel = getGymLeaderMinLevel()-2;
+ u8 LeaderMinLevel = getGymLeaderMinLevel();
  u8 TrainerLevel[] = {5,5,5,5,5,5};
  u8 levelboost = getLevelBoost();
  u8 PokemonEvs[] = {0,0,0,0,0,0};
@@ -24044,7 +24068,7 @@ static u8 CreateNPCTrainerParty(struct Pokemon *party, u16 trainerNum, bool8 fir
  u8 isDoubleBattle = gTrainers[trainerNum].doubleBattle;
  u8 PartySize = GetPlayerUsableMons();
 
- if(PartySize >= 2 && gTrainers[trainerNum].partySize >= 2 && FlagGet(0x2A2))
+ if(PartySize >= 2 && gTrainers[trainerNum].partySize >= 2 && FlagGet(0x2A))
   isDoubleBattle = 1;
 
  if(IsHardMode() == 1 && PartySize > LeaderMonsCount+1)
@@ -26685,7 +26709,7 @@ u32 GetBattlerTotalSpeedStat(u8 battlerId)
 
     speed *= gStatStageRatios[gBattleMons[battlerId].statStages[3]][0];
     speed /= gStatStageRatios[gBattleMons[battlerId].statStages[3]][1];
-# 4489 "src/battle_main.c"
+# 4488 "src/battle_main.c"
     if (GetBattlerHoldEffect(battlerId, 0) == 24 || GetBattlerHoldEffect(battlerId, 0) == 99)
         speed /= 2;
     else if (holdEffect == 89)

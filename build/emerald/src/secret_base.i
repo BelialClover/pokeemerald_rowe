@@ -10811,6 +10811,23 @@ extern const u8 gText_Region_Kanto[];
 extern const u8 gText_Region_Jotho[];
 extern const u8 gText_Region_Hoenn[];
 extern const u8 gText_Region_Sinnoh[];
+
+extern const u8 gText_Difficulty_Level[];
+extern const u8 gText_Game_Modes[];
+extern const u8 gText_Start_Game[];
+extern const u8 gText_Difficulty_Easy[];
+extern const u8 gText_Difficulty_Normal[];
+extern const u8 gText_Difficulty_Hard[];
+extern const u8 gText_Game_Modes_Random[];
+extern const u8 gText_Game_Modes_Double[];
+extern const u8 gText_Game_Modes_Inverse[];
+extern const u8 gText_Game_Modes_Perfect_Iv[];
+extern const u8 gText_Game_Modes_No_Evs[];
+extern const u8 gText_Game_Modes_Default[];
+extern const u8 gText_Game_Modes_Save[];
+extern const u8 gText_Game_Modes_Enable[];
+extern const u8 gText_Game_Modes_Disable[];
+extern const u8 gText_Game_Modes_Info[];
 # 34 "src/secret_base.c" 2
 # 1 "include/task.h" 1
 # 35 "src/secret_base.c" 2
@@ -11454,7 +11471,7 @@ void InitSecretBaseDecorationSprites(void)
             if (MetatileBehavior_HoldsSmallDecoration(metatileBehavior) == 1
              || MetatileBehavior_HoldsLargeDecoration(metatileBehavior) == 1)
             {
-                gSpecialVar_Result = 0x4010 + (gMapHeader.events->objectEvents[objectEventId].graphicsId - ((243 + 1) + 0x0));
+                gSpecialVar_Result = 0x4010 + (gMapHeader.events->objectEvents[objectEventId].graphicsId - ((244 + 1) + 0x0));
                 VarSet(gSpecialVar_Result, gDecorations[decorations[i]].tiles[0]);
                 gSpecialVar_Result = gMapHeader.events->objectEvents[objectEventId].localId;
                 FlagClear(0xAE + gSpecialVar_0x8004);

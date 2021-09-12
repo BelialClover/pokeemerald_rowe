@@ -12444,6 +12444,10 @@ extern const u32 gItemIconPalette_PinkMint[];
 extern const u32 gItemIconPalette_GreenMint[];
 extern const u32 gItemIconPalette_LightBlueMint[];
 extern const u32 gItemIconPalette_YellowMint[];
+
+
+extern const u32 gItemIcon_SweetApple[];
+extern const u32 gItemIcon_SourApple[];
 # 4 "src/item_icon.c" 2
 # 1 "include/item_icon.h" 1
 
@@ -12868,8 +12872,8 @@ const u32 *const gItemIconTable[][2] =
 
  [690] = {gItemIcon_AbilityCapsule, gItemIconPalette_AbilityCapsule},
 
-    [692] = {gItemIcon_SecretKey, gItemIconPalette_SecretKey},
-    [693] = {gItemIcon_BikeVoucher, gItemIconPalette_BikeVoucher},
+
+
     [694] = {gItemIcon_GoldTeeth, gItemIconPalette_GoldTeeth},
     [695] = {gItemIcon_OldAmber, gItemIconPalette_OldAmber},
     [696] = {gItemIcon_CardKey, gItemIconPalette_CardKey},
@@ -13205,6 +13209,9 @@ const u32 *const gItemIconTable[][2] =
     [770] = {gItemIcon_ParkBall, gItemIconPalette_ParkBall},
     [771] = {gItemIcon_DreamBall, gItemIconPalette_DreamBall},
     [772] = {gItemIcon_BeastBall, gItemIconPalette_BeastBall},
+
+ [693] = {gItemIcon_SourApple, gItemIconPalette_BabiriBerry},
+ [692] = {gItemIcon_SweetApple, gItemIconPalette_RedApricorn},
 
 };
 # 15 "src/item_icon.c" 2

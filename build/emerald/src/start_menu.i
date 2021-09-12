@@ -3229,6 +3229,88 @@ u32 GetBgType(u8 bg);
 bool32 IsInvalidBg32(u8 bg);
 bool32 IsTileMapOutsideWram(u8 bg);
 # 6 "src/start_menu.c" 2
+# 1 "include/bike.h" 1
+
+
+
+
+
+struct BikeHistoryInputInfo
+{
+    u32 dirHistoryMatch;
+    u32 abStartSelectHistoryMatch;
+    u32 dirHistoryMask;
+    u32 abStartSelectHistoryMask;
+    const u8 *dirTimerHistoryList;
+    const u8 *abStartSelectHistoryList;
+    u32 direction;
+};
+
+
+enum
+{
+    SPEED_STANDING,
+    SPEED_NORMAL,
+    SPEED_FAST,
+    SPEED_FASTER,
+    SPEED_FASTEST,
+};
+
+
+enum
+{
+    MACH_TRANS_FACE_DIRECTION,
+    MACH_TRANS_TURN_DIRECTION,
+    MACH_TRANS_KEEP_MOVING,
+    MACH_TRANS_START_MOVING
+};
+
+
+enum
+{
+    ACRO_STATE_NORMAL,
+    ACRO_STATE_TURNING,
+    ACRO_STATE_WHEELIE_STANDING,
+    ACRO_STATE_BUNNY_HOP,
+    ACRO_STATE_WHEELIE_MOVING,
+    ACRO_STATE_SIDE_JUMP,
+    ACRO_STATE_TURN_JUMP,
+};
+
+
+enum
+{
+    ACRO_TRANS_FACE_DIRECTION,
+    ACRO_TRANS_TURN_DIRECTION,
+    ACRO_TRANS_MOVING,
+    ACRO_TRANS_NORMAL_TO_WHEELIE,
+    ACRO_TRANS_WHEELIE_TO_NORMAL,
+    ACRO_TRANS_WHEELIE_IDLE,
+    ACRO_TRANS_WHEELIE_HOPPING_STANDING,
+    ACRO_TRANS_WHEELIE_HOPPING_MOVING,
+    ACRO_TRANS_SIDE_JUMP,
+    ACRO_TRANS_TURN_JUMP,
+    ACRO_TRANS_WHEELIE_MOVING,
+    ACRO_TRANS_WHEELIE_RISING_MOVING,
+    ACRO_TRANS_WHEELIE_LOWERING_MOVING,
+};
+
+
+extern bool8 gUnusedBikeCameraAheadPanback;
+
+
+void MovePlayerOnBike(u8 direction, u16 newKeys, u16 heldKeys);
+void Bike_TryAcroBikeHistoryUpdate(u16 newKeys, u16 heldKeys);
+bool8 RS_IsRunningDisallowed(u8 tile);
+bool8 IsBikingDisallowedByPlayer(void);
+bool8 player_should_look_direction_be_enforced_upon_movement(void);
+void GetOnOffBike(u8 transitionFlags);
+void BikeClearState(int newDirHistory, int newAbStartHistory);
+void Bike_UpdateBikeCounterSpeed(u8 counter);
+s16 GetPlayerSpeed(void);
+void Bike_HandleBumpySlopeJump(void);
+bool32 IsRunningDisallowed(u8 metatile);
+# 7 "src/start_menu.c" 2
 # 1 "include/day_night.h" 1
 
 
@@ -3255,7 +3337,7 @@ void ProcessImmediateTimeEvents(void);
 void DoLoadSpritePaletteDayNight(const u16 *src, u16 paletteOffset);
 const u8 *GetDayOfWeekString(u8 dayOfWeek);
 const u8 GetTimeOfDayString(void);
-# 7 "src/start_menu.c" 2
+# 8 "src/start_menu.c" 2
 # 1 "include/event_data.h" 1
 
 
@@ -3310,7 +3392,7 @@ extern u16 gSpecialVar_Unused_0x8014;
 
 extern const u16 sLevelCapFlags[9];
 extern const u16 sLevelCaps[9];
-# 8 "src/start_menu.c" 2
+# 9 "src/start_menu.c" 2
 # 1 "include/event_object_movement.h" 1
 
 
@@ -3710,7 +3792,7 @@ bool32 IsObjectEventSpriteInvisible(u8 var);
 void SetObjectEventSpriteGraphics(u8 var1, u8 graphicsId);
 void SetObjectEventSpriteAnim(u8 var1, u8 var2);
 bool32 IsObjectEventSpriteAnimating(u8 var);
-# 9 "src/start_menu.c" 2
+# 10 "src/start_menu.c" 2
 # 1 "include/event_object_lock.h" 1
 
 
@@ -3723,7 +3805,7 @@ void sub_8098630(void);
 bool8 sub_8098734(void);
 void ScriptUnfreezeObjectEvents(void);
 void UnionRoom_UnlockPlayerAndChatPartner(void);
-# 10 "src/start_menu.c" 2
+# 11 "src/start_menu.c" 2
 # 1 "include/event_scripts.h" 1
 
 
@@ -4344,7 +4426,7 @@ extern const u8 EventScript_TradeCenter_Chair1[];
 extern const u8 EventScript_TradeCenter_Chair0[];
 extern const u8 EventScript_ConfirmLeaveTradeRoom[];
 extern const u8 EventScript_TerminateLink[];
-# 11 "src/start_menu.c" 2
+# 12 "src/start_menu.c" 2
 # 1 "include/fieldmap.h" 1
 # 12 "include/fieldmap.h"
 # 1 "include/main.h" 1
@@ -4460,7 +4542,7 @@ void MapGridSetMetatileImpassabilityAt(int x, int y, bool32 impassable);
 
 
 void FieldInitRegionMap(MainCallback callback);
-# 12 "src/start_menu.c" 2
+# 13 "src/start_menu.c" 2
 # 1 "include/field_effect.h" 1
 
 
@@ -4514,7 +4596,7 @@ void StartEscapeRopeFieldEffect(void);
 
 void FieldEffectFreeGraphicsResources(struct Sprite *sprite);
 void FieldEff_CaveDust(void);
-# 13 "src/start_menu.c" 2
+# 14 "src/start_menu.c" 2
 # 1 "include/field_player_avatar.h" 1
 
 
@@ -4582,7 +4664,7 @@ bool32 sub_808D1E8(void);
 void SetPlayerInvisibility(bool8 invisible);
 u8 player_get_pos_including_state_based_drift(s16 *x, s16 *y);
 void StartFishing(u8 rod);
-# 14 "src/start_menu.c" 2
+# 15 "src/start_menu.c" 2
 # 1 "include/field_specials.h" 1
 
 
@@ -4617,7 +4699,7 @@ bool8 UsedPokemonCenterWarp(void);
 void ResetFanClub(void);
 bool8 ShouldShowBoxWasFullMessage(void);
 void SetPCBoxToSendMon(u8 boxId);
-# 15 "src/start_menu.c" 2
+# 16 "src/start_menu.c" 2
 # 1 "include/field_weather.h" 1
 
 
@@ -4833,7 +4915,7 @@ void SetWeather(u32 weather);
 void DoCurrentWeather(void);
 void UpdateWeatherPerDay(u16 increment);
 void ResumePausedWeather(void);
-# 16 "src/start_menu.c" 2
+# 17 "src/start_menu.c" 2
 # 1 "include/field_screen_effect.h" 1
 
 
@@ -4879,14 +4961,14 @@ void FadeOutOrbEffect(void);
 void sub_80B05B4(void);
 void WriteFlashScanlineEffectBuffer(u8 flashLevel);
 bool8 IsPlayerStandingStill(void);
-# 17 "src/start_menu.c" 2
+# 18 "src/start_menu.c" 2
 # 1 "include/frontier_pass.h" 1
 
 
 
 void ShowFrontierPass(void (*callback)(void));
 void CB2_ReshowFrontierPass(void);
-# 18 "src/start_menu.c" 2
+# 19 "src/start_menu.c" 2
 # 1 "include/frontier_util.h" 1
 
 
@@ -4916,7 +4998,7 @@ u8 GetFrontierBrainMonEvs(u8 monId, u8 evStatId);
 s32 GetFronterBrainSymbol(void);
 
 extern const u16 gFrontierBannedSpecies[];
-# 19 "src/start_menu.c" 2
+# 20 "src/start_menu.c" 2
 # 1 "gflib/gpu_regs.h" 1
 # 9 "gflib/gpu_regs.h"
 void InitGpuRegManager(void);
@@ -4928,7 +5010,7 @@ void SetGpuRegBits(u8 regOffset, u16 mask);
 void ClearGpuRegBits(u8 regOffset, u16 mask);
 void EnableInterrupts(u16 mask);
 void DisableInterrupts(u16 mask);
-# 20 "src/start_menu.c" 2
+# 21 "src/start_menu.c" 2
 # 1 "include/international_string_util.h" 1
 
 
@@ -5257,7 +5339,7 @@ void sub_81DB554(u8 *, u8);
 void sub_81DB5AC(u8 *);
 int sub_81DB604(u8 *);
 void sub_81DB620(int windowId, int columnStart, int rowStart, int numFillTiles, int numRows);
-# 21 "src/start_menu.c" 2
+# 22 "src/start_menu.c" 2
 # 1 "include/item_menu.h" 1
 
 
@@ -5506,7 +5588,7 @@ void UpdatePocketItemList(u8 pocketId);
 void DisplayItemMessage(u8 taskId, u8 fontId, const u8 *str, void ( *callback)(u8 taskId));
 void DisplayItemMessageOnField(u8 taskId, const u8 *src, TaskFunc callback);
 void SortItemsInBag(u8 pocket, u8 type);
-# 22 "src/start_menu.c" 2
+# 23 "src/start_menu.c" 2
 # 1 "include/link.h" 1
 # 106 "include/link.h"
 struct LinkStatus
@@ -5759,7 +5841,7 @@ bool8 DoesLinkPlayerCountMatchSaved(void);
 void SetCloseLinkCallbackAndType(u16 type);
 bool32 IsSendingKeysToLink(void);
 u32 GetLinkRecvQueueLength(void);
-# 23 "src/start_menu.c" 2
+# 24 "src/start_menu.c" 2
 # 1 "include/load_save.h" 1
 
 
@@ -5793,11 +5875,11 @@ void LoadPlayerBag(void);
 void SavePlayerBag(void);
 void ApplyNewEncryptionKeyToHword(u16 *hWord, u32 newKey);
 void ApplyNewEncryptionKeyToWord(u32 *word, u32 newKey);
-# 24 "src/start_menu.c" 2
-# 1 "include/main.h" 1
 # 25 "src/start_menu.c" 2
-# 1 "include/menu.h" 1
+# 1 "include/main.h" 1
 # 26 "src/start_menu.c" 2
+# 1 "include/menu.h" 1
+# 27 "src/start_menu.c" 2
 # 1 "include/new_game.h" 1
 
 
@@ -5813,13 +5895,13 @@ void CopyTrainerId(u8 *dst, u8 *src);
 void NewGameInitData(void);
 void ResetMenuAndMonGlobals(void);
 void Sav2_ClearSetDefault(void);
-# 27 "src/start_menu.c" 2
+# 28 "src/start_menu.c" 2
 # 1 "include/option_menu.h" 1
 
 
 
 void CB2_InitOptionMenu(void);
-# 28 "src/start_menu.c" 2
+# 29 "src/start_menu.c" 2
 # 1 "include/overworld.h" 1
 # 29 "include/overworld.h"
 struct InitialPlayerAvatarState
@@ -5954,7 +6036,7 @@ bool32 sub_80875C8(void);
 bool32 sub_8087634(void);
 bool32 sub_808766C(void);
 void ClearLinkPlayerObjectEvents(void);
-# 29 "src/start_menu.c" 2
+# 30 "src/start_menu.c" 2
 # 1 "include/palette.h" 1
 # 17 "include/palette.h"
 enum
@@ -6019,7 +6101,7 @@ void TintPalette_GrayScale2(u16 *palette, u16 count);
 void TintPalette_SepiaTone(u16 *palette, u16 count);
 void TintPalette_CustomTone(u16 *palette, u16 count, u16 rTone, u16 gTone, u16 bTone);
 void TintPalette_CustomToneWithCopy(const u16 *src, u16 *dest, u16 count, u16 rTone, u16 gTone, u16 bTone, bool8 excludeZeroes);
-# 30 "src/start_menu.c" 2
+# 31 "src/start_menu.c" 2
 # 1 "include/party_menu.h" 1
 # 9 "include/party_menu.h"
 struct PartyMenu
@@ -6120,7 +6202,7 @@ void MoveDeleterChooseMoveToForget(void);
 bool8 CanLearnTutorMove(u16, u8);
 void ItemUseCB_Mints(u8 taskId, TaskFunc task);
 void ItemUseCB_Seal(u8 taskId, TaskFunc task);
-# 31 "src/start_menu.c" 2
+# 32 "src/start_menu.c" 2
 # 1 "include/pokedex.h" 1
 
 
@@ -6166,7 +6248,7 @@ bool16 HasAllHoennMons(void);
 void ResetPokedexScrollPositions(void);
 bool16 HasAllMons(void);
 void CB2_OpenPokedex(void);
-# 32 "src/start_menu.c" 2
+# 33 "src/start_menu.c" 2
 # 1 "include/pokenav.h" 1
 
 
@@ -6690,7 +6772,7 @@ bool32 OpenRibbonsSummaryMenu(void);
 void CreateRibbonsSummaryLoopedTask(s32);
 u32 IsRibbonsSummaryLoopedTaskActive(void);
 void FreeRibbonsSummaryScreen2(void);
-# 33 "src/start_menu.c" 2
+# 34 "src/start_menu.c" 2
 # 1 "include/rtc.h" 1
 
 
@@ -6774,7 +6856,7 @@ u32 RtcGetMinuteCount(void);
 u32 GetTotalMinutes(struct Time *time);
 u32 GetTotalSeconds(struct Time *time);
 u32 RtcGetLocalDayCount(void);
-# 34 "src/start_menu.c" 2
+# 35 "src/start_menu.c" 2
 # 1 "include/safari_zone.h" 1
 
 
@@ -6795,7 +6877,7 @@ void CB2_EndSafariBattle(void);
 
 struct Pokeblock *SafariZoneGetActivePokeblock(void);
 void SafariZoneActivatePokeblockFeeder(u8 pokeblock_index);
-# 35 "src/start_menu.c" 2
+# 36 "src/start_menu.c" 2
 # 1 "include/save.h" 1
 
 
@@ -6879,7 +6961,7 @@ void Task_LinkSave(u8 taskId);
 
 
 void DoSaveFailedScreen(u8 saveType);
-# 36 "src/start_menu.c" 2
+# 37 "src/start_menu.c" 2
 # 1 "include/scanline_effect.h" 1
 # 17 "include/scanline_effect.h"
 struct ScanlineEffectParams
@@ -6912,7 +6994,7 @@ void ScanlineEffect_Clear(void);
 void ScanlineEffect_SetParams(struct ScanlineEffectParams);
 void ScanlineEffect_InitHBlankDmaTransfer(void);
 u8 ScanlineEffect_InitWave(u8 startLine, u8 endLine, u8 frequency, u8 amplitude, u8 delayInterval, u8 regOffset, bool8 a7);
-# 37 "src/start_menu.c" 2
+# 38 "src/start_menu.c" 2
 # 1 "include/script.h" 1
 
 
@@ -6979,7 +7061,7 @@ void InitRamScript_NoObjectEvent(u8 *script, u16 scriptSize);
 
 
 void SetMovingNpcId(u16 npcId);
-# 38 "src/start_menu.c" 2
+# 39 "src/start_menu.c" 2
 # 1 "include/sound.h" 1
 
 
@@ -7030,7 +7112,7 @@ void SE12PanpotControl(s8 pan);
 bool8 IsSEPlaying(void);
 bool8 IsBGMPlaying(void);
 bool8 IsSpecialSEPlaying(void);
-# 39 "src/start_menu.c" 2
+# 40 "src/start_menu.c" 2
 # 1 "include/start_menu.h" 1
 
 
@@ -7046,7 +7128,7 @@ void CB2_SetUpSaveAfterLinkBattle(void);
 void SaveForBattleTowerLink(void);
 void HideStartMenu(void);
 void AppendToList(u8* list, u8* pos, u8 newEntry);
-# 40 "src/start_menu.c" 2
+# 41 "src/start_menu.c" 2
 # 1 "include/strings.h" 1
 
 
@@ -10203,7 +10285,24 @@ extern const u8 gText_Region_Kanto[];
 extern const u8 gText_Region_Jotho[];
 extern const u8 gText_Region_Hoenn[];
 extern const u8 gText_Region_Sinnoh[];
-# 41 "src/start_menu.c" 2
+
+extern const u8 gText_Difficulty_Level[];
+extern const u8 gText_Game_Modes[];
+extern const u8 gText_Start_Game[];
+extern const u8 gText_Difficulty_Easy[];
+extern const u8 gText_Difficulty_Normal[];
+extern const u8 gText_Difficulty_Hard[];
+extern const u8 gText_Game_Modes_Random[];
+extern const u8 gText_Game_Modes_Double[];
+extern const u8 gText_Game_Modes_Inverse[];
+extern const u8 gText_Game_Modes_Perfect_Iv[];
+extern const u8 gText_Game_Modes_No_Evs[];
+extern const u8 gText_Game_Modes_Default[];
+extern const u8 gText_Game_Modes_Save[];
+extern const u8 gText_Game_Modes_Enable[];
+extern const u8 gText_Game_Modes_Disable[];
+extern const u8 gText_Game_Modes_Info[];
+# 42 "src/start_menu.c" 2
 # 1 "gflib/string_util.h" 1
 
 
@@ -10251,9 +10350,9 @@ void ConvertInternationalString(u8 *s, u8 language);
 void StripExtCtrlCodes(u8 *str);
 
 char *ConvertToAscii(const u8 *str);
-# 42 "src/start_menu.c" 2
-# 1 "include/task.h" 1
 # 43 "src/start_menu.c" 2
+# 1 "include/task.h" 1
+# 44 "src/start_menu.c" 2
 
 # 1 "include/text_window.h" 1
 
@@ -10284,7 +10383,7 @@ void sub_8098C6C(u8 bg, u16 destOffset, u8 palOffset);
 
 
 void LoadDexNavWindowGfx(u8 windowId, u16 destOffset, u8 palOffset);
-# 45 "src/start_menu.c" 2
+# 46 "src/start_menu.c" 2
 # 1 "include/trainer_card.h" 1
 
 
@@ -10354,10 +10453,62 @@ void CopyTrainerCardData(struct TrainerCard *dst, u16 *src, u8 gameVersion);
 void ShowPlayerTrainerCard(void (*callback)(void));
 void ShowTrainerCardInLink(u8 arg0, void (*callback)(void));
 void TrainerCard_GenerateCardForPlayer(struct TrainerCard *);
-# 46 "src/start_menu.c" 2
+# 47 "src/start_menu.c" 2
 
+# 1 "include/wild_encounter.h" 1
+# 10 "include/wild_encounter.h"
+struct WildPokemon
+{
+    u8 minLevel;
+    u8 maxLevel;
+    u16 species;
+};
+
+struct WildPokemonInfo
+{
+    u8 encounterRate;
+    const struct WildPokemon *wildPokemon;
+};
+
+struct WildPokemonHeader
+{
+    u8 mapGroup;
+    u8 mapNum;
+    const struct WildPokemonInfo *landMonsInfo;
+    const struct WildPokemonInfo *landMonsNightInfo;
+    const struct WildPokemonInfo *waterMonsInfo;
+    const struct WildPokemonInfo *rockSmashMonsInfo;
+    const struct WildPokemonInfo *fishingMonsInfo;
+    const struct WildPokemonInfo *hiddenMonsInfo;
+ const struct WildPokemonInfo *headbuttMonsInfo;
+};
+
+extern bool8 gIsFishingEncounter;
+extern bool8 gIsSurfingEncounter;
+
+extern const struct WildPokemonHeader gWildMonHeaders[];
+
+void DisableWildEncounters(bool8 disabled);
+bool8 StandardWildEncounter(u16 currMetaTileBehavior, u16 previousMetaTileBehavior);
+void ScrSpecial_RockSmashWildEncounter(void);
+bool8 SweetScentWildEncounter(void);
+bool8 DoesCurrentMapHaveFishingMons(void);
+void FishingWildEncounter(u8 rod);
+u16 GetLocalWildMon(bool8 *isWaterMon);
+u16 GetLocalWaterMon(void);
+bool8 UpdateRepelCounter(void);
+bool8 TryDoDoubleWildBattle(void);
+bool8 UpdateLureCounter(void);
+void CreateWildMon(u16 species, u8 level);
+u16 GetCurrentMapWildMonHeaderId(void);
+u8 ChooseWildMonIndex_Land(void);
+u8 ChooseWildMonIndex_WaterRock(void);
+u8 ChooseHiddenMonIndex(void);
+u8 ChooseHeadbuttMonIndex(void);
+u16 GetFirstStage(u16 species);
+# 49 "src/start_menu.c" 2
 # 1 "include/constants/songs.h" 1
-# 48 "src/start_menu.c" 2
+# 50 "src/start_menu.c" 2
 # 1 "include/union_room.h" 1
 
 
@@ -11223,7 +11374,7 @@ void MEvent_CreateTask_CardOrNewsOverWireless(u32 arg0);
 void MEvent_CreateTask_Leader(u32 arg0);
 u8 CreateTask_ListenToWireless(void);
 void StartUnionRoomBattle(u16 battleFlags);
-# 49 "src/start_menu.c" 2
+# 51 "src/start_menu.c" 2
 # 1 "include/dexnav.h" 1
 # 123 "include/dexnav.h"
 void EndDexNavSearch(u8 taskId);
@@ -11237,9 +11388,11 @@ bool8 DexNavTryMakeShinyMon(void);
 
 extern u8 gCurrentDexNavChain;
 extern bool8 gDexnavBattle;
-# 50 "src/start_menu.c" 2
+# 52 "src/start_menu.c" 2
+# 1 "include/constants/map_types.h" 1
+# 53 "src/start_menu.c" 2
 # 1 "include/constants/rgb.h" 1
-# 51 "src/start_menu.c" 2
+# 54 "src/start_menu.c" 2
 
 
 enum
@@ -11276,6 +11429,7 @@ bool8 (*gMenuCallback)(void);
 __attribute__((section("ewram_data"))) static u8 sSafariBallsWindowId = 0;
 __attribute__((section("ewram_data"))) static u8 sBattlePyramidFloorWindowId = 0;
 __attribute__((section("ewram_data"))) static u8 sStartMenuCursorPos = 0;
+__attribute__((section("ewram_data"))) static u8 sStartMenuSecondCursorPos = 0;
 __attribute__((section("ewram_data"))) static u8 sNumStartMenuActions = 0;
 __attribute__((section("ewram_data"))) static u8 sCurrentStartMenuActions[9] = {0};
 __attribute__((section("ewram_data"))) static u8 sInitStartMenuData[2] = {0};
@@ -11394,6 +11548,7 @@ static const struct WindowTemplate sSaveInfoWindowTemplate = {0, 1, 1, 0xE, 0xA,
 static void BuildStartMenuActions(void);
 static void AddStartMenuAction(u8 action);
 static void BuildNormalStartMenu(void);
+bool8 HasMapMons(void);
 static void BuildSafariZoneStartMenu(void);
 static void BuildLinkModeStartMenu(void);
 static void BuildUnionRoomStartMenu(void);
@@ -11404,6 +11559,7 @@ static void ShowSafariBallsWindow(void);
 static void ShowPyramidFloorWindow(void);
 static void ShowClockWindow(void);
 static void ShowGameVersionWindow(void);
+static void ShowBikeMenu(void);
 static void RemoveExtraStartMenuWindows(void);
 static bool32 PrintStartMenuActions(s8 *pIndex, u32 count);
 static bool32 InitStartMenuStep(void);
@@ -11427,9 +11583,9 @@ static void HideStartMenuWindow(void);
 
 void SetDexPokemonPokenavFlags(void)
 {
-    FlagSet((((0x500 + 864 - 1) + 1) + 0x1));
-    FlagSet((((0x500 + 864 - 1) + 1) + 0x0));
-    FlagSet((((0x500 + 864 - 1) + 1) + 0x2));
+    FlagSet(0x33);
+    FlagSet(0x33);
+    FlagSet(0x33);
 }
 
 static void BuildStartMenuActions(void)
@@ -11471,22 +11627,41 @@ static void AddStartMenuAction(u8 action)
     AppendToList(sCurrentStartMenuActions, &sNumStartMenuActions, action);
 }
 
+bool8 HasMapMons(void){
+ u16 i;
+
+    for (i = 0; ; i++)
+    {
+        const struct WildPokemonHeader *wildHeader = &gWildMonHeaders[i];
+        if (wildHeader->mapGroup == 0xFF)
+            break;
+
+        if (gWildMonHeaders[i].mapGroup == gSaveBlock1Ptr->location.mapGroup &&
+            gWildMonHeaders[i].mapNum == gSaveBlock1Ptr->location.mapNum)
+        {
+   return 1;
+        }
+    }
+
+    return 0;
+}
+
 static void BuildNormalStartMenu(void)
 {
-    if (FlagGet((((0x500 + 864 - 1) + 1) + 0x1)) == 1)
+    if (FlagGet(0x33) == 1)
         AddStartMenuAction(MENU_ACTION_POKEDEX);
 
-    if (FlagGet((((0x500 + 864 - 1) + 1) + 0x2F)))
+    if (FlagGet((((0x500 + 864 - 1) + 1) + 0x2F)) && HasMapMons())
         AddStartMenuAction(MENU_ACTION_DEXNAV);
 
-    if (FlagGet((((0x500 + 864 - 1) + 1) + 0x0)) == 1)
+    if (FlagGet(0x33) == 1)
     {
         AddStartMenuAction(MENU_ACTION_POKEMON);
     }
 
     AddStartMenuAction(MENU_ACTION_BAG);
 
-    if (FlagGet((((0x500 + 864 - 1) + 1) + 0x2)) == 1)
+    if (FlagGet(0x33) == 1)
     {
         AddStartMenuAction(MENU_ACTION_POKENAV);
     }
@@ -11501,7 +11676,7 @@ static void BuildSafariZoneStartMenu(void)
 {
     AddStartMenuAction(MENU_ACTION_RETIRE_SAFARI);
     AddStartMenuAction(MENU_ACTION_POKEDEX);
- if (FlagGet((((0x500 + 864 - 1) + 1) + 0x2F)))
+ if (FlagGet((((0x500 + 864 - 1) + 1) + 0x2F)) && HasMapMons())
         AddStartMenuAction(MENU_ACTION_DEXNAV);
     AddStartMenuAction(MENU_ACTION_POKEMON);
     AddStartMenuAction(MENU_ACTION_BAG);
@@ -11515,7 +11690,7 @@ static void BuildLinkModeStartMenu(void)
     AddStartMenuAction(MENU_ACTION_POKEMON);
     AddStartMenuAction(MENU_ACTION_BAG);
 
-    if (FlagGet((((0x500 + 864 - 1) + 1) + 0x2)) == 1)
+    if (FlagGet(0x33) == 1)
     {
         AddStartMenuAction(MENU_ACTION_POKENAV);
     }
@@ -11530,7 +11705,7 @@ static void BuildUnionRoomStartMenu(void)
     AddStartMenuAction(MENU_ACTION_POKEMON);
     AddStartMenuAction(MENU_ACTION_BAG);
 
-    if (FlagGet((((0x500 + 864 - 1) + 1) + 0x2)) == 1)
+    if (FlagGet(0x33) == 1)
     {
         AddStartMenuAction(MENU_ACTION_POKENAV);
     }
@@ -11669,6 +11844,8 @@ static bool32 InitStartMenuStep(void)
             ShowSafariBallsWindow();
   else if (InBattlePyramid())
             ShowPyramidFloorWindow();
+  else if(!IsBikingDisallowedByPlayer())
+   ShowBikeMenu();
   else
    ShowClockWindow();
         sInitStartMenuData[0]++;
@@ -11679,6 +11856,10 @@ static bool32 InitStartMenuStep(void)
         break;
     case 5:
         sStartMenuCursorPos = Menu_InitCursor(GetStartMenuWindowId(), 1, 0, 9, 16, sNumStartMenuActions, sStartMenuCursorPos);
+  if(!IsBikingDisallowedByPlayer())
+   sStartMenuSecondCursorPos = 0;
+  else
+   sStartMenuSecondCursorPos = 1;
         CopyWindowToVram(GetStartMenuWindowId(), 1);
         return 1;
     }
@@ -11764,6 +11945,8 @@ extern const u8 EventScript_DisableAutoRun[];
 extern const u8 EventScript_EnableAutoRun[];
 static bool8 HandleStartMenuInput(void)
 {
+
+
     if (({(gMain.newKeys) & (0x0040);}))
     {
         PlaySE(5);
@@ -11802,18 +11985,55 @@ static bool8 HandleStartMenuInput(void)
     {
   if (!GetSafariZoneFlag() && !InBattlePyramid())
   {
-   RemoveExtraStartMenuWindows();
-   ShowGameVersionWindow();
-  }
+  if(sStartMenuSecondCursorPos == 0)
+   sStartMenuSecondCursorPos = 2;
+  else
+  sStartMenuSecondCursorPos--;
+
+  if(IsBikingDisallowedByPlayer() && sStartMenuSecondCursorPos == 0)
+   sStartMenuSecondCursorPos = 2;
+
+  switch(sStartMenuSecondCursorPos){
+  case 0:
+  RemoveExtraStartMenuWindows();
+  ShowBikeMenu();
+  break;
+  case 1:
+  RemoveExtraStartMenuWindows();
+  ShowClockWindow();
+  break;
+  case 2:
+  RemoveExtraStartMenuWindows();
+  ShowGameVersionWindow();
+  break;
+  }}
  }
 
  if (({(gMain.newKeys) & (0x0010);}))
     {
   if (!GetSafariZoneFlag() && !InBattlePyramid())
   {
-   RemoveExtraStartMenuWindows();
-   ShowClockWindow();
-  }
+  if(sStartMenuSecondCursorPos == 2)
+   sStartMenuSecondCursorPos = 0;
+  else
+  sStartMenuSecondCursorPos++;
+  if(IsBikingDisallowedByPlayer() && sStartMenuSecondCursorPos == 0)
+   sStartMenuSecondCursorPos = 1;
+
+  switch(sStartMenuSecondCursorPos){
+  case 0:
+  RemoveExtraStartMenuWindows();
+  ShowBikeMenu();
+  break;
+  case 1:
+  RemoveExtraStartMenuWindows();
+  ShowClockWindow();
+  break;
+  case 2:
+  RemoveExtraStartMenuWindows();
+  ShowGameVersionWindow();
+  break;
+  }}
  }
 
  if (({(gMain.newKeys) & (0x0100);}))
@@ -11821,33 +12041,66 @@ static bool8 HandleStartMenuInput(void)
   if (!GetSafariZoneFlag() && !InBattlePyramid())
   {
 
+  switch(sStartMenuSecondCursorPos){
+  case 0:
+   if(!IsBikingDisallowedByPlayer()){
+   RemoveExtraStartMenuWindows();
+   if (gPlayerAvatar.flags & (1 << 1))
+   {
+
+
+
+    SetPlayerAvatarTransitionFlags((1 << 0));
+
+
+   }
+   else if (gPlayerAvatar.flags & (1 << 2))
+   {
+    gPlayerAvatar.flags -= (1 << 2);
+    gPlayerAvatar.flags += (1 << 1);
+    SetPlayerAvatarTransitionFlags((1 << 1));
+
+
+   }
+   else
+   {
+    gPlayerAvatar.flags -= (1 << 1);
+    gPlayerAvatar.flags += (1 << 2);
+    SetPlayerAvatarTransitionFlags((1 << 2));
+
+
+   }
+   PlaySE(34);
+   ShowBikeMenu();}
+   return 0;
+  break;
+  case 1:
    RemoveExtraStartMenuWindows();
    PlaySE(5);
-   if (FlagGet(0x1AA))
-    FlagClear(0x1AA);
+   if (FlagGet(0x35))
+    FlagClear(0x35);
    else
-    FlagSet(0x1AA);
-
+    FlagSet(0x35);
    ShowClockWindow();
-
-  }else{
-
-     PlaySE(5);
-  if (FlagGet(0x1AA))
-  {
-   FlagClear(0x1AA);
-   ScriptContext1_SetupScript(EventScript_DisableAutoRun);
-  }
-  else
-  {
-   FlagSet(0x1AA);
-   ScriptContext1_SetupScript(EventScript_EnableAutoRun);
-  }
-  RemoveExtraStartMenuWindows();
-        HideStartMenu();
-  return 1;
-  }
+   return 0;
+  break;
+  }}
  }
+
+ if (({(gMain.newKeys) & (0x0004);}))
+    {
+        PlaySE(5);
+  gMenuCallback = StartMenuSaveCallback;
+        if (gMenuCallback != StartMenuSaveCallback
+            && gMenuCallback != StartMenuExitCallback
+            && gMenuCallback != StartMenuSafariZoneRetireCallback
+            && gMenuCallback != StartMenuBattlePyramidRetireCallback)
+        {
+           FadeScreen(1, 0);
+        }
+
+        return 0;
+    }
 
     if (({(gMain.newKeys) & (0x0008 | 0x0002);}))
     {
@@ -12562,7 +12815,7 @@ static void ShowSaveInfoWindow(void)
     u32 xOffset;
     u32 yOffset;
 
-    if (!FlagGet((((0x500 + 864 - 1) + 1) + 0x1)))
+    if (!FlagGet(0x33))
     {
         saveInfoWindow.height -= 2;
     }
@@ -12597,7 +12850,7 @@ static void ShowSaveInfoWindow(void)
     xOffset = GetStringRightAlignXOffset(1, gStringVar4, 0x70);
     AddTextPrinterParameterized(sSaveInfoWindowId, 1, gStringVar4, xOffset, yOffset, 0xFF, ((void *)0));
 
-    if (FlagGet((((0x500 + 864 - 1) + 1) + 0x1)) == 1)
+    if (FlagGet(0x33) == 1)
     {
 
         yOffset += 16;
@@ -12676,7 +12929,7 @@ static void ShowClockWindow(void)
  sSafariBallsWindowId = AddWindow(&sClockWindowTemplate);
     PutWindowTilemap(sSafariBallsWindowId);
     DrawStdWindowFrame(sSafariBallsWindowId, 0);
- if(FlagGet(0x1AA))
+ if(FlagGet(0x35))
   StringExpandPlaceholders(gStringVar4, AutoRunOn);
  else
   StringExpandPlaceholders(gStringVar4, AutoRunOff);
@@ -12686,7 +12939,7 @@ static void ShowClockWindow(void)
 
 static void ShowGameVersionWindow(void)
 {
- static const u8 GameVersion[] = _("Game Version 1.3.3.2\n{STR_VAR_1}$");
+ static const u8 GameVersion[] = _("Game Version 1.4\n{STR_VAR_1}$");
  static const u8 hardmodeText[] = _("{COLOR RED}Hard Mode$");
  static const u8 normalmodeText[] = _("{COLOR GREEN}Normal Mode$");
  sSafariBallsWindowId = AddWindow(&sClockWindowTemplate);
@@ -12697,6 +12950,25 @@ static void ShowGameVersionWindow(void)
  else
   StringCopy(gStringVar1, normalmodeText);
  StringExpandPlaceholders(gStringVar4, GameVersion);
+    AddTextPrinterParameterized(sSafariBallsWindowId, 1, gStringVar4, 0, 1, 0xFF, ((void *)0));
+    CopyWindowToVram(sSafariBallsWindowId, 2);
+}
+
+static void ShowBikeMenu(void)
+{
+
+ static const u8 BikeChangeAcro[] = _("Press R to Use\nthe Acro Bike$");
+ static const u8 BikeChangeMach[] = _("Press R to Change\nto the {COLOR GREEN}Mach Bike$");
+ static const u8 BikeChangeOff[] = _("Press R to Dismount\nyour Bike$");
+ sSafariBallsWindowId = AddWindow(&sClockWindowTemplate);
+    PutWindowTilemap(sSafariBallsWindowId);
+    DrawStdWindowFrame(sSafariBallsWindowId, 0);
+ if(gPlayerAvatar.flags & (1 << 1))
+  StringExpandPlaceholders(gStringVar4, BikeChangeOff);
+ else if(gPlayerAvatar.flags & (1 << 2))
+  StringExpandPlaceholders(gStringVar4, BikeChangeMach);
+ else
+  StringExpandPlaceholders(gStringVar4, BikeChangeAcro);
     AddTextPrinterParameterized(sSafariBallsWindowId, 1, gStringVar4, 0, 1, 0xFF, ((void *)0));
     CopyWindowToVram(sSafariBallsWindowId, 2);
 }

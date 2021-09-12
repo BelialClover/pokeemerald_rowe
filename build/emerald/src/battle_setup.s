@@ -1480,100 +1480,304 @@ BattleSetup_StartLatiBattle:
 BattleSetup_StartLegendaryBattle:
 	push	{r4, lr}
 	bl	ScriptContext2_Enable
-	ldr	r1, .L65
-	ldr	r0, .L65+0x4
+	ldr	r1, .L99
+	ldr	r0, .L99+0x4
 	str	r0, [r1, #0x8]
-	ldr	r4, .L65+0x8
+	ldr	r4, .L99+0x8
 	mov	r0, #0x80
 	lsl	r0, r0, #0x6
 	str	r0, [r4]
-	ldr	r0, .L65+0xc
+	ldr	r0, .L99+0xc
 	mov	r1, #0xb
 	mov	r2, #0x0
 	bl	GetMonData
 	add	r1, r0, #0
-	mov	r0, #0xbf
-	lsl	r0, r0, #0x1
+	ldr	r0, .L99+0x10
 	cmp	r1, r0
-	beq	.L56	@cond_branch
+	bne	.LCB566
+	b	.L63	@long jump
+.LCB566:
 	cmp	r1, r0
-	bhi	.L63	@cond_branch
-	cmp	r1, #0x97
+	bhi	.L88	@cond_branch
+	cmp	r1, #0xf3
 	beq	.L61	@cond_branch
+	cmp	r1, #0xf3
+	bhi	.L89	@cond_branch
+	cmp	r1, #0x96
+	beq	.L58	@cond_branch
+	cmp	r1, #0x96
+	bls	.L57	@cond_branch
 	cmp	r1, #0x97
-	bcc	.L55	@cond_branch
-	cmp	r1, #0xfa
-	bhi	.L55	@cond_branch
-	cmp	r1, #0xf9
-	bcc	.L55	@cond_branch
-	mov	r1, #0xfa
-	lsl	r1, r1, #0x1
-	b	.L64
-.L66:
+	beq	.L59	@cond_branch
+	b	.L57
+.L100:
 	.align	2, 0
-.L65:
+.L99:
 	.word	gMain
 	.word	CB2_EndScriptedWildBattle
 	.word	gBattleTypeFlags
 	.word	gEnemyParty
-.L63:
-	mov	r0, #0xc0
+	.word	0x17f
+.L89:
+	cmp	r1, #0xf9
+	bne	.LCB593
+	b	.L76	@long jump
+.LCB593:
+	cmp	r1, #0xf9
+	bhi	.L91	@cond_branch
+	cmp	r1, #0xf4
+	beq	.L62	@cond_branch
+	cmp	r1, #0xf5
+	beq	.L60	@cond_branch
+	b	.L57
+.L91:
+	cmp	r1, #0xfa
+	bne	.LCB604
+	b	.L77	@long jump
+.LCB604:
+	mov	r0, #0xbf
 	lsl	r0, r0, #0x1
 	cmp	r1, r0
-	beq	.L57	@cond_branch
+	beq	.L67	@cond_branch
+	b	.L57
+.L88:
+	mov	r0, #0xf2
+	lsl	r0, r0, #0x1
 	cmp	r1, r0
-	bcc	.L55	@cond_branch
+	bhi	.L92	@cond_branch
+	sub	r0, r0, #0x1
+	cmp	r1, r0
+	bcc	.LCB618
+	b	.L84	@long jump
+.LCB618:
+	sub	r0, r0, #0x61
+	cmp	r1, r0
+	bne	.LCB621
+	b	.L75	@long jump
+.LCB621:
+	cmp	r1, r0
+	bhi	.L93	@cond_branch
+	sub	r0, r0, #0x2
+	cmp	r1, r0
+	bne	.LCB626
+	b	.L71	@long jump
+.LCB626:
+	b	.L57
+.L93:
+	mov	r0, #0xf0
+	lsl	r0, r0, #0x1
+	cmp	r1, r0
+	bcc	.L57	@cond_branch
+	ldr	r1, .L101
+	b	.L95
+.L102:
+	.align	2, 0
+.L101:
+	.word	0x287
+.L92:
+	ldr	r0, .L103
+	cmp	r1, r0
+	bne	.LCB647
+	b	.L85	@long jump
+.LCB647:
+	cmp	r1, r0
+	bhi	.L94	@cond_branch
+	sub	r0, r0, #0x2
+	cmp	r1, r0
+	bne	.LCB652
+	b	.L82	@long jump
+.LCB652:
+	b	.L57
+.L104:
+	.align	2, 0
+.L103:
+	.word	0x1e7
+.L94:
+	ldr	r0, .L105
+	cmp	r1, r0
+	bne	.LCB664
+	b	.L82	@long jump
+.LCB664:
 	add	r0, r0, #0x2
 	cmp	r1, r0
-	beq	.L58	@cond_branch
-.L55:
-	ldr	r2, .L67
-	ldr	r0, [r2]
+	bne	.LCB667
+	b	.L86	@long jump
+.LCB667:
+.L57:
+	mov	r1, #0xfa
+	lsl	r1, r1, #0x1
+	b	.L95
+.L106:
+	.align	2, 0
+.L105:
+	.word	0x1eb
+.L58:
+	ldr	r1, .L107
+	b	.L95
+.L108:
+	.align	2, 0
+.L107:
+	.word	0x1f3
+.L59:
+	ldr	r1, .L109
+	mov	r0, #0xa
+	bl	CreateBattleStartTask
+	b	.L53
+.L110:
+	.align	2, 0
+.L109:
+	.word	0x209
+.L60:
+	ldr	r1, .L111
+	b	.L96
+.L112:
+	.align	2, 0
+.L111:
+	.word	0x32f
+.L61:
+	ldr	r1, .L113
+	b	.L96
+.L114:
+	.align	2, 0
+.L113:
+	.word	0x30f
+.L62:
+	ldr	r1, .L115
+	b	.L96
+.L116:
+	.align	2, 0
+.L115:
+	.word	0x31e
+.L63:
+	ldr	r0, [r4]
 	mov	r1, #0x80
 	lsl	r1, r1, #0x15
 	orr	r0, r0, r1
-	str	r0, [r2]
+	str	r0, [r4]
+	ldr	r0, .L117
+	ldr	r0, [r0]
+	ldrb	r0, [r0, #0x15]
+	mov	r1, #0x1f
+	and	r1, r1, r0
+	cmp	r1, #0x1
+	beq	.L65	@cond_branch
+	cmp	r1, #0x3
+	bne	.L64	@cond_branch
+.L65:
+	ldr	r1, .L117+0x4
+	b	.L96
+.L118:
+	.align	2, 0
+.L117:
+	.word	gSaveBlock2Ptr
+	.word	0x373
+.L64:
 	mov	r1, #0xd9
 	lsl	r1, r1, #0x1
+.L96:
 	mov	r0, #0x17
 	bl	CreateBattleStartTask
 	b	.L53
-.L68:
-	.align	2, 0
 .L67:
-	.word	gBattleTypeFlags
-.L56:
 	ldr	r0, [r4]
 	mov	r1, #0x80
 	lsl	r1, r1, #0x16
 	orr	r0, r0, r1
 	str	r0, [r4]
+	ldr	r0, .L119
+	ldr	r0, [r0]
+	ldrb	r0, [r0, #0x15]
+	mov	r1, #0x1f
+	and	r1, r1, r0
+	cmp	r1, #0x1
+	beq	.L69	@cond_branch
+	cmp	r1, #0x3
+	bne	.L68	@cond_branch
+.L69:
+	ldr	r1, .L119+0x4
+	b	.L97
+.L120:
+	.align	2, 0
+.L119:
+	.word	gSaveBlock2Ptr
+	.word	0x373
+.L68:
 	mov	r1, #0xd9
 	lsl	r1, r1, #0x1
+.L97:
 	mov	r0, #0x16
 	bl	CreateBattleStartTask
 	b	.L53
-.L57:
+.L71:
 	ldr	r0, [r4]
 	mov	r1, #0x80
 	lsl	r1, r1, #0x17
 	orr	r0, r0, r1
 	str	r0, [r4]
+	ldr	r0, .L121
+	ldr	r0, [r0]
+	ldrb	r0, [r0, #0x15]
+	mov	r1, #0x1f
+	and	r1, r1, r0
+	cmp	r1, #0x1
+	beq	.L73	@cond_branch
+	cmp	r1, #0x3
+	bne	.L72	@cond_branch
+.L73:
+	ldr	r1, .L121+0x4
+	b	.L98
+.L122:
+	.align	2, 0
+.L121:
+	.word	gSaveBlock2Ptr
+	.word	0x373
+.L72:
 	mov	r1, #0xd9
 	lsl	r1, r1, #0x1
+.L98:
 	mov	r0, #0x18
 	bl	CreateBattleStartTask
 	b	.L53
-.L58:
+.L75:
 	mov	r1, #0xf9
 	lsl	r1, r1, #0x1
-.L64:
+	b	.L95
+.L76:
+	mov	r1, #0xdb
+	lsl	r1, r1, #0x2
+	b	.L95
+.L77:
+	ldr	r1, .L123
+	b	.L95
+.L124:
+	.align	2, 0
+.L123:
+	.word	0x322
+.L82:
+	ldr	r1, .L125
+	b	.L95
+.L126:
+	.align	2, 0
+.L125:
+	.word	0x296
+.L84:
+	mov	r1, #0x9a
+	lsl	r1, r1, #0x2
+	b	.L95
+.L85:
+	ldr	r1, .L127
+.L95:
 	mov	r0, #0x0
 	bl	CreateBattleStartTask
 	b	.L53
-.L61:
-	ldr	r1, .L69
-	mov	r0, #0xa
+.L128:
+	.align	2, 0
+.L127:
+	.word	0x2b2
+.L86:
+	mov	r1, #0xa9
+	lsl	r1, r1, #0x2
+	mov	r0, #0x0
 	bl	CreateBattleStartTask
 .L53:
 	mov	r0, #0x7
@@ -1585,10 +1789,6 @@ BattleSetup_StartLegendaryBattle:
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L70:
-	.align	2, 0
-.L69:
-	.word	0x209
 .Lfe16:
 	.size	 BattleSetup_StartLegendaryBattle,.Lfe16-BattleSetup_StartLegendaryBattle
 	.align	2, 0
@@ -1598,35 +1798,35 @@ BattleSetup_StartLegendaryBattle:
 StartGroudonKyogreBattle:
 	push	{lr}
 	bl	ScriptContext2_Enable
-	ldr	r1, .L74
-	ldr	r0, .L74+0x4
+	ldr	r1, .L132
+	ldr	r0, .L132+0x4
 	str	r0, [r1, #0x8]
-	ldr	r1, .L74+0x8
+	ldr	r1, .L132+0x8
 	mov	r0, #0xc0
 	lsl	r0, r0, #0x6
 	str	r0, [r1]
-	ldr	r0, .L74+0xc
+	ldr	r0, .L132+0xc
 	ldrb	r0, [r0]
 	cmp	r0, #0x2
-	bne	.L72	@cond_branch
+	bne	.L130	@cond_branch
 	mov	r1, #0xd9
 	lsl	r1, r1, #0x1
 	mov	r0, #0xb
 	bl	CreateBattleStartTask
-	b	.L73
-.L75:
+	b	.L131
+.L133:
 	.align	2, 0
-.L74:
+.L132:
 	.word	gMain
 	.word	CB2_EndScriptedWildBattle
 	.word	gBattleTypeFlags
 	.word	gGameVersion
-.L72:
+.L130:
 	mov	r1, #0xd9
 	lsl	r1, r1, #0x1
 	mov	r0, #0x6
 	bl	CreateBattleStartTask
-.L73:
+.L131:
 	mov	r0, #0x7
 	bl	IncrementGameStat
 	mov	r0, #0x8
@@ -1644,14 +1844,14 @@ StartGroudonKyogreBattle:
 StartRegiBattle:
 	push	{lr}
 	bl	ScriptContext2_Enable
-	ldr	r1, .L84
-	ldr	r0, .L84+0x4
+	ldr	r1, .L144
+	ldr	r0, .L144+0x4
 	str	r0, [r1, #0x8]
-	ldr	r1, .L84+0x8
+	ldr	r1, .L144+0x8
 	mov	r0, #0xc0
 	lsl	r0, r0, #0x7
 	str	r0, [r1]
-	ldr	r0, .L84+0xc
+	ldr	r0, .L144+0xc
 	mov	r1, #0xb
 	bl	GetMonData
 	lsl	r0, r0, #0x10
@@ -1660,43 +1860,62 @@ StartRegiBattle:
 	mov	r0, #0xbd
 	lsl	r0, r0, #0x1
 	cmp	r1, r0
-	beq	.L79	@cond_branch
+	beq	.L137	@cond_branch
 	cmp	r1, r0
-	bgt	.L83	@cond_branch
+	bgt	.L141	@cond_branch
 	sub	r0, r0, #0x1
 	cmp	r1, r0
-	beq	.L78	@cond_branch
-	b	.L81
-.L85:
+	beq	.L136	@cond_branch
+	b	.L139
+.L145:
 	.align	2, 0
-.L84:
+.L144:
 	.word	gMain
 	.word	CB2_EndScriptedWildBattle
 	.word	gBattleTypeFlags
 	.word	gEnemyParty
-.L83:
-	ldr	r0, .L86
+.L141:
+	ldr	r0, .L146
 	cmp	r2, r0
-	beq	.L80	@cond_branch
-	b	.L81
-.L87:
+	beq	.L138	@cond_branch
+	b	.L139
+.L147:
 	.align	2, 0
-.L86:
+.L146:
 	.word	0x17b
-.L78:
-	mov	r0, #0x15
-	b	.L77
-.L79:
-	mov	r0, #0x13
-	b	.L77
-.L80:
-	mov	r0, #0x14
-	b	.L77
-.L81:
-	mov	r0, #0xa
-.L77:
-	ldr	r1, .L88
+.L136:
+	mov	r2, #0x15
+	b	.L135
+.L137:
+	mov	r2, #0x13
+	b	.L135
+.L138:
+	mov	r2, #0x14
+	b	.L135
+.L139:
+	mov	r2, #0xa
+.L135:
+	ldr	r0, .L148
+	ldr	r0, [r0]
+	ldrb	r1, [r0, #0x15]
+	mov	r0, #0x1f
+	and	r0, r0, r1
+	cmp	r0, #0x3
+	bne	.L142	@cond_branch
+	ldr	r1, .L148+0x4
+	add	r0, r2, #0
 	bl	CreateBattleStartTask
+	b	.L143
+.L149:
+	.align	2, 0
+.L148:
+	.word	gSaveBlock2Ptr
+	.word	0x2c6
+.L142:
+	ldr	r1, .L150
+	add	r0, r2, #0
+	bl	CreateBattleStartTask
+.L143:
 	mov	r0, #0x7
 	bl	IncrementGameStat
 	mov	r0, #0x8
@@ -1705,9 +1924,9 @@ StartRegiBattle:
 	bl	TryUpdateGymLeaderRematchFromWild
 	pop	{r0}
 	bx	r0
-.L89:
+.L151:
 	.align	2, 0
-.L88:
+.L150:
 	.word	0x1b1
 .Lfe18:
 	.size	 StartRegiBattle,.Lfe18-StartRegiBattle
@@ -1722,47 +1941,47 @@ CB2_EndWildBattle:
 	strh	r0, [r1]
 	mov	r1, #0xa0
 	lsl	r1, r1, #0x13
-	ldr	r2, .L93
+	ldr	r2, .L155
 	mov	r0, sp
 	bl	CpuSet
 	mov	r0, #0x0
 	mov	r1, #0x80
 	bl	ResetOamRange
-	ldr	r0, .L93+0x4
+	ldr	r0, .L155+0x4
 	ldrb	r0, [r0]
 	bl	IsPlayerDefeated
 	cmp	r0, #0x1
-	bne	.L91	@cond_branch
+	bne	.L153	@cond_branch
 	bl	InBattlePyramid
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	bne	.L91	@cond_branch
+	bne	.L153	@cond_branch
 	bl	InBattlePike
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	bne	.L91	@cond_branch
-	ldr	r0, .L93+0x8
+	bne	.L153	@cond_branch
+	ldr	r0, .L155+0x8
 	bl	SetMainCallback2
-	b	.L92
-.L94:
+	b	.L154
+.L156:
 	.align	2, 0
-.L93:
+.L155:
 	.word	0x1000100
 	.word	gBattleOutcome
 	.word	CB2_WhiteOut
-.L91:
-	ldr	r0, .L95
+.L153:
+	ldr	r0, .L157
 	bl	SetMainCallback2
-	ldr	r1, .L95+0x4
-	ldr	r0, .L95+0x8
+	ldr	r1, .L157+0x4
+	ldr	r0, .L157+0x8
 	str	r0, [r1]
-.L92:
+.L154:
 	add	sp, sp, #0x4
 	pop	{r0}
 	bx	r0
-.L96:
+.L158:
 	.align	2, 0
-.L95:
+.L157:
 	.word	CB2_ReturnToField
 	.word	gFieldCallback
 	.word	sub_80AF6F0
@@ -1779,48 +1998,48 @@ CB2_EndScriptedWildBattle:
 	strh	r0, [r1]
 	mov	r1, #0xa0
 	lsl	r1, r1, #0x13
-	ldr	r2, .L102
+	ldr	r2, .L164
 	mov	r0, sp
 	bl	CpuSet
 	mov	r0, #0x0
 	mov	r1, #0x80
 	bl	ResetOamRange
-	ldr	r0, .L102+0x4
+	ldr	r0, .L164+0x4
 	ldrb	r0, [r0]
 	bl	IsPlayerDefeated
 	cmp	r0, #0x1
-	bne	.L98	@cond_branch
+	bne	.L160	@cond_branch
 	bl	InBattlePyramid
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.L99	@cond_branch
-	ldr	r0, .L102+0x8
+	beq	.L161	@cond_branch
+	ldr	r0, .L164+0x8
 	bl	SetMainCallback2
-	b	.L101
-.L103:
+	b	.L163
+.L165:
 	.align	2, 0
-.L102:
+.L164:
 	.word	0x1000100
 	.word	gBattleOutcome
 	.word	CB2_ReturnToFieldContinueScriptPlayMapMusic
-.L99:
-	ldr	r0, .L104
+.L161:
+	ldr	r0, .L166
 	bl	SetMainCallback2
-	b	.L101
-.L105:
+	b	.L163
+.L167:
 	.align	2, 0
-.L104:
+.L166:
 	.word	CB2_WhiteOut
-.L98:
-	ldr	r0, .L106
+.L160:
+	ldr	r0, .L168
 	bl	SetMainCallback2
-.L101:
+.L163:
 	add	sp, sp, #0x4
 	pop	{r0}
 	bx	r0
-.L107:
+.L169:
 	.align	2, 0
-.L106:
+.L168:
 	.word	CB2_ReturnToFieldContinueScriptPlayMapMusic
 .Lfe20:
 	.size	 CB2_EndScriptedWildBattle,.Lfe20-CB2_EndScriptedWildBattle
@@ -1850,160 +2069,160 @@ BattleSetup_GetTerrainId:
 	bl	MetatileBehavior_IsTallGrass
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.L109	@cond_branch
+	beq	.L171	@cond_branch
 	bl	GetCurrentTimeOfDay
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	cmp	r0, #0x2
-	beq	.L111	@cond_branch
+	beq	.L173	@cond_branch
 	cmp	r0, #0x3
-	beq	.L112	@cond_branch
+	beq	.L174	@cond_branch
 	mov	r0, #0x0
-	b	.L139
-.L111:
+	b	.L201
+.L173:
 	mov	r0, #0xa
-	b	.L139
-.L112:
+	b	.L201
+.L174:
 	mov	r0, #0xb
-	b	.L139
-.L109:
+	b	.L201
+.L171:
 	add	r0, r4, #0
 	bl	MetatileBehavior_IsLongGrass
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.L115	@cond_branch
+	beq	.L177	@cond_branch
 	mov	r0, #0x1
-	b	.L139
-.L115:
+	b	.L201
+.L177:
 	add	r0, r4, #0
 	bl	MetatileBehavior_IsSandOrDeepSand
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	bne	.L138	@cond_branch
-	ldr	r0, .L144
+	bne	.L200	@cond_branch
+	ldr	r0, .L206
 	ldrb	r0, [r0, #0x17]
 	sub	r0, r0, #0x1
 	cmp	r0, #0x8
-	bhi	.L117	@cond_branch
+	bhi	.L179	@cond_branch
 	lsl	r0, r0, #0x2
-	ldr	r1, .L144+0x4
+	ldr	r1, .L206+0x4
 	add	r0, r0, r1
 	ldr	r0, [r0]
 	mov	pc, r0
-.L145:
+.L207:
 	.align	2, 0
-.L144:
+.L206:
 	.word	gMapHeader
-	.word	.L129
+	.word	.L191
 	.align	2, 0
 	.align	2, 0
-.L129:
-	.word	.L117
-	.word	.L117
-	.word	.L117
-	.word	.L121
-	.word	.L126
-	.word	.L127
-	.word	.L117
-	.word	.L141
-	.word	.L141
-.L121:
+.L191:
+	.word	.L179
+	.word	.L179
+	.word	.L179
+	.word	.L183
+	.word	.L188
+	.word	.L189
+	.word	.L179
+	.word	.L203
+	.word	.L203
+.L183:
 	lsl	r0, r5, #0x18
 	lsr	r4, r0, #0x18
 	add	r0, r4, #0
 	bl	MetatileBehavior_IsIndoorEncounter
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.L122	@cond_branch
-.L141:
+	beq	.L184	@cond_branch
+.L203:
 	mov	r0, #0x8
-	b	.L139
-.L122:
+	b	.L201
+.L184:
 	add	r0, r4, #0
 	bl	MetatileBehavior_IsSurfableWaterOrUnderwater
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	bne	.L140	@cond_branch
+	bne	.L202	@cond_branch
 	mov	r0, #0x7
-	b	.L139
-.L126:
+	b	.L201
+.L188:
 	mov	r0, #0x3
-	b	.L139
-.L127:
+	b	.L201
+.L189:
 	lsl	r0, r5, #0x18
 	lsr	r0, r0, #0x18
 	bl	MetatileBehavior_IsSurfableWaterOrUnderwater
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	bne	.L142	@cond_branch
-	b	.L143
-.L117:
+	bne	.L204	@cond_branch
+	b	.L205
+.L179:
 	lsl	r0, r5, #0x18
 	lsr	r4, r0, #0x18
 	add	r0, r4, #0
 	bl	MetatileBehavior_IsDeepOrOceanWater
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	bne	.L142	@cond_branch
+	bne	.L204	@cond_branch
 	add	r0, r4, #0
 	bl	MetatileBehavior_IsSurfableWaterOrUnderwater
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	bne	.L140	@cond_branch
+	bne	.L202	@cond_branch
 	add	r0, r4, #0
 	bl	MetatileBehavior_IsMountain
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.L133	@cond_branch
+	beq	.L195	@cond_branch
 	mov	r0, #0x6
-	b	.L139
-.L133:
+	b	.L201
+.L195:
 	mov	r0, #0x8
 	bl	TestPlayerAvatarFlags
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.L134	@cond_branch
+	beq	.L196	@cond_branch
 	add	r0, r4, #0
 	bl	MetatileBehavior_GetBridgeType
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.L135	@cond_branch
-.L140:
+	beq	.L197	@cond_branch
+.L202:
 	mov	r0, #0x5
-	b	.L139
-.L135:
+	b	.L201
+.L197:
 	add	r0, r4, #0
 	bl	MetatileBehavior_IsBridge
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	cmp	r0, #0x1
-	bne	.L134	@cond_branch
-.L142:
+	bne	.L196	@cond_branch
+.L204:
 	mov	r0, #0x4
-	b	.L139
-.L134:
-	ldr	r0, .L146
+	b	.L201
+.L196:
+	ldr	r0, .L208
 	ldr	r0, [r0]
 	ldrh	r1, [r0, #0x4]
 	mov	r0, #0xe0
 	lsl	r0, r0, #0x5
 	cmp	r1, r0
-	beq	.L138	@cond_branch
+	beq	.L200	@cond_branch
 	bl	GetSav1Weather
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	cmp	r0, #0x8
-	beq	.L138	@cond_branch
-.L143:
+	beq	.L200	@cond_branch
+.L205:
 	mov	r0, #0x9
-	b	.L139
-.L147:
+	b	.L201
+.L209:
 	.align	2, 0
-.L146:
+.L208:
 	.word	gSaveBlock1Ptr
-.L138:
+.L200:
 	mov	r0, #0x2
-.L139:
+.L201:
 	add	sp, sp, #0x4
 	pop	{r4, r5}
 	pop	{r1}
@@ -2032,35 +2251,35 @@ GetBattleTransitionTypeByMap:
 	bl	Overworld_GetFlashLevel
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.L149	@cond_branch
+	beq	.L211	@cond_branch
 	mov	r0, #0x2
-	b	.L156
-.L149:
+	b	.L218
+.L211:
 	lsl	r0, r4, #0x18
 	lsr	r0, r0, #0x18
 	bl	MetatileBehavior_IsSurfableWaterOrUnderwater
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	bne	.L150	@cond_branch
-	ldr	r0, .L157
+	bne	.L212	@cond_branch
+	ldr	r0, .L219
 	ldrb	r0, [r0, #0x17]
 	cmp	r0, #0x4
-	beq	.L152	@cond_branch
+	beq	.L214	@cond_branch
 	cmp	r0, #0x5
-	beq	.L153	@cond_branch
+	beq	.L215	@cond_branch
 	mov	r0, #0x0
-	b	.L156
-.L158:
+	b	.L218
+.L220:
 	.align	2, 0
-.L157:
+.L219:
 	.word	gMapHeader
-.L152:
+.L214:
 	mov	r0, #0x1
-	b	.L156
-.L153:
-.L150:
+	b	.L218
+.L215:
+.L212:
 	mov	r0, #0x3
-.L156:
+.L218:
 	add	sp, sp, #0x4
 	pop	{r4}
 	pop	{r1}
@@ -2076,26 +2295,26 @@ GetSumOfPlayerPartyLevel:
 	lsr	r5, r0, #0x18
 	mov	r7, #0x0
 	mov	r6, #0x0
-.L163:
+.L225:
 	mov	r0, #0x64
 	mov	r1, r6
 	mul	r1, r1, r0
-	ldr	r0, .L167
+	ldr	r0, .L229
 	add	r4, r1, r0
 	add	r0, r4, #0
 	mov	r1, #0x41
 	bl	GetMonData
 	add	r1, r0, #0
-	ldr	r0, .L167+0x4
+	ldr	r0, .L229+0x4
 	cmp	r1, r0
-	beq	.L162	@cond_branch
+	beq	.L224	@cond_branch
 	cmp	r1, #0
-	beq	.L162	@cond_branch
+	beq	.L224	@cond_branch
 	add	r0, r4, #0
 	mov	r1, #0x39
 	bl	GetMonData
 	cmp	r0, #0
-	beq	.L162	@cond_branch
+	beq	.L224	@cond_branch
 	add	r0, r4, #0
 	mov	r1, #0x38
 	bl	GetMonData
@@ -2106,19 +2325,19 @@ GetSumOfPlayerPartyLevel:
 	lsl	r0, r0, #0x18
 	lsr	r5, r0, #0x18
 	cmp	r5, #0
-	beq	.L161	@cond_branch
-.L162:
+	beq	.L223	@cond_branch
+.L224:
 	add	r6, r6, #0x1
 	cmp	r6, #0x5
-	ble	.L163	@cond_branch
-.L161:
+	ble	.L225	@cond_branch
+.L223:
 	add	r0, r7, #0
 	pop	{r4, r5, r6, r7}
 	pop	{r1}
 	bx	r1
-.L168:
+.L230:
 	.align	2, 0
-.L167:
+.L229:
 	.word	gPlayerParty
 	.word	0x4b7
 .Lfe23:
@@ -2132,7 +2351,7 @@ GetSumOfEnemyPartyLevel:
 	lsr	r0, r0, #0x10
 	lsl	r1, r1, #0x18
 	lsr	r4, r1, #0x18
-	ldr	r5, .L199
+	ldr	r5, .L261
 	lsl	r1, r0, #0x2
 	add	r1, r1, r0
 	lsl	r1, r1, #0x3
@@ -2141,37 +2360,37 @@ GetSumOfEnemyPartyLevel:
 	add	r0, r0, #0x20
 	ldrb	r0, [r0]
 	cmp	r0, r4
-	bcs	.L170	@cond_branch
+	bcs	.L232	@cond_branch
 	add	r4, r0, #0
-.L170:
+.L232:
 	mov	r3, #0x0
 	ldrb	r0, [r2]
 	cmp	r0, #0x1
-	beq	.L178	@cond_branch
+	beq	.L240	@cond_branch
 	cmp	r0, #0x1
-	bgt	.L198	@cond_branch
+	bgt	.L260	@cond_branch
 	cmp	r0, #0
-	beq	.L172	@cond_branch
-	b	.L171
-.L200:
+	beq	.L234	@cond_branch
+	b	.L233
+.L262:
 	.align	2, 0
-.L199:
+.L261:
 	.word	gTrainers
-.L198:
+.L260:
 	cmp	r0, #0x2
-	beq	.L184	@cond_branch
+	beq	.L246	@cond_branch
 	cmp	r0, #0x3
-	beq	.L190	@cond_branch
-	b	.L171
-.L172:
+	beq	.L252	@cond_branch
+	b	.L233
+.L234:
 	add	r0, r5, #0
 	add	r0, r0, #0x24
 	add	r0, r1, r0
 	ldr	r1, [r0]
 	mov	r2, #0x0
 	cmp	r3, r4
-	bcs	.L171	@cond_branch
-.L176:
+	bcs	.L233	@cond_branch
+.L238:
 	lsl	r0, r2, #0x4
 	add	r0, r0, r1
 	ldrb	r0, [r0, #0x2]
@@ -2182,17 +2401,17 @@ GetSumOfEnemyPartyLevel:
 	lsl	r0, r0, #0x18
 	lsr	r2, r0, #0x18
 	cmp	r2, r4
-	bcc	.L176	@cond_branch
-	b	.L171
-.L178:
+	bcc	.L238	@cond_branch
+	b	.L233
+.L240:
 	add	r0, r5, #0
 	add	r0, r0, #0x24
 	add	r0, r1, r0
 	ldr	r1, [r0]
 	mov	r2, #0x0
 	cmp	r3, r4
-	bcs	.L171	@cond_branch
-.L182:
+	bcs	.L233	@cond_branch
+.L244:
 	lsl	r0, r2, #0x5
 	add	r0, r0, r1
 	ldrb	r0, [r0, #0x2]
@@ -2203,17 +2422,17 @@ GetSumOfEnemyPartyLevel:
 	lsl	r0, r0, #0x18
 	lsr	r2, r0, #0x18
 	cmp	r2, r4
-	bcc	.L182	@cond_branch
-	b	.L171
-.L184:
+	bcc	.L244	@cond_branch
+	b	.L233
+.L246:
 	add	r0, r5, #0
 	add	r0, r0, #0x24
 	add	r0, r1, r0
 	ldr	r1, [r0]
 	mov	r2, #0x0
 	cmp	r3, r4
-	bcs	.L171	@cond_branch
-.L188:
+	bcs	.L233	@cond_branch
+.L250:
 	lsl	r0, r2, #0x2
 	add	r0, r0, r2
 	lsl	r0, r0, #0x2
@@ -2226,17 +2445,17 @@ GetSumOfEnemyPartyLevel:
 	lsl	r0, r0, #0x18
 	lsr	r2, r0, #0x18
 	cmp	r2, r4
-	bcc	.L188	@cond_branch
-	b	.L171
-.L190:
+	bcc	.L250	@cond_branch
+	b	.L233
+.L252:
 	add	r0, r5, #0
 	add	r0, r0, #0x24
 	add	r0, r1, r0
 	ldr	r1, [r0]
 	mov	r2, #0x0
 	cmp	r3, r4
-	bcs	.L171	@cond_branch
-.L194:
+	bcs	.L233	@cond_branch
+.L256:
 	lsl	r0, r2, #0x3
 	add	r0, r0, r2
 	lsl	r0, r0, #0x2
@@ -2249,8 +2468,8 @@ GetSumOfEnemyPartyLevel:
 	lsl	r0, r0, #0x18
 	lsr	r2, r0, #0x18
 	cmp	r2, r4
-	bcc	.L194	@cond_branch
-.L171:
+	bcc	.L256	@cond_branch
+.L233:
 	add	r0, r3, #0
 	pop	{r4, r5}
 	pop	{r1}
@@ -2267,7 +2486,7 @@ GetWildBattleTransition:
 	lsl	r0, r0, #0x18
 	lsr	r5, r0, #0x18
 	add	r6, r5, #0
-	ldr	r0, .L210
+	ldr	r0, .L272
 	mov	r1, #0x38
 	bl	GetMonData
 	add	r4, r0, #0
@@ -2278,44 +2497,44 @@ GetWildBattleTransition:
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	cmp	r4, r0
-	bcs	.L202	@cond_branch
+	bcs	.L264	@cond_branch
 	bl	InBattlePyramid
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.L203	@cond_branch
+	beq	.L265	@cond_branch
 	mov	r0, #0x0
-	b	.L208
-.L211:
+	b	.L270
+.L273:
 	.align	2, 0
-.L210:
+.L272:
 	.word	gEnemyParty
-.L203:
-	ldr	r0, .L212
+.L265:
+	ldr	r0, .L274
 	lsl	r1, r5, #0x1
-	b	.L209
-.L213:
+	b	.L271
+.L275:
 	.align	2, 0
-.L212:
+.L274:
 	.word	sBattleTransitionTable_Wild
-.L202:
+.L264:
 	bl	InBattlePyramid
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	bne	.L206	@cond_branch
-	ldr	r0, .L214
+	bne	.L268	@cond_branch
+	ldr	r0, .L276
 	lsl	r1, r6, #0x1
 	add	r0, r0, #0x1
-.L209:
+.L271:
 	add	r1, r1, r0
 	ldrb	r0, [r1]
-	b	.L208
-.L215:
+	b	.L270
+.L277:
 	.align	2, 0
-.L214:
+.L276:
 	.word	sBattleTransitionTable_Wild
-.L206:
+.L268:
 	mov	r0, #0xa
-.L208:
+.L270:
 	pop	{r4, r5, r6}
 	pop	{r1}
 	bx	r1
@@ -2327,13 +2546,13 @@ GetWildBattleTransition:
 	.thumb_func
 GetTrainerBattleTransition:
 	push	{r4, r5, r6, lr}
-	ldr	r4, .L236
+	ldr	r4, .L298
 	ldrh	r1, [r4]
 	mov	r0, #0x80
 	lsl	r0, r0, #0x3
 	cmp	r1, r0
-	beq	.L233	@cond_branch
-	ldr	r1, .L236+0x4
+	beq	.L295	@cond_branch
+	ldr	r1, .L298+0x4
 	ldrh	r2, [r4]
 	lsl	r0, r2, #0x2
 	add	r0, r0, r2
@@ -2341,76 +2560,76 @@ GetTrainerBattleTransition:
 	add	r0, r0, r1
 	ldrb	r1, [r0, #0x1]
 	cmp	r1, #0x1f
-	bne	.L218	@cond_branch
+	bne	.L280	@cond_branch
 	add	r1, r2, #0
-	ldr	r0, .L236+0x8
+	ldr	r0, .L298+0x8
 	cmp	r1, r0
-	bne	.L219	@cond_branch
+	bne	.L281	@cond_branch
 	mov	r0, #0xc
-	b	.L232
-.L237:
+	b	.L294
+.L299:
 	.align	2, 0
-.L236:
+.L298:
 	.word	gTrainerBattleOpponent_A
 	.word	gTrainers
 	.word	0x105
-.L219:
+.L281:
 	mov	r0, #0x83
 	lsl	r0, r0, #0x1
 	cmp	r1, r0
-	bne	.L220	@cond_branch
+	bne	.L282	@cond_branch
 	mov	r0, #0xd
-	b	.L232
-.L220:
-	ldr	r0, .L238
+	b	.L294
+.L282:
+	ldr	r0, .L300
 	cmp	r1, r0
-	bne	.L221	@cond_branch
+	bne	.L283	@cond_branch
 	mov	r0, #0xe
-	b	.L232
-.L239:
+	b	.L294
+.L301:
 	.align	2, 0
-.L238:
+.L300:
 	.word	0x107
-.L221:
+.L283:
 	mov	r0, #0x84
 	lsl	r0, r0, #0x1
 	cmp	r1, r0
-	bne	.L233	@cond_branch
+	bne	.L295	@cond_branch
 	mov	r0, #0xf
-	b	.L232
-.L218:
+	b	.L294
+.L280:
 	cmp	r1, #0x26
-	bne	.L223	@cond_branch
-.L233:
+	bne	.L285	@cond_branch
+.L295:
 	mov	r0, #0x10
-	b	.L232
-.L223:
+	b	.L294
+.L285:
 	cmp	r1, #0x9
-	beq	.L225	@cond_branch
+	beq	.L287	@cond_branch
 	cmp	r1, #0x35
-	beq	.L225	@cond_branch
+	beq	.L287	@cond_branch
 	cmp	r1, #0x31
-	bne	.L224	@cond_branch
-.L225:
+	bne	.L286	@cond_branch
+.L287:
 	mov	r0, #0x12
-	b	.L232
-.L224:
+	b	.L294
+.L286:
 	cmp	r1, #0x3
-	beq	.L227	@cond_branch
+	beq	.L289	@cond_branch
 	cmp	r1, #0xd
-	beq	.L227	@cond_branch
+	beq	.L289	@cond_branch
 	cmp	r1, #0xb
-	bne	.L226	@cond_branch
-.L227:
+	bne	.L288	@cond_branch
+.L289:
 	mov	r0, #0x11
-	b	.L232
-.L226:
+	b	.L294
+.L288:
 	ldrb	r0, [r0, #0x18]
 	mov	r5, #0x1
 	cmp	r0, #0x1
-	bne	.L228	@cond_branch
+	bne	.L290	@cond_branch
 	mov	r5, #0x2
-.L228:
+.L290:
 	bl	GetBattleTransitionTypeByMap
 	lsl	r0, r0, #0x18
 	lsr	r6, r0, #0x18
@@ -2425,28 +2644,28 @@ GetTrainerBattleTransition:
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	cmp	r4, r0
-	bcc	.L230	@cond_branch
-	ldr	r0, .L240
+	bcc	.L292	@cond_branch
+	ldr	r0, .L302
 	lsl	r1, r6, #0x1
 	add	r0, r0, #0x1
-	b	.L235
-.L241:
+	b	.L297
+.L303:
 	.align	2, 0
-.L240:
+.L302:
 	.word	sBattleTransitionTable_Trainer
-.L230:
-	ldr	r0, .L242
+.L292:
+	ldr	r0, .L304
 	lsl	r1, r6, #0x1
-.L235:
+.L297:
 	add	r1, r1, r0
 	ldrb	r0, [r1]
-.L232:
+.L294:
 	pop	{r4, r5, r6}
 	pop	{r1}
 	bx	r1
-.L243:
+.L305:
 	.align	2, 0
-.L242:
+.L304:
 	.word	sBattleTransitionTable_Trainer
 .Lfe26:
 	.size	 GetTrainerBattleTransition,.Lfe26-GetTrainerBattleTransition
@@ -2457,7 +2676,7 @@ GetTrainerBattleTransition:
 GetSpecialBattleTransition:
 	push	{r4, r5, lr}
 	add	r5, r0, #0
-	ldr	r0, .L277
+	ldr	r0, .L339
 	mov	r1, #0x38
 	bl	GetMonData
 	add	r4, r0, #0
@@ -2468,116 +2687,116 @@ GetSpecialBattleTransition:
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	cmp	r4, r0
-	bcs	.L245	@cond_branch
+	bcs	.L307	@cond_branch
 	cmp	r5, #0xa
-	beq	.L250	@cond_branch
+	beq	.L312	@cond_branch
 	cmp	r5, #0xa
-	bgt	.L254	@cond_branch
+	bgt	.L316	@cond_branch
 	cmp	r5, #0x3
-	beq	.L251	@cond_branch
-	b	.L246
-.L278:
+	beq	.L313	@cond_branch
+	b	.L308
+.L340:
 	.align	2, 0
-.L277:
+.L339:
 	.word	gEnemyParty
-.L254:
+.L316:
 	cmp	r5, #0xd
-	bgt	.L246	@cond_branch
+	bgt	.L308	@cond_branch
 	mov	r0, #0x4
-	b	.L267
-.L250:
-	ldr	r4, .L279
+	b	.L329
+.L312:
+	ldr	r4, .L341
 	bl	Random
 	lsl	r0, r0, #0x10
 	lsr	r0, r0, #0x10
 	mov	r1, #0x3
-	b	.L269
-.L280:
+	b	.L331
+.L342:
 	.align	2, 0
-.L279:
+.L341:
 	.word	sBattleTransitionTable_BattlePyramid
-.L251:
-	ldr	r4, .L281
+.L313:
+	ldr	r4, .L343
 	bl	Random
 	and	r5, r5, r0
 	lsl	r0, r5, #0x10
-	b	.L271
-.L282:
+	b	.L333
+.L344:
 	.align	2, 0
-.L281:
+.L343:
 	.word	sBattleTransitionTable_BattleDome
-.L246:
-	ldr	r0, .L283
+.L308:
+	ldr	r0, .L345
 	bl	VarGet
 	lsl	r0, r0, #0x10
 	lsr	r0, r0, #0x10
 	cmp	r0, #0x3
-	beq	.L256	@cond_branch
-	ldr	r4, .L283+0x4
+	beq	.L318	@cond_branch
+	ldr	r4, .L345+0x4
 	bl	Random
 	lsl	r0, r0, #0x10
 	lsr	r0, r0, #0x10
-	b	.L273
-.L284:
+	b	.L335
+.L346:
 	.align	2, 0
-.L283:
+.L345:
 	.word	0x40ce
 	.word	sBattleTransitionTable_BattleFrontier
-.L245:
+.L307:
 	cmp	r5, #0xa
-	beq	.L261	@cond_branch
+	beq	.L323	@cond_branch
 	cmp	r5, #0xa
-	bgt	.L265	@cond_branch
+	bgt	.L327	@cond_branch
 	cmp	r5, #0x3
-	beq	.L262	@cond_branch
-	b	.L257
-.L265:
+	beq	.L324	@cond_branch
+	b	.L319
+.L327:
 	cmp	r5, #0xd
-	bgt	.L257	@cond_branch
+	bgt	.L319	@cond_branch
 	mov	r0, #0x3
-	b	.L267
-.L261:
-	ldr	r4, .L285
+	b	.L329
+.L323:
+	ldr	r4, .L347
 	bl	Random
 	lsl	r0, r0, #0x10
 	lsr	r0, r0, #0x10
 	mov	r1, #0x3
-	b	.L269
-.L286:
+	b	.L331
+.L348:
 	.align	2, 0
-.L285:
+.L347:
 	.word	sBattleTransitionTable_BattlePyramid
-.L262:
-	ldr	r4, .L287
+.L324:
+	ldr	r4, .L349
 	bl	Random
 	and	r5, r5, r0
 	lsl	r0, r5, #0x10
-	b	.L271
-.L288:
+	b	.L333
+.L350:
 	.align	2, 0
-.L287:
+.L349:
 	.word	sBattleTransitionTable_BattleDome
-.L257:
-	ldr	r0, .L289
+.L319:
+	ldr	r0, .L351
 	bl	VarGet
 	lsl	r0, r0, #0x10
 	lsr	r0, r0, #0x10
 	cmp	r0, #0x3
-	beq	.L256	@cond_branch
-	ldr	r4, .L289+0x4
+	beq	.L318	@cond_branch
+	ldr	r4, .L351+0x4
 	bl	Random
 	lsl	r0, r0, #0x10
 	lsr	r0, r0, #0x10
-	b	.L273
-.L290:
+	b	.L335
+.L352:
 	.align	2, 0
-.L289:
+.L351:
 	.word	0x40ce
 	.word	sBattleTransitionTable_BattleFrontier
-.L256:
-	ldr	r0, .L291
+.L318:
+	ldr	r0, .L353
 	ldr	r1, [r0]
-	ldr	r2, .L291+0x4
+	ldr	r2, .L353+0x4
 	add	r0, r1, r2
 	ldrh	r0, [r0]
 	lsl	r2, r0, #0x2
@@ -2594,23 +2813,23 @@ GetSpecialBattleTransition:
 	add	r0, r0, r2
 	lsl	r0, r0, #0x10
 	lsr	r0, r0, #0x10
-	ldr	r4, .L291+0x8
-.L273:
+	ldr	r4, .L353+0x8
+.L335:
 	mov	r1, #0xc
-.L269:
+.L331:
 	bl	__umodsi3
 	lsl	r0, r0, #0x10
-.L271:
+.L333:
 	lsr	r0, r0, #0x10
 	add	r0, r0, r4
 	ldrb	r0, [r0]
-.L267:
+.L329:
 	pop	{r4, r5}
 	pop	{r1}
 	bx	r1
-.L292:
+.L354:
 	.align	2, 0
-.L291:
+.L353:
 	.word	gSaveBlock2Ptr
 	.word	0xc3e
 	.word	sBattleTransitionTable_BattleFrontier
@@ -2622,16 +2841,16 @@ GetSpecialBattleTransition:
 	.thumb_func
 ChooseStarter:
 	push	{lr}
-	ldr	r0, .L294
+	ldr	r0, .L356
 	bl	SetMainCallback2
-	ldr	r1, .L294+0x4
-	ldr	r0, .L294+0x8
+	ldr	r1, .L356+0x4
+	ldr	r0, .L356+0x8
 	str	r0, [r1, #0x8]
 	pop	{r0}
 	bx	r0
-.L295:
+.L357:
 	.align	2, 0
-.L294:
+.L356:
 	.word	CB2_ChooseStarter
 	.word	gMain
 	.word	CB2_GiveStarter
@@ -2643,9 +2862,9 @@ ChooseStarter:
 CB2_GiveStarter:
 	push	{lr}
 	add	sp, sp, #-0x8
-	ldr	r0, .L297
+	ldr	r0, .L359
 	bl	GetVarPointer
-	ldr	r2, .L297+0x4
+	ldr	r2, .L359+0x4
 	ldrh	r1, [r2]
 	strh	r1, [r0]
 	ldrh	r0, [r2]
@@ -2661,16 +2880,16 @@ CB2_GiveStarter:
 	bl	ScriptGiveMon
 	bl	ResetTasks
 	bl	PlayBattleBGM
-	ldr	r0, .L297+0x8
+	ldr	r0, .L359+0x8
 	bl	SetMainCallback2
 	mov	r0, #0x0
 	bl	BattleTransition_Start
 	add	sp, sp, #0x8
 	pop	{r0}
 	bx	r0
-.L298:
+.L360:
 	.align	2, 0
-.L297:
+.L359:
 	.word	0x4023
 	.word	gSpecialVar_Result
 	.word	CB2_StartFirstBattle
@@ -2687,15 +2906,15 @@ CB2_StartFirstBattle:
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	cmp	r0, #0x1
-	bne	.L300	@cond_branch
-	ldr	r1, .L301
+	bne	.L362	@cond_branch
+	ldr	r1, .L363
 	mov	r0, #0x10
 	str	r0, [r1]
-	ldr	r1, .L301+0x4
-	ldr	r0, .L301+0x8
+	ldr	r1, .L363+0x4
+	ldr	r0, .L363+0x8
 	str	r0, [r1, #0x8]
 	bl	FreeAllWindowBuffers
-	ldr	r0, .L301+0xc
+	ldr	r0, .L363+0xc
 	bl	SetMainCallback2
 	bl	RestartWildEncounterImmunitySteps
 	bl	ClearPoisonStepCounter
@@ -2705,12 +2924,12 @@ CB2_StartFirstBattle:
 	bl	IncrementGameStat
 	bl	IncrementDailyWildBattles
 	bl	TryUpdateGymLeaderRematchFromWild
-.L300:
+.L362:
 	pop	{r0}
 	bx	r0
-.L302:
+.L364:
 	.align	2, 0
-.L301:
+.L363:
 	.word	gBattleTypeFlags
 	.word	gMain
 	.word	CB2_EndFirstBattle
@@ -2723,13 +2942,13 @@ CB2_StartFirstBattle:
 CB2_EndFirstBattle:
 	push	{lr}
 	bl	Overworld_ClearSavedMusic
-	ldr	r0, .L304
+	ldr	r0, .L366
 	bl	SetMainCallback2
 	pop	{r0}
 	bx	r0
-.L305:
+.L367:
 	.align	2, 0
-.L304:
+.L366:
 	.word	CB2_ReturnToFieldContinueScriptPlayMapMusic
 .Lfe31:
 	.size	 CB2_EndFirstBattle,.Lfe31-CB2_EndFirstBattle
@@ -2743,9 +2962,9 @@ TryUpdateGymLeaderRematchFromWild:
 	mov	r1, #0x3c
 	bl	__umodsi3
 	cmp	r0, #0
-	bne	.L307	@cond_branch
+	bne	.L369	@cond_branch
 	bl	UpdateGymLeaderRematch
-.L307:
+.L369:
 	pop	{r0}
 	bx	r0
 .Lfe32:
@@ -2760,9 +2979,9 @@ TryUpdateGymLeaderRematchFromTrainer:
 	mov	r1, #0x14
 	bl	__umodsi3
 	cmp	r0, #0
-	bne	.L309	@cond_branch
+	bne	.L371	@cond_branch
 	bl	UpdateGymLeaderRematch
-.L309:
+.L371:
 	pop	{r0}
 	bx	r0
 .Lfe33:
@@ -2809,7 +3028,7 @@ TrainerBattleLoadArg8:
 	.type	 GetTrainerAFlag,function
 	.thumb_func
 GetTrainerAFlag:
-	ldr	r1, .L314
+	ldr	r1, .L376
 	mov	r2, #0xa0
 	lsl	r2, r2, #0x3
 	add	r0, r2, #0
@@ -2818,9 +3037,9 @@ GetTrainerAFlag:
 	lsl	r0, r0, #0x10
 	lsr	r0, r0, #0x10
 	bx	lr
-.L315:
+.L377:
 	.align	2, 0
-.L314:
+.L376:
 	.word	gTrainerBattleOpponent_A
 .Lfe37:
 	.size	 GetTrainerAFlag,.Lfe37-GetTrainerAFlag
@@ -2828,7 +3047,7 @@ GetTrainerAFlag:
 	.type	 GetTrainerBFlag,function
 	.thumb_func
 GetTrainerBFlag:
-	ldr	r1, .L317
+	ldr	r1, .L379
 	mov	r2, #0xa0
 	lsl	r2, r2, #0x3
 	add	r0, r2, #0
@@ -2837,9 +3056,9 @@ GetTrainerBFlag:
 	lsl	r0, r0, #0x10
 	lsr	r0, r0, #0x10
 	bx	lr
-.L318:
+.L380:
 	.align	2, 0
-.L317:
+.L379:
 	.word	gTrainerBattleOpponent_B
 .Lfe38:
 	.size	 GetTrainerBFlag,.Lfe38-GetTrainerBFlag
@@ -2850,33 +3069,33 @@ IsPlayerDefeated:
 	push	{lr}
 	sub	r0, r0, #0x1
 	cmp	r0, #0x6
-	bhi	.L328	@cond_branch
+	bhi	.L390	@cond_branch
 	lsl	r0, r0, #0x2
-	ldr	r1, .L331
+	ldr	r1, .L393
 	add	r0, r0, r1
 	ldr	r0, [r0]
 	mov	pc, r0
-.L332:
+.L394:
 	.align	2, 0
-.L331:
-	.word	.L329
+.L393:
+	.word	.L391
 	.align	2, 0
 	.align	2, 0
-.L329:
-	.word	.L327
-	.word	.L322
-	.word	.L322
-	.word	.L327
-	.word	.L327
-	.word	.L327
-	.word	.L327
-.L322:
+.L391:
+	.word	.L389
+	.word	.L384
+	.word	.L384
+	.word	.L389
+	.word	.L389
+	.word	.L389
+	.word	.L389
+.L384:
 	mov	r0, #0x1
-	b	.L330
-.L327:
-.L328:
+	b	.L392
+.L389:
+.L390:
 	mov	r0, #0x0
-.L330:
+.L392:
 	pop	{r1}
 	bx	r1
 .Lfe39:
@@ -2886,15 +3105,15 @@ IsPlayerDefeated:
 	.type	 ResetTrainerOpponentIds,function
 	.thumb_func
 ResetTrainerOpponentIds:
-	ldr	r0, .L334
+	ldr	r0, .L396
 	mov	r1, #0x0
 	strh	r1, [r0]
-	ldr	r0, .L334+0x4
+	ldr	r0, .L396+0x4
 	strh	r1, [r0]
 	bx	lr
-.L335:
+.L397:
 	.align	2, 0
-.L334:
+.L396:
 	.word	gTrainerBattleOpponent_A
 	.word	gTrainerBattleOpponent_B
 .Lfe40:
@@ -2904,51 +3123,51 @@ ResetTrainerOpponentIds:
 	.thumb_func
 InitTrainerBattleVariables:
 	push	{lr}
-	ldr	r0, .L340
+	ldr	r0, .L402
 	mov	r1, #0x0
 	strh	r1, [r0]
-	ldr	r0, .L340+0x4
+	ldr	r0, .L402+0x4
 	ldrb	r1, [r0]
 	cmp	r1, #0
-	bne	.L337	@cond_branch
-	ldr	r0, .L340+0x8
+	bne	.L399	@cond_branch
+	ldr	r0, .L402+0x8
 	str	r1, [r0]
-	ldr	r0, .L340+0xc
+	ldr	r0, .L402+0xc
 	str	r1, [r0]
-	ldr	r0, .L340+0x10
-	b	.L339
-.L341:
+	ldr	r0, .L402+0x10
+	b	.L401
+.L403:
 	.align	2, 0
-.L340:
+.L402:
 	.word	sTrainerBattleMode
 	.word	gApproachingTrainerId
 	.word	sTrainerAIntroSpeech
 	.word	sTrainerADefeatSpeech
 	.word	sTrainerABattleScriptRetAddr
-.L337:
-	ldr	r0, .L342
+.L399:
+	ldr	r0, .L404
 	mov	r1, #0x0
 	str	r1, [r0]
-	ldr	r0, .L342+0x4
+	ldr	r0, .L404+0x4
 	str	r1, [r0]
-	ldr	r0, .L342+0x8
-.L339:
+	ldr	r0, .L404+0x8
+.L401:
 	str	r1, [r0]
-	ldr	r1, .L342+0xc
+	ldr	r1, .L404+0xc
 	mov	r0, #0x0
 	strh	r0, [r1]
-	ldr	r0, .L342+0x10
+	ldr	r0, .L404+0x10
 	mov	r1, #0x0
 	str	r1, [r0]
-	ldr	r0, .L342+0x14
+	ldr	r0, .L404+0x14
 	str	r1, [r0]
-	ldr	r0, .L342+0x18
+	ldr	r0, .L404+0x18
 	str	r1, [r0]
 	pop	{r0}
 	bx	r0
-.L343:
+.L405:
 	.align	2, 0
-.L342:
+.L404:
 	.word	sTrainerBIntroSpeech
 	.word	sTrainerBDefeatSpeech
 	.word	sTrainerBBattleScriptRetAddr
@@ -2965,68 +3184,68 @@ TrainerBattleLoadArgs:
 	push	{r4, r5, lr}
 	add	r4, r0, #0
 	add	r5, r1, #0
-.L351:
+.L413:
 	ldrb	r0, [r4, #0x4]
 	cmp	r0, #0x6
-	bhi	.L352	@cond_branch
+	bhi	.L414	@cond_branch
 	lsl	r0, r0, #0x2
-	ldr	r1, .L370
+	ldr	r1, .L432
 	add	r0, r0, r1
 	ldr	r0, [r0]
 	mov	pc, r0
-.L371:
+.L433:
 	.align	2, 0
-.L370:
-	.word	.L367
+.L432:
+	.word	.L429
 	.align	2, 0
 	.align	2, 0
-.L367:
-	.word	.L353
-	.word	.L355
-	.word	.L357
-	.word	.L359
-	.word	.L361
-	.word	.L363
-	.word	.L348
-.L353:
+.L429:
+	.word	.L415
+	.word	.L417
+	.word	.L419
+	.word	.L421
+	.word	.L423
+	.word	.L425
+	.word	.L410
+.L415:
 	add	r0, r5, #0
 	bl	TrainerBattleLoadArg8
 	ldr	r1, [r4]
 	strb	r0, [r1]
 	add	r5, r5, #0x1
-	b	.L352
-.L355:
+	b	.L414
+.L417:
 	add	r0, r5, #0
 	bl	TrainerBattleLoadArg16
 	ldr	r1, [r4]
 	strh	r0, [r1]
 	add	r5, r5, #0x2
-	b	.L352
-.L357:
+	b	.L414
+.L419:
 	add	r0, r5, #0
 	bl	TrainerBattleLoadArg32
 	ldr	r1, [r4]
 	str	r0, [r1]
 	add	r5, r5, #0x4
-	b	.L352
-.L359:
+	b	.L414
+.L421:
 	ldr	r1, [r4]
 	mov	r0, #0x0
 	strb	r0, [r1]
-	b	.L352
-.L361:
+	b	.L414
+.L423:
 	ldr	r1, [r4]
 	mov	r0, #0x0
 	strh	r0, [r1]
-	b	.L352
-.L363:
+	b	.L414
+.L425:
 	ldr	r1, [r4]
 	mov	r0, #0x0
 	str	r0, [r1]
-.L352:
+.L414:
 	add	r4, r4, #0x8
-	b	.L351
-.L348:
+	b	.L413
+.L410:
 	ldr	r0, [r4]
 	str	r5, [r0]
 	pop	{r4, r5}
@@ -3040,27 +3259,27 @@ TrainerBattleLoadArgs:
 	.thumb_func
 SetMapVarsToTrainer:
 	push	{lr}
-	ldr	r0, .L374
+	ldr	r0, .L436
 	ldrh	r1, [r0]
 	cmp	r1, #0
-	beq	.L373	@cond_branch
-	ldr	r0, .L374+0x4
+	beq	.L435	@cond_branch
+	ldr	r0, .L436+0x4
 	strh	r1, [r0]
 	lsl	r0, r1, #0x18
 	lsr	r0, r0, #0x18
-	ldr	r1, .L374+0x8
+	ldr	r1, .L436+0x8
 	ldr	r2, [r1]
 	ldrb	r1, [r2, #0x5]
 	ldrb	r2, [r2, #0x4]
 	bl	GetObjectEventIdByLocalIdAndMap
-	ldr	r1, .L374+0xc
+	ldr	r1, .L436+0xc
 	strb	r0, [r1]
-.L373:
+.L435:
 	pop	{r0}
 	bx	r0
-.L375:
+.L437:
 	.align	2, 0
-.L374:
+.L436:
 	.word	sTrainerObjectEventLocalId
 	.word	gSpecialVar_LastTalked
 	.word	gSaveBlock1Ptr
@@ -3078,10 +3297,10 @@ BattleSetup_ConfigureTrainerBattle:
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	cmp	r0, #0xb
-	beq	.L377	@cond_branch
+	beq	.L439	@cond_branch
 	bl	InitTrainerBattleVariables
-.L377:
-	ldr	r4, .L410
+.L439:
+	ldr	r4, .L472
 	add	r0, r5, #0
 	bl	TrainerBattleLoadArg8
 	lsl	r0, r0, #0x18
@@ -3090,248 +3309,248 @@ BattleSetup_ConfigureTrainerBattle:
 	ldrh	r0, [r4]
 	sub	r0, r0, #0x1
 	cmp	r0, #0xb
-	bls	.LCB2621
-	b	.L397	@long jump
-.LCB2621:
+	bls	.LCB2889
+	b	.L459	@long jump
+.LCB2889:
 	lsl	r0, r0, #0x2
-	ldr	r1, .L410+0x4
+	ldr	r1, .L472+0x4
 	add	r0, r0, r1
 	ldr	r0, [r0]
 	mov	pc, r0
-.L411:
+.L473:
 	.align	2, 0
-.L410:
+.L472:
 	.word	sTrainerBattleMode
-	.word	.L400
+	.word	.L462
 	.align	2, 0
 	.align	2, 0
-.L400:
-	.word	.L384
-	.word	.L381
-	.word	.L379
-	.word	.L380
-	.word	.L388
-	.word	.L386
-	.word	.L387
-	.word	.L386
-	.word	.L389
-	.word	.L392
-	.word	.L393
-	.word	.L394
-.L379:
-	ldr	r0, .L412
+.L462:
+	.word	.L446
+	.word	.L443
+	.word	.L441
+	.word	.L442
+	.word	.L450
+	.word	.L448
+	.word	.L449
+	.word	.L448
+	.word	.L451
+	.word	.L454
+	.word	.L455
+	.word	.L456
+.L441:
+	ldr	r0, .L474
 	add	r1, r5, #0
 	bl	TrainerBattleLoadArgs
-	ldr	r0, .L412+0x4
-	b	.L401
-.L413:
+	ldr	r0, .L474+0x4
+	b	.L463
+.L475:
 	.align	2, 0
-.L412:
+.L474:
 	.word	sOrdinaryNoIntroBattleParams
 	.word	EventScript_DoNoIntroTrainerBattle
-.L380:
-	ldr	r0, .L414
-	b	.L402
-.L415:
+.L442:
+	ldr	r0, .L476
+	b	.L464
+.L477:
 	.align	2, 0
-.L414:
+.L476:
 	.word	sDoubleBattleParams
-.L381:
-	ldr	r0, .L416
+.L443:
+	ldr	r0, .L478
 	ldrb	r0, [r0]
 	cmp	r0, #0
-	bne	.L382	@cond_branch
-	ldr	r0, .L416+0x4
-	b	.L403
-.L417:
+	bne	.L444	@cond_branch
+	ldr	r0, .L478+0x4
+	b	.L465
+.L479:
 	.align	2, 0
-.L416:
+.L478:
 	.word	gApproachingTrainerId
 	.word	sContinueScriptBattleParams
-.L382:
-	ldr	r0, .L418
-	b	.L408
-.L419:
+.L444:
+	ldr	r0, .L480
+	b	.L470
+.L481:
 	.align	2, 0
-.L418:
+.L480:
 	.word	sTrainerBContinueScriptBattleParams
-.L384:
-	ldr	r0, .L420
-	b	.L403
-.L421:
+.L446:
+	ldr	r0, .L482
+	b	.L465
+.L483:
 	.align	2, 0
-.L420:
+.L482:
 	.word	sContinueScriptBattleParams
-.L386:
-	ldr	r0, .L422
-.L402:
+.L448:
+	ldr	r0, .L484
+.L464:
 	add	r1, r5, #0
 	bl	TrainerBattleLoadArgs
 	bl	SetMapVarsToTrainer
-	ldr	r0, .L422+0x4
-	b	.L401
-.L423:
+	ldr	r0, .L484+0x4
+	b	.L463
+.L485:
 	.align	2, 0
-.L422:
+.L484:
 	.word	sContinueScriptDoubleBattleParams
 	.word	EventScript_TryDoDoubleTrainerBattle
-.L387:
-	ldr	r0, .L424
+.L449:
+	ldr	r0, .L486
 	add	r1, r5, #0
 	bl	TrainerBattleLoadArgs
 	bl	SetMapVarsToTrainer
-	ldr	r4, .L424+0x4
+	ldr	r4, .L486+0x4
 	ldrh	r0, [r4]
 	bl	GetRematchTrainerId
 	strh	r0, [r4]
-	ldr	r0, .L424+0x8
-	b	.L401
-.L425:
+	ldr	r0, .L486+0x8
+	b	.L463
+.L487:
 	.align	2, 0
-.L424:
+.L486:
 	.word	sDoubleBattleParams
 	.word	gTrainerBattleOpponent_A
 	.word	EventScript_TryDoDoubleRematchBattle
-.L388:
-	ldr	r0, .L426
+.L450:
+	ldr	r0, .L488
 	add	r1, r5, #0
 	bl	TrainerBattleLoadArgs
 	bl	SetMapVarsToTrainer
-	ldr	r4, .L426+0x4
+	ldr	r4, .L488+0x4
 	ldrh	r0, [r4]
 	bl	GetRematchTrainerId
 	strh	r0, [r4]
-	ldr	r0, .L426+0x8
-	b	.L401
-.L427:
+	ldr	r0, .L488+0x8
+	b	.L463
+.L489:
 	.align	2, 0
-.L426:
+.L488:
 	.word	sOrdinaryBattleParams
 	.word	gTrainerBattleOpponent_A
 	.word	EventScript_TryDoRematchBattle
-.L389:
-	ldr	r0, .L428
+.L451:
+	ldr	r0, .L490
 	ldrb	r0, [r0]
 	cmp	r0, #0
-	bne	.L390	@cond_branch
-	ldr	r0, .L428+0x4
+	bne	.L452	@cond_branch
+	ldr	r0, .L490+0x4
 	add	r1, r5, #0
 	bl	TrainerBattleLoadArgs
 	bl	SetMapVarsToTrainer
-	ldr	r0, .L428+0x8
+	ldr	r0, .L490+0x8
 	ldrb	r0, [r0]
 	bl	LocalIdToPyramidTrainerId
-	ldr	r1, .L428+0xc
-	b	.L404
-.L429:
+	ldr	r1, .L490+0xc
+	b	.L466
+.L491:
 	.align	2, 0
-.L428:
+.L490:
 	.word	gApproachingTrainerId
 	.word	sOrdinaryBattleParams
 	.word	gSpecialVar_LastTalked
 	.word	gTrainerBattleOpponent_A
-.L390:
-	ldr	r0, .L430
+.L452:
+	ldr	r0, .L492
 	add	r1, r5, #0
 	bl	TrainerBattleLoadArgs
-	ldr	r0, .L430+0x4
+	ldr	r0, .L492+0x4
 	ldrb	r0, [r0]
 	bl	LocalIdToPyramidTrainerId
-.L409:
-	ldr	r1, .L430+0x8
-.L404:
+.L471:
+	ldr	r1, .L492+0x8
+.L466:
 	strh	r0, [r1]
-	b	.L399
-.L431:
+	b	.L461
+.L493:
 	.align	2, 0
-.L430:
+.L492:
 	.word	sTrainerBOrdinaryBattleParams
 	.word	gSpecialVar_LastTalked
 	.word	gTrainerBattleOpponent_B
-.L392:
-	ldr	r0, .L432
-	b	.L405
-.L433:
+.L454:
+	ldr	r0, .L494
+	b	.L467
+.L495:
 	.align	2, 0
-.L432:
+.L494:
 	.word	sOrdinaryBattleParams
-.L393:
-	ldr	r0, .L434
-.L405:
+.L455:
+	ldr	r0, .L496
+.L467:
 	add	r1, r5, #0
 	bl	TrainerBattleLoadArgs
-	ldr	r0, .L434+0x4
+	ldr	r0, .L496+0x4
 	ldr	r0, [r0]
-	b	.L401
-.L435:
+	b	.L463
+.L497:
 	.align	2, 0
-.L434:
+.L496:
 	.word	sTrainerBOrdinaryBattleParams
 	.word	sTrainerBattleEndScript
-.L394:
-	ldr	r0, .L436
+.L456:
+	ldr	r0, .L498
 	ldrb	r0, [r0]
 	cmp	r0, #0
-	bne	.L395	@cond_branch
-	ldr	r0, .L436+0x4
+	bne	.L457	@cond_branch
+	ldr	r0, .L498+0x4
 	add	r1, r5, #0
 	bl	TrainerBattleLoadArgs
 	bl	SetMapVarsToTrainer
-	ldr	r0, .L436+0x8
+	ldr	r0, .L498+0x8
 	ldrb	r0, [r0]
 	bl	LocalIdToHillTrainerId
-	ldr	r1, .L436+0xc
-	b	.L404
-.L437:
+	ldr	r1, .L498+0xc
+	b	.L466
+.L499:
 	.align	2, 0
-.L436:
+.L498:
 	.word	gApproachingTrainerId
 	.word	sOrdinaryBattleParams
 	.word	gSpecialVar_LastTalked
 	.word	gTrainerBattleOpponent_A
-.L395:
-	ldr	r0, .L438
+.L457:
+	ldr	r0, .L500
 	add	r1, r5, #0
 	bl	TrainerBattleLoadArgs
-	ldr	r0, .L438+0x4
+	ldr	r0, .L500+0x4
 	ldrb	r0, [r0]
 	bl	LocalIdToHillTrainerId
-	b	.L409
-.L439:
+	b	.L471
+.L501:
 	.align	2, 0
-.L438:
+.L500:
 	.word	sTrainerBOrdinaryBattleParams
 	.word	gSpecialVar_LastTalked
-.L397:
-	ldr	r0, .L440
+.L459:
+	ldr	r0, .L502
 	ldrb	r0, [r0]
 	cmp	r0, #0
-	bne	.L398	@cond_branch
-	ldr	r0, .L440+0x4
-.L403:
+	bne	.L460	@cond_branch
+	ldr	r0, .L502+0x4
+.L465:
 	add	r1, r5, #0
 	bl	TrainerBattleLoadArgs
 	bl	SetMapVarsToTrainer
-	b	.L399
-.L441:
+	b	.L461
+.L503:
 	.align	2, 0
-.L440:
+.L502:
 	.word	gApproachingTrainerId
 	.word	sOrdinaryBattleParams
-.L398:
-	ldr	r0, .L442
-.L408:
+.L460:
+	ldr	r0, .L504
+.L470:
 	add	r1, r5, #0
 	bl	TrainerBattleLoadArgs
-.L399:
-	ldr	r0, .L442+0x4
-.L401:
+.L461:
+	ldr	r0, .L504+0x4
+.L463:
 	pop	{r4, r5}
 	pop	{r1}
 	bx	r1
-.L443:
+.L505:
 	.align	2, 0
-.L442:
+.L504:
 	.word	sTrainerBOrdinaryBattleParams
 	.word	EventScript_TryDoNormalTrainerBattle
 .Lfe44:
@@ -3344,10 +3563,10 @@ ConfigureAndSetUpOneTrainerBattle:
 	push	{r4, lr}
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
-	ldr	r2, .L445
+	ldr	r2, .L507
 	strb	r0, [r2]
-	ldr	r4, .L445+0x4
-	ldr	r3, .L445+0x8
+	ldr	r4, .L507+0x4
+	ldr	r3, .L507+0x8
 	lsl	r2, r0, #0x3
 	add	r2, r2, r0
 	lsl	r2, r2, #0x2
@@ -3357,15 +3576,15 @@ ConfigureAndSetUpOneTrainerBattle:
 	add	r1, r1, #0x1
 	add	r0, r1, #0
 	bl	BattleSetup_ConfigureTrainerBattle
-	ldr	r0, .L445+0xc
+	ldr	r0, .L507+0xc
 	bl	ScriptContext1_SetupScript
 	bl	ScriptContext2_Enable
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L446:
+.L508:
 	.align	2, 0
-.L445:
+.L507:
 	.word	gSelectedObjectEvent
 	.word	gSpecialVar_LastTalked
 	.word	gObjectEvents
@@ -3380,10 +3599,10 @@ ConfigureTwoTrainersBattle:
 	push	{r4, lr}
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
-	ldr	r2, .L448
+	ldr	r2, .L510
 	strb	r0, [r2]
-	ldr	r4, .L448+0x4
-	ldr	r3, .L448+0x8
+	ldr	r4, .L510+0x4
+	ldr	r3, .L510+0x8
 	lsl	r2, r0, #0x3
 	add	r2, r2, r0
 	lsl	r2, r2, #0x2
@@ -3396,9 +3615,9 @@ ConfigureTwoTrainersBattle:
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L449:
+.L511:
 	.align	2, 0
-.L448:
+.L510:
 	.word	gSelectedObjectEvent
 	.word	gSpecialVar_LastTalked
 	.word	gObjectEvents
@@ -3410,14 +3629,14 @@ ConfigureTwoTrainersBattle:
 	.thumb_func
 SetUpTwoTrainersBattle:
 	push	{lr}
-	ldr	r0, .L451
+	ldr	r0, .L513
 	bl	ScriptContext1_SetupScript
 	bl	ScriptContext2_Enable
 	pop	{r0}
 	bx	r0
-.L452:
+.L514:
 	.align	2, 0
-.L451:
+.L513:
 	.word	EventScript_271354
 .Lfe47:
 	.size	 SetUpTwoTrainersBattle,.Lfe47-SetUpTwoTrainersBattle
@@ -3447,12 +3666,12 @@ GetTrainerFlagFromScriptPointer:
 	.thumb_func
 SetUpTrainerMovement:
 	push	{r4, lr}
-	ldr	r0, .L455
+	ldr	r0, .L517
 	ldrb	r0, [r0]
 	lsl	r4, r0, #0x3
 	add	r4, r4, r0
 	lsl	r4, r4, #0x2
-	ldr	r0, .L455+0x4
+	ldr	r0, .L517+0x4
 	add	r4, r4, r0
 	ldrb	r0, [r4, #0x18]
 	lsl	r0, r0, #0x1c
@@ -3466,9 +3685,9 @@ SetUpTrainerMovement:
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L456:
+.L518:
 	.align	2, 0
-.L455:
+.L517:
 	.word	gSelectedObjectEvent
 	.word	gObjectEvents
 .Lfe49:
@@ -3478,12 +3697,12 @@ SetUpTrainerMovement:
 	.type	 GetTrainerBattleMode,function
 	.thumb_func
 GetTrainerBattleMode:
-	ldr	r0, .L458
+	ldr	r0, .L520
 	ldrb	r0, [r0]
 	bx	lr
-.L459:
+.L521:
 	.align	2, 0
-.L458:
+.L520:
 	.word	sTrainerBattleMode
 .Lfe50:
 	.size	 GetTrainerBattleMode,.Lfe50-GetTrainerBattleMode
@@ -3496,36 +3715,36 @@ GetTrainerFlag:
 	bl	InBattlePyramid
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.L461	@cond_branch
-	ldr	r0, .L469
+	beq	.L523	@cond_branch
+	ldr	r0, .L531
 	ldrb	r0, [r0]
 	bl	GetBattlePyramidTrainerFlag
-	b	.L467
-.L470:
+	b	.L529
+.L532:
 	.align	2, 0
-.L469:
+.L531:
 	.word	gSelectedObjectEvent
-.L461:
+.L523:
 	bl	InTrainerHill
 	cmp	r0, #0
-	bne	.L463	@cond_branch
+	bne	.L525	@cond_branch
 	bl	GetTrainerAFlag
 	lsl	r0, r0, #0x10
 	lsr	r0, r0, #0x10
 	bl	FlagGet
-	b	.L467
-.L463:
-	ldr	r0, .L471
+	b	.L529
+.L525:
+	ldr	r0, .L533
 	ldrb	r0, [r0]
 	bl	GetHillTrainerFlag
-.L467:
+.L529:
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	pop	{r1}
 	bx	r1
-.L472:
+.L534:
 	.align	2, 0
-.L471:
+.L533:
 	.word	gSelectedObjectEvent
 .Lfe51:
 	.size	 GetTrainerFlag,.Lfe51-GetTrainerFlag
@@ -3534,24 +3753,24 @@ GetTrainerFlag:
 	.thumb_func
 SetBattledTrainersFlags:
 	push	{lr}
-	ldr	r0, .L475
+	ldr	r0, .L537
 	ldrh	r0, [r0]
 	cmp	r0, #0
-	beq	.L474	@cond_branch
+	beq	.L536	@cond_branch
 	bl	GetTrainerBFlag
 	lsl	r0, r0, #0x10
 	lsr	r0, r0, #0x10
 	bl	FlagSet
-.L474:
+.L536:
 	bl	GetTrainerAFlag
 	lsl	r0, r0, #0x10
 	lsr	r0, r0, #0x10
 	bl	FlagSet
 	pop	{r0}
 	bx	r0
-.L476:
+.L538:
 	.align	2, 0
-.L475:
+.L537:
 	.word	gTrainerBattleOpponent_B
 .Lfe52:
 	.size	 SetBattledTrainersFlags,.Lfe52-SetBattledTrainersFlags
@@ -3624,44 +3843,44 @@ ClearTrainerFlag:
 	.thumb_func
 BattleSetup_StartTrainerBattle:
 	push	{r4, lr}
-	ldr	r0, .L495
+	ldr	r0, .L557
 	ldrb	r0, [r0]
 	cmp	r0, #0x2
-	bne	.L482	@cond_branch
-	ldr	r1, .L495+0x4
-	ldr	r0, .L495+0x8
-	b	.L494
-.L496:
+	bne	.L544	@cond_branch
+	ldr	r1, .L557+0x4
+	ldr	r0, .L557+0x8
+	b	.L556
+.L558:
 	.align	2, 0
-.L495:
+.L557:
 	.word	gNoOfApproachingTrainers
 	.word	gBattleTypeFlags
 	.word	0x8009
-.L482:
-	ldr	r1, .L497
+.L544:
+	ldr	r1, .L559
 	mov	r0, #0x8
-.L494:
+.L556:
 	str	r0, [r1]
 	bl	InBattlePyramid
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.L484	@cond_branch
-	ldr	r0, .L497+0x4
+	beq	.L546	@cond_branch
+	ldr	r0, .L559+0x4
 	mov	r1, #0x0
 	bl	VarSet
-	ldr	r2, .L497
+	ldr	r2, .L559
 	ldr	r0, [r2]
 	mov	r1, #0x80
 	lsl	r1, r1, #0xe
 	orr	r0, r0, r1
 	str	r0, [r2]
-	ldr	r0, .L497+0x8
+	ldr	r0, .L559+0x8
 	ldrb	r0, [r0]
 	cmp	r0, #0x2
-	bne	.L485	@cond_branch
+	bne	.L547	@cond_branch
 	mov	r0, #0x1
 	bl	FillFrontierTrainersParties
-	ldr	r4, .L497+0xc
+	ldr	r4, .L559+0xc
 	add	r0, r4, #0
 	bl	ZeroMonData
 	add	r0, r4, #0
@@ -3675,94 +3894,94 @@ BattleSetup_StartTrainerBattle:
 	lsl	r1, r1, #0x1
 	add	r0, r4, r1
 	bl	ZeroMonData
-	b	.L486
-.L498:
+	b	.L548
+.L560:
 	.align	2, 0
-.L497:
+.L559:
 	.word	gBattleTypeFlags
 	.word	0x400e
 	.word	gNoOfApproachingTrainers
 	.word	gEnemyParty+0x64
-.L485:
+.L547:
 	mov	r0, #0x1
 	bl	FillFrontierTrainerParty
-	ldr	r4, .L499
+	ldr	r4, .L561
 	add	r0, r4, #0
 	bl	ZeroMonData
 	add	r4, r4, #0x64
 	add	r0, r4, #0
 	bl	ZeroMonData
-.L486:
+.L548:
 	bl	MarkApproachingPyramidTrainersAsBattled
-	b	.L487
-.L500:
+	b	.L549
+.L562:
 	.align	2, 0
-.L499:
+.L561:
 	.word	gEnemyParty+0x64
-.L484:
+.L546:
 	bl	InTrainerHillChallenge
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.L487	@cond_branch
-	ldr	r2, .L501
+	beq	.L549	@cond_branch
+	ldr	r2, .L563
 	ldr	r0, [r2]
 	mov	r1, #0x80
 	lsl	r1, r1, #0x13
 	orr	r0, r0, r1
 	str	r0, [r2]
-	ldr	r0, .L501+0x4
+	ldr	r0, .L563+0x4
 	ldrb	r0, [r0]
 	cmp	r0, #0x2
-	bne	.L489	@cond_branch
+	bne	.L551	@cond_branch
 	bl	FillHillTrainersParties
-	b	.L490
-.L502:
+	b	.L552
+.L564:
 	.align	2, 0
-.L501:
+.L563:
 	.word	gBattleTypeFlags
 	.word	gNoOfApproachingTrainers
-.L489:
+.L551:
 	bl	FillHillTrainerParty
-.L490:
+.L552:
 	bl	SetHillTrainerFlag
-.L487:
-	ldr	r1, .L503
-	ldr	r2, .L503+0x4
+.L549:
+	ldr	r1, .L565
+	ldr	r2, .L565+0x4
 	ldrb	r0, [r2]
 	strb	r0, [r1]
 	mov	r1, #0x0
 	strb	r1, [r2]
-	ldr	r0, .L503+0x8
+	ldr	r0, .L565+0x8
 	strb	r1, [r0]
-	ldr	r1, .L503+0xc
+	ldr	r1, .L565+0xc
 	mov	r0, #0x0
 	strh	r0, [r1]
-	ldr	r1, .L503+0x10
-	ldr	r0, .L503+0x14
+	ldr	r1, .L565+0x10
+	ldr	r0, .L565+0x14
 	str	r0, [r1, #0x8]
 	bl	InBattlePyramid
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	bne	.L492	@cond_branch
+	bne	.L554	@cond_branch
 	bl	InTrainerHillChallenge
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.L491	@cond_branch
-.L492:
+	beq	.L553	@cond_branch
+.L554:
 	bl	sub_80B0828
-	b	.L493
-.L504:
+	b	.L555
+.L566:
 	.align	2, 0
-.L503:
+.L565:
 	.word	sNoOfPossibleTrainerRetScripts
 	.word	gNoOfApproachingTrainers
 	.word	sShouldCheckTrainerBScript
 	.word	gWhichTrainerToFaceAfterBattle
 	.word	gMain
 	.word	CB2_EndTrainerBattle
-.L491:
+.L553:
 	bl	DoTrainerBattle
-.L493:
+.L555:
 	bl	ScriptContext1_Stop
 	pop	{r4}
 	pop	{r0}
@@ -3774,62 +3993,62 @@ BattleSetup_StartTrainerBattle:
 	.thumb_func
 CB2_EndTrainerBattle:
 	push	{lr}
-	ldr	r0, .L514
+	ldr	r0, .L576
 	ldrh	r1, [r0]
 	mov	r0, #0x80
 	lsl	r0, r0, #0x3
 	cmp	r1, r0
-	beq	.L510	@cond_branch
-	ldr	r0, .L514+0x4
+	beq	.L572	@cond_branch
+	ldr	r0, .L576+0x4
 	ldrb	r0, [r0]
 	bl	IsPlayerDefeated
 	cmp	r0, #0x1
-	bne	.L508	@cond_branch
+	bne	.L570	@cond_branch
 	bl	InBattlePyramid
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	bne	.L510	@cond_branch
+	bne	.L572	@cond_branch
 	bl	InTrainerHillChallenge
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.L509	@cond_branch
-.L510:
-	ldr	r0, .L514+0x8
+	beq	.L571	@cond_branch
+.L572:
+	ldr	r0, .L576+0x8
 	bl	SetMainCallback2
-	b	.L507
-.L515:
+	b	.L569
+.L577:
 	.align	2, 0
-.L514:
+.L576:
 	.word	gTrainerBattleOpponent_A
 	.word	gBattleOutcome
 	.word	CB2_ReturnToFieldContinueScriptPlayMapMusic
-.L509:
-	ldr	r0, .L516
+.L571:
+	ldr	r0, .L578
 	bl	SetMainCallback2
-	b	.L507
-.L517:
+	b	.L569
+.L579:
 	.align	2, 0
-.L516:
+.L578:
 	.word	CB2_WhiteOut
-.L508:
-	ldr	r0, .L518
+.L570:
+	ldr	r0, .L580
 	bl	SetMainCallback2
 	bl	InBattlePyramid
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	bne	.L507	@cond_branch
+	bne	.L569	@cond_branch
 	bl	InTrainerHillChallenge
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	bne	.L507	@cond_branch
+	bne	.L569	@cond_branch
 	bl	RegisterTrainerInMatchCall
 	bl	SetBattledTrainersFlags
-.L507:
+.L569:
 	pop	{r0}
 	bx	r0
-.L519:
+.L581:
 	.align	2, 0
-.L518:
+.L580:
 	.word	CB2_ReturnToFieldContinueScriptPlayMapMusic
 .Lfe58:
 	.size	 CB2_EndTrainerBattle,.Lfe58-CB2_EndTrainerBattle
@@ -3838,46 +4057,46 @@ CB2_EndTrainerBattle:
 	.thumb_func
 CB2_EndRematchBattle:
 	push	{lr}
-	ldr	r0, .L525
+	ldr	r0, .L587
 	ldrh	r1, [r0]
 	mov	r0, #0x80
 	lsl	r0, r0, #0x3
 	cmp	r1, r0
-	bne	.L521	@cond_branch
-	ldr	r0, .L525+0x4
+	bne	.L583	@cond_branch
+	ldr	r0, .L587+0x4
 	bl	SetMainCallback2
-	b	.L522
-.L526:
+	b	.L584
+.L588:
 	.align	2, 0
-.L525:
+.L587:
 	.word	gTrainerBattleOpponent_A
 	.word	CB2_ReturnToFieldContinueScriptPlayMapMusic
-.L521:
-	ldr	r0, .L527
+.L583:
+	ldr	r0, .L589
 	ldrb	r0, [r0]
 	bl	IsPlayerDefeated
 	cmp	r0, #0x1
-	bne	.L523	@cond_branch
-	ldr	r0, .L527+0x4
+	bne	.L585	@cond_branch
+	ldr	r0, .L589+0x4
 	bl	SetMainCallback2
-	b	.L522
-.L528:
+	b	.L584
+.L590:
 	.align	2, 0
-.L527:
+.L589:
 	.word	gBattleOutcome
 	.word	CB2_WhiteOut
-.L523:
-	ldr	r0, .L529
+.L585:
+	ldr	r0, .L591
 	bl	SetMainCallback2
 	bl	RegisterTrainerInMatchCall
 	bl	SetBattledTrainersFlags
 	bl	HandleRematchVarsOnBattleEnd
-.L522:
+.L584:
 	pop	{r0}
 	bx	r0
-.L530:
+.L592:
 	.align	2, 0
-.L529:
+.L591:
 	.word	CB2_ReturnToFieldContinueScriptPlayMapMusic
 .Lfe59:
 	.size	 CB2_EndRematchBattle,.Lfe59-CB2_EndRematchBattle
@@ -3887,19 +4106,19 @@ CB2_EndRematchBattle:
 	.thumb_func
 BattleSetup_StartRematchBattle:
 	push	{lr}
-	ldr	r1, .L532
+	ldr	r1, .L594
 	mov	r0, #0x8
 	str	r0, [r1]
-	ldr	r1, .L532+0x4
-	ldr	r0, .L532+0x8
+	ldr	r1, .L594+0x4
+	ldr	r0, .L594+0x8
 	str	r0, [r1, #0x8]
 	bl	DoTrainerBattle
 	bl	ScriptContext1_Stop
 	pop	{r0}
 	bx	r0
-.L533:
+.L595:
 	.align	2, 0
-.L532:
+.L594:
 	.word	gBattleTypeFlags
 	.word	gMain
 	.word	CB2_EndRematchBattle
@@ -3914,27 +4133,27 @@ ShowTrainerIntroSpeech:
 	bl	InBattlePyramid
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.L535	@cond_branch
-	ldr	r0, .L544
+	beq	.L597	@cond_branch
+	ldr	r0, .L606
 	ldrb	r0, [r0]
 	cmp	r0, #0x1
-	bhi	.L536	@cond_branch
-	ldr	r0, .L544+0x4
+	bhi	.L598	@cond_branch
+	ldr	r0, .L606+0x4
 	ldrb	r0, [r0]
 	bl	LocalIdToPyramidTrainerId
 	lsl	r0, r0, #0x10
 	lsr	r0, r0, #0x10
 	bl	CopyPyramidTrainerSpeechBefore
-	b	.L541
-.L545:
+	b	.L603
+.L607:
 	.align	2, 0
-.L544:
+.L606:
 	.word	gNoOfApproachingTrainers
 	.word	gSpecialVar_LastTalked
-.L536:
-	ldr	r3, .L546
-	ldr	r2, .L546+0x4
-	ldr	r0, .L546+0x8
+.L598:
+	ldr	r3, .L608
+	ldr	r2, .L608+0x4
+	ldr	r0, .L608+0x8
 	ldrb	r1, [r0]
 	lsl	r0, r1, #0x1
 	add	r0, r0, r1
@@ -3950,23 +4169,23 @@ ShowTrainerIntroSpeech:
 	lsl	r0, r0, #0x10
 	lsr	r0, r0, #0x10
 	bl	CopyPyramidTrainerSpeechBefore
-	b	.L543
-.L547:
+	b	.L605
+.L609:
 	.align	2, 0
-.L546:
+.L608:
 	.word	gObjectEvents
 	.word	gApproachingTrainers
 	.word	gApproachingTrainerId
-.L535:
+.L597:
 	bl	InTrainerHillChallenge
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.L539	@cond_branch
-	ldr	r0, .L548
+	beq	.L601	@cond_branch
+	ldr	r0, .L610
 	ldrb	r0, [r0]
 	cmp	r0, #0x1
-	bhi	.L540	@cond_branch
-	ldr	r0, .L548+0x4
+	bhi	.L602	@cond_branch
+	ldr	r0, .L610+0x4
 	ldrb	r0, [r0]
 	bl	LocalIdToHillTrainerId
 	add	r1, r0, #0
@@ -3974,16 +4193,16 @@ ShowTrainerIntroSpeech:
 	lsr	r1, r1, #0x10
 	mov	r0, #0x2
 	bl	CopyTrainerHillTrainerText
-	b	.L541
-.L549:
+	b	.L603
+.L611:
 	.align	2, 0
-.L548:
+.L610:
 	.word	gNoOfApproachingTrainers
 	.word	gSpecialVar_LastTalked
-.L540:
-	ldr	r3, .L550
-	ldr	r2, .L550+0x4
-	ldr	r0, .L550+0x8
+.L602:
+	ldr	r3, .L612
+	ldr	r2, .L612+0x4
+	ldr	r0, .L612+0x8
 	ldrb	r1, [r0]
 	lsl	r0, r1, #0x1
 	add	r0, r0, r1
@@ -4001,20 +4220,20 @@ ShowTrainerIntroSpeech:
 	lsr	r1, r1, #0x10
 	mov	r0, #0x2
 	bl	CopyTrainerHillTrainerText
-.L543:
-.L541:
+.L605:
+.L603:
 	bl	ShowFieldMessageFromBuffer
-	b	.L538
-.L551:
+	b	.L600
+.L613:
 	.align	2, 0
-.L550:
+.L612:
 	.word	gObjectEvents
 	.word	gApproachingTrainers
 	.word	gApproachingTrainerId
-.L539:
+.L601:
 	bl	GetIntroSpeechOfApproachingTrainer
 	bl	ShowFieldMessage
-.L538:
+.L600:
 	pop	{r0}
 	bx	r0
 .Lfe61:
@@ -4025,17 +4244,17 @@ ShowTrainerIntroSpeech:
 	.thumb_func
 BattleSetup_GetScriptAddrAfterBattle:
 	push	{lr}
-	ldr	r0, .L556
+	ldr	r0, .L618
 	ldr	r0, [r0]
 	cmp	r0, #0
-	bne	.L555	@cond_branch
-	ldr	r0, .L556+0x4
-.L555:
+	bne	.L617	@cond_branch
+	ldr	r0, .L618+0x4
+.L617:
 	pop	{r1}
 	bx	r1
-.L557:
+.L619:
 	.align	2, 0
-.L556:
+.L618:
 	.word	sTrainerBattleEndScript
 	.word	EventScript_TestSignpostMsg
 .Lfe62:
@@ -4046,49 +4265,49 @@ BattleSetup_GetScriptAddrAfterBattle:
 	.thumb_func
 BattleSetup_GetTrainerPostBattleScript:
 	push	{lr}
-	ldr	r1, .L564
+	ldr	r1, .L626
 	ldrb	r2, [r1]
 	cmp	r2, #0
-	beq	.L559	@cond_branch
+	beq	.L621	@cond_branch
 	mov	r0, #0x0
 	strb	r0, [r1]
-	ldr	r0, .L564+0x4
+	ldr	r0, .L626+0x4
 	ldr	r2, [r0]
 	cmp	r2, #0
-	beq	.L561	@cond_branch
-	ldr	r1, .L564+0x8
+	beq	.L623	@cond_branch
+	ldr	r1, .L626+0x8
 	mov	r0, #0x1
 	strh	r0, [r1]
 	add	r0, r2, #0
-	b	.L563
-.L565:
+	b	.L625
+.L627:
 	.align	2, 0
-.L564:
+.L626:
 	.word	sShouldCheckTrainerBScript
 	.word	sTrainerBBattleScriptRetAddr
 	.word	gWhichTrainerToFaceAfterBattle
-.L559:
-	ldr	r0, .L566
+.L621:
+	ldr	r0, .L628
 	ldr	r1, [r0]
 	cmp	r1, #0
-	beq	.L561	@cond_branch
-	ldr	r0, .L566+0x4
+	beq	.L623	@cond_branch
+	ldr	r0, .L628+0x4
 	strh	r2, [r0]
 	add	r0, r1, #0
-	b	.L563
-.L567:
+	b	.L625
+.L629:
 	.align	2, 0
-.L566:
+.L628:
 	.word	sTrainerABattleScriptRetAddr
 	.word	gWhichTrainerToFaceAfterBattle
-.L561:
-	ldr	r0, .L568
-.L563:
+.L623:
+	ldr	r0, .L630
+.L625:
 	pop	{r1}
 	bx	r1
-.L569:
+.L631:
 	.align	2, 0
-.L568:
+.L630:
 	.word	EventScript_TryGetTrainerScript
 .Lfe63:
 	.size	 BattleSetup_GetTrainerPostBattleScript,.Lfe63-BattleSetup_GetTrainerPostBattleScript
@@ -4110,128 +4329,128 @@ ShowTrainerCantBattleSpeech:
 	.thumb_func
 SetUpTrainerEncounterMusic:
 	push	{lr}
-	ldr	r0, .L592
+	ldr	r0, .L654
 	ldrb	r0, [r0]
 	cmp	r0, #0
-	bne	.L572	@cond_branch
-	ldr	r0, .L592+0x4
-	b	.L591
-.L593:
+	bne	.L634	@cond_branch
+	ldr	r0, .L654+0x4
+	b	.L653
+.L655:
 	.align	2, 0
-.L592:
+.L654:
 	.word	gApproachingTrainerId
 	.word	gTrainerBattleOpponent_A
-.L572:
-	ldr	r0, .L594
-.L591:
+.L634:
+	ldr	r0, .L656
+.L653:
 	ldrh	r1, [r0]
-	ldr	r0, .L594+0x4
+	ldr	r0, .L656+0x4
 	ldrh	r0, [r0]
 	cmp	r0, #0x1
-	beq	.L574	@cond_branch
+	beq	.L636	@cond_branch
 	cmp	r0, #0x8
-	beq	.L574	@cond_branch
+	beq	.L636	@cond_branch
 	add	r0, r1, #0
 	bl	GetTrainerEncounterMusicId
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	cmp	r0, #0xd
-	bhi	.L589	@cond_branch
+	bhi	.L651	@cond_branch
 	lsl	r0, r0, #0x2
-	ldr	r1, .L594+0x8
+	ldr	r1, .L656+0x8
 	add	r0, r0, r1
 	ldr	r0, [r0]
 	mov	pc, r0
-.L595:
+.L657:
 	.align	2, 0
-.L594:
+.L656:
 	.word	gTrainerBattleOpponent_B
 	.word	sTrainerBattleMode
-	.word	.L590
+	.word	.L652
 	.align	2, 0
 	.align	2, 0
-.L590:
-	.word	.L576
-	.word	.L577
-	.word	.L578
-	.word	.L589
-	.word	.L579
-	.word	.L580
-	.word	.L581
-	.word	.L582
-	.word	.L583
-	.word	.L584
-	.word	.L585
-	.word	.L586
-	.word	.L587
-	.word	.L588
-.L576:
-	ldr	r0, .L596
-	b	.L575
-.L597:
+.L652:
+	.word	.L638
+	.word	.L639
+	.word	.L640
+	.word	.L651
+	.word	.L641
+	.word	.L642
+	.word	.L643
+	.word	.L644
+	.word	.L645
+	.word	.L646
+	.word	.L647
+	.word	.L648
+	.word	.L649
+	.word	.L650
+.L638:
+	ldr	r0, .L658
+	b	.L637
+.L659:
 	.align	2, 0
-.L596:
+.L658:
 	.word	0x15f
-.L577:
+.L639:
 	mov	r0, #0xbd
 	lsl	r0, r0, #0x1
-	b	.L575
-.L578:
+	b	.L637
+.L640:
 	mov	r0, #0xaf
 	lsl	r0, r0, #0x1
-	b	.L575
-.L579:
-	ldr	r0, .L598
-	b	.L575
-.L599:
+	b	.L637
+.L641:
+	ldr	r0, .L660
+	b	.L637
+.L661:
 	.align	2, 0
-.L598:
+.L660:
 	.word	0x183
-.L580:
+.L642:
 	mov	r0, #0xc2
 	lsl	r0, r0, #0x1
-	b	.L575
-.L581:
+	b	.L637
+.L643:
 	mov	r0, #0xc3
 	lsl	r0, r0, #0x1
-	b	.L575
-.L582:
+	b	.L637
+.L644:
 	mov	r0, #0xce
 	lsl	r0, r0, #0x1
-	b	.L575
-.L583:
+	b	.L637
+.L645:
 	mov	r0, #0xb2
 	lsl	r0, r0, #0x1
-	b	.L575
-.L584:
+	b	.L637
+.L646:
 	mov	r0, #0xd2
 	lsl	r0, r0, #0x1
-	b	.L575
-.L585:
-	ldr	r0, .L600
-	b	.L575
-.L601:
+	b	.L637
+.L647:
+	ldr	r0, .L662
+	b	.L637
+.L663:
 	.align	2, 0
-.L600:
+.L662:
 	.word	0x1a5
-.L586:
+.L648:
 	mov	r0, #0xd3
 	lsl	r0, r0, #0x1
-	b	.L575
-.L587:
+	b	.L637
+.L649:
 	mov	r0, #0xd4
 	lsl	r0, r0, #0x1
-	b	.L575
-.L588:
+	b	.L637
+.L650:
 	mov	r0, #0xb8
 	lsl	r0, r0, #0x1
-	b	.L575
-.L589:
+	b	.L637
+.L651:
 	mov	r0, #0xc5
 	lsl	r0, r0, #0x1
-.L575:
+.L637:
 	bl	PlayNewMapMusic
-.L574:
+.L636:
 	pop	{r0}
 	bx	r0
 .Lfe65:
@@ -4242,14 +4461,14 @@ SetUpTrainerEncounterMusic:
 ReturnEmptyStringIfNull:
 	push	{lr}
 	cmp	r0, #0
-	bne	.L605	@cond_branch
-	ldr	r0, .L606
-.L605:
+	bne	.L667	@cond_branch
+	ldr	r0, .L668
+.L667:
 	pop	{r1}
 	bx	r1
-.L607:
+.L669:
 	.align	2, 0
-.L606:
+.L668:
 	.word	gText_EmptyString2
 .Lfe66:
 	.size	 ReturnEmptyStringIfNull,.Lfe66-ReturnEmptyStringIfNull
@@ -4258,27 +4477,27 @@ ReturnEmptyStringIfNull:
 	.thumb_func
 GetIntroSpeechOfApproachingTrainer:
 	push	{lr}
-	ldr	r0, .L614
+	ldr	r0, .L676
 	ldrb	r0, [r0]
 	cmp	r0, #0
-	beq	.L609	@cond_branch
-	ldr	r0, .L614+0x4
-	b	.L613
-.L615:
+	beq	.L671	@cond_branch
+	ldr	r0, .L676+0x4
+	b	.L675
+.L677:
 	.align	2, 0
-.L614:
+.L676:
 	.word	gApproachingTrainerId
 	.word	sTrainerBIntroSpeech
-.L609:
-	ldr	r0, .L616
-.L613:
+.L671:
+	ldr	r0, .L678
+.L675:
 	ldr	r0, [r0]
 	bl	ReturnEmptyStringIfNull
 	pop	{r1}
 	bx	r1
-.L617:
+.L679:
 	.align	2, 0
-.L616:
+.L678:
 	.word	sTrainerAIntroSpeech
 .Lfe67:
 	.size	 GetIntroSpeechOfApproachingTrainer,.Lfe67-GetIntroSpeechOfApproachingTrainer
@@ -4288,23 +4507,23 @@ GetIntroSpeechOfApproachingTrainer:
 	.thumb_func
 GetTrainerALoseText:
 	push	{r4, lr}
-	ldr	r0, .L621
+	ldr	r0, .L683
 	ldrh	r1, [r0]
 	mov	r0, #0x80
 	lsl	r0, r0, #0x3
 	cmp	r1, r0
-	bne	.L619	@cond_branch
+	bne	.L681	@cond_branch
 	bl	GetSecretBaseTrainerLoseText
-	b	.L620
-.L622:
+	b	.L682
+.L684:
 	.align	2, 0
-.L621:
+.L683:
 	.word	gTrainerBattleOpponent_A
-.L619:
-	ldr	r0, .L623
+.L681:
+	ldr	r0, .L685
 	ldr	r0, [r0]
-.L620:
-	ldr	r4, .L623+0x4
+.L682:
+	ldr	r4, .L685+0x4
 	bl	ReturnEmptyStringIfNull
 	add	r1, r0, #0
 	add	r0, r4, #0
@@ -4313,9 +4532,9 @@ GetTrainerALoseText:
 	pop	{r4}
 	pop	{r1}
 	bx	r1
-.L624:
+.L686:
 	.align	2, 0
-.L623:
+.L685:
 	.word	sTrainerADefeatSpeech
 	.word	gStringVar4
 .Lfe68:
@@ -4326,8 +4545,8 @@ GetTrainerALoseText:
 	.thumb_func
 GetTrainerBLoseText:
 	push	{r4, lr}
-	ldr	r4, .L626
-	ldr	r0, .L626+0x4
+	ldr	r4, .L688
+	ldr	r0, .L688+0x4
 	ldr	r0, [r0]
 	bl	ReturnEmptyStringIfNull
 	add	r1, r0, #0
@@ -4337,9 +4556,9 @@ GetTrainerBLoseText:
 	pop	{r4}
 	pop	{r1}
 	bx	r1
-.L627:
+.L689:
 	.align	2, 0
-.L626:
+.L688:
 	.word	gStringVar4
 	.word	sTrainerBDefeatSpeech
 .Lfe69:
@@ -4350,14 +4569,14 @@ GetTrainerBLoseText:
 	.thumb_func
 GetTrainerWonSpeech:
 	push	{lr}
-	ldr	r0, .L629
+	ldr	r0, .L691
 	ldr	r0, [r0]
 	bl	ReturnEmptyStringIfNull
 	pop	{r1}
 	bx	r1
-.L630:
+.L692:
 	.align	2, 0
-.L629:
+.L691:
 	.word	sTrainerVictorySpeech
 .Lfe70:
 	.size	 GetTrainerWonSpeech,.Lfe70-GetTrainerWonSpeech
@@ -4366,14 +4585,14 @@ GetTrainerWonSpeech:
 	.thumb_func
 GetTrainerCantBattleSpeech:
 	push	{lr}
-	ldr	r0, .L632
+	ldr	r0, .L694
 	ldr	r0, [r0]
 	bl	ReturnEmptyStringIfNull
 	pop	{r1}
 	bx	r1
-.L633:
+.L695:
 	.align	2, 0
-.L632:
+.L694:
 	.word	sTrainerCannotBattleSpeech
 .Lfe71:
 	.size	 GetTrainerCantBattleSpeech,.Lfe71-GetTrainerCantBattleSpeech
@@ -4386,20 +4605,20 @@ FirstBattleTrainerIdToRematchTableId:
 	lsr	r1, r1, #0x10
 	mov	r3, #0x0
 	add	r2, r0, #0
-.L638:
+.L700:
 	ldrh	r0, [r2]
 	cmp	r0, r1
-	bne	.L637	@cond_branch
+	bne	.L699	@cond_branch
 	add	r0, r3, #0
-	b	.L641
-.L637:
+	b	.L703
+.L699:
 	add	r2, r2, #0x10
 	add	r3, r3, #0x1
 	cmp	r3, #0x4d
-	ble	.L638	@cond_branch
+	ble	.L700	@cond_branch
 	mov	r0, #0x1
 	neg	r0, r0
-.L641:
+.L703:
 	pop	{r1}
 	bx	r1
 .Lfe72:
@@ -4413,36 +4632,36 @@ TrainerIdToRematchTableId:
 	lsr	r5, r1, #0x10
 	mov	r4, #0x0
 	add	r2, r0, #0
-.L646:
+.L708:
 	mov	r1, #0x0
 	ldrh	r0, [r2]
 	cmp	r0, #0
-	beq	.L645	@cond_branch
+	beq	.L707	@cond_branch
 	mov	r3, #0x0
-.L651:
+.L713:
 	add	r0, r2, r3
 	ldrh	r0, [r0]
 	cmp	r0, r5
-	bne	.L649	@cond_branch
+	bne	.L711	@cond_branch
 	add	r0, r4, #0
-	b	.L655
-.L649:
+	b	.L717
+.L711:
 	add	r3, r3, #0x2
 	add	r1, r1, #0x1
 	cmp	r1, #0x4
-	bgt	.L645	@cond_branch
+	bgt	.L707	@cond_branch
 	add	r0, r2, r3
 	ldrh	r0, [r0]
 	cmp	r0, #0
-	bne	.L651	@cond_branch
-.L645:
+	bne	.L713	@cond_branch
+.L707:
 	add	r2, r2, #0x10
 	add	r4, r4, #0x1
 	cmp	r4, #0x4d
-	ble	.L646	@cond_branch
+	ble	.L708	@cond_branch
 	mov	r0, #0x1
 	neg	r0, r0
-.L655:
+.L717:
 	pop	{r4, r5}
 	pop	{r1}
 	bx	r1
@@ -4454,25 +4673,25 @@ TrainerIdToRematchTableId:
 sub_80B1D94:
 	push	{lr}
 	cmp	r0, #0x48
-	ble	.L657	@cond_branch
+	ble	.L719	@cond_branch
 	mov	r0, #0x1
-	b	.L662
-.L657:
+	b	.L724
+.L719:
 	cmp	r0, #0x40
-	bne	.L659	@cond_branch
+	bne	.L721	@cond_branch
 	mov	r0, #0x7e
 	bl	FlagGet
 	mov	r1, #0x0
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	bne	.L660	@cond_branch
+	bne	.L722	@cond_branch
 	mov	r1, #0x1
-.L660:
+.L722:
 	add	r0, r1, #0
-	b	.L662
-.L659:
+	b	.L724
+.L721:
 	mov	r0, #0x0
-.L662:
+.L724:
 	pop	{r1}
 	bx	r1
 .Lfe74:
@@ -4487,33 +4706,33 @@ SetRematchIdForTrainer:
 	lsl	r1, r6, #0x4
 	add	r1, r1, r0
 	add	r4, r1, #0x2
-	b	.L664
-.L666:
+	b	.L726
+.L728:
 	add	r4, r4, #0x2
 	add	r5, r5, #0x1
-.L664:
+.L726:
 	cmp	r5, #0x4
-	bgt	.L665	@cond_branch
+	bgt	.L727	@cond_branch
 	ldrh	r0, [r4]
 	cmp	r0, #0
-	beq	.L665	@cond_branch
+	beq	.L727	@cond_branch
 	bl	HasTrainerBeenFought
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	bne	.L666	@cond_branch
-.L665:
-	ldr	r0, .L671
+	bne	.L728	@cond_branch
+.L727:
+	ldr	r0, .L733
 	ldr	r0, [r0]
-	ldr	r1, .L671+0x4
+	ldr	r1, .L733+0x4
 	add	r0, r0, r1
 	add	r0, r0, r6
 	strb	r5, [r0]
 	pop	{r4, r5, r6}
 	pop	{r0}
 	bx	r0
-.L672:
+.L734:
 	.align	2, 0
-.L671:
+.L733:
 	.word	gSaveBlock1Ptr
 	.word	0xfaa
 .Lfe75:
@@ -4537,25 +4756,25 @@ UpdateRandomTrainerRematches:
 	mov	r5, #0x0
 	add	r4, r6, #0
 	add	r4, r4, #0xa
-.L677:
+.L739:
 	ldrh	r0, [r4]
 	cmp	r0, r9
-	bne	.L676	@cond_branch
+	bne	.L738	@cond_branch
 	ldrh	r0, [r4, #0x2]
 	cmp	r0, r8
-	bne	.L676	@cond_branch
+	bne	.L738	@cond_branch
 	add	r0, r5, #0
 	bl	sub_80B1D94
 	cmp	r0, #0
-	bne	.L676	@cond_branch
-	ldr	r0, .L684
+	bne	.L738	@cond_branch
+	ldr	r0, .L746
 	ldr	r0, [r0]
-	ldr	r1, .L684+0x4
+	ldr	r1, .L746+0x4
 	add	r0, r0, r1
 	add	r0, r0, r5
 	ldrb	r0, [r0]
 	cmp	r0, #0
-	bne	.L683	@cond_branch
+	bne	.L745	@cond_branch
 	mov	r1, #0xae
 	lsl	r1, r1, #0x1
 	add	r0, r5, r1
@@ -4564,7 +4783,7 @@ UpdateRandomTrainerRematches:
 	bl	FlagGet
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.L676	@cond_branch
+	beq	.L738	@cond_branch
 	bl	Random
 	lsl	r0, r0, #0x10
 	lsr	r0, r0, #0x10
@@ -4573,17 +4792,17 @@ UpdateRandomTrainerRematches:
 	lsl	r0, r0, #0x10
 	lsr	r0, r0, #0x10
 	cmp	r0, #0x1e
-	bhi	.L676	@cond_branch
+	bhi	.L738	@cond_branch
 	add	r0, r6, #0
 	add	r1, r5, #0
 	bl	SetRematchIdForTrainer
-.L683:
+.L745:
 	mov	r7, #0x1
-.L676:
+.L738:
 	add	r4, r4, #0x10
 	add	r5, r5, #0x1
 	cmp	r5, #0x40
-	ble	.L677	@cond_branch
+	ble	.L739	@cond_branch
 	add	r0, r7, #0
 	pop	{r3, r4}
 	mov	r8, r3
@@ -4591,9 +4810,9 @@ UpdateRandomTrainerRematches:
 	pop	{r4, r5, r6, r7}
 	pop	{r1}
 	bx	r1
-.L685:
+.L747:
 	.align	2, 0
-.L684:
+.L746:
 	.word	gSaveBlock1Ptr
 	.word	0xfaa
 .Lfe76:
@@ -4605,7 +4824,7 @@ UpdateRandomTrainerRematches:
 UpdateRematchIfDefeated:
 	push	{r4, r5, lr}
 	add	r4, r0, #0
-	ldr	r5, .L688
+	ldr	r5, .L750
 	lsl	r0, r4, #0x4
 	add	r0, r0, r5
 	ldrh	r0, [r0]
@@ -4613,17 +4832,17 @@ UpdateRematchIfDefeated:
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	cmp	r0, #0x1
-	bne	.L687	@cond_branch
+	bne	.L749	@cond_branch
 	add	r0, r5, #0
 	add	r1, r4, #0
 	bl	SetRematchIdForTrainer
-.L687:
+.L749:
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.L689:
+.L751:
 	.align	2, 0
-.L688:
+.L750:
 	.word	gRematchTable
 .Lfe77:
 	.size	 UpdateRematchIfDefeated,.Lfe77-UpdateRematchIfDefeated
@@ -4639,35 +4858,35 @@ DoesSomeoneWantRematchIn_:
 	mov	r1, #0x0
 	add	r3, r0, #0
 	add	r3, r3, #0xa
-	ldr	r5, .L698
-.L694:
+	ldr	r5, .L760
+.L756:
 	ldrh	r0, [r3]
 	cmp	r0, r4
-	bne	.L693	@cond_branch
+	bne	.L755	@cond_branch
 	ldrh	r0, [r3, #0x2]
 	cmp	r0, r2
-	bne	.L693	@cond_branch
+	bne	.L755	@cond_branch
 	ldr	r0, [r5]
-	ldr	r6, .L698+0x4
+	ldr	r6, .L760+0x4
 	add	r0, r0, r6
 	add	r0, r0, r1
 	ldrb	r0, [r0]
 	cmp	r0, #0
-	beq	.L693	@cond_branch
+	beq	.L755	@cond_branch
 	mov	r0, #0x1
-	b	.L697
-.L699:
+	b	.L759
+.L761:
 	.align	2, 0
-.L698:
+.L760:
 	.word	gSaveBlock1Ptr
 	.word	0xfaa
-.L693:
+.L755:
 	add	r3, r3, #0x10
 	add	r1, r1, #0x1
 	cmp	r1, #0x4d
-	ble	.L694	@cond_branch
+	ble	.L756	@cond_branch
 	mov	r0, #0x0
-.L697:
+.L759:
 	pop	{r4, r5, r6}
 	pop	{r1}
 	bx	r1
@@ -4685,22 +4904,22 @@ IsRematchTrainerIn_:
 	mov	r1, #0x0
 	add	r3, r0, #0
 	add	r3, r3, #0xa
-.L704:
+.L766:
 	ldrh	r0, [r3]
 	cmp	r0, r4
-	bne	.L703	@cond_branch
+	bne	.L765	@cond_branch
 	ldrh	r0, [r3, #0x2]
 	cmp	r0, r2
-	bne	.L703	@cond_branch
+	bne	.L765	@cond_branch
 	mov	r0, #0x1
-	b	.L707
-.L703:
+	b	.L769
+.L765:
 	add	r3, r3, #0x10
 	add	r1, r1, #0x1
 	cmp	r1, #0x4d
-	ble	.L704	@cond_branch
+	ble	.L766	@cond_branch
 	mov	r0, #0x0
-.L707:
+.L769:
 	pop	{r4}
 	pop	{r1}
 	bx	r1
@@ -4718,27 +4937,27 @@ IsFirstTrainerIdReadyForRematch:
 	mov	r0, #0x1
 	neg	r0, r0
 	cmp	r1, r0
-	beq	.L711	@cond_branch
+	beq	.L773	@cond_branch
 	cmp	r1, #0x63
-	bgt	.L711	@cond_branch
-	ldr	r0, .L713
+	bgt	.L773	@cond_branch
+	ldr	r0, .L775
 	ldr	r0, [r0]
-	ldr	r2, .L713+0x4
+	ldr	r2, .L775+0x4
 	add	r0, r0, r2
 	add	r0, r0, r1
 	ldrb	r0, [r0]
 	cmp	r0, #0
-	beq	.L711	@cond_branch
+	beq	.L773	@cond_branch
 	mov	r0, #0x1
-	b	.L712
-.L714:
+	b	.L774
+.L776:
 	.align	2, 0
-.L713:
+.L775:
 	.word	gSaveBlock1Ptr
 	.word	0xfaa
-.L711:
+.L773:
 	mov	r0, #0x0
-.L712:
+.L774:
 	pop	{r1}
 	bx	r1
 .Lfe80:
@@ -4755,27 +4974,27 @@ IsTrainerReadyForRematch_:
 	mov	r0, #0x1
 	neg	r0, r0
 	cmp	r1, r0
-	beq	.L718	@cond_branch
+	beq	.L780	@cond_branch
 	cmp	r1, #0x63
-	bgt	.L718	@cond_branch
-	ldr	r0, .L720
+	bgt	.L780	@cond_branch
+	ldr	r0, .L782
 	ldr	r0, [r0]
-	ldr	r2, .L720+0x4
+	ldr	r2, .L782+0x4
 	add	r0, r0, r2
 	add	r0, r0, r1
 	ldrb	r0, [r0]
 	cmp	r0, #0
-	beq	.L718	@cond_branch
+	beq	.L780	@cond_branch
 	mov	r0, #0x1
-	b	.L719
-.L721:
+	b	.L781
+.L783:
 	.align	2, 0
-.L720:
+.L782:
 	.word	gSaveBlock1Ptr
 	.word	0xfaa
-.L718:
+.L780:
 	mov	r0, #0x0
-.L719:
+.L781:
 	pop	{r1}
 	bx	r1
 .Lfe81:
@@ -4793,40 +5012,40 @@ GetRematchTrainerIdFromTable:
 	mov	r0, #0x1
 	neg	r0, r0
 	cmp	r1, r0
-	bne	.L723	@cond_branch
+	bne	.L785	@cond_branch
 	mov	r0, #0x0
-	b	.L731
-.L732:
+	b	.L793
+.L794:
 	sub	r0, r6, #0x1
 	lsl	r0, r0, #0x1
 	add	r0, r7, r0
 	ldrh	r0, [r0]
-	b	.L734
-.L733:
+	b	.L796
+.L795:
 	ldrh	r0, [r5]
-	b	.L734
-.L723:
+	b	.L796
+.L785:
 	lsl	r0, r1, #0x4
 	add	r7, r4, r0
 	mov	r6, #0x1
 	add	r5, r7, #0x2
 	add	r4, r5, #0
-.L727:
+.L789:
 	ldrh	r0, [r4]
 	cmp	r0, #0
-	beq	.L732	@cond_branch
+	beq	.L794	@cond_branch
 	bl	HasTrainerBeenFought
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.L733	@cond_branch
+	beq	.L795	@cond_branch
 	add	r4, r4, #0x2
 	add	r5, r5, #0x2
 	add	r6, r6, #0x1
 	cmp	r6, #0x4
-	ble	.L727	@cond_branch
+	ble	.L789	@cond_branch
 	ldrh	r0, [r7, #0x8]
-.L734:
-.L731:
+.L796:
+.L793:
 	pop	{r4, r5, r6, r7}
 	pop	{r1}
 	bx	r1
@@ -4845,41 +5064,41 @@ GetLastBeatenRematchTrainerIdFromTable:
 	mov	r0, #0x1
 	neg	r0, r0
 	cmp	r1, r0
-	bne	.L736	@cond_branch
+	bne	.L798	@cond_branch
 	mov	r0, #0x0
-	b	.L744
-.L745:
+	b	.L806
+.L807:
 	sub	r0, r5, #0x1
 	lsl	r0, r0, #0x1
 	add	r0, r6, r0
 	ldrh	r0, [r0]
-	b	.L747
-.L746:
+	b	.L809
+.L808:
 	sub	r0, r5, #0x1
 	lsl	r0, r0, #0x1
 	add	r0, r6, r0
 	ldrh	r0, [r0]
-	b	.L747
-.L736:
+	b	.L809
+.L798:
 	lsl	r0, r1, #0x4
 	add	r6, r4, r0
 	mov	r5, #0x1
 	add	r4, r6, #0x2
-.L740:
+.L802:
 	ldrh	r0, [r4]
 	cmp	r0, #0
-	beq	.L745	@cond_branch
+	beq	.L807	@cond_branch
 	bl	HasTrainerBeenFought
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.L746	@cond_branch
+	beq	.L808	@cond_branch
 	add	r4, r4, #0x2
 	add	r5, r5, #0x1
 	cmp	r5, #0x4
-	ble	.L740	@cond_branch
+	ble	.L802	@cond_branch
 	ldrh	r0, [r6, #0x8]
-.L747:
-.L744:
+.L809:
+.L806:
 	pop	{r4, r5, r6}
 	pop	{r1}
 	bx	r1
@@ -4897,20 +5116,20 @@ ClearTrainerWantRematchState:
 	mov	r0, #0x1
 	neg	r0, r0
 	cmp	r1, r0
-	beq	.L749	@cond_branch
-	ldr	r0, .L750
+	beq	.L811	@cond_branch
+	ldr	r0, .L812
 	ldr	r0, [r0]
-	ldr	r2, .L750+0x4
+	ldr	r2, .L812+0x4
 	add	r0, r0, r2
 	add	r0, r0, r1
 	mov	r1, #0x0
 	strb	r1, [r0]
-.L749:
+.L811:
 	pop	{r0}
 	bx	r0
-.L751:
+.L813:
 	.align	2, 0
-.L750:
+.L812:
 	.word	gSaveBlock1Ptr
 	.word	0xfaa
 .Lfe84:
@@ -4924,30 +5143,30 @@ GetTrainerMatchCallFlag:
 	mov	r1, #0x0
 	mov	r4, #0xae
 	lsl	r4, r4, #0x1
-	ldr	r2, .L760
-.L756:
+	ldr	r2, .L822
+.L818:
 	ldrh	r0, [r2]
 	cmp	r0, r3
-	bne	.L755	@cond_branch
+	bne	.L817	@cond_branch
 	add	r0, r1, r4
-	b	.L759
-.L761:
+	b	.L821
+.L823:
 	.align	2, 0
-.L760:
+.L822:
 	.word	gRematchTable
-.L755:
+.L817:
 	add	r2, r2, #0x10
 	add	r1, r1, #0x1
 	cmp	r1, #0x4d
-	ble	.L756	@cond_branch
-	ldr	r0, .L762
-.L759:
+	ble	.L818	@cond_branch
+	ldr	r0, .L824
+.L821:
 	pop	{r4}
 	pop	{r1}
 	bx	r1
-.L763:
+.L825:
 	.align	2, 0
-.L762:
+.L824:
 	.word	0xffff
 .Lfe85:
 	.size	 GetTrainerMatchCallFlag,.Lfe85-GetTrainerMatchCallFlag
@@ -4956,27 +5175,27 @@ GetTrainerMatchCallFlag:
 	.thumb_func
 RegisterTrainerInMatchCall:
 	push	{lr}
-	ldr	r0, .L767
+	ldr	r0, .L829
 	bl	FlagGet
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.L765	@cond_branch
-	ldr	r0, .L767+0x4
+	beq	.L827	@cond_branch
+	ldr	r0, .L829+0x4
 	ldrh	r0, [r0]
 	bl	GetTrainerMatchCallFlag
 	add	r1, r0, #0
-	ldr	r0, .L767+0x8
+	ldr	r0, .L829+0x8
 	cmp	r1, r0
-	beq	.L765	@cond_branch
+	beq	.L827	@cond_branch
 	lsl	r0, r1, #0x10
 	lsr	r0, r0, #0x10
 	bl	FlagSet
-.L765:
+.L827:
 	pop	{r0}
 	bx	r0
-.L768:
+.L830:
 	.align	2, 0
-.L767:
+.L829:
 	.word	0x12f
 	.word	gTrainerBattleOpponent_A
 	.word	0xffff
@@ -4995,19 +5214,19 @@ WasSecondRematchWon:
 	mov	r0, #0x1
 	neg	r0, r0
 	cmp	r1, r0
-	beq	.L771	@cond_branch
+	beq	.L833	@cond_branch
 	lsl	r0, r1, #0x4
 	add	r0, r0, r4
 	ldrh	r0, [r0, #0x2]
 	bl	HasTrainerBeenFought
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.L771	@cond_branch
+	beq	.L833	@cond_branch
 	mov	r0, #0x1
-	b	.L772
-.L771:
+	b	.L834
+.L833:
 	mov	r0, #0x0
-.L772:
+.L834:
 	pop	{r4}
 	pop	{r1}
 	bx	r1
@@ -5020,30 +5239,30 @@ HasAtLeastFiveBadges:
 	push	{r4, r5, r6, lr}
 	mov	r6, #0x0
 	mov	r5, #0x0
-	ldr	r4, .L782
-.L777:
+	ldr	r4, .L844
+.L839:
 	ldrh	r0, [r4]
 	bl	FlagGet
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	cmp	r0, #0x1
-	bne	.L776	@cond_branch
+	bne	.L838	@cond_branch
 	add	r6, r6, #0x1
 	cmp	r6, #0x4
-	ble	.L776	@cond_branch
+	ble	.L838	@cond_branch
 	mov	r0, #0x1
-	b	.L781
-.L783:
+	b	.L843
+.L845:
 	.align	2, 0
-.L782:
+.L844:
 	.word	sBadgeFlags
-.L776:
+.L838:
 	add	r4, r4, #0x2
 	add	r5, r5, #0x1
 	cmp	r5, #0x7
-	bls	.L777	@cond_branch
+	bls	.L839	@cond_branch
 	mov	r0, #0x0
-.L781:
+.L843:
 	pop	{r4, r5, r6}
 	pop	{r1}
 	bx	r1
@@ -5057,26 +5276,26 @@ IncrementRematchStepCounter:
 	push	{lr}
 	bl	HasAtLeastFiveBadges
 	cmp	r0, #0
-	beq	.L785	@cond_branch
-	ldr	r0, .L789
+	beq	.L847	@cond_branch
+	ldr	r0, .L851
 	ldr	r0, [r0]
-	ldr	r2, .L789+0x4
+	ldr	r2, .L851+0x4
 	add	r1, r0, r2
 	ldrh	r0, [r1]
 	cmp	r0, #0xfe
-	bls	.L786	@cond_branch
+	bls	.L848	@cond_branch
 	mov	r0, #0xff
-	b	.L788
-.L790:
+	b	.L850
+.L852:
 	.align	2, 0
-.L789:
+.L851:
 	.word	gSaveBlock1Ptr
 	.word	0xfa8
-.L786:
+.L848:
 	add	r0, r0, #0x1
-.L788:
+.L850:
 	strh	r0, [r1]
-.L785:
+.L847:
 	pop	{r0}
 	bx	r0
 .Lfe89:
@@ -5088,24 +5307,24 @@ IsRematchStepCounterMaxed:
 	push	{lr}
 	bl	HasAtLeastFiveBadges
 	cmp	r0, #0
-	beq	.L792	@cond_branch
-	ldr	r0, .L795
+	beq	.L854	@cond_branch
+	ldr	r0, .L857
 	ldr	r0, [r0]
-	ldr	r1, .L795+0x4
+	ldr	r1, .L857+0x4
 	add	r0, r0, r1
 	ldrh	r0, [r0]
 	cmp	r0, #0xfe
-	bls	.L792	@cond_branch
+	bls	.L854	@cond_branch
 	mov	r0, #0x1
-	b	.L794
-.L796:
+	b	.L856
+.L858:
 	.align	2, 0
-.L795:
+.L857:
 	.word	gSaveBlock1Ptr
 	.word	0xfa8
-.L792:
+.L854:
 	mov	r0, #0x0
-.L794:
+.L856:
 	pop	{r1}
 	bx	r1
 .Lfe90:
@@ -5122,26 +5341,26 @@ TryUpdateRandomTrainerRematches:
 	lsr	r4, r1, #0x10
 	bl	IsRematchStepCounterMaxed
 	cmp	r0, #0
-	beq	.L798	@cond_branch
-	ldr	r0, .L799
+	beq	.L860	@cond_branch
+	ldr	r0, .L861
 	add	r1, r5, #0
 	add	r2, r4, #0
 	bl	UpdateRandomTrainerRematches
 	cmp	r0, #0x1
-	bne	.L798	@cond_branch
-	ldr	r0, .L799+0x4
+	bne	.L860	@cond_branch
+	ldr	r0, .L861+0x4
 	ldr	r0, [r0]
-	ldr	r1, .L799+0x8
+	ldr	r1, .L861+0x8
 	add	r0, r0, r1
 	mov	r1, #0x0
 	strh	r1, [r0]
-.L798:
+.L860:
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.L800:
+.L862:
 	.align	2, 0
-.L799:
+.L861:
 	.word	gRematchTable
 	.word	gSaveBlock1Ptr
 	.word	0xfa8
@@ -5159,14 +5378,14 @@ DoesSomeoneWantRematchIn:
 	lsr	r3, r3, #0x10
 	lsl	r2, r2, #0x10
 	lsr	r2, r2, #0x10
-	ldr	r0, .L802
+	ldr	r0, .L864
 	add	r1, r3, #0
 	bl	DoesSomeoneWantRematchIn_
 	pop	{r1}
 	bx	r1
-.L803:
+.L865:
 	.align	2, 0
-.L802:
+.L864:
 	.word	gRematchTable
 .Lfe92:
 	.size	 DoesSomeoneWantRematchIn,.Lfe92-DoesSomeoneWantRematchIn
@@ -5182,14 +5401,14 @@ IsRematchTrainerIn:
 	lsr	r3, r3, #0x10
 	lsl	r2, r2, #0x10
 	lsr	r2, r2, #0x10
-	ldr	r0, .L805
+	ldr	r0, .L867
 	add	r1, r3, #0
 	bl	IsRematchTrainerIn_
 	pop	{r1}
 	bx	r1
-.L806:
+.L868:
 	.align	2, 0
-.L805:
+.L867:
 	.word	gRematchTable
 .Lfe93:
 	.size	 IsRematchTrainerIn,.Lfe93-IsRematchTrainerIn
@@ -5201,15 +5420,15 @@ GetRematchTrainerId:
 	add	r1, r0, #0
 	lsl	r1, r1, #0x10
 	lsr	r1, r1, #0x10
-	ldr	r0, .L808
+	ldr	r0, .L870
 	bl	GetRematchTrainerIdFromTable
 	lsl	r0, r0, #0x10
 	lsr	r0, r0, #0x10
 	pop	{r1}
 	bx	r1
-.L809:
+.L871:
 	.align	2, 0
-.L808:
+.L870:
 	.word	gRematchTable
 .Lfe94:
 	.size	 GetRematchTrainerId,.Lfe94-GetRematchTrainerId
@@ -5222,15 +5441,15 @@ GetLastBeatenRematchTrainerId:
 	add	r1, r0, #0
 	lsl	r1, r1, #0x10
 	lsr	r1, r1, #0x10
-	ldr	r0, .L811
+	ldr	r0, .L873
 	bl	GetLastBeatenRematchTrainerIdFromTable
 	lsl	r0, r0, #0x10
 	lsr	r0, r0, #0x10
 	pop	{r1}
 	bx	r1
-.L812:
+.L874:
 	.align	2, 0
-.L811:
+.L873:
 	.word	gRematchTable
 .Lfe95:
 	.size	 GetLastBeatenRematchTrainerId,.Lfe95-GetLastBeatenRematchTrainerId
@@ -5240,28 +5459,28 @@ GetLastBeatenRematchTrainerId:
 	.thumb_func
 ShouldTryRematchBattle:
 	push	{r4, r5, lr}
-	ldr	r5, .L816
-	ldr	r4, .L816+0x4
+	ldr	r5, .L878
+	ldr	r4, .L878+0x4
 	ldrh	r1, [r4]
 	add	r0, r5, #0
 	bl	IsFirstTrainerIdReadyForRematch
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	bne	.L814	@cond_branch
+	bne	.L876	@cond_branch
 	ldrh	r1, [r4]
 	add	r0, r5, #0
 	bl	WasSecondRematchWon
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
-	b	.L815
-.L817:
+	b	.L877
+.L879:
 	.align	2, 0
-.L816:
+.L878:
 	.word	gRematchTable
 	.word	gTrainerBattleOpponent_A
-.L814:
+.L876:
 	mov	r0, #0x1
-.L815:
+.L877:
 	pop	{r4, r5}
 	pop	{r1}
 	bx	r1
@@ -5273,17 +5492,17 @@ ShouldTryRematchBattle:
 	.thumb_func
 IsTrainerReadyForRematch:
 	push	{lr}
-	ldr	r0, .L819
-	ldr	r1, .L819+0x4
+	ldr	r0, .L881
+	ldr	r1, .L881+0x4
 	ldrh	r1, [r1]
 	bl	IsTrainerReadyForRematch_
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	pop	{r1}
 	bx	r1
-.L820:
+.L882:
 	.align	2, 0
-.L819:
+.L881:
 	.word	gRematchTable
 	.word	gTrainerBattleOpponent_A
 .Lfe97:
@@ -5293,16 +5512,16 @@ IsTrainerReadyForRematch:
 	.thumb_func
 HandleRematchVarsOnBattleEnd:
 	push	{lr}
-	ldr	r0, .L822
-	ldr	r1, .L822+0x4
+	ldr	r0, .L884
+	ldr	r1, .L884+0x4
 	ldrh	r1, [r1]
 	bl	ClearTrainerWantRematchState
 	bl	SetBattledTrainersFlags
 	pop	{r0}
 	bx	r0
-.L823:
+.L885:
 	.align	2, 0
-.L822:
+.L884:
 	.word	gRematchTable
 	.word	gTrainerBattleOpponent_A
 .Lfe98:
@@ -5313,37 +5532,37 @@ HandleRematchVarsOnBattleEnd:
 	.thumb_func
 ShouldTryGetTrainerScript:
 	push	{lr}
-	ldr	r1, .L828
+	ldr	r1, .L890
 	ldrb	r0, [r1]
 	cmp	r0, #0x1
-	bls	.L825	@cond_branch
+	bls	.L887	@cond_branch
 	mov	r0, #0x0
 	strb	r0, [r1]
-	ldr	r1, .L828+0x4
+	ldr	r1, .L890+0x4
 	mov	r0, #0x1
 	strb	r0, [r1]
-	ldr	r1, .L828+0x8
+	ldr	r1, .L890+0x8
 	mov	r0, #0x1
-	b	.L827
-.L829:
+	b	.L889
+.L891:
 	.align	2, 0
-.L828:
+.L890:
 	.word	sNoOfPossibleTrainerRetScripts
 	.word	sShouldCheckTrainerBScript
 	.word	gSpecialVar_Result
-.L825:
-	ldr	r1, .L830
+.L887:
+	ldr	r1, .L892
 	mov	r0, #0x0
 	strb	r0, [r1]
-	ldr	r1, .L830+0x4
+	ldr	r1, .L892+0x4
 	mov	r0, #0x0
-.L827:
+.L889:
 	strh	r0, [r1]
 	pop	{r0}
 	bx	r0
-.L831:
+.L893:
 	.align	2, 0
-.L830:
+.L892:
 	.word	sShouldCheckTrainerBScript
 	.word	gSpecialVar_Result
 .Lfe99:
@@ -5355,7 +5574,7 @@ ShouldTryGetTrainerScript:
 CountBattledRematchTeams:
 	push	{r4, r5, r6, r7, lr}
 	lsl	r0, r0, #0x10
-	ldr	r7, .L842
+	ldr	r7, .L904
 	lsr	r4, r0, #0xc
 	add	r6, r4, r7
 	ldrh	r0, [r6]
@@ -5363,38 +5582,38 @@ CountBattledRematchTeams:
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	cmp	r0, #0x1
-	beq	.L833	@cond_branch
+	beq	.L895	@cond_branch
 	mov	r0, #0x0
-	b	.L841
-.L843:
+	b	.L903
+.L905:
 	.align	2, 0
-.L842:
+.L904:
 	.word	gRematchTable
-.L833:
+.L895:
 	mov	r5, #0x1
 	add	r0, r4, #0x2
 	add	r0, r0, r7
 	ldrh	r0, [r0]
 	cmp	r0, #0
-	beq	.L835	@cond_branch
+	beq	.L897	@cond_branch
 	add	r4, r6, #0x2
-.L838:
+.L900:
 	ldrh	r0, [r4]
 	bl	HasTrainerBeenFought
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.L835	@cond_branch
+	beq	.L897	@cond_branch
 	add	r4, r4, #0x2
 	add	r5, r5, #0x1
 	cmp	r5, #0x4
-	bgt	.L835	@cond_branch
+	bgt	.L897	@cond_branch
 	ldrh	r0, [r4]
 	cmp	r0, #0
-	bne	.L838	@cond_branch
-.L835:
+	bne	.L900	@cond_branch
+.L897:
 	lsl	r0, r5, #0x10
 	lsr	r0, r0, #0x10
-.L841:
+.L903:
 	pop	{r4, r5, r6, r7}
 	pop	{r1}
 	bx	r1

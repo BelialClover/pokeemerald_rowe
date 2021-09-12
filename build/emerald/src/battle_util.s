@@ -13315,6 +13315,10 @@ forms.156:
 	.short	0x22b
 	.short	0x42a
 	.short	0x2
+	.short	0xa1
+	.short	0x3d7
+	.short	0x42b
+	.short	0x2
 	.short	0xc5
 	.short	0x306
 	.short	0x494
@@ -13464,7 +13468,7 @@ ShouldChangeFormHpBased:
 	mov	r0, #0x1
 	add	r9, r9, r0
 	mov	r1, r9
-	cmp	r1, #0x8
+	cmp	r1, #0x9
 	bls	.L1630	@cond_branch
 	mov	r0, #0x0
 .L1635:
@@ -25681,8 +25685,7 @@ IsBattlerGrounded:
 	cmp	r0, #0x2
 	bne	.L3072	@cond_branch
 .L3073:
-	mov	r0, #0xed
-	lsl	r0, r0, #0x1
+	mov	r0, #0x2b
 	bl	FlagGet
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
@@ -25924,9 +25927,9 @@ GetMoveTargetCount:
 	add	r1, r1, r2
 	ldrb	r0, [r1, #0x7]
 	cmp	r0, #0x40
-	bls	.LCB28261
+	bls	.LCB28259
 	b	.L3135	@long jump
-.LCB28261:
+.LCB28259:
 	lsl	r0, r0, #0x2
 	ldr	r1, .L3139+0x4
 	add	r0, r0, r1
@@ -26380,9 +26383,9 @@ CalcMoveBasePower:
 	sub	r0, r0, #0x27
 	add	r2, r1, #0
 	cmp	r0, #0xbf
-	bls	.LCB28428
+	bls	.LCB28426
 	bl	.L3147	@far jump
-.LCB28428:
+.LCB28426:
 	lsl	r0, r0, #0x2
 	ldr	r1, .L3241+0x4
 	add	r0, r0, r1
@@ -26688,9 +26691,9 @@ CalcMoveBasePower:
 	add	r0, r0, r1
 	ldrb	r0, [r0, #0x13]
 	cmp	r3, r0
-	bcc	.LCB28576
+	bcc	.LCB28574
 	b	.L3147	@long jump
-.LCB28576:
+.LCB28574:
 	add	r1, r0, #0
 .L3164:
 	lsl	r0, r5, #0x11
@@ -26739,9 +26742,9 @@ CalcMoveBasePower:
 	lsl	r1, r1, #0x17
 	and	r0, r0, r1
 	cmp	r0, #0
-	bne	.LCB28652
+	bne	.LCB28650
 	b	.L3147	@long jump
-.LCB28652:
+.LCB28650:
 	b	.L3239
 .L3254:
 	.align	2, 0
@@ -26809,24 +26812,24 @@ CalcMoveBasePower:
 	add	r0, r1, r2
 	ldrb	r0, [r0, #0xc]
 	cmp	r0, r7
-	bne	.LCB28741
+	bne	.LCB28739
 	b	.L3239	@long jump
-.LCB28741:
+.LCB28739:
 .L3180:
 	add	r0, r2, #0
 	add	r0, r0, #0x8
 	add	r0, r1, r0
 	ldr	r0, [r0]
 	cmp	r0, #0
-	bne	.LCB28748
+	bne	.LCB28746
 	b	.L3147	@long jump
-.LCB28748:
+.LCB28746:
 	add	r0, r1, r2
 	ldrb	r0, [r0, #0xd]
 	cmp	r0, r7
-	beq	.LCB28754
+	beq	.LCB28752
 	b	.L3147	@long jump
-.LCB28754:
+.LCB28752:
 	b	.L3239
 .L3264:
 	.align	2, 0
@@ -26836,23 +26839,23 @@ CalcMoveBasePower:
 	mov	r0, #0xd
 	bl	IsAbilityOnField
 	cmp	r0, #0
-	beq	.LCB28769
+	beq	.LCB28767
 	b	.L3147	@long jump
-.LCB28769:
+.LCB28767:
 	mov	r0, #0x4c
 	bl	IsAbilityOnField
 	cmp	r0, #0
-	beq	.LCB28774
+	beq	.LCB28772
 	b	.L3147	@long jump
-.LCB28774:
+.LCB28772:
 	ldr	r0, .L3265
 	ldrh	r1, [r0]
 	ldr	r0, .L3265+0x4
 	and	r0, r0, r1
 	cmp	r0, #0
-	bne	.LCB28783
+	bne	.LCB28781
 	b	.L3147	@long jump
-.LCB28783:
+.LCB28781:
 	b	.L3239
 .L3266:
 	.align	2, 0
@@ -26869,9 +26872,9 @@ CalcMoveBasePower:
 	add	r0, r0, r4
 	ldrb	r0, [r0]
 	cmp	r0, #0x2
-	beq	.LCB28808
+	beq	.LCB28806
 	b	.L3147	@long jump
-.LCB28808:
+.LCB28806:
 	b	.L3239
 .L3268:
 	.align	2, 0
@@ -26905,15 +26908,15 @@ CalcMoveBasePower:
 	mov	r1, #0x7
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.LCB28849
+	beq	.LCB28847
 	b	.L3239	@long jump
-.LCB28849:
+.LCB28847:
 	add	r0, r7, #0
 	bl	GetBattlerAbility
 	cmp	r0, #0xd5
-	beq	.LCB28854
+	beq	.LCB28852
 	b	.L3147	@long jump
-.LCB28854:
+.LCB28852:
 	b	.L3239
 .L3272:
 	.align	2, 0
@@ -26929,9 +26932,9 @@ CalcMoveBasePower:
 	mov	r1, #0x40
 	and	r0, r0, r1
 	cmp	r0, #0
-	bne	.LCB28874
+	bne	.LCB28872
 	b	.L3147	@long jump
-.LCB28874:
+.LCB28872:
 	b	.L3239
 .L3274:
 	.align	2, 0
@@ -26963,15 +26966,15 @@ CalcMoveBasePower:
 	add	r0, r0, r1
 	ldrb	r0, [r0]
 	cmp	r0, #0
-	beq	.LCB28917
+	beq	.LCB28915
 	b	.L3239	@long jump
-.LCB28917:
+.LCB28915:
 	add	r0, r7, #0
 	bl	GetBattlerAbility
 	cmp	r0, #0xd5
-	beq	.LCB28922
+	beq	.LCB28920
 	b	.L3147	@long jump
-.LCB28922:
+.LCB28920:
 	b	.L3239
 .L3278:
 	.align	2, 0
@@ -26984,24 +26987,24 @@ CalcMoveBasePower:
 	add	r0, r1, r0
 	ldr	r0, [r0]
 	cmp	r0, #0
-	beq	.LCB28939
+	beq	.LCB28937
 	b	.L3239	@long jump
-.LCB28939:
+.LCB28937:
 	add	r0, r2, #0
 	add	r0, r0, #0x8
 	add	r0, r1, r0
 	ldr	r0, [r0]
 	cmp	r0, #0
-	beq	.LCB28945
+	beq	.LCB28943
 	b	.L3239	@long jump
-.LCB28945:
+.LCB28943:
 	add	r0, r1, r2
 	ldrb	r0, [r0, #0x1]
 	lsl	r0, r0, #0x1d
 	cmp	r0, #0
-	blt	.LCB28951
+	blt	.LCB28949
 	b	.L3147	@long jump
-.LCB28951:
+.LCB28949:
 	b	.L3239
 .L3280:
 	.align	2, 0
@@ -27018,9 +27021,9 @@ CalcMoveBasePower:
 	lsl	r0, r0, #0x18
 	lsr	r3, r0, #0x18
 	cmp	r3, #0x4
-	bne	.LCB28973
+	bne	.LCB28971
 	b	.L3147	@long jump
-.LCB28973:
+.LCB28971:
 	add	r0, r3, r4
 	add	r1, r6, #0
 	add	r1, r1, #0x25
@@ -27050,9 +27053,9 @@ CalcMoveBasePower:
 	add	r0, r0, r1
 	ldrh	r0, [r0, #0x30]
 	cmp	r0, #0
-	bne	.LCB29014
+	bne	.LCB29012
 	b	.L3239	@long jump
-.LCB29014:
+.LCB29012:
 	ldr	r0, .L3285+0x4
 	lsl	r1, r6, #0x1
 	add	r1, r1, r6
@@ -27061,16 +27064,16 @@ CalcMoveBasePower:
 	ldrb	r0, [r1, #0x2]
 	lsl	r0, r0, #0x1e
 	cmp	r0, #0
-	blt	.LCB29026
+	blt	.LCB29024
 	b	.L3147	@long jump
-.LCB29026:
+.LCB29024:
 	add	r0, r6, #0
 	mov	r1, #0x0
 	bl	GetBattlerHoldEffect
 	cmp	r0, #0x77
-	beq	.LCB29032
+	beq	.LCB29030
 	b	.L3147	@long jump
-.LCB29032:
+.LCB29030:
 	b	.L3239
 .L3286:
 	.align	2, 0
@@ -27161,9 +27164,9 @@ CalcMoveBasePower:
 	add	r1, r1, r0
 	lsr	r5, r1, #0x10
 	cmp	r5, #0xc8
-	bhi	.LCB29161
+	bhi	.LCB29159
 	b	.L3147	@long jump
-.LCB29161:
+.LCB29159:
 	mov	r5, #0xc8
 	b	.L3236
 .L3219:
@@ -27355,9 +27358,9 @@ CalcMoveBasePowerAfterModifiers:
 	bl	GetBattlerAbility
 	sub	r0, r0, #0x4f
 	cmp	r0, #0x7f
-	bls	.LCB29407
+	bls	.LCB29405
 	b	.L3304	@long jump
-.LCB29407:
+.LCB29405:
 	lsl	r0, r0, #0x2
 	ldr	r1, .L3458
 	add	r0, r0, r1
@@ -27501,9 +27504,9 @@ CalcMoveBasePowerAfterModifiers:
 .L3305:
 	ldr	r0, [sp, #0xc]
 	cmp	r0, #0x3c
-	bls	.LCB29428
+	bls	.LCB29426
 	b	.L3304	@long jump
-.LCB29428:
+.LCB29426:
 	mov	r1, #0xc0
 	lsl	r1, r1, #0x5
 	b	.L3451
@@ -27517,17 +27520,17 @@ CalcMoveBasePowerAfterModifiers:
 	mov	r1, #0x10
 	and	r0, r0, r1
 	cmp	r0, #0
-	bne	.LCB29444
+	bne	.LCB29442
 	b	.L3304	@long jump
-.LCB29444:
+.LCB29442:
 	add	r0, r6, #0
 	bl	GetBattleMoveSplit
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	cmp	r0, #0x1
-	beq	.LCB29451
+	beq	.LCB29449
 	b	.L3304	@long jump
-.LCB29451:
+.LCB29449:
 	mov	r1, #0xc0
 	lsl	r1, r1, #0x5
 	b	.L3451
@@ -27545,16 +27548,16 @@ CalcMoveBasePowerAfterModifiers:
 	mov	r1, #0x88
 	and	r0, r0, r1
 	cmp	r0, #0
-	bne	.LCB29473
+	bne	.LCB29471
 	b	.L3304	@long jump
-.LCB29473:
+.LCB29471:
 	add	r0, r6, #0
 	bl	GetBattleMoveSplit
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.LCB29480
+	beq	.LCB29478
 	b	.L3304	@long jump
-.LCB29480:
+.LCB29478:
 	mov	r1, #0xc0
 	lsl	r1, r1, #0x5
 	b	.L3451
@@ -27605,9 +27608,9 @@ CalcMoveBasePowerAfterModifiers:
 	lsl	r1, r1, #0x2
 	and	r0, r0, r1
 	cmp	r0, #0
-	bne	.LCB29543
+	bne	.LCB29541
 	b	.L3304	@long jump
-.LCB29543:
+.LCB29541:
 	ldr	r1, .L3468+0x4
 	b	.L3451
 .L3469:
@@ -27622,9 +27625,9 @@ CalcMoveBasePowerAfterModifiers:
 	cmp	r1, #0x5
 	beq	.L3319	@cond_branch
 	cmp	r1, #0x4
-	beq	.LCB29562
+	beq	.LCB29560
 	b	.L3304	@long jump
-.LCB29562:
+.LCB29560:
 .L3319:
 	ldr	r1, .L3470
 	b	.L3451
@@ -27652,9 +27655,9 @@ CalcMoveBasePowerAfterModifiers:
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	cmp	r0, #0xff
-	bne	.LCB29598
+	bne	.LCB29596
 	b	.L3304	@long jump
-.LCB29598:
+.LCB29596:
 	ldr	r0, [sp, #0x4]
 	mov	r1, r8
 	mul	r1, r1, r0
@@ -27669,9 +27672,9 @@ CalcMoveBasePowerAfterModifiers:
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	cmp	r0, #0xff
-	bne	.LCB29617
+	bne	.LCB29615
 	b	.L3304	@long jump
-.LCB29617:
+.LCB29615:
 	mov	r1, sl
 	ldrh	r0, [r1]
 	lsl	r0, r0, #0x15
@@ -27710,18 +27713,18 @@ CalcMoveBasePowerAfterModifiers:
 	ldrb	r1, [r1]
 	sub	r1, r1, #0x1
 	cmp	r0, r1
-	beq	.LCB29675
+	beq	.LCB29673
+	b	.L3304	@long jump
+.LCB29673:
+	cmp	r6, #0xf8
+	bne	.LCB29675
 	b	.L3304	@long jump
 .LCB29675:
-	cmp	r6, #0xf8
-	bne	.LCB29677
-	b	.L3304	@long jump
-.LCB29677:
 	ldr	r0, .L3474+0x4
 	cmp	r6, r0
-	bne	.LCB29682
+	bne	.LCB29680
 	b	.L3304	@long jump
-.LCB29682:
+.LCB29680:
 	ldr	r1, .L3474+0x8
 	b	.L3451
 .L3475:
@@ -27741,9 +27744,9 @@ CalcMoveBasePowerAfterModifiers:
 	mov	r1, #0x1
 	and	r0, r0, r1
 	cmp	r0, #0
-	bne	.LCB29706
+	bne	.LCB29704
 	b	.L3304	@long jump
-.LCB29706:
+.LCB29704:
 	ldr	r1, .L3476+0x4
 	b	.L3451
 .L3477:
@@ -28045,9 +28048,9 @@ CalcMoveBasePowerAfterModifiers:
 	lsl	r3, r5, #0x4
 	mov	sl, r3
 	cmp	r0, #0x7b
-	bls	.LCB30100
+	bls	.LCB30098
 	b	.L3374	@long jump
-.LCB30100:
+.LCB30098:
 	lsl	r0, r0, #0x2
 	ldr	r1, .L3494+0x4
 	add	r0, r0, r1
@@ -28195,9 +28198,9 @@ CalcMoveBasePowerAfterModifiers:
 	lsl	r2, r5, #0x4
 	mov	sl, r2
 	cmp	r0, #0
-	beq	.LCB30134
+	beq	.LCB30132
 	b	.L3374	@long jump
-.LCB30134:
+.LCB30132:
 	b	.L3454
 .L3377:
 	add	r0, r6, #0
@@ -28210,9 +28213,9 @@ CalcMoveBasePowerAfterModifiers:
 	lsl	r1, r5, #0x4
 	mov	sl, r1
 	cmp	r0, #0x1
-	beq	.LCB30152
+	beq	.LCB30150
 	b	.L3374	@long jump
-.LCB30152:
+.LCB30150:
 	b	.L3454
 .L3379:
 	ldr	r1, .L3496
@@ -28229,9 +28232,9 @@ CalcMoveBasePowerAfterModifiers:
 	lsl	r3, r5, #0x4
 	mov	sl, r3
 	cmp	r0, r1
-	beq	.LCB30178
+	beq	.LCB30176
 	b	.L3374	@long jump
-.LCB30178:
+.LCB30176:
 	ldr	r0, [sp, #0x8]
 	cmp	r0, #0xb
 	beq	.L3387	@cond_branch
@@ -28254,16 +28257,16 @@ CalcMoveBasePowerAfterModifiers:
 	lsl	r2, r5, #0x4
 	mov	sl, r2
 	cmp	r0, r1
-	beq	.LCB30212
+	beq	.LCB30210
 	b	.L3374	@long jump
-.LCB30212:
+.LCB30210:
 	ldr	r3, [sp, #0x8]
 	cmp	r3, #0x8
 	beq	.L3384	@cond_branch
 	cmp	r3, #0x10
-	beq	.LCB30220
+	beq	.LCB30218
 	b	.L3374	@long jump
-.LCB30220:
+.LCB30218:
 .L3384:
 	mov	r0, sp
 	mov	r1, r9
@@ -28293,17 +28296,17 @@ CalcMoveBasePowerAfterModifiers:
 	lsl	r3, r5, #0x4
 	mov	sl, r3
 	cmp	r0, r1
-	beq	.LCB30258
+	beq	.LCB30256
 	b	.L3374	@long jump
-.LCB30258:
+.LCB30256:
 	ldr	r0, [sp, #0x8]
 	cmp	r0, #0x7
 	beq	.L3387	@cond_branch
 .L3457:
 	cmp	r0, #0x10
-	beq	.LCB30267
+	beq	.LCB30265
 	b	.L3374	@long jump
-.LCB30267:
+.LCB30265:
 .L3387:
 	mov	r0, sp
 	mov	r1, r9
@@ -28452,15 +28455,15 @@ CalcMoveBasePowerAfterModifiers:
 	add	r0, r0, r1
 	ldrh	r1, [r0]
 	cmp	r1, #0xbc
-	bne	.LCB30468
+	bne	.LCB30466
 	b	.L3437	@long jump
-.LCB30468:
+.LCB30466:
 	cmp	r1, #0xbc
 	bgt	.L3441	@cond_branch
 	cmp	r1, #0x93
-	bne	.LCB30472
+	bne	.LCB30470
 	b	.L3435	@long jump
-.LCB30472:
+.LCB30470:
 	cmp	r1, #0x93
 	bgt	.L3442	@cond_branch
 	cmp	r1, #0x7e
@@ -28479,9 +28482,9 @@ CalcMoveBasePowerAfterModifiers:
 	b	.L3421
 .L3441:
 	cmp	r1, #0xe9
-	bne	.LCB30495
+	bne	.LCB30493
 	b	.L3421	@long jump
-.LCB30495:
+.LCB30493:
 	cmp	r1, #0xe9
 	bgt	.L3443	@cond_branch
 	cmp	r1, #0xe7
@@ -28507,9 +28510,9 @@ CalcMoveBasePowerAfterModifiers:
 	mov	r1, #0xd8
 	and	r0, r0, r1
 	cmp	r0, #0
-	bne	.LCB30525
+	bne	.LCB30523
 	b	.L3421	@long jump
-.LCB30525:
+.LCB30523:
 	mov	r1, #0x80
 	lsl	r1, r1, #0x6
 	b	.L3455
@@ -28916,17 +28919,17 @@ CalcAttackStat:
 	add	r0, r5, #0
 	bl	GetBattlerAbility
 	cmp	r0, #0x42
-	bne	.LCB31027
+	bne	.LCB31025
 	b	.L3549	@long jump
-.LCB31027:
+.LCB31025:
 	cmp	r0, #0x42
 	bhi	.L3567	@cond_branch
 	cmp	r0, #0x3a
 	bhi	.L3568	@cond_branch
 	cmp	r0, #0x39
-	bcc	.LCB31033
+	bcc	.LCB31031
 	b	.L3554	@long jump
-.LCB31033:
+.LCB31031:
 	cmp	r0, #0x25
 	beq	.L3535	@cond_branch
 	cmp	r0, #0x25
@@ -28941,19 +28944,19 @@ CalcAttackStat:
 	.word	gStatStageRatios
 .L3569:
 	cmp	r0, #0x37
-	bne	.LCB31051
+	bne	.LCB31049
 	b	.L3559	@long jump
-.LCB31051:
+.LCB31049:
 	b	.L3533
 .L3568:
 	cmp	r0, #0x3e
-	bne	.LCB31056
+	bne	.LCB31054
 	b	.L3563	@long jump
-.LCB31056:
+.LCB31054:
 	cmp	r0, #0x41
-	bne	.LCB31058
+	bne	.LCB31056
 	b	.L3551	@long jump
-.LCB31058:
+.LCB31056:
 	b	.L3533
 .L3567:
 	cmp	r0, #0x5e
@@ -28963,17 +28966,17 @@ CalcAttackStat:
 	cmp	r0, #0x44
 	beq	.L3545	@cond_branch
 	cmp	r0, #0x44
-	bcs	.LCB31069
+	bcs	.LCB31067
 	b	.L3547	@long jump
-.LCB31069:
+.LCB31067:
 	cmp	r0, #0x4a
 	beq	.L3535	@cond_branch
 	b	.L3533
 .L3570:
 	cmp	r0, #0x7a
-	bne	.LCB31076
+	bne	.LCB31074
 	b	.L3557	@long jump
-.LCB31076:
+.LCB31074:
 	cmp	r0, #0x7a
 	bhi	.L3571	@cond_branch
 	cmp	r0, #0x70
@@ -28983,18 +28986,18 @@ CalcAttackStat:
 	cmp	r0, #0x81
 	beq	.L3541	@cond_branch
 	cmp	r0, #0xc6
-	bne	.LCB31087
+	bne	.LCB31085
 	b	.L3561	@long jump
-.LCB31087:
+.LCB31085:
 	b	.L3533
 .L3535:
 	add	r0, r6, #0
 	bl	GetBattleMoveSplit
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.LCB31099
+	beq	.LCB31097
 	b	.L3533	@long jump
-.LCB31099:
+.LCB31097:
 	b	.L3602
 .L3537:
 	ldr	r0, .L3613
@@ -29004,9 +29007,9 @@ CalcAttackStat:
 	add	r1, r1, r0
 	ldrb	r0, [r1, #0x1d]
 	cmp	r0, #0
-	bne	.LCB31113
+	bne	.LCB31111
 	b	.L3533	@long jump
-.LCB31113:
+.LCB31111:
 	mov	r1, #0x80
 	lsl	r1, r1, #0x4
 	b	.L3603
@@ -29020,29 +29023,29 @@ CalcAttackStat:
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	cmp	r0, #0x1
-	beq	.LCB31132
+	beq	.LCB31130
 	b	.L3533	@long jump
-.LCB31132:
+.LCB31130:
 	mov	r0, #0xd
 	bl	IsAbilityOnField
 	cmp	r0, #0
-	beq	.LCB31137
+	beq	.LCB31135
 	b	.L3533	@long jump
-.LCB31137:
+.LCB31135:
 	mov	r0, #0x4c
 	bl	IsAbilityOnField
 	cmp	r0, #0
-	beq	.LCB31142
+	beq	.LCB31140
 	b	.L3533	@long jump
-.LCB31142:
+.LCB31140:
 	ldr	r0, .L3615
 	ldrh	r1, [r0]
 	mov	r0, #0x60
 	and	r0, r0, r1
 	cmp	r0, #0
-	bne	.LCB31150
+	bne	.LCB31148
 	b	.L3533	@long jump
-.LCB31150:
+.LCB31148:
 	mov	r1, #0xc0
 	lsl	r1, r1, #0x5
 	b	.L3603
@@ -29062,9 +29065,9 @@ CalcAttackStat:
 	ldrh	r1, [r1, #0x2a]
 	lsr	r0, r0, #0x1
 	cmp	r1, r0
-	bls	.LCB31177
+	bls	.LCB31175
 	b	.L3533	@long jump
-.LCB31177:
+.LCB31175:
 	mov	r1, #0x80
 	lsl	r1, r1, #0x4
 	b	.L3603
@@ -29075,9 +29078,9 @@ CalcAttackStat:
 .L3543:
 	mov	r0, r8
 	cmp	r0, #0xa
-	beq	.LCB31192
+	beq	.LCB31190
 	b	.L3533	@long jump
-.LCB31192:
+.LCB31190:
 	ldr	r0, .L3619
 	ldr	r0, [r0]
 	ldr	r0, [r0, #0x4]
@@ -29087,9 +29090,9 @@ CalcAttackStat:
 	mov	r1, #0x1
 	and	r0, r0, r1
 	cmp	r0, #0
-	bne	.LCB31202
+	bne	.LCB31200
 	b	.L3533	@long jump
-.LCB31202:
+.LCB31200:
 	mov	r1, #0xc0
 	lsl	r1, r1, #0x5
 	b	.L3603
@@ -29100,9 +29103,9 @@ CalcAttackStat:
 .L3545:
 	mov	r1, r8
 	cmp	r1, #0x6
-	beq	.LCB31217
+	beq	.LCB31215
 	b	.L3533	@long jump
-.LCB31217:
+.LCB31215:
 	ldr	r1, .L3621
 	mov	r0, #0x5c
 	mov	r4, r5
@@ -29115,9 +29118,9 @@ CalcAttackStat:
 	lsl	r0, r0, #0x10
 	lsr	r0, r0, #0x10
 	cmp	r1, r0
-	bls	.LCB31233
+	bls	.LCB31231
 	b	.L3533	@long jump
-.LCB31233:
+.LCB31231:
 	mov	r1, #0xc0
 	lsl	r1, r1, #0x5
 	b	.L3603
@@ -29128,9 +29131,9 @@ CalcAttackStat:
 .L3547:
 	mov	r3, r8
 	cmp	r3, #0xb
-	beq	.LCB31248
+	beq	.LCB31246
 	b	.L3533	@long jump
-.LCB31248:
+.LCB31246:
 	ldr	r1, .L3623
 	mov	r0, #0x5c
 	mov	r4, r5
@@ -29143,9 +29146,9 @@ CalcAttackStat:
 	lsl	r0, r0, #0x10
 	lsr	r0, r0, #0x10
 	cmp	r1, r0
-	bls	.LCB31264
+	bls	.LCB31262
 	b	.L3533	@long jump
-.LCB31264:
+.LCB31262:
 	mov	r1, #0xc0
 	lsl	r1, r1, #0x5
 	b	.L3603
@@ -29156,9 +29159,9 @@ CalcAttackStat:
 .L3549:
 	mov	r0, r8
 	cmp	r0, #0xa
-	beq	.LCB31279
+	beq	.LCB31277
 	b	.L3533	@long jump
-.LCB31279:
+.LCB31277:
 	ldr	r1, .L3625
 	mov	r0, #0x5c
 	mov	r4, r5
@@ -29171,9 +29174,9 @@ CalcAttackStat:
 	lsl	r0, r0, #0x10
 	lsr	r0, r0, #0x10
 	cmp	r1, r0
-	bls	.LCB31295
+	bls	.LCB31293
 	b	.L3533	@long jump
-.LCB31295:
+.LCB31293:
 	mov	r1, #0xc0
 	lsl	r1, r1, #0x5
 	b	.L3603
@@ -29353,9 +29356,9 @@ CalcAttackStat:
 	bl	GetBattlerHoldEffect
 	sub	r0, r0, #0x1d
 	cmp	r0, #0x27
-	bls	.LCB31546
+	bls	.LCB31544
 	b	.L3585	@long jump
-.LCB31546:
+.LCB31544:
 	lsl	r0, r0, #0x2
 	ldr	r1, .L3633+0x8
 	add	r0, r0, r1
@@ -30998,8 +31001,7 @@ UpdateMoveResultFlags:
 	lsr	r4, r0, #0x10
 	cmp	r4, #0
 	bne	.L3845	@cond_branch
-	mov	r0, #0xed
-	lsl	r0, r0, #0x1
+	mov	r0, #0x2b
 	bl	FlagGet
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
@@ -31445,8 +31447,7 @@ GetTypeModifier:
 	lsr	r5, r0, #0x18
 	lsl	r1, r1, #0x18
 	lsr	r4, r1, #0x18
-	mov	r0, #0xed
-	lsl	r0, r0, #0x1
+	mov	r0, #0x2b
 	bl	FlagGet
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
@@ -31783,9 +31784,9 @@ CanMegaEvolve:
 	add	r4, r7, r4
 	ldrb	r0, [r4]
 	cmp	r0, #0
-	beq	.LCB34486
+	beq	.LCB34480
 	b	.L3960	@long jump
-.LCB34486:
+.LCB34480:
 	ldr	r0, .L3963+0x8
 	ldr	r0, [r0]
 	mov	r1, #0x1
@@ -31800,9 +31801,9 @@ CanMegaEvolve:
 	add	r0, r7, r1
 	ldrb	r0, [r0]
 	cmp	r0, #0
-	beq	.LCB34505
+	beq	.LCB34499
 	b	.L3960	@long jump
-.LCB34505:
+.LCB34499:
 	mov	r2, r8
 	ldrb	r1, [r2, #0x1c]
 	ldr	r2, .L3963+0xc
@@ -31811,9 +31812,9 @@ CanMegaEvolve:
 	ldr	r0, [r0]
 	and	r1, r1, r0
 	cmp	r1, #0
-	beq	.LCB34514
+	beq	.LCB34508
 	b	.L3960	@long jump
-.LCB34514:
+.LCB34508:
 .L3947:
 	add	r0, r5, #0
 	bl	GetBattlerSide
@@ -32093,6 +32094,10 @@ species.323:
 	.short	0x15f
 	.short	0x405
 	.short	0x15f
+	.short	0x42a
+	.short	0x22b
+	.short	0x42b
+	.short	0x3d7
 	.short	0x469
 	.short	0x2a9
 	.short	0x49b
@@ -32148,7 +32153,7 @@ UndoFormChange:
 .L3984:
 	add	r3, r3, #0x1
 .L3982:
-	cmp	r3, #0xe
+	cmp	r3, #0x10
 	bhi	.L3983	@cond_branch
 	ldr	r2, .L3990
 	lsl	r1, r3, #0x2

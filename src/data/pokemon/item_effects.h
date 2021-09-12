@@ -548,5 +548,7 @@ const u8 *const gItemEffectTable[ITEMS_COUNT] =
     [ITEM_HONDEW_BERRY] = gItemEffect_HondewBerry,
     [ITEM_GREPA_BERRY] = gItemEffect_GrepaBerry,
     [ITEM_TAMATO_BERRY] = gItemEffect_TamatoBerry,
+	[ITEM_SOUR_APPLE] = gItemEffect_EvoStone,
+	[ITEM_SWEET_APPLE] = gItemEffect_EvoStone,
     [LAST_BERRY_INDEX] = NULL
 };

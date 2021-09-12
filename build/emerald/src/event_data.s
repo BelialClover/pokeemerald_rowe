@@ -283,37 +283,8 @@ EnableNationalPokedex:
 	.type	 IsNationalPokedexEnabled,function
 	.thumb_func
 IsNationalPokedexEnabled:
-	push	{lr}
-	ldr	r0, .L21
-	ldr	r0, [r0]
-	ldrb	r0, [r0, #0x1e]
-	cmp	r0, #0xda
-	bne	.L18	@cond_branch
-	ldr	r0, .L21+0x4
-	bl	VarGet
-	lsl	r0, r0, #0x10
-	ldr	r1, .L21+0x8
-	cmp	r0, r1
-	bne	.L18	@cond_branch
-	ldr	r0, .L21+0xc
-	bl	FlagGet
-	lsl	r0, r0, #0x18
-	cmp	r0, #0
-	beq	.L18	@cond_branch
 	mov	r0, #0x1
-	b	.L20
-.L22:
-	.align	2, 0
-.L21:
-	.word	gSaveBlock2Ptr
-	.word	0x4046
-	.word	0x3020000
-	.word	0x896
-.L18:
-	mov	r0, #0x0
-.L20:
-	pop	{r1}
-	bx	r1
+	bx	lr
 .Lfe6:
 	.size	 IsNationalPokedexEnabled,.Lfe6-IsNationalPokedexEnabled
 	.align	2, 0
@@ -322,13 +293,13 @@ IsNationalPokedexEnabled:
 	.thumb_func
 DisableMysteryEvent:
 	push	{lr}
-	ldr	r0, .L24
+	ldr	r0, .L19
 	bl	FlagClear
 	pop	{r0}
 	bx	r0
-.L25:
+.L20:
 	.align	2, 0
-.L24:
+.L19:
 	.word	0x8ac
 .Lfe7:
 	.size	 DisableMysteryEvent,.Lfe7-DisableMysteryEvent
@@ -338,13 +309,13 @@ DisableMysteryEvent:
 	.thumb_func
 EnableMysteryEvent:
 	push	{lr}
-	ldr	r0, .L27
+	ldr	r0, .L22
 	bl	FlagSet
 	pop	{r0}
 	bx	r0
-.L28:
+.L23:
 	.align	2, 0
-.L27:
+.L22:
 	.word	0x8ac
 .Lfe8:
 	.size	 EnableMysteryEvent,.Lfe8-EnableMysteryEvent
@@ -354,15 +325,15 @@ EnableMysteryEvent:
 	.thumb_func
 IsMysteryEventEnabled:
 	push	{lr}
-	ldr	r0, .L30
+	ldr	r0, .L25
 	bl	FlagGet
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	pop	{r1}
 	bx	r1
-.L31:
+.L26:
 	.align	2, 0
-.L30:
+.L25:
 	.word	0x8ac
 .Lfe9:
 	.size	 IsMysteryEventEnabled,.Lfe9-IsMysteryEventEnabled
@@ -372,13 +343,13 @@ IsMysteryEventEnabled:
 	.thumb_func
 DisableMysteryGift:
 	push	{lr}
-	ldr	r0, .L33
+	ldr	r0, .L28
 	bl	FlagClear
 	pop	{r0}
 	bx	r0
-.L34:
+.L29:
 	.align	2, 0
-.L33:
+.L28:
 	.word	0x8db
 .Lfe10:
 	.size	 DisableMysteryGift,.Lfe10-DisableMysteryGift
@@ -388,13 +359,13 @@ DisableMysteryGift:
 	.thumb_func
 EnableMysteryGift:
 	push	{lr}
-	ldr	r0, .L36
+	ldr	r0, .L31
 	bl	FlagSet
 	pop	{r0}
 	bx	r0
-.L37:
+.L32:
 	.align	2, 0
-.L36:
+.L31:
 	.word	0x8db
 .Lfe11:
 	.size	 EnableMysteryGift,.Lfe11-EnableMysteryGift
@@ -404,15 +375,15 @@ EnableMysteryGift:
 	.thumb_func
 IsMysteryGiftEnabled:
 	push	{lr}
-	ldr	r0, .L39
+	ldr	r0, .L34
 	bl	FlagGet
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	pop	{r1}
 	bx	r1
-.L40:
+.L35:
 	.align	2, 0
-.L39:
+.L34:
 	.word	0x8db
 .Lfe12:
 	.size	 IsMysteryGiftEnabled,.Lfe12-IsMysteryGiftEnabled
@@ -425,48 +396,48 @@ ClearMysteryEventFlags:
 	mov	r0, #0xf2
 	lsl	r0, r0, #0x1
 	bl	FlagClear
-	ldr	r0, .L42
+	ldr	r0, .L37
 	bl	FlagClear
 	mov	r0, #0xf3
 	lsl	r0, r0, #0x1
 	bl	FlagClear
-	ldr	r0, .L42+0x4
+	ldr	r0, .L37+0x4
 	bl	FlagClear
 	mov	r0, #0xf4
 	lsl	r0, r0, #0x1
 	bl	FlagClear
-	ldr	r0, .L42+0x8
+	ldr	r0, .L37+0x8
 	bl	FlagClear
 	mov	r0, #0xf5
 	lsl	r0, r0, #0x1
 	bl	FlagClear
-	ldr	r0, .L42+0xc
+	ldr	r0, .L37+0xc
 	bl	FlagClear
 	mov	r0, #0xf6
 	lsl	r0, r0, #0x1
 	bl	FlagClear
-	ldr	r0, .L42+0x10
+	ldr	r0, .L37+0x10
 	bl	FlagClear
 	mov	r0, #0xf7
 	lsl	r0, r0, #0x1
 	bl	FlagClear
-	ldr	r0, .L42+0x14
+	ldr	r0, .L37+0x14
 	bl	FlagClear
 	mov	r0, #0xf8
 	lsl	r0, r0, #0x1
 	bl	FlagClear
-	ldr	r0, .L42+0x18
+	ldr	r0, .L37+0x18
 	bl	FlagClear
 	mov	r0, #0xf9
 	lsl	r0, r0, #0x1
 	bl	FlagClear
-	ldr	r0, .L42+0x1c
+	ldr	r0, .L37+0x1c
 	bl	FlagClear
 	pop	{r0}
 	bx	r0
-.L43:
+.L38:
 	.align	2, 0
-.L42:
+.L37:
 	.word	0x1e5
 	.word	0x1e7
 	.word	0x1e9
@@ -483,35 +454,35 @@ ClearMysteryEventFlags:
 	.thumb_func
 ClearMysteryEventVars:
 	push	{lr}
-	ldr	r0, .L45
+	ldr	r0, .L40
 	mov	r1, #0x0
 	bl	VarSet
-	ldr	r0, .L45+0x4
+	ldr	r0, .L40+0x4
 	mov	r1, #0x0
 	bl	VarSet
-	ldr	r0, .L45+0x8
+	ldr	r0, .L40+0x8
 	mov	r1, #0x0
 	bl	VarSet
-	ldr	r0, .L45+0xc
+	ldr	r0, .L40+0xc
 	mov	r1, #0x0
 	bl	VarSet
-	ldr	r0, .L45+0x10
+	ldr	r0, .L40+0x10
 	mov	r1, #0x0
 	bl	VarSet
-	ldr	r0, .L45+0x14
+	ldr	r0, .L40+0x14
 	mov	r1, #0x0
 	bl	VarSet
-	ldr	r0, .L45+0x18
+	ldr	r0, .L40+0x18
 	mov	r1, #0x0
 	bl	VarSet
-	ldr	r0, .L45+0x1c
+	ldr	r0, .L40+0x1c
 	mov	r1, #0x0
 	bl	VarSet
 	pop	{r0}
 	bx	r0
-.L46:
+.L41:
 	.align	2, 0
-.L45:
+.L40:
 	.word	0x40dd
 	.word	0x40de
 	.word	0x40df
@@ -528,16 +499,16 @@ ClearMysteryEventVars:
 	.thumb_func
 DisableResetRTC:
 	push	{lr}
-	ldr	r0, .L48
+	ldr	r0, .L43
 	mov	r1, #0x0
 	bl	VarSet
-	ldr	r0, .L48+0x4
+	ldr	r0, .L43+0x4
 	bl	FlagClear
 	pop	{r0}
 	bx	r0
-.L49:
+.L44:
 	.align	2, 0
-.L48:
+.L43:
 	.word	0x402c
 	.word	0x8c2
 .Lfe15:
@@ -548,17 +519,17 @@ DisableResetRTC:
 	.thumb_func
 EnableResetRTC:
 	push	{lr}
-	ldr	r0, .L51
+	ldr	r0, .L46
 	mov	r1, #0x92
 	lsl	r1, r1, #0x4
 	bl	VarSet
-	ldr	r0, .L51+0x4
+	ldr	r0, .L46+0x4
 	bl	FlagSet
 	pop	{r0}
 	bx	r0
-.L52:
+.L47:
 	.align	2, 0
-.L51:
+.L46:
 	.word	0x402c
 	.word	0x8c2
 .Lfe16:
@@ -569,28 +540,28 @@ EnableResetRTC:
 	.thumb_func
 CanResetRTC:
 	push	{lr}
-	ldr	r0, .L57
+	ldr	r0, .L52
 	bl	FlagGet
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.L54	@cond_branch
-	ldr	r0, .L57+0x4
+	beq	.L49	@cond_branch
+	ldr	r0, .L52+0x4
 	bl	VarGet
 	lsl	r0, r0, #0x10
 	mov	r1, #0x92
 	lsl	r1, r1, #0x14
 	cmp	r0, r1
-	bne	.L54	@cond_branch
+	bne	.L49	@cond_branch
 	mov	r0, #0x1
-	b	.L56
-.L58:
+	b	.L51
+.L53:
 	.align	2, 0
-.L57:
+.L52:
 	.word	0x8c2
 	.word	0x402c
-.L54:
+.L49:
 	mov	r0, #0x0
-.L56:
+.L51:
 	pop	{r1}
 	bx	r1
 .Lfe17:
@@ -604,45 +575,45 @@ GetVarPointer:
 	lsl	r0, r0, #0x10
 	lsr	r1, r0, #0x10
 	add	r2, r1, #0
-	ldr	r0, .L66
+	ldr	r0, .L61
 	cmp	r1, r0
-	bhi	.L60	@cond_branch
+	bhi	.L55	@cond_branch
 	mov	r0, #0x0
-	b	.L64
-.L67:
+	b	.L59
+.L62:
 	.align	2, 0
-.L66:
+.L61:
 	.word	0x3fff
-.L60:
+.L55:
 	lsl	r0, r1, #0x10
 	cmp	r0, #0
-	bge	.L62	@cond_branch
-	ldr	r0, .L68
-	ldr	r2, .L68+0x4
+	bge	.L57	@cond_branch
+	ldr	r0, .L63
+	ldr	r2, .L63+0x4
 	add	r1, r1, r2
 	lsl	r1, r1, #0x2
 	add	r1, r1, r0
 	ldr	r0, [r1]
-	b	.L65
-.L69:
+	b	.L60
+.L64:
 	.align	2, 0
-.L68:
+.L63:
 	.word	gSpecialVars
 	.word	-0x8000
-.L62:
-	ldr	r0, .L70
+.L57:
+	ldr	r0, .L65
 	lsl	r1, r2, #0x1
-	ldr	r2, .L70+0x4
+	ldr	r2, .L65+0x4
 	add	r1, r1, r2
 	ldr	r0, [r0]
 	add	r0, r0, r1
-.L65:
-.L64:
+.L60:
+.L59:
 	pop	{r1}
 	bx	r1
-.L71:
+.L66:
 	.align	2, 0
-.L70:
+.L65:
 	.word	gSaveBlock1Ptr
 	.word	-0x6684
 .Lfe18:
@@ -658,12 +629,12 @@ VarGet:
 	add	r0, r4, #0
 	bl	GetVarPointer
 	cmp	r0, #0
-	beq	.L73	@cond_branch
+	beq	.L68	@cond_branch
 	ldrh	r0, [r0]
-	b	.L74
-.L73:
+	b	.L69
+.L68:
 	add	r0, r4, #0
-.L74:
+.L69:
 	pop	{r4}
 	pop	{r1}
 	bx	r1
@@ -679,17 +650,17 @@ VarGetIfExist:
 	lsr	r0, r0, #0x10
 	bl	GetVarPointer
 	cmp	r0, #0
-	beq	.L76	@cond_branch
+	beq	.L71	@cond_branch
 	ldrh	r0, [r0]
-	b	.L77
-.L76:
-	ldr	r0, .L78
-.L77:
+	b	.L72
+.L71:
+	ldr	r0, .L73
+.L72:
 	pop	{r1}
 	bx	r1
-.L79:
+.L74:
 	.align	2, 0
-.L78:
+.L73:
 	.word	0xffff
 .Lfe20:
 	.size	 VarGetIfExist,.Lfe20-VarGetIfExist
@@ -705,13 +676,13 @@ VarSet:
 	lsr	r4, r1, #0x10
 	bl	GetVarPointer
 	cmp	r0, #0
-	beq	.L81	@cond_branch
+	beq	.L76	@cond_branch
 	strh	r4, [r0]
 	mov	r0, #0x1
-	b	.L82
-.L81:
+	b	.L77
+.L76:
 	mov	r0, #0x0
-.L82:
+.L77:
 	pop	{r4}
 	pop	{r1}
 	bx	r1
@@ -725,7 +696,7 @@ VarGetObjectEventGraphicsId:
 	push	{lr}
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x8
-	ldr	r1, .L84
+	ldr	r1, .L79
 	add	r0, r0, r1
 	lsr	r0, r0, #0x10
 	bl	VarGet
@@ -733,9 +704,9 @@ VarGetObjectEventGraphicsId:
 	lsr	r0, r0, #0x18
 	pop	{r1}
 	bx	r1
-.L85:
+.L80:
 	.align	2, 0
-.L84:
+.L79:
 	.word	0x40100000
 .Lfe22:
 	.size	 VarGetObjectEventGraphicsId,.Lfe22-VarGetObjectEventGraphicsId
@@ -749,43 +720,43 @@ GetFlagPointer:
 	lsr	r2, r1, #0x10
 	add	r3, r2, #0
 	cmp	r2, #0
-	bne	.L87	@cond_branch
+	bne	.L82	@cond_branch
 	mov	r0, #0x0
-	b	.L92
-.L87:
-	ldr	r0, .L95
+	b	.L87
+.L82:
+	ldr	r0, .L90
 	cmp	r2, r0
-	bhi	.L89	@cond_branch
-	ldr	r0, .L95+0x4
+	bhi	.L84	@cond_branch
+	ldr	r0, .L90+0x4
 	lsr	r1, r1, #0x13
-	ldr	r2, .L95+0x8
+	ldr	r2, .L90+0x8
 	add	r1, r1, r2
 	ldr	r0, [r0]
-	b	.L94
-.L96:
+	b	.L89
+.L91:
 	.align	2, 0
-.L95:
+.L90:
 	.word	0x3fff
 	.word	gSaveBlock1Ptr
 	.word	0x1850
-.L89:
-	ldr	r1, .L97
+.L84:
+	ldr	r1, .L92
 	add	r0, r3, r1
 	cmp	r0, #0
-	bge	.L91	@cond_branch
-	ldr	r2, .L97+0x4
+	bge	.L86	@cond_branch
+	ldr	r2, .L92+0x4
 	add	r0, r3, r2
-.L91:
+.L86:
 	asr	r0, r0, #0x3
-	ldr	r1, .L97+0x8
-.L94:
+	ldr	r1, .L92+0x8
+.L89:
 	add	r0, r0, r1
-.L92:
+.L87:
 	pop	{r1}
 	bx	r1
-.L98:
+.L93:
 	.align	2, 0
-.L97:
+.L92:
 	.word	-0x4000
 	.word	-0x3ff9
 	.word	gSpecialFlags
@@ -803,7 +774,7 @@ FlagSet:
 	bl	GetFlagPointer
 	add	r2, r0, #0
 	cmp	r2, #0
-	beq	.L100	@cond_branch
+	beq	.L95	@cond_branch
 	mov	r0, #0x7
 	and	r0, r0, r4
 	mov	r1, #0x1
@@ -811,7 +782,7 @@ FlagSet:
 	ldrb	r0, [r2]
 	orr	r1, r1, r0
 	strb	r1, [r2]
-.L100:
+.L95:
 	mov	r0, #0x0
 	pop	{r4}
 	pop	{r1}
@@ -830,7 +801,7 @@ FlagToggle:
 	bl	GetFlagPointer
 	add	r2, r0, #0
 	cmp	r2, #0
-	beq	.L102	@cond_branch
+	beq	.L97	@cond_branch
 	mov	r0, #0x7
 	and	r0, r0, r4
 	mov	r1, #0x1
@@ -838,7 +809,7 @@ FlagToggle:
 	ldrb	r0, [r2]
 	eor	r1, r1, r0
 	strb	r1, [r2]
-.L102:
+.L97:
 	mov	r0, #0x0
 	pop	{r4}
 	pop	{r1}
@@ -857,7 +828,7 @@ FlagClear:
 	bl	GetFlagPointer
 	add	r2, r0, #0
 	cmp	r2, #0
-	beq	.L104	@cond_branch
+	beq	.L99	@cond_branch
 	mov	r0, #0x7
 	and	r0, r0, r4
 	mov	r1, #0x1
@@ -865,7 +836,7 @@ FlagClear:
 	ldrb	r0, [r2]
 	bic	r0, r0, r1
 	strb	r0, [r2]
-.L104:
+.L99:
 	mov	r0, #0x0
 	pop	{r4}
 	pop	{r1}
@@ -883,7 +854,7 @@ FlagGet:
 	add	r0, r4, #0
 	bl	GetFlagPointer
 	cmp	r0, #0
-	beq	.L107	@cond_branch
+	beq	.L102	@cond_branch
 	ldrb	r0, [r0]
 	mov	r1, #0x7
 	and	r1, r1, r4
@@ -891,12 +862,12 @@ FlagGet:
 	mov	r1, #0x1
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L107	@cond_branch
+	beq	.L102	@cond_branch
 	mov	r0, #0x1
-	b	.L108
-.L107:
+	b	.L103
+.L102:
 	mov	r0, #0x0
-.L108:
+.L103:
 	pop	{r4}
 	pop	{r1}
 	bx	r1

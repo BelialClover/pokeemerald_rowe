@@ -1214,15 +1214,13 @@ PlayerNotOnBikeMoving:
 	lsr	r4, r0, #0x10
 	cmp	r4, #0
 	bne	.L147	@cond_branch
-	mov	r0, #0xd5
-	lsl	r0, r0, #0x1
+	mov	r0, #0x35
 	bl	FlagGet
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
 	beq	.L146	@cond_branch
 .L147:
-	mov	r0, #0x8c
-	lsl	r0, r0, #0x4
+	mov	r0, #0x33
 	bl	FlagGet
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
@@ -1241,8 +1239,7 @@ PlayerNotOnBikeMoving:
 	bne	.L146	@cond_branch
 	cmp	r4, #0
 	beq	.L148	@cond_branch
-	mov	r0, #0xd5
-	lsl	r0, r0, #0x1
+	mov	r0, #0x35
 	bl	FlagGet
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
@@ -3078,9 +3075,9 @@ player_get_pos_including_state_based_drift:
 	mov	r0, #0xc0
 	and	r0, r0, r1
 	cmp	r0, #0x40
-	beq	.LCB3639
+	beq	.LCB3633
 	b	.L329	@long jump
-.LCB3639:
+.LCB3633:
 	ldr	r2, .L344+0x8
 	ldrb	r1, [r3, #0x4]
 	lsl	r0, r1, #0x4
@@ -3090,9 +3087,9 @@ player_get_pos_including_state_based_drift:
 	mov	r1, #0x32
 	ldrsh	r0, [r0, r1]
 	cmp	r0, #0
-	beq	.LCB3650
+	beq	.LCB3644
 	b	.L329	@long jump
-.LCB3650:
+.LCB3644:
 	ldrh	r0, [r3, #0x10]
 	strh	r0, [r4]
 	ldrh	r0, [r3, #0x12]
@@ -3100,9 +3097,9 @@ player_get_pos_including_state_based_drift:
 	ldrb	r0, [r3, #0x1c]
 	sub	r0, r0, #0x8
 	cmp	r0, #0x30
-	bls	.LCB3660
+	bls	.LCB3654
 	b	.L329	@long jump
-.LCB3660:
+.LCB3654:
 	lsl	r0, r0, #0x2
 	ldr	r1, .L344+0xc
 	add	r0, r0, r1

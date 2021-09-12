@@ -9527,4 +9527,8 @@ extern const u32 gItemIconPalette_GreenMint[];
 extern const u32 gItemIconPalette_LightBlueMint[];
 extern const u32 gItemIconPalette_YellowMint[];
 
+//Other Items
+extern const u32 gItemIcon_SweetApple[];
+extern const u32 gItemIcon_SourApple[];
+
 #endif //GUARD_GRAPHICS_H

@@ -37,7 +37,7 @@ LittleWoodsIndoor_House1_EventScript_PsyduckPokeBall_5:
 	compare VAR_RESULT, YES
 	goto_if_eq LittleWoodsIndoor_House1_EventScript_PsyduckPokeBall_11
 LittleWoodsIndoor_House1_EventScript_PsyduckPokeBall_10:
-	setflag FLAG_UNUSED_0x020
+	//setflag FLAG_UNUSED_0x020
 	goto LittleWoodsIndoor_House1_EventScript_PsyduckPokeBall_4
 
 LittleWoodsIndoor_House1_EventScript_PsyduckPokeBall_6:

@@ -6040,13 +6040,16 @@ void sub_819789C(void);
 
 
 u8 IsHardMode(void);
+u8 GetGameDifficultyLevel(void);;
 u8 GetNumBadges(void);
 u8 getLevelBoost(void);
 u8 GetPlayerUsableMons(void);
-u8 getTrainerLevel(u8 Level);
-u8 getWildLevel(u8 Ability);
+u8 getTrainerMinLevel(void);
 u8 getTrainerPokemonNum(void);
+u8 getGymLeaderMinLevel(void);
 u8 getLeaderPokemonNum(void);
+u8 getWildPokemonLevel(void);
+u8 getMinWildPokemonLevel(void);
 u8 getDoubleTrainerPokemonNum(void);
 u16 GetWildPokemon(u16 basespecies, u8 level, u16 heldItem);
 u16 GetTrainerPokemon(u16 basespecies, u8 level);
@@ -6056,6 +6059,7 @@ u16 GetFirstEvolution(u16 species);
 u8 GetEvsfromPokemon(u8 evs);
 bool8 IsMoveUsable(u8 movepower);
 u16 GetMapRandomPokemon(u16 TrainerClass, u16 species);
+u16 GetScaledItem(u16 itemId);
 # 32 "src/battle_script_commands.c" 2
 # 1 "include/palette.h" 1
 # 17 "include/palette.h"
@@ -9768,11 +9772,20 @@ static bool32 TryAegiFormChange(void)
         gBattleMons[gBattlerAttacker].species = 898 + 301;
         break;
  case 351:
-  if (gBattleMoves[gCurrentMove].type == 10)
+ case 898 + 131:
+ case 898 + 132:
+ case 898 + 130:
+  if (gBattleMoves[gCurrentMove].type == 0
+  && gBattleMons[gBattlerAttacker].species != 351)
+  gBattleMons[gBattlerAttacker].species = 351;
+  if (gBattleMoves[gCurrentMove].type == 10
+  && gBattleMons[gBattlerAttacker].species != 898 + 130)
   gBattleMons[gBattlerAttacker].species = 898 + 130;
-        else if (gBattleMoves[gCurrentMove].type == 15)
+        else if (gBattleMoves[gCurrentMove].type == 15
+  && gBattleMons[gBattlerAttacker].species != 898 + 132)
   gBattleMons[gBattlerAttacker].species = 898 + 132;
-        else if (gBattleMoves[gCurrentMove].type == 11)
+        else if (gBattleMoves[gCurrentMove].type == 11
+  && gBattleMons[gBattlerAttacker].species != 898 + 131)
   gBattleMons[gBattlerAttacker].species = 898 + 131;
   else
    return 0;
@@ -9810,7 +9823,7 @@ static void Cmd_attackcanceler(void)
 
 
     { if (gBattleStruct->dynamicMoveType) moveType = gBattleStruct->dynamicMoveType & 0x3F; else moveType = gBattleMoves[gCurrentMove].type; };
-    if (GetBattlerAbility(gBattlerAttacker) == 168
+    if ((GetBattlerAbility(gBattlerAttacker) == 168 || GetBattlerAbility(gBattlerAttacker) == 236)
         && (gBattleMons[gBattlerAttacker].type1 != moveType || gBattleMons[gBattlerAttacker].type2 != moveType ||
             (gBattleMons[gBattlerAttacker].type3 != moveType && gBattleMons[gBattlerAttacker].type3 != 9))
         && gCurrentMove != 165)
@@ -10904,7 +10917,7 @@ static void CheckSetUnburden(u8 battlerId)
         RecordAbilityBattle(battlerId, 84);
     }
 }
-# 2495 "src/battle_script_commands.c"
+# 2504 "src/battle_script_commands.c"
 void SetMoveEffect(bool32 primary, u32 certain)
 {
     s32 i, byTwo, affectsUser = 0;
@@ -12230,7 +12243,7 @@ static void Cmd_getexp(void)
 
             if (gSaveBlock2Ptr->expShare)
                 viaExpShare = gSaveBlock1Ptr->playerPartyCount;
-# 3840 "src/battle_script_commands.c"
+# 3849 "src/battle_script_commands.c"
                 *exp = calculatedExp;
     if(gSaveBlock2Ptr->optionsBattleStyle == 0 || FlagGet((((0x500 + 864 - 1) + 1) + 0x4))|| GetPlayerUsableMons() < 3){
                 gExpShareExp = calculatedExp / 2;
@@ -15609,7 +15622,7 @@ bool32 CanUseLastResort(u8 battlerId)
 
     return (knownMovesCount >= 2 && usedMovesCount >= knownMovesCount - 1);
 }
-# 7236 "src/battle_script_commands.c"
+# 7245 "src/battle_script_commands.c"
 static bool32 ClearDefogHazards(u8 battlerAtk, bool32 clear)
 {
     s32 i;
@@ -20575,7 +20588,7 @@ static void Cmd_handleballthrow(void)
 
                     if (gBattleMons[gBattlerTarget].level < 30)
                         ballMultiplier = 41 - gBattleMons[gBattlerTarget].level;
-# 12214 "src/battle_script_commands.c"
+# 12223 "src/battle_script_commands.c"
                 break;
             case 9:
                 if (GetSetPokedexFlag(SpeciesToNationalPokedexNum(gBattleMons[gBattlerTarget].species), FLAG_GET_CAUGHT))
@@ -20649,7 +20662,7 @@ static void Cmd_handleballthrow(void)
                         ballAddition = 20;
                     else
                         ballAddition = 30;
-# 12308 "src/battle_script_commands.c"
+# 12317 "src/battle_script_commands.c"
                 break;
             case 17:
                 if (gBaseStats[gBattleMons[gBattlerTarget].species].baseSpeed >= 100)
@@ -20834,7 +20847,7 @@ static void Cmd_trysetcaughtmondexflags(void)
     {
         gBattlescriptCurrInstr = (u8*) ((gBattlescriptCurrInstr + 1)[0] | ((gBattlescriptCurrInstr + 1)[1] << 8) | ((gBattlescriptCurrInstr + 1)[2] << 16) | ((gBattlescriptCurrInstr + 1)[3] << 24));
     }
-    else if (!FlagGet((((0x500 + 864 - 1) + 1) + 0x1)))
+    else if (!FlagGet(0x33))
     {
         HandleSetPokedexFlag(SpeciesToNationalPokedexNum(species), FLAG_SET_CAUGHT, personality);
         gBattlescriptCurrInstr = (u8*) ((gBattlescriptCurrInstr + 1)[0] | ((gBattlescriptCurrInstr + 1)[1] << 8) | ((gBattlescriptCurrInstr + 1)[2] << 16) | ((gBattlescriptCurrInstr + 1)[3] << 24));

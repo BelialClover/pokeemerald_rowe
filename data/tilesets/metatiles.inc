@@ -572,3 +572,17 @@ gMetatiles_FRLG_General::
 	.align 1
 gMetatileAttributes_FRLG_General::
 	.incbin "data/tilesets/primary/frlg_general/metatile_attributes.bin"
+	.align 1
+gMetatiles_Power_Plant::
+	.incbin "data/tilesets/secondary/power_plant/metatiles.bin"
+
+	.align 1
+gMetatileAttributes_Power_Plant::
+	.incbin "data/tilesets/secondary/power_plant/metatile_attributes.bin"
+	.align 1
+gMetatiles_FRLG_Building::
+	.incbin "data/tilesets/primary/frlg_building/metatiles.bin"
+
+	.align 1
+gMetatileAttributes_FRLG_Building::
+	.incbin "data/tilesets/primary/frlg_building/metatile_attributes.bin"

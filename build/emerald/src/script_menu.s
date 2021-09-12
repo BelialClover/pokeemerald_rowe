@@ -1182,6 +1182,72 @@ MultichoiceList_Exit:
 	.space	4
 	.size	 MultichoiceList_Exit,8
 	.align	2, 0
+	.type	 MultichoiceList_New_Game_Questions,object
+MultichoiceList_New_Game_Questions:
+	.word	gText_Difficulty_Level
+	.space	4
+	.word	gText_Game_Modes
+	.space	4
+	.word	gText_Start_Game
+	.space	4
+	.size	 MultichoiceList_New_Game_Questions,24
+	.align	2, 0
+	.type	 MultichoiceList_Difficulty_Level,object
+MultichoiceList_Difficulty_Level:
+	.word	gText_Difficulty_Easy
+	.space	4
+	.word	gText_Difficulty_Normal
+	.space	4
+	.word	gText_Difficulty_Hard
+	.space	4
+	.size	 MultichoiceList_Difficulty_Level,24
+	.align	2, 0
+	.type	 MultichoiceList_Game_Modes,object
+MultichoiceList_Game_Modes:
+	.word	gText_Game_Modes_Perfect_Iv
+	.space	4
+	.word	gText_Game_Modes_No_Evs
+	.space	4
+	.word	gText_Game_Modes_Double
+	.space	4
+	.word	gText_Game_Modes_Inverse
+	.space	4
+	.word	gText_Game_Modes_Random
+	.space	4
+	.word	gText_Game_Modes_Save
+	.space	4
+	.size	 MultichoiceList_Game_Modes,48
+	.align	2, 0
+	.type	 MultichoiceList_Game_Modes_Enable,object
+MultichoiceList_Game_Modes_Enable:
+	.word	gText_Game_Modes_Enable
+	.space	4
+	.word	gText_Game_Modes_Info
+	.space	4
+	.word	gText_Cancel2
+	.space	4
+	.size	 MultichoiceList_Game_Modes_Enable,24
+	.align	2, 0
+	.type	 MultichoiceList_Game_Modes_Disable,object
+MultichoiceList_Game_Modes_Disable:
+	.word	gText_Game_Modes_Disable
+	.space	4
+	.word	gText_Game_Modes_Info
+	.space	4
+	.word	gText_Cancel2
+	.space	4
+	.size	 MultichoiceList_Game_Modes_Disable,24
+	.align	2, 0
+	.type	 MultichoiceList_Game_Modes_Save,object
+MultichoiceList_Game_Modes_Save:
+	.word	gText_No
+	.space	4
+	.word	gText_Yes
+	.space	4
+	.word	gText_Game_Modes_Default
+	.space	4
+	.size	 MultichoiceList_Game_Modes_Save,24
+	.align	2, 0
 	.type	 sMultichoiceLists,object
 sMultichoiceLists:
 	.word	MultichoiceList_BrineyOnDewford
@@ -1529,7 +1595,25 @@ sMultichoiceLists:
 	.word	MultichoiceList_RotomAppliances
 	.byte	0x6
 	.space	3
-	.size	 sMultichoiceLists,920
+	.word	MultichoiceList_New_Game_Questions
+	.byte	0x3
+	.space	3
+	.word	MultichoiceList_Difficulty_Level
+	.byte	0x3
+	.space	3
+	.word	MultichoiceList_Game_Modes
+	.byte	0x6
+	.space	3
+	.word	MultichoiceList_Game_Modes_Enable
+	.byte	0x3
+	.space	3
+	.word	MultichoiceList_Game_Modes_Disable
+	.byte	0x3
+	.space	3
+	.word	MultichoiceList_Game_Modes_Save
+	.byte	0x3
+	.space	3
+	.size	 sMultichoiceLists,968
 	.globl	gStdStrings
 	.align	2, 0
 	.type	 gStdStrings,object

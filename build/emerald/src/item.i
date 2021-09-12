@@ -6925,6 +6925,23 @@ extern const u8 gText_Region_Kanto[];
 extern const u8 gText_Region_Jotho[];
 extern const u8 gText_Region_Hoenn[];
 extern const u8 gText_Region_Sinnoh[];
+
+extern const u8 gText_Difficulty_Level[];
+extern const u8 gText_Game_Modes[];
+extern const u8 gText_Start_Game[];
+extern const u8 gText_Difficulty_Easy[];
+extern const u8 gText_Difficulty_Normal[];
+extern const u8 gText_Difficulty_Hard[];
+extern const u8 gText_Game_Modes_Random[];
+extern const u8 gText_Game_Modes_Double[];
+extern const u8 gText_Game_Modes_Inverse[];
+extern const u8 gText_Game_Modes_Perfect_Iv[];
+extern const u8 gText_Game_Modes_No_Evs[];
+extern const u8 gText_Game_Modes_Default[];
+extern const u8 gText_Game_Modes_Save[];
+extern const u8 gText_Game_Modes_Enable[];
+extern const u8 gText_Game_Modes_Disable[];
+extern const u8 gText_Game_Modes_Info[];
 # 12 "src/item.c" 2
 # 1 "include/load_save.h" 1
 
@@ -6960,8 +6977,34 @@ void SavePlayerBag(void);
 void ApplyNewEncryptionKeyToHword(u16 *hWord, u32 newKey);
 void ApplyNewEncryptionKeyToWord(u32 *word, u32 newKey);
 # 13 "src/item.c" 2
-# 1 "include/item_use.h" 1
+# 1 "include/level_scaling.h" 1
+
+
+
+u8 IsHardMode(void);
+u8 GetGameDifficultyLevel(void);;
+u8 GetNumBadges(void);
+u8 getLevelBoost(void);
+u8 GetPlayerUsableMons(void);
+u8 getTrainerMinLevel(void);
+u8 getTrainerPokemonNum(void);
+u8 getGymLeaderMinLevel(void);
+u8 getLeaderPokemonNum(void);
+u8 getWildPokemonLevel(void);
+u8 getMinWildPokemonLevel(void);
+u8 getDoubleTrainerPokemonNum(void);
+u16 GetWildPokemon(u16 basespecies, u8 level, u16 heldItem);
+u16 GetTrainerPokemon(u16 basespecies, u8 level);
+u16 GetBaseSpecie(u16 basespecies);
+u16 GetHeldItem(u16 baseitem);
+u16 GetFirstEvolution(u16 species);
+u8 GetEvsfromPokemon(u8 evs);
+bool8 IsMoveUsable(u8 movepower);
+u16 GetMapRandomPokemon(u16 TrainerClass, u16 species);
+u16 GetScaledItem(u16 itemId);
 # 14 "src/item.c" 2
+# 1 "include/item_use.h" 1
+# 15 "src/item.c" 2
 # 1 "include/battle_pyramid.h" 1
 
 
@@ -6985,7 +7028,7 @@ void LoadBattlePyramidObjectEventTemplates(void);
 void LoadBattlePyramidFloorObjectEventScripts(void);
 u8 GetNumBattlePyramidObjectEvents(void);
 u16 GetBattlePyramidPickupItemId(void);
-# 15 "src/item.c" 2
+# 16 "src/item.c" 2
 # 1 "include/battle_pyramid_bag.h" 1
 
 
@@ -7144,7 +7187,7 @@ void TryStoreHeldItemsInPyramidBag(void);
 void ChooseItemsToTossFromPyramidBag(void);
 void CloseBattlePyramidBagAndSetCallback(u8 taskId);
 void DisplayItemMessageInBattlePyramid(u8 taskId, const u8 *str, void (*callback)(u8 taskId));
-# 16 "src/item.c" 2
+# 17 "src/item.c" 2
 # 1 "include/item_icon.h" 1
 
 
@@ -7160,7 +7203,7 @@ void CopyItemIconPicTo4x4Buffer(const void *src, void *dest);
 u8 AddItemIconSprite(u16 tilesTag, u16 paletteTag, u16 itemId);
 u8 AddCustomItemIconSprite(const struct SpriteTemplate *customSpriteTemplate, u16 tilesTag, u16 paletteTag, u16 itemId);
 const void *GetItemIconPicOrPalette(u16 itemId, u8 which);
-# 17 "src/item.c" 2
+# 18 "src/item.c" 2
 # 1 "include/pokemon_summary_screen.h" 1
 
 
@@ -7199,7 +7242,7 @@ enum PokemonSummaryScreenPage
     PSS_PAGE_CONTEST_MOVES,
     PSS_PAGE_COUNT,
 };
-# 18 "src/item.c" 2
+# 19 "src/item.c" 2
 # 1 "include/menu.h" 1
 # 26 "include/menu.h"
 enum
@@ -7304,7 +7347,7 @@ void ResetBgPositions(void);
 void AddTextPrinterWithCustomSpeedForMessage(bool8 allowSkippingDelayWithButtonPress, u8 speed);
 void sub_8198C78(void);
 void PrintTextArray(u8 windowId, u8 fontId, u8 left, u8 top, u8 lineHeight, u8 itemCount, const struct MenuAction *strs);
-# 19 "src/item.c" 2
+# 20 "src/item.c" 2
 
 # 1 "include/overworld.h" 1
 # 29 "include/overworld.h"
@@ -7440,13 +7483,13 @@ bool32 sub_80875C8(void);
 bool32 sub_8087634(void);
 bool32 sub_808766C(void);
 void ClearLinkPlayerObjectEvents(void);
-# 21 "src/item.c" 2
-# 1 "include/constants/items.h" 1
 # 22 "src/item.c" 2
-# 1 "include/constants/hold_effects.h" 1
+# 1 "include/constants/items.h" 1
 # 23 "src/item.c" 2
-# 1 "include/constants/tv.h" 1
+# 1 "include/constants/hold_effects.h" 1
 # 24 "src/item.c" 2
+# 1 "include/constants/tv.h" 1
+# 25 "src/item.c" 2
 
 extern u16 gUnknown_0203CF30[];
 
@@ -8930,8 +8973,8 @@ static const u8 sBasementKeyDesc[] = _(
 
 static const u8 sAcroBikeDesc[] = _(
     "A folding bicycle\n"
-    "capable of jumps\n"
-    "and wheelies.");
+    "with two modes,\n"
+    "Acro and Mach.");
 
 static const u8 sPokeblockCaseDesc[] = _(
     "A case for holding\n"
@@ -10802,7 +10845,7 @@ static const u8 sSealDesc[] = _(
     "Changes the Ball\n"
     "of a Pokémon to\n"
     "a different one");
-# 47 "src/item.c" 2
+# 48 "src/item.c" 2
 # 1 "src/data/items.h" 1
 
 
@@ -12659,6 +12702,30 @@ const struct Item gItems[] =
         .fieldUseFunc = ItemUseOutOfBattle_EvolutionStone,
         .secondaryId = 0,
     },
+
+ [693] =
+    {
+        .name = _("Sour Apple"),
+        .itemId = 693,
+        .price = 5000,
+        .description = sMoonStoneDesc,
+        .pocket = 8,
+        .type = 1,
+        .fieldUseFunc = ItemUseOutOfBattle_EvolutionStone,
+        .secondaryId = 0,
+ },
+
+ [692] =
+    {
+        .name = _("Sweet Apple"),
+        .itemId = 692,
+        .price = 5000,
+        .description = sMoonStoneDesc,
+        .pocket = 8,
+        .type = 1,
+        .fieldUseFunc = ItemUseOutOfBattle_EvolutionStone,
+        .secondaryId = 0,
+ },
 
 
 
@@ -15667,7 +15734,7 @@ const struct Item gItems[] =
 
 
 
-        .name = _("Mach Bike"),
+        .name = _("Bike"),
 
         .itemId = 455,
         .price = 0,
@@ -15876,7 +15943,7 @@ const struct Item gItems[] =
 
 
 
-        .name = _("Acro Bike"),
+        .name = _("Bike"),
 
         .itemId = 467,
         .price = 0,
@@ -17832,41 +17899,7 @@ const struct Item gItems[] =
         .fieldUseFunc = ItemUseOutOfBattle_TMHM,
         .secondaryId = 0,
     },
-# 7066 "src/data/items.h"
-    [692] =
-    {
-
-
-
-        .name = _("Secret Key"),
-
-        .itemId = 692,
-        .price = 0,
-        .description = sSecretKeyDesc,
-        .importance = 1,
-        .pocket = 10,
-        .type = 4,
-        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
-        .secondaryId = 0,
-    },
-
-    [693] =
-    {
-
-
-
-        .name = _("Bike Voucher"),
-
-        .itemId = 693,
-        .price = 0,
-        .description = sBikeVoucherDesc,
-        .importance = 1,
-        .pocket = 10,
-        .type = 4,
-        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
-        .secondaryId = 0,
-    },
-
+# 7124 "src/data/items.h"
     [694] =
     {
 
@@ -22069,7 +22102,7 @@ const struct Item gItems[] =
   .secondaryId = 27,
  },
 };
-# 48 "src/item.c" 2
+# 49 "src/item.c" 2
 
 
 u16 GetBagItemQuantity(u16 *quantity)
@@ -22166,15 +22199,16 @@ void CopyItemName(u16 itemId, u8 *dst)
 static const u8 sText_s[] = _("s");
 void CopyItemNameHandlePlural(u16 itemId, u8 *dst, u32 quantity)
 {
-    if (ItemId_GetPocket(itemId) == 9 && 0)
-        GetTMWithName(dst, itemId, ItemId_GetName(itemId));
+ u16 ScaledItem = GetScaledItem(itemId);
+    if (ItemId_GetPocket(ScaledItem) == 9 && 0)
+        GetTMWithName(dst, ScaledItem, ItemId_GetName(ScaledItem));
     else
     {
-        StringCopy(dst, ItemId_GetName(itemId));
+        StringCopy(dst, ItemId_GetName(ScaledItem));
         if (quantity > 1)
         {
-            if (ItemId_GetPocket(itemId) == 7)
-                GetBerryCountString(dst, gBerries[itemId - 144].name, quantity);
+            if (ItemId_GetPocket(ScaledItem) == 7)
+                GetBerryCountString(dst, gBerries[ScaledItem - 144].name, quantity);
             else
                 StringAppend(dst, sText_s);
         }
@@ -22355,6 +22389,8 @@ static void SetTmHmOwned(u16 itemId)
 bool8 AddBagItem(u16 itemId, u16 count)
 {
     u8 i;
+ u16 scaledItem = GetScaledItem(itemId);
+ itemId = scaledItem;
 
     if (ItemId_GetPocket(itemId) == 0)
         return 0;
@@ -23103,8 +23139,10 @@ bool8 GetSetItemObtained(u16 item, u8 caseId)
     u8 bit;
     u8 mask;
 
-    index = item / 8;
-    bit = item % 8;
+ u16 scaledItem = GetScaledItem(item);
+
+    index = scaledItem / 8;
+    bit = scaledItem % 8;
     mask = 1 << bit;
     switch (caseId)
     {
@@ -23123,7 +23161,8 @@ static u8 ReformatItemDescription(u16 item, u8 *dest)
     u8 count = 0;
     u8 numLines = 1;
     u8 maxChars = 32;
-    u8 *desc = (u8 *)gItems[item].description;
+ u16 scaledItem = GetScaledItem(item);
+    u8 *desc = (u8 *)gItems[scaledItem].description;
 
     while (*desc != 0xFF)
     {
@@ -23166,6 +23205,7 @@ void DrawHeaderBox(void)
 {
     struct WindowTemplate template;
     u16 item = gSpecialVar_0x8006;
+ u16 scaledItem = GetScaledItem(item);
     u8 headerType = gSpecialVar_0x8009;
     u8 textY;
     u8 *dst;
@@ -23179,9 +23219,9 @@ void DrawHeaderBox(void)
     else
         dst = gStringVar1;
 
-    if (GetSetItemObtained(item, FLAG_GET_OBTAINED))
+    if (GetSetItemObtained(scaledItem, FLAG_GET_OBTAINED))
     {
-        ShowItemIconSprite(item, 0, handleFlash);
+        ShowItemIconSprite(scaledItem, 0, handleFlash);
         return;
     }
 
@@ -23192,12 +23232,12 @@ void DrawHeaderBox(void)
     CopyWindowToVram(sHeaderBoxWindowId, 3);
     DrawStdFrameWithCustomTileAndPalette(sHeaderBoxWindowId, 0, 0x214, 14);
 
-    if (ReformatItemDescription(item, dst) == 1)
+    if (ReformatItemDescription(scaledItem, dst) == 1)
         textY = 4;
     else
         textY = 0;
 
-    ShowItemIconSprite(item, 1, handleFlash);
+    ShowItemIconSprite(scaledItem, 1, handleFlash);
     AddTextPrinterParameterized(sHeaderBoxWindowId, 0, dst, 26 + 2, textY, 0, ((void *)0));
 }
 
@@ -23226,7 +23266,7 @@ void SetGpuRegBits(u8 regOffset, u16 mask);
 void ClearGpuRegBits(u8 regOffset, u16 mask);
 void EnableInterrupts(u16 mask);
 void DisableInterrupts(u16 mask);
-# 1194 "src/item.c" 2
+# 1202 "src/item.c" 2
 
 
 static void ShowItemIconSprite(u16 item, bool8 firstTime, bool8 flash)
@@ -23234,6 +23274,7 @@ static void ShowItemIconSprite(u16 item, bool8 firstTime, bool8 flash)
  s16 x, y;
  u8 iconSpriteId;
     u8 spriteId2 = 64;
+ u16 scaledItem = GetScaledItem(item);
 
     if (flash)
     {
@@ -23241,9 +23282,9 @@ static void ShowItemIconSprite(u16 item, bool8 firstTime, bool8 flash)
         SetGpuRegBits(0x4a, (1 << 12));
     }
 
-    iconSpriteId = AddItemIconSprite(0x2722, 0x2722, item);
+    iconSpriteId = AddItemIconSprite(0x2722, 0x2722, scaledItem);
     if (flash)
-        spriteId2 = AddItemIconSprite(0x2722, 0x2722, item);
+        spriteId2 = AddItemIconSprite(0x2722, 0x2722, scaledItem);
 
  if (iconSpriteId != 64)
  {

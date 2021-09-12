@@ -4309,8 +4309,8 @@ static const u8 sBasementKeyDesc[] = _(
 
 static const u8 sAcroBikeDesc[] = _(
     "A folding bicycle\n"
-    "capable of jumps\n"
-    "and wheelies.");
+    "with two modes,\n"
+    "Acro and Mach.");
 
 static const u8 sPokeblockCaseDesc[] = _(
     "A case for holding\n"

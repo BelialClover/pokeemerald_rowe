@@ -228,7 +228,7 @@ int ProcessPlayerFieldInput(struct FieldInput *input)
         return TRUE;
 
 
-    if (input->input_field_1_2 && FlagGet(FLAG_UNUSED_0x020))
+    if (input->input_field_1_2 && FlagGet(FLAG_DEBUG_MODE))
     {
         PlaySE(SE_WIN_OPEN);
         Debug_ShowMainMenu();

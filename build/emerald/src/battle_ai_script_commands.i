@@ -5178,13 +5178,16 @@ enum ItemObtainFlags
 
 
 u8 IsHardMode(void);
+u8 GetGameDifficultyLevel(void);;
 u8 GetNumBadges(void);
 u8 getLevelBoost(void);
 u8 GetPlayerUsableMons(void);
-u8 getTrainerLevel(u8 Level);
-u8 getWildLevel(u8 Ability);
+u8 getTrainerMinLevel(void);
 u8 getTrainerPokemonNum(void);
+u8 getGymLeaderMinLevel(void);
 u8 getLeaderPokemonNum(void);
+u8 getWildPokemonLevel(void);
+u8 getMinWildPokemonLevel(void);
 u8 getDoubleTrainerPokemonNum(void);
 u16 GetWildPokemon(u16 basespecies, u8 level, u16 heldItem);
 u16 GetTrainerPokemon(u16 basespecies, u8 level);
@@ -5194,6 +5197,7 @@ u16 GetFirstEvolution(u16 species);
 u8 GetEvsfromPokemon(u8 evs);
 bool8 IsMoveUsable(u8 movepower);
 u16 GetMapRandomPokemon(u16 TrainerClass, u16 species);
+u16 GetScaledItem(u16 itemId);
 # 13 "src/battle_ai_script_commands.c" 2
 # 1 "include/random.h" 1
 
@@ -5588,7 +5592,6 @@ void BattleAI_SetupFlags(void)
 {
  u8 PartySize = GetPlayerUsableMons();
 
-
     if (gBattleTypeFlags & (1 << 24))
         ((struct AI_ThinkingStruct *)(gBattleResources->ai))->aiFlags = GetAiScriptsInRecordedBattle();
     else if (gBattleTypeFlags & (1 << 7))
@@ -5603,10 +5606,12 @@ void BattleAI_SetupFlags(void)
         ((struct AI_ThinkingStruct *)(gBattleResources->ai))->aiFlags = (1 << 0) | (1 << 2) | (1 << 1);
     else if (gBattleTypeFlags & (1 << 15))
         ((struct AI_ThinkingStruct *)(gBattleResources->ai))->aiFlags = gTrainers[gTrainerBattleOpponent_A].aiFlags | gTrainers[gTrainerBattleOpponent_B].aiFlags;
-    else
-        ((struct AI_ThinkingStruct *)(gBattleResources->ai))->aiFlags = gTrainers[gTrainerBattleOpponent_A].aiFlags;
+    else if(FlagGet(0x26) || FlagGet(0x27))
+        ((struct AI_ThinkingStruct *)(gBattleResources->ai))->aiFlags = (1 << 0) | (1 << 2) | (1 << 1);
+ else
+     ((struct AI_ThinkingStruct *)(gBattleResources->ai))->aiFlags = gTrainers[gTrainerBattleOpponent_A].aiFlags;
 
-    if (gBattleTypeFlags & ((1 << 0) | (1 << 15)) || gTrainers[gTrainerBattleOpponent_A].doubleBattle ||(FlagGet(0x2A2) && PartySize >= 2))
+    if (gBattleTypeFlags & ((1 << 0) | (1 << 15)) || gTrainers[gTrainerBattleOpponent_A].doubleBattle ||(FlagGet(0x2A) && PartySize >= 2))
         ((struct AI_ThinkingStruct *)(gBattleResources->ai))->aiFlags |= (1 << 7);
 }
 
@@ -5810,7 +5815,7 @@ static u8 ChooseMoveOrAction_Doubles(void)
     u32 flags;
 
     s32 scriptsToRun;
-# 596 "src/battle_ai_script_commands.c"
+# 597 "src/battle_ai_script_commands.c"
     s16 bestMovePointsForTarget[4];
     s8 mostViableTargetsArray[4];
     u8 actionOrMoveIndex[4];

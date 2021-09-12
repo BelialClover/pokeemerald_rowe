@@ -201,10 +201,7 @@ static u8 ChooseWildMonIndex_Fishing(u8 rod)
 
 static u8 ChooseWildMonLevel(const struct WildPokemon *wildPokemon)
 {
-	//u8 Ability = getMonAbility(&gPlayerParty[0]);
-    u8 level = getWildLevel(0);
-
-    return level;
+    return getWildPokemonLevel();
 }
 
 u16 GetCurrentMapWildMonHeaderId(void)
@@ -1052,7 +1049,7 @@ bool8 TryDoDoubleWildBattle(void)
         return FALSE;
     else if (B_FLAG_FORCE_DOUBLE_WILD != 0 && FlagGet(B_FLAG_FORCE_DOUBLE_WILD))
         return TRUE;
-	else if (GetMonsStateToDoubles() == PLAYER_HAS_TWO_USABLE_MONS && FlagGet(FLAG_UNUSED_0x2A2))
+	else if (GetMonsStateToDoubles() == PLAYER_HAS_TWO_USABLE_MONS && FlagGet(FLAG_DOUBLE_BATTLE_MODE))
 		return TRUE;
     #if B_DOUBLE_WILD_CHANCE != 0
     else if ((Random() % 100) + 1 < B_DOUBLE_WILD_CHANCE)

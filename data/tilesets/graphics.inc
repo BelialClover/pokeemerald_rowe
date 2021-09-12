@@ -1778,3 +1778,43 @@ gTilesetPalettes_FRLG_General::
 	.align 2
 gTilesetTiles_FRLG_General::
 	.incbin "data/tilesets/primary/frlg_general/tiles.4bpp.lz"
+
+	.align 2
+gTilesetPalettes_Power_Plant::
+	.incbin "data/tilesets/secondary/power_plant/palettes/00.gbapal"
+	.incbin "data/tilesets/secondary/power_plant/palettes/01.gbapal"
+	.incbin "data/tilesets/secondary/power_plant/palettes/02.gbapal"
+	.incbin "data/tilesets/secondary/power_plant/palettes/03.gbapal"
+	.incbin "data/tilesets/secondary/power_plant/palettes/04.gbapal"
+	.incbin "data/tilesets/secondary/power_plant/palettes/05.gbapal"
+	.incbin "data/tilesets/secondary/power_plant/palettes/06.gbapal"
+	.incbin "data/tilesets/secondary/power_plant/palettes/07.gbapal"
+	.incbin "data/tilesets/secondary/power_plant/palettes/08.gbapal"
+	.incbin "data/tilesets/secondary/power_plant/palettes/09.gbapal"
+	.incbin "data/tilesets/secondary/power_plant/palettes/10.gbapal"
+	.incbin "data/tilesets/secondary/power_plant/palettes/11.gbapal"
+	.incbin "data/tilesets/secondary/power_plant/palettes/12.gbapal"
+
+	.align 2
+gTilesetTiles_Power_Plant::
+	.incbin "data/tilesets/secondary/power_plant/tiles.4bpp.lz"
+
+	.align 2
+gTilesetPalettes_FRLG_Building::
+	.incbin "data/tilesets/primary/frlg_building/palettes/00.gbapal"
+	.incbin "data/tilesets/primary/frlg_building/palettes/01.gbapal"
+	.incbin "data/tilesets/primary/frlg_building/palettes/02.gbapal"
+	.incbin "data/tilesets/primary/frlg_building/palettes/03.gbapal"
+	.incbin "data/tilesets/primary/frlg_building/palettes/04.gbapal"
+	.incbin "data/tilesets/primary/frlg_building/palettes/05.gbapal"
+	.incbin "data/tilesets/primary/frlg_building/palettes/06.gbapal"
+	.incbin "data/tilesets/primary/frlg_building/palettes/07.gbapal"
+	.incbin "data/tilesets/primary/frlg_building/palettes/08.gbapal"
+	.incbin "data/tilesets/primary/frlg_building/palettes/09.gbapal"
+	.incbin "data/tilesets/primary/frlg_building/palettes/10.gbapal"
+	.incbin "data/tilesets/primary/frlg_building/palettes/11.gbapal"
+	.incbin "data/tilesets/primary/frlg_building/palettes/12.gbapal"
+
+	.align 2
+gTilesetTiles_FRLG_Building::
+	.incbin "data/tilesets/primary/frlg_building/tiles.4bpp.lz"

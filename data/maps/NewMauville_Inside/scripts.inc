@@ -40,8 +40,14 @@ NewMauville_Inside_EventScript_ShowVoltorb3:: @ 8237449
 	return
 
 NewMauville_Inside_OnLoad: @ 823744D
+	call_if_unset FLAG_DEFEATED_RAYQUAZA, NewMauville_Inside_Hide_Hoopa_Ring
 	compare VAR_NEW_MAUVILLE_STATE, 2
 	call_if_eq NewMauville_Inside_EventScript_SetGeneratorOffMetatiles
+	end
+
+NewMauville_Inside_Hide_Hoopa_Ring::
+	setobjectxyperm 10, 34,15
+	return
 	end
 
 NewMauville_Inside_EventScript_BlueButton:: @ 8237459
@@ -153,7 +159,7 @@ NewMauville_Inside_EventScript_Zapdos::
 	waitmoncry
 	setwildbattle SPECIES_ZAPDOS, 70, ITEM_NONE
 	setflag FLAG_SYS_CTRL_OBJ_DELETE
-	special StartRegiBattle
+	special BattleSetup_StartLegendaryBattle
 	waitstate
 	clearflag FLAG_SYS_CTRL_OBJ_DELETE
 	specialvar VAR_RESULT, GetBattleOutcome
@@ -165,12 +171,12 @@ NewMauville_Inside_EventScript_Zapdos::
 	goto_if_eq NewMauville_Inside_EventScript_RanFromZapdos
 	compare VAR_RESULT, B_OUTCOME_PLAYER_TELEPORTED
 	goto_if_eq NewMauville_Inside_EventScript_RanFromZapdos
-	setflag FLAG_UNUSED_0x494
+	setflag FLAG_ZAPDOS_CAUGHT
 	release
 	end
 
 NewMauville_Inside_EventScript_CaughtZapdos::
-	setflag FLAG_UNUSED_0x494
+	setflag FLAG_ZAPDOS_CAUGHT
 	goto Common_EventScript_RemoveStaticPokemon
 	end
 
@@ -220,7 +226,7 @@ NewMauville_Inside_EventScript_GeneratorOff:: @ 82377A5
 NewMauville_Inside_EventScript_Voltorb1:: @ 82377AF
 	lock
 	faceplayer
-	setwildbattle SPECIES_VOLTORB, 10, ITEM_NONE
+	setwildbattle SPECIES_VOLTORB, 2, ITEM_NONE
 	waitse
 	playmoncry SPECIES_VOLTORB, 2
 	delay 40
@@ -247,7 +253,7 @@ NewMauville_Inside_EventScript_DefeatedVoltorb1:: @ 82377F3
 NewMauville_Inside_EventScript_Voltorb2:: @ 82377FC
 	lock
 	faceplayer
-	setwildbattle SPECIES_VOLTORB, 10, ITEM_NONE
+	setwildbattle SPECIES_VOLTORB, 2, ITEM_NONE
 	waitse
 	playmoncry SPECIES_VOLTORB, 2
 	delay 40
@@ -274,7 +280,7 @@ NewMauville_Inside_EventScript_DefeatedVoltorb2:: @ 8237840
 NewMauville_Inside_EventScript_Voltorb3:: @ 8237849
 	lock
 	faceplayer
-	setwildbattle SPECIES_VOLTORB, 10, ITEM_NONE
+	setwildbattle SPECIES_VOLTORB, 2, ITEM_NONE
 	waitse
 	playmoncry SPECIES_VOLTORB, 2
 	delay 40
@@ -290,6 +296,19 @@ NewMauville_Inside_EventScript_Voltorb3:: @ 8237849
 	compare VAR_RESULT, B_OUTCOME_PLAYER_TELEPORTED
 	goto_if_eq NewMauville_Inside_EventScript_DefeatedVoltorb3
 	setflag FLAG_DEFEATED_VOLTORB_3_NEW_MAUVILLE
+	release
+	end
+	
+NewMauville_Inside_Eventscript_Portal::
+	lock
+	msgbox Power_Plant_Text_Portal, MSGBOX_YESNO
+	compare VAR_RESULT, NO
+	goto_if_eq Power_Plant_Eventscript_Portal2
+	waitse
+	playmoncry SPECIES_HOOPA, 2
+	delay 40
+	waitmoncry
+	warp MAP_POWER_PLANT, 0, 5, 37
 	release
 	end
 

@@ -4033,6 +4033,7 @@ void MovePlayerOnBike(u8 direction, u16 newKeys, u16 heldKeys)
         MovePlayerOnMachBike(direction, newKeys, heldKeys);
     else
         MovePlayerOnAcroBike(direction, newKeys, heldKeys);
+# 150 "src/bike.c"
 }
 
 static void MovePlayerOnMachBike(u8 direction, u16 newKeys, u16 heldKeys)
@@ -4856,7 +4857,7 @@ bool8 IsBikingDisallowedByPlayer(void)
     s16 x, y;
     u8 tileBehavior;
 
-    if (!(gPlayerAvatar.flags & ((1 << 3) | (1 << 4))))
+    if (!(gPlayerAvatar.flags & ((1 << 3) | (1 << 4)))&& gMapHeader.mapType != 8)
     {
         PlayerGetDestCoords(&x, &y);
         tileBehavior = MapGridGetMetatileBehaviorAt(x, y);

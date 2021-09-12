@@ -123,6 +123,12 @@
 #define MULTI_FALLARBOR_TENT_RULES         112
 #define MULTI_TAG_MATCH_TYPE               113
 #define MULTI_ROTOM_APPLIANCES             114
+#define MULTI_NEW_GAME_QUESTIONS           115
+#define MULTI_GAME_LEVEL             	   116
+#define MULTI_GAME_MODES             	   117
+#define MULTI_GAME_MODE_ENABLE             118
+#define MULTI_GAME_MODE_DISABLE            119
+#define MULTI_GAME_MODE_SAVE               120
 
 // Lilycove SS Tidal Multichoice Selections
 #define SSTIDAL_SELECTION_SLATEPORT        0

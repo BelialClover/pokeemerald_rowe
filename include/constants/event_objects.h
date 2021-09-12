@@ -244,8 +244,9 @@
 #define OBJ_EVENT_GFX_ARTICUNO                   240
 #define OBJ_EVENT_GFX_ZAPDOS                     241
 #define OBJ_EVENT_GFX_MOLTRES                    242
+#define OBJ_EVENT_GFX_HOOPA_RING                 243
 
-#define NUM_OBJ_EVENT_GFX                        243
+#define NUM_OBJ_EVENT_GFX                        244
 
 
 // These are dynamic object gfx ids.

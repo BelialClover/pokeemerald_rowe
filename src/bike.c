@@ -131,7 +131,7 @@ void MovePlayerOnBike(u8 direction, u16 newKeys, u16 heldKeys)
     else
         MovePlayerOnAcroBike(direction, newKeys, heldKeys);
 
-    if (heldKeys & R_BUTTON)
+    /*/if (heldKeys & A_BUTTON & B_BUTTON  )
     {
         if (gPlayerAvatar.flags & PLAYER_AVATAR_FLAG_MACH_BIKE)
         {
@@ -146,7 +146,7 @@ void MovePlayerOnBike(u8 direction, u16 newKeys, u16 heldKeys)
             SetPlayerAvatarTransitionFlags(PLAYER_AVATAR_FLAG_MACH_BIKE);
         }
         PlaySE(SE_BIKE_HOP);
-    }
+    }/*/
 }
 
 static void MovePlayerOnMachBike(u8 direction, u16 newKeys, u16 heldKeys)
@@ -970,7 +970,7 @@ bool8 IsBikingDisallowedByPlayer(void)
     s16 x, y;
     u8 tileBehavior;
 
-    if (!(gPlayerAvatar.flags & (PLAYER_AVATAR_FLAG_SURFING | PLAYER_AVATAR_FLAG_UNDERWATER)))
+    if (!(gPlayerAvatar.flags & (PLAYER_AVATAR_FLAG_SURFING | PLAYER_AVATAR_FLAG_UNDERWATER))&& gMapHeader.mapType != MAP_TYPE_INDOOR)
     {
         PlayerGetDestCoords(&x, &y);
         tileBehavior = MapGridGetMetatileBehaviorAt(x, y);

@@ -70,7 +70,7 @@ u8 ScriptGiveMon(u16 species, u8 level, u16 item, u32 ability, u32 unused2, u8 u
     struct Pokemon mon;
     u8 formId = GetFormIdFromFormSpeciesId(species);
     u16 baseSpecies = GetFormSpeciesId(species, 0);
-	u8 scaledlevel = getWildLevel(0);
+	u8 scaledlevel = getWildPokemonLevel();
 	u16 WonderTradeSpecie = CreateWonderTradePokemon();
 	u16 FirstStage = WonderTradeGetFirstStage(WonderTradeSpecie);
 	u16 Specie = WonderTradeGetEvolvedForm(FirstStage, level);
@@ -81,8 +81,10 @@ u8 ScriptGiveMon(u16 species, u8 level, u16 item, u32 ability, u32 unused2, u8 u
 
 	if(baseSpecies != SPECIES_MEW)
 		CreateMon(&mon, baseSpecies, scaledlevel, 32, 0, 0, OT_ID_PLAYER_ID, 0, formId);
-	else
+	else{
 		CreateMon(&mon, Specie, scaledlevel, 32, 0, 0, OT_ID_PLAYER_ID, 0, formId);
+		baseSpecies = Specie;
+	}
     heldItem[0] = item;
     heldItem[1] = item >> 8;
     SetMonData(&mon, MON_DATA_HELD_ITEM, heldItem);
@@ -155,7 +157,11 @@ bool8 DoesPartyHaveEnigmaBerry(void)
 void CreateScriptedWildMon(u16 species, u8 level, u16 item)
 {
     u8 heldItem[2];
-
+	u8 abilityNum = 2;
+	if(level <= 4)
+		level = getWildPokemonLevel(); 
+	if(level == 2|| level == 4)
+		species = GetWildPokemon(species,level,item);
     ZeroEnemyPartyMons();
     CreateMon(&gEnemyParty[0], species, level, 32, 0, 0, OT_ID_PLAYER_ID, 0, 0); // handle forms
     if (item)
@@ -163,6 +169,10 @@ void CreateScriptedWildMon(u16 species, u8 level, u16 item)
         heldItem[0] = item;
         heldItem[1] = item >> 8;
         SetMonData(&gEnemyParty[0], MON_DATA_HELD_ITEM, heldItem);
+    }
+	if(level == 4||level == 3)
+	{
+        SetMonData(&gEnemyParty[0], MON_DATA_ABILITY_NUM, &abilityNum);
     }
 }
 void CreateScriptedDoubleWildMon(u16 species1, u8 level1, u16 item1, u16 species2, u8 level2, u16 item2)

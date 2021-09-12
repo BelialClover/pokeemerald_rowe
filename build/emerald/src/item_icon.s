@@ -1246,10 +1246,10 @@ gItemIconTable:
 	.word	gItemIconPalette_AbilityCapsule
 	.word	gItemIcon_RareCandy
 	.word	gItemIconPalette_RareCandy
-	.word	gItemIcon_SecretKey
-	.word	gItemIconPalette_SecretKey
-	.word	gItemIcon_BikeVoucher
-	.word	gItemIconPalette_BikeVoucher
+	.word	gItemIcon_SweetApple
+	.word	gItemIconPalette_RedApricorn
+	.word	gItemIcon_SourApple
+	.word	gItemIconPalette_BabiriBerry
 	.word	gItemIcon_GoldTeeth
 	.word	gItemIconPalette_GoldTeeth
 	.word	gItemIcon_OldAmber

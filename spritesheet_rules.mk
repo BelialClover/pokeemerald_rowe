@@ -715,3 +715,6 @@ $(OBJEVENTGFXDIR)/pokemon/moltres.4bpp: %.4bpp: %.png
 
 $(OBJEVENTGFXDIR)/pokemon/zapdos.4bpp: %.4bpp: %.png
 	$(GFX) $< $@ -mwidth 4 -mheight 4
+	
+$(OBJEVENTGFXDIR)/misc/hoopa_ring.4bpp: %.4bpp: %.png
+	$(GFX) $< $@ -mwidth 4 -mheight 4

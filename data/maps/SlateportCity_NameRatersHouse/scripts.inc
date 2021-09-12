@@ -4,11 +4,11 @@ SlateportCity_NameRatersHouse_MapScripts:: @ 8209AA4
 SlateportCity_NameRatersHouse_EventScript_NameRater:: @ 8209AA5
 	lock
 	faceplayer
-	clearflag FLAG_UNUSED_0x2A2 
+	clearflag FLAG_DOUBLE_BATTLE_MODE 
 	msgbox SlateportCity_NameRatersHouse_Text_PleasedToRateMonNickname, MSGBOX_YESNO
 	compare VAR_RESULT, NO
 	goto_if_eq SlateportCity_NameRatersHouse_EventScript_ChooseMonToRate
-	setflag FLAG_UNUSED_0x2A2 
+	setflag FLAG_DOUBLE_BATTLE_MODE 
 	msgbox SlateportCity_NameRatersHouse_Text_FineNameSuggestBetterOne, MSGBOX_DEFAULT
 	release
 	end

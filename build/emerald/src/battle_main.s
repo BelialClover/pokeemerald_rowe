@@ -15244,7 +15244,6 @@ CreateNPCTrainerParty:
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	str	r0, [sp, #0x44]
-	bl	Random
 	bl	getTrainerPokemonNum
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
@@ -15257,15 +15256,12 @@ CreateNPCTrainerParty:
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	str	r0, [sp, #0x4c]
-	mov	r0, #0x0
-	bl	getTrainerLevel
+	bl	getTrainerMinLevel
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	mov	r8, r0
-	mov	r0, #0x2
-	bl	getTrainerLevel
-	mov	r0, #0x5
-	bl	getTrainerLevel
+	bl	getGymLeaderMinLevel
+	bl	getGymLeaderMinLevel
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	str	r0, [sp, #0x50]
@@ -15292,26 +15288,26 @@ CreateNPCTrainerParty:
 	lsl	r0, r2, #0x2
 	add	r0, r0, r2
 	lsl	r0, r0, #0x3
-	add	r6, r0, r1
-	ldrb	r3, [r6, #0x18]
+	add	r7, r0, r1
+	ldrb	r3, [r7, #0x18]
 	str	r3, [sp, #0x58]
 	bl	GetPlayerUsableMons
 	lsl	r0, r0, #0x18
-	lsr	r7, r0, #0x18
-	cmp	r7, #0x1
+	lsr	r6, r0, #0x18
+	cmp	r6, #0x1
 	bls	.L657	@cond_branch
-	add	r0, r6, #0
+	add	r0, r7, #0
 	add	r0, r0, #0x20
 	ldrb	r0, [r0]
 	cmp	r0, #0x1
 	bls	.L657	@cond_branch
-	ldr	r0, .L817+0x8
+	mov	r0, #0x2a
 	bl	FlagGet
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
 	beq	.L657	@cond_branch
-	mov	r6, #0x1
-	str	r6, [sp, #0x58]
+	mov	r7, #0x1
+	str	r7, [sp, #0x58]
 .L657:
 	bl	IsHardMode
 	lsl	r0, r0, #0x18
@@ -15320,17 +15316,17 @@ CreateNPCTrainerParty:
 	bne	.L658	@cond_branch
 	ldr	r0, [sp, #0x4c]
 	add	r0, r0, #0x1
-	cmp	r7, r0
+	cmp	r6, r0
 	ble	.L658	@cond_branch
-	sub	r0, r7, #0x1
+	sub	r0, r6, #0x1
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	str	r0, [sp, #0x4c]
 .L658:
 	mov	r0, #0x80
 	lsl	r0, r0, #0x3
-	ldr	r7, [sp, #0x38]
-	cmp	r7, r0
+	ldr	r1, [sp, #0x38]
+	cmp	r1, r0
 	bne	.L659	@cond_branch
 	mov	r0, #0x0
 	bl	.L809	@ far jump
@@ -15339,21 +15335,20 @@ CreateNPCTrainerParty:
 .L817:
 	.word	.LC215
 	.word	gTrainers
-	.word	0x2a2
 .L659:
 	ldr	r4, .L819
 	ldr	r0, [r4]
 	ldr	r1, .L819+0x4
 	and	r0, r0, r1
-	ldr	r1, [sp, #0x38]
-	lsl	r1, r1, #0x2
-	str	r1, [sp, #0x64]
+	ldr	r2, [sp, #0x38]
+	lsl	r2, r2, #0x2
+	str	r2, [sp, #0x64]
 	cmp	r0, #0x8
-	beq	.LCB4956
+	beq	.LCB4942
 	bl	.L660	@far jump
-.LCB4956:
-	mov	r2, r9
-	cmp	r2, #0x1
+.LCB4942:
+	mov	r3, r9
+	cmp	r3, #0x1
 	bne	.L661	@cond_branch
 	bl	ZeroEnemyPartyMons
 .L661:
@@ -15364,26 +15359,26 @@ CreateNPCTrainerParty:
 	cmp	r0, #0
 	beq	.L662	@cond_branch
 	ldr	r0, .L819+0x8
-	ldr	r3, [sp, #0x64]
-	ldr	r6, [sp, #0x38]
-	add	r1, r3, r6
+	ldr	r6, [sp, #0x64]
+	ldr	r7, [sp, #0x38]
+	add	r1, r6, r7
 	lsl	r1, r1, #0x3
 	add	r1, r1, r0
 	add	r2, r1, #0
 	add	r2, r2, #0x20
 	ldrb	r1, [r2]
-	mov	r7, sl
-	str	r7, [sp, #0x40]
+	mov	r3, sl
+	str	r3, [sp, #0x40]
 	add	r4, r0, #0
-	cmp	r1, r7
+	cmp	r1, r3
 	bhi	.L664	@cond_branch
 	add	r2, r1, #0
 	str	r2, [sp, #0x40]
 .L664:
-	mov	r0, #0x0
-	mov	r9, r0
-	ldr	r1, [sp, #0x40]
-	cmp	r9, r1
+	mov	r6, #0x0
+	mov	r9, r6
+	ldr	r7, [sp, #0x40]
+	cmp	r9, r7
 	bgt	.L670	@cond_branch
 .L668:
 	mov	r1, sp
@@ -15392,10 +15387,10 @@ CreateNPCTrainerParty:
 	mov	r0, r8
 	add	r0, r0, r9
 	strb	r0, [r1]
-	mov	r2, #0x1
-	add	r9, r9, r2
-	ldr	r3, [sp, #0x40]
-	cmp	r9, r3
+	mov	r0, #0x1
+	add	r9, r9, r0
+	ldr	r1, [sp, #0x40]
+	cmp	r9, r1
 	ble	.L668	@cond_branch
 	b	.L670
 .L820:
@@ -15406,9 +15401,9 @@ CreateNPCTrainerParty:
 	.word	gTrainers
 .L662:
 	ldr	r1, .L821
-	ldr	r6, [sp, #0x64]
-	ldr	r7, [sp, #0x38]
-	add	r0, r6, r7
+	ldr	r2, [sp, #0x64]
+	ldr	r3, [sp, #0x38]
+	add	r0, r2, r3
 	lsl	r0, r0, #0x3
 	add	r0, r0, r1
 	ldrb	r2, [r0, #0x1]
@@ -15424,17 +15419,17 @@ CreateNPCTrainerParty:
 	add	r1, r0, #0
 	add	r1, r1, #0x20
 	ldrb	r0, [r1]
-	ldr	r2, [sp, #0x48]
-	str	r2, [sp, #0x40]
-	cmp	r0, r2
+	ldr	r6, [sp, #0x48]
+	str	r6, [sp, #0x40]
+	cmp	r0, r6
 	bhi	.L673	@cond_branch
 	add	r1, r0, #0
 	str	r1, [sp, #0x40]
 .L673:
-	mov	r3, #0x0
-	mov	r9, r3
-	ldr	r6, [sp, #0x40]
-	cmp	r9, r6
+	mov	r7, #0x0
+	mov	r9, r7
+	ldr	r0, [sp, #0x40]
+	cmp	r9, r0
 	bgt	.L670	@cond_branch
 .L677:
 	mov	r1, sp
@@ -15443,10 +15438,10 @@ CreateNPCTrainerParty:
 	mov	r0, r8
 	add	r0, r0, r9
 	strb	r0, [r1]
-	mov	r7, #0x1
-	add	r9, r9, r7
-	ldr	r0, [sp, #0x40]
-	cmp	r9, r0
+	mov	r1, #0x1
+	add	r9, r9, r1
+	ldr	r2, [sp, #0x40]
+	cmp	r9, r2
 	ble	.L677	@cond_branch
 	b	.L670
 .L822:
@@ -15454,11 +15449,11 @@ CreateNPCTrainerParty:
 .L821:
 	.word	gTrainers
 .L671:
-	ldr	r1, [sp, #0x4c]
-	str	r1, [sp, #0x40]
-	mov	r2, #0x0
-	mov	r9, r2
-	cmp	r9, r1
+	ldr	r3, [sp, #0x4c]
+	str	r3, [sp, #0x40]
+	mov	r6, #0x0
+	mov	r9, r6
+	cmp	r9, r3
 	bgt	.L670	@cond_branch
 .L683:
 	mov	r1, sp
@@ -15467,66 +15462,66 @@ CreateNPCTrainerParty:
 	ldr	r0, [sp, #0x50]
 	add	r0, r0, r9
 	strb	r0, [r1]
-	mov	r3, #0x1
-	add	r9, r9, r3
-	ldr	r6, [sp, #0x40]
-	cmp	r9, r6
-	ble	.L683	@cond_branch
-.L670:
-	mov	r7, #0x0
-	mov	r9, r7
+	mov	r7, #0x1
+	add	r9, r9, r7
 	ldr	r0, [sp, #0x40]
 	cmp	r9, r0
-	blt	.LCB5115
+	ble	.L683	@cond_branch
+.L670:
+	mov	r1, #0x0
+	mov	r9, r1
+	ldr	r2, [sp, #0x40]
+	cmp	r9, r2
+	blt	.LCB5101
 	bl	.L686	@far jump
-.LCB5115:
+.LCB5101:
 .L688:
-	ldr	r1, [sp, #0x58]
-	cmp	r1, #0x1
+	ldr	r3, [sp, #0x58]
+	cmp	r3, #0x1
 	bne	.L689	@cond_branch
-	mov	r2, #0x80
-	mov	sl, r2
+	mov	r6, #0x80
+	mov	sl, r6
 	b	.L690
 .L689:
-	ldr	r3, [sp, #0x64]
-	ldr	r6, [sp, #0x38]
-	add	r0, r3, r6
+	ldr	r7, [sp, #0x64]
+	ldr	r1, [sp, #0x38]
+	add	r0, r7, r1
 	lsl	r0, r0, #0x3
 	add	r0, r0, r4
 	ldrb	r1, [r0, #0x2]
 	mov	r0, #0x80
 	and	r0, r0, r1
-	mov	r7, #0x88
-	mov	sl, r7
+	mov	r2, #0x88
+	mov	sl, r2
 	cmp	r0, #0
 	beq	.L690	@cond_branch
-	mov	r0, #0x78
-	mov	sl, r0
+	mov	r3, #0x78
+	mov	sl, r3
 .L690:
 	mov	r5, #0x0
 	ldr	r2, [sp, #0x64]
-	ldr	r1, [sp, #0x38]
-	add	r0, r2, r1
+	ldr	r6, [sp, #0x38]
+	add	r0, r2, r6
 	lsl	r0, r0, #0x3
 	add	r1, r4, #0x4
 	add	r0, r0, r1
 	ldrb	r0, [r0]
-	mov	r3, r9
-	add	r3, r3, #0x1
-	str	r3, [sp, #0x68]
+	mov	r7, r9
+	add	r7, r7, #0x1
+	str	r7, [sp, #0x68]
 	cmp	r0, #0xff
 	beq	.L694	@cond_branch
 	add	r3, r1, #0
 .L696:
-	ldr	r6, [sp, #0x38]
-	add	r1, r2, r6
+	ldr	r0, [sp, #0x38]
+	add	r1, r2, r0
 	lsl	r1, r1, #0x3
 	add	r0, r5, r1
 	add	r0, r0, r3
 	ldrb	r0, [r0]
-	ldr	r7, [sp, #0x3c]
-	add	r7, r7, r0
-	str	r7, [sp, #0x3c]
+	ldr	r6, [sp, #0x3c]
+	add	r6, r6, r0
+	str	r6, [sp, #0x3c]
 	add	r5, r5, #0x1
 	add	r1, r5, r1
 	add	r1, r1, r3
@@ -15534,9 +15529,9 @@ CreateNPCTrainerParty:
 	cmp	r0, #0xff
 	bne	.L696	@cond_branch
 .L694:
-	ldr	r1, [sp, #0x64]
-	ldr	r2, [sp, #0x38]
-	add	r0, r1, r2
+	ldr	r7, [sp, #0x64]
+	ldr	r1, [sp, #0x38]
+	add	r0, r7, r1
 	lsl	r1, r0, #0x3
 	add	r2, r1, r4
 	ldrb	r0, [r2]
@@ -15549,13 +15544,13 @@ CreateNPCTrainerParty:
 	bl	.L687	@ far jump
 .L807:
 	cmp	r0, #0x2
-	bne	.LCB5213
+	bne	.LCB5199
 	b	.L741	@long jump
-.LCB5213:
+.LCB5199:
 	cmp	r0, #0x3
-	bne	.LCB5215
+	bne	.LCB5201
 	b	.L754	@long jump
-.LCB5215:
+.LCB5201:
 	bl	.L687	@ far jump
 .L699:
 	add	r0, r4, #0
@@ -15563,8 +15558,8 @@ CreateNPCTrainerParty:
 	add	r0, r1, r0
 	ldr	r7, [r0]
 	ldrb	r0, [r2, #0x1]
-	mov	r3, r9
-	lsl	r5, r3, #0x4
+	mov	r2, r9
+	lsl	r5, r2, #0x4
 	add	r4, r5, r7
 	ldrh	r1, [r4, #0xc]
 	bl	GetMapRandomPokemon
@@ -15574,15 +15569,15 @@ CreateNPCTrainerParty:
 	ldrh	r1, [r4, #0xc]
 	mov	r0, #0xb
 	mul	r1, r1, r0
-	ldr	r6, .L823
-	add	r0, r1, r6
+	ldr	r3, .L823
+	add	r0, r1, r3
 	ldrb	r0, [r0]
 	mov	r6, sp
 	add	r6, r6, r9
 	add	r6, r6, #0x14
 	cmp	r0, #0xff
 	beq	.L701	@cond_branch
-	ldr	r0, .L823
+	add	r0, r3, #0
 	add	r1, r1, r0
 .L703:
 	ldrb	r0, [r1]
@@ -16639,9 +16634,9 @@ CreateNPCTrainerParty:
 	ldr	r4, .L843
 	ldr	r7, [sp, #0x40]
 	cmp	r9, r7
-	bge	.LCB6650
+	bge	.LCB6636
 	bl	.L688	@far jump
-.LCB6650:
+.LCB6636:
 .L686:
 	ldr	r1, .L843+0x4
 	ldr	r0, [r1]
@@ -17302,9 +17297,9 @@ sub_8038F34:
 	ldrb	r1, [r0]
 	add	r4, r0, #0
 	cmp	r1, #0x9
-	bls	.LCB7404
+	bls	.LCB7390
 	b	.L918	@long jump
-.LCB7404:
+.LCB7390:
 	lsl	r0, r1, #0x2
 	ldr	r1, .L965+0x4
 	add	r0, r0, r1
@@ -17350,9 +17345,9 @@ sub_8038F34:
 	lsl	r0, r0, #0x18
 	lsr	r1, r0, #0x18
 	cmp	r1, #0
-	beq	.LCB7454
+	beq	.LCB7440
 	b	.L918	@long jump
-.LCB7454:
+.LCB7440:
 	mov	r0, #0x1
 	neg	r0, r0
 	str	r1, [sp]
@@ -17367,9 +17362,9 @@ sub_8038F34:
 	mov	r0, #0x80
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.LCB7474
+	beq	.LCB7460
 	b	.L918	@long jump
-.LCB7474:
+.LCB7460:
 	bl	sub_8185FAC
 	ldr	r2, .L969+0x4
 	ldr	r1, .L969+0x8
@@ -17866,9 +17861,9 @@ sub_803939C:
 	ldrb	r1, [r0]
 	add	r4, r0, #0
 	cmp	r1, #0xc
-	bls	.LCB8141
+	bls	.LCB8127
 	b	.L1026	@long jump
-.LCB8141:
+.LCB8127:
 	lsl	r0, r1, #0x2
 	ldr	r1, .L1076+0x4
 	add	r0, r0, r1
@@ -17944,9 +17939,9 @@ sub_803939C:
 	bl	FuncIsActiveTask
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.LCB8225
+	beq	.LCB8211
 	b	.L1026	@long jump
-.LCB8225:
+.LCB8211:
 	ldr	r1, .L1082+0x4
 	ldrb	r0, [r1]
 	add	r0, r0, #0x1
@@ -17962,9 +17957,9 @@ sub_803939C:
 	mov	r0, #0x80
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.LCB8246
+	beq	.LCB8232
 	b	.L1026	@long jump
-.LCB8246:
+.LCB8232:
 	ldr	r0, .L1084+0x4
 	mov	r1, #0x0
 	bl	BattlePutTextOnWindow
@@ -17984,9 +17979,9 @@ sub_803939C:
 	lsl	r0, r0, #0x10
 	lsr	r0, r0, #0x10
 	cmp	r0, #0
-	beq	.LCB8272
+	beq	.LCB8258
 	b	.L1026	@long jump
-.LCB8272:
+.LCB8258:
 	str	r0, [sp]
 	mov	r0, #0x18
 	mov	r1, #0x8
@@ -18015,9 +18010,9 @@ sub_803939C:
 	beq	.L1037	@cond_branch
 	ldrb	r0, [r4, #0x1]
 	cmp	r0, #0
-	bne	.LCB8316
+	bne	.LCB8302
 	b	.L1026	@long jump
-.LCB8316:
+.LCB8302:
 	mov	r0, #0x5
 	bl	PlaySE
 	ldrb	r0, [r4, #0x1]
@@ -18035,9 +18030,9 @@ sub_803939C:
 	beq	.L1040	@cond_branch
 	ldrb	r0, [r4, #0x1]
 	cmp	r0, #0
-	beq	.LCB8349
+	beq	.LCB8335
 	b	.L1026	@long jump
-.LCB8349:
+.LCB8335:
 	mov	r0, #0x5
 	bl	PlaySE
 	ldrb	r0, [r4, #0x1]
@@ -18058,9 +18053,9 @@ sub_803939C:
 	ldr	r4, .L1090
 	ldrb	r0, [r4, #0x1]
 	cmp	r0, #0
-	beq	.LCB8382
+	beq	.LCB8368
 	b	.L1063	@long jump
-.LCB8382:
+.LCB8368:
 	str	r5, [sp]
 	mov	r0, #0x18
 	mov	r1, #0x8
@@ -18080,9 +18075,9 @@ sub_803939C:
 	mov	r0, #0x2
 	and	r0, r0, r1
 	cmp	r0, #0
-	bne	.LCB8413
+	bne	.LCB8399
 	b	.L1026	@long jump
-.LCB8413:
+.LCB8399:
 	mov	r0, #0x5
 	bl	PlaySE
 	ldr	r1, .L1092
@@ -18098,9 +18093,9 @@ sub_803939C:
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	cmp	r0, #0x1
-	beq	.LCB8434
+	beq	.LCB8420
 	b	.L1026	@long jump
-.LCB8434:
+.LCB8420:
 	str	r0, [sp]
 	mov	r0, #0x18
 	mov	r1, #0x8
@@ -18137,9 +18132,9 @@ sub_803939C:
 	strb	r0, [r4, #0x1]
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.LCB8485
+	beq	.LCB8471
 	b	.L1026	@long jump
-.LCB8485:
+.LCB8471:
 	ldr	r0, .L1096
 	ldr	r1, .L1096+0x4
 	add	r0, r0, r1
@@ -18182,9 +18177,9 @@ sub_803939C:
 	ldr	r0, .L1098+0xc
 	ldrb	r0, [r0]
 	cmp	r0, #0x1
-	bne	.LCB8545
+	bne	.LCB8531
 	b	.L1026	@long jump
-.LCB8545:
+.LCB8531:
 .L1056:
 	ldr	r0, .L1098+0x4
 	add	r2, r3, r0
@@ -18198,9 +18193,9 @@ sub_803939C:
 	mov	r0, #0x80
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.LCB8565
+	beq	.LCB8551
 	b	.L1026	@long jump
-.LCB8565:
+.LCB8551:
 	ldr	r0, [r3, #0x8]
 	bl	SetMainCallback2
 	bl	FreeBattleResources
@@ -21208,9 +21203,9 @@ DoBattleIntro:
 	mov	r8, r1
 	ldrb	r0, [r1]
 	cmp	r0, #0x14
-	bls	.LCB12153
+	bls	.LCB12139
 	bl	.L1360	@far jump
-.LCB12153:
+.LCB12139:
 	lsl	r0, r0, #0x2
 	ldr	r1, .L1499+0x8
 	add	r0, r0, r1
@@ -21266,9 +21261,9 @@ DoBattleIntro:
 	ldr	r0, .L1503
 	ldr	r2, [r0]
 	cmp	r2, #0
-	beq	.LCB12197
+	beq	.LCB12183
 	b	.L1360	@long jump
-.LCB12197:
+.LCB12183:
 	ldr	r0, .L1503+0x4
 	ldrb	r1, [r0, #0x1]
 	add	r1, r1, #0x1
@@ -21278,9 +21273,9 @@ DoBattleIntro:
 	lsr	r1, r1, #0x18
 	ldrb	r0, [r0]
 	cmp	r1, r0
-	bne	.LCB12213
+	bne	.LCB12199
 	b	.L1474	@long jump
-.LCB12213:
+.LCB12199:
 	mov	r0, r8
 	strb	r2, [r0]
 	b	.L1360
@@ -21294,9 +21289,9 @@ DoBattleIntro:
 	ldr	r0, .L1505
 	ldr	r5, [r0]
 	cmp	r5, #0
-	beq	.LCB12230
+	beq	.LCB12216
 	b	.L1360	@long jump
-.LCB12230:
+.LCB12216:
 	mov	r0, #0x0
 	bl	GetBattlerAtPosition
 	ldr	r4, .L1505+0x4
@@ -21322,9 +21317,9 @@ DoBattleIntro:
 	ldr	r0, .L1507
 	ldr	r0, [r0]
 	cmp	r0, #0
-	beq	.LCB12263
+	beq	.LCB12249
 	b	.L1360	@long jump
-.LCB12263:
+.LCB12249:
 	b	.L1488
 .L1508:
 	.align	2, 0
@@ -21337,9 +21332,9 @@ DoBattleIntro:
 	ldr	r0, .L1509+0x4
 	ldrb	r0, [r0]
 	cmp	r0, #0
-	bne	.LCB12282
+	bne	.LCB12268
 	b	.L1373	@long jump
-.LCB12282:
+.LCB12268:
 	mov	r0, #0x5c
 	mov	r9, r0
 	ldr	r2, .L1509+0x8
@@ -21643,18 +21638,18 @@ DoBattleIntro:
 	lsr	r0, r0, #0x18
 	ldrb	r1, [r1]
 	cmp	r0, r1
-	bcs	.LCB12683
+	bcs	.LCB12669
 	b	.L1375	@long jump
-.LCB12683:
+.LCB12669:
 .L1373:
 	ldr	r0, .L1519+0xc
 	ldr	r0, [r0]
 	mov	r1, #0x8
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.LCB12691
+	beq	.LCB12677
 	b	.L1488	@long jump
-.LCB12691:
+.LCB12677:
 	mov	r0, #0x7
 	b	.L1489
 .L1520:
@@ -21669,9 +21664,9 @@ DoBattleIntro:
 	ldr	r0, .L1521
 	ldr	r0, [r0]
 	cmp	r0, #0
-	beq	.LCB12711
+	beq	.LCB12697
 	b	.L1360	@long jump
-.LCB12711:
+.LCB12697:
 	mov	r6, #0x0
 	add	r2, sp, #0x4
 	mov	r9, r2
@@ -21797,9 +21792,9 @@ DoBattleIntro:
 	ldr	r0, .L1527
 	ldr	r0, [r0]
 	cmp	r0, #0
-	beq	.LCB12888
+	beq	.LCB12874
 	b	.L1360	@long jump
-.LCB12888:
+.LCB12874:
 	b	.L1488
 .L1528:
 	.align	2, 0
@@ -21812,9 +21807,9 @@ DoBattleIntro:
 	lsr	r0, r0, #0x18
 	bl	IsBattlerMarkedForControllerExec
 	cmp	r0, #0
-	beq	.LCB12907
+	beq	.LCB12893
 	b	.L1360	@long jump
-.LCB12907:
+.LCB12893:
 	mov	r0, #0x0
 	bl	GetBattlerAtPosition
 	add	r1, r0, #0
@@ -21830,17 +21825,17 @@ DoBattleIntro:
 	lsr	r0, r0, #0x18
 	bl	IsBattlerMarkedForControllerExec
 	cmp	r0, #0
-	beq	.LCB12929
+	beq	.LCB12915
 	b	.L1360	@long jump
-.LCB12929:
+.LCB12915:
 	ldr	r0, .L1529
 	ldr	r0, [r0]
 	mov	r1, #0x8
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.LCB12936
+	beq	.LCB12922
 	b	.L1488	@long jump
-.LCB12936:
+.LCB12922:
 	mov	r0, #0xf
 .L1489:
 	mov	r1, r8
@@ -21886,9 +21881,9 @@ DoBattleIntro:
 	ldr	r0, [r0]
 .L1495:
 	cmp	r0, #0
-	beq	.LCB12994
+	beq	.LCB12980
 	b	.L1360	@long jump
-.LCB12994:
+.LCB12980:
 	b	.L1474
 .L1534:
 	.align	2, 0
@@ -21903,9 +21898,9 @@ DoBattleIntro:
 	mov	r1, #0x80
 	lsl	r1, r1, #0x12
 	cmp	r0, r1
-	bne	.LCB13012
+	bne	.LCB12998
 	b	.L1471	@long jump
-.LCB13012:
+.LCB12998:
 	mov	r0, #0x1
 	b	.L1493
 .L1536:
@@ -21968,9 +21963,9 @@ DoBattleIntro:
 	ldr	r1, .L1539+0x8
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.LCB13093
+	beq	.LCB13079
 	b	.L1474	@long jump
-.LCB13093:
+.LCB13079:
 	mov	r0, #0xf
 	mov	r2, r8
 	strb	r0, [r2]
@@ -21985,9 +21980,9 @@ DoBattleIntro:
 	ldr	r0, .L1541
 	ldr	r0, [r0]
 	cmp	r0, #0
-	beq	.LCB13111
+	beq	.LCB13097
 	b	.L1360	@long jump
-.LCB13111:
+.LCB13097:
 	b	.L1488
 .L1542:
 	.align	2, 0
@@ -22006,9 +22001,9 @@ DoBattleIntro:
 	mov	r0, #0x80
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.LCB13137
+	beq	.LCB13123
 	b	.L1488	@long jump
-.LCB13137:
+.LCB13123:
 	mov	r0, #0x82
 	lsl	r0, r0, #0x18
 	and	r1, r1, r0
@@ -22050,9 +22045,9 @@ DoBattleIntro:
 	ldr	r1, [r0]
 	ldr	r0, .L1545+0x14
 	cmp	r1, r0
-	bne	.LCB13189
+	bne	.LCB13175
 	b	.L1360	@long jump
-.LCB13189:
+.LCB13175:
 .L1463:
 	ldrb	r1, [r4]
 	mov	r0, #0x1
@@ -22077,9 +22072,9 @@ DoBattleIntro:
 	ldr	r0, .L1547+0x4
 	ldr	r0, [r0]
 	cmp	r0, #0
-	beq	.LCB13221
+	beq	.LCB13207
 	b	.L1360	@long jump
-.LCB13221:
+.LCB13207:
 .L1466:
 	mov	r0, #0x82
 	lsl	r0, r0, #0x18
@@ -22295,9 +22290,9 @@ TryDoEventsBeforeFirstTurn:
 	ldr	r0, .L1610
 	ldr	r0, [r0]
 	cmp	r0, #0
-	beq	.LCB13488
+	beq	.LCB13474
 	b	.L1561	@long jump
-.LCB13488:
+.LCB13474:
 	ldr	r0, .L1610+0x4
 	ldr	r0, [r0]
 	add	r0, r0, #0x4c
@@ -22426,9 +22421,9 @@ TryDoEventsBeforeFirstTurn:
 	bl	AbilityBattleEffects
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.LCB13670
+	beq	.LCB13656
 	b	.L1561	@long jump
-.LCB13670:
+.LCB13656:
 	ldr	r0, [r4]
 	add	r0, r0, #0x4c
 	ldr	r1, .L1614+0x4
@@ -22447,9 +22442,9 @@ TryDoEventsBeforeFirstTurn:
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.LCB13698
+	beq	.LCB13684
 	b	.L1561	@long jump
-.LCB13698:
+.LCB13684:
 	str	r0, [sp]
 	mov	r0, #0xc
 	mov	r1, #0x0
@@ -22458,9 +22453,9 @@ TryDoEventsBeforeFirstTurn:
 	bl	AbilityBattleEffects
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.LCB13709
+	beq	.LCB13695
 	b	.L1561	@long jump
-.LCB13709:
+.LCB13695:
 	ldr	r2, .L1614
 	ldr	r0, [r2]
 	add	r0, r0, #0xd5
@@ -22744,23 +22739,23 @@ BattleTurnPassed:
 	bl	DoFieldEndTurnEffects
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.LCB14075
+	beq	.LCB14061
 	b	.L1631	@long jump
-.LCB14075:
+.LCB14061:
 	bl	DoBattlerEndTurnEffects
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.LCB14081
+	beq	.LCB14067
 	b	.L1631	@long jump
-.LCB14081:
+.LCB14067:
 .L1632:
 	bl	HandleFaintedMonActions
 	lsl	r0, r0, #0x18
 	lsr	r1, r0, #0x18
 	cmp	r1, #0
-	beq	.LCB14088
+	beq	.LCB14074
 	b	.L1631	@long jump
-.LCB14088:
+.LCB14074:
 	ldr	r0, .L1659+0x4
 	ldr	r0, [r0]
 	add	r0, r0, #0x4d
@@ -22769,9 +22764,9 @@ BattleTurnPassed:
 	lsl	r0, r0, #0x18
 	lsr	r4, r0, #0x18
 	cmp	r4, #0
-	beq	.LCB14098
+	beq	.LCB14084
 	b	.L1631	@long jump
-.LCB14098:
+.LCB14084:
 	mov	r0, #0x0
 	bl	TurnValuesCleanUp
 	ldr	r2, .L1659+0x8
@@ -23252,9 +23247,9 @@ HandleTurnActionSelectionState:
 	add	r5, r0, #0
 	ldrb	r0, [r5]
 	cmp	r1, r0
-	bcc	.LCB14707
+	bcc	.LCB14693
 	bl	.L1714	@far jump
-.LCB14707:
+.LCB14693:
 .L1716:
 	ldr	r4, .L1876+0x4
 	ldrb	r0, [r4]
@@ -23266,9 +23261,9 @@ HandleTurnActionSelectionState:
 	add	r0, r0, r1
 	ldrb	r0, [r0]
 	cmp	r0, #0x8
-	bls	.LCB14724
+	bls	.LCB14710
 	bl	.L1715	@far jump
-.LCB14724:
+.LCB14710:
 	lsl	r0, r0, #0x2
 	ldr	r1, .L1876+0xc
 	add	r0, r0, r1
@@ -23348,9 +23343,9 @@ HandleTurnActionSelectionState:
 	add	r0, r0, r4
 	ldrb	r0, [r0]
 	cmp	r0, #0x5
-	beq	.LCB14812
+	beq	.LCB14798
 	bl	.L1715	@far jump
-.LCB14812:
+.LCB14798:
 .L1721:
 	ldr	r1, .L1880+0x4
 	mov	r8, r1
@@ -23519,9 +23514,9 @@ HandleTurnActionSelectionState:
 	ldr	r0, [r3]
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.LCB15014
+	beq	.LCB15000
 	bl	.L1715	@far jump
-.LCB15014:
+.LCB15000:
 	ldr	r4, .L1890+0xc
 	ldr	r0, [r4]
 	lsl	r1, r6, #0x9
@@ -23547,9 +23542,9 @@ HandleTurnActionSelectionState:
 	add	r1, r1, r0
 	ldrb	r0, [r1]
 	cmp	r0, #0x15
-	bls	.LCB15043
+	bls	.LCB15029
 	b	.L1734	@long jump
-.LCB15043:
+.LCB15029:
 	lsl	r0, r0, #0x2
 	ldr	r1, .L1890+0x18
 	add	r0, r0, r1
@@ -23798,9 +23793,9 @@ HandleTurnActionSelectionState:
 	ldr	r1, .L1898+0x8
 	and	r0, r0, r1
 	cmp	r0, #0
-	bne	.LCB15315
+	bne	.LCB15301
 	b	.L1766	@long jump
-.LCB15315:
+.LCB15301:
 .L1748:
 	ldr	r4, .L1898+0xc
 	ldrb	r0, [r4]
@@ -23832,9 +23827,9 @@ HandleTurnActionSelectionState:
 	ldr	r1, .L1900+0x4
 	and	r0, r0, r1
 	cmp	r0, #0
-	bne	.LCB15357
+	bne	.LCB15343
 	b	.L1766	@long jump
-.LCB15357:
+.LCB15343:
 .L1751:
 	ldr	r4, .L1900+0x8
 	ldrb	r0, [r4]
@@ -24036,9 +24031,9 @@ HandleTurnActionSelectionState:
 	bl	IsPlayerPartyAndPokemonStorageFull
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	bne	.LCB15607
+	bne	.LCB15593
 	b	.L1734	@long jump
-.LCB15607:
+.LCB15593:
 	ldr	r1, .L1914
 	ldr	r3, .L1914+0x4
 	ldrb	r0, [r3]
@@ -24519,17 +24514,17 @@ HandleTurnActionSelectionState:
 	ldr	r1, [r4]
 	and	r1, r1, r0
 	cmp	r1, #0
-	beq	.LCB16237
+	beq	.LCB16223
 	b	.L1715	@long jump
-.LCB16237:
+.LCB16223:
 	ldr	r1, .L1936+0xc
 	add	r0, r5, r1
 	ldrb	r0, [r0]
 	add	r2, r1, #0
 	cmp	r0, #0x14
-	bls	.LCB16244
+	bls	.LCB16230
 	b	.L1715	@long jump
-.LCB16244:
+.LCB16230:
 	lsl	r0, r0, #0x2
 	ldr	r1, .L1936+0x10
 	add	r0, r0, r1
@@ -24792,9 +24787,9 @@ HandleTurnActionSelectionState:
 	lsl	r0, r0, #0x8
 	orr	r3, r3, r0
 	cmp	r3, #0
-	bne	.LCB16532
+	bne	.LCB16518
 	b	.L1873	@long jump
-.LCB16532:
+.LCB16518:
 	ldr	r0, .L1946+0x10
 	strh	r3, [r0]
 	ldrh	r0, [r0]
@@ -24910,9 +24905,9 @@ HandleTurnActionSelectionState:
 	lsl	r0, r0, #0x8
 	orr	r2, r2, r0
 	cmp	r2, #0
-	bne	.LCB16678
+	bne	.LCB16664
 	b	.L1873	@long jump
-.LCB16678:
+.LCB16664:
 	ldr	r1, .L1956+0x10
 	add	r1, r4, r1
 	b	.L1871
@@ -24995,9 +24990,9 @@ HandleTurnActionSelectionState:
 	ldr	r0, [r3]
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.LCB16778
+	beq	.LCB16764
 	b	.L1715	@long jump
-.LCB16778:
+.LCB16764:
 	bl	AllAtActionConfirmed
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
@@ -25087,9 +25082,9 @@ HandleTurnActionSelectionState:
 	ldr	r0, [r3]
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.LCB16889
+	beq	.LCB16875
 	b	.L1715	@long jump
-.LCB16889:
+.LCB16875:
 	ldr	r1, .L1970+0xc
 	ldrb	r0, [r1, #0x4]
 	add	r0, r0, #0x1
@@ -25276,9 +25271,9 @@ HandleTurnActionSelectionState:
 	add	r5, r0, #0
 	ldrb	r4, [r5]
 	cmp	r1, r4
-	bcs	.LCB17116
+	bcs	.LCB17102
 	bl	.L1716	@far jump
-.LCB17116:
+.LCB17102:
 .L1714:
 	ldr	r0, .L1980+0x20
 	ldrb	r0, [r0, #0x4]
@@ -26260,9 +26255,9 @@ SetActionsAndBattlersTurnOrder:
 	mov	r8, r0
 	ldrb	r0, [r4]
 	cmp	r3, r0
-	bcc	.LCB18281
+	bcc	.LCB18267
 	b	.L2125	@long jump
-.LCB18281:
+.LCB18267:
 	ldr	r7, .L2173+0xc
 	ldr	r6, .L2173+0x10
 	mov	r2, r8
@@ -27234,9 +27229,9 @@ HandleEndTurn_BattleWon:
 	ldrh	r1, [r0]
 	ldr	r0, .L2265+0x10
 	cmp	r1, r0
-	bne	.LCB19543
+	bne	.LCB19529
 	b	.L2259	@long jump
-.LCB19543:
+.LCB19529:
 	b	.L2260
 .L2266:
 	.align	2, 0
@@ -27251,9 +27246,9 @@ HandleEndTurn_BattleWon:
 	mov	r1, #0xa
 	and	r0, r0, r1
 	cmp	r0, #0x8
-	beq	.LCB19564
+	beq	.LCB19550
 	b	.L2249	@long jump
-.LCB19564:
+.LCB19550:
 	bl	BattleStopLowHpSound
 	ldr	r1, .L2267
 	ldr	r0, .L2267+0x4
@@ -27268,9 +27263,9 @@ HandleEndTurn_BattleWon:
 	ldrb	r0, [r0, #0x1]
 	sub	r0, r0, #0x3
 	cmp	r0, #0x32
-	bls	.LCB19581
+	bls	.LCB19567
 	b	.L2260	@long jump
-.LCB19581:
+.LCB19567:
 	lsl	r0, r0, #0x2
 	ldr	r1, .L2267+0x10
 	add	r0, r0, r1
@@ -27668,9 +27663,9 @@ HandleEndTurn_FinishBattle:
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	cmp	r0, #0x1
-	bls	.LCB19996
+	bls	.LCB19982
 	b	.L2317	@long jump
-.LCB19996:
+.LCB19982:
 	ldr	r0, .L2335+0x4
 	ldr	r1, [r0]
 	ldr	r0, .L2335+0x8
@@ -28256,9 +28251,9 @@ SetTypeBeforeUsingMove:
 	lsl	r1, r1, #0x18
 	lsr	r6, r1, #0x18
 	cmp	r7, #0xa5
-	bne	.LCB20724
+	bne	.LCB20710
 	b	.L2399	@long jump
-.LCB20724:
+.LCB20710:
 	ldr	r5, .L2453
 	ldr	r0, [r5]
 	mov	r1, #0x0
@@ -28293,15 +28288,15 @@ SetTypeBeforeUsingMove:
 	mov	r0, #0xd
 	bl	IsAbilityOnField
 	cmp	r0, #0
-	beq	.LCB20765
+	beq	.LCB20751
 	b	.L2411	@long jump
-.LCB20765:
+.LCB20751:
 	mov	r0, #0x4c
 	bl	IsAbilityOnField
 	cmp	r0, #0
-	beq	.LCB20770
+	beq	.LCB20756
 	b	.L2411	@long jump
-.LCB20770:
+.LCB20756:
 	ldr	r0, .L2453+0x10
 	ldrh	r1, [r0]
 	mov	r0, #0x7

@@ -90,13 +90,13 @@ LittlerootTown_EventScript_MoveMomToMaysDoor:: @ 81E7E67
 LittlerootTown_EventScript_SetTwinPos:: @ 81E7E6F
 	compare VAR_LITTLEROOT_TOWN_STATE, 0
 	goto_if_eq LittlerootTown_EventScript_SetTwinGuardingRoutePos
-	setobjectxyperm LOCALID_TWIN, 10, 1
-	setobjectmovementtype LOCALID_TWIN, MOVEMENT_TYPE_FACE_UP
+	//setobjectxyperm LOCALID_TWIN, 10, 1
+	//setobjectmovementtype LOCALID_TWIN, MOVEMENT_TYPE_FACE_UP
 	return
 
 LittlerootTown_EventScript_SetTwinGuardingRoutePos:: @ 81E7E86
-	setobjectxyperm LOCALID_TWIN, 7, 2
-	setobjectmovementtype LOCALID_TWIN, MOVEMENT_TYPE_FACE_DOWN
+	//setobjectxyperm LOCALID_TWIN, 7, 2
+	//setobjectmovementtype LOCALID_TWIN, MOVEMENT_TYPE_FACE_DOWN
 	return
 
 LittlerootTown_EventScript_SetMomStandingInFrontOfDoorPos:: @ 81E7E92

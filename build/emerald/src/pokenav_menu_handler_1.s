@@ -50,8 +50,7 @@ sMenuItems:
 GetPokenavMainMenuType:
 	push	{r4, lr}
 	mov	r4, #0x0
-	mov	r0, #0x98
-	lsl	r0, r0, #0x1
+	mov	r0, #0x33
 	bl	FlagGet
 	lsl	r0, r0, #0x18
 	cmp	r0, #0

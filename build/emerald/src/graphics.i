@@ -13239,6 +13239,11 @@ const u32 gItemIconPalette_StrangeSouvenir[] = INCBIN_U32("graphics/items/icon_p
 
 const u32 gItemIcon_SafariPass[] = INCBIN_U32("graphics/items/icons/safari_pass.4bpp.lz");
 const u32 gItemIconPalette_SafariPass[] = INCBIN_U32("graphics/items/icon_palettes/safari_pass.gbapal.lz");
+
+
+const u32 gItemIcon_SourApple[] = INCBIN_U32("graphics/items/icons/sour_apple.4bpp.lz");
+
+const u32 gItemIcon_SweetApple[] = INCBIN_U32("graphics/items/icons/sweet_apple.4bpp.lz");
 # 1735 "src/graphics.c" 2
 # 1 "src/data/graphics/decorations.h" 1
 const u32 gDecorIcon_HeavyDesk[] = INCBIN_U32("graphics/decorations/heavy_desk.4bpp.lz");

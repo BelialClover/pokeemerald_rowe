@@ -14504,6 +14504,10 @@ extern const u32 gItemIconPalette_PinkMint[];
 extern const u32 gItemIconPalette_GreenMint[];
 extern const u32 gItemIconPalette_LightBlueMint[];
 extern const u32 gItemIconPalette_YellowMint[];
+
+
+extern const u32 gItemIcon_SweetApple[];
+extern const u32 gItemIcon_SourApple[];
 # 24 "src/title_screen.c" 2
 # 1 "include/constants/rgb.h" 1
 # 25 "src/title_screen.c" 2

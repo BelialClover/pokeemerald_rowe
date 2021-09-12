@@ -1258,7 +1258,7 @@ static u8 DexNavTryGenerateMonLevel(u16 species, u8 environment)
 {
     u8 levelBase = GetEncounterLevelFromMapData(species, environment);
     u8 levelBonus = gSaveBlock1Ptr->dexNavChain / 5;
-	u8 level = getWildLevel(ABILITY_WIMP_OUT);
+	u8 level = getMinWildPokemonLevel();
 
     if (levelBase == MON_LEVEL_NONEXISTENT || levelBase == 1)
         return MON_LEVEL_NONEXISTENT;   //species not found in the area

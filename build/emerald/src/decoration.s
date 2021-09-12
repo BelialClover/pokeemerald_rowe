@@ -13801,7 +13801,7 @@ SetDecoration:
 	.word	gSpecialVar_0x8005
 	.word	gSpecialVar_0x8006
 	.word	gSaveBlock1Ptr
-	.word	0x3f1c
+	.word	0x3f1b
 	.word	sPlaceDecorationGraphicsDataBuffer
 	.word	sCurDecorMapX
 	.word	sCurDecorMapY

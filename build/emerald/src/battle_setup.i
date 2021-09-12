@@ -9328,6 +9328,23 @@ extern const u8 gText_Region_Kanto[];
 extern const u8 gText_Region_Jotho[];
 extern const u8 gText_Region_Hoenn[];
 extern const u8 gText_Region_Sinnoh[];
+
+extern const u8 gText_Difficulty_Level[];
+extern const u8 gText_Game_Modes[];
+extern const u8 gText_Start_Game[];
+extern const u8 gText_Difficulty_Easy[];
+extern const u8 gText_Difficulty_Normal[];
+extern const u8 gText_Difficulty_Hard[];
+extern const u8 gText_Game_Modes_Random[];
+extern const u8 gText_Game_Modes_Double[];
+extern const u8 gText_Game_Modes_Inverse[];
+extern const u8 gText_Game_Modes_Perfect_Iv[];
+extern const u8 gText_Game_Modes_No_Evs[];
+extern const u8 gText_Game_Modes_Default[];
+extern const u8 gText_Game_Modes_Save[];
+extern const u8 gText_Game_Modes_Enable[];
+extern const u8 gText_Game_Modes_Disable[];
+extern const u8 gText_Game_Modes_Info[];
 # 25 "src/battle_setup.c" 2
 # 1 "include/trainer_hill.h" 1
 
@@ -10829,6 +10846,7 @@ void BattleSetup_StartLatiBattle(void)
     TryUpdateGymLeaderRematchFromWild();
 }
 
+
 void BattleSetup_StartLegendaryBattle(void)
 {
     ScriptContext2_Enable();
@@ -10838,27 +10856,87 @@ void BattleSetup_StartLegendaryBattle(void)
     switch (GetMonData(&gEnemyParty[0], 11, ((void *)0)))
     {
     default:
+ case 144:
+ case 145:
+ case 146:
+        CreateBattleStartTask(0, 500);
+        break;
+ case 150:
+        CreateBattleStartTask(0, 499);
+        break;
+    case 151:
+        CreateBattleStartTask(10, 521);
+        break;
+ case 245:
+
+
+
+   CreateBattleStartTask(23, 815);
+        break;
+ case 243:
+
+
+
+   CreateBattleStartTask(23, 783);
+        break;
+ case 244:
+
+
+
+   CreateBattleStartTask(23, 798);
+        break;
     case 383:
         gBattleTypeFlags |= (1 << 28);
-        CreateBattleStartTask(23, 434);
+  if(gSaveBlock2Ptr->optionsMusicGame == 1||
+     gSaveBlock2Ptr->optionsMusicGame == 3)
+      CreateBattleStartTask(23, 883);
+  else
+   CreateBattleStartTask(23, 434);
         break;
     case 382:
         gBattleTypeFlags |= (1 << 29);
-        CreateBattleStartTask(22, 434);
+  if(gSaveBlock2Ptr->optionsMusicGame == 1||
+     gSaveBlock2Ptr->optionsMusicGame == 3)
+      CreateBattleStartTask(22, 883);
+  else
+   CreateBattleStartTask(22, 434);
         break;
     case 384:
         gBattleTypeFlags |= (1 << 30);
-        CreateBattleStartTask(24, 434);
+  if(gSaveBlock2Ptr->optionsMusicGame == 1||
+     gSaveBlock2Ptr->optionsMusicGame == 3)
+      CreateBattleStartTask(24, 883);
+  else
+   CreateBattleStartTask(24, 434);
         break;
     case 386:
         CreateBattleStartTask(0, 498);
         break;
     case 249:
-    case 250:
-        CreateBattleStartTask(0, 500);
+ CreateBattleStartTask(0, 876);
         break;
-    case 151:
-        CreateBattleStartTask(10, 521);
+    case 250:
+        CreateBattleStartTask(0, 802);
+        break;
+ case 482:
+ case 481:
+ case 480:
+        CreateBattleStartTask(0, 647);
+  break;
+ case 491:
+ case 485:
+        CreateBattleStartTask(0, 662);
+        break;
+ case 483:
+ case 484:
+        CreateBattleStartTask(0, 616);
+        break;
+ case 487:
+        CreateBattleStartTask(0, 690);
+        break;
+ case 493:
+  CreateBattleStartTask(0, 676);
+
         break;
     }
 
@@ -10910,7 +10988,10 @@ void StartRegiBattle(void)
         transitionId = 10;
         break;
     }
-    CreateBattleStartTask(transitionId, 433);
+    if(gSaveBlock2Ptr->optionsMusicGame == 3)
+  CreateBattleStartTask(transitionId, 710);
+ else
+  CreateBattleStartTask(transitionId, 433);
 
     IncrementGameStat(7);
     IncrementGameStat(8);
@@ -11186,7 +11267,7 @@ u8 GetTrainerBattleTransition(void)
     else
         return sBattleTransitionTable_Trainer[transitionType][1];
 }
-# 896 "src/battle_setup.c"
+# 960 "src/battle_setup.c"
 u8 GetSpecialBattleTransition(s32 id)
 {
     u16 var;

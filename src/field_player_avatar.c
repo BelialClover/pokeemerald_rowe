@@ -664,10 +664,10 @@ static void PlayerNotOnBikeMoving(u8 direction, u16 heldKeys)
 
     //if (!(gPlayerAvatar.flags & PLAYER_AVATAR_FLAG_UNDERWATER) && (heldKeys & B_BUTTON) && FlagGet(FLAG_SYS_B_DASH)
 	//&& IsRunningDisallowed(gObjectEvents[gPlayerAvatar.objectEventId].currentMetatileBehavior) == 0)
-	if (!(gPlayerAvatar.flags & PLAYER_AVATAR_FLAG_UNDERWATER) && (heldKeys & B_BUTTON || FlagGet(FLAG_UNUSED_0x1AA)) && FlagGet(FLAG_SYS_B_DASH)
+	if (!(gPlayerAvatar.flags & PLAYER_AVATAR_FLAG_UNDERWATER) && (heldKeys & B_BUTTON || FlagGet(FLAG_SYS_AUTO_RUN)) && FlagGet(FLAG_SYS_B_DASH)
      && IsRunningDisallowed(gObjectEvents[gPlayerAvatar.objectEventId].currentMetatileBehavior) == 0)
     {
-        if (heldKeys & B_BUTTON && FlagGet(FLAG_UNUSED_0x1AA))
+        if (heldKeys & B_BUTTON && FlagGet(FLAG_SYS_AUTO_RUN))
         {
             PlayerGoSpeed1(direction);
         }

@@ -70,9 +70,9 @@ SkyPillar_Top_EventScript_Rayquaza:: @ 8239722
 SkyPillar_Top_EventScript_DefeatedRayquaza:: @ 8239768
 	setflag FLAG_DEFEATED_RAYQUAZA
 	setflag FLAG_HIDE_RAYQUAZA_SKY_TOWER_SUMMIT
-	clearflag FLAG_UNUSED_0x493	//Articuno
-	clearflag FLAG_UNUSED_0x494 //Zapdos
-	clearflag FLAG_UNUSED_0x495 //Moltres
+	//clearflag FLAG_UNUSED_0x493	//Articuno
+	//clearflag FLAG_UNUSED_0x494 //Zapdos
+	//clearflag FLAG_UNUSED_0x495 //Moltres
 	goto SkyPillar_Top_EventScript_DefeatedRayquaza2
 	end
 

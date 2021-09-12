@@ -599,8 +599,8 @@ EventScript_MoveMrBrineyToHouse:: @ 8271884
 	setflag FLAG_HIDE_ROUTE_109_MR_BRINEY
 	setflag FLAG_HIDE_ROUTE_109_MR_BRINEY_BOAT
 	clearflag FLAG_HIDE_ROUTE_104_MR_BRINEY_BOAT
-	clearflag FLAG_HIDE_BRINEYS_HOUSE_MR_BRINEY
-	clearflag FLAG_HIDE_BRINEYS_HOUSE_PEEKO
+	//clearflag FLAG_HIDE_BRINEYS_HOUSE_MR_BRINEY
+	//clearflag FLAG_HIDE_BRINEYS_HOUSE_PEEKO
 	end
 
 EventScript_MoveMrBrineyToDewford:: @ 827189A
@@ -610,8 +610,8 @@ EventScript_MoveMrBrineyToDewford:: @ 827189A
 	setflag FLAG_HIDE_ROUTE_104_MR_BRINEY_BOAT
 	setflag FLAG_HIDE_BRINEYS_HOUSE_MR_BRINEY
 	setflag FLAG_HIDE_BRINEYS_HOUSE_PEEKO
-	clearflag FLAG_HIDE_MR_BRINEY_DEWFORD_TOWN
-	clearflag FLAG_HIDE_MR_BRINEY_BOAT_DEWFORD_TOWN
+	//clearflag FLAG_HIDE_MR_BRINEY_DEWFORD_TOWN
+	//clearflag FLAG_HIDE_MR_BRINEY_BOAT_DEWFORD_TOWN
 	end
 
 EventScript_MoveMrBrineyToRoute109:: @ 82718B3
@@ -621,8 +621,8 @@ EventScript_MoveMrBrineyToRoute109:: @ 82718B3
 	setflag FLAG_HIDE_BRINEYS_HOUSE_PEEKO
 	setflag FLAG_HIDE_MR_BRINEY_DEWFORD_TOWN
 	setflag FLAG_HIDE_MR_BRINEY_BOAT_DEWFORD_TOWN
-	clearflag FLAG_HIDE_ROUTE_109_MR_BRINEY
-	clearflag FLAG_HIDE_ROUTE_109_MR_BRINEY_BOAT
+	//clearflag FLAG_HIDE_ROUTE_109_MR_BRINEY
+	//clearflag FLAG_HIDE_ROUTE_109_MR_BRINEY_BOAT
 	end
 
 EverGrandeCity_HallOfFame_EventScript_ResetEliteFour:: @ 82718CC
@@ -1157,3 +1157,5 @@ loop:
 	.include "data/maps/SecretIslet/scripts.inc"
 
 	.include "data/maps/SecretShore/scripts.inc"
+
+	.include "data/maps/Power_Plant/scripts.inc"

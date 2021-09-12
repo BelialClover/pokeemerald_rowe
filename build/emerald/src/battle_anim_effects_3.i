@@ -14863,6 +14863,10 @@ extern const u32 gItemIconPalette_PinkMint[];
 extern const u32 gItemIconPalette_GreenMint[];
 extern const u32 gItemIconPalette_LightBlueMint[];
 extern const u32 gItemIconPalette_YellowMint[];
+
+
+extern const u32 gItemIcon_SweetApple[];
+extern const u32 gItemIcon_SourApple[];
 # 12 "src/battle_anim_effects_3.c" 2
 # 1 "include/palette.h" 1
 # 13 "src/battle_anim_effects_3.c" 2

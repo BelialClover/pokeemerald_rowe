@@ -14949,35 +14949,35 @@ sAcroBikeDesc:
 	.byte	0xe0
 	.byte	0xd9
 	.byte	0xfe
-	.byte	0xd7
-	.byte	0xd5
-	.byte	0xe4
-	.byte	0xd5
-	.byte	0xd6
-	.byte	0xe0
-	.byte	0xd9
+	.byte	0xeb
+	.byte	0xdd
+	.byte	0xe8
+	.byte	0xdc
 	.byte	0x0
+	.byte	0xe8
+	.byte	0xeb
 	.byte	0xe3
-	.byte	0xda
 	.byte	0x0
-	.byte	0xde
-	.byte	0xe9
 	.byte	0xe1
-	.byte	0xe4
+	.byte	0xe3
+	.byte	0xd8
+	.byte	0xd9
 	.byte	0xe7
+	.byte	0xb8
 	.byte	0xfe
+	.byte	0xbb
+	.byte	0xd7
+	.byte	0xe6
+	.byte	0xe3
+	.byte	0x0
 	.byte	0xd5
 	.byte	0xe2
 	.byte	0xd8
 	.byte	0x0
-	.byte	0xeb
+	.byte	0xc7
+	.byte	0xd5
+	.byte	0xd7
 	.byte	0xdc
-	.byte	0xd9
-	.byte	0xd9
-	.byte	0xe0
-	.byte	0xdd
-	.byte	0xd9
-	.byte	0xe7
 	.byte	0xad
 	.byte	0xff
 	.size	 sAcroBikeDesc,49
@@ -46201,17 +46201,12 @@ gItems:
 	.space	8
 	.byte	0x0
 	.space	3
-	.byte	0xc7
-	.byte	0xd5
-	.byte	0xd7
-	.byte	0xdc
-	.byte	0x0
 	.byte	0xbc
 	.byte	0xdd
 	.byte	0xdf
 	.byte	0xd9
 	.byte	0xff
-	.space	8
+	.space	13
 	.short	0x1c7
 	.short	0x0
 	.space	2
@@ -46493,17 +46488,12 @@ gItems:
 	.space	8
 	.byte	0x0
 	.space	3
-	.byte	0xbb
-	.byte	0xd7
-	.byte	0xe6
-	.byte	0xe3
-	.byte	0x0
 	.byte	0xbc
 	.byte	0xdd
 	.byte	0xdf
 	.byte	0xd9
 	.byte	0xff
-	.space	8
+	.space	13
 	.short	0x1d3
 	.short	0x0
 	.space	2
@@ -49247,52 +49237,49 @@ gItems:
 	.byte	0x0
 	.space	3
 	.byte	0xcd
+	.byte	0xeb
 	.byte	0xd9
-	.byte	0xd7
-	.byte	0xe6
 	.byte	0xd9
 	.byte	0xe8
 	.byte	0x0
-	.byte	0xc5
+	.byte	0xbb
+	.byte	0xe4
+	.byte	0xe4
+	.byte	0xe0
 	.byte	0xd9
-	.byte	0xed
 	.byte	0xff
-	.space	7
+	.space	6
 	.short	0x2b4
-	.short	0x0
+	.short	0x1388
 	.space	2
-	.word	sSecretKeyDesc
+	.word	sMoonStoneDesc
+	.space	2
+	.byte	0x8
 	.byte	0x1
-	.space	1
-	.byte	0xa
-	.byte	0x4
-	.word	ItemUseOutOfBattle_CannotUse
+	.word	ItemUseOutOfBattle_EvolutionStone
 	.space	8
 	.byte	0x0
 	.space	3
-	.byte	0xbc
-	.byte	0xdd
-	.byte	0xdf
-	.byte	0xd9
-	.byte	0x0
-	.byte	0xd0
+	.byte	0xcd
 	.byte	0xe3
 	.byte	0xe9
-	.byte	0xd7
-	.byte	0xdc
-	.byte	0xd9
 	.byte	0xe6
+	.byte	0x0
+	.byte	0xbb
+	.byte	0xe4
+	.byte	0xe4
+	.byte	0xe0
+	.byte	0xd9
 	.byte	0xff
-	.space	5
+	.space	7
 	.short	0x2b5
-	.short	0x0
+	.short	0x1388
 	.space	2
-	.word	sBikeVoucherDesc
+	.word	sMoonStoneDesc
+	.space	2
+	.byte	0x8
 	.byte	0x1
-	.space	1
-	.byte	0xa
-	.byte	0x4
-	.word	ItemUseOutOfBattle_CannotUse
+	.word	ItemUseOutOfBattle_EvolutionStone
 	.space	8
 	.byte	0x0
 	.space	3
@@ -51543,6 +51530,9 @@ CopyItemNameHandlePlural:
 	add	r5, r1, #0
 	add	r6, r2, #0
 	lsl	r0, r0, #0x10
+	lsr	r0, r0, #0x10
+	bl	GetScaledItem
+	lsl	r0, r0, #0x10
 	lsr	r4, r0, #0x10
 	add	r0, r4, #0
 	bl	ItemId_GetPocket
@@ -52082,6 +52072,10 @@ AddBagItem:
 	mov	sl, r0
 	lsl	r1, r1, #0x10
 	lsr	r5, r1, #0x10
+	bl	GetScaledItem
+	lsl	r0, r0, #0x10
+	lsr	r0, r0, #0x10
+	mov	sl, r0
 	bl	ItemId_GetPocket
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
@@ -54156,21 +54150,24 @@ ItemId_GetSecondaryId:
 GetSetItemObtained:
 	push	{r4, lr}
 	lsl	r0, r0, #0x10
-	lsr	r2, r0, #0x10
+	lsr	r0, r0, #0x10
 	lsl	r1, r1, #0x18
-	lsr	r1, r1, #0x18
+	lsr	r4, r1, #0x18
+	bl	GetScaledItem
+	lsl	r0, r0, #0x10
+	lsr	r1, r0, #0x10
 	lsr	r0, r0, #0x13
 	lsl	r0, r0, #0x18
-	lsr	r4, r0, #0x18
+	lsr	r2, r0, #0x18
 	mov	r0, #0x7
-	and	r2, r2, r0
+	and	r1, r1, r0
 	mov	r0, #0x80
 	lsl	r0, r0, #0x11
-	lsl	r0, r0, r2
+	lsl	r0, r0, r1
 	lsr	r3, r0, #0x18
-	cmp	r1, #0
+	cmp	r4, #0
 	beq	.L526	@cond_branch
-	cmp	r1, #0x1
+	cmp	r4, #0x1
 	beq	.L527	@cond_branch
 	mov	r0, #0x0
 	b	.L530
@@ -54179,7 +54176,7 @@ GetSetItemObtained:
 	ldr	r0, [r0]
 	ldr	r1, .L531+0x4
 	add	r0, r0, r1
-	add	r0, r0, r4
+	add	r0, r0, r2
 	ldrb	r0, [r0]
 	and	r0, r0, r3
 	b	.L530
@@ -54193,7 +54190,7 @@ GetSetItemObtained:
 	ldr	r1, [r0]
 	ldr	r0, .L533+0x4
 	add	r1, r1, r0
-	add	r1, r1, r4
+	add	r1, r1, r2
 	ldrb	r2, [r1]
 	add	r0, r3, #0
 	orr	r0, r0, r2
@@ -54214,13 +54211,16 @@ GetSetItemObtained:
 	.type	 ReformatItemDescription,function
 	.thumb_func
 ReformatItemDescription:
-	push	{r4, r5, r6, lr}
-	add	r3, r1, #0
+	push	{r4, r5, r6, r7, lr}
+	add	r4, r1, #0
 	lsl	r0, r0, #0x10
 	lsr	r0, r0, #0x10
 	mov	r5, #0x0
-	mov	r4, #0x1
-	mov	r6, #0x20
+	mov	r6, #0x1
+	mov	r7, #0x20
+	bl	GetScaledItem
+	lsl	r0, r0, #0x10
+	lsr	r0, r0, #0x10
 	ldr	r2, .L548
 	lsl	r1, r0, #0x1
 	add	r1, r1, r0
@@ -54234,15 +54234,15 @@ ReformatItemDescription:
 .L548:
 	.word	gItems
 .L538:
-	cmp	r5, r6
+	cmp	r5, r7
 	bcc	.L539	@cond_branch
 	add	r0, r2, #0
 	add	r2, r0, #0
-	add	r4, r4, #0x1
+	add	r3, r6, #0x1
 	b	.L547
 .L542:
-	strb	r0, [r3]
-	add	r3, r3, #0x1
+	strb	r0, [r4]
+	add	r4, r4, #0x1
 	add	r1, r1, #0x1
 	ldrb	r0, [r1]
 	add	r2, r0, #0
@@ -54253,23 +54253,23 @@ ReformatItemDescription:
 	bne	.L542	@cond_branch
 .L541:
 	mov	r0, #0xfe
-	strb	r0, [r3]
+	strb	r0, [r4]
 	mov	r5, #0x0
-	lsl	r0, r4, #0x18
-	lsr	r4, r0, #0x18
-	add	r3, r3, #0x1
+	lsl	r0, r3, #0x18
+	lsr	r6, r0, #0x18
+	add	r4, r4, #0x1
 	add	r1, r1, #0x1
 	b	.L536
 .L539:
 	ldrb	r0, [r1]
-	strb	r0, [r3]
+	strb	r0, [r4]
 	ldrb	r0, [r1]
 	cmp	r0, #0xfe
 	bne	.L545	@cond_branch
 	mov	r0, #0x0
-	strb	r0, [r3]
+	strb	r0, [r4]
 .L545:
-	add	r3, r3, #0x1
+	add	r4, r4, #0x1
 	add	r1, r1, #0x1
 	add	r0, r5, #0x1
 	lsl	r0, r0, #0x18
@@ -54280,9 +54280,9 @@ ReformatItemDescription:
 	cmp	r0, #0xff
 	bne	.L538	@cond_branch
 	mov	r0, #0xff
-	strb	r0, [r3]
-	add	r0, r4, #0
-	pop	{r4, r5, r6}
+	strb	r0, [r4]
+	add	r0, r6, #0
+	pop	{r4, r5, r6, r7}
 	pop	{r1}
 	bx	r1
 .Lfe57:
@@ -54298,7 +54298,10 @@ DrawHeaderBox:
 	push	{r6, r7}
 	add	sp, sp, #-0x18
 	ldr	r0, .L557
-	ldrh	r5, [r0]
+	ldrh	r0, [r0]
+	bl	GetScaledItem
+	lsl	r0, r0, #0x10
+	lsr	r5, r0, #0x10
 	mov	r9, r5
 	ldr	r0, .L557+0x4
 	ldrb	r4, [r0]
@@ -54452,16 +54455,19 @@ ShowItemIconSprite:
 	push	{r5, r6, r7}
 	add	sp, sp, #-0x4
 	lsl	r0, r0, #0x10
-	lsr	r7, r0, #0x10
+	lsr	r0, r0, #0x10
 	lsl	r1, r1, #0x18
 	lsr	r1, r1, #0x18
 	str	r1, [sp]
 	lsl	r2, r2, #0x18
 	lsr	r2, r2, #0x18
-	add	r6, r2, #0
-	mov	r0, #0x40
-	mov	r8, r0
-	cmp	r6, #0
+	add	r7, r2, #0
+	mov	r1, #0x40
+	mov	r8, r1
+	bl	GetScaledItem
+	lsl	r0, r0, #0x10
+	lsr	r6, r0, #0x10
+	cmp	r7, #0
 	beq	.L566	@cond_branch
 	mov	r1, #0x80
 	lsl	r1, r1, #0x8
@@ -54475,15 +54481,15 @@ ShowItemIconSprite:
 	ldr	r4, .L573
 	add	r0, r4, #0
 	add	r1, r4, #0
-	add	r2, r7, #0
+	add	r2, r6, #0
 	bl	AddItemIconSprite
 	lsl	r0, r0, #0x18
 	lsr	r5, r0, #0x18
-	cmp	r6, #0
+	cmp	r7, #0
 	beq	.L567	@cond_branch
 	add	r0, r4, #0
 	add	r1, r4, #0
-	add	r2, r7, #0
+	add	r2, r6, #0
 	bl	AddItemIconSprite
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
@@ -54491,23 +54497,23 @@ ShowItemIconSprite:
 .L567:
 	cmp	r5, #0x40
 	beq	.L568	@cond_branch
-	ldr	r1, [sp]
-	cmp	r1, #0
+	ldr	r0, [sp]
+	cmp	r0, #0
 	bne	.L569	@cond_branch
-	mov	r0, #0xd5
-	mov	sl, r0
-	mov	r1, #0x8c
+	mov	r1, #0xd5
+	mov	sl, r1
+	mov	r0, #0x8c
 	b	.L572
 .L574:
 	.align	2, 0
 .L573:
 	.word	0x2722
 .L569:
-	mov	r0, #0x1a
-	mov	sl, r0
-	mov	r1, #0x18
+	mov	r1, #0x1a
+	mov	sl, r1
+	mov	r0, #0x18
 .L572:
-	mov	r9, r1
+	mov	r9, r0
 	ldr	r0, .L575
 	lsl	r1, r5, #0x4
 	add	r1, r1, r5

@@ -1853,6 +1853,30 @@ const struct Item gItems[] =
         .fieldUseFunc = ItemUseOutOfBattle_EvolutionStone,
         .secondaryId = 0,
     },
+	
+	[ITEM_SOUR_APPLE] = 
+    {
+        .name = _("Sour Apple"),
+        .itemId = ITEM_SOUR_APPLE,
+        .price = 5000,
+        .description = sMoonStoneDesc,
+        .pocket = POCKET_POWER_UP,
+        .type = 1,
+        .fieldUseFunc = ItemUseOutOfBattle_EvolutionStone,
+        .secondaryId = 0,
+	},
+	
+	[ITEM_SWEET_APPLE] = 
+    {
+        .name = _("Sweet Apple"),
+        .itemId = ITEM_SWEET_APPLE,
+        .price = 5000,
+        .description = sMoonStoneDesc,
+        .pocket = POCKET_POWER_UP,
+        .type = 1,
+        .fieldUseFunc = ItemUseOutOfBattle_EvolutionStone,
+        .secondaryId = 0,
+	},
 
 // Valuable items
 
@@ -4859,9 +4883,9 @@ const struct Item gItems[] =
     [ITEM_MACH_BIKE] =
     {
 #if GAME_LANGUAGE == LANGUAGE_SPANISH
-        .name = _("Bici Carrera"),
+        .name = _("Bici"),
 #else
-        .name = _("Mach Bike"),
+        .name = _("Bike"),
 #endif
         .itemId = ITEM_MACH_BIKE,
         .price = 0,
@@ -5068,9 +5092,9 @@ const struct Item gItems[] =
     [ITEM_ACRO_BIKE] =
     {
 #if GAME_LANGUAGE == LANGUAGE_SPANISH
-        .name = _("Bici Acrobática"),
+        .name = _("Bici"),
 #else
-        .name = _("Acro Bike"),
+        .name = _("Bike"),
 #endif
         .itemId = ITEM_ACRO_BIKE,
         .price = 0,
@@ -7063,7 +7087,7 @@ const struct Item gItems[] =
         .secondaryId = 0,
     },/*/
 
-    [ITEM_SECRET_KEY] =
+    /*/[ITEM_SECRET_KEY] =
     {
 #if GAME_LANGUAGE == LANGUAGE_SPANISH
         .name = _("Llave Secreta"),
@@ -7095,7 +7119,7 @@ const struct Item gItems[] =
         .type = 4,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
         .secondaryId = 0,
-    },
+    },/*/
 
     [ITEM_GOLD_TEETH] =
     {

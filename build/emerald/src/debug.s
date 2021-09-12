@@ -4833,29 +4833,23 @@ DebugAction_Flags_SetPokedexFlags:
 	.type	 DebugAction_Flags_SwitchDex,function
 	.thumb_func
 DebugAction_Flags_SwitchDex:
-	push	{r4, lr}
-	ldr	r4, .L177
-	add	r0, r4, #0
+	push	{lr}
+	mov	r0, #0x33
 	bl	FlagGet
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
 	beq	.L175	@cond_branch
-	add	r0, r4, #0
+	mov	r0, #0x33
 	bl	FlagClear
 	mov	r0, #0x3
 	bl	PlaySE
 	b	.L176
-.L178:
-	.align	2, 0
-.L177:
-	.word	0x861
 .L175:
-	add	r0, r4, #0
+	mov	r0, #0x33
 	bl	FlagSet
 	mov	r0, #0x2
 	bl	PlaySE
 .L176:
-	pop	{r4}
 	pop	{r0}
 	bx	r0
 .Lfe32:
@@ -4867,16 +4861,16 @@ DebugAction_Flags_SwitchNatDex:
 	push	{lr}
 	bl	IsNationalPokedexEnabled
 	cmp	r0, #0
-	beq	.L180	@cond_branch
+	beq	.L178	@cond_branch
 	bl	DisableNationalPokedex
 	mov	r0, #0x3
 	bl	PlaySE
-	b	.L181
-.L180:
+	b	.L179
+.L178:
 	bl	EnableNationalPokedex
 	mov	r0, #0x2
 	bl	PlaySE
-.L181:
+.L179:
 	pop	{r0}
 	bx	r0
 .Lfe33:
@@ -4885,29 +4879,23 @@ DebugAction_Flags_SwitchNatDex:
 	.type	 DebugAction_Flags_SwitchPokeNav,function
 	.thumb_func
 DebugAction_Flags_SwitchPokeNav:
-	push	{r4, lr}
-	ldr	r4, .L185
-	add	r0, r4, #0
+	push	{lr}
+	mov	r0, #0x33
 	bl	FlagGet
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.L183	@cond_branch
-	add	r0, r4, #0
+	beq	.L181	@cond_branch
+	mov	r0, #0x33
 	bl	FlagClear
 	mov	r0, #0x3
 	bl	PlaySE
-	b	.L184
-.L186:
-	.align	2, 0
-.L185:
-	.word	0x862
-.L183:
-	add	r0, r4, #0
+	b	.L182
+.L181:
+	mov	r0, #0x33
 	bl	FlagSet
 	mov	r0, #0x2
 	bl	PlaySE
-.L184:
-	pop	{r4}
+.L182:
 	pop	{r0}
 	bx	r0
 .Lfe34:
@@ -4917,38 +4905,38 @@ DebugAction_Flags_SwitchPokeNav:
 	.thumb_func
 DebugAction_Flags_SwitchDexNav:
 	push	{r4, lr}
-	ldr	r4, .L190
+	ldr	r4, .L186
 	add	r0, r4, #0
 	bl	FlagGet
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.L188	@cond_branch
+	beq	.L184	@cond_branch
 	add	r0, r4, #0
 	bl	FlagClear
-	ldr	r0, .L190+0x4
+	ldr	r0, .L186+0x4
 	bl	FlagClear
 	mov	r0, #0x3
 	bl	PlaySE
-	b	.L189
-.L191:
+	b	.L185
+.L187:
 	.align	2, 0
-.L190:
+.L186:
 	.word	0x88f
 	.word	0x88e
-.L188:
+.L184:
 	add	r0, r4, #0
 	bl	FlagSet
-	ldr	r0, .L192
+	ldr	r0, .L188
 	bl	FlagSet
 	mov	r0, #0x2
 	bl	PlaySE
-.L189:
+.L185:
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L193:
+.L189:
 	.align	2, 0
-.L192:
+.L188:
 	.word	0x88e
 .Lfe35:
 	.size	 DebugAction_Flags_SwitchDexNav,.Lfe35-DebugAction_Flags_SwitchDexNav
@@ -4957,121 +4945,121 @@ DebugAction_Flags_SwitchDexNav:
 	.thumb_func
 DebugAction_Flags_ToggleFlyFlags:
 	push	{r4, lr}
-	ldr	r4, .L197
+	ldr	r4, .L193
 	add	r0, r4, #0
 	bl	FlagGet
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	bne	.LCB2730
-	b	.L195	@long jump
-.LCB2730:
+	bne	.LCB2716
+	b	.L191	@long jump
+.LCB2716:
 	mov	r0, #0x3
 	bl	PlaySE
-	ldr	r0, .L197+0x4
+	ldr	r0, .L193+0x4
 	bl	FlagClear
 	mov	r0, #0x87
 	lsl	r0, r0, #0x4
 	bl	FlagClear
-	ldr	r0, .L197+0x8
+	ldr	r0, .L193+0x8
 	bl	FlagClear
-	ldr	r0, .L197+0xc
+	ldr	r0, .L193+0xc
 	bl	FlagClear
-	ldr	r0, .L197+0x10
+	ldr	r0, .L193+0x10
 	bl	FlagClear
-	ldr	r0, .L197+0x14
+	ldr	r0, .L193+0x14
 	bl	FlagClear
-	ldr	r0, .L197+0x18
+	ldr	r0, .L193+0x18
 	bl	FlagClear
-	ldr	r0, .L197+0x1c
+	ldr	r0, .L193+0x1c
 	bl	FlagClear
-	ldr	r0, .L197+0x20
+	ldr	r0, .L193+0x20
 	bl	FlagClear
-	ldr	r0, .L197+0x24
+	ldr	r0, .L193+0x24
 	bl	FlagClear
-	ldr	r0, .L197+0x28
+	ldr	r0, .L193+0x28
 	bl	FlagClear
-	ldr	r0, .L197+0x2c
+	ldr	r0, .L193+0x2c
 	bl	FlagClear
-	ldr	r0, .L197+0x30
+	ldr	r0, .L193+0x30
 	bl	FlagClear
-	ldr	r0, .L197+0x34
+	ldr	r0, .L193+0x34
 	bl	FlagClear
-	ldr	r0, .L197+0x38
+	ldr	r0, .L193+0x38
 	bl	FlagClear
-	ldr	r0, .L197+0x3c
+	ldr	r0, .L193+0x3c
 	bl	FlagClear
-	ldr	r0, .L197+0x40
+	ldr	r0, .L193+0x40
 	bl	FlagClear
 	add	r0, r4, #0
 	bl	FlagClear
-	ldr	r0, .L197+0x44
+	ldr	r0, .L193+0x44
 	bl	FlagClear
-	ldr	r0, .L197+0x48
+	ldr	r0, .L193+0x48
 	bl	FlagClear
-	ldr	r0, .L197+0x4c
+	ldr	r0, .L193+0x4c
 	bl	FlagClear
-	ldr	r0, .L197+0x50
+	ldr	r0, .L193+0x50
 	bl	FlagClear
-	ldr	r0, .L197+0x54
+	ldr	r0, .L193+0x54
 	bl	FlagClear
-	ldr	r0, .L197+0x58
+	ldr	r0, .L193+0x58
 	bl	FlagClear
-	ldr	r0, .L197+0x5c
+	ldr	r0, .L193+0x5c
 	bl	FlagClear
-	ldr	r0, .L197+0x60
+	ldr	r0, .L193+0x60
 	bl	FlagClear
-	ldr	r0, .L197+0x64
+	ldr	r0, .L193+0x64
 	bl	FlagClear
-	ldr	r0, .L197+0x68
+	ldr	r0, .L193+0x68
 	bl	FlagClear
-	ldr	r0, .L197+0x6c
+	ldr	r0, .L193+0x6c
 	bl	FlagClear
 	mov	r0, #0x8f
 	lsl	r0, r0, #0x4
 	bl	FlagClear
-	ldr	r0, .L197+0x70
+	ldr	r0, .L193+0x70
 	bl	FlagClear
-	ldr	r0, .L197+0x74
+	ldr	r0, .L193+0x74
 	bl	FlagClear
-	ldr	r0, .L197+0x78
+	ldr	r0, .L193+0x78
 	bl	FlagClear
-	ldr	r0, .L197+0x7c
+	ldr	r0, .L193+0x7c
 	bl	FlagClear
-	ldr	r0, .L197+0x80
+	ldr	r0, .L193+0x80
 	bl	FlagClear
-	ldr	r0, .L197+0x84
+	ldr	r0, .L193+0x84
 	bl	FlagClear
-	ldr	r0, .L197+0x88
+	ldr	r0, .L193+0x88
 	bl	FlagClear
-	ldr	r0, .L197+0x8c
+	ldr	r0, .L193+0x8c
 	bl	FlagClear
-	ldr	r0, .L197+0x90
+	ldr	r0, .L193+0x90
 	bl	FlagClear
-	ldr	r0, .L197+0x94
+	ldr	r0, .L193+0x94
 	bl	FlagClear
-	ldr	r0, .L197+0x98
+	ldr	r0, .L193+0x98
 	bl	FlagClear
-	ldr	r0, .L197+0x9c
+	ldr	r0, .L193+0x9c
 	bl	FlagClear
-	ldr	r0, .L197+0xa0
+	ldr	r0, .L193+0xa0
 	bl	FlagClear
-	ldr	r0, .L197+0xa4
+	ldr	r0, .L193+0xa4
 	bl	FlagClear
 	mov	r0, #0x90
 	lsl	r0, r0, #0x4
 	bl	FlagClear
-	ldr	r0, .L197+0xa8
+	ldr	r0, .L193+0xa8
 	bl	FlagClear
-	ldr	r0, .L197+0xac
+	ldr	r0, .L193+0xac
 	bl	FlagClear
-	ldr	r0, .L197+0xb0
+	ldr	r0, .L193+0xb0
 	bl	FlagClear
-	ldr	r0, .L197+0xb4
+	ldr	r0, .L193+0xb4
 	bl	FlagClear
-	b	.L196
-.L198:
+	b	.L192
+.L194:
 	.align	2, 0
-.L197:
+.L193:
 	.word	0x8a8
 	.word	0x86f
 	.word	0x871
@@ -5118,117 +5106,117 @@ DebugAction_Flags_ToggleFlyFlags:
 	.word	0x905
 	.word	0x906
 	.word	0x907
-.L195:
+.L191:
 	mov	r0, #0x2
 	bl	PlaySE
-	ldr	r0, .L199
+	ldr	r0, .L195
 	bl	FlagSet
 	mov	r0, #0x87
 	lsl	r0, r0, #0x4
 	bl	FlagSet
-	ldr	r0, .L199+0x4
+	ldr	r0, .L195+0x4
 	bl	FlagSet
-	ldr	r0, .L199+0x8
+	ldr	r0, .L195+0x8
 	bl	FlagSet
-	ldr	r0, .L199+0xc
+	ldr	r0, .L195+0xc
 	bl	FlagSet
-	ldr	r0, .L199+0x10
+	ldr	r0, .L195+0x10
 	bl	FlagSet
-	ldr	r0, .L199+0x14
+	ldr	r0, .L195+0x14
 	bl	FlagSet
-	ldr	r0, .L199+0x18
+	ldr	r0, .L195+0x18
 	bl	FlagSet
-	ldr	r0, .L199+0x1c
+	ldr	r0, .L195+0x1c
 	bl	FlagSet
-	ldr	r0, .L199+0x20
+	ldr	r0, .L195+0x20
 	bl	FlagSet
-	ldr	r0, .L199+0x24
+	ldr	r0, .L195+0x24
 	bl	FlagSet
-	ldr	r0, .L199+0x28
+	ldr	r0, .L195+0x28
 	bl	FlagSet
-	ldr	r0, .L199+0x2c
+	ldr	r0, .L195+0x2c
 	bl	FlagSet
-	ldr	r0, .L199+0x30
+	ldr	r0, .L195+0x30
 	bl	FlagSet
-	ldr	r0, .L199+0x34
+	ldr	r0, .L195+0x34
 	bl	FlagSet
-	ldr	r0, .L199+0x38
+	ldr	r0, .L195+0x38
 	bl	FlagSet
-	ldr	r0, .L199+0x3c
+	ldr	r0, .L195+0x3c
 	bl	FlagSet
 	add	r0, r4, #0
 	bl	FlagSet
-	ldr	r0, .L199+0x40
+	ldr	r0, .L195+0x40
 	bl	FlagSet
-	ldr	r0, .L199+0x44
+	ldr	r0, .L195+0x44
 	bl	FlagSet
-	ldr	r0, .L199+0x48
+	ldr	r0, .L195+0x48
 	bl	FlagSet
-	ldr	r0, .L199+0x4c
+	ldr	r0, .L195+0x4c
 	bl	FlagSet
-	ldr	r0, .L199+0x50
+	ldr	r0, .L195+0x50
 	bl	FlagSet
-	ldr	r0, .L199+0x54
+	ldr	r0, .L195+0x54
 	bl	FlagSet
-	ldr	r0, .L199+0x58
+	ldr	r0, .L195+0x58
 	bl	FlagSet
-	ldr	r0, .L199+0x5c
+	ldr	r0, .L195+0x5c
 	bl	FlagSet
-	ldr	r0, .L199+0x60
+	ldr	r0, .L195+0x60
 	bl	FlagSet
-	ldr	r0, .L199+0x64
+	ldr	r0, .L195+0x64
 	bl	FlagSet
-	ldr	r0, .L199+0x68
+	ldr	r0, .L195+0x68
 	bl	FlagSet
 	mov	r0, #0x8f
 	lsl	r0, r0, #0x4
 	bl	FlagSet
-	ldr	r0, .L199+0x6c
+	ldr	r0, .L195+0x6c
 	bl	FlagSet
-	ldr	r0, .L199+0x70
+	ldr	r0, .L195+0x70
 	bl	FlagSet
-	ldr	r0, .L199+0x74
+	ldr	r0, .L195+0x74
 	bl	FlagSet
-	ldr	r0, .L199+0x78
+	ldr	r0, .L195+0x78
 	bl	FlagSet
-	ldr	r0, .L199+0x7c
+	ldr	r0, .L195+0x7c
 	bl	FlagSet
-	ldr	r0, .L199+0x80
+	ldr	r0, .L195+0x80
 	bl	FlagSet
-	ldr	r0, .L199+0x84
+	ldr	r0, .L195+0x84
 	bl	FlagSet
-	ldr	r0, .L199+0x88
+	ldr	r0, .L195+0x88
 	bl	FlagSet
-	ldr	r0, .L199+0x8c
+	ldr	r0, .L195+0x8c
 	bl	FlagSet
-	ldr	r0, .L199+0x90
+	ldr	r0, .L195+0x90
 	bl	FlagSet
-	ldr	r0, .L199+0x94
+	ldr	r0, .L195+0x94
 	bl	FlagSet
-	ldr	r0, .L199+0x98
+	ldr	r0, .L195+0x98
 	bl	FlagSet
-	ldr	r0, .L199+0x9c
+	ldr	r0, .L195+0x9c
 	bl	FlagSet
-	ldr	r0, .L199+0xa0
+	ldr	r0, .L195+0xa0
 	bl	FlagSet
 	mov	r0, #0x90
 	lsl	r0, r0, #0x4
 	bl	FlagSet
-	ldr	r0, .L199+0xa4
+	ldr	r0, .L195+0xa4
 	bl	FlagSet
-	ldr	r0, .L199+0xa8
+	ldr	r0, .L195+0xa8
 	bl	FlagSet
-	ldr	r0, .L199+0xac
+	ldr	r0, .L195+0xac
 	bl	FlagSet
-	ldr	r0, .L199+0xb0
+	ldr	r0, .L195+0xb0
 	bl	FlagSet
-.L196:
+.L192:
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L200:
+.L196:
 	.align	2, 0
-.L199:
+.L195:
 	.word	0x86f
 	.word	0x871
 	.word	0x872
@@ -5281,43 +5269,43 @@ DebugAction_Flags_ToggleFlyFlags:
 	.thumb_func
 DebugAction_Flags_ToggleBadgeFlags:
 	push	{lr}
-	ldr	r0, .L204
+	ldr	r0, .L200
 	bl	FlagGet
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.L202	@cond_branch
+	beq	.L198	@cond_branch
 	mov	r0, #0x3
 	bl	PlaySE
-	b	.L203
-.L205:
+	b	.L199
+.L201:
 	.align	2, 0
-.L204:
+.L200:
 	.word	0x86e
-.L202:
+.L198:
 	mov	r0, #0x2
 	bl	PlaySE
-.L203:
-	ldr	r0, .L206
+.L199:
+	ldr	r0, .L202
 	bl	FlagToggle
-	ldr	r0, .L206+0x4
+	ldr	r0, .L202+0x4
 	bl	FlagToggle
-	ldr	r0, .L206+0x8
+	ldr	r0, .L202+0x8
 	bl	FlagToggle
-	ldr	r0, .L206+0xc
+	ldr	r0, .L202+0xc
 	bl	FlagToggle
-	ldr	r0, .L206+0x10
+	ldr	r0, .L202+0x10
 	bl	FlagToggle
-	ldr	r0, .L206+0x14
+	ldr	r0, .L202+0x14
 	bl	FlagToggle
-	ldr	r0, .L206+0x18
+	ldr	r0, .L202+0x18
 	bl	FlagToggle
-	ldr	r0, .L206+0x1c
+	ldr	r0, .L202+0x1c
 	bl	FlagToggle
 	pop	{r0}
 	bx	r0
-.L207:
+.L203:
 	.align	2, 0
-.L206:
+.L202:
 	.word	0x867
 	.word	0x868
 	.word	0x869
@@ -5333,27 +5321,27 @@ DebugAction_Flags_ToggleBadgeFlags:
 	.thumb_func
 DebugAction_Flags_CollisionOnOff:
 	push	{r4, lr}
-	ldr	r4, .L211
+	ldr	r4, .L207
 	add	r0, r4, #0
 	bl	FlagGet
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.L209	@cond_branch
+	beq	.L205	@cond_branch
 	add	r0, r4, #0
 	bl	FlagClear
 	mov	r0, #0x3
 	bl	PlaySE
-	b	.L210
-.L212:
+	b	.L206
+.L208:
 	.align	2, 0
-.L211:
+.L207:
 	.word	0x885
-.L209:
+.L205:
 	add	r0, r4, #0
 	bl	FlagSet
 	mov	r0, #0x2
 	bl	PlaySE
-.L210:
+.L206:
 	pop	{r4}
 	pop	{r0}
 	bx	r0
@@ -5368,18 +5356,18 @@ DebugAction_Flags_EncounterOnOff:
 	bl	FlagGet
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.L214	@cond_branch
+	beq	.L210	@cond_branch
 	mov	r0, #0x21
 	bl	FlagClear
 	mov	r0, #0x3
 	bl	PlaySE
-	b	.L215
-.L214:
+	b	.L211
+.L210:
 	mov	r0, #0x21
 	bl	FlagSet
 	mov	r0, #0x2
 	bl	PlaySE
-.L215:
+.L211:
 	pop	{r0}
 	bx	r0
 .Lfe39:
@@ -5393,18 +5381,18 @@ DebugAction_Flags_TrainerSeeOnOff:
 	bl	FlagGet
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.L217	@cond_branch
+	beq	.L213	@cond_branch
 	mov	r0, #0x22
 	bl	FlagClear
 	mov	r0, #0x3
 	bl	PlaySE
-	b	.L218
-.L217:
+	b	.L214
+.L213:
 	mov	r0, #0x22
 	bl	FlagSet
 	mov	r0, #0x2
 	bl	PlaySE
-.L218:
+.L214:
 	pop	{r0}
 	bx	r0
 .Lfe40:
@@ -5418,18 +5406,18 @@ DebugAction_Flags_BagUseOnOff:
 	bl	FlagGet
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.L220	@cond_branch
+	beq	.L216	@cond_branch
 	mov	r0, #0x23
 	bl	FlagClear
 	mov	r0, #0x3
 	bl	PlaySE
-	b	.L221
-.L220:
+	b	.L217
+.L216:
 	mov	r0, #0x23
 	bl	FlagSet
 	mov	r0, #0x2
 	bl	PlaySE
-.L221:
+.L217:
 	pop	{r0}
 	bx	r0
 .Lfe41:
@@ -5443,18 +5431,18 @@ DebugAction_Flags_CatchingOnOff:
 	bl	FlagGet
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.L223	@cond_branch
+	beq	.L219	@cond_branch
 	mov	r0, #0x24
 	bl	FlagClear
 	mov	r0, #0x3
 	bl	PlaySE
-	b	.L224
-.L223:
+	b	.L220
+.L219:
 	mov	r0, #0x24
 	bl	FlagSet
 	mov	r0, #0x2
 	bl	PlaySE
-.L224:
+.L220:
 	pop	{r0}
 	bx	r0
 .Lfe42:
@@ -5470,7 +5458,7 @@ DebugAction_Vars_Vars:
 	add	sp, sp, #-0xc
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
-	ldr	r1, .L226
+	ldr	r1, .L222
 	lsl	r5, r0, #0x2
 	add	r5, r5, r0
 	lsl	r5, r5, #0x3
@@ -5482,7 +5470,7 @@ DebugAction_Vars_Vars:
 	bl	RemoveWindow
 	bl	HideMapNamePopUpWindow
 	bl	LoadMessageBoxAndBorderGfx
-	ldr	r0, .L226+0x4
+	ldr	r0, .L222+0x4
 	bl	AddWindow
 	add	r6, r0, #0
 	lsl	r6, r6, #0x18
@@ -5493,7 +5481,7 @@ DebugAction_Vars_Vars:
 	add	r0, r6, #0
 	mov	r1, #0x3
 	bl	CopyWindowToVram
-	ldr	r4, .L226+0x8
+	ldr	r4, .L222+0x8
 	mov	r0, #0x80
 	lsl	r0, r0, #0x7
 	mov	r9, r0
@@ -5502,16 +5490,16 @@ DebugAction_Vars_Vars:
 	mov	r2, #0x2
 	mov	r3, #0x5
 	bl	ConvertIntToDecimalStringN
-	ldr	r0, .L226+0xc
+	ldr	r0, .L222+0xc
 	mov	r8, r0
 	mov	r1, r9
 	mov	r2, #0x0
 	mov	r3, #0x4
 	bl	ConvertIntToHexStringN
-	ldr	r1, .L226+0x10
+	ldr	r1, .L222+0x10
 	add	r0, r4, #0
 	bl	StringExpandPlaceholders
-	ldr	r4, .L226+0x14
+	ldr	r4, .L222+0x14
 	add	r0, r4, #0
 	mov	r1, #0x0
 	mov	r2, #0x2
@@ -5522,13 +5510,13 @@ DebugAction_Vars_Vars:
 	mov	r2, #0x0
 	mov	r3, #0xf
 	bl	StringCopyPadded
-	ldr	r0, .L226+0x18
+	ldr	r0, .L222+0x18
 	ldr	r1, [r0]
 	mov	r0, r8
 	bl	StringCopy
-	ldr	r0, .L226+0x1c
+	ldr	r0, .L222+0x1c
 	mov	r8, r0
-	ldr	r1, .L226+0x20
+	ldr	r1, .L222+0x20
 	bl	StringExpandPlaceholders
 	mov	r0, #0x1
 	str	r0, [sp]
@@ -5540,7 +5528,7 @@ DebugAction_Vars_Vars:
 	mov	r2, r8
 	mov	r3, #0x1
 	bl	AddTextPrinterParameterized
-	ldr	r0, .L226+0x24
+	ldr	r0, .L222+0x24
 	str	r0, [r5]
 	strh	r6, [r5, #0xc]
 	mov	r0, r9
@@ -5554,9 +5542,9 @@ DebugAction_Vars_Vars:
 	pop	{r4, r5, r6}
 	pop	{r0}
 	bx	r0
-.L227:
+.L223:
 	.align	2, 0
-.L226:
+.L222:
 	.word	gTasks
 	.word	sDebugNumberDisplayWindowTemplate
 	.word	gStringVar1
@@ -5579,18 +5567,18 @@ DebugAction_Vars_Select:
 	add	sp, sp, #-0xc
 	lsl	r0, r0, #0x18
 	lsr	r7, r0, #0x18
-	ldr	r2, .L247
+	ldr	r2, .L243
 	ldrh	r1, [r2, #0x2e]
 	mov	r0, #0x40
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L229	@cond_branch
-	ldr	r1, .L247+0x4
+	beq	.L225	@cond_branch
+	ldr	r1, .L243+0x4
 	lsl	r0, r7, #0x2
 	add	r0, r0, r7
 	lsl	r0, r0, #0x3
 	add	r3, r0, r1
-	ldr	r1, .L247+0x8
+	ldr	r1, .L243+0x8
 	mov	r4, #0x10
 	ldrsh	r0, [r3, r4]
 	lsl	r0, r0, #0x2
@@ -5601,22 +5589,22 @@ DebugAction_Vars_Select:
 	strh	r0, [r3, #0xe]
 	lsl	r0, r0, #0x10
 	asr	r0, r0, #0x10
-	ldr	r1, .L247+0xc
+	ldr	r1, .L243+0xc
 	cmp	r0, r1
-	ble	.L229	@cond_branch
+	ble	.L225	@cond_branch
 	strh	r1, [r3, #0xe]
-.L229:
+.L225:
 	ldrh	r1, [r2, #0x2e]
 	mov	r0, #0x80
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L231	@cond_branch
-	ldr	r1, .L247+0x4
+	beq	.L227	@cond_branch
+	ldr	r1, .L243+0x4
 	lsl	r0, r7, #0x2
 	add	r0, r0, r7
 	lsl	r0, r0, #0x3
 	add	r3, r0, r1
-	ldr	r1, .L247+0x8
+	ldr	r1, .L243+0x8
 	mov	r4, #0x10
 	ldrsh	r0, [r3, r4]
 	lsl	r0, r0, #0x2
@@ -5626,19 +5614,19 @@ DebugAction_Vars_Select:
 	sub	r0, r0, r1
 	strh	r0, [r3, #0xe]
 	lsl	r0, r0, #0x10
-	ldr	r1, .L247+0x10
+	ldr	r1, .L243+0x10
 	cmp	r0, r1
-	bgt	.L231	@cond_branch
+	bgt	.L227	@cond_branch
 	mov	r0, #0x80
 	lsl	r0, r0, #0x7
 	strh	r0, [r3, #0xe]
-.L231:
+.L227:
 	ldrh	r1, [r2, #0x2e]
 	mov	r0, #0x20
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L233	@cond_branch
-	ldr	r0, .L247+0x4
+	beq	.L229	@cond_branch
+	ldr	r0, .L243+0x4
 	lsl	r1, r7, #0x2
 	add	r1, r1, r7
 	lsl	r1, r1, #0x3
@@ -5648,16 +5636,16 @@ DebugAction_Vars_Select:
 	strh	r0, [r1, #0x10]
 	lsl	r0, r0, #0x10
 	cmp	r0, #0
-	bge	.L233	@cond_branch
+	bge	.L229	@cond_branch
 	mov	r0, #0x0
 	strh	r0, [r1, #0x10]
-.L233:
+.L229:
 	ldrh	r1, [r2, #0x2e]
 	mov	r0, #0x10
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L235	@cond_branch
-	ldr	r1, .L247+0x4
+	beq	.L231	@cond_branch
+	ldr	r1, .L243+0x4
 	lsl	r0, r7, #0x2
 	add	r0, r0, r7
 	lsl	r0, r0, #0x3
@@ -5668,20 +5656,20 @@ DebugAction_Vars_Select:
 	lsl	r0, r0, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, #0x4
-	ble	.L235	@cond_branch
+	ble	.L231	@cond_branch
 	mov	r0, #0x4
 	strh	r0, [r1, #0x10]
-.L235:
-	ldr	r0, .L247
+.L231:
+	ldr	r0, .L243
 	ldrh	r1, [r0, #0x2e]
 	mov	r0, #0xf0
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L237	@cond_branch
+	beq	.L233	@cond_branch
 	mov	r0, #0x5
 	bl	PlaySE
-	ldr	r4, .L247+0x14
-	ldr	r1, .L247+0x4
+	ldr	r4, .L243+0x14
+	ldr	r1, .L243+0x4
 	lsl	r5, r7, #0x2
 	add	r0, r5, r7
 	lsl	r0, r0, #0x3
@@ -5692,27 +5680,27 @@ DebugAction_Vars_Select:
 	mov	r2, #0x2
 	mov	r3, #0x5
 	bl	ConvertIntToDecimalStringN
-	ldr	r0, .L247+0x18
+	ldr	r0, .L243+0x18
 	mov	r2, #0xe
 	ldrsh	r1, [r6, r2]
 	mov	r2, #0x0
 	mov	r3, #0x4
 	bl	ConvertIntToHexStringN
-	ldr	r1, .L247+0x1c
+	ldr	r1, .L243+0x1c
 	add	r0, r4, #0
 	bl	StringExpandPlaceholders
 	ldrh	r0, [r6, #0xe]
 	bl	VarGetIfExist
 	lsl	r0, r0, #0x10
-	ldr	r1, .L247+0x20
+	ldr	r1, .L243+0x20
 	add	r4, r5, #0
 	cmp	r0, r1
-	bne	.L238	@cond_branch
+	bne	.L234	@cond_branch
 	mov	r0, #0x0
-	b	.L245
-.L248:
+	b	.L241
+.L244:
 	.align	2, 0
-.L247:
+.L243:
 	.word	gMain
 	.word	gTasks
 	.word	sPowersOfTen
@@ -5722,13 +5710,13 @@ DebugAction_Vars_Select:
 	.word	gStringVar2
 	.word	gDebugText_VariableHex
 	.word	-0x10000
-.L238:
+.L234:
 	ldrh	r0, [r6, #0xe]
 	bl	VarGet
-.L245:
+.L241:
 	strh	r0, [r6, #0x12]
-	ldr	r0, .L249
-	ldr	r1, .L249+0x4
+	ldr	r0, .L245
+	ldr	r1, .L245+0x4
 	add	r4, r4, r7
 	lsl	r4, r4, #0x3
 	add	r4, r4, r1
@@ -5737,16 +5725,16 @@ DebugAction_Vars_Select:
 	mov	r2, #0x2
 	mov	r3, #0x5
 	bl	ConvertIntToDecimalStringN
-	ldr	r0, .L249+0x8
-	ldr	r2, .L249+0xc
+	ldr	r0, .L245+0x8
+	ldr	r2, .L245+0xc
 	mov	r3, #0x10
 	ldrsh	r1, [r4, r3]
 	lsl	r1, r1, #0x2
 	add	r1, r1, r2
 	ldr	r1, [r1]
 	bl	StringCopy
-	ldr	r5, .L249+0x10
-	ldr	r1, .L249+0x14
+	ldr	r5, .L245+0x10
+	ldr	r1, .L245+0x14
 	add	r0, r5, #0
 	bl	StringExpandPlaceholders
 	ldrb	r0, [r4, #0xc]
@@ -5759,16 +5747,16 @@ DebugAction_Vars_Select:
 	add	r2, r5, #0
 	mov	r3, #0x1
 	bl	AddTextPrinterParameterized
-.L237:
-	ldr	r0, .L249+0x18
+.L233:
+	ldr	r0, .L245+0x18
 	ldrh	r1, [r0, #0x2e]
 	mov	r0, #0x1
 	and	r0, r0, r1
 	cmp	r0, #0
-	bne	.LCB3749
-	b	.L240	@long jump
-.LCB3749:
-	ldr	r1, .L249+0x4
+	bne	.LCB3735
+	b	.L236	@long jump
+.LCB3735:
+	ldr	r1, .L245+0x4
 	lsl	r5, r7, #0x2
 	add	r0, r5, r7
 	lsl	r0, r0, #0x3
@@ -5779,34 +5767,34 @@ DebugAction_Vars_Select:
 	strh	r0, [r6, #0x10]
 	mov	r0, #0x5
 	bl	PlaySE
-	ldr	r4, .L249+0x1c
+	ldr	r4, .L245+0x1c
 	mov	r2, #0xe
 	ldrsh	r1, [r6, r2]
 	add	r0, r4, #0
 	mov	r2, #0x2
 	mov	r3, #0x5
 	bl	ConvertIntToDecimalStringN
-	ldr	r0, .L249+0x8
+	ldr	r0, .L245+0x8
 	mov	r3, #0xe
 	ldrsh	r1, [r6, r3]
 	mov	r2, #0x0
 	mov	r3, #0x4
 	bl	ConvertIntToHexStringN
-	ldr	r1, .L249+0x20
+	ldr	r1, .L245+0x20
 	add	r0, r4, #0
 	bl	StringExpandPlaceholders
 	ldrh	r0, [r6, #0xe]
 	bl	VarGetIfExist
 	lsl	r0, r0, #0x10
-	ldr	r1, .L249+0x24
+	ldr	r1, .L245+0x24
 	add	r4, r5, #0
 	cmp	r0, r1
-	bne	.L241	@cond_branch
+	bne	.L237	@cond_branch
 	mov	r0, r8
-	b	.L246
-.L250:
+	b	.L242
+.L246:
 	.align	2, 0
-.L249:
+.L245:
 	.word	gStringVar3
 	.word	gTasks
 	.word	gStringVar2
@@ -5817,13 +5805,13 @@ DebugAction_Vars_Select:
 	.word	gStringVar1
 	.word	gDebugText_VariableHex
 	.word	-0x10000
-.L241:
+.L237:
 	ldrh	r0, [r6, #0xe]
 	bl	VarGet
-.L246:
+.L242:
 	strh	r0, [r6, #0x12]
-	ldr	r5, .L251
-	ldr	r0, .L251+0x4
+	ldr	r5, .L247
+	ldr	r0, .L247+0x4
 	add	r4, r4, r7
 	lsl	r4, r4, #0x3
 	add	r4, r4, r0
@@ -5838,16 +5826,16 @@ DebugAction_Vars_Select:
 	mov	r2, #0x0
 	mov	r3, #0xf
 	bl	StringCopyPadded
-	ldr	r0, .L251+0x8
-	ldr	r2, .L251+0xc
+	ldr	r0, .L247+0x8
+	ldr	r2, .L247+0xc
 	mov	r3, #0x10
 	ldrsh	r1, [r4, r3]
 	lsl	r1, r1, #0x2
 	add	r1, r1, r2
 	ldr	r1, [r1]
 	bl	StringCopy
-	ldr	r5, .L251+0x10
-	ldr	r1, .L251+0x14
+	ldr	r5, .L247+0x10
+	ldr	r1, .L247+0x14
 	add	r0, r5, #0
 	bl	StringExpandPlaceholders
 	ldrb	r0, [r4, #0xc]
@@ -5862,12 +5850,12 @@ DebugAction_Vars_Select:
 	bl	AddTextPrinterParameterized
 	ldrh	r0, [r4, #0x12]
 	strh	r0, [r4, #0x14]
-	ldr	r0, .L251+0x18
+	ldr	r0, .L247+0x18
 	str	r0, [r4]
-	b	.L243
-.L252:
+	b	.L239
+.L248:
 	.align	2, 0
-.L251:
+.L247:
 	.word	gStringVar3
 	.word	gTasks
 	.word	gStringVar2
@@ -5875,16 +5863,16 @@ DebugAction_Vars_Select:
 	.word	gStringVar4
 	.word	gDebugText_VariableValueSet
 	.word	DebugAction_Vars_SetValue
-.L240:
+.L236:
 	mov	r0, #0x2
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L243	@cond_branch
+	beq	.L239	@cond_branch
 	mov	r0, #0x5
 	bl	PlaySE
 	add	r0, r7, #0
 	bl	DebugAction_DestroyExtraWindow
-.L243:
+.L239:
 	add	sp, sp, #0xc
 	pop	{r3}
 	mov	r8, r3
@@ -5901,18 +5889,18 @@ DebugAction_Vars_SetValue:
 	add	sp, sp, #-0xc
 	lsl	r0, r0, #0x18
 	lsr	r6, r0, #0x18
-	ldr	r2, .L267
+	ldr	r2, .L263
 	ldrh	r1, [r2, #0x2e]
 	mov	r0, #0x40
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L254	@cond_branch
-	ldr	r1, .L267+0x4
+	beq	.L250	@cond_branch
+	ldr	r1, .L263+0x4
 	lsl	r0, r6, #0x2
 	add	r0, r0, r6
 	lsl	r0, r0, #0x3
 	add	r3, r0, r1
-	ldr	r1, .L267+0x8
+	ldr	r1, .L263+0x8
 	mov	r4, #0x10
 	ldrsh	r0, [r3, r4]
 	lsl	r0, r0, #0x2
@@ -5924,21 +5912,21 @@ DebugAction_Vars_SetValue:
 	lsl	r0, r0, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, #0x63
-	ble	.L254	@cond_branch
+	ble	.L250	@cond_branch
 	mov	r0, #0x63
 	strh	r0, [r3, #0x14]
-.L254:
+.L250:
 	ldrh	r1, [r2, #0x2e]
 	mov	r0, #0x80
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L256	@cond_branch
-	ldr	r1, .L267+0x4
+	beq	.L252	@cond_branch
+	ldr	r1, .L263+0x4
 	lsl	r0, r6, #0x2
 	add	r0, r0, r6
 	lsl	r0, r0, #0x3
 	add	r3, r0, r1
-	ldr	r1, .L267+0x8
+	ldr	r1, .L263+0x8
 	mov	r4, #0x10
 	ldrsh	r0, [r3, r4]
 	lsl	r0, r0, #0x2
@@ -5949,16 +5937,16 @@ DebugAction_Vars_SetValue:
 	strh	r0, [r3, #0x14]
 	lsl	r0, r0, #0x10
 	cmp	r0, #0
-	bge	.L256	@cond_branch
+	bge	.L252	@cond_branch
 	mov	r0, #0x0
 	strh	r0, [r3, #0x14]
-.L256:
+.L252:
 	ldrh	r1, [r2, #0x2e]
 	mov	r0, #0x20
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L258	@cond_branch
-	ldr	r0, .L267+0x4
+	beq	.L254	@cond_branch
+	ldr	r0, .L263+0x4
 	lsl	r1, r6, #0x2
 	add	r1, r1, r6
 	lsl	r1, r1, #0x3
@@ -5968,16 +5956,16 @@ DebugAction_Vars_SetValue:
 	strh	r0, [r1, #0x10]
 	lsl	r0, r0, #0x10
 	cmp	r0, #0
-	bge	.L258	@cond_branch
+	bge	.L254	@cond_branch
 	mov	r0, #0x0
 	strh	r0, [r1, #0x10]
-.L258:
+.L254:
 	ldrh	r1, [r2, #0x2e]
 	mov	r0, #0x10
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L260	@cond_branch
-	ldr	r1, .L267+0x4
+	beq	.L256	@cond_branch
+	ldr	r1, .L263+0x4
 	lsl	r0, r6, #0x2
 	add	r0, r0, r6
 	lsl	r0, r0, #0x3
@@ -5988,34 +5976,34 @@ DebugAction_Vars_SetValue:
 	lsl	r0, r0, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, #0x2
-	ble	.L260	@cond_branch
+	ble	.L256	@cond_branch
 	mov	r0, #0x2
 	strh	r0, [r1, #0x10]
-.L260:
+.L256:
 	ldrh	r2, [r2, #0x2e]
 	mov	r0, #0x1
 	and	r0, r0, r2
 	cmp	r0, #0
-	bne	.L262	@cond_branch
+	bne	.L258	@cond_branch
 	mov	r0, #0x2
 	and	r0, r0, r2
 	cmp	r0, #0
-	beq	.L263	@cond_branch
+	beq	.L259	@cond_branch
 	mov	r0, #0x5
 	bl	PlaySE
 	add	r0, r6, #0
 	bl	DebugAction_DestroyExtraWindow
-	b	.L253
-.L268:
+	b	.L249
+.L264:
 	.align	2, 0
-.L267:
+.L263:
 	.word	gMain
 	.word	gTasks
 	.word	sPowersOfTen
-.L262:
+.L258:
 	mov	r0, #0x5
 	bl	PlaySE
-	ldr	r0, .L269
+	ldr	r0, .L265
 	lsl	r1, r6, #0x2
 	add	r1, r1, r6
 	lsl	r1, r1, #0x3
@@ -6023,22 +6011,22 @@ DebugAction_Vars_SetValue:
 	ldrh	r0, [r1, #0xe]
 	ldrh	r1, [r1, #0x12]
 	bl	VarSet
-.L263:
-	ldr	r0, .L269+0x4
+.L259:
+	ldr	r0, .L265+0x4
 	ldrh	r1, [r0, #0x2e]
 	mov	r0, #0xf0
 	and	r0, r0, r1
 	cmp	r0, #0
-	bne	.L266	@cond_branch
+	bne	.L262	@cond_branch
 	mov	r0, #0x1
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L253	@cond_branch
-.L266:
+	beq	.L249	@cond_branch
+.L262:
 	mov	r0, #0x5
 	bl	PlaySE
-	ldr	r4, .L269+0x8
-	ldr	r0, .L269
+	ldr	r4, .L265+0x8
+	ldr	r0, .L265
 	lsl	r5, r6, #0x2
 	add	r5, r5, r6
 	lsl	r5, r5, #0x3
@@ -6049,14 +6037,14 @@ DebugAction_Vars_SetValue:
 	mov	r2, #0x2
 	mov	r3, #0x5
 	bl	ConvertIntToDecimalStringN
-	ldr	r6, .L269+0xc
+	ldr	r6, .L265+0xc
 	mov	r2, #0xe
 	ldrsh	r1, [r5, r2]
 	add	r0, r6, #0
 	mov	r2, #0x0
 	mov	r3, #0x4
 	bl	ConvertIntToHexStringN
-	ldr	r1, .L269+0x10
+	ldr	r1, .L265+0x10
 	add	r0, r4, #0
 	bl	StringExpandPlaceholders
 	add	r0, r4, #0
@@ -6064,7 +6052,7 @@ DebugAction_Vars_SetValue:
 	mov	r2, #0x0
 	mov	r3, #0xf
 	bl	StringCopyPadded
-	ldr	r4, .L269+0x14
+	ldr	r4, .L265+0x14
 	mov	r0, #0x14
 	ldrsh	r1, [r5, r0]
 	add	r0, r4, #0
@@ -6076,7 +6064,7 @@ DebugAction_Vars_SetValue:
 	mov	r2, #0x0
 	mov	r3, #0xf
 	bl	StringCopyPadded
-	ldr	r1, .L269+0x18
+	ldr	r1, .L265+0x18
 	mov	r2, #0x10
 	ldrsh	r0, [r5, r2]
 	lsl	r0, r0, #0x2
@@ -6084,8 +6072,8 @@ DebugAction_Vars_SetValue:
 	ldr	r1, [r0]
 	add	r0, r6, #0
 	bl	StringCopy
-	ldr	r4, .L269+0x1c
-	ldr	r1, .L269+0x20
+	ldr	r4, .L265+0x1c
+	ldr	r1, .L265+0x20
 	add	r0, r4, #0
 	bl	StringExpandPlaceholders
 	ldrb	r0, [r5, #0xc]
@@ -6098,14 +6086,14 @@ DebugAction_Vars_SetValue:
 	add	r2, r4, #0
 	mov	r3, #0x1
 	bl	AddTextPrinterParameterized
-.L253:
+.L249:
 	add	sp, sp, #0xc
 	pop	{r4, r5, r6}
 	pop	{r0}
 	bx	r0
-.L270:
+.L266:
 	.align	2, 0
-.L269:
+.L265:
 	.word	gTasks
 	.word	gMain
 	.word	gStringVar1
@@ -6128,7 +6116,7 @@ DebugAction_Give_Item:
 	add	sp, sp, #-0xc
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
-	ldr	r1, .L272
+	ldr	r1, .L268
 	lsl	r5, r0, #0x2
 	add	r5, r5, r0
 	lsl	r5, r5, #0x3
@@ -6140,7 +6128,7 @@ DebugAction_Give_Item:
 	bl	RemoveWindow
 	bl	HideMapNamePopUpWindow
 	bl	LoadMessageBoxAndBorderGfx
-	ldr	r0, .L272+0x4
+	ldr	r0, .L268+0x4
 	bl	AddWindow
 	add	r6, r0, #0
 	lsl	r6, r6, #0x18
@@ -6151,16 +6139,16 @@ DebugAction_Give_Item:
 	add	r0, r6, #0
 	mov	r1, #0x3
 	bl	CopyWindowToVram
-	ldr	r0, .L272+0x8
-	ldr	r1, .L272+0xc
+	ldr	r0, .L268+0x8
+	ldr	r1, .L268+0xc
 	ldr	r1, [r1]
 	bl	StringCopy
-	ldr	r0, .L272+0x10
+	ldr	r0, .L268+0x10
 	mov	r1, #0x1
 	mov	r2, #0x2
 	mov	r3, #0x4
 	bl	ConvertIntToDecimalStringN
-	ldr	r4, .L272+0x14
+	ldr	r4, .L268+0x14
 	mov	r0, #0x1
 	add	r1, r4, #0
 	bl	CopyItemName
@@ -6169,9 +6157,9 @@ DebugAction_Give_Item:
 	mov	r2, #0x0
 	mov	r3, #0xf
 	bl	StringCopyPadded
-	ldr	r0, .L272+0x18
+	ldr	r0, .L268+0x18
 	mov	r8, r0
-	ldr	r1, .L272+0x1c
+	ldr	r1, .L268+0x1c
 	bl	StringExpandPlaceholders
 	mov	r1, #0x1
 	mov	r9, r1
@@ -6183,20 +6171,20 @@ DebugAction_Give_Item:
 	mov	r2, r8
 	mov	r3, #0x1
 	bl	AddTextPrinterParameterized
-	ldr	r0, .L272+0x20
+	ldr	r0, .L268+0x20
 	str	r0, [r5]
 	strh	r6, [r5, #0xc]
 	mov	r0, r9
 	strh	r0, [r5, #0xe]
 	strh	r4, [r5, #0x10]
-	ldr	r1, .L272+0x24
+	ldr	r1, .L268+0x24
 	add	r0, r1, #0
 	mov	r2, #0x1
 	bl	AddItemIconSprite
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	strh	r0, [r5, #0x14]
-	ldr	r2, .L272+0x28
+	ldr	r2, .L268+0x28
 	mov	r0, #0x14
 	ldrsh	r1, [r5, r0]
 	lsl	r0, r1, #0x4
@@ -6231,9 +6219,9 @@ DebugAction_Give_Item:
 	pop	{r4, r5, r6}
 	pop	{r0}
 	bx	r0
-.L273:
+.L269:
 	.align	2, 0
-.L272:
+.L268:
 	.word	gTasks
 	.word	sDebugNumberDisplayWindowTemplate
 	.word	gStringVar2
@@ -6257,14 +6245,14 @@ DebugAction_Give_Item_SelectId:
 	add	sp, sp, #-0xc
 	lsl	r0, r0, #0x18
 	lsr	r7, r0, #0x18
-	ldr	r4, .L287
+	ldr	r4, .L283
 	ldrh	r1, [r4, #0x2e]
 	mov	r0, #0xf0
 	and	r0, r0, r1
 	cmp	r0, #0
-	bne	.LCB4339
-	b	.L275	@long jump
-.LCB4339:
+	bne	.LCB4325
+	b	.L271	@long jump
+.LCB4325:
 	mov	r0, #0x5
 	bl	PlaySE
 	ldrh	r1, [r4, #0x2e]
@@ -6272,12 +6260,12 @@ DebugAction_Give_Item_SelectId:
 	and	r0, r0, r1
 	lsl	r5, r7, #0x2
 	cmp	r0, #0
-	beq	.L276	@cond_branch
-	ldr	r1, .L287+0x4
+	beq	.L272	@cond_branch
+	ldr	r1, .L283+0x4
 	add	r0, r5, r7
 	lsl	r0, r0, #0x3
 	add	r2, r0, r1
-	ldr	r1, .L287+0x8
+	ldr	r1, .L283+0x8
 	mov	r3, #0x10
 	ldrsh	r0, [r2, r3]
 	lsl	r0, r0, #0x2
@@ -6291,20 +6279,20 @@ DebugAction_Give_Item_SelectId:
 	mov	r1, #0xc1
 	lsl	r1, r1, #0x2
 	cmp	r0, r1
-	ble	.L276	@cond_branch
+	ble	.L272	@cond_branch
 	strh	r1, [r2, #0xe]
-.L276:
-	ldr	r2, .L287
+.L272:
+	ldr	r2, .L283
 	ldrh	r1, [r2, #0x2e]
 	mov	r0, #0x80
 	and	r0, r0, r1
-	ldr	r4, .L287+0x4
+	ldr	r4, .L283+0x4
 	cmp	r0, #0
-	beq	.L278	@cond_branch
+	beq	.L274	@cond_branch
 	add	r0, r5, r7
 	lsl	r0, r0, #0x3
 	add	r3, r0, r4
-	ldr	r1, .L287+0x8
+	ldr	r1, .L283+0x8
 	mov	r6, #0x10
 	ldrsh	r0, [r3, r6]
 	lsl	r0, r0, #0x2
@@ -6315,15 +6303,15 @@ DebugAction_Give_Item_SelectId:
 	strh	r0, [r3, #0xe]
 	lsl	r0, r0, #0x10
 	cmp	r0, #0
-	bgt	.L278	@cond_branch
+	bgt	.L274	@cond_branch
 	mov	r0, #0x1
 	strh	r0, [r3, #0xe]
-.L278:
+.L274:
 	ldrh	r1, [r2, #0x2e]
 	mov	r0, #0x20
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L280	@cond_branch
+	beq	.L276	@cond_branch
 	add	r0, r5, r7
 	lsl	r0, r0, #0x3
 	add	r1, r0, r4
@@ -6331,16 +6319,16 @@ DebugAction_Give_Item_SelectId:
 	mov	r3, #0x10
 	ldrsh	r0, [r1, r3]
 	cmp	r0, #0
-	ble	.L280	@cond_branch
+	ble	.L276	@cond_branch
 	sub	r0, r2, #0x1
 	strh	r0, [r1, #0x10]
-.L280:
-	ldr	r0, .L287
+.L276:
+	ldr	r0, .L283
 	ldrh	r1, [r0, #0x2e]
 	mov	r0, #0x10
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L282	@cond_branch
+	beq	.L278	@cond_branch
 	add	r0, r5, r7
 	lsl	r0, r0, #0x3
 	add	r1, r0, r4
@@ -6348,12 +6336,12 @@ DebugAction_Give_Item_SelectId:
 	mov	r6, #0x10
 	ldrsh	r0, [r1, r6]
 	cmp	r0, #0x2
-	bgt	.L282	@cond_branch
+	bgt	.L278	@cond_branch
 	add	r0, r2, #0x1
 	strh	r0, [r1, #0x10]
-.L282:
-	ldr	r0, .L287+0xc
-	ldr	r2, .L287+0x10
+.L278:
+	ldr	r0, .L283+0xc
+	ldr	r2, .L283+0x10
 	add	r5, r5, r7
 	lsl	r5, r5, #0x3
 	add	r5, r5, r4
@@ -6364,7 +6352,7 @@ DebugAction_Give_Item_SelectId:
 	ldr	r1, [r1]
 	bl	StringCopy
 	ldrh	r0, [r5, #0xe]
-	ldr	r4, .L287+0x14
+	ldr	r4, .L283+0x14
 	add	r1, r4, #0
 	bl	CopyItemName
 	add	r0, r4, #0
@@ -6372,14 +6360,14 @@ DebugAction_Give_Item_SelectId:
 	mov	r2, #0x0
 	mov	r3, #0xf
 	bl	StringCopyPadded
-	ldr	r0, .L287+0x18
+	ldr	r0, .L283+0x18
 	mov	r6, #0xe
 	ldrsh	r1, [r5, r6]
 	mov	r2, #0x2
 	mov	r3, #0x4
 	bl	ConvertIntToDecimalStringN
-	ldr	r4, .L287+0x1c
-	ldr	r1, .L287+0x20
+	ldr	r4, .L283+0x1c
+	ldr	r1, .L283+0x20
 	add	r0, r4, #0
 	bl	StringExpandPlaceholders
 	ldrb	r0, [r5, #0xc]
@@ -6392,7 +6380,7 @@ DebugAction_Give_Item_SelectId:
 	add	r2, r4, #0
 	mov	r3, #0x1
 	bl	AddTextPrinterParameterized
-	ldr	r4, .L287+0x24
+	ldr	r4, .L283+0x24
 	add	r0, r4, #0
 	bl	FreeSpriteTilesByTag
 	add	r0, r4, #0
@@ -6402,7 +6390,7 @@ DebugAction_Give_Item_SelectId:
 	lsl	r0, r1, #0x4
 	add	r0, r0, r1
 	lsl	r0, r0, #0x2
-	ldr	r6, .L287+0x28
+	ldr	r6, .L283+0x28
 	add	r0, r0, r6
 	bl	FreeSpriteOamMatrix
 	mov	r2, #0x14
@@ -6446,16 +6434,16 @@ DebugAction_Give_Item_SelectId:
 	neg	r0, r0
 	and	r0, r0, r2
 	strb	r0, [r1, #0x5]
-.L275:
-	ldr	r0, .L287
+.L271:
+	ldr	r0, .L283
 	ldrh	r1, [r0, #0x2e]
 	mov	r2, #0x1
 	mov	r8, r2
 	mov	r0, r8
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L284	@cond_branch
-	ldr	r0, .L287+0x4
+	beq	.L280	@cond_branch
+	ldr	r0, .L283+0x4
 	lsl	r4, r7, #0x2
 	add	r4, r4, r7
 	lsl	r4, r4, #0x3
@@ -6466,11 +6454,11 @@ DebugAction_Give_Item_SelectId:
 	mov	r3, r8
 	strh	r3, [r4, #0xe]
 	strh	r6, [r4, #0x10]
-	ldr	r0, .L287+0xc
-	ldr	r1, .L287+0x10
+	ldr	r0, .L283+0xc
+	ldr	r1, .L283+0x10
 	ldr	r1, [r1]
 	bl	StringCopy
-	ldr	r5, .L287+0x14
+	ldr	r5, .L283+0x14
 	mov	r0, #0xe
 	ldrsh	r1, [r4, r0]
 	add	r0, r5, #0
@@ -6482,8 +6470,8 @@ DebugAction_Give_Item_SelectId:
 	mov	r2, #0x0
 	mov	r3, #0xf
 	bl	StringCopyPadded
-	ldr	r5, .L287+0x1c
-	ldr	r1, .L287+0x2c
+	ldr	r5, .L283+0x1c
+	ldr	r1, .L283+0x2c
 	add	r0, r5, #0
 	bl	StringExpandPlaceholders
 	ldrb	r0, [r4, #0xc]
@@ -6495,12 +6483,12 @@ DebugAction_Give_Item_SelectId:
 	add	r2, r5, #0
 	mov	r3, #0x1
 	bl	AddTextPrinterParameterized
-	ldr	r0, .L287+0x30
+	ldr	r0, .L283+0x30
 	str	r0, [r4]
-	b	.L285
-.L288:
+	b	.L281
+.L284:
 	.align	2, 0
-.L287:
+.L283:
 	.word	gMain
 	.word	gTasks
 	.word	sPowersOfTen
@@ -6514,17 +6502,17 @@ DebugAction_Give_Item_SelectId:
 	.word	gSprites
 	.word	gDebugText_ItemQuantity
 	.word	DebugAction_Give_Item_SelectQuantity
-.L284:
+.L280:
 	mov	r0, #0x2
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L285	@cond_branch
-	ldr	r4, .L289
+	beq	.L281	@cond_branch
+	ldr	r4, .L285
 	add	r0, r4, #0
 	bl	FreeSpriteTilesByTag
 	add	r0, r4, #0
 	bl	FreeSpritePaletteByTag
-	ldr	r0, .L289+0x4
+	ldr	r0, .L285+0x4
 	lsl	r4, r7, #0x2
 	add	r4, r4, r7
 	lsl	r4, r4, #0x3
@@ -6534,7 +6522,7 @@ DebugAction_Give_Item_SelectId:
 	lsl	r0, r1, #0x4
 	add	r0, r0, r1
 	lsl	r0, r0, #0x2
-	ldr	r5, .L289+0x8
+	ldr	r5, .L285+0x8
 	add	r0, r0, r5
 	bl	FreeSpriteOamMatrix
 	mov	r3, #0x14
@@ -6548,16 +6536,16 @@ DebugAction_Give_Item_SelectId:
 	bl	PlaySE
 	add	r0, r7, #0
 	bl	DebugAction_DestroyExtraWindow
-.L285:
+.L281:
 	add	sp, sp, #0xc
 	pop	{r3}
 	mov	r8, r3
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L290:
+.L286:
 	.align	2, 0
-.L289:
+.L285:
 	.word	0xfdf3
 	.word	gTasks
 	.word	gSprites
@@ -6571,12 +6559,12 @@ DebugAction_Give_Item_SelectQuantity:
 	add	sp, sp, #-0xc
 	lsl	r0, r0, #0x18
 	lsr	r6, r0, #0x18
-	ldr	r4, .L304
+	ldr	r4, .L300
 	ldrh	r1, [r4, #0x2e]
 	mov	r0, #0xf0
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L292	@cond_branch
+	beq	.L288	@cond_branch
 	mov	r0, #0x5
 	bl	PlaySE
 	ldrh	r1, [r4, #0x2e]
@@ -6584,12 +6572,12 @@ DebugAction_Give_Item_SelectQuantity:
 	and	r0, r0, r1
 	lsl	r5, r6, #0x2
 	cmp	r0, #0
-	beq	.L293	@cond_branch
-	ldr	r1, .L304+0x4
+	beq	.L289	@cond_branch
+	ldr	r1, .L300+0x4
 	add	r0, r5, r6
 	lsl	r0, r0, #0x3
 	add	r2, r0, r1
-	ldr	r1, .L304+0x8
+	ldr	r1, .L300+0x8
 	mov	r3, #0x10
 	ldrsh	r0, [r2, r3]
 	lsl	r0, r0, #0x2
@@ -6601,21 +6589,21 @@ DebugAction_Give_Item_SelectQuantity:
 	lsl	r0, r0, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, #0x63
-	ble	.L293	@cond_branch
+	ble	.L289	@cond_branch
 	mov	r0, #0x63
 	strh	r0, [r2, #0xe]
-.L293:
-	ldr	r2, .L304
+.L289:
+	ldr	r2, .L300
 	ldrh	r1, [r2, #0x2e]
 	mov	r0, #0x80
 	and	r0, r0, r1
-	ldr	r4, .L304+0x4
+	ldr	r4, .L300+0x4
 	cmp	r0, #0
-	beq	.L295	@cond_branch
+	beq	.L291	@cond_branch
 	add	r0, r5, r6
 	lsl	r0, r0, #0x3
 	add	r3, r0, r4
-	ldr	r1, .L304+0x8
+	ldr	r1, .L300+0x8
 	mov	r7, #0x10
 	ldrsh	r0, [r3, r7]
 	lsl	r0, r0, #0x2
@@ -6626,15 +6614,15 @@ DebugAction_Give_Item_SelectQuantity:
 	strh	r0, [r3, #0xe]
 	lsl	r0, r0, #0x10
 	cmp	r0, #0
-	bgt	.L295	@cond_branch
+	bgt	.L291	@cond_branch
 	mov	r0, #0x1
 	strh	r0, [r3, #0xe]
-.L295:
+.L291:
 	ldrh	r1, [r2, #0x2e]
 	mov	r0, #0x20
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L297	@cond_branch
+	beq	.L293	@cond_branch
 	add	r0, r5, r6
 	lsl	r0, r0, #0x3
 	add	r1, r0, r4
@@ -6642,16 +6630,16 @@ DebugAction_Give_Item_SelectQuantity:
 	mov	r3, #0x10
 	ldrsh	r0, [r1, r3]
 	cmp	r0, #0
-	ble	.L297	@cond_branch
+	ble	.L293	@cond_branch
 	sub	r0, r2, #0x1
 	strh	r0, [r1, #0x10]
-.L297:
-	ldr	r0, .L304
+.L293:
+	ldr	r0, .L300
 	ldrh	r1, [r0, #0x2e]
 	mov	r0, #0x10
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L299	@cond_branch
+	beq	.L295	@cond_branch
 	add	r0, r5, r6
 	lsl	r0, r0, #0x3
 	add	r1, r0, r4
@@ -6659,12 +6647,12 @@ DebugAction_Give_Item_SelectQuantity:
 	mov	r7, #0x10
 	ldrsh	r0, [r1, r7]
 	cmp	r0, #0x1
-	bgt	.L299	@cond_branch
+	bgt	.L295	@cond_branch
 	add	r0, r2, #0x1
 	strh	r0, [r1, #0x10]
-.L299:
-	ldr	r0, .L304+0xc
-	ldr	r2, .L304+0x10
+.L295:
+	ldr	r0, .L300+0xc
+	ldr	r2, .L300+0x10
 	add	r5, r5, r6
 	lsl	r5, r5, #0x3
 	add	r5, r5, r4
@@ -6674,7 +6662,7 @@ DebugAction_Give_Item_SelectQuantity:
 	add	r1, r1, r2
 	ldr	r1, [r1]
 	bl	StringCopy
-	ldr	r4, .L304+0x14
+	ldr	r4, .L300+0x14
 	mov	r7, #0xe
 	ldrsh	r1, [r5, r7]
 	add	r0, r4, #0
@@ -6686,8 +6674,8 @@ DebugAction_Give_Item_SelectQuantity:
 	mov	r2, #0x0
 	mov	r3, #0xf
 	bl	StringCopyPadded
-	ldr	r4, .L304+0x18
-	ldr	r1, .L304+0x1c
+	ldr	r4, .L300+0x18
+	ldr	r1, .L300+0x1c
 	add	r0, r4, #0
 	bl	StringExpandPlaceholders
 	ldrb	r0, [r5, #0xc]
@@ -6700,19 +6688,19 @@ DebugAction_Give_Item_SelectQuantity:
 	add	r2, r4, #0
 	mov	r3, #0x1
 	bl	AddTextPrinterParameterized
-.L292:
-	ldr	r0, .L304
+.L288:
+	ldr	r0, .L300
 	ldrh	r1, [r0, #0x2e]
 	mov	r0, #0x1
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L301	@cond_branch
-	ldr	r4, .L304+0x20
+	beq	.L297	@cond_branch
+	ldr	r4, .L300+0x20
 	add	r0, r4, #0
 	bl	FreeSpriteTilesByTag
 	add	r0, r4, #0
 	bl	FreeSpritePaletteByTag
-	ldr	r0, .L304+0x4
+	ldr	r0, .L300+0x4
 	lsl	r4, r6, #0x2
 	add	r4, r4, r6
 	lsl	r4, r4, #0x3
@@ -6722,7 +6710,7 @@ DebugAction_Give_Item_SelectQuantity:
 	lsl	r0, r1, #0x4
 	add	r0, r0, r1
 	lsl	r0, r0, #0x2
-	ldr	r5, .L304+0x24
+	ldr	r5, .L300+0x24
 	add	r0, r0, r5
 	bl	FreeSpriteOamMatrix
 	mov	r3, #0x14
@@ -6732,17 +6720,17 @@ DebugAction_Give_Item_SelectQuantity:
 	lsl	r0, r0, #0x2
 	add	r0, r0, r5
 	bl	DestroySprite
-	ldr	r0, .L304+0x28
+	ldr	r0, .L300+0x28
 	bl	PlaySE
 	ldrh	r0, [r4, #0x12]
 	ldrh	r1, [r4, #0xe]
 	bl	AddBagItem
 	add	r0, r6, #0
 	bl	DebugAction_DestroyExtraWindow
-	b	.L302
-.L305:
+	b	.L298
+.L301:
 	.align	2, 0
-.L304:
+.L300:
 	.word	gMain
 	.word	gTasks
 	.word	sPowersOfTen
@@ -6754,17 +6742,17 @@ DebugAction_Give_Item_SelectQuantity:
 	.word	0xfdf3
 	.word	gSprites
 	.word	0x155
-.L301:
+.L297:
 	mov	r0, #0x2
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L302	@cond_branch
-	ldr	r4, .L306
+	beq	.L298	@cond_branch
+	ldr	r4, .L302
 	add	r0, r4, #0
 	bl	FreeSpriteTilesByTag
 	add	r0, r4, #0
 	bl	FreeSpritePaletteByTag
-	ldr	r0, .L306+0x4
+	ldr	r0, .L302+0x4
 	lsl	r4, r6, #0x2
 	add	r4, r4, r6
 	lsl	r4, r4, #0x3
@@ -6774,7 +6762,7 @@ DebugAction_Give_Item_SelectQuantity:
 	lsl	r0, r1, #0x4
 	add	r0, r0, r1
 	lsl	r0, r0, #0x2
-	ldr	r5, .L306+0x8
+	ldr	r5, .L302+0x8
 	add	r0, r0, r5
 	bl	FreeSpriteOamMatrix
 	mov	r0, #0x14
@@ -6788,14 +6776,14 @@ DebugAction_Give_Item_SelectQuantity:
 	bl	PlaySE
 	add	r0, r6, #0
 	bl	DebugAction_DestroyExtraWindow
-.L302:
+.L298:
 	add	sp, sp, #0xc
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L307:
+.L303:
 	.align	2, 0
-.L306:
+.L302:
 	.word	0xfdf3
 	.word	gTasks
 	.word	gSprites
@@ -6808,54 +6796,54 @@ DebugAction_Give_AllTMs:
 	push	{r4, r5, r6, lr}
 	lsl	r0, r0, #0x18
 	lsr	r6, r0, #0x18
-	ldr	r0, .L321
+	ldr	r0, .L317
 	bl	PlayFanfare
 	mov	r4, #0xf1
 	lsl	r4, r4, #0x1
-	ldr	r5, .L321+0x4
-.L312:
+	ldr	r5, .L317+0x4
+.L308:
 	add	r0, r4, #0
 	mov	r1, #0x1
 	bl	CheckBagHasItem
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	bne	.L311	@cond_branch
+	bne	.L307	@cond_branch
 	add	r0, r4, #0
 	mov	r1, #0x1
 	bl	AddBagItem
-.L311:
+.L307:
 	add	r0, r4, #0x1
 	lsl	r0, r0, #0x10
 	lsr	r4, r0, #0x10
 	cmp	r4, r5
-	bls	.L312	@cond_branch
-	ldr	r4, .L321+0x8
-	ldr	r5, .L321+0xc
-.L318:
+	bls	.L308	@cond_branch
+	ldr	r4, .L317+0x8
+	ldr	r5, .L317+0xc
+.L314:
 	add	r0, r4, #0
 	mov	r1, #0x1
 	bl	CheckBagHasItem
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	bne	.L317	@cond_branch
+	bne	.L313	@cond_branch
 	add	r0, r4, #0
 	mov	r1, #0x1
 	bl	AddBagItem
-.L317:
+.L313:
 	add	r0, r4, #0x1
 	lsl	r0, r0, #0x10
 	lsr	r4, r0, #0x10
 	cmp	r4, r5
-	bls	.L318	@cond_branch
+	bls	.L314	@cond_branch
 	add	r0, r6, #0
 	bl	Debug_DestroyMenu
 	bl	EnableBothScriptContexts
 	pop	{r4, r5, r6}
 	pop	{r0}
 	bx	r0
-.L322:
+.L318:
 	.align	2, 0
-.L321:
+.L317:
 	.word	0x157
 	.word	0x213
 	.word	0x2aa
@@ -6899,12 +6887,12 @@ DebugAction_Give_PokemonSimple:
 	add	r4, r0, #0
 	lsl	r4, r4, #0x18
 	lsr	r4, r4, #0x18
-	ldr	r5, .L325
+	ldr	r5, .L321
 	mov	r0, #0x18
 	bl	AllocZeroed
 	str	r0, [r5]
 	bl	ResetMonDataStruct
-	ldr	r0, .L325+0x4
+	ldr	r0, .L321+0x4
 	lsl	r5, r4, #0x2
 	add	r5, r5, r4
 	lsl	r5, r5, #0x3
@@ -6916,7 +6904,7 @@ DebugAction_Give_PokemonSimple:
 	bl	RemoveWindow
 	bl	HideMapNamePopUpWindow
 	bl	LoadMessageBoxAndBorderGfx
-	ldr	r0, .L325+0x8
+	ldr	r0, .L321+0x8
 	bl	AddWindow
 	add	r6, r0, #0
 	lsl	r6, r6, #0x18
@@ -6927,17 +6915,17 @@ DebugAction_Give_PokemonSimple:
 	add	r0, r6, #0
 	mov	r1, #0x3
 	bl	CopyWindowToVram
-	ldr	r0, .L325+0xc
-	ldr	r1, .L325+0x10
+	ldr	r0, .L321+0xc
+	ldr	r1, .L321+0x10
 	ldr	r1, [r1]
 	bl	StringCopy
-	ldr	r0, .L325+0x14
+	ldr	r0, .L321+0x14
 	mov	r1, #0x1
 	mov	r2, #0x2
 	mov	r3, #0x4
 	bl	ConvertIntToDecimalStringN
-	ldr	r4, .L325+0x18
-	ldr	r1, .L325+0x1c
+	ldr	r4, .L321+0x18
+	ldr	r1, .L321+0x1c
 	add	r0, r4, #0
 	bl	StringCopy
 	add	r0, r4, #0
@@ -6945,9 +6933,9 @@ DebugAction_Give_PokemonSimple:
 	mov	r2, #0x0
 	mov	r3, #0xf
 	bl	StringCopyPadded
-	ldr	r0, .L325+0x20
+	ldr	r0, .L321+0x20
 	mov	r9, r0
-	ldr	r1, .L325+0x24
+	ldr	r1, .L321+0x24
 	bl	StringExpandPlaceholders
 	mov	r1, #0x1
 	mov	r8, r1
@@ -6959,7 +6947,7 @@ DebugAction_Give_PokemonSimple:
 	mov	r2, r9
 	mov	r3, #0x1
 	bl	AddTextPrinterParameterized
-	ldr	r0, .L325+0x28
+	ldr	r0, .L321+0x28
 	str	r0, [r5]
 	strh	r6, [r5, #0xc]
 	mov	r2, r8
@@ -6970,7 +6958,7 @@ DebugAction_Give_PokemonSimple:
 	ldrh	r0, [r5, #0xe]
 	bl	LoadMonIconPalette
 	ldrh	r0, [r5, #0xe]
-	ldr	r1, .L325+0x2c
+	ldr	r1, .L321+0x2c
 	mov	r2, #0x4
 	str	r2, [sp]
 	str	r4, [sp, #0x4]
@@ -6983,7 +6971,7 @@ DebugAction_Give_PokemonSimple:
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	strh	r0, [r5, #0x14]
-	ldr	r2, .L325+0x30
+	ldr	r2, .L321+0x30
 	mov	r1, #0x14
 	ldrsh	r0, [r5, r1]
 	lsl	r1, r0, #0x4
@@ -7002,9 +6990,9 @@ DebugAction_Give_PokemonSimple:
 	pop	{r4, r5, r6}
 	pop	{r0}
 	bx	r0
-.L326:
+.L322:
 	.align	2, 0
-.L325:
+.L321:
 	.word	sDebugMonData
 	.word	gTasks
 	.word	sDebugNumberDisplayWindowTemplate
@@ -7032,12 +7020,12 @@ DebugAction_Give_PokemonComplex:
 	add	r4, r0, #0
 	lsl	r4, r4, #0x18
 	lsr	r4, r4, #0x18
-	ldr	r5, .L328
+	ldr	r5, .L324
 	mov	r0, #0x18
 	bl	AllocZeroed
 	str	r0, [r5]
 	bl	ResetMonDataStruct
-	ldr	r0, .L328+0x4
+	ldr	r0, .L324+0x4
 	lsl	r5, r4, #0x2
 	add	r5, r5, r4
 	lsl	r5, r5, #0x3
@@ -7049,7 +7037,7 @@ DebugAction_Give_PokemonComplex:
 	bl	RemoveWindow
 	bl	HideMapNamePopUpWindow
 	bl	LoadMessageBoxAndBorderGfx
-	ldr	r0, .L328+0x8
+	ldr	r0, .L324+0x8
 	bl	AddWindow
 	add	r6, r0, #0
 	lsl	r6, r6, #0x18
@@ -7060,17 +7048,17 @@ DebugAction_Give_PokemonComplex:
 	add	r0, r6, #0
 	mov	r1, #0x3
 	bl	CopyWindowToVram
-	ldr	r0, .L328+0xc
-	ldr	r1, .L328+0x10
+	ldr	r0, .L324+0xc
+	ldr	r1, .L324+0x10
 	ldr	r1, [r1]
 	bl	StringCopy
-	ldr	r0, .L328+0x14
+	ldr	r0, .L324+0x14
 	mov	r1, #0x1
 	mov	r2, #0x2
 	mov	r3, #0x4
 	bl	ConvertIntToDecimalStringN
-	ldr	r4, .L328+0x18
-	ldr	r1, .L328+0x1c
+	ldr	r4, .L324+0x18
+	ldr	r1, .L324+0x1c
 	add	r0, r4, #0
 	bl	StringCopy
 	add	r0, r4, #0
@@ -7078,9 +7066,9 @@ DebugAction_Give_PokemonComplex:
 	mov	r2, #0x0
 	mov	r3, #0xf
 	bl	StringCopyPadded
-	ldr	r0, .L328+0x20
+	ldr	r0, .L324+0x20
 	mov	r8, r0
-	ldr	r1, .L328+0x24
+	ldr	r1, .L324+0x24
 	bl	StringExpandPlaceholders
 	mov	r4, #0x1
 	str	r4, [sp]
@@ -7093,7 +7081,7 @@ DebugAction_Give_PokemonComplex:
 	mov	r2, r8
 	mov	r3, #0x1
 	bl	AddTextPrinterParameterized
-	ldr	r0, .L328+0x28
+	ldr	r0, .L324+0x28
 	str	r0, [r5]
 	strh	r6, [r5, #0xc]
 	strh	r4, [r5, #0xe]
@@ -7108,7 +7096,7 @@ DebugAction_Give_PokemonComplex:
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	ldrh	r3, [r5, #0xe]
-	ldr	r1, .L328+0x2c
+	ldr	r1, .L324+0x2c
 	mov	r2, #0x4
 	str	r2, [sp]
 	mov	r2, r9
@@ -7122,7 +7110,7 @@ DebugAction_Give_PokemonComplex:
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	strh	r0, [r5, #0x14]
-	ldr	r2, .L328+0x30
+	ldr	r2, .L324+0x30
 	mov	r1, #0x14
 	ldrsh	r0, [r5, r1]
 	lsl	r1, r0, #0x4
@@ -7143,9 +7131,9 @@ DebugAction_Give_PokemonComplex:
 	pop	{r4, r5, r6}
 	pop	{r0}
 	bx	r0
-.L329:
+.L325:
 	.align	2, 0
-.L328:
+.L324:
 	.word	sDebugMonData
 	.word	gTasks
 	.word	sDebugNumberDisplayWindowTemplate
@@ -7171,14 +7159,14 @@ DebugAction_Give_Pokemon_SelectId:
 	add	sp, sp, #-0x10
 	lsl	r0, r0, #0x18
 	lsr	r7, r0, #0x18
-	ldr	r4, .L345
+	ldr	r4, .L341
 	ldrh	r1, [r4, #0x2e]
 	mov	r0, #0xf0
 	and	r0, r0, r1
 	cmp	r0, #0
-	bne	.LCB5423
-	b	.L331	@long jump
-.LCB5423:
+	bne	.LCB5409
+	b	.L327	@long jump
+.LCB5409:
 	mov	r0, #0x5
 	bl	PlaySE
 	ldrh	r1, [r4, #0x2e]
@@ -7186,12 +7174,12 @@ DebugAction_Give_Pokemon_SelectId:
 	and	r0, r0, r1
 	lsl	r5, r7, #0x2
 	cmp	r0, #0
-	beq	.L332	@cond_branch
-	ldr	r1, .L345+0x4
+	beq	.L328	@cond_branch
+	ldr	r1, .L341+0x4
 	add	r0, r5, r7
 	lsl	r0, r0, #0x3
 	add	r2, r0, r1
-	ldr	r1, .L345+0x8
+	ldr	r1, .L341+0x8
 	mov	r3, #0x10
 	ldrsh	r0, [r2, r3]
 	lsl	r0, r0, #0x2
@@ -7202,22 +7190,22 @@ DebugAction_Give_Pokemon_SelectId:
 	strh	r0, [r2, #0xe]
 	lsl	r0, r0, #0x10
 	asr	r0, r0, #0x10
-	ldr	r1, .L345+0xc
+	ldr	r1, .L341+0xc
 	cmp	r0, r1
-	ble	.L332	@cond_branch
+	ble	.L328	@cond_branch
 	strh	r1, [r2, #0xe]
-.L332:
-	ldr	r2, .L345
+.L328:
+	ldr	r2, .L341
 	ldrh	r1, [r2, #0x2e]
 	mov	r0, #0x80
 	and	r0, r0, r1
-	ldr	r4, .L345+0x4
+	ldr	r4, .L341+0x4
 	cmp	r0, #0
-	beq	.L335	@cond_branch
+	beq	.L331	@cond_branch
 	add	r0, r5, r7
 	lsl	r0, r0, #0x3
 	add	r3, r0, r4
-	ldr	r1, .L345+0x8
+	ldr	r1, .L341+0x8
 	mov	r6, #0x10
 	ldrsh	r0, [r3, r6]
 	lsl	r0, r0, #0x2
@@ -7228,15 +7216,15 @@ DebugAction_Give_Pokemon_SelectId:
 	strh	r0, [r3, #0xe]
 	lsl	r0, r0, #0x10
 	cmp	r0, #0
-	bgt	.L335	@cond_branch
+	bgt	.L331	@cond_branch
 	mov	r0, #0x1
 	strh	r0, [r3, #0xe]
-.L335:
+.L331:
 	ldrh	r1, [r2, #0x2e]
 	mov	r0, #0x20
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L338	@cond_branch
+	beq	.L334	@cond_branch
 	add	r0, r5, r7
 	lsl	r0, r0, #0x3
 	add	r1, r0, r4
@@ -7244,16 +7232,16 @@ DebugAction_Give_Pokemon_SelectId:
 	mov	r3, #0x10
 	ldrsh	r0, [r1, r3]
 	cmp	r0, #0
-	ble	.L338	@cond_branch
+	ble	.L334	@cond_branch
 	sub	r0, r2, #0x1
 	strh	r0, [r1, #0x10]
-.L338:
-	ldr	r0, .L345
+.L334:
+	ldr	r0, .L341
 	ldrh	r1, [r0, #0x2e]
 	mov	r0, #0x10
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L340	@cond_branch
+	beq	.L336	@cond_branch
 	add	r0, r5, r7
 	lsl	r0, r0, #0x3
 	add	r1, r0, r4
@@ -7261,12 +7249,12 @@ DebugAction_Give_Pokemon_SelectId:
 	mov	r6, #0x10
 	ldrsh	r0, [r1, r6]
 	cmp	r0, #0x2
-	bgt	.L340	@cond_branch
+	bgt	.L336	@cond_branch
 	add	r0, r2, #0x1
 	strh	r0, [r1, #0x10]
-.L340:
-	ldr	r0, .L345+0x10
-	ldr	r2, .L345+0x14
+.L336:
+	ldr	r0, .L341+0x10
+	ldr	r2, .L341+0x14
 	add	r5, r5, r7
 	lsl	r5, r5, #0x3
 	add	r5, r5, r4
@@ -7276,12 +7264,12 @@ DebugAction_Give_Pokemon_SelectId:
 	add	r1, r1, r2
 	ldr	r1, [r1]
 	bl	StringCopy
-	ldr	r4, .L345+0x18
+	ldr	r4, .L341+0x18
 	mov	r6, #0xe
 	ldrsh	r1, [r5, r6]
 	mov	r0, #0xb
 	mul	r1, r1, r0
-	ldr	r0, .L345+0x1c
+	ldr	r0, .L341+0x1c
 	add	r1, r1, r0
 	add	r0, r4, #0
 	bl	StringCopy
@@ -7290,14 +7278,14 @@ DebugAction_Give_Pokemon_SelectId:
 	mov	r2, #0x0
 	mov	r3, #0xf
 	bl	StringCopyPadded
-	ldr	r0, .L345+0x20
+	ldr	r0, .L341+0x20
 	mov	r2, #0xe
 	ldrsh	r1, [r5, r2]
 	mov	r2, #0x2
 	mov	r3, #0x4
 	bl	ConvertIntToDecimalStringN
-	ldr	r6, .L345+0x24
-	ldr	r1, .L345+0x28
+	ldr	r6, .L341+0x24
+	ldr	r1, .L341+0x28
 	add	r0, r6, #0
 	bl	StringExpandPlaceholders
 	ldrb	r0, [r5, #0xc]
@@ -7315,7 +7303,7 @@ DebugAction_Give_Pokemon_SelectId:
 	lsl	r0, r1, #0x4
 	add	r0, r0, r1
 	lsl	r0, r0, #0x2
-	ldr	r6, .L345+0x2c
+	ldr	r6, .L341+0x2c
 	add	r0, r0, r6
 	bl	FreeAndDestroyMonIconSprite
 	bl	FreeMonIconPalettes
@@ -7326,7 +7314,7 @@ DebugAction_Give_Pokemon_SelectId:
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	ldrh	r3, [r5, #0xe]
-	ldr	r1, .L345+0x30
+	ldr	r1, .L341+0x30
 	mov	r2, #0x4
 	str	r2, [sp]
 	str	r4, [sp, #0x4]
@@ -7351,18 +7339,18 @@ DebugAction_Give_Pokemon_SelectId:
 	neg	r0, r0
 	and	r0, r0, r2
 	strb	r0, [r1, #0x5]
-.L331:
-	ldr	r0, .L345
+.L327:
+	ldr	r0, .L341
 	ldrh	r1, [r0, #0x2e]
 	mov	r6, #0x1
 	mov	r8, r6
 	mov	r0, r8
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L342	@cond_branch
-	ldr	r0, .L345+0x34
+	beq	.L338	@cond_branch
+	ldr	r0, .L341+0x34
 	ldr	r1, [r0]
-	ldr	r0, .L345+0x4
+	ldr	r0, .L341+0x4
 	lsl	r5, r7, #0x2
 	add	r5, r5, r7
 	lsl	r5, r5, #0x3
@@ -7373,11 +7361,11 @@ DebugAction_Give_Pokemon_SelectId:
 	mov	r0, r8
 	strh	r0, [r5, #0xe]
 	strh	r6, [r5, #0x10]
-	ldr	r0, .L345+0x10
-	ldr	r1, .L345+0x14
+	ldr	r0, .L341+0x10
+	ldr	r1, .L341+0x14
 	ldr	r1, [r1]
 	bl	StringCopy
-	ldr	r4, .L345+0x18
+	ldr	r4, .L341+0x18
 	mov	r2, #0xe
 	ldrsh	r1, [r5, r2]
 	add	r0, r4, #0
@@ -7389,8 +7377,8 @@ DebugAction_Give_Pokemon_SelectId:
 	mov	r2, #0x0
 	mov	r3, #0xf
 	bl	StringCopyPadded
-	ldr	r4, .L345+0x24
-	ldr	r1, .L345+0x38
+	ldr	r4, .L341+0x24
+	ldr	r1, .L341+0x38
 	add	r0, r4, #0
 	bl	StringExpandPlaceholders
 	ldrb	r0, [r5, #0xc]
@@ -7402,12 +7390,12 @@ DebugAction_Give_Pokemon_SelectId:
 	add	r2, r4, #0
 	mov	r3, #0x1
 	bl	AddTextPrinterParameterized
-	ldr	r0, .L345+0x3c
+	ldr	r0, .L341+0x3c
 	str	r0, [r5]
-	b	.L343
-.L346:
+	b	.L339
+.L342:
 	.align	2, 0
-.L345:
+.L341:
 	.word	gMain
 	.word	gTasks
 	.word	sPowersOfTen
@@ -7424,18 +7412,18 @@ DebugAction_Give_Pokemon_SelectId:
 	.word	sDebugMonData
 	.word	gDebugText_PokemonLevel
 	.word	DebugAction_Give_Pokemon_SelectLevel
-.L342:
+.L338:
 	mov	r0, #0x2
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L343	@cond_branch
+	beq	.L339	@cond_branch
 	mov	r0, #0x5
 	bl	PlaySE
-	ldr	r0, .L347
+	ldr	r0, .L343
 	ldr	r0, [r0]
 	bl	Free
 	bl	FreeMonIconPalettes
-	ldr	r1, .L347+0x4
+	ldr	r1, .L343+0x4
 	lsl	r0, r7, #0x2
 	add	r0, r0, r7
 	lsl	r0, r0, #0x3
@@ -7445,21 +7433,21 @@ DebugAction_Give_Pokemon_SelectId:
 	lsl	r0, r1, #0x4
 	add	r0, r0, r1
 	lsl	r0, r0, #0x2
-	ldr	r1, .L347+0x8
+	ldr	r1, .L343+0x8
 	add	r0, r0, r1
 	bl	FreeAndDestroyMonIconSprite
 	add	r0, r7, #0
 	bl	DebugAction_DestroyExtraWindow
-.L343:
+.L339:
 	add	sp, sp, #0x10
 	pop	{r3}
 	mov	r8, r3
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L348:
+.L344:
 	.align	2, 0
-.L347:
+.L343:
 	.word	sDebugMonData
 	.word	gTasks
 	.word	gSprites
@@ -7475,12 +7463,12 @@ DebugAction_Give_Pokemon_SelectLevel:
 	add	sp, sp, #-0xc
 	lsl	r0, r0, #0x18
 	lsr	r7, r0, #0x18
-	ldr	r4, .L364
+	ldr	r4, .L360
 	ldrh	r1, [r4, #0x2e]
 	mov	r0, #0xf0
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L350	@cond_branch
+	beq	.L346	@cond_branch
 	mov	r0, #0x5
 	bl	PlaySE
 	ldrh	r1, [r4, #0x2e]
@@ -7488,12 +7476,12 @@ DebugAction_Give_Pokemon_SelectLevel:
 	and	r0, r0, r1
 	lsl	r5, r7, #0x2
 	cmp	r0, #0
-	beq	.L351	@cond_branch
-	ldr	r1, .L364+0x4
+	beq	.L347	@cond_branch
+	ldr	r1, .L360+0x4
 	add	r0, r5, r7
 	lsl	r0, r0, #0x3
 	add	r2, r0, r1
-	ldr	r1, .L364+0x8
+	ldr	r1, .L360+0x8
 	mov	r3, #0x10
 	ldrsh	r0, [r2, r3]
 	lsl	r0, r0, #0x2
@@ -7505,21 +7493,21 @@ DebugAction_Give_Pokemon_SelectLevel:
 	lsl	r0, r0, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, #0x64
-	ble	.L351	@cond_branch
+	ble	.L347	@cond_branch
 	mov	r0, #0x64
 	strh	r0, [r2, #0xe]
-.L351:
-	ldr	r2, .L364
+.L347:
+	ldr	r2, .L360
 	ldrh	r1, [r2, #0x2e]
 	mov	r0, #0x80
 	and	r0, r0, r1
-	ldr	r4, .L364+0x4
+	ldr	r4, .L360+0x4
 	cmp	r0, #0
-	beq	.L353	@cond_branch
+	beq	.L349	@cond_branch
 	add	r0, r5, r7
 	lsl	r0, r0, #0x3
 	add	r3, r0, r4
-	ldr	r1, .L364+0x8
+	ldr	r1, .L360+0x8
 	mov	r6, #0x10
 	ldrsh	r0, [r3, r6]
 	lsl	r0, r0, #0x2
@@ -7530,15 +7518,15 @@ DebugAction_Give_Pokemon_SelectLevel:
 	strh	r0, [r3, #0xe]
 	lsl	r0, r0, #0x10
 	cmp	r0, #0
-	bgt	.L353	@cond_branch
+	bgt	.L349	@cond_branch
 	mov	r0, #0x1
 	strh	r0, [r3, #0xe]
-.L353:
+.L349:
 	ldrh	r1, [r2, #0x2e]
 	mov	r0, #0x20
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L355	@cond_branch
+	beq	.L351	@cond_branch
 	add	r0, r5, r7
 	lsl	r0, r0, #0x3
 	add	r1, r0, r4
@@ -7546,16 +7534,16 @@ DebugAction_Give_Pokemon_SelectLevel:
 	mov	r3, #0x10
 	ldrsh	r0, [r1, r3]
 	cmp	r0, #0
-	ble	.L355	@cond_branch
+	ble	.L351	@cond_branch
 	sub	r0, r2, #0x1
 	strh	r0, [r1, #0x10]
-.L355:
-	ldr	r0, .L364
+.L351:
+	ldr	r0, .L360
 	ldrh	r1, [r0, #0x2e]
 	mov	r0, #0x10
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L357	@cond_branch
+	beq	.L353	@cond_branch
 	add	r0, r5, r7
 	lsl	r0, r0, #0x3
 	add	r1, r0, r4
@@ -7563,12 +7551,12 @@ DebugAction_Give_Pokemon_SelectLevel:
 	mov	r6, #0x10
 	ldrsh	r0, [r1, r6]
 	cmp	r0, #0x1
-	bgt	.L357	@cond_branch
+	bgt	.L353	@cond_branch
 	add	r0, r2, #0x1
 	strh	r0, [r1, #0x10]
-.L357:
-	ldr	r0, .L364+0xc
-	ldr	r2, .L364+0x10
+.L353:
+	ldr	r0, .L360+0xc
+	ldr	r2, .L360+0x10
 	add	r5, r5, r7
 	lsl	r5, r5, #0x3
 	add	r5, r5, r4
@@ -7578,7 +7566,7 @@ DebugAction_Give_Pokemon_SelectLevel:
 	add	r1, r1, r2
 	ldr	r1, [r1]
 	bl	StringCopy
-	ldr	r4, .L364+0x14
+	ldr	r4, .L360+0x14
 	mov	r6, #0xe
 	ldrsh	r1, [r5, r6]
 	add	r0, r4, #0
@@ -7590,8 +7578,8 @@ DebugAction_Give_Pokemon_SelectLevel:
 	mov	r2, #0x0
 	mov	r3, #0xf
 	bl	StringCopyPadded
-	ldr	r4, .L364+0x18
-	ldr	r1, .L364+0x1c
+	ldr	r4, .L360+0x18
+	ldr	r1, .L360+0x1c
 	add	r0, r4, #0
 	bl	StringExpandPlaceholders
 	ldrb	r0, [r5, #0xc]
@@ -7604,16 +7592,16 @@ DebugAction_Give_Pokemon_SelectLevel:
 	add	r2, r4, #0
 	mov	r3, #0x1
 	bl	AddTextPrinterParameterized
-.L350:
-	ldr	r0, .L364
+.L346:
+	ldr	r0, .L360
 	ldrh	r1, [r0, #0x2e]
 	mov	r0, #0x1
 	mov	r8, r0
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L359	@cond_branch
+	beq	.L355	@cond_branch
 	bl	FreeMonIconPalettes
-	ldr	r1, .L364+0x4
+	ldr	r1, .L360+0x4
 	lsl	r0, r7, #0x2
 	add	r0, r0, r7
 	lsl	r0, r0, #0x3
@@ -7623,17 +7611,17 @@ DebugAction_Give_Pokemon_SelectLevel:
 	lsl	r0, r1, #0x4
 	add	r0, r0, r1
 	lsl	r0, r0, #0x2
-	ldr	r1, .L364+0x20
+	ldr	r1, .L360+0x20
 	add	r0, r0, r1
 	bl	FreeAndDestroyMonIconSprite
 	mov	r3, #0x12
 	ldrsh	r5, [r6, r3]
 	cmp	r5, #0
-	bne	.L360	@cond_branch
+	bne	.L356	@cond_branch
 	mov	r0, #0xa9
 	lsl	r0, r0, #0x1
 	bl	PlaySE
-	ldr	r4, .L364+0x24
+	ldr	r4, .L360+0x24
 	ldr	r0, [r4]
 	ldrh	r0, [r0]
 	ldrb	r1, [r6, #0xe]
@@ -7646,10 +7634,10 @@ DebugAction_Give_Pokemon_SelectLevel:
 	bl	Free
 	add	r0, r7, #0
 	bl	DebugAction_DestroyExtraWindow
-	b	.L362
-.L365:
+	b	.L358
+.L361:
 	.align	2, 0
-.L364:
+.L360:
 	.word	gMain
 	.word	gTasks
 	.word	sPowersOfTen
@@ -7660,15 +7648,15 @@ DebugAction_Give_Pokemon_SelectLevel:
 	.word	gDebugText_PokemonLevel
 	.word	gSprites
 	.word	sDebugMonData
-.L360:
-	ldr	r0, .L366
+.L356:
+	ldr	r0, .L362
 	ldr	r1, [r0]
 	ldrh	r0, [r6, #0xe]
 	mov	r5, #0x0
 	strb	r0, [r1, #0x2]
 	strh	r5, [r6, #0xe]
 	strh	r5, [r6, #0x10]
-	ldr	r4, .L366+0x4
+	ldr	r4, .L362+0x4
 	add	r0, r4, #0
 	mov	r1, #0x0
 	mov	r2, #0x2
@@ -7679,13 +7667,13 @@ DebugAction_Give_Pokemon_SelectLevel:
 	mov	r2, #0x0
 	mov	r3, #0xf
 	bl	StringCopyPadded
-	ldr	r0, .L366+0x8
-	ldr	r1, .L366+0xc
+	ldr	r0, .L362+0x8
+	ldr	r1, .L362+0xc
 	mov	r2, #0x0
 	mov	r3, #0xf
 	bl	StringCopyPadded
-	ldr	r4, .L366+0x10
-	ldr	r1, .L366+0x14
+	ldr	r4, .L362+0x10
+	ldr	r1, .L362+0x14
 	add	r0, r4, #0
 	bl	StringExpandPlaceholders
 	ldrb	r0, [r6, #0xc]
@@ -7697,12 +7685,12 @@ DebugAction_Give_Pokemon_SelectLevel:
 	add	r2, r4, #0
 	mov	r3, #0x1
 	bl	AddTextPrinterParameterized
-	ldr	r0, .L366+0x18
+	ldr	r0, .L362+0x18
 	str	r0, [r6]
-	b	.L362
-.L367:
+	b	.L358
+.L363:
 	.align	2, 0
-.L366:
+.L362:
 	.word	sDebugMonData
 	.word	gStringVar3
 	.word	gStringVar2
@@ -7710,18 +7698,18 @@ DebugAction_Give_Pokemon_SelectLevel:
 	.word	gStringVar4
 	.word	gDebugText_PokemonShiny
 	.word	DebugAction_Give_Pokemon_SelectShiny
-.L359:
+.L355:
 	mov	r0, #0x2
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L362	@cond_branch
+	beq	.L358	@cond_branch
 	mov	r0, #0x5
 	bl	PlaySE
-	ldr	r0, .L368
+	ldr	r0, .L364
 	ldr	r0, [r0]
 	bl	Free
 	bl	FreeMonIconPalettes
-	ldr	r1, .L368+0x4
+	ldr	r1, .L364+0x4
 	lsl	r0, r7, #0x2
 	add	r0, r0, r7
 	lsl	r0, r0, #0x3
@@ -7731,21 +7719,21 @@ DebugAction_Give_Pokemon_SelectLevel:
 	lsl	r0, r1, #0x4
 	add	r0, r0, r1
 	lsl	r0, r0, #0x2
-	ldr	r1, .L368+0x8
+	ldr	r1, .L364+0x8
 	add	r0, r0, r1
 	bl	FreeAndDestroyMonIconSprite
 	add	r0, r7, #0
 	bl	DebugAction_DestroyExtraWindow
-.L362:
+.L358:
 	add	sp, sp, #0xc
 	pop	{r3}
 	mov	r8, r3
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L369:
+.L365:
 	.align	2, 0
-.L368:
+.L364:
 	.word	sDebugMonData
 	.word	gTasks
 	.word	gSprites
@@ -7759,12 +7747,12 @@ DebugAction_Give_Pokemon_SelectShiny:
 	add	sp, sp, #-0xc
 	lsl	r0, r0, #0x18
 	lsr	r6, r0, #0x18
-	ldr	r4, .L381
+	ldr	r4, .L377
 	ldrh	r1, [r4, #0x2e]
 	mov	r0, #0xf0
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L371	@cond_branch
+	beq	.L367	@cond_branch
 	mov	r0, #0x5
 	bl	PlaySE
 	ldrh	r1, [r4, #0x2e]
@@ -7772,12 +7760,12 @@ DebugAction_Give_Pokemon_SelectShiny:
 	and	r0, r0, r1
 	lsl	r4, r6, #0x2
 	cmp	r0, #0
-	beq	.L372	@cond_branch
-	ldr	r1, .L381+0x4
+	beq	.L368	@cond_branch
+	ldr	r1, .L377+0x4
 	add	r0, r4, r6
 	lsl	r0, r0, #0x3
 	add	r2, r0, r1
-	ldr	r1, .L381+0x8
+	ldr	r1, .L377+0x8
 	mov	r3, #0x10
 	ldrsh	r0, [r2, r3]
 	lsl	r0, r0, #0x2
@@ -7789,21 +7777,21 @@ DebugAction_Give_Pokemon_SelectShiny:
 	lsl	r0, r0, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, #0x1
-	ble	.L372	@cond_branch
+	ble	.L368	@cond_branch
 	mov	r0, #0x1
 	strh	r0, [r2, #0xe]
-.L372:
-	ldr	r0, .L381
+.L368:
+	ldr	r0, .L377
 	ldrh	r1, [r0, #0x2e]
 	mov	r0, #0x80
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L374	@cond_branch
-	ldr	r1, .L381+0x4
+	beq	.L370	@cond_branch
+	ldr	r1, .L377+0x4
 	add	r0, r4, r6
 	lsl	r0, r0, #0x3
 	add	r2, r0, r1
-	ldr	r1, .L381+0x8
+	ldr	r1, .L377+0x8
 	mov	r3, #0x10
 	ldrsh	r0, [r2, r3]
 	lsl	r0, r0, #0x2
@@ -7814,41 +7802,41 @@ DebugAction_Give_Pokemon_SelectShiny:
 	strh	r0, [r2, #0xe]
 	lsl	r0, r0, #0x10
 	cmp	r0, #0
-	bge	.L374	@cond_branch
+	bge	.L370	@cond_branch
 	mov	r0, #0x0
 	strh	r0, [r2, #0xe]
-.L374:
-	ldr	r0, .L381+0x4
+.L370:
+	ldr	r0, .L377+0x4
 	add	r1, r4, r6
 	lsl	r1, r1, #0x3
 	add	r1, r1, r0
 	mov	r2, #0xe
 	ldrsh	r0, [r1, r2]
 	cmp	r0, #0x1
-	bne	.L376	@cond_branch
-	ldr	r0, .L381+0xc
-	ldr	r1, .L381+0x10
+	bne	.L372	@cond_branch
+	ldr	r0, .L377+0xc
+	ldr	r1, .L377+0x10
 	mov	r2, #0x0
 	mov	r3, #0xf
 	bl	StringCopyPadded
-	b	.L377
-.L382:
+	b	.L373
+.L378:
 	.align	2, 0
-.L381:
+.L377:
 	.word	gMain
 	.word	gTasks
 	.word	sPowersOfTen
 	.word	gStringVar2
 	.word	gDebugText_FlagSet
-.L376:
-	ldr	r0, .L383
-	ldr	r1, .L383+0x4
+.L372:
+	ldr	r0, .L379
+	ldr	r1, .L379+0x4
 	mov	r2, #0x0
 	mov	r3, #0xf
 	bl	StringCopyPadded
-.L377:
-	ldr	r5, .L383+0x8
-	ldr	r0, .L383+0xc
+.L373:
+	ldr	r5, .L379+0x8
+	ldr	r0, .L379+0xc
 	add	r4, r4, r6
 	lsl	r4, r4, #0x3
 	add	r4, r4, r0
@@ -7863,8 +7851,8 @@ DebugAction_Give_Pokemon_SelectShiny:
 	mov	r2, #0x0
 	mov	r3, #0xf
 	bl	StringCopyPadded
-	ldr	r5, .L383+0x10
-	ldr	r1, .L383+0x14
+	ldr	r5, .L379+0x10
+	ldr	r1, .L379+0x14
 	add	r0, r5, #0
 	bl	StringExpandPlaceholders
 	ldrb	r0, [r4, #0xc]
@@ -7877,17 +7865,17 @@ DebugAction_Give_Pokemon_SelectShiny:
 	add	r2, r5, #0
 	mov	r3, #0x1
 	bl	AddTextPrinterParameterized
-.L371:
-	ldr	r0, .L383+0x18
+.L367:
+	ldr	r0, .L379+0x18
 	ldrh	r1, [r0, #0x2e]
 	mov	r7, #0x1
 	add	r0, r7, #0
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L378	@cond_branch
-	ldr	r0, .L383+0x1c
+	beq	.L374	@cond_branch
+	ldr	r0, .L379+0x1c
 	ldr	r1, [r0]
-	ldr	r0, .L383+0xc
+	ldr	r0, .L379+0xc
 	lsl	r5, r6, #0x2
 	add	r5, r5, r6
 	lsl	r5, r5, #0x3
@@ -7897,11 +7885,11 @@ DebugAction_Give_Pokemon_SelectShiny:
 	strb	r0, [r1, #0x3]
 	strh	r6, [r5, #0xe]
 	strh	r6, [r5, #0x10]
-	ldr	r0, .L383
-	ldr	r1, .L383+0x20
+	ldr	r0, .L379
+	ldr	r1, .L379+0x20
 	ldr	r1, [r1]
 	bl	StringCopy
-	ldr	r4, .L383+0x8
+	ldr	r4, .L379+0x8
 	mov	r0, #0xe
 	ldrsh	r1, [r5, r0]
 	add	r0, r4, #0
@@ -7913,12 +7901,12 @@ DebugAction_Give_Pokemon_SelectShiny:
 	mov	r2, #0x0
 	mov	r3, #0xf
 	bl	StringCopyPadded
-	ldr	r0, .L383+0x24
-	ldr	r1, .L383+0x28
+	ldr	r0, .L379+0x24
+	ldr	r1, .L379+0x28
 	ldr	r1, [r1]
 	bl	StringCopy
-	ldr	r4, .L383+0x10
-	ldr	r1, .L383+0x2c
+	ldr	r4, .L379+0x10
+	ldr	r1, .L379+0x2c
 	add	r0, r4, #0
 	bl	StringExpandPlaceholders
 	ldrb	r0, [r5, #0xc]
@@ -7929,12 +7917,12 @@ DebugAction_Give_Pokemon_SelectShiny:
 	add	r2, r4, #0
 	mov	r3, #0x1
 	bl	AddTextPrinterParameterized
-	ldr	r0, .L383+0x30
+	ldr	r0, .L379+0x30
 	str	r0, [r5]
-	b	.L379
-.L384:
+	b	.L375
+.L380:
 	.align	2, 0
-.L383:
+.L379:
 	.word	gStringVar2
 	.word	gDebugText_FlagUnset
 	.word	gStringVar3
@@ -7948,26 +7936,26 @@ DebugAction_Give_Pokemon_SelectShiny:
 	.word	gNatureNamePointers
 	.word	gDebugText_PokemonNature
 	.word	DebugAction_Give_Pokemon_SelectNature
-.L378:
+.L374:
 	mov	r0, #0x2
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L379	@cond_branch
+	beq	.L375	@cond_branch
 	mov	r0, #0x5
 	bl	PlaySE
-	ldr	r0, .L385
+	ldr	r0, .L381
 	ldr	r0, [r0]
 	bl	Free
 	add	r0, r6, #0
 	bl	DebugAction_DestroyExtraWindow
-.L379:
+.L375:
 	add	sp, sp, #0xc
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L386:
+.L382:
 	.align	2, 0
-.L385:
+.L381:
 	.word	sDebugMonData
 .Lfe55:
 	.size	 DebugAction_Give_Pokemon_SelectShiny,.Lfe55-DebugAction_Give_Pokemon_SelectShiny
@@ -7981,12 +7969,12 @@ DebugAction_Give_Pokemon_SelectNature:
 	add	sp, sp, #-0xc
 	lsl	r0, r0, #0x18
 	lsr	r6, r0, #0x18
-	ldr	r4, .L396
+	ldr	r4, .L392
 	ldrh	r1, [r4, #0x2e]
 	mov	r0, #0xf0
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L388	@cond_branch
+	beq	.L384	@cond_branch
 	mov	r0, #0x5
 	bl	PlaySE
 	ldrh	r1, [r4, #0x2e]
@@ -7994,12 +7982,12 @@ DebugAction_Give_Pokemon_SelectNature:
 	and	r0, r0, r1
 	lsl	r5, r6, #0x2
 	cmp	r0, #0
-	beq	.L389	@cond_branch
-	ldr	r1, .L396+0x4
+	beq	.L385	@cond_branch
+	ldr	r1, .L392+0x4
 	add	r0, r5, r6
 	lsl	r0, r0, #0x3
 	add	r2, r0, r1
-	ldr	r1, .L396+0x8
+	ldr	r1, .L392+0x8
 	mov	r3, #0x10
 	ldrsh	r0, [r2, r3]
 	lsl	r0, r0, #0x2
@@ -8011,21 +7999,21 @@ DebugAction_Give_Pokemon_SelectNature:
 	lsl	r0, r0, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, #0x18
-	ble	.L389	@cond_branch
+	ble	.L385	@cond_branch
 	mov	r0, #0x18
 	strh	r0, [r2, #0xe]
-.L389:
-	ldr	r0, .L396
+.L385:
+	ldr	r0, .L392
 	ldrh	r1, [r0, #0x2e]
 	mov	r0, #0x80
 	and	r0, r0, r1
-	ldr	r3, .L396+0x4
+	ldr	r3, .L392+0x4
 	cmp	r0, #0
-	beq	.L391	@cond_branch
+	beq	.L387	@cond_branch
 	add	r0, r5, r6
 	lsl	r0, r0, #0x3
 	add	r2, r0, r3
-	ldr	r1, .L396+0x8
+	ldr	r1, .L392+0x8
 	mov	r4, #0x10
 	ldrsh	r0, [r2, r4]
 	lsl	r0, r0, #0x2
@@ -8036,12 +8024,12 @@ DebugAction_Give_Pokemon_SelectNature:
 	strh	r0, [r2, #0xe]
 	lsl	r0, r0, #0x10
 	cmp	r0, #0
-	bge	.L391	@cond_branch
+	bge	.L387	@cond_branch
 	mov	r0, #0x0
 	strh	r0, [r2, #0xe]
-.L391:
-	ldr	r0, .L396+0xc
-	ldr	r2, .L396+0x10
+.L387:
+	ldr	r0, .L392+0xc
+	ldr	r2, .L392+0x10
 	add	r5, r5, r6
 	lsl	r5, r5, #0x3
 	add	r5, r5, r3
@@ -8051,7 +8039,7 @@ DebugAction_Give_Pokemon_SelectNature:
 	add	r1, r1, r2
 	ldr	r1, [r1]
 	bl	StringCopy
-	ldr	r4, .L396+0x14
+	ldr	r4, .L392+0x14
 	mov	r0, #0xe
 	ldrsh	r1, [r5, r0]
 	add	r0, r4, #0
@@ -8063,16 +8051,16 @@ DebugAction_Give_Pokemon_SelectNature:
 	mov	r2, #0x0
 	mov	r3, #0xf
 	bl	StringCopyPadded
-	ldr	r0, .L396+0x18
-	ldr	r2, .L396+0x1c
+	ldr	r0, .L392+0x18
+	ldr	r2, .L392+0x1c
 	mov	r3, #0xe
 	ldrsh	r1, [r5, r3]
 	lsl	r1, r1, #0x2
 	add	r1, r1, r2
 	ldr	r1, [r1]
 	bl	StringCopy
-	ldr	r4, .L396+0x20
-	ldr	r1, .L396+0x24
+	ldr	r4, .L392+0x20
+	ldr	r1, .L392+0x24
 	add	r0, r4, #0
 	bl	StringExpandPlaceholders
 	ldrb	r0, [r5, #0xc]
@@ -8085,18 +8073,18 @@ DebugAction_Give_Pokemon_SelectNature:
 	add	r2, r4, #0
 	mov	r3, #0x1
 	bl	AddTextPrinterParameterized
-.L388:
-	ldr	r0, .L396
+.L384:
+	ldr	r0, .L392
 	ldrh	r1, [r0, #0x2e]
 	mov	r7, #0x1
 	add	r0, r7, #0
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L393	@cond_branch
-	ldr	r4, .L396+0x28
+	beq	.L389	@cond_branch
+	ldr	r4, .L392+0x28
 	mov	r8, r4
 	ldr	r1, [r4]
-	ldr	r0, .L396+0x4
+	ldr	r0, .L392+0x4
 	lsl	r5, r6, #0x2
 	add	r5, r5, r6
 	lsl	r5, r5, #0x3
@@ -8106,11 +8094,11 @@ DebugAction_Give_Pokemon_SelectNature:
 	strh	r0, [r1, #0x4]
 	strh	r6, [r5, #0xe]
 	strh	r6, [r5, #0x10]
-	ldr	r0, .L396+0xc
-	ldr	r1, .L396+0x10
+	ldr	r0, .L392+0xc
+	ldr	r1, .L392+0x10
 	ldr	r1, [r1]
 	bl	StringCopy
-	ldr	r4, .L396+0x14
+	ldr	r4, .L392+0x14
 	mov	r0, #0xe
 	ldrsh	r1, [r5, r0]
 	add	r0, r4, #0
@@ -8135,15 +8123,15 @@ DebugAction_Give_Pokemon_SelectNature:
 	bl	GetAbilityBySpecies
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
-	ldr	r2, .L396+0x18
+	ldr	r2, .L392+0x18
 	mov	r1, #0xd
 	mul	r1, r1, r0
-	ldr	r0, .L396+0x2c
+	ldr	r0, .L392+0x2c
 	add	r1, r1, r0
 	add	r0, r2, #0
 	bl	StringCopy
-	ldr	r4, .L396+0x20
-	ldr	r1, .L396+0x30
+	ldr	r4, .L392+0x20
+	ldr	r1, .L392+0x30
 	add	r0, r4, #0
 	bl	StringExpandPlaceholders
 	ldrb	r0, [r5, #0xc]
@@ -8154,12 +8142,12 @@ DebugAction_Give_Pokemon_SelectNature:
 	add	r2, r4, #0
 	mov	r3, #0x1
 	bl	AddTextPrinterParameterized
-	ldr	r0, .L396+0x34
+	ldr	r0, .L392+0x34
 	str	r0, [r5]
-	b	.L394
-.L397:
+	b	.L390
+.L393:
 	.align	2, 0
-.L396:
+.L392:
 	.word	gMain
 	.word	gTasks
 	.word	sPowersOfTen
@@ -8174,28 +8162,28 @@ DebugAction_Give_Pokemon_SelectNature:
 	.word	gAbilityNames
 	.word	gDebugText_PokemonAbility
 	.word	DebugAction_Give_Pokemon_SelectAbility
-.L393:
+.L389:
 	mov	r0, #0x2
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L394	@cond_branch
+	beq	.L390	@cond_branch
 	mov	r0, #0x5
 	bl	PlaySE
-	ldr	r0, .L398
+	ldr	r0, .L394
 	ldr	r0, [r0]
 	bl	Free
 	add	r0, r6, #0
 	bl	DebugAction_DestroyExtraWindow
-.L394:
+.L390:
 	add	sp, sp, #0xc
 	pop	{r3}
 	mov	r8, r3
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L399:
+.L395:
 	.align	2, 0
-.L398:
+.L394:
 	.word	sDebugMonData
 .Lfe56:
 	.size	 DebugAction_Give_Pokemon_SelectNature,.Lfe56-DebugAction_Give_Pokemon_SelectNature
@@ -8209,8 +8197,8 @@ DebugAction_Give_Pokemon_SelectAbility:
 	add	sp, sp, #-0xc
 	lsl	r0, r0, #0x18
 	lsr	r7, r0, #0x18
-	ldr	r2, .L411
-	ldr	r0, .L411+0x4
+	ldr	r2, .L407
+	ldr	r0, .L407+0x4
 	ldr	r0, [r0]
 	ldrh	r0, [r0]
 	lsl	r1, r0, #0x3
@@ -8223,15 +8211,15 @@ DebugAction_Give_Pokemon_SelectAbility:
 	lsr	r4, r0, #0x1f
 	ldrh	r0, [r1, #0x1c]
 	cmp	r0, #0
-	beq	.L402	@cond_branch
+	beq	.L398	@cond_branch
 	add	r4, r4, #0x1
-.L402:
-	ldr	r5, .L411+0x8
+.L398:
+	ldr	r5, .L407+0x8
 	ldrh	r1, [r5, #0x2e]
 	mov	r0, #0xf0
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L403	@cond_branch
+	beq	.L399	@cond_branch
 	mov	r0, #0x5
 	bl	PlaySE
 	ldrh	r1, [r5, #0x2e]
@@ -8239,12 +8227,12 @@ DebugAction_Give_Pokemon_SelectAbility:
 	and	r0, r0, r1
 	lsl	r5, r7, #0x2
 	cmp	r0, #0
-	beq	.L404	@cond_branch
-	ldr	r1, .L411+0xc
+	beq	.L400	@cond_branch
+	ldr	r1, .L407+0xc
 	add	r0, r5, r7
 	lsl	r0, r0, #0x3
 	add	r2, r0, r1
-	ldr	r1, .L411+0x10
+	ldr	r1, .L407+0x10
 	mov	r3, #0x10
 	ldrsh	r0, [r2, r3]
 	lsl	r0, r0, #0x2
@@ -8256,20 +8244,20 @@ DebugAction_Give_Pokemon_SelectAbility:
 	mov	r1, #0xe
 	ldrsh	r0, [r2, r1]
 	cmp	r0, r4
-	ble	.L404	@cond_branch
+	ble	.L400	@cond_branch
 	strh	r4, [r2, #0xe]
-.L404:
-	ldr	r0, .L411+0x8
+.L400:
+	ldr	r0, .L407+0x8
 	ldrh	r1, [r0, #0x2e]
 	mov	r0, #0x80
 	and	r0, r0, r1
-	ldr	r3, .L411+0xc
+	ldr	r3, .L407+0xc
 	cmp	r0, #0
-	beq	.L406	@cond_branch
+	beq	.L402	@cond_branch
 	add	r0, r5, r7
 	lsl	r0, r0, #0x3
 	add	r2, r0, r3
-	ldr	r1, .L411+0x10
+	ldr	r1, .L407+0x10
 	mov	r4, #0x10
 	ldrsh	r0, [r2, r4]
 	lsl	r0, r0, #0x2
@@ -8280,11 +8268,11 @@ DebugAction_Give_Pokemon_SelectAbility:
 	strh	r0, [r2, #0xe]
 	lsl	r0, r0, #0x10
 	cmp	r0, #0
-	bge	.L406	@cond_branch
+	bge	.L402	@cond_branch
 	mov	r0, #0x0
 	strh	r0, [r2, #0xe]
-.L406:
-	ldr	r0, .L411+0x4
+.L402:
+	ldr	r0, .L407+0x4
 	ldr	r0, [r0]
 	ldrh	r4, [r0]
 	add	r5, r5, r7
@@ -8302,15 +8290,15 @@ DebugAction_Give_Pokemon_SelectAbility:
 	add	r6, r0, #0
 	lsl	r6, r6, #0x18
 	lsr	r6, r6, #0x18
-	ldr	r0, .L411+0x14
-	ldr	r2, .L411+0x18
+	ldr	r0, .L407+0x14
+	ldr	r2, .L407+0x18
 	mov	r3, #0x10
 	ldrsh	r1, [r5, r3]
 	lsl	r1, r1, #0x2
 	add	r1, r1, r2
 	ldr	r1, [r1]
 	bl	StringCopy
-	ldr	r4, .L411+0x1c
+	ldr	r4, .L407+0x1c
 	mov	r0, #0xe
 	ldrsh	r1, [r5, r0]
 	add	r0, r4, #0
@@ -8322,14 +8310,14 @@ DebugAction_Give_Pokemon_SelectAbility:
 	mov	r2, #0x0
 	mov	r3, #0xf
 	bl	StringCopyPadded
-	ldr	r0, .L411+0x20
+	ldr	r0, .L407+0x20
 	mov	r1, #0xd
 	mul	r1, r1, r6
-	ldr	r2, .L411+0x24
+	ldr	r2, .L407+0x24
 	add	r1, r1, r2
 	bl	StringCopy
-	ldr	r4, .L411+0x28
-	ldr	r1, .L411+0x2c
+	ldr	r4, .L407+0x28
+	ldr	r1, .L407+0x2c
 	add	r0, r4, #0
 	bl	StringExpandPlaceholders
 	ldrb	r0, [r5, #0xc]
@@ -8342,18 +8330,18 @@ DebugAction_Give_Pokemon_SelectAbility:
 	add	r2, r4, #0
 	mov	r3, #0x1
 	bl	AddTextPrinterParameterized
-.L403:
-	ldr	r0, .L411+0x8
+.L399:
+	ldr	r0, .L407+0x8
 	ldrh	r1, [r0, #0x2e]
 	mov	r3, #0x1
 	mov	r8, r3
 	mov	r0, r8
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L408	@cond_branch
-	ldr	r0, .L411+0x4
+	beq	.L404	@cond_branch
+	ldr	r0, .L407+0x4
 	ldr	r1, [r0]
-	ldr	r0, .L411+0xc
+	ldr	r0, .L407+0xc
 	lsl	r5, r7, #0x2
 	add	r5, r5, r7
 	lsl	r5, r5, #0x3
@@ -8363,11 +8351,11 @@ DebugAction_Give_Pokemon_SelectAbility:
 	strh	r0, [r1, #0x6]
 	strh	r6, [r5, #0xe]
 	strh	r6, [r5, #0x10]
-	ldr	r0, .L411+0x14
-	ldr	r1, .L411+0x18
+	ldr	r0, .L407+0x14
+	ldr	r1, .L407+0x18
 	ldr	r1, [r1]
 	bl	StringCopy
-	ldr	r4, .L411+0x1c
+	ldr	r4, .L407+0x1c
 	mov	r0, #0xe
 	ldrsh	r1, [r5, r0]
 	add	r0, r4, #0
@@ -8379,8 +8367,8 @@ DebugAction_Give_Pokemon_SelectAbility:
 	mov	r2, #0x0
 	mov	r3, #0xf
 	bl	StringCopyPadded
-	ldr	r4, .L411+0x28
-	ldr	r1, .L411+0x30
+	ldr	r4, .L407+0x28
+	ldr	r1, .L407+0x30
 	add	r0, r4, #0
 	bl	StringExpandPlaceholders
 	ldrb	r0, [r5, #0xc]
@@ -8392,12 +8380,12 @@ DebugAction_Give_Pokemon_SelectAbility:
 	add	r2, r4, #0
 	mov	r3, #0x1
 	bl	AddTextPrinterParameterized
-	ldr	r0, .L411+0x34
+	ldr	r0, .L407+0x34
 	str	r0, [r5]
-	b	.L409
-.L412:
+	b	.L405
+.L408:
 	.align	2, 0
-.L411:
+.L407:
 	.word	gBaseStats
 	.word	sDebugMonData
 	.word	gMain
@@ -8412,28 +8400,28 @@ DebugAction_Give_Pokemon_SelectAbility:
 	.word	gDebugText_PokemonAbility
 	.word	gDebugText_PokemonIV_0
 	.word	DebugAction_Give_Pokemon_SelectIVs
-.L408:
+.L404:
 	mov	r0, #0x2
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L409	@cond_branch
+	beq	.L405	@cond_branch
 	mov	r0, #0x5
 	bl	PlaySE
-	ldr	r0, .L413
+	ldr	r0, .L409
 	ldr	r0, [r0]
 	bl	Free
 	add	r0, r7, #0
 	bl	DebugAction_DestroyExtraWindow
-.L409:
+.L405:
 	add	sp, sp, #0xc
 	pop	{r3}
 	mov	r8, r3
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L414:
+.L410:
 	.align	2, 0
-.L413:
+.L409:
 	.word	sDebugMonData
 .Lfe57:
 	.size	 DebugAction_Give_Pokemon_SelectAbility,.Lfe57-DebugAction_Give_Pokemon_SelectAbility
@@ -8448,14 +8436,14 @@ DebugAction_Give_Pokemon_SelectIVs:
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	mov	r8, r0
-	ldr	r4, .L457
+	ldr	r4, .L453
 	ldrh	r1, [r4, #0x2e]
 	mov	r0, #0xf0
 	and	r0, r0, r1
 	cmp	r0, #0
-	bne	.LCB6998
-	b	.L416	@long jump
-.LCB6998:
+	bne	.LCB6984
+	b	.L412	@long jump
+.LCB6984:
 	mov	r0, #0x5
 	bl	PlaySE
 	ldrh	r1, [r4, #0x2e]
@@ -8464,13 +8452,13 @@ DebugAction_Give_Pokemon_SelectIVs:
 	mov	r1, r8
 	lsl	r7, r1, #0x2
 	cmp	r0, #0
-	beq	.L417	@cond_branch
-	ldr	r1, .L457+0x4
+	beq	.L413	@cond_branch
+	ldr	r1, .L453+0x4
 	mov	r2, r8
 	add	r0, r7, r2
 	lsl	r0, r0, #0x3
 	add	r2, r0, r1
-	ldr	r1, .L457+0x8
+	ldr	r1, .L453+0x8
 	mov	r3, #0x10
 	ldrsh	r0, [r2, r3]
 	lsl	r0, r0, #0x2
@@ -8482,22 +8470,22 @@ DebugAction_Give_Pokemon_SelectIVs:
 	lsl	r0, r0, #0x10
 	asr	r0, r0, #0x10
 	cmp	r0, #0x1f
-	ble	.L417	@cond_branch
+	ble	.L413	@cond_branch
 	mov	r0, #0x1f
 	strh	r0, [r2, #0xe]
-.L417:
-	ldr	r2, .L457
+.L413:
+	ldr	r2, .L453
 	ldrh	r1, [r2, #0x2e]
 	mov	r0, #0x80
 	and	r0, r0, r1
-	ldr	r4, .L457+0x4
+	ldr	r4, .L453+0x4
 	cmp	r0, #0
-	beq	.L419	@cond_branch
+	beq	.L415	@cond_branch
 	mov	r5, r8
 	add	r0, r7, r5
 	lsl	r0, r0, #0x3
 	add	r3, r0, r4
-	ldr	r1, .L457+0x8
+	ldr	r1, .L453+0x8
 	mov	r5, #0x10
 	ldrsh	r0, [r3, r5]
 	lsl	r0, r0, #0x2
@@ -8508,15 +8496,15 @@ DebugAction_Give_Pokemon_SelectIVs:
 	strh	r0, [r3, #0xe]
 	lsl	r0, r0, #0x10
 	cmp	r0, #0
-	bge	.L419	@cond_branch
+	bge	.L415	@cond_branch
 	mov	r0, #0x0
 	strh	r0, [r3, #0xe]
-.L419:
+.L415:
 	ldrh	r1, [r2, #0x2e]
 	mov	r0, #0x20
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L421	@cond_branch
+	beq	.L417	@cond_branch
 	mov	r1, r8
 	add	r0, r7, r1
 	lsl	r0, r0, #0x3
@@ -8525,16 +8513,16 @@ DebugAction_Give_Pokemon_SelectIVs:
 	mov	r3, #0x10
 	ldrsh	r0, [r1, r3]
 	cmp	r0, #0
-	ble	.L421	@cond_branch
+	ble	.L417	@cond_branch
 	sub	r0, r2, #0x1
 	strh	r0, [r1, #0x10]
-.L421:
-	ldr	r0, .L457
+.L417:
+	ldr	r0, .L453
 	ldrh	r1, [r0, #0x2e]
 	mov	r0, #0x10
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L423	@cond_branch
+	beq	.L419	@cond_branch
 	mov	r5, r8
 	add	r0, r7, r5
 	lsl	r0, r0, #0x3
@@ -8543,13 +8531,13 @@ DebugAction_Give_Pokemon_SelectIVs:
 	mov	r3, #0x10
 	ldrsh	r0, [r1, r3]
 	cmp	r0, #0x1
-	bgt	.L423	@cond_branch
+	bgt	.L419	@cond_branch
 	add	r0, r2, #0x1
 	strh	r0, [r1, #0x10]
-.L423:
-	ldr	r0, .L457+0xc
-	ldr	r2, .L457+0x10
-	ldr	r1, .L457+0x4
+.L419:
+	ldr	r0, .L453+0xc
+	ldr	r2, .L453+0x10
+	ldr	r1, .L453+0x4
 	mov	r5, r8
 	add	r4, r7, r5
 	lsl	r4, r4, #0x3
@@ -8560,7 +8548,7 @@ DebugAction_Give_Pokemon_SelectIVs:
 	add	r1, r1, r2
 	ldr	r1, [r1]
 	bl	StringCopy
-	ldr	r5, .L457+0x14
+	ldr	r5, .L453+0x14
 	mov	r0, #0xe
 	ldrsh	r1, [r4, r0]
 	add	r0, r5, #0
@@ -8575,93 +8563,93 @@ DebugAction_Give_Pokemon_SelectIVs:
 	mov	r1, #0x16
 	ldrsh	r0, [r4, r1]
 	cmp	r0, #0x5
-	bhi	.L425	@cond_branch
+	bhi	.L421	@cond_branch
 	lsl	r0, r0, #0x2
-	ldr	r1, .L457+0x18
+	ldr	r1, .L453+0x18
 	add	r0, r0, r1
 	ldr	r0, [r0]
 	mov	pc, r0
-.L458:
+.L454:
 	.align	2, 0
-.L457:
+.L453:
 	.word	gMain
 	.word	gTasks
 	.word	sPowersOfTen
 	.word	gStringVar2
 	.word	gText_DigitIndicator
 	.word	gStringVar3
-	.word	.L432
+	.word	.L428
 	.align	2, 0
 	.align	2, 0
-.L432:
+.L428:
+	.word	.L422
+	.word	.L423
+	.word	.L424
+	.word	.L425
 	.word	.L426
 	.word	.L427
-	.word	.L428
-	.word	.L429
-	.word	.L430
-	.word	.L431
-.L426:
+.L422:
+	ldr	r0, .L455
+	ldr	r1, .L455+0x4
+	bl	StringExpandPlaceholders
+	b	.L421
+.L456:
+	.align	2, 0
+.L455:
+	.word	gStringVar4
+	.word	gDebugText_PokemonIV_0
+.L423:
+	ldr	r0, .L457
+	ldr	r1, .L457+0x4
+	bl	StringExpandPlaceholders
+	b	.L421
+.L458:
+	.align	2, 0
+.L457:
+	.word	gStringVar4
+	.word	gDebugText_PokemonIV_1
+.L424:
 	ldr	r0, .L459
 	ldr	r1, .L459+0x4
 	bl	StringExpandPlaceholders
-	b	.L425
+	b	.L421
 .L460:
 	.align	2, 0
 .L459:
 	.word	gStringVar4
-	.word	gDebugText_PokemonIV_0
-.L427:
+	.word	gDebugText_PokemonIV_2
+.L425:
 	ldr	r0, .L461
 	ldr	r1, .L461+0x4
 	bl	StringExpandPlaceholders
-	b	.L425
+	b	.L421
 .L462:
 	.align	2, 0
 .L461:
 	.word	gStringVar4
-	.word	gDebugText_PokemonIV_1
-.L428:
+	.word	gDebugText_PokemonIV_3
+.L426:
 	ldr	r0, .L463
 	ldr	r1, .L463+0x4
 	bl	StringExpandPlaceholders
-	b	.L425
+	b	.L421
 .L464:
 	.align	2, 0
 .L463:
 	.word	gStringVar4
-	.word	gDebugText_PokemonIV_2
-.L429:
+	.word	gDebugText_PokemonIV_4
+.L427:
 	ldr	r0, .L465
 	ldr	r1, .L465+0x4
 	bl	StringExpandPlaceholders
-	b	.L425
-.L466:
-	.align	2, 0
-.L465:
-	.word	gStringVar4
-	.word	gDebugText_PokemonIV_3
-.L430:
-	ldr	r0, .L467
-	ldr	r1, .L467+0x4
-	bl	StringExpandPlaceholders
-	b	.L425
-.L468:
-	.align	2, 0
-.L467:
-	.word	gStringVar4
-	.word	gDebugText_PokemonIV_4
-.L431:
-	ldr	r0, .L469
-	ldr	r1, .L469+0x4
-	bl	StringExpandPlaceholders
-.L425:
-	ldr	r1, .L469+0x8
+.L421:
+	ldr	r1, .L465+0x8
 	mov	r2, r8
 	add	r0, r7, r2
 	lsl	r0, r0, #0x3
 	add	r0, r0, r1
 	ldrb	r0, [r0, #0xc]
-	ldr	r2, .L469
+	ldr	r2, .L465
 	mov	r1, #0x1
 	str	r1, [sp]
 	mov	r1, #0x0
@@ -8670,16 +8658,16 @@ DebugAction_Give_Pokemon_SelectIVs:
 	mov	r1, #0x1
 	mov	r3, #0x1
 	bl	AddTextPrinterParameterized
-.L416:
-	ldr	r0, .L469+0xc
+.L412:
+	ldr	r0, .L465+0xc
 	ldrh	r1, [r0, #0x2e]
 	mov	r0, #0x1
 	and	r0, r0, r1
 	cmp	r0, #0
-	bne	.LCB7283
-	b	.L434	@long jump
-.LCB7283:
-	ldr	r0, .L469+0x8
+	bne	.LCB7269
+	b	.L430	@long jump
+.LCB7269:
+	ldr	r0, .L465+0x8
 	mov	r3, r8
 	lsl	r2, r3, #0x2
 	add	r1, r2, r3
@@ -8690,31 +8678,31 @@ DebugAction_Give_Pokemon_SelectIVs:
 	add	r4, r0, #0
 	add	r7, r2, #0
 	cmp	r1, #0x5
-	bhi	.L435	@cond_branch
+	bhi	.L431	@cond_branch
 	lsl	r0, r1, #0x2
-	ldr	r1, .L469+0x10
+	ldr	r1, .L465+0x10
 	add	r0, r0, r1
 	ldr	r0, [r0]
 	mov	pc, r0
-.L470:
+.L466:
 	.align	2, 0
-.L469:
+.L465:
 	.word	gStringVar4
 	.word	gDebugText_PokemonIV_5
 	.word	gTasks
 	.word	gMain
-	.word	.L442
+	.word	.L438
 	.align	2, 0
 	.align	2, 0
-.L442:
+.L438:
+	.word	.L432
+	.word	.L433
+	.word	.L434
+	.word	.L435
 	.word	.L436
 	.word	.L437
-	.word	.L438
-	.word	.L439
-	.word	.L440
-	.word	.L441
-.L436:
-	ldr	r0, .L471
+.L432:
+	ldr	r0, .L467
 	ldr	r1, [r0]
 	mov	r2, r8
 	add	r0, r7, r2
@@ -8722,13 +8710,13 @@ DebugAction_Give_Pokemon_SelectIVs:
 	add	r0, r0, r4
 	ldrh	r0, [r0, #0xe]
 	strb	r0, [r1, #0x8]
-	b	.L435
-.L472:
+	b	.L431
+.L468:
 	.align	2, 0
-.L471:
+.L467:
 	.word	sDebugMonData
-.L437:
-	ldr	r0, .L473
+.L433:
+	ldr	r0, .L469
 	ldr	r1, [r0]
 	mov	r3, r8
 	add	r0, r7, r3
@@ -8736,13 +8724,13 @@ DebugAction_Give_Pokemon_SelectIVs:
 	add	r0, r0, r4
 	ldrh	r0, [r0, #0xe]
 	strb	r0, [r1, #0x9]
-	b	.L435
-.L474:
+	b	.L431
+.L470:
 	.align	2, 0
-.L473:
+.L469:
 	.word	sDebugMonData
-.L438:
-	ldr	r0, .L475
+.L434:
+	ldr	r0, .L471
 	ldr	r1, [r0]
 	mov	r5, r8
 	add	r0, r7, r5
@@ -8750,13 +8738,13 @@ DebugAction_Give_Pokemon_SelectIVs:
 	add	r0, r0, r4
 	ldrh	r0, [r0, #0xe]
 	strb	r0, [r1, #0xa]
-	b	.L435
-.L476:
+	b	.L431
+.L472:
 	.align	2, 0
-.L475:
+.L471:
 	.word	sDebugMonData
-.L439:
-	ldr	r0, .L477
+.L435:
+	ldr	r0, .L473
 	ldr	r1, [r0]
 	mov	r2, r8
 	add	r0, r7, r2
@@ -8764,13 +8752,13 @@ DebugAction_Give_Pokemon_SelectIVs:
 	add	r0, r0, r4
 	ldrh	r0, [r0, #0xe]
 	strb	r0, [r1, #0xb]
-	b	.L435
-.L478:
+	b	.L431
+.L474:
 	.align	2, 0
-.L477:
+.L473:
 	.word	sDebugMonData
-.L440:
-	ldr	r0, .L479
+.L436:
+	ldr	r0, .L475
 	ldr	r1, [r0]
 	mov	r3, r8
 	add	r0, r7, r3
@@ -8778,13 +8766,13 @@ DebugAction_Give_Pokemon_SelectIVs:
 	add	r0, r0, r4
 	ldrh	r0, [r0, #0xe]
 	strb	r0, [r1, #0xc]
-	b	.L435
-.L480:
+	b	.L431
+.L476:
 	.align	2, 0
-.L479:
+.L475:
 	.word	sDebugMonData
-.L441:
-	ldr	r0, .L481
+.L437:
+	ldr	r0, .L477
 	ldr	r1, [r0]
 	mov	r5, r8
 	add	r0, r7, r5
@@ -8792,7 +8780,7 @@ DebugAction_Give_Pokemon_SelectIVs:
 	add	r0, r0, r4
 	ldrh	r0, [r0, #0xe]
 	strb	r0, [r1, #0xd]
-.L435:
+.L431:
 	mov	r1, r8
 	add	r0, r7, r1
 	lsl	r0, r0, #0x3
@@ -8801,19 +8789,19 @@ DebugAction_Give_Pokemon_SelectIVs:
 	mov	r2, #0x16
 	ldrsh	r0, [r6, r2]
 	cmp	r0, #0x5
-	bne	.LCB7434
-	b	.L444	@long jump
-.LCB7434:
+	bne	.LCB7420
+	b	.L440	@long jump
+.LCB7420:
 	add	r0, r1, #0x1
 	mov	r1, #0x0
 	strh	r0, [r6, #0x16]
 	strh	r1, [r6, #0xe]
 	strh	r1, [r6, #0x10]
-	ldr	r0, .L481+0x4
-	ldr	r1, .L481+0x8
+	ldr	r0, .L477+0x4
+	ldr	r1, .L477+0x8
 	ldr	r1, [r1]
 	bl	StringCopy
-	ldr	r4, .L481+0xc
+	ldr	r4, .L477+0xc
 	mov	r3, #0xe
 	ldrsh	r1, [r6, r3]
 	add	r0, r4, #0
@@ -8828,91 +8816,91 @@ DebugAction_Give_Pokemon_SelectIVs:
 	mov	r5, #0x16
 	ldrsh	r0, [r6, r5]
 	cmp	r0, #0x5
-	bhi	.L445	@cond_branch
+	bhi	.L441	@cond_branch
 	lsl	r0, r0, #0x2
-	ldr	r1, .L481+0x10
+	ldr	r1, .L477+0x10
 	add	r0, r0, r1
 	ldr	r0, [r0]
 	mov	pc, r0
-.L482:
+.L478:
 	.align	2, 0
-.L481:
+.L477:
 	.word	sDebugMonData
 	.word	gStringVar2
 	.word	gText_DigitIndicator
 	.word	gStringVar3
-	.word	.L452
+	.word	.L448
 	.align	2, 0
 	.align	2, 0
-.L452:
+.L448:
+	.word	.L442
+	.word	.L443
+	.word	.L444
+	.word	.L445
 	.word	.L446
 	.word	.L447
-	.word	.L448
-	.word	.L449
-	.word	.L450
-	.word	.L451
-.L446:
+.L442:
+	ldr	r0, .L479
+	ldr	r1, .L479+0x4
+	bl	StringExpandPlaceholders
+	b	.L441
+.L480:
+	.align	2, 0
+.L479:
+	.word	gStringVar4
+	.word	gDebugText_PokemonIV_0
+.L443:
+	ldr	r0, .L481
+	ldr	r1, .L481+0x4
+	bl	StringExpandPlaceholders
+	b	.L441
+.L482:
+	.align	2, 0
+.L481:
+	.word	gStringVar4
+	.word	gDebugText_PokemonIV_1
+.L444:
 	ldr	r0, .L483
 	ldr	r1, .L483+0x4
 	bl	StringExpandPlaceholders
-	b	.L445
+	b	.L441
 .L484:
 	.align	2, 0
 .L483:
 	.word	gStringVar4
-	.word	gDebugText_PokemonIV_0
-.L447:
+	.word	gDebugText_PokemonIV_2
+.L445:
 	ldr	r0, .L485
 	ldr	r1, .L485+0x4
 	bl	StringExpandPlaceholders
-	b	.L445
+	b	.L441
 .L486:
 	.align	2, 0
 .L485:
 	.word	gStringVar4
-	.word	gDebugText_PokemonIV_1
-.L448:
+	.word	gDebugText_PokemonIV_3
+.L446:
 	ldr	r0, .L487
 	ldr	r1, .L487+0x4
 	bl	StringExpandPlaceholders
-	b	.L445
+	b	.L441
 .L488:
 	.align	2, 0
 .L487:
 	.word	gStringVar4
-	.word	gDebugText_PokemonIV_2
-.L449:
+	.word	gDebugText_PokemonIV_4
+.L447:
 	ldr	r0, .L489
 	ldr	r1, .L489+0x4
 	bl	StringExpandPlaceholders
-	b	.L445
-.L490:
-	.align	2, 0
-.L489:
-	.word	gStringVar4
-	.word	gDebugText_PokemonIV_3
-.L450:
-	ldr	r0, .L491
-	ldr	r1, .L491+0x4
-	bl	StringExpandPlaceholders
-	b	.L445
-.L492:
-	.align	2, 0
-.L491:
-	.word	gStringVar4
-	.word	gDebugText_PokemonIV_4
-.L451:
-	ldr	r0, .L493
-	ldr	r1, .L493+0x4
-	bl	StringExpandPlaceholders
-.L445:
-	ldr	r0, .L493+0x8
+.L441:
+	ldr	r0, .L489+0x8
 	mov	r1, r8
 	add	r4, r7, r1
 	lsl	r4, r4, #0x3
 	add	r4, r4, r0
 	ldrb	r0, [r4, #0xc]
-	ldr	r2, .L493
+	ldr	r2, .L489
 	mov	r1, #0x1
 	str	r1, [sp]
 	mov	r1, #0x0
@@ -8921,31 +8909,31 @@ DebugAction_Give_Pokemon_SelectIVs:
 	mov	r1, #0x1
 	mov	r3, #0x1
 	bl	AddTextPrinterParameterized
-	ldr	r0, .L493+0xc
+	ldr	r0, .L489+0xc
 	str	r0, [r4]
-	b	.L455
-.L494:
+	b	.L451
+.L490:
 	.align	2, 0
-.L493:
+.L489:
 	.word	gStringVar4
 	.word	gDebugText_PokemonIV_5
 	.word	gTasks
 	.word	DebugAction_Give_Pokemon_SelectIVs
-.L444:
+.L440:
 	mov	r5, #0x0
 	strh	r5, [r6, #0xe]
 	strh	r5, [r6, #0x10]
 	strh	r5, [r6, #0x16]
-	ldr	r0, .L495
-	ldr	r1, .L495+0x4
+	ldr	r0, .L491
+	ldr	r1, .L491+0x4
 	ldr	r1, [r1]
 	bl	StringCopy
-	ldr	r4, .L495+0x8
+	ldr	r4, .L491+0x8
 	mov	r2, #0xe
 	ldrsh	r0, [r6, r2]
 	lsl	r1, r0, #0x4
 	add	r1, r1, r0
-	ldr	r0, .L495+0xc
+	ldr	r0, .L491+0xc
 	add	r1, r1, r0
 	add	r0, r4, #0
 	bl	StringCopy
@@ -8954,14 +8942,14 @@ DebugAction_Give_Pokemon_SelectIVs:
 	mov	r2, #0x0
 	mov	r3, #0xf
 	bl	StringCopyPadded
-	ldr	r0, .L495+0x10
+	ldr	r0, .L491+0x10
 	mov	r3, #0xe
 	ldrsh	r1, [r6, r3]
 	mov	r2, #0x2
 	mov	r3, #0x3
 	bl	ConvertIntToDecimalStringN
-	ldr	r4, .L495+0x14
-	ldr	r1, .L495+0x18
+	ldr	r4, .L491+0x14
+	ldr	r1, .L491+0x18
 	add	r0, r4, #0
 	bl	StringExpandPlaceholders
 	ldrb	r0, [r6, #0xc]
@@ -8972,12 +8960,12 @@ DebugAction_Give_Pokemon_SelectIVs:
 	add	r2, r4, #0
 	mov	r3, #0x1
 	bl	AddTextPrinterParameterized
-	ldr	r0, .L495+0x1c
+	ldr	r0, .L491+0x1c
 	str	r0, [r6]
-	b	.L455
-.L496:
+	b	.L451
+.L492:
 	.align	2, 0
-.L495:
+.L491:
 	.word	gStringVar2
 	.word	gText_DigitIndicator
 	.word	gStringVar1
@@ -8986,28 +8974,28 @@ DebugAction_Give_Pokemon_SelectIVs:
 	.word	gStringVar4
 	.word	gDebugText_PokemonMove_0
 	.word	DebugAction_Give_Pokemon_Move
-.L434:
+.L430:
 	mov	r0, #0x2
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L455	@cond_branch
+	beq	.L451	@cond_branch
 	mov	r0, #0x5
 	bl	PlaySE
-	ldr	r0, .L497
+	ldr	r0, .L493
 	ldr	r0, [r0]
 	bl	Free
 	mov	r0, r8
 	bl	DebugAction_DestroyExtraWindow
-.L455:
+.L451:
 	add	sp, sp, #0xc
 	pop	{r3}
 	mov	r8, r3
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L498:
+.L494:
 	.align	2, 0
-.L497:
+.L493:
 	.word	sDebugMonData
 .Lfe58:
 	.size	 DebugAction_Give_Pokemon_SelectIVs,.Lfe58-DebugAction_Give_Pokemon_SelectIVs
@@ -9019,14 +9007,14 @@ DebugAction_Give_Pokemon_Move:
 	add	sp, sp, #-0xc
 	lsl	r0, r0, #0x18
 	lsr	r6, r0, #0x18
-	ldr	r4, .L539
+	ldr	r4, .L535
 	ldrh	r1, [r4, #0x2e]
 	mov	r0, #0xf0
 	and	r0, r0, r1
 	cmp	r0, #0
-	bne	.LCB7721
-	b	.L500	@long jump
-.LCB7721:
+	bne	.LCB7707
+	b	.L496	@long jump
+.LCB7707:
 	mov	r0, #0x5
 	bl	PlaySE
 	ldrh	r1, [r4, #0x2e]
@@ -9034,12 +9022,12 @@ DebugAction_Give_Pokemon_Move:
 	and	r0, r0, r1
 	lsl	r7, r6, #0x2
 	cmp	r0, #0
-	beq	.L501	@cond_branch
-	ldr	r1, .L539+0x4
+	beq	.L497	@cond_branch
+	ldr	r1, .L535+0x4
 	add	r0, r7, r6
 	lsl	r0, r0, #0x3
 	add	r2, r0, r1
-	ldr	r1, .L539+0x8
+	ldr	r1, .L535+0x8
 	mov	r3, #0x10
 	ldrsh	r0, [r2, r3]
 	lsl	r0, r0, #0x2
@@ -9050,22 +9038,22 @@ DebugAction_Give_Pokemon_Move:
 	strh	r0, [r2, #0xe]
 	lsl	r0, r0, #0x10
 	asr	r0, r0, #0x10
-	ldr	r1, .L539+0xc
+	ldr	r1, .L535+0xc
 	cmp	r0, r1
-	ble	.L501	@cond_branch
+	ble	.L497	@cond_branch
 	strh	r1, [r2, #0xe]
-.L501:
-	ldr	r2, .L539
+.L497:
+	ldr	r2, .L535
 	ldrh	r1, [r2, #0x2e]
 	mov	r0, #0x80
 	and	r0, r0, r1
-	ldr	r4, .L539+0x4
+	ldr	r4, .L535+0x4
 	cmp	r0, #0
-	beq	.L503	@cond_branch
+	beq	.L499	@cond_branch
 	add	r0, r7, r6
 	lsl	r0, r0, #0x3
 	add	r3, r0, r4
-	ldr	r1, .L539+0x8
+	ldr	r1, .L535+0x8
 	mov	r5, #0x10
 	ldrsh	r0, [r3, r5]
 	lsl	r0, r0, #0x2
@@ -9076,15 +9064,15 @@ DebugAction_Give_Pokemon_Move:
 	strh	r0, [r3, #0xe]
 	lsl	r0, r0, #0x10
 	cmp	r0, #0
-	bge	.L503	@cond_branch
+	bge	.L499	@cond_branch
 	mov	r0, #0x0
 	strh	r0, [r3, #0xe]
-.L503:
+.L499:
 	ldrh	r1, [r2, #0x2e]
 	mov	r0, #0x20
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L505	@cond_branch
+	beq	.L501	@cond_branch
 	add	r0, r7, r6
 	lsl	r0, r0, #0x3
 	add	r1, r0, r4
@@ -9092,16 +9080,16 @@ DebugAction_Give_Pokemon_Move:
 	mov	r3, #0x10
 	ldrsh	r0, [r1, r3]
 	cmp	r0, #0
-	ble	.L505	@cond_branch
+	ble	.L501	@cond_branch
 	sub	r0, r2, #0x1
 	strh	r0, [r1, #0x10]
-.L505:
-	ldr	r0, .L539
+.L501:
+	ldr	r0, .L535
 	ldrh	r1, [r0, #0x2e]
 	mov	r0, #0x10
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L507	@cond_branch
+	beq	.L503	@cond_branch
 	add	r0, r7, r6
 	lsl	r0, r0, #0x3
 	add	r1, r0, r4
@@ -9109,13 +9097,13 @@ DebugAction_Give_Pokemon_Move:
 	mov	r4, #0x10
 	ldrsh	r0, [r1, r4]
 	cmp	r0, #0x2
-	bgt	.L507	@cond_branch
+	bgt	.L503	@cond_branch
 	add	r0, r2, #0x1
 	strh	r0, [r1, #0x10]
-.L507:
-	ldr	r0, .L539+0x10
-	ldr	r2, .L539+0x14
-	ldr	r1, .L539+0x4
+.L503:
+	ldr	r0, .L535+0x10
+	ldr	r2, .L535+0x14
+	ldr	r1, .L535+0x4
 	add	r4, r7, r6
 	lsl	r4, r4, #0x3
 	add	r4, r4, r1
@@ -9125,12 +9113,12 @@ DebugAction_Give_Pokemon_Move:
 	add	r1, r1, r2
 	ldr	r1, [r1]
 	bl	StringCopy
-	ldr	r5, .L539+0x18
+	ldr	r5, .L535+0x18
 	mov	r1, #0xe
 	ldrsh	r0, [r4, r1]
 	lsl	r1, r0, #0x4
 	add	r1, r1, r0
-	ldr	r0, .L539+0x1c
+	ldr	r0, .L535+0x1c
 	add	r1, r1, r0
 	add	r0, r5, #0
 	bl	StringCopy
@@ -9139,7 +9127,7 @@ DebugAction_Give_Pokemon_Move:
 	mov	r2, #0x0
 	mov	r3, #0xf
 	bl	StringCopyPadded
-	ldr	r0, .L539+0x20
+	ldr	r0, .L535+0x20
 	mov	r2, #0xe
 	ldrsh	r1, [r4, r2]
 	mov	r2, #0x2
@@ -9148,15 +9136,15 @@ DebugAction_Give_Pokemon_Move:
 	mov	r3, #0x16
 	ldrsh	r0, [r4, r3]
 	cmp	r0, #0x1
-	beq	.L511	@cond_branch
+	beq	.L507	@cond_branch
 	cmp	r0, #0x1
-	bgt	.L516	@cond_branch
+	bgt	.L512	@cond_branch
 	cmp	r0, #0
-	beq	.L510	@cond_branch
-	b	.L509
-.L540:
+	beq	.L506	@cond_branch
+	b	.L505
+.L536:
 	.align	2, 0
-.L539:
+.L535:
 	.word	gMain
 	.word	gTasks
 	.word	sPowersOfTen
@@ -9166,53 +9154,53 @@ DebugAction_Give_Pokemon_Move:
 	.word	gStringVar1
 	.word	gMoveNames
 	.word	gStringVar3
-.L516:
+.L512:
 	cmp	r0, #0x2
-	beq	.L512	@cond_branch
+	beq	.L508	@cond_branch
 	cmp	r0, #0x3
-	beq	.L513	@cond_branch
-	b	.L509
-.L510:
+	beq	.L509	@cond_branch
+	b	.L505
+.L506:
+	ldr	r0, .L537
+	ldr	r1, .L537+0x4
+	bl	StringExpandPlaceholders
+	b	.L505
+.L538:
+	.align	2, 0
+.L537:
+	.word	gStringVar4
+	.word	gDebugText_PokemonMove_0
+.L507:
+	ldr	r0, .L539
+	ldr	r1, .L539+0x4
+	bl	StringExpandPlaceholders
+	b	.L505
+.L540:
+	.align	2, 0
+.L539:
+	.word	gStringVar4
+	.word	gDebugText_PokemonMove_1
+.L508:
 	ldr	r0, .L541
 	ldr	r1, .L541+0x4
 	bl	StringExpandPlaceholders
-	b	.L509
+	b	.L505
 .L542:
 	.align	2, 0
 .L541:
 	.word	gStringVar4
-	.word	gDebugText_PokemonMove_0
-.L511:
+	.word	gDebugText_PokemonMove_2
+.L509:
 	ldr	r0, .L543
 	ldr	r1, .L543+0x4
 	bl	StringExpandPlaceholders
-	b	.L509
-.L544:
-	.align	2, 0
-.L543:
-	.word	gStringVar4
-	.word	gDebugText_PokemonMove_1
-.L512:
-	ldr	r0, .L545
-	ldr	r1, .L545+0x4
-	bl	StringExpandPlaceholders
-	b	.L509
-.L546:
-	.align	2, 0
-.L545:
-	.word	gStringVar4
-	.word	gDebugText_PokemonMove_2
-.L513:
-	ldr	r0, .L547
-	ldr	r1, .L547+0x4
-	bl	StringExpandPlaceholders
-.L509:
-	ldr	r1, .L547+0x8
+.L505:
+	ldr	r1, .L543+0x8
 	add	r0, r7, r6
 	lsl	r0, r0, #0x3
 	add	r0, r0, r1
 	ldrb	r0, [r0, #0xc]
-	ldr	r2, .L547
+	ldr	r2, .L543
 	mov	r1, #0x1
 	str	r1, [sp]
 	mov	r1, #0x0
@@ -9221,16 +9209,16 @@ DebugAction_Give_Pokemon_Move:
 	mov	r1, #0x1
 	mov	r3, #0x1
 	bl	AddTextPrinterParameterized
-.L500:
-	ldr	r0, .L547+0xc
+.L496:
+	ldr	r0, .L543+0xc
 	ldrh	r1, [r0, #0x2e]
 	mov	r0, #0x1
 	and	r0, r0, r1
 	cmp	r0, #0
-	bne	.LCB7986
-	b	.L517	@long jump
-.LCB7986:
-	ldr	r1, .L547+0x8
+	bne	.LCB7972
+	b	.L513	@long jump
+.LCB7972:
+	ldr	r1, .L543+0x8
 	lsl	r2, r6, #0x2
 	add	r0, r2, r6
 	lsl	r0, r0, #0x3
@@ -9240,68 +9228,68 @@ DebugAction_Give_Pokemon_Move:
 	add	r4, r1, #0
 	add	r7, r2, #0
 	cmp	r0, #0
-	bne	.L518	@cond_branch
+	bne	.L514	@cond_branch
 	mov	r0, #0x4
 	strh	r0, [r3, #0x16]
-.L518:
+.L514:
 	mov	r5, #0x16
 	ldrsh	r0, [r3, r5]
 	cmp	r0, #0x1
-	beq	.L521	@cond_branch
+	beq	.L517	@cond_branch
 	cmp	r0, #0x1
-	bgt	.L526	@cond_branch
+	bgt	.L522	@cond_branch
 	cmp	r0, #0
-	beq	.L520	@cond_branch
-	b	.L519
-.L548:
+	beq	.L516	@cond_branch
+	b	.L515
+.L544:
 	.align	2, 0
-.L547:
+.L543:
 	.word	gStringVar4
 	.word	gDebugText_PokemonMove_3
 	.word	gTasks
 	.word	gMain
-.L526:
+.L522:
 	cmp	r0, #0x2
-	beq	.L522	@cond_branch
+	beq	.L518	@cond_branch
 	cmp	r0, #0x3
-	beq	.L523	@cond_branch
-	b	.L519
-.L520:
-	ldr	r0, .L549
+	beq	.L519	@cond_branch
+	b	.L515
+.L516:
+	ldr	r0, .L545
 	ldr	r1, [r0]
 	ldrh	r0, [r3, #0xe]
 	strh	r0, [r1, #0xe]
-	b	.L519
+	b	.L515
+.L546:
+	.align	2, 0
+.L545:
+	.word	sDebugMonData
+.L517:
+	ldr	r0, .L547
+	ldr	r1, [r0]
+	ldrh	r0, [r3, #0xe]
+	strh	r0, [r1, #0x10]
+	b	.L515
+.L548:
+	.align	2, 0
+.L547:
+	.word	sDebugMonData
+.L518:
+	ldr	r0, .L549
+	ldr	r1, [r0]
+	ldrh	r0, [r3, #0xe]
+	strh	r0, [r1, #0x12]
+	b	.L515
 .L550:
 	.align	2, 0
 .L549:
 	.word	sDebugMonData
-.L521:
+.L519:
 	ldr	r0, .L551
 	ldr	r1, [r0]
 	ldrh	r0, [r3, #0xe]
-	strh	r0, [r1, #0x10]
-	b	.L519
-.L552:
-	.align	2, 0
-.L551:
-	.word	sDebugMonData
-.L522:
-	ldr	r0, .L553
-	ldr	r1, [r0]
-	ldrh	r0, [r3, #0xe]
-	strh	r0, [r1, #0x12]
-	b	.L519
-.L554:
-	.align	2, 0
-.L553:
-	.word	sDebugMonData
-.L523:
-	ldr	r0, .L555
-	ldr	r1, [r0]
-	ldrh	r0, [r3, #0xe]
 	strh	r0, [r1, #0x14]
-.L519:
+.L515:
 	add	r0, r7, r6
 	lsl	r0, r0, #0x3
 	add	r5, r0, r4
@@ -9309,22 +9297,22 @@ DebugAction_Give_Pokemon_Move:
 	mov	r2, #0x16
 	ldrsh	r0, [r5, r2]
 	cmp	r0, #0x2
-	bgt	.L527	@cond_branch
+	bgt	.L523	@cond_branch
 	add	r0, r1, #0x1
 	mov	r1, #0x0
 	strh	r0, [r5, #0x16]
 	strh	r1, [r5, #0xe]
 	strh	r1, [r5, #0x10]
-	ldr	r0, .L555+0x4
-	ldr	r1, .L555+0x8
+	ldr	r0, .L551+0x4
+	ldr	r1, .L551+0x8
 	ldr	r1, [r1]
 	bl	StringCopy
-	ldr	r4, .L555+0xc
+	ldr	r4, .L551+0xc
 	mov	r3, #0xe
 	ldrsh	r0, [r5, r3]
 	lsl	r1, r0, #0x4
 	add	r1, r1, r0
-	ldr	r0, .L555+0x10
+	ldr	r0, .L551+0x10
 	add	r1, r1, r0
 	add	r0, r4, #0
 	bl	StringCopy
@@ -9333,7 +9321,7 @@ DebugAction_Give_Pokemon_Move:
 	mov	r2, #0x0
 	mov	r3, #0xf
 	bl	StringCopyPadded
-	ldr	r0, .L555+0x14
+	ldr	r0, .L551+0x14
 	mov	r4, #0xe
 	ldrsh	r1, [r5, r4]
 	mov	r2, #0x2
@@ -9342,68 +9330,68 @@ DebugAction_Give_Pokemon_Move:
 	mov	r1, #0x16
 	ldrsh	r0, [r5, r1]
 	cmp	r0, #0x1
-	beq	.L530	@cond_branch
+	beq	.L526	@cond_branch
 	cmp	r0, #0x1
-	bgt	.L535	@cond_branch
+	bgt	.L531	@cond_branch
 	cmp	r0, #0
-	beq	.L529	@cond_branch
-	b	.L528
-.L556:
+	beq	.L525	@cond_branch
+	b	.L524
+.L552:
 	.align	2, 0
-.L555:
+.L551:
 	.word	sDebugMonData
 	.word	gStringVar2
 	.word	gText_DigitIndicator
 	.word	gStringVar1
 	.word	gMoveNames
 	.word	gStringVar3
-.L535:
+.L531:
 	cmp	r0, #0x2
-	beq	.L531	@cond_branch
+	beq	.L527	@cond_branch
 	cmp	r0, #0x3
-	beq	.L532	@cond_branch
-	b	.L528
-.L529:
+	beq	.L528	@cond_branch
+	b	.L524
+.L525:
+	ldr	r0, .L553
+	ldr	r1, .L553+0x4
+	bl	StringExpandPlaceholders
+	b	.L524
+.L554:
+	.align	2, 0
+.L553:
+	.word	gStringVar4
+	.word	gDebugText_PokemonMove_0
+.L526:
+	ldr	r0, .L555
+	ldr	r1, .L555+0x4
+	bl	StringExpandPlaceholders
+	b	.L524
+.L556:
+	.align	2, 0
+.L555:
+	.word	gStringVar4
+	.word	gDebugText_PokemonMove_1
+.L527:
 	ldr	r0, .L557
 	ldr	r1, .L557+0x4
 	bl	StringExpandPlaceholders
-	b	.L528
+	b	.L524
 .L558:
 	.align	2, 0
 .L557:
 	.word	gStringVar4
-	.word	gDebugText_PokemonMove_0
-.L530:
+	.word	gDebugText_PokemonMove_2
+.L528:
 	ldr	r0, .L559
 	ldr	r1, .L559+0x4
 	bl	StringExpandPlaceholders
-	b	.L528
-.L560:
-	.align	2, 0
-.L559:
-	.word	gStringVar4
-	.word	gDebugText_PokemonMove_1
-.L531:
-	ldr	r0, .L561
-	ldr	r1, .L561+0x4
-	bl	StringExpandPlaceholders
-	b	.L528
-.L562:
-	.align	2, 0
-.L561:
-	.word	gStringVar4
-	.word	gDebugText_PokemonMove_2
-.L532:
-	ldr	r0, .L563
-	ldr	r1, .L563+0x4
-	bl	StringExpandPlaceholders
-.L528:
-	ldr	r0, .L563+0x8
+.L524:
+	ldr	r0, .L559+0x8
 	add	r4, r7, r6
 	lsl	r4, r4, #0x3
 	add	r4, r4, r0
 	ldrb	r0, [r4, #0xc]
-	ldr	r2, .L563
+	ldr	r2, .L559
 	mov	r1, #0x1
 	str	r1, [sp]
 	mov	r1, #0x0
@@ -9412,50 +9400,50 @@ DebugAction_Give_Pokemon_Move:
 	mov	r1, #0x1
 	mov	r3, #0x1
 	bl	AddTextPrinterParameterized
-	ldr	r0, .L563+0xc
+	ldr	r0, .L559+0xc
 	str	r0, [r4]
-	b	.L537
-.L564:
+	b	.L533
+.L560:
 	.align	2, 0
-.L563:
+.L559:
 	.word	gStringVar4
 	.word	gDebugText_PokemonMove_3
 	.word	gTasks
 	.word	DebugAction_Give_Pokemon_Move
-.L527:
+.L523:
 	mov	r0, #0x0
 	strh	r0, [r5, #0xe]
 	strh	r0, [r5, #0x10]
 	mov	r0, #0xa9
 	lsl	r0, r0, #0x1
 	bl	PlaySE
-	ldr	r0, .L565
+	ldr	r0, .L561
 	str	r0, [r5]
-	b	.L537
-.L566:
+	b	.L533
+.L562:
 	.align	2, 0
-.L565:
+.L561:
 	.word	DebugAction_Give_Pokemon_ComplexCreateMon
-.L517:
+.L513:
 	mov	r0, #0x2
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L537	@cond_branch
+	beq	.L533	@cond_branch
 	mov	r0, #0x5
 	bl	PlaySE
-	ldr	r0, .L567
+	ldr	r0, .L563
 	ldr	r0, [r0]
 	bl	Free
 	add	r0, r6, #0
 	bl	DebugAction_DestroyExtraWindow
-.L537:
+.L533:
 	add	sp, sp, #0xc
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L568:
+.L564:
 	.align	2, 0
-.L567:
+.L563:
 	.word	sDebugMonData
 .Lfe59:
 	.size	 DebugAction_Give_Pokemon_Move,.Lfe59-DebugAction_Give_Pokemon_Move
@@ -9472,7 +9460,7 @@ DebugAction_Give_Pokemon_ComplexCreateMon:
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	str	r0, [sp, #0x8c]
-	ldr	r4, .L614
+	ldr	r4, .L610
 	ldr	r0, [r4]
 	ldrh	r0, [r0]
 	bl	GetBaseFormSpeciesId
@@ -9517,10 +9505,10 @@ DebugAction_Give_Pokemon_ComplexCreateMon:
 	ldrb	r0, [r1, #0xd]
 	strb	r0, [r2, #0x5]
 	cmp	r7, #0x19
-	beq	.L571	@cond_branch
+	beq	.L567	@cond_branch
 	cmp	r7, #0xff
-	bne	.L570	@cond_branch
-.L571:
+	bne	.L566	@cond_branch
+.L567:
 	bl	Random
 	lsl	r0, r0, #0x10
 	lsr	r0, r0, #0x10
@@ -9528,10 +9516,10 @@ DebugAction_Give_Pokemon_ComplexCreateMon:
 	bl	__umodsi3
 	lsl	r0, r0, #0x18
 	lsr	r7, r0, #0x18
-.L570:
+.L566:
 	cmp	r5, #0x1
-	bne	.L572	@cond_branch
-	ldr	r0, .L614+0x4
+	bne	.L568	@cond_branch
+	ldr	r0, .L610+0x4
 	ldr	r1, [r0]
 	ldrb	r5, [r1, #0xa]
 	ldrb	r0, [r1, #0xb]
@@ -9546,13 +9534,13 @@ DebugAction_Give_Pokemon_ComplexCreateMon:
 	add	r1, sp, #0x88
 	mov	sl, r1
 	lsr	r6, r5, #0x10
-	ldr	r0, .L614+0x8
+	ldr	r0, .L610+0x8
 	mov	r8, r0
 	add	r0, r5, #0
 	mov	r1, r8
 	and	r0, r0, r1
 	eor	r6, r6, r0
-.L573:
+.L569:
 	bl	Random
 	add	r4, r0, #0
 	bl	Random
@@ -9577,7 +9565,7 @@ DebugAction_Give_Pokemon_ComplexCreateMon:
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	cmp	r7, r0
-	bne	.L573	@cond_branch
+	bne	.L569	@cond_branch
 	mov	r0, #0x1
 	str	r0, [sp]
 	str	r4, [sp, #0x4]
@@ -9590,14 +9578,14 @@ DebugAction_Give_Pokemon_ComplexCreateMon:
 	ldr	r2, [sp, #0x94]
 	mov	r3, #0x20
 	bl	CreateMon
-	b	.L578
-.L615:
+	b	.L574
+.L611:
 	.align	2, 0
-.L614:
+.L610:
 	.word	sDebugMonData
 	.word	gSaveBlock2Ptr
 	.word	0xffff
-.L572:
+.L568:
 	str	r7, [sp]
 	mov	r1, r9
 	str	r1, [sp, #0x4]
@@ -9608,10 +9596,10 @@ DebugAction_Give_Pokemon_ComplexCreateMon:
 	bl	CreateMonWithNature
 	add	r0, sp, #0x88
 	mov	sl, r0
-.L578:
+.L574:
 	mov	r4, #0x0
 	mov	r5, sl
-.L582:
+.L578:
 	mov	r0, sp
 	add	r0, r0, r4
 	add	r0, r0, #0x80
@@ -9619,61 +9607,61 @@ DebugAction_Give_Pokemon_ComplexCreateMon:
 	strb	r0, [r5]
 	ldrb	r0, [r5]
 	cmp	r0, #0x20
-	beq	.L581	@cond_branch
+	beq	.L577	@cond_branch
 	cmp	r0, #0xff
-	beq	.L581	@cond_branch
+	beq	.L577	@cond_branch
 	add	r1, r4, #0
 	add	r1, r1, #0x27
 	add	r0, sp, #0x14
 	add	r2, r5, #0
 	bl	SetMonData
-.L581:
+.L577:
 	add	r0, r4, #0x1
 	lsl	r0, r0, #0x18
 	lsr	r4, r0, #0x18
 	cmp	r4, #0x5
-	bls	.L582	@cond_branch
+	bls	.L578	@cond_branch
 	add	r0, sp, #0x14
 	bl	CalculateMonStats
 	mov	r4, #0x0
-	ldr	r5, .L616
-.L588:
+	ldr	r5, .L612
+.L584:
 	lsl	r0, r4, #0x1
 	mov	r1, sp
 	add	r1, r1, r0
 	add	r1, r1, #0x78
 	ldrh	r0, [r1]
 	cmp	r0, #0
-	beq	.L587	@cond_branch
+	beq	.L583	@cond_branch
 	cmp	r0, #0xff
-	beq	.L587	@cond_branch
+	beq	.L583	@cond_branch
 	cmp	r0, r5
-	bhi	.L587	@cond_branch
+	bhi	.L583	@cond_branch
 	add	r1, r0, #0
 	add	r0, sp, #0x14
 	add	r2, r4, #0
 	bl	SetMonMoveSlot
-.L587:
+.L583:
 	add	r0, r4, #0x1
 	lsl	r0, r0, #0x18
 	lsr	r4, r0, #0x18
 	cmp	r4, #0x3
-	bls	.L588	@cond_branch
+	bls	.L584	@cond_branch
 	mov	r0, #0x89
 	add	r0, r0, sp
 	ldrb	r1, [r0]
 	cmp	r1, #0xff
-	beq	.L593	@cond_branch
+	beq	.L589	@cond_branch
 	ldr	r0, [sp, #0x90]
 	mov	r2, r9
 	bl	GetAbilityBySpecies
 	lsl	r0, r0, #0x10
 	cmp	r0, #0
-	bne	.L592	@cond_branch
-.L593:
+	bne	.L588	@cond_branch
+.L589:
 	mov	r4, sp
 	add	r4, r4, #0x89
-.L594:
+.L590:
 	bl	Random
 	lsl	r0, r0, #0x10
 	lsr	r0, r0, #0x10
@@ -9686,14 +9674,14 @@ DebugAction_Give_Pokemon_ComplexCreateMon:
 	bl	GetAbilityBySpecies
 	lsl	r0, r0, #0x10
 	cmp	r0, #0
-	beq	.L594	@cond_branch
-.L592:
+	beq	.L590	@cond_branch
+.L588:
 	add	r0, sp, #0x14
 	mov	r1, #0x2e
 	mov	r2, sp
 	add	r2, r2, #0x89
 	bl	SetMonData
-	ldr	r4, .L616+0x4
+	ldr	r4, .L612+0x4
 	ldr	r2, [r4]
 	add	r0, sp, #0x14
 	mov	r1, #0x7
@@ -9704,66 +9692,66 @@ DebugAction_Give_Pokemon_ComplexCreateMon:
 	mov	r1, #0x31
 	bl	SetMonData
 	mov	r4, #0x0
-	b	.L599
-.L617:
+	b	.L595
+.L613:
 	.align	2, 0
-.L616:
+.L612:
 	.word	0x2f3
 	.word	gSaveBlock2Ptr
-.L601:
+.L597:
 	add	r0, r4, #0x1
 	lsl	r0, r0, #0x18
 	lsr	r4, r0, #0x18
-.L599:
+.L595:
 	cmp	r4, #0x5
-	bhi	.L613	@cond_branch
+	bhi	.L609	@cond_branch
 	mov	r0, #0x64
 	mov	r1, r4
 	mul	r1, r1, r0
-	ldr	r0, .L618
+	ldr	r0, .L614
 	add	r5, r1, r0
 	add	r0, r5, #0
 	mov	r1, #0xb
 	mov	r2, #0x0
 	bl	GetMonData
 	cmp	r0, #0
-	bne	.L601	@cond_branch
+	bne	.L597	@cond_branch
 	mov	r6, #0x0
 	add	r0, r5, #0
 	add	r1, sp, #0x14
 	mov	r2, #0x64
 	bl	CopyMon
-	ldr	r1, .L618+0x4
+	ldr	r1, .L614+0x4
 	add	r0, r4, #0x1
 	strb	r0, [r1]
-	b	.L606
-.L619:
+	b	.L602
+.L615:
 	.align	2, 0
-.L618:
+.L614:
 	.word	gPlayerParty
 	.word	gPlayerPartyCount
-.L613:
+.L609:
 	add	r0, sp, #0x14
 	bl	SendMonToPC
 	lsl	r0, r0, #0x18
 	lsr	r6, r0, #0x18
-.L606:
+.L602:
 	ldr	r0, [sp, #0x90]
 	bl	SpeciesToNationalPokedexNum
 	lsl	r0, r0, #0x10
 	lsr	r4, r0, #0x10
 	cmp	r6, #0
-	blt	.L607	@cond_branch
+	blt	.L603	@cond_branch
 	cmp	r6, #0x1
-	bgt	.L607	@cond_branch
+	bgt	.L603	@cond_branch
 	add	r0, r4, #0
 	mov	r1, #0x2
 	bl	GetSetPokedexFlag
 	add	r0, r4, #0
 	mov	r1, #0x3
 	bl	GetSetPokedexFlag
-.L607:
-	ldr	r0, .L620
+.L603:
+	ldr	r0, .L616
 	ldr	r0, [r0]
 	bl	Free
 	ldr	r0, [sp, #0x8c]
@@ -9776,9 +9764,9 @@ DebugAction_Give_Pokemon_ComplexCreateMon:
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L621:
+.L617:
 	.align	2, 0
-.L620:
+.L616:
 	.word	sDebugMonData
 .Lfe60:
 	.size	 DebugAction_Give_Pokemon_ComplexCreateMon,.Lfe60-DebugAction_Give_Pokemon_ComplexCreateMon
@@ -9791,13 +9779,13 @@ DebugAction_Give_CHEAT:
 	lsr	r0, r0, #0x18
 	bl	Debug_DestroyMenu
 	bl	ScriptContext2_Enable
-	ldr	r0, .L623
+	ldr	r0, .L619
 	bl	ScriptContext1_SetupScript
 	pop	{r0}
 	bx	r0
-.L624:
+.L620:
 	.align	2, 0
-.L623:
+.L619:
 	.word	Debug_CheatStart
 .Lfe61:
 	.size	 DebugAction_Give_CHEAT,.Lfe61-DebugAction_Give_CHEAT
@@ -9806,12 +9794,12 @@ DebugAction_Give_CHEAT:
 	.thumb_func
 DebugAction_GiveAllTMs:
 	push	{r4, r5, lr}
-	ldr	r0, .L631
+	ldr	r0, .L627
 	bl	PlayFanfare
 	mov	r4, #0xf1
 	lsl	r4, r4, #0x1
-	ldr	r5, .L631+0x4
-.L629:
+	ldr	r5, .L627+0x4
+.L625:
 	add	r0, r4, #0
 	mov	r1, #0x1
 	bl	AddBagItem
@@ -9819,16 +9807,16 @@ DebugAction_GiveAllTMs:
 	lsl	r0, r0, #0x10
 	lsr	r4, r0, #0x10
 	cmp	r4, r5
-	bls	.L629	@cond_branch
-	ldr	r0, .L631+0x8
+	bls	.L625	@cond_branch
+	ldr	r0, .L627+0x8
 	mov	r1, #0x1
 	bl	AddBagItem
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.L632:
+.L628:
 	.align	2, 0
-.L631:
+.L627:
 	.word	0x157
 	.word	0x213
 	.word	0x221

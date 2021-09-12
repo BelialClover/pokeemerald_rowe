@@ -525,6 +525,7 @@ void BattleSetup_StartLatiBattle(void)
     TryUpdateGymLeaderRematchFromWild();
 }
 
+//Music_Search_here
 void BattleSetup_StartLegendaryBattle(void)
 {
     ScriptContext2_Enable();
@@ -534,27 +535,87 @@ void BattleSetup_StartLegendaryBattle(void)
     switch (GetMonData(&gEnemyParty[0], MON_DATA_SPECIES, NULL))
     {
     default:
+	case SPECIES_ARTICUNO:
+	case SPECIES_ZAPDOS:
+	case SPECIES_MOLTRES:
+        CreateBattleStartTask(B_TRANSITION_BLUR, MUS_RG_VS_LEGEND);
+        break;
+	case SPECIES_MEWTWO:
+        CreateBattleStartTask(B_TRANSITION_BLUR, MUS_RG_VS_MEWTWO);
+        break;
+    case SPECIES_MEW:
+        CreateBattleStartTask(B_TRANSITION_GRID_SQUARES, MUS_VS_MEW);
+        break;
+	case SPECIES_SUICUNE:
+		/*/if(gSaveBlock2Ptr->optionsMusicGame == OPTIONS_MUSIC_HOENN)
+			CreateBattleStartTask(B_TRANSITION_GROUDON, MUS_C_VS_LEGEND_BEAST);
+		else/*/
+			CreateBattleStartTask(B_TRANSITION_GROUDON, HG_SEQ_GS_VS_SUICUNE);
+        break;
+	case SPECIES_RAIKOU:
+        /*/if(gSaveBlock2Ptr->optionsMusicGame == OPTIONS_MUSIC_HOENN)
+			CreateBattleStartTask(B_TRANSITION_GROUDON, MUS_C_VS_LEGEND_BEAST);
+		else/*/
+			CreateBattleStartTask(B_TRANSITION_GROUDON, HG_SEQ_GS_VS_RAIKOU);
+        break;
+	case SPECIES_ENTEI:
+        /*/if(gSaveBlock2Ptr->optionsMusicGame == OPTIONS_MUSIC_HOENN)
+			CreateBattleStartTask(B_TRANSITION_GROUDON, MUS_C_VS_LEGEND_BEAST);
+		else/*/
+			CreateBattleStartTask(B_TRANSITION_GROUDON, HG_SEQ_GS_VS_ENTEI);
+        break;
     case SPECIES_GROUDON:
         gBattleTypeFlags |= BATTLE_TYPE_GROUDON;
-        CreateBattleStartTask(B_TRANSITION_GROUDON, MUS_VS_KYOGRE_GROUDON);
+		if(gSaveBlock2Ptr->optionsMusicGame == OPTIONS_MUSIC_JOTHO||
+		   gSaveBlock2Ptr->optionsMusicGame == OPTIONS_MUSIC_SINNOH)
+		    CreateBattleStartTask(B_TRANSITION_GROUDON, HG_SEQ_GS_VS_KODAI);
+		else
+			CreateBattleStartTask(B_TRANSITION_GROUDON, MUS_VS_KYOGRE_GROUDON);
         break;
     case SPECIES_KYOGRE:
         gBattleTypeFlags |= BATTLE_TYPE_KYOGRE;
-        CreateBattleStartTask(B_TRANSITION_KYOGRE, MUS_VS_KYOGRE_GROUDON);
+		if(gSaveBlock2Ptr->optionsMusicGame == OPTIONS_MUSIC_JOTHO||
+		   gSaveBlock2Ptr->optionsMusicGame == OPTIONS_MUSIC_SINNOH)
+		    CreateBattleStartTask(B_TRANSITION_KYOGRE, HG_SEQ_GS_VS_KODAI);
+		else
+			CreateBattleStartTask(B_TRANSITION_KYOGRE, MUS_VS_KYOGRE_GROUDON);
         break;
     case SPECIES_RAYQUAZA:
         gBattleTypeFlags |= BATTLE_TYPE_RAYQUAZA;
-        CreateBattleStartTask(B_TRANSITION_RAYQUAZA, MUS_VS_KYOGRE_GROUDON);
+		if(gSaveBlock2Ptr->optionsMusicGame == OPTIONS_MUSIC_JOTHO||
+		   gSaveBlock2Ptr->optionsMusicGame == OPTIONS_MUSIC_SINNOH)
+		    CreateBattleStartTask(B_TRANSITION_RAYQUAZA, HG_SEQ_GS_VS_KODAI);
+		else
+			CreateBattleStartTask(B_TRANSITION_RAYQUAZA, MUS_VS_KYOGRE_GROUDON);
         break;
     case SPECIES_DEOXYS:
         CreateBattleStartTask(B_TRANSITION_BLUR, MUS_RG_VS_DEOXYS);
         break;
     case SPECIES_LUGIA:
-    case SPECIES_HO_OH:
-        CreateBattleStartTask(B_TRANSITION_BLUR, MUS_RG_VS_LEGEND);
+	CreateBattleStartTask(B_TRANSITION_BLUR, HG_SEQ_GS_VS_LUGIA);
         break;
-    case SPECIES_MEW:
-        CreateBattleStartTask(B_TRANSITION_GRID_SQUARES, MUS_VS_MEW);
+    case SPECIES_HO_OH:
+        CreateBattleStartTask(B_TRANSITION_BLUR, HG_SEQ_GS_VS_HOUOU);
+        break;
+	case SPECIES_AZELF:
+	case SPECIES_MESPRIT:
+	case SPECIES_UXIE:
+        CreateBattleStartTask(B_TRANSITION_BLUR, DP_SEQ_BA_DPOKE1);
+		break;
+	case SPECIES_DARKRAI:
+	case SPECIES_HEATRAN:
+        CreateBattleStartTask(B_TRANSITION_BLUR, DP_SEQ_BA_SECRET2);
+        break;
+	case SPECIES_DIALGA:
+	case SPECIES_PALKIA:
+        CreateBattleStartTask(B_TRANSITION_BLUR, DP_SEQ_BA_DPOKE2);
+        break;
+	case SPECIES_GIRATINA:
+        CreateBattleStartTask(B_TRANSITION_BLUR, PL_SEQ_PL_BA_GIRA);
+        break;
+	case SPECIES_ARCEUS:
+		CreateBattleStartTask(B_TRANSITION_BLUR, DP_SEQ_BA_SECRET1);
+        //CreateBattleStartTask(B_TRANSITION_BLUR, HQ_SEQ_GS_E_ARCEUS);
         break;
     }
 
@@ -606,7 +667,10 @@ void StartRegiBattle(void)
         transitionId = B_TRANSITION_GRID_SQUARES;
         break;
     }
-    CreateBattleStartTask(transitionId, MUS_VS_REGI);
+    if(gSaveBlock2Ptr->optionsMusicGame == OPTIONS_MUSIC_SINNOH)
+		CreateBattleStartTask(transitionId, PL_SEQ_PL_BA_REGI);
+	else
+		CreateBattleStartTask(transitionId, MUS_VS_REGI);
 
     IncrementGameStat(GAME_STAT_TOTAL_BATTLES);
     IncrementGameStat(GAME_STAT_WILD_BATTLES);

@@ -1642,7 +1642,7 @@ InitSecretBaseDecorationSprites:
 	.word	gSpecialVar_0x8006
 	.word	gSpecialVar_0x8007
 	.word	gSpecialVar_Result
-	.word	0x3f1c
+	.word	0x3f1b
 	.word	gDecorations+0x1c
 	.word	gSaveBlock1Ptr
 	.word	0x4054

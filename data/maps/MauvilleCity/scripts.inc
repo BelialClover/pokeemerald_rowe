@@ -32,7 +32,10 @@ MauvilleCity_EventScript_Boy:: @ 81DF3B3
 MauvilleCity_EventScript_Maniac:: @ 81DF3BC
 	msgbox MauvilleCity_Text_AllSortsOfPeopleComeThrough, MSGBOX_NPC
 	//givemon SPECIES_MEW, 1, ITEM_MYSTIC_WATER
-	setflag FLAG_UNUSED_0x020
+	setflag FLAG_DEBUG_MODE
+	additem ITEM_SOUR_APPLE
+	additem ITEM_SWEET_APPLE
+	release
 	end
 
 MauvilleCity_EventScript_Woman:: @ 81DF3C5

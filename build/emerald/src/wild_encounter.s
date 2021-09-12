@@ -40,7 +40,7 @@ gRoute101_LandMons:
 	.byte	0x3
 	.short	0x10
 	.byte	0x3
-	.byte	0x3
+	.byte	0x4
 	.short	0xd8
 	.byte	0x3
 	.byte	0x3
@@ -10069,7 +10069,7 @@ gPetalburg_Woods_20_WaterMons:
 	.type	 gPetalburg_Woods_20_WaterMonsInfo,object
 	.size	 gPetalburg_Woods_20_WaterMonsInfo,8
 gPetalburg_Woods_20_WaterMonsInfo:
-	.byte	0x0
+	.byte	0x5
 	.space	3
 	.word	gPetalburg_Woods_20_WaterMons
 	.globl	gPetalburg_Woods_20_RockSmashMons
@@ -10097,9 +10097,58 @@ gPetalburg_Woods_20_RockSmashMons:
 	.type	 gPetalburg_Woods_20_RockSmashMonsInfo,object
 	.size	 gPetalburg_Woods_20_RockSmashMonsInfo,8
 gPetalburg_Woods_20_RockSmashMonsInfo:
-	.byte	0x0
+	.byte	0x5
 	.space	3
 	.word	gPetalburg_Woods_20_RockSmashMons
+	.globl	gPower_Plant0_LandMons
+	.align	2, 0
+	.type	 gPower_Plant0_LandMons,object
+gPower_Plant0_LandMons:
+	.byte	0x5
+	.byte	0x5
+	.short	0x51
+	.byte	0x5
+	.byte	0x5
+	.short	0x64
+	.byte	0x5
+	.byte	0x5
+	.short	0xac
+	.byte	0x5
+	.byte	0x5
+	.short	0xef
+	.byte	0x5
+	.byte	0x5
+	.short	0x2e0
+	.byte	0x5
+	.byte	0x5
+	.short	0x24b
+	.byte	0x5
+	.byte	0x5
+	.short	0x1df
+	.byte	0x5
+	.byte	0x5
+	.short	0x135
+	.byte	0x5
+	.byte	0x5
+	.short	0x350
+	.byte	0x5
+	.byte	0x5
+	.short	0x343
+	.byte	0x5
+	.byte	0x5
+	.short	0x350
+	.byte	0x5
+	.byte	0x5
+	.short	0x343
+	.size	 gPower_Plant0_LandMons,48
+	.globl	gPower_Plant0_LandMonsInfo
+	.align	2, 0
+	.type	 gPower_Plant0_LandMonsInfo,object
+	.size	 gPower_Plant0_LandMonsInfo,8
+gPower_Plant0_LandMonsInfo:
+	.byte	0x14
+	.space	3
+	.word	gPower_Plant0_LandMons
 	.globl	gWildMonHeaders
 	.align	2, 0
 	.type	 gWildMonHeaders,object
@@ -11424,6 +11473,16 @@ gWildMonHeaders:
 	.word	0x0
 	.word	0x0
 	.word	0x0
+	.byte	0x0
+	.byte	0x3e
+	.space	2
+	.word	gPower_Plant0_LandMonsInfo
+	.word	gPower_Plant0_LandMonsInfo
+	.word	0x0
+	.word	0x0
+	.word	0x0
+	.word	0x0
+	.word	0x0
 	.byte	0xff
 	.byte	0xff
 	.space	2
@@ -11434,7 +11493,7 @@ gWildMonHeaders:
 	.word	0x0
 	.word	0x0
 	.word	0x0
-	.size	 gWildMonHeaders,4256
+	.size	 gWildMonHeaders,4288
 	.globl	gBattlePyramid_1_LandMons
 	.align	2, 0
 	.type	 gBattlePyramid_1_LandMons,object
@@ -12572,8 +12631,7 @@ ChooseWildMonIndex_Fishing:
 	.thumb_func
 ChooseWildMonLevel:
 	push	{lr}
-	mov	r0, #0x0
-	bl	getWildLevel
+	bl	getWildPokemonLevel
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	pop	{r1}
@@ -12941,9 +12999,9 @@ TryGenerateWildMon:
 	cmp	r5, #0x2
 	beq	.L171	@cond_branch
 	cmp	r5, #0x3
-	bne	.LCB1022
+	bne	.LCB1020
 	b	.L178	@long jump
-.LCB1022:
+.LCB1020:
 	b	.L156
 .L157:
 	ldr	r0, [r4, #0x4]
@@ -12953,9 +13011,9 @@ TryGenerateWildMon:
 	bl	TryGetAbilityInfluencedWildMonIndex
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.LCB1038
+	beq	.LCB1036
 	b	.L156	@long jump
-.LCB1038:
+.LCB1036:
 	ldr	r0, [r4, #0x4]
 	mov	r1, #0xd
 	mov	r2, #0x9
@@ -12963,9 +13021,9 @@ TryGenerateWildMon:
 	bl	TryGetAbilityInfluencedWildMonIndex
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.LCB1049
+	beq	.LCB1047
 	b	.L156	@long jump
-.LCB1049:
+.LCB1047:
 	ldr	r0, [r4, #0x4]
 	mov	r1, #0xd
 	mov	r2, #0x1f
@@ -12973,9 +13031,9 @@ TryGenerateWildMon:
 	bl	TryGetAbilityInfluencedWildMonIndex
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.LCB1060
+	beq	.LCB1058
 	b	.L156	@long jump
-.LCB1060:
+.LCB1058:
 	ldr	r0, [r4, #0x4]
 	mov	r1, #0xa
 	mov	r2, #0x12
@@ -12983,9 +13041,9 @@ TryGenerateWildMon:
 	bl	TryGetAbilityInfluencedWildMonIndex
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.LCB1071
+	beq	.LCB1069
 	b	.L156	@long jump
-.LCB1071:
+.LCB1069:
 	ldr	r0, [r4, #0x4]
 	mov	r1, #0xc
 	mov	r2, #0x8b
@@ -13578,9 +13636,9 @@ StandardWildEncounter:
 	ldr	r0, .L315
 	ldrb	r0, [r0]
 	cmp	r0, #0x1
-	bne	.LCB1862
+	bne	.LCB1860
 	b	.L270	@long jump
-.LCB1862:
+.LCB1860:
 	bl	GetCurrentMapWildMonHeaderId
 	lsl	r0, r0, #0x10
 	lsr	r4, r0, #0x10
@@ -13601,9 +13659,9 @@ StandardWildEncounter:
 	bl	DoGlobalWildEncounterDiceRoll
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	bne	.LCB1895
+	bne	.LCB1893
 	b	.L270	@long jump
-.LCB1895:
+.LCB1893:
 .L257:
 	ldr	r0, .L315+0xc
 	lsl	r1, r4, #0x5
@@ -13616,9 +13674,9 @@ StandardWildEncounter:
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	cmp	r0, #0x1
-	beq	.LCB1910
+	beq	.LCB1908
 	b	.L270	@long jump
-.LCB1910:
+.LCB1908:
 	ldr	r0, [r4]
 	mov	r1, #0x0
 	mov	r2, #0x2
@@ -13626,15 +13684,15 @@ StandardWildEncounter:
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	cmp	r0, #0x1
-	beq	.LCB1920
+	beq	.LCB1918
 	b	.L270	@long jump
-.LCB1920:
+.LCB1918:
 	mov	r0, #0x1
 	bl	TryGenerateBattlePikeWildMon
 	cmp	r0, #0
-	bne	.LCB1925
+	bne	.LCB1923
 	b	.L270	@long jump
-.LCB1925:
+.LCB1923:
 	bl	BattleSetup_StartBattlePikeWildBattle
 .L314:
 	mov	r0, #0x1
@@ -13649,9 +13707,9 @@ StandardWildEncounter:
 .L256:
 	ldr	r0, .L317
 	cmp	r1, r0
-	beq	.LCB1945
+	beq	.LCB1943
 	b	.L270	@long jump
-.LCB1945:
+.LCB1943:
 	ldr	r0, .L317+0x4
 	ldr	r0, [r0]
 	ldr	r1, .L317+0x8
@@ -13662,9 +13720,9 @@ StandardWildEncounter:
 	bl	DoGlobalWildEncounterDiceRoll
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	bne	.LCB1960
+	bne	.LCB1958
 	b	.L270	@long jump
-.LCB1960:
+.LCB1958:
 .L265:
 	ldr	r0, .L317+0xc
 	lsl	r1, r4, #0x5
@@ -13677,9 +13735,9 @@ StandardWildEncounter:
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	cmp	r0, #0x1
-	beq	.LCB1975
+	beq	.LCB1973
 	b	.L270	@long jump
-.LCB1975:
+.LCB1973:
 	ldr	r0, [r4]
 	mov	r1, #0x0
 	mov	r2, #0x2
@@ -13687,9 +13745,9 @@ StandardWildEncounter:
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	cmp	r0, #0x1
-	beq	.LCB1985
+	beq	.LCB1983
 	b	.L270	@long jump
-.LCB1985:
+.LCB1983:
 	bl	GenerateBattlePyramidWildMon
 	b	.L308
 .L318:
@@ -13707,9 +13765,9 @@ StandardWildEncounter:
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	cmp	r0, #0x1
-	beq	.LCB2008
+	beq	.LCB2006
 	b	.L271	@long jump
-.LCB2008:
+.LCB2006:
 	ldr	r2, .L319
 	lsl	r0, r4, #0x5
 	add	r1, r2, #0x4
@@ -13717,25 +13775,25 @@ StandardWildEncounter:
 	ldr	r1, [r1]
 	add	r4, r0, #0
 	cmp	r1, #0
-	bne	.LCB2017
+	bne	.LCB2015
 	b	.L270	@long jump
-.LCB2017:
+.LCB2015:
 	add	r0, r2, #0
 	add	r0, r0, #0x8
 	add	r0, r4, r0
 	ldr	r0, [r0]
 	cmp	r0, #0
-	bne	.LCB2023
+	bne	.LCB2021
 	b	.L270	@long jump
-.LCB2023:
+.LCB2021:
 	cmp	r7, r6
 	beq	.L276	@cond_branch
 	bl	DoGlobalWildEncounterDiceRoll
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	bne	.LCB2031
+	bne	.LCB2029
 	b	.L270	@long jump
-.LCB2031:
+.LCB2029:
 .L276:
 	ldr	r0, .L319
 	add	r0, r0, #0x4
@@ -13747,16 +13805,16 @@ StandardWildEncounter:
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	cmp	r0, #0x1
-	beq	.LCB2046
+	beq	.LCB2044
 	b	.L270	@long jump
-.LCB2046:
+.LCB2044:
 	bl	TryStartRoamerEncounter
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	cmp	r0, #0x1
-	bne	.LCB2052
+	bne	.LCB2050
 	b	.L313	@long jump
-.LCB2052:
+.LCB2050:
 	bl	DoMassOutbreakEncounterTest
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
@@ -13791,9 +13849,9 @@ StandardWildEncounter:
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	cmp	r0, #0x1
-	beq	.LCB2104
+	beq	.LCB2102
 	b	.L270	@long jump
-.LCB2104:
+.LCB2102:
 	bl	TryDoDoubleWildBattle
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
@@ -13834,9 +13892,9 @@ StandardWildEncounter:
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	cmp	r0, #0x1
-	beq	.LCB2158
+	beq	.LCB2156
 	b	.L270	@long jump
-.LCB2158:
+.LCB2156:
 	bl	TryDoDoubleWildBattle
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
@@ -14216,9 +14274,9 @@ SweetScentWildEncounter:
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	cmp	r0, #0x1
-	beq	.LCB2628
+	beq	.LCB2626
 	b	.L367	@long jump
-.LCB2628:
+.LCB2626:
 	mov	r0, #0x0
 	bl	TryGenerateBattlePikeWildMon
 	bl	BattleSetup_StartBattlePikeWildBattle
@@ -14233,9 +14291,9 @@ SweetScentWildEncounter:
 .L363:
 	ldr	r0, .L386
 	cmp	r1, r0
-	beq	.LCB2648
+	beq	.LCB2646
 	b	.L367	@long jump
-.LCB2648:
+.LCB2646:
 	ldr	r0, .L386+0x4
 	ldr	r0, [r0]
 	ldr	r1, .L386+0x8
@@ -15038,17 +15096,11 @@ TryDoDoubleWildBattle:
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
 	bne	.L524	@cond_branch
-	mov	r0, #0xef
-	lsl	r0, r0, #0x1
-	bl	FlagGet
-	lsl	r0, r0, #0x18
-	cmp	r0, #0
-	bne	.L514	@cond_branch
 	bl	GetMonsStateToDoubles
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
 	bne	.L520	@cond_branch
-	ldr	r0, .L525+0x4
+	mov	r0, #0x2a
 	bl	FlagGet
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
@@ -15071,7 +15123,6 @@ TryDoDoubleWildBattle:
 	.align	2, 0
 .L525:
 	.word	0x404e
-	.word	0x2a2
 .L514:
 	mov	r0, #0x1
 .L523:

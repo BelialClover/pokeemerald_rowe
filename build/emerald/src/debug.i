@@ -8883,6 +8883,23 @@ extern const u8 gText_Region_Kanto[];
 extern const u8 gText_Region_Jotho[];
 extern const u8 gText_Region_Hoenn[];
 extern const u8 gText_Region_Sinnoh[];
+
+extern const u8 gText_Difficulty_Level[];
+extern const u8 gText_Game_Modes[];
+extern const u8 gText_Start_Game[];
+extern const u8 gText_Difficulty_Easy[];
+extern const u8 gText_Difficulty_Normal[];
+extern const u8 gText_Difficulty_Hard[];
+extern const u8 gText_Game_Modes_Random[];
+extern const u8 gText_Game_Modes_Double[];
+extern const u8 gText_Game_Modes_Inverse[];
+extern const u8 gText_Game_Modes_Perfect_Iv[];
+extern const u8 gText_Game_Modes_No_Evs[];
+extern const u8 gText_Game_Modes_Default[];
+extern const u8 gText_Game_Modes_Save[];
+extern const u8 gText_Game_Modes_Enable[];
+extern const u8 gText_Game_Modes_Disable[];
+extern const u8 gText_Game_Modes_Info[];
 # 43 "src/debug.c" 2
 # 1 "gflib/string_util.h" 1
 
@@ -9994,12 +10011,12 @@ static void DebugAction_Flags_SetPokedexFlags(u8 taskId)
 }
 static void DebugAction_Flags_SwitchDex(u8 taskId)
 {
-    if(FlagGet((((0x500 + 864 - 1) + 1) + 0x1)))
+    if(FlagGet(0x33))
     {
-        FlagClear((((0x500 + 864 - 1) + 1) + 0x1));
+        FlagClear(0x33);
         PlaySE(3);
     }else{
-        FlagSet((((0x500 + 864 - 1) + 1) + 0x1));
+        FlagSet(0x33);
         PlaySE(2);
     }
 }
@@ -10016,12 +10033,12 @@ static void DebugAction_Flags_SwitchNatDex(u8 taskId)
 }
 static void DebugAction_Flags_SwitchPokeNav(u8 taskId)
 {
-    if(FlagGet((((0x500 + 864 - 1) + 1) + 0x2)))
+    if(FlagGet(0x33))
     {
-        FlagClear((((0x500 + 864 - 1) + 1) + 0x2));
+        FlagClear(0x33);
         PlaySE(3);
     }else{
-        FlagSet((((0x500 + 864 - 1) + 1) + 0x2));
+        FlagSet(0x33);
         PlaySE(2);
     }
 }

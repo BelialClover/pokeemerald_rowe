@@ -802,6 +802,51 @@ struct MultichoiceListStruct
     u8 count;
 };
 
+static const struct MenuAction MultichoiceList_New_Game_Questions[] =
+{
+    {gText_Difficulty_Level},
+    {gText_Game_Modes},
+    {gText_Start_Game},
+};
+
+static const struct MenuAction MultichoiceList_Difficulty_Level[] =
+{
+    {gText_Difficulty_Easy},
+    {gText_Difficulty_Normal},
+    {gText_Difficulty_Hard},
+};
+
+static const struct MenuAction MultichoiceList_Game_Modes[] =
+{
+	{gText_Game_Modes_Perfect_Iv},
+    {gText_Game_Modes_No_Evs},
+	{gText_Game_Modes_Double},
+    {gText_Game_Modes_Inverse},
+	{gText_Game_Modes_Random},
+	{gText_Game_Modes_Save},
+};
+
+static const struct MenuAction MultichoiceList_Game_Modes_Enable[] =
+{
+	{gText_Game_Modes_Enable},
+    {gText_Game_Modes_Info},
+	{gText_Cancel2},
+};
+
+static const struct MenuAction MultichoiceList_Game_Modes_Disable[] =
+{
+	{gText_Game_Modes_Disable},
+    {gText_Game_Modes_Info},
+	{gText_Cancel2},
+};
+
+static const struct MenuAction MultichoiceList_Game_Modes_Save[] =
+{
+	{gText_No},
+    {gText_Yes},
+	{gText_Game_Modes_Default},
+};
+
 static const struct MultichoiceListStruct sMultichoiceLists[] =
 {
     [MULTI_BRINEY_ON_DEWFORD]          = MULTICHOICE(MultichoiceList_BrineyOnDewford),
@@ -919,6 +964,12 @@ static const struct MultichoiceListStruct sMultichoiceLists[] =
     [MULTI_FALLARBOR_TENT_RULES]       = MULTICHOICE(MultichoiceList_FallarborTentRules),
     [MULTI_TAG_MATCH_TYPE]             = MULTICHOICE(MultichoiceList_TagMatchType),
     [MULTI_ROTOM_APPLIANCES]           = MULTICHOICE(MultichoiceList_RotomAppliances),
+	[MULTI_NEW_GAME_QUESTIONS]         = MULTICHOICE(MultichoiceList_New_Game_Questions),
+	[MULTI_GAME_LEVEL]         		   = MULTICHOICE(MultichoiceList_Difficulty_Level),
+	[MULTI_GAME_MODES]         		   = MULTICHOICE(MultichoiceList_Game_Modes),
+	[MULTI_GAME_MODE_ENABLE]           = MULTICHOICE(MultichoiceList_Game_Modes_Enable),
+	[MULTI_GAME_MODE_DISABLE]          = MULTICHOICE(MultichoiceList_Game_Modes_Disable),
+	[MULTI_GAME_MODE_SAVE]             = MULTICHOICE(MultichoiceList_Game_Modes_Save),
 };
 
 const u8 *const gStdStrings[] =

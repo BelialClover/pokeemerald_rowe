@@ -3050,10 +3050,11 @@ void EnableNationalPokedex(void)
 
 bool32 IsNationalPokedexEnabled(void)
 {
-    if (gSaveBlock2Ptr->pokedex.nationalMagic == 0xDA && VarGet(0x4046) == 0x302 && FlagGet((((0x500 + 864 - 1) + 1) + 0x36)))
-        return 1;
-    else
-        return 0;
+
+
+
+
+ return 1;
 }
 
 void DisableMysteryEvent(void)

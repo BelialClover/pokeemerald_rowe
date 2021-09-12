@@ -5491,8 +5491,41 @@ void PlayBGM(u16 songNum)
 
 u16 RegionalMusicHandler(u16 songNum)
 {
+ bool8 music_enabled = 1;
+ bool8 Gen4 = 0;
  switch(songNum)
  {
+
+ case 345:
+
+
+  if (gSaveBlock2Ptr->optionsMusicGame == 1)
+   return 713;
+  else if(gSaveBlock2Ptr->optionsMusicGame == 3)
+   return 525;
+  else
+   return songNum;
+
+ case 330:
+  if (gSaveBlock2Ptr->optionsMusicGame == 0 && music_enabled)
+   return 457;
+  else if (gSaveBlock2Ptr->optionsMusicGame == 1 && music_enabled)
+   return 720;
+  else if(gSaveBlock2Ptr->optionsMusicGame == 3 && music_enabled)
+   return 871;
+  else
+   return songNum;
+
+ case 374:
+  if (gSaveBlock2Ptr->optionsMusicGame == 0)
+   return 448;
+  else if(gSaveBlock2Ptr->optionsMusicGame == 1)
+   return 770;
+  else if(gSaveBlock2Ptr->optionsMusicGame == 3)
+   return 585;
+  else
+   return songNum;
+ break;
 
  case 336:
   if (gSaveBlock2Ptr->optionsMusicGame == 0)
@@ -5501,6 +5534,18 @@ u16 RegionalMusicHandler(u16 songNum)
    return 785;
   else if(gSaveBlock2Ptr->optionsMusicGame == 3)
    return 632;
+  else
+   return songNum;
+ break;
+
+ case 339:
+  RtcCalcLocalTime();
+  if (gSaveBlock2Ptr->optionsMusicGame == 0)
+   return 447;
+  else if(gSaveBlock2Ptr->optionsMusicGame == 1)
+   return 728;
+  else if(gSaveBlock2Ptr->optionsMusicGame == 3)
+   return 546;
   else
    return songNum;
  break;
@@ -5527,8 +5572,10 @@ u16 RegionalMusicHandler(u16 songNum)
  break;
 
  case 428:
-  if (gSaveBlock2Ptr->optionsMusicGame == 0)
+  if (gSaveBlock2Ptr->optionsMusicGame == 0 && !Gen4)
    return 464;
+  else if (gSaveBlock2Ptr->optionsMusicGame == 0 && Gen4)
+   return 809;
   else if(gSaveBlock2Ptr->optionsMusicGame == 1)
    return 721;
   else if(gSaveBlock2Ptr->optionsMusicGame == 3)
@@ -5538,12 +5585,23 @@ u16 RegionalMusicHandler(u16 songNum)
  break;
 
  case 430:
- if (gSaveBlock2Ptr->optionsMusicGame == 0)
+ if (gSaveBlock2Ptr->optionsMusicGame == 0 && !Gen4)
    return 463;
+  else if (gSaveBlock2Ptr->optionsMusicGame == 0 && Gen4)
+   return 830;
   else if(gSaveBlock2Ptr->optionsMusicGame == 1)
    return 730;
   else if(gSaveBlock2Ptr->optionsMusicGame == 3)
    return 549;
+  else
+   return songNum;
+ break;
+
+ case 520:
+  if(gSaveBlock2Ptr->optionsMusicGame == 1)
+   return 861;
+  else if(gSaveBlock2Ptr->optionsMusicGame == 3)
+   return 708;
   else
    return songNum;
  break;
@@ -5606,8 +5664,19 @@ u16 RegionalMusicHandler(u16 songNum)
    return 619;
   else
    return songNum;
+ break;
+
+ case 399:
+ if(gSaveBlock2Ptr->optionsMusicGame == 1)
+   return 833;
+  else if(gSaveBlock2Ptr->optionsMusicGame == 3)
+   return 640;
+  else
+   return songNum;
+ break;
  }
  return songNum;
+# 791 "src/sound.c"
 }
 
 void PlaySE(u16 songNum)

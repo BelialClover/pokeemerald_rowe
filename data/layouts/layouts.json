@@ -4490,6 +4490,16 @@
       "secondary_tileset": "gTileset_Mossdeep",
       "border_filepath": "data/layouts/SecretShore/border.bin",
       "blockdata_filepath": "data/layouts/SecretShore/map.bin"
+    },
+    {
+      "id": "LAYOUT_POWER_PLANT",
+      "name": "Power_Plant_Layout",
+      "width": 49,
+      "height": 40,
+      "primary_tileset": "gTileset_FRLG_Building",
+      "secondary_tileset": "gTileset_Power_Plant",
+      "border_filepath": "data/layouts/Power_Plant/border.bin",
+      "blockdata_filepath": "data/layouts/Power_Plant/map.bin"
     }
   ]
 }

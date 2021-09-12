@@ -2291,6 +2291,10 @@ IsBikingDisallowedByPlayer:
 	and	r0, r0, r1
 	cmp	r0, #0
 	bne	.L328	@cond_branch
+	ldr	r0, .L331+0x4
+	ldrb	r0, [r0, #0x17]
+	cmp	r0, #0x8
+	beq	.L328	@cond_branch
 	mov	r4, sp
 	add	r4, r4, #0x2
 	mov	r0, sp
@@ -2314,6 +2318,7 @@ IsBikingDisallowedByPlayer:
 	.align	2, 0
 .L331:
 	.word	gPlayerAvatar
+	.word	gMapHeader
 .L328:
 	mov	r0, #0x1
 .L330:

@@ -10,6 +10,7 @@
 #include "item_menu.h"
 #include "strings.h"
 #include "load_save.h"
+#include "level_scaling.h"
 #include "item_use.h"
 #include "battle_pyramid.h"
 #include "battle_pyramid_bag.h"
@@ -141,15 +142,16 @@ void CopyItemName(u16 itemId, u8 *dst)
 static const u8 sText_s[] = _("s");
 void CopyItemNameHandlePlural(u16 itemId, u8 *dst, u32 quantity)
 {
-    if (ItemId_GetPocket(itemId) == POCKET_TM_HM && FALSE)
-        GetTMWithName(dst, itemId, ItemId_GetName(itemId));
+	u16 ScaledItem = GetScaledItem(itemId);
+    if (ItemId_GetPocket(ScaledItem) == POCKET_TM_HM && FALSE)
+        GetTMWithName(dst, ScaledItem, ItemId_GetName(ScaledItem));
     else
     {
-        StringCopy(dst, ItemId_GetName(itemId));
+        StringCopy(dst, ItemId_GetName(ScaledItem));
         if (quantity > 1)
         {
-            if (ItemId_GetPocket(itemId) == POCKET_BERRIES)
-                GetBerryCountString(dst, gBerries[itemId - ITEM_CHERI_BERRY].name, quantity);
+            if (ItemId_GetPocket(ScaledItem) == POCKET_BERRIES)
+                GetBerryCountString(dst, gBerries[ScaledItem - ITEM_CHERI_BERRY].name, quantity);
             else
                 StringAppend(dst, sText_s);
         }
@@ -330,6 +332,8 @@ static void SetTmHmOwned(u16 itemId)
 bool8 AddBagItem(u16 itemId, u16 count)
 {
     u8 i;
+	u16 scaledItem = GetScaledItem(itemId);
+	itemId = scaledItem;
 
     if (ItemId_GetPocket(itemId) == POCKET_NONE)
         return FALSE;
@@ -1077,9 +1081,11 @@ bool8 GetSetItemObtained(u16 item, u8 caseId)
     u8 index;
     u8 bit;
     u8 mask;
+	
+	u16 scaledItem = GetScaledItem(item);
     
-    index = item / 8;
-    bit = item % 8;
+    index = scaledItem / 8;
+    bit = scaledItem % 8;
     mask = 1 << bit;
     switch (caseId)
     {
@@ -1098,7 +1104,8 @@ static u8 ReformatItemDescription(u16 item, u8 *dest)
     u8 count = 0;
     u8 numLines = 1;
     u8 maxChars = 32;
-    u8 *desc = (u8 *)gItems[item].description;
+	u16 scaledItem = GetScaledItem(item);
+    u8 *desc = (u8 *)gItems[scaledItem].description;
     
     while (*desc != EOS)
     {        
@@ -1141,6 +1148,7 @@ void DrawHeaderBox(void)
 {
     struct WindowTemplate template;
     u16 item = gSpecialVar_0x8006;
+	u16 scaledItem = GetScaledItem(item);
     u8 headerType = gSpecialVar_0x8009;
     u8 textY;
     u8 *dst;
@@ -1154,9 +1162,9 @@ void DrawHeaderBox(void)
     else
         dst = gStringVar1;
     
-    if (GetSetItemObtained(item, FLAG_GET_OBTAINED))
+    if (GetSetItemObtained(scaledItem, FLAG_GET_OBTAINED))
     {
-        ShowItemIconSprite(item, FALSE, handleFlash);
+        ShowItemIconSprite(scaledItem, FALSE, handleFlash);
         return; //no box if item obtained previously
     }
     
@@ -1167,12 +1175,12 @@ void DrawHeaderBox(void)
     CopyWindowToVram(sHeaderBoxWindowId, 3);
     DrawStdFrameWithCustomTileAndPalette(sHeaderBoxWindowId, FALSE, 0x214, 14);
     
-    if (ReformatItemDescription(item, dst) == 1)
+    if (ReformatItemDescription(scaledItem, dst) == 1)
         textY = 4;
     else
         textY = 0;
     
-    ShowItemIconSprite(item, TRUE, handleFlash);
+    ShowItemIconSprite(scaledItem, TRUE, handleFlash);
     AddTextPrinterParameterized(sHeaderBoxWindowId, 0, dst, ITEM_ICON_X + 2, textY, 0, NULL);
 }
 
@@ -1198,6 +1206,7 @@ static void ShowItemIconSprite(u16 item, bool8 firstTime, bool8 flash)
 	s16 x, y;
 	u8 iconSpriteId;   
     u8 spriteId2 = MAX_SPRITES;
+	u16 scaledItem = GetScaledItem(item);
     
     if (flash)
     {
@@ -1205,9 +1214,9 @@ static void ShowItemIconSprite(u16 item, bool8 firstTime, bool8 flash)
         SetGpuRegBits(REG_OFFSET_WINOUT, WINOUT_WINOBJ_OBJ);
     }
     
-    iconSpriteId = AddItemIconSprite(ITEM_TAG, ITEM_TAG, item);
+    iconSpriteId = AddItemIconSprite(ITEM_TAG, ITEM_TAG, scaledItem);
     if (flash)
-        spriteId2 = AddItemIconSprite(ITEM_TAG, ITEM_TAG, item);
+        spriteId2 = AddItemIconSprite(ITEM_TAG, ITEM_TAG, scaledItem);
     
 	if (iconSpriteId != MAX_SPRITES)
 	{        

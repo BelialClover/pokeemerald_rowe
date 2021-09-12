@@ -1958,8 +1958,7 @@ MapAllowsMatchCall:
 	beq	.L25	@cond_branch
 	cmp	r0, #0xe
 	bne	.L22	@cond_branch
-	mov	r0, #0xf9
-	lsl	r0, r0, #0x2
+	mov	r0, #0x33
 	bl	FlagGet
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
@@ -1981,7 +1980,7 @@ MapAllowsMatchCall:
 	lsr	r0, r0, #0x18
 	cmp	r0, #0x1
 	bne	.L23	@cond_branch
-	mov	r0, #0x8b
+	mov	r0, #0x33
 	bl	FlagGet
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
@@ -4807,9 +4806,9 @@ GetFrontierStreakInfo:
 	lsr	r0, r0, #0x10
 	mov	r4, #0x0
 	cmp	r0, #0x6
-	bls	.LCB2990
+	bls	.LCB2988
 	b	.L338	@long jump
-.LCB2990:
+.LCB2988:
 	lsl	r0, r0, #0x2
 	ldr	r1, .L411
 	add	r0, r0, r1

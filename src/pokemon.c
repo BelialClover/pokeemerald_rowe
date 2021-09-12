@@ -4039,13 +4039,12 @@ u8 GetGenderFromSpeciesAndPersonality(u16 formSpecies, u32 personality)
 
 u32 GetUnownSpeciesId(u32 personality)
 {
-    return GetUnownLetterByPersonality(personality) + SPECIES_UNOWN_B - 1; //TODO
-    /*
+    //return GetUnownLetterByPersonality(personality) + SPECIES_UNOWN_B - 1; //TODO
+    
     u16 unownLetter = GetUnownLetterByPersonality(personality);
     if (unownLetter == 0)
         return SPECIES_UNOWN;
     return unownLetter + SPECIES_UNOWN_B - 1;
-    */
 }
 
 void SetMultiuseSpriteTemplateToPokemon(u16 speciesTag, u8 battlerPosition, u8 formId)
@@ -4396,37 +4395,37 @@ u32 GetBoxMonData(struct BoxPokemon *boxMon, s32 field, u8 *data)
         retVal = substruct1->pp[field - MON_DATA_PP1];
         break;
     case MON_DATA_HP_EV:
-		if(FlagGet(FLAG_UNUSED_0x1AB))
+		if(FlagGet(FLAG_NO_EVS_MODE))
 		retVal = 0;
 		else
         retVal = substruct2->hpEV;
         break;
     case MON_DATA_ATK_EV:
-		if(FlagGet(FLAG_UNUSED_0x1AB))
+		if(FlagGet(FLAG_NO_EVS_MODE))
 		retVal = 0;
 		else
         retVal = substruct2->attackEV;
         break;
     case MON_DATA_DEF_EV:
-		if(FlagGet(FLAG_UNUSED_0x1AB))
+		if(FlagGet(FLAG_NO_EVS_MODE))
 		retVal = 0;
 		else
         retVal = substruct2->defenseEV;
         break;
     case MON_DATA_SPEED_EV:
-		if(FlagGet(FLAG_UNUSED_0x1AB))
+		if(FlagGet(FLAG_NO_EVS_MODE))
 		retVal = 0;
 		else
         retVal = substruct2->speedEV;
         break;
     case MON_DATA_SPATK_EV:
-		if(FlagGet(FLAG_UNUSED_0x1AB))
+		if(FlagGet(FLAG_NO_EVS_MODE))
 		retVal = 0;
 		else
         retVal = substruct2->spAttackEV;
         break;
     case MON_DATA_SPDEF_EV:
-		if(FlagGet(FLAG_UNUSED_0x1AB))
+		if(FlagGet(FLAG_NO_EVS_MODE))
 		retVal = 0;
 		else
         retVal = substruct2->spDefenseEV;
@@ -4472,37 +4471,37 @@ u32 GetBoxMonData(struct BoxPokemon *boxMon, s32 field, u8 *data)
         retVal = substruct3->otGender;
         break;
     case MON_DATA_HP_IV:
-		if(FlagGet(FLAG_UNUSED_0x068))
+		if(FlagGet(FLAG_PERFECT_IVS_MODE))
 		retVal = 31;
 		else
         retVal = substruct3->hpIV;
         break;
     case MON_DATA_ATK_IV:
-		if(FlagGet(FLAG_UNUSED_0x068))
+		if(FlagGet(FLAG_PERFECT_IVS_MODE))
 		retVal = 31;
 		else
         retVal = substruct3->attackIV;
         break;
     case MON_DATA_DEF_IV:
-		if(FlagGet(FLAG_UNUSED_0x068))
+		if(FlagGet(FLAG_PERFECT_IVS_MODE))
 		retVal = 31;
 		else
         retVal = substruct3->defenseIV;
         break;
     case MON_DATA_SPEED_IV:
-		if(FlagGet(FLAG_UNUSED_0x068))
+		if(FlagGet(FLAG_PERFECT_IVS_MODE))
 		retVal = 31;
 		else
         retVal = substruct3->speedIV;
         break;
     case MON_DATA_SPATK_IV:
-		if(FlagGet(FLAG_UNUSED_0x068))
+		if(FlagGet(FLAG_PERFECT_IVS_MODE))
 		retVal = 31;
 		else
         retVal = substruct3->spAttackIV;
         break;
     case MON_DATA_SPDEF_IV:
-		if(FlagGet(FLAG_UNUSED_0x068))
+		if(FlagGet(FLAG_PERFECT_IVS_MODE))
 		retVal = 31;
 		else
         retVal = substruct3->spDefenseIV;
@@ -5254,7 +5253,7 @@ void PokemonToBattleMon(struct Pokemon *src, struct BattlePokemon *dst)
     dst->ppBonuses = GetMonData(src, MON_DATA_PP_BONUSES, NULL);
     dst->friendship = GetMonData(src, MON_DATA_FRIENDSHIP, NULL);
     dst->experience = GetMonData(src, MON_DATA_EXP, NULL);
-	if(FlagGet(FLAG_UNUSED_0x068))
+	if(FlagGet(FLAG_PERFECT_IVS_MODE))
 	{
 	dst->hpIV = 31;
     dst->attackIV = 31;

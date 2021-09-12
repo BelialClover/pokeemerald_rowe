@@ -668,6 +668,50 @@ MauvilleCity_GameCorner_EventScript_NoCoinCase:: @ 8210456
 	msgbox MauvilleCity_GameCorner_Text_CantPlayWithNoCoinCase, MSGBOX_DEFAULT
 	releaseall
 	end
+	
+MauvilleCity_GameCorner_EventScript_Gachamon::
+	lock
+	faceplayer
+	showcoinsbox 1, 1
+	msgbox MauvilleCity_GameCorner_Text_Gachamon_Introduction, MSGBOX_YESNO
+	compare VAR_RESULT, NO
+	goto_if_eq MauvilleCity_GameCorner_EventScript_DeclineStarterDoll
+	checkcoins VAR_TEMP_2
+	compare VAR_TEMP_2, 500
+	goto_if_lt MauvilleCity_GameCorner_EventScript_NotEnoughCoinsForTM
+	playse SE_SHOP
+	msgbox MauvilleCity_GameCorner_Text_HereYouGo, MSGBOX_DEFAULT
+	playfanfare MUS_OBTAIN_ITEM
+	msgbox Text_Received_Starter10, MSGBOX_DEFAULT
+	waitfanfare
+	givemon SPECIES_MEW, 1, ITEM_NONE
+	compare VAR_RESULT, 0
+	goto_if_eq MauvilleCity_GameCorner_EventScript_Gachamon_2
+	compare VAR_RESULT, 1
+	goto_if_eq MauvilleCity_GameCorner_EventScript_Gachamon_PC
+	goto Common_EventScript_NoMoreRoomForPokemon
+	release
+	end
+	
+MauvilleCity_GameCorner_EventScript_Gachamon_PC:
+	msgbox MauvilleCity_GameCorner_Text_Gachamon_PC, MSGBOX_DEFAULT
+	goto MauvilleCity_GameCorner_EventScript_Gachamon_2
+	end
+	
+MauvilleCity_GameCorner_EventScript_Gachamon_2:
+	removecoins 500
+	updatecoinsbox 1, 1
+	hidecoinsbox 0, 5
+	release
+	end
+
+MauvilleCity_GameCorner_Text_Gachamon_Introduction:
+	.string "Do you want to trade 500 coins\n"
+	.string "for a random Pokemon?$"
+	
+MauvilleCity_GameCorner_Text_Gachamon_PC:
+	.string "The Pokemon was sent to\n"
+	.string "your PC$"
 
 MauvilleCity_GameCorner_Text_ThisIsMauvilleGameCorner: @ 8210460
 	.string "This is Mauville Game Corner.$"

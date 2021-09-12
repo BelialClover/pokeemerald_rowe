@@ -8384,6 +8384,23 @@ extern const u8 gText_Region_Kanto[];
 extern const u8 gText_Region_Jotho[];
 extern const u8 gText_Region_Hoenn[];
 extern const u8 gText_Region_Sinnoh[];
+
+extern const u8 gText_Difficulty_Level[];
+extern const u8 gText_Game_Modes[];
+extern const u8 gText_Start_Game[];
+extern const u8 gText_Difficulty_Easy[];
+extern const u8 gText_Difficulty_Normal[];
+extern const u8 gText_Difficulty_Hard[];
+extern const u8 gText_Game_Modes_Random[];
+extern const u8 gText_Game_Modes_Double[];
+extern const u8 gText_Game_Modes_Inverse[];
+extern const u8 gText_Game_Modes_Perfect_Iv[];
+extern const u8 gText_Game_Modes_No_Evs[];
+extern const u8 gText_Game_Modes_Default[];
+extern const u8 gText_Game_Modes_Save[];
+extern const u8 gText_Game_Modes_Enable[];
+extern const u8 gText_Game_Modes_Disable[];
+extern const u8 gText_Game_Modes_Info[];
 # 11 "src/pokenav_match_call_data.c" 2
 # 1 "include/constants/region_map_sections.h" 1
 # 12 "src/pokenav_match_call_data.c" 2
@@ -8547,13 +8564,13 @@ static void MatchCall_GetNameAndDescByRematchIdx(u32, const u8 **, const u8 **);
 static const match_call_text_data_t sMrStoneTextScripts[] = {
     { MatchCall_Text_MrStone1, 0xFFFF, 0x158 },
     { MatchCall_Text_MrStone2, 0x158, 0xFFFF },
-    { MatchCall_Text_MrStone3, 0xBD, 0xFFFF },
+    { MatchCall_Text_MrStone3, 0x33, 0xFFFF },
     { MatchCall_Text_MrStone4, 0x110, 0xFFFF },
     { MatchCall_Text_MrStone5, 0x6A, 0xFFFF },
     { MatchCall_Text_MrStone6, 0x4F4, 0xFFFF },
     { MatchCall_Text_MrStone7, 0x97, 0xFFFF },
     { MatchCall_Text_MrStone8, 0x6F, 0xFFFF },
-    { MatchCall_Text_MrStone9, 0x70, 0xFFFF },
+    { MatchCall_Text_MrStone9, 0x33, 0xFFFF },
     { MatchCall_Text_MrStone10, 0x4F7, 0xFFFF },
     { MatchCall_Text_MrStone11, (((0x500 + 864 - 1) + 1) + 0x4), 0xFFFF },
     { ((void *)0), 0xFFFF, 0xFFFF }
@@ -8570,7 +8587,7 @@ static const struct MatchCallStructNPC sMrStoneMatchCallHeader =
 };
 
 static const match_call_text_data_t sNormanTextScripts[] = {
-    { MatchCall_Text_Norman1, 0x132, 0xFFFF },
+    { MatchCall_Text_Norman1, 0x33, 0xFFFF },
     { MatchCall_Text_Norman2, 0x4F1, 0xFFFF },
     { MatchCall_Text_Norman3, 0x4F3, 0xFFFF },
     { MatchCall_Text_Norman4, 0x4F4, 0xFFFF },
@@ -8586,7 +8603,7 @@ static const struct MatchCallStructTrainer sNormanMatchCallHeader =
 {
     .type = MC_TYPE_LEADER,
     .mapSec = 0x07,
-    .flag = 0x132,
+    .flag = 0x33,
     .rematchTableIdx = REMATCH_NORMAN,
     .desc = gText_NormanMatchCallDesc,
     .name = gText_NormanMatchCallName,
@@ -8597,7 +8614,7 @@ static const struct MatchCallBirch sProfBirchMatchCallHeader =
 {
     .type = MC_TYPE_BIRCH,
     .mapSec = 0,
-    .flag = 0x119,
+    .flag = 0x33,
     .desc = gText_ProfBirchMatchCallDesc,
     .name = gText_ProfBirchMatchCallName
 };
@@ -8623,9 +8640,9 @@ static const match_call_text_data_t sStevenTextScripts[] = {
     { MatchCall_Text_Steven1, 0xFFFF, 0xFFFF },
     { MatchCall_Text_Steven2, 0xC7, 0xFFFF },
     { MatchCall_Text_Steven3, 0xD4, 0xFFFF },
-    { MatchCall_Text_Steven4, 0x70, 0xFFFF },
+    { MatchCall_Text_Steven4, 0x33, 0xFFFF },
     { MatchCall_Text_Steven5, 0x4F6, 0xFFFF },
-    { MatchCall_Text_Steven6, 0x81, 0xFFFF },
+    { MatchCall_Text_Steven6, 0x33, 0xFFFF },
     { MatchCall_Text_Steven7, (((0x500 + 864 - 1) + 1) + 0x4), 0xFFFF },
     { ((void *)0), 0xFFFF, 0xFFFF },
 };
@@ -8643,7 +8660,7 @@ static const struct MatchCallStructNPC sStevenMatchCallHeader =
 static const match_call_text_data_t sMayTextScripts[] = {
     { MatchCall_Text_May1, 0xFFFF, 0xFFFF },
     { MatchCall_Text_May2, 0x4F1, 0xFFFF },
-    { MatchCall_Text_May3, 0x95, 0xFFFF },
+    { MatchCall_Text_May3, 0x33, 0xFFFF },
     { MatchCall_Text_May4, 0x324, 0xFFFF },
     { MatchCall_Text_May5, 0x6A, 0xFFFF },
     { MatchCall_Text_May6, 0x4F3, 0xFFFF },
@@ -8652,8 +8669,8 @@ static const match_call_text_data_t sMayTextScripts[] = {
     { MatchCall_Text_May9, 0xD4, 0xFFFF },
     { MatchCall_Text_May10, 0x6F, 0xFFFF },
     { MatchCall_Text_May11, 0x61, 0xFFFF },
-    { MatchCall_Text_May12, 0x70, 0xFFFF },
-    { MatchCall_Text_May13, 0x81, 0xFFFF },
+    { MatchCall_Text_May12, 0x33, 0xFFFF },
+    { MatchCall_Text_May13, 0x33, 0xFFFF },
     { MatchCall_Text_May14, 0x4F7, 0xFFFF },
     { MatchCall_Text_May15, (((0x500 + 864 - 1) + 1) + 0x4), 0xFFFF },
     { ((void *)0), 0xFFFF, 0xFFFF }
@@ -8663,7 +8680,7 @@ static const struct MatchCallRival sMayMatchCallHeader =
 {
     .type = MC_TYPE_RIVAL,
     .playerGender = 0,
-    .flag = 0xFD,
+    .flag = 0x33,
     .desc = gText_MayBrendanMatchCallDesc,
     .name = gText_ExpandedPlaceholder_May,
     .textData = sMayTextScripts
@@ -8672,7 +8689,7 @@ static const struct MatchCallRival sMayMatchCallHeader =
 static const match_call_text_data_t sBrendanTextScripts[] = {
     { MatchCall_Text_Brendan1, 0xFFFF, 0xFFFF },
     { MatchCall_Text_Brendan2, 0x4F1, 0xFFFF },
-    { MatchCall_Text_Brendan3, 0x95, 0xFFFF },
+    { MatchCall_Text_Brendan3, 0x33, 0xFFFF },
     { MatchCall_Text_Brendan4, 0x324, 0xFFFF },
     { MatchCall_Text_Brendan5, 0x6A, 0xFFFF },
     { MatchCall_Text_Brendan6, 0x4F3, 0xFFFF },
@@ -8681,8 +8698,8 @@ static const match_call_text_data_t sBrendanTextScripts[] = {
     { MatchCall_Text_Brendan9, 0xD4, 0xFFFF },
     { MatchCall_Text_Brendan10, 0x6F, 0xFFFF },
     { MatchCall_Text_Brendan11, 0x61, 0xFFFF },
-    { MatchCall_Text_Brendan12, 0x70, 0xFFFF },
-    { MatchCall_Text_Brendan13, 0x81, 0xFFFF },
+    { MatchCall_Text_Brendan12, 0x33, 0xFFFF },
+    { MatchCall_Text_Brendan13, 0x33, 0xFFFF },
     { MatchCall_Text_Brendan14, 0x4F7, 0xFFFF },
     { MatchCall_Text_Brendan15, (((0x500 + 864 - 1) + 1) + 0x4), 0xFFFF },
     { ((void *)0), 0xFFFF, 0xFFFF }
@@ -8692,7 +8709,7 @@ static const struct MatchCallRival sBrendanMatchCallHeader =
 {
     .type = MC_TYPE_RIVAL,
     .playerGender = 1,
-    .flag = 0xFD,
+    .flag = 0x33,
     .desc = gText_MayBrendanMatchCallDesc,
     .name = gText_ExpandedPlaceholder_Brendan,
     .textData = sBrendanTextScripts
@@ -8704,7 +8721,7 @@ static const match_call_text_data_t sWallyTextScripts[] = {
     { MatchCall_Text_Wally3, 0x4F3, 0xFFFF },
     { MatchCall_Text_Wally4, 0x97, 0xFFFF },
     { MatchCall_Text_Wally5, 0x6F, 0xFFFF },
-    { MatchCall_Text_Wally6, 0x81, 0xFFFF },
+    { MatchCall_Text_Wally6, 0x33, 0xFFFF },
     { MatchCall_Text_Wally7, 0x7E, 0xFFFF },
     { ((void *)0), 0xFFFF, 0xFFFF }
 };
@@ -8729,10 +8746,10 @@ static const struct MatchCallWally sWallyMatchCallHeader =
 
 static const match_call_text_data_t sScottTextScripts[] = {
     { MatchCall_Text_Scott1, 0xFFFF, 0xFFFF },
-    { MatchCall_Text_Scott2, 0x8B, 0xFFFF },
+    { MatchCall_Text_Scott2, 0x33, 0xFFFF },
     { MatchCall_Text_Scott3, 0x97, 0xFFFF },
     { MatchCall_Text_Scott4, 0xD4, 0xFFFF },
-    { MatchCall_Text_Scott5, 0x70, 0xFFFF },
+    { MatchCall_Text_Scott5, 0x33, 0xFFFF },
     { MatchCall_Text_Scott6, 0x4F7, 0xFFFF },
     { MatchCall_Text_Scott7, (((0x500 + 864 - 1) + 1) + 0x4), 0xFFFF },
     { ((void *)0), 0xFFFF, 0xFFFF }
@@ -8743,7 +8760,7 @@ static const struct MatchCallStructNPC sScottMatchCallHeader =
 {
     .type = 0,
     .mapSec = 0xD5,
-    .flag = 0xD7,
+    .flag = 0x33,
     .desc = gText_ScottMatchCallDesc,
     .name = gText_ScottMatchCallName,
     .textData = sScottTextScripts

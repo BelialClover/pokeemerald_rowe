@@ -839,7 +839,7 @@ static const u16 sPonytaFormSpeciesIdTable[] = {
 
 static const u16 sRapidashFormSpeciesIdTable[] = {
     SPECIES_RAPIDASH,
-    SPECIES_RAPIDASH_GALARIAN,
+    //SPECIES_RAPIDASH_GALARIAN,
     0xFFFF,
 };
 

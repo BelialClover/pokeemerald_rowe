@@ -15588,6 +15588,10 @@ extern const u32 gItemIconPalette_PinkMint[];
 extern const u32 gItemIconPalette_GreenMint[];
 extern const u32 gItemIconPalette_LightBlueMint[];
 extern const u32 gItemIconPalette_YellowMint[];
+
+
+extern const u32 gItemIcon_SweetApple[];
+extern const u32 gItemIcon_SourApple[];
 # 25 "src/level_scaling.c" 2
 # 1 "gflib/gpu_regs.h" 1
 # 9 "gflib/gpu_regs.h"
@@ -21328,6 +21332,23 @@ extern const u8 gText_Region_Kanto[];
 extern const u8 gText_Region_Jotho[];
 extern const u8 gText_Region_Hoenn[];
 extern const u8 gText_Region_Sinnoh[];
+
+extern const u8 gText_Difficulty_Level[];
+extern const u8 gText_Game_Modes[];
+extern const u8 gText_Start_Game[];
+extern const u8 gText_Difficulty_Easy[];
+extern const u8 gText_Difficulty_Normal[];
+extern const u8 gText_Difficulty_Hard[];
+extern const u8 gText_Game_Modes_Random[];
+extern const u8 gText_Game_Modes_Double[];
+extern const u8 gText_Game_Modes_Inverse[];
+extern const u8 gText_Game_Modes_Perfect_Iv[];
+extern const u8 gText_Game_Modes_No_Evs[];
+extern const u8 gText_Game_Modes_Default[];
+extern const u8 gText_Game_Modes_Save[];
+extern const u8 gText_Game_Modes_Enable[];
+extern const u8 gText_Game_Modes_Disable[];
+extern const u8 gText_Game_Modes_Info[];
 # 48 "src/level_scaling.c" 2
 # 1 "include/task.h" 1
 # 49 "src/level_scaling.c" 2
@@ -21529,18 +21550,28 @@ bool32 GetLinkTrainerCardColor(u8 linkPlayerIndex);
 # 67 "src/level_scaling.c" 2
 
 
-u8 normalnumMonsBadge[] = {2,3,3,4,4,5,5,5,5,6,6};
-u8 normalnumMonsGym[] = {3,4,4,4,5,5,5,6,6,6,6};
-u8 normalminTrainerLevel[] = {6,10,15,20,25,30,35,40,45,55,60};
-u8 normalminGymLevel[] = {12,17,22,27,32,37,42,50,55,65,70};
-u8 normalnumMonsDouble[] = {1,2,2,2,2,2,3,3,3,3,3};
+u8 Easy_Mode_Trainer_Max_Pokemon_Number[] = {2,3,3,4,4,5,5,5,5,6,6};
+u8 Easy_Mode_Boss_Pokemon_Number[] = {3,4,4,4,5,5,5,6,6,6,6};
+u8 Easy_Mode_Double_Max_Pokemon_Number[] = {1,2,2,2,2,2,3,3,3,3,3};
+u8 Easy_Mode_Trainer_Pokemon_Min_Level[] = {6,10,15,20,25,30,35,40,45,55,60};
+u8 Easy_Mode_Boss_Pokemon_Min_Level[] = {12,17,22,27,32,37,42,50,55,65,70};
+u8 Easy_Mode_Min_Wild_Pokemon_Level[] = {4,10,15,20,25,30,35,40,45,55,60};
 
 
-u8 hardnumMonsBadge[] = {3,3,4,4,4,5,5,6,6,6,6};
-u8 hardnumMonsGym[] = {3,4,4,5,5,6,6,6,6,6,6};
-u8 hardminTrainerLevel[] = {7,12,18,24,30,36,42,48,55,65,70};
-u8 hardminGymLevel[] = {13,19,25,31,37,43,49,60,68,76,82};
-u8 hardnumMonsDouble[] = {2,2,2,2,2,2,3,3,3,3,3};
+u8 Normal_Mode_Trainer_Max_Pokemon_Number[] = {2,3,3,4,4,4,5,5,6,6,6};
+u8 Normal_Mode_Boss_Pokemon_Number[] = {3,4,4,5,5,6,6,6,6,6,6};
+u8 Normal_Mode_Double_Max_Pokemon_Number[] = {1,2,2,2,2,2,3,3,3,3,3};
+u8 Normal_Mode_Boss_Pokemon_Min_Level[] = {13,19,25,31,37,43,49,60,68,76,82};
+u8 Normal_Mode_Trainer_Pokemon_Min_Level[] = {7,12,18,24,30,36,42,48,55,65,70};
+u8 Normal_Mode_Min_Wild_Pokemon_Level[] = {5,10,15,20,25,31,37,43,50,60,65};
+
+
+u8 Hard_Mode_Trainer_Max_Pokemon_Number[] = {3,3,4,4,4,5,5,6,6,6,6};
+u8 Hard_Mode_Boss_Pokemon_Number[] = {3,4,4,5,5,6,6,6,6,6,6};
+u8 Hard_Mode_Double_Max_Pokemon_Number[] = {2,2,2,2,2,2,3,3,3,3,3};
+u8 Hard_Mode_Boss_Pokemon_Min_Level[] = {13,19,25,31,38,45,51,62,70,78,85};
+u8 Hard_Mode_Trainer_Pokemon_Min_Level[] = {7,12,18,25,32,38,44,50,57,67,72};
+u8 Hard_Mode_Min_Wild_Pokemon_Level[] = {5,11,16,21,26,32,38,45,52,62,67};
 
 u16 SplitEvolutions(u16 basespecies, u8 level);
 u16 CheckforLegendary(u16 species);
@@ -21548,14 +21579,22 @@ u16 GetCurrentMapWildPokemon(u8 isWaterMon, u8 index);
 bool8 IsPokemonValid(u16 mon);
 
 
-u8 WildLevel[] = {4,10,15,20,25,30,35,40,45,55,60};
 u8 MovePowerLimit[] = {60,60,70,70,80,90,100,250,250,250,250};
 
 u8 IsHardMode(){
- if (gSaveBlock2Ptr->optionsBattleStyle != 0)
+ if (FlagGet(0x27))
   return 1;
  else
   return 0;
+}
+
+u8 GetGameDifficultyLevel(){
+ if (FlagGet(0x25))
+  return 0;
+ else if (FlagGet(0x27))
+  return 2;
+ else
+  return 1;
 }
 
 u16 GetFirstEvolution(u16 species){
@@ -21617,13 +21656,12 @@ u8 GetNumBadges()
 };
 
 u8 getLevelBoost(){
- u8 badges = GetNumBadges();
- if (FlagGet((((0x500 + 864 - 1) + 1) + 0x4)) && IsHardMode() == 1)
-  return badges*2;
- else if(IsHardMode() == 1 || FlagGet((((0x500 + 864 - 1) + 1) + 0x4)))
-  return badges;
+ u8 levelboost = Random() % (GetNumBadges()+2);
+ u8 levelboosthard = Random() % GetNumBadges() + levelboost;
+ if(FlagGet(0x27)||(FlagGet((((0x500 + 864 - 1) + 1) + 0x4)) && FlagGet(0x26)))
+  return levelboosthard;
  else
-  return 0;
+  return levelboost;
 }
 
 u16 GetBaseSpecie(u16 basespecies){
@@ -21631,7 +21669,7 @@ u16 GetBaseSpecie(u16 basespecies){
  u16 randomizedspecie = 1;
  u16 firstStage = 1;
  u16 notLegendary = 1;
- if(FlagGet((((0x500 + 864 - 1) + 1) + 0x2F)) == 0){
+ if(FlagGet(0x2C)){
   randomizedspecie = 1+((basespecies*id)% 884);
   notLegendary = CheckforLegendary(randomizedspecie);
 
@@ -21641,58 +21679,71 @@ u16 GetBaseSpecie(u16 basespecies){
   return basespecies;
 }
 
-u8 getTrainerLevel(u8 Level){
- u8 badges = GetNumBadges();
- u8 levelboost = Random() % (2+badges);
- if(IsHardMode() == 0){
- if(Level == 0)
-  return normalminTrainerLevel[badges];
- else if(Level == 1)
-  return normalminTrainerLevel[badges] + levelboost;
- else if (Level == 5 || Level == 6)
-  return normalminGymLevel[badges];
+u8 getGymLeaderMinLevel(){
+ if(FlagGet(0x27))
+  return Hard_Mode_Boss_Pokemon_Min_Level[GetNumBadges()];
+ else if(FlagGet(0x25))
+  return Easy_Mode_Boss_Pokemon_Min_Level[GetNumBadges()];
  else
-  return Level;
- }else{
- if(Level == 0)
-  return hardminTrainerLevel[badges] + levelboost;
- else if(Level == 1)
-  return hardminTrainerLevel[badges] + levelboost;
- else if (Level == 5 || Level == 6)
-  return hardminGymLevel[badges];
- }
- return Level;
+  return Normal_Mode_Boss_Pokemon_Min_Level[GetNumBadges()];
 }
 
-u8 getWildLevel(u8 Ability){
- u8 levelboost = Random() % 5 + IsHardMode();
- if(Ability == 46 || Ability == 55 || Ability == 72 || Ability == 22)
-  return WildLevel[GetNumBadges()] + 6;
- else if(Ability == 193 || Ability == 50 || Ability == 155)
-  return WildLevel[GetNumBadges()];
+u8 getTrainerMinLevel(){
+ u8 levelboost = getLevelBoost();
+ if(FlagGet(0x27))
+  return Hard_Mode_Trainer_Pokemon_Min_Level[GetNumBadges()]+levelboost;
+ else if(FlagGet(0x25))
+  return Easy_Mode_Trainer_Pokemon_Min_Level[GetNumBadges()]+levelboost;
+ else
+  return Normal_Mode_Trainer_Pokemon_Min_Level[GetNumBadges()]+levelboost;
+}
 
- return WildLevel[GetNumBadges()] + levelboost;
+u8 getWildPokemonLevel(){
+
+ u8 levelboost = getLevelBoost();
+ if(FlagGet(0x27))
+  return Hard_Mode_Min_Wild_Pokemon_Level[GetNumBadges()] + getLevelBoost();
+ else if(FlagGet(0x25))
+  return Easy_Mode_Min_Wild_Pokemon_Level[GetNumBadges()] + getLevelBoost();
+ else
+  return Normal_Mode_Min_Wild_Pokemon_Level[GetNumBadges()] + getLevelBoost();
+}
+
+u8 getMinWildPokemonLevel(){
+
+ if(FlagGet(0x27))
+  return Hard_Mode_Min_Wild_Pokemon_Level[GetNumBadges()] + getLevelBoost();
+ else if(FlagGet(0x25))
+  return Easy_Mode_Min_Wild_Pokemon_Level[GetNumBadges()] + getLevelBoost();
+ else
+  return Normal_Mode_Min_Wild_Pokemon_Level[GetNumBadges()] + getLevelBoost();
 }
 
 u8 getTrainerPokemonNum(){
- if(IsHardMode() == 0)
-  return normalnumMonsBadge[GetNumBadges()];
+ if(FlagGet(0x27))
+  return Hard_Mode_Trainer_Max_Pokemon_Number[GetNumBadges()];
+ else if(FlagGet(0x25))
+  return Easy_Mode_Trainer_Max_Pokemon_Number[GetNumBadges()];
  else
-  return hardnumMonsBadge[GetNumBadges()];
+  return Normal_Mode_Trainer_Max_Pokemon_Number[GetNumBadges()];
 }
 
 u8 getLeaderPokemonNum(){
- if(IsHardMode() == 0)
-  return normalnumMonsGym[GetNumBadges()];
+ if(FlagGet(0x27))
+  return Hard_Mode_Boss_Pokemon_Number[GetNumBadges()];
+ else if(FlagGet(0x25))
+  return Easy_Mode_Boss_Pokemon_Number[GetNumBadges()];
  else
-  return hardnumMonsGym[GetNumBadges()];
+  return Normal_Mode_Boss_Pokemon_Number[GetNumBadges()];
 }
 
 u8 getDoubleTrainerPokemonNum(){
- if(IsHardMode() == 0)
-  return normalnumMonsDouble[GetNumBadges()];
+ if(FlagGet(0x27))
+  return Hard_Mode_Double_Max_Pokemon_Number[GetNumBadges()];
+ else if(FlagGet(0x25))
+  return Easy_Mode_Double_Max_Pokemon_Number[GetNumBadges()];
  else
-  return hardnumMonsDouble[GetNumBadges()];
+  return Normal_Mode_Double_Max_Pokemon_Number[GetNumBadges()];
 }
 
 u16 GetWildPokemon(u16 basespecies, u8 level, u16 heldItem){
@@ -21706,7 +21757,11 @@ u16 GetWildPokemon(u16 basespecies, u8 level, u16 heldItem){
  u8 BadgesLategame = 7;
 
 
- if (heldItem == 224 || heldItem == 291|| !GetSetPokedexFlag(SpeciesToNationalPokedexNum(WildSpecie), FLAG_GET_SEEN)||2 <= (Random() % 10))
+ if (heldItem == 224
+ || heldItem == 291
+ || !GetSetPokedexFlag(SpeciesToNationalPokedexNum(WildSpecie), FLAG_GET_SEEN)
+ || level == getMinWildPokemonLevel()
+ || FlagGet(0x2D))
   return WildSpecie;
 
  switch(gEvolutionTable[split][0].method)
@@ -21715,7 +21770,7 @@ u16 GetWildPokemon(u16 basespecies, u8 level, u16 heldItem){
   case 1:
   case 21:
   if(level >= FriendshipLevel)
-   return GetWildPokemon(gEvolutionTable[split][0].targetSpecies, level, heldItem);
+   return GetWildPokemon(gEvolutionTable[split][0].targetSpecies, level-1, heldItem);
   break;
 
 
@@ -21727,7 +21782,7 @@ u16 GetWildPokemon(u16 basespecies, u8 level, u16 heldItem){
    if(gEvolutionTable[split][0].param && gEvolutionTable[split][0].param <= level)
    {
     if(GetWildPokemon(gEvolutionTable[split][0].targetSpecies, level, heldItem))
-     return GetWildPokemon(gEvolutionTable[split][0].targetSpecies, level, heldItem);
+     return GetWildPokemon(gEvolutionTable[split][0].targetSpecies, level-1, heldItem);
     else
      return gEvolutionTable[split][0].targetSpecies;
    }
@@ -21740,7 +21795,7 @@ u16 GetWildPokemon(u16 basespecies, u8 level, u16 heldItem){
   case 29:
   case 30:
    if(BadgesMidgame <= numbadges)
-    return GetWildPokemon(gEvolutionTable[split][0].targetSpecies, level, heldItem);
+    return GetWildPokemon(gEvolutionTable[split][0].targetSpecies, level-1, heldItem);
   break;
 
 
@@ -21753,7 +21808,7 @@ u16 GetWildPokemon(u16 basespecies, u8 level, u16 heldItem){
   case 28:
   case 27:
    if(BadgesLategame <= numbadges)
-    return GetWildPokemon(gEvolutionTable[split][0].targetSpecies, level, heldItem);
+    return GetWildPokemon(gEvolutionTable[split][0].targetSpecies, level-1, heldItem);
   break;
 
  }
@@ -21770,8 +21825,8 @@ u16 GetTrainerPokemon(u16 basespecies, u8 level){
  u8 BadgesMidgame = 4;
  u8 BadgesLategame = 6;
 
-
-
+ if(FlagGet(0x2D))
+  return basespecies;
 
  switch(gEvolutionTable[split][0].method)
  {
@@ -22245,4 +22300,66 @@ u16 GetCurrentMapWildPokemon(u8 isWaterMon, u8 index)
   return waterMonsInfo->wildPokemon[index%4].species;
 
  return 0;
+}
+
+u16 GetScaledItem(u16 itemId)
+{
+ u16 PokeballList[] = {
+ 4,
+ 4,
+ 3,
+ 3,
+ 3,
+ 3,
+ 2,
+ 2,
+ 2,
+ 2,
+ 2,
+ };
+
+ u16 RepelList[] = {
+ 90,
+ 90,
+ 91,
+ 91,
+ 91,
+ 91,
+ 92,
+ 92,
+ 92,
+ 92,
+ 92,
+ };
+
+ u16 PotionList[] = {
+ 28,
+ 28,
+ 37,
+ 37,
+ 36,
+ 36,
+ 35,
+ 35,
+ 35,
+ 35,
+ 34,
+ };
+
+ if(itemId == 4||itemId == 3||itemId == 2)
+  return PokeballList[GetNumBadges()];
+ else if(itemId == 90||itemId == 91||itemId == 92)
+  return RepelList[GetNumBadges()];
+ else if(itemId == 28||itemId == 37||itemId == 36||itemId == 35||itemId == 34)
+  return RepelList[GetNumBadges()];
+ else if(itemId == 51||itemId == 52||itemId == 49){
+  if(GetNumBadges() >= 7)
+   return 52;
+  else if(GetNumBadges() >= 4)
+   return 51;
+  else
+   return 49;
+ }
+ else
+  return itemId;
 }

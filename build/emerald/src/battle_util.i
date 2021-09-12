@@ -8514,6 +8514,7 @@ u8 TrySetCantSelectMoveBattleScript(void)
     u32 move = gBattleMons[gActiveBattler].moves[moveId];
     u32 holdEffect = GetBattlerHoldEffect(gActiveBattler, 1);
     u16 *choicedMove = &gBattleStruct->choicedMove[gActiveBattler];
+ u16 ability = gBattleMons[gActiveBattler].ability;
 
     if (gDisableStructs[gActiveBattler].disabledMove == move && move != 0)
     {
@@ -8530,7 +8531,7 @@ u8 TrySetCantSelectMoveBattleScript(void)
             limitations++;
         }
     }
-
+# 1409 "src/battle_util.c"
     if (move == gLastMoves[gActiveBattler] && move != 165 && (gBattleMons[gActiveBattler].status2 & (1 << 31)))
     {
         CancelMultiTurnMoves(gActiveBattler);
@@ -9270,7 +9271,7 @@ s32 GetDrainedBigRootHp(u32 battler, s32 hp)
 
     return hp * -1;
 }
-# 2142 "src/battle_util.c"
+# 2158 "src/battle_util.c"
 u8 DoBattlerEndTurnEffects(void)
 {
     u32 ability, i, effect = 0;
@@ -10513,7 +10514,7 @@ u8 TryWeatherFormChange(u8 battler)
 {
     u8 ret = 0;
     bool32 weatherEffect = ((!IsAbilityOnField(13) && !IsAbilityOnField(76)));
-# 3431 "src/battle_util.c"
+# 3447 "src/battle_util.c"
     return ret;
 }
 static const u16 sWeatherFlagsInfo[][3] =
@@ -10571,6 +10572,7 @@ static bool32 ShouldChangeFormHpBased(u32 battler)
     static const u16 forms[][4] =
     {
         {161, 555, 898 + 168, 2},
+  {161, 898 + 85, 898 + 169, 2},
         {197, 774, 898 + 274, 2},
         {197, 898 + 271, 898 + 278, 2},
         {197, 898 + 270, 898 + 277, 2},
@@ -10586,6 +10588,8 @@ static bool32 ShouldChangeFormHpBased(u32 battler)
     {
         if (gBattleMons[battler].ability == forms[i][0])
         {
+
+
             if (gBattleMons[battler].species == forms[i][2]
                 && gBattleMons[battler].hp > gBattleMons[battler].maxHP / forms[i][3])
             {
@@ -13127,7 +13131,7 @@ static bool32 HasObedientBitSet(u8 battlerId)
 
 u8 IsMonDisobedient(void)
 {
-# 6153 "src/battle_util.c"
+# 6172 "src/battle_util.c"
  return 0;
 }
 
@@ -13192,7 +13196,7 @@ bool32 IsBattlerGrounded(u8 battlerId)
         return 0;
     else if (GetBattlerAbility(battlerId) == 26)
         return 0;
-    else if (((gBattleMons[battlerId].type1 == 2 || gBattleMons[battlerId].type2 == 2 || gBattleMons[battlerId].type3 == 2)) && !FlagGet(0x1DA))
+    else if (((gBattleMons[battlerId].type1 == 2 || gBattleMons[battlerId].type2 == 2 || gBattleMons[battlerId].type3 == 2)) && !FlagGet(0x2B))
         return 0;
 
     else
@@ -14393,7 +14397,7 @@ static void MulByTypeEffectiveness(u16 *modifier, u16 move, u8 moveType, u8 batt
 
 static void UpdateMoveResultFlags(u16 modifier)
 {
-    if (modifier == ((u16)((0.0) * 4096)) && !FlagGet(0x1DA))
+    if (modifier == ((u16)((0.0) * 4096)) && !FlagGet(0x2B))
     {
         gMoveResultFlags |= (1 << 3);
         gMoveResultFlags &= ~((1 << 2) | (1 << 1));
@@ -14490,7 +14494,7 @@ u16 CalcPartyMonTypeEffectivenessMultiplier(u16 move, u16 speciesDef, u16 abilit
 
 u16 GetTypeModifier(u8 atkType, u8 defType)
 {
-    if (0x1DA != 0 && FlagGet(0x1DA))
+    if (0x2B != 0 && FlagGet(0x2B))
         return sInverseTypeEffectivenessTable[atkType][defType];
     else
         return sTypeEffectivenessTable[atkType][defType];
@@ -14668,6 +14672,8 @@ void UndoFormChange(u32 monId, u32 side)
         {898 + 130, 351},
   {898 + 132, 351},
   {898 + 131, 351},
+  {898 + 168, 555},
+  {898 + 169, 898 + 85},
   {898 + 231, 681},
         {898 + 281, 778},
         {898 + 168, 555},

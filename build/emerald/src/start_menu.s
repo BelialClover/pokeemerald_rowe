@@ -14,6 +14,10 @@ sBattlePyramidFloorWindowId:
 	.size	 sStartMenuCursorPos,1
 sStartMenuCursorPos:
 	.byte	0x0
+	.type	 sStartMenuSecondCursorPos,object
+	.size	 sStartMenuSecondCursorPos,1
+sStartMenuSecondCursorPos:
+	.byte	0x0
 	.type	 sNumStartMenuActions,object
 	.size	 sNumStartMenuActions,1
 sNumStartMenuActions:
@@ -178,20 +182,14 @@ sSaveInfoWindowTemplate:
 	.thumb_func
 SetDexPokemonPokenavFlags:
 	push	{lr}
-	ldr	r0, .L3
+	mov	r0, #0x33
 	bl	FlagSet
-	mov	r0, #0x86
-	lsl	r0, r0, #0x4
+	mov	r0, #0x33
 	bl	FlagSet
-	ldr	r0, .L3+0x4
+	mov	r0, #0x33
 	bl	FlagSet
 	pop	{r0}
 	bx	r0
-.L4:
-	.align	2, 0
-.L3:
-	.word	0x861
-	.word	0x862
 .Lfe1:
 	.size	 SetDexPokemonPokenavFlags,.Lfe1-SetDexPokemonPokenavFlags
 	.align	2, 0
@@ -199,54 +197,54 @@ SetDexPokemonPokenavFlags:
 	.thumb_func
 BuildStartMenuActions:
 	push	{lr}
-	ldr	r0, .L18
+	ldr	r0, .L16
 	mov	r1, #0x0
 	strb	r1, [r0]
 	bl	IsUpdateLinkStateCBActive
 	cmp	r0, #0x1
-	bne	.L6	@cond_branch
+	bne	.L4	@cond_branch
 	bl	BuildLinkModeStartMenu
-	b	.L7
-.L19:
+	b	.L5
+.L17:
 	.align	2, 0
-.L18:
+.L16:
 	.word	sNumStartMenuActions
-.L6:
+.L4:
 	bl	InUnionRoom
 	cmp	r0, #0x1
-	bne	.L8	@cond_branch
+	bne	.L6	@cond_branch
 	bl	BuildUnionRoomStartMenu
-	b	.L7
-.L8:
+	b	.L5
+.L6:
 	bl	GetSafariZoneFlag
 	cmp	r0, #0x1
-	bne	.L10	@cond_branch
+	bne	.L8	@cond_branch
 	bl	BuildSafariZoneStartMenu
-	b	.L7
-.L10:
+	b	.L5
+.L8:
 	bl	InBattlePike
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.L12	@cond_branch
+	beq	.L10	@cond_branch
 	bl	BuildBattlePikeStartMenu
-	b	.L7
-.L12:
+	b	.L5
+.L10:
 	bl	InBattlePyramid
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.L14	@cond_branch
+	beq	.L12	@cond_branch
 	bl	BuildBattlePyramidStartMenu
-	b	.L7
-.L14:
+	b	.L5
+.L12:
 	bl	InMultiPartnerRoom
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.L16	@cond_branch
+	beq	.L14	@cond_branch
 	bl	BuildMultiPartnerRoomStartMenu
-	b	.L7
-.L16:
+	b	.L5
+.L14:
 	bl	BuildNormalStartMenu
-.L7:
+.L5:
 	pop	{r0}
 	bx	r0
 .Lfe2:
@@ -259,61 +257,115 @@ AddStartMenuAction:
 	add	r2, r0, #0
 	lsl	r2, r2, #0x18
 	lsr	r2, r2, #0x18
-	ldr	r0, .L21
-	ldr	r1, .L21+0x4
+	ldr	r0, .L19
+	ldr	r1, .L19+0x4
 	bl	AppendToList
 	pop	{r0}
 	bx	r0
-.L22:
+.L20:
 	.align	2, 0
-.L21:
+.L19:
 	.word	sCurrentStartMenuActions
 	.word	sNumStartMenuActions
 .Lfe3:
 	.size	 AddStartMenuAction,.Lfe3-AddStartMenuAction
 	.align	2, 0
+	.globl	HasMapMons
+	.type	 HasMapMons,function
+	.thumb_func
+HasMapMons:
+	push	{r4, r5, lr}
+	mov	r2, #0x0
+	ldr	r1, .L29
+	ldrb	r0, [r1]
+	cmp	r0, #0xff
+	beq	.L23	@cond_branch
+	add	r4, r1, #0
+	ldr	r0, .L29+0x4
+	ldr	r3, [r0]
+	mov	r5, #0x4
+	ldrsb	r5, [r3, r5]
+.L25:
+	lsl	r0, r2, #0x5
+	add	r1, r0, r4
+	ldrb	r0, [r1]
+	cmp	r0, r5
+	bne	.L24	@cond_branch
+	ldrb	r1, [r1, #0x1]
+	mov	r0, #0x5
+	ldrsb	r0, [r3, r0]
+	cmp	r1, r0
+	bne	.L24	@cond_branch
+	mov	r0, #0x1
+	b	.L28
+.L30:
+	.align	2, 0
+.L29:
+	.word	gWildMonHeaders
+	.word	gSaveBlock1Ptr
+.L24:
+	add	r0, r2, #0x1
+	lsl	r0, r0, #0x10
+	lsr	r2, r0, #0x10
+	lsl	r0, r2, #0x5
+	add	r0, r0, r4
+	ldrb	r0, [r0]
+	cmp	r0, #0xff
+	bne	.L25	@cond_branch
+.L23:
+	mov	r0, #0x0
+.L28:
+	pop	{r4, r5}
+	pop	{r1}
+	bx	r1
+.Lfe4:
+	.size	 HasMapMons,.Lfe4-HasMapMons
+	.align	2, 0
 	.type	 BuildNormalStartMenu,function
 	.thumb_func
 BuildNormalStartMenu:
 	push	{lr}
-	ldr	r0, .L28
+	mov	r0, #0x33
 	bl	FlagGet
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	cmp	r0, #0x1
-	bne	.L24	@cond_branch
+	bne	.L32	@cond_branch
 	mov	r0, #0x0
 	bl	AddStartMenuAction
-.L24:
-	ldr	r0, .L28+0x4
+.L32:
+	ldr	r0, .L36
 	bl	FlagGet
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.L25	@cond_branch
+	beq	.L33	@cond_branch
+	bl	HasMapMons
+	lsl	r0, r0, #0x18
+	cmp	r0, #0
+	beq	.L33	@cond_branch
 	mov	r0, #0xd
 	bl	AddStartMenuAction
-.L25:
-	mov	r0, #0x86
-	lsl	r0, r0, #0x4
+.L33:
+	mov	r0, #0x33
 	bl	FlagGet
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	cmp	r0, #0x1
-	bne	.L26	@cond_branch
+	bne	.L34	@cond_branch
 	mov	r0, #0x1
 	bl	AddStartMenuAction
-.L26:
+.L34:
 	mov	r0, #0x2
 	bl	AddStartMenuAction
-	ldr	r0, .L28+0x8
+	mov	r0, #0x33
 	bl	FlagGet
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	cmp	r0, #0x1
-	bne	.L27	@cond_branch
+	bne	.L35	@cond_branch
 	mov	r0, #0x3
 	bl	AddStartMenuAction
-.L27:
+.L35:
 	mov	r0, #0x4
 	bl	AddStartMenuAction
 	mov	r0, #0x5
@@ -322,14 +374,12 @@ BuildNormalStartMenu:
 	bl	AddStartMenuAction
 	pop	{r0}
 	bx	r0
-.L29:
+.L37:
 	.align	2, 0
-.L28:
-	.word	0x861
+.L36:
 	.word	0x88f
-	.word	0x862
-.Lfe4:
-	.size	 BuildNormalStartMenu,.Lfe4-BuildNormalStartMenu
+.Lfe5:
+	.size	 BuildNormalStartMenu,.Lfe5-BuildNormalStartMenu
 	.align	2, 0
 	.type	 BuildSafariZoneStartMenu,function
 	.thumb_func
@@ -339,14 +389,18 @@ BuildSafariZoneStartMenu:
 	bl	AddStartMenuAction
 	mov	r0, #0x0
 	bl	AddStartMenuAction
-	ldr	r0, .L32
+	ldr	r0, .L40
 	bl	FlagGet
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.L31	@cond_branch
+	beq	.L39	@cond_branch
+	bl	HasMapMons
+	lsl	r0, r0, #0x18
+	cmp	r0, #0
+	beq	.L39	@cond_branch
 	mov	r0, #0xd
 	bl	AddStartMenuAction
-.L31:
+.L39:
 	mov	r0, #0x1
 	bl	AddStartMenuAction
 	mov	r0, #0x2
@@ -357,12 +411,12 @@ BuildSafariZoneStartMenu:
 	bl	AddStartMenuAction
 	pop	{r0}
 	bx	r0
-.L33:
+.L41:
 	.align	2, 0
-.L32:
+.L40:
 	.word	0x88f
-.Lfe5:
-	.size	 BuildSafariZoneStartMenu,.Lfe5-BuildSafariZoneStartMenu
+.Lfe6:
+	.size	 BuildSafariZoneStartMenu,.Lfe6-BuildSafariZoneStartMenu
 	.align	2, 0
 	.type	 BuildLinkModeStartMenu,function
 	.thumb_func
@@ -372,15 +426,15 @@ BuildLinkModeStartMenu:
 	bl	AddStartMenuAction
 	mov	r0, #0x2
 	bl	AddStartMenuAction
-	ldr	r0, .L36
+	mov	r0, #0x33
 	bl	FlagGet
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	cmp	r0, #0x1
-	bne	.L35	@cond_branch
+	bne	.L43	@cond_branch
 	mov	r0, #0x3
 	bl	AddStartMenuAction
-.L35:
+.L43:
 	mov	r0, #0x9
 	bl	AddStartMenuAction
 	mov	r0, #0x6
@@ -389,12 +443,8 @@ BuildLinkModeStartMenu:
 	bl	AddStartMenuAction
 	pop	{r0}
 	bx	r0
-.L37:
-	.align	2, 0
-.L36:
-	.word	0x862
-.Lfe6:
-	.size	 BuildLinkModeStartMenu,.Lfe6-BuildLinkModeStartMenu
+.Lfe7:
+	.size	 BuildLinkModeStartMenu,.Lfe7-BuildLinkModeStartMenu
 	.align	2, 0
 	.type	 BuildUnionRoomStartMenu,function
 	.thumb_func
@@ -404,15 +454,15 @@ BuildUnionRoomStartMenu:
 	bl	AddStartMenuAction
 	mov	r0, #0x2
 	bl	AddStartMenuAction
-	ldr	r0, .L40
+	mov	r0, #0x33
 	bl	FlagGet
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	cmp	r0, #0x1
-	bne	.L39	@cond_branch
+	bne	.L45	@cond_branch
 	mov	r0, #0x3
 	bl	AddStartMenuAction
-.L39:
+.L45:
 	mov	r0, #0x4
 	bl	AddStartMenuAction
 	mov	r0, #0x6
@@ -421,12 +471,8 @@ BuildUnionRoomStartMenu:
 	bl	AddStartMenuAction
 	pop	{r0}
 	bx	r0
-.L41:
-	.align	2, 0
-.L40:
-	.word	0x862
-.Lfe7:
-	.size	 BuildUnionRoomStartMenu,.Lfe7-BuildUnionRoomStartMenu
+.Lfe8:
+	.size	 BuildUnionRoomStartMenu,.Lfe8-BuildUnionRoomStartMenu
 	.align	2, 0
 	.type	 BuildBattlePikeStartMenu,function
 	.thumb_func
@@ -444,8 +490,8 @@ BuildBattlePikeStartMenu:
 	bl	AddStartMenuAction
 	pop	{r0}
 	bx	r0
-.Lfe8:
-	.size	 BuildBattlePikeStartMenu,.Lfe8-BuildBattlePikeStartMenu
+.Lfe9:
+	.size	 BuildBattlePikeStartMenu,.Lfe9-BuildBattlePikeStartMenu
 	.align	2, 0
 	.type	 BuildBattlePyramidStartMenu,function
 	.thumb_func
@@ -467,8 +513,8 @@ BuildBattlePyramidStartMenu:
 	bl	AddStartMenuAction
 	pop	{r0}
 	bx	r0
-.Lfe9:
-	.size	 BuildBattlePyramidStartMenu,.Lfe9-BuildBattlePyramidStartMenu
+.Lfe10:
+	.size	 BuildBattlePyramidStartMenu,.Lfe10-BuildBattlePyramidStartMenu
 	.align	2, 0
 	.type	 BuildMultiPartnerRoomStartMenu,function
 	.thumb_func
@@ -484,16 +530,16 @@ BuildMultiPartnerRoomStartMenu:
 	bl	AddStartMenuAction
 	pop	{r0}
 	bx	r0
-.Lfe10:
-	.size	 BuildMultiPartnerRoomStartMenu,.Lfe10-BuildMultiPartnerRoomStartMenu
+.Lfe11:
+	.size	 BuildMultiPartnerRoomStartMenu,.Lfe11-BuildMultiPartnerRoomStartMenu
 	.align	2, 0
 	.type	 ShowSafariBallsWindow,function
 	.thumb_func
 ShowSafariBallsWindow:
 	push	{r4, r5, lr}
 	add	sp, sp, #-0xc
-	ldr	r4, .L46
-	ldr	r0, .L46+0x4
+	ldr	r4, .L50
+	ldr	r0, .L50+0x4
 	bl	AddWindow
 	strb	r0, [r4]
 	ldrb	r0, [r4]
@@ -501,14 +547,14 @@ ShowSafariBallsWindow:
 	ldrb	r0, [r4]
 	mov	r1, #0x0
 	bl	DrawStdWindowFrame
-	ldr	r0, .L46+0x8
-	ldr	r1, .L46+0xc
+	ldr	r0, .L50+0x8
+	ldr	r1, .L50+0xc
 	ldrb	r1, [r1]
 	mov	r2, #0x1
 	mov	r3, #0x2
 	bl	ConvertIntToDecimalStringN
-	ldr	r5, .L46+0x10
-	ldr	r1, .L46+0x14
+	ldr	r5, .L50+0x10
+	ldr	r1, .L50+0x14
 	add	r0, r5, #0
 	bl	StringExpandPlaceholders
 	ldrb	r0, [r4]
@@ -529,65 +575,65 @@ ShowSafariBallsWindow:
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.L47:
+.L51:
 	.align	2, 0
-.L46:
+.L50:
 	.word	sSafariBallsWindowId
 	.word	sSafariBallsWindowTemplate
 	.word	gStringVar1
 	.word	gNumSafariBalls
 	.word	gStringVar4
 	.word	gText_SafariBallStock
-.Lfe11:
-	.size	 ShowSafariBallsWindow,.Lfe11-ShowSafariBallsWindow
+.Lfe12:
+	.size	 ShowSafariBallsWindow,.Lfe12-ShowSafariBallsWindow
 	.align	2, 0
 	.type	 ShowPyramidFloorWindow,function
 	.thumb_func
 ShowPyramidFloorWindow:
 	push	{r4, r5, lr}
 	add	sp, sp, #-0xc
-	ldr	r0, .L52
+	ldr	r0, .L56
 	ldr	r0, [r0]
-	ldr	r1, .L52+0x4
+	ldr	r1, .L56+0x4
 	add	r0, r0, r1
 	ldrh	r0, [r0]
 	cmp	r0, #0x7
-	bne	.L49	@cond_branch
-	ldr	r4, .L52+0x8
-	ldr	r0, .L52+0xc
-	b	.L51
-.L53:
+	bne	.L53	@cond_branch
+	ldr	r4, .L56+0x8
+	ldr	r0, .L56+0xc
+	b	.L55
+.L57:
 	.align	2, 0
-.L52:
+.L56:
 	.word	gSaveBlock2Ptr
 	.word	0xc3e
 	.word	sBattlePyramidFloorWindowId
 	.word	sPyramidFloorWindowTemplate_1
-.L49:
-	ldr	r4, .L54
-	ldr	r0, .L54+0x4
-.L51:
+.L53:
+	ldr	r4, .L58
+	ldr	r0, .L58+0x4
+.L55:
 	bl	AddWindow
 	strb	r0, [r4]
-	ldr	r4, .L54
+	ldr	r4, .L58
 	ldrb	r0, [r4]
 	bl	PutWindowTilemap
 	ldrb	r0, [r4]
 	mov	r1, #0x0
 	bl	DrawStdWindowFrame
-	ldr	r0, .L54+0x8
-	ldr	r2, .L54+0xc
-	ldr	r1, .L54+0x10
+	ldr	r0, .L58+0x8
+	ldr	r2, .L58+0xc
+	ldr	r1, .L58+0x10
 	ldr	r1, [r1]
-	ldr	r3, .L54+0x14
+	ldr	r3, .L58+0x14
 	add	r1, r1, r3
 	ldrh	r1, [r1]
 	lsl	r1, r1, #0x2
 	add	r1, r1, r2
 	ldr	r1, [r1]
 	bl	StringCopy
-	ldr	r5, .L54+0x18
-	ldr	r1, .L54+0x1c
+	ldr	r5, .L58+0x18
+	ldr	r1, .L58+0x1c
 	add	r0, r5, #0
 	bl	StringExpandPlaceholders
 	ldrb	r0, [r4]
@@ -608,9 +654,9 @@ ShowPyramidFloorWindow:
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.L55:
+.L59:
 	.align	2, 0
-.L54:
+.L58:
 	.word	sBattlePyramidFloorWindowId
 	.word	sPyramidFloorWindowTemplate_2
 	.word	gStringVar1
@@ -619,8 +665,8 @@ ShowPyramidFloorWindow:
 	.word	0xc3e
 	.word	gStringVar4
 	.word	gText_BattlePyramidFloor
-.Lfe12:
-	.size	 ShowPyramidFloorWindow,.Lfe12-ShowPyramidFloorWindow
+.Lfe13:
+	.size	 ShowPyramidFloorWindow,.Lfe13-ShowPyramidFloorWindow
 	.align	2, 0
 	.type	 RemoveExtraStartMenuWindows,function
 	.thumb_func
@@ -628,37 +674,7 @@ RemoveExtraStartMenuWindows:
 	push	{r4, lr}
 	bl	GetSafariZoneFlag
 	cmp	r0, #0
-	beq	.L57	@cond_branch
-	ldr	r4, .L62
-	ldrb	r0, [r4]
-	mov	r1, #0x0
-	bl	ClearStdWindowAndFrameToTransparent
-	ldrb	r0, [r4]
-	mov	r1, #0x2
-	bl	CopyWindowToVram
-	b	.L61
-.L63:
-	.align	2, 0
-.L62:
-	.word	sSafariBallsWindowId
-.L57:
-	bl	InBattlePyramid
-	lsl	r0, r0, #0x18
-	cmp	r0, #0
-	beq	.L59	@cond_branch
-	ldr	r4, .L64
-	ldrb	r0, [r4]
-	mov	r1, #0x0
-	bl	ClearStdWindowAndFrameToTransparent
-.L61:
-	ldrb	r0, [r4]
-	bl	RemoveWindow
-	b	.L58
-.L65:
-	.align	2, 0
-.L64:
-	.word	sBattlePyramidFloorWindowId
-.L59:
+	beq	.L61	@cond_branch
 	ldr	r4, .L66
 	ldrb	r0, [r4]
 	mov	r1, #0x0
@@ -666,18 +682,48 @@ RemoveExtraStartMenuWindows:
 	ldrb	r0, [r4]
 	mov	r1, #0x2
 	bl	CopyWindowToVram
-	ldrb	r0, [r4]
-	bl	RemoveWindow
-.L58:
-	pop	{r4}
-	pop	{r0}
-	bx	r0
+	b	.L65
 .L67:
 	.align	2, 0
 .L66:
 	.word	sSafariBallsWindowId
-.Lfe13:
-	.size	 RemoveExtraStartMenuWindows,.Lfe13-RemoveExtraStartMenuWindows
+.L61:
+	bl	InBattlePyramid
+	lsl	r0, r0, #0x18
+	cmp	r0, #0
+	beq	.L63	@cond_branch
+	ldr	r4, .L68
+	ldrb	r0, [r4]
+	mov	r1, #0x0
+	bl	ClearStdWindowAndFrameToTransparent
+.L65:
+	ldrb	r0, [r4]
+	bl	RemoveWindow
+	b	.L62
+.L69:
+	.align	2, 0
+.L68:
+	.word	sBattlePyramidFloorWindowId
+.L63:
+	ldr	r4, .L70
+	ldrb	r0, [r4]
+	mov	r1, #0x0
+	bl	ClearStdWindowAndFrameToTransparent
+	ldrb	r0, [r4]
+	mov	r1, #0x2
+	bl	CopyWindowToVram
+	ldrb	r0, [r4]
+	bl	RemoveWindow
+.L62:
+	pop	{r4}
+	pop	{r0}
+	bx	r0
+.L71:
+	.align	2, 0
+.L70:
+	.word	sSafariBallsWindowId
+.Lfe14:
+	.size	 RemoveExtraStartMenuWindows,.Lfe14-RemoveExtraStartMenuWindows
 	.align	2, 0
 	.type	 PrintStartMenuActions,function
 	.thumb_func
@@ -691,12 +737,12 @@ PrintStartMenuActions:
 	mov	r8, r0
 	add	r6, r1, #0
 	ldrb	r2, [r0]
-	ldr	r0, .L78
+	ldr	r0, .L82
 	mov	r9, r0
-	ldr	r1, .L78+0x4
+	ldr	r1, .L82+0x4
 	mov	sl, r1
-.L69:
-	ldr	r0, .L78+0x8
+.L73:
+	ldr	r0, .L82+0x8
 	lsl	r2, r2, #0x18
 	asr	r4, r2, #0x18
 	add	r5, r4, r0
@@ -706,10 +752,10 @@ PrintStartMenuActions:
 	add	r0, r0, #0x4
 	add	r0, r3, r0
 	ldr	r1, [r0]
-	ldr	r0, .L78+0xc
+	ldr	r0, .L82+0xc
 	add	r7, r2, #0
 	cmp	r1, r0
-	bne	.L72	@cond_branch
+	bne	.L76	@cond_branch
 	bl	GetStartMenuWindowId
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
@@ -723,15 +769,15 @@ PrintStartMenuActions:
 	lsr	r3, r3, #0x10
 	mov	r2, #0x8
 	bl	PrintPlayerNameOnWindow
-	b	.L73
-.L79:
+	b	.L77
+.L83:
 	.align	2, 0
-.L78:
+.L82:
 	.word	sStartMenuItems
 	.word	gStringVar4
 	.word	sCurrentStartMenuActions
 	.word	StartMenuPlayerNameCallback
-.L72:
+.L76:
 	mov	r1, r9
 	add	r0, r3, r1
 	ldr	r1, [r0]
@@ -753,32 +799,32 @@ PrintStartMenuActions:
 	mov	r2, sl
 	mov	r3, #0x8
 	bl	AddTextPrinterParameterized
-.L73:
+.L77:
 	mov	r0, #0x80
 	lsl	r0, r0, #0x11
 	add	r1, r7, r0
 	lsr	r2, r1, #0x18
 	asr	r1, r1, #0x18
-	ldr	r0, .L80
+	ldr	r0, .L84
 	ldrb	r0, [r0]
 	cmp	r1, r0
-	bge	.L74	@cond_branch
+	bge	.L78	@cond_branch
 	sub	r6, r6, #0x1
 	cmp	r6, #0
-	bne	.L69	@cond_branch
+	bne	.L73	@cond_branch
 	mov	r1, r8
 	strb	r2, [r1]
 	mov	r0, #0x0
-	b	.L77
-.L81:
+	b	.L81
+.L85:
 	.align	2, 0
-.L80:
+.L84:
 	.word	sNumStartMenuActions
-.L74:
+.L78:
 	mov	r0, r8
 	strb	r2, [r0]
 	mov	r0, #0x1
-.L77:
+.L81:
 	add	sp, sp, #0xc
 	pop	{r3, r4, r5}
 	mov	r8, r3
@@ -787,121 +833,128 @@ PrintStartMenuActions:
 	pop	{r4, r5, r6, r7}
 	pop	{r1}
 	bx	r1
-.Lfe14:
-	.size	 PrintStartMenuActions,.Lfe14-PrintStartMenuActions
+.Lfe15:
+	.size	 PrintStartMenuActions,.Lfe15-PrintStartMenuActions
 	.align	2, 0
 	.type	 InitStartMenuStep,function
 	.thumb_func
 InitStartMenuStep:
 	push	{r4, lr}
 	add	sp, sp, #-0xc
-	ldr	r0, .L99
+	ldr	r0, .L107
 	mov	r1, #0x0
 	ldrsb	r1, [r0, r1]
 	add	r2, r0, #0
 	cmp	r1, #0x5
-	bls	.LCB774
-	b	.L83	@long jump
-.LCB774:
+	bls	.LCB819
+	b	.L87	@long jump
+.LCB819:
 	lsl	r0, r1, #0x2
-	ldr	r1, .L99+0x4
+	ldr	r1, .L107+0x4
 	add	r0, r0, r1
 	ldr	r0, [r0]
 	mov	pc, r0
-.L100:
+.L108:
 	.align	2, 0
-.L99:
+.L107:
 	.word	sInitStartMenuData
-	.word	.L95
+	.word	.L103
 	.align	2, 0
 	.align	2, 0
-.L95:
-	.word	.L84
-	.word	.L85
-	.word	.L86
-	.word	.L87
-	.word	.L92
-	.word	.L94
-.L84:
+.L103:
+	.word	.L88
+	.word	.L89
+	.word	.L90
+	.word	.L91
+	.word	.L98
+	.word	.L100
+.L88:
 	ldrb	r0, [r2]
 	add	r0, r0, #0x1
 	strb	r0, [r2]
-	b	.L83
-.L85:
+	b	.L87
+.L89:
 	bl	BuildStartMenuActions
-	ldr	r1, .L101
-	b	.L98
-.L102:
+	ldr	r1, .L109
+	b	.L106
+.L110:
 	.align	2, 0
-.L101:
+.L109:
 	.word	sInitStartMenuData
-.L86:
+.L90:
 	bl	LoadMessageBoxAndBorderGfx
-	ldr	r0, .L103
+	ldr	r0, .L111
 	ldrb	r0, [r0]
 	bl	sub_81979C4
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	mov	r1, #0x0
 	bl	DrawStdWindowFrame
-	ldr	r1, .L103+0x4
+	ldr	r1, .L111+0x4
 	mov	r0, #0x0
 	strb	r0, [r1, #0x1]
-	b	.L98
-.L104:
+	b	.L106
+.L112:
 	.align	2, 0
-.L103:
+.L111:
 	.word	sNumStartMenuActions
 	.word	sInitStartMenuData
-.L87:
+.L91:
 	bl	GetSafariZoneFlag
 	cmp	r0, #0
-	beq	.L88	@cond_branch
+	beq	.L92	@cond_branch
 	bl	ShowSafariBallsWindow
-	b	.L89
-.L88:
+	b	.L93
+.L92:
 	bl	InBattlePyramid
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.L90	@cond_branch
+	beq	.L94	@cond_branch
 	bl	ShowPyramidFloorWindow
-	b	.L89
-.L90:
+	b	.L93
+.L94:
+	bl	IsBikingDisallowedByPlayer
+	lsl	r0, r0, #0x18
+	cmp	r0, #0
+	bne	.L96	@cond_branch
+	bl	ShowBikeMenu
+	b	.L93
+.L96:
 	bl	ShowClockWindow
-.L89:
-	ldr	r1, .L105
-	b	.L98
-.L106:
+.L93:
+	ldr	r1, .L113
+	b	.L106
+.L114:
 	.align	2, 0
-.L105:
+.L113:
 	.word	sInitStartMenuData
-.L92:
-	ldr	r4, .L107
+.L98:
+	ldr	r4, .L115
 	add	r0, r4, #0
 	mov	r1, #0x2
 	bl	PrintStartMenuActions
 	cmp	r0, #0
-	beq	.L83	@cond_branch
+	beq	.L87	@cond_branch
 	sub	r1, r4, #0x1
-.L98:
+.L106:
 	ldrb	r0, [r1]
 	add	r0, r0, #0x1
 	strb	r0, [r1]
-	b	.L83
-.L108:
+	b	.L87
+.L116:
 	.align	2, 0
-.L107:
+.L115:
 	.word	sInitStartMenuData+0x1
-.L94:
+.L100:
 	bl	GetStartMenuWindowId
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	mov	r1, #0x10
 	str	r1, [sp]
-	ldr	r1, .L109
+	ldr	r1, .L117
 	ldrb	r1, [r1]
 	str	r1, [sp, #0x4]
-	ldr	r4, .L109+0x4
+	ldr	r4, .L117+0x4
 	ldrb	r1, [r4]
 	str	r1, [sp, #0x8]
 	mov	r1, #0x1
@@ -909,48 +962,66 @@ InitStartMenuStep:
 	mov	r3, #0x9
 	bl	Menu_InitCursor
 	strb	r0, [r4]
+	bl	IsBikingDisallowedByPlayer
+	lsl	r0, r0, #0x18
+	lsr	r1, r0, #0x18
+	cmp	r1, #0
+	bne	.L101	@cond_branch
+	ldr	r0, .L117+0x8
+	strb	r1, [r0]
+	b	.L102
+.L118:
+	.align	2, 0
+.L117:
+	.word	sNumStartMenuActions
+	.word	sStartMenuCursorPos
+	.word	sStartMenuSecondCursorPos
+.L101:
+	ldr	r1, .L119
+	mov	r0, #0x1
+	strb	r0, [r1]
+.L102:
 	bl	GetStartMenuWindowId
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	mov	r1, #0x1
 	bl	CopyWindowToVram
 	mov	r0, #0x1
-	b	.L97
-.L110:
+	b	.L105
+.L120:
 	.align	2, 0
-.L109:
-	.word	sNumStartMenuActions
-	.word	sStartMenuCursorPos
-.L83:
+.L119:
+	.word	sStartMenuSecondCursorPos
+.L87:
 	mov	r0, #0x0
-.L97:
+.L105:
 	add	sp, sp, #0xc
 	pop	{r4}
 	pop	{r1}
 	bx	r1
-.Lfe15:
-	.size	 InitStartMenuStep,.Lfe15-InitStartMenuStep
+.Lfe16:
+	.size	 InitStartMenuStep,.Lfe16-InitStartMenuStep
 	.align	2, 0
 	.type	 InitStartMenu,function
 	.thumb_func
 InitStartMenu:
 	push	{lr}
-	ldr	r1, .L116
+	ldr	r1, .L126
 	mov	r0, #0x0
 	strb	r0, [r1]
 	strb	r0, [r1, #0x1]
-.L112:
+.L122:
 	bl	InitStartMenuStep
 	cmp	r0, #0
-	beq	.L112	@cond_branch
+	beq	.L122	@cond_branch
 	pop	{r0}
 	bx	r0
-.L117:
+.L127:
 	.align	2, 0
-.L116:
+.L126:
 	.word	sInitStartMenuData
-.Lfe16:
-	.size	 InitStartMenu,.Lfe16-InitStartMenu
+.Lfe17:
+	.size	 InitStartMenu,.Lfe17-InitStartMenu
 	.align	2, 0
 	.type	 StartMenuTask,function
 	.thumb_func
@@ -960,26 +1031,26 @@ StartMenuTask:
 	lsr	r4, r0, #0x18
 	bl	InitStartMenuStep
 	cmp	r0, #0x1
-	bne	.L119	@cond_branch
+	bne	.L129	@cond_branch
 	add	r0, r4, #0
 	bl	SwitchTaskToFollowupFunc
-.L119:
+.L129:
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.Lfe17:
-	.size	 StartMenuTask,.Lfe17-StartMenuTask
+.Lfe18:
+	.size	 StartMenuTask,.Lfe18-StartMenuTask
 	.align	2, 0
 	.type	 CreateStartMenuTask,function
 	.thumb_func
 CreateStartMenuTask:
 	push	{r4, r5, lr}
 	add	r5, r0, #0
-	ldr	r1, .L121
+	ldr	r1, .L131
 	mov	r0, #0x0
 	strb	r0, [r1]
 	strb	r0, [r1, #0x1]
-	ldr	r4, .L121+0x4
+	ldr	r4, .L131+0x4
 	add	r0, r4, #0
 	mov	r1, #0x50
 	bl	CreateTask
@@ -991,13 +1062,13 @@ CreateStartMenuTask:
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.L122:
+.L132:
 	.align	2, 0
-.L121:
+.L131:
 	.word	sInitStartMenuData
 	.word	StartMenuTask
-.Lfe18:
-	.size	 CreateStartMenuTask,.Lfe18-CreateStartMenuTask
+.Lfe19:
+	.size	 CreateStartMenuTask,.Lfe19-CreateStartMenuTask
 	.align	2, 0
 	.type	 FieldCB_ReturnToFieldStartMenu,function
 	.thumb_func
@@ -1005,38 +1076,38 @@ FieldCB_ReturnToFieldStartMenu:
 	push	{lr}
 	bl	InitStartMenuStep
 	cmp	r0, #0
-	beq	.L124	@cond_branch
+	beq	.L134	@cond_branch
 	bl	ReturnToFieldOpenStartMenu
 	mov	r0, #0x1
-	b	.L125
-.L124:
+	b	.L135
+.L134:
 	mov	r0, #0x0
-.L125:
+.L135:
 	pop	{r1}
 	bx	r1
-.Lfe19:
-	.size	 FieldCB_ReturnToFieldStartMenu,.Lfe19-FieldCB_ReturnToFieldStartMenu
+.Lfe20:
+	.size	 FieldCB_ReturnToFieldStartMenu,.Lfe20-FieldCB_ReturnToFieldStartMenu
 	.align	2, 0
 	.globl	ShowReturnToFieldStartMenu
 	.type	 ShowReturnToFieldStartMenu,function
 	.thumb_func
 ShowReturnToFieldStartMenu:
-	ldr	r1, .L127
+	ldr	r1, .L137
 	mov	r0, #0x0
 	strb	r0, [r1]
 	strb	r0, [r1, #0x1]
-	ldr	r1, .L127+0x4
-	ldr	r0, .L127+0x8
+	ldr	r1, .L137+0x4
+	ldr	r0, .L137+0x8
 	str	r0, [r1]
 	bx	lr
-.L128:
+.L138:
 	.align	2, 0
-.L127:
+.L137:
 	.word	sInitStartMenuData
 	.word	gFieldCallback2
 	.word	FieldCB_ReturnToFieldStartMenu
-.Lfe20:
-	.size	 ShowReturnToFieldStartMenu,.Lfe20-ShowReturnToFieldStartMenu
+.Lfe21:
+	.size	 ShowReturnToFieldStartMenu,.Lfe21-ShowReturnToFieldStartMenu
 	.align	2, 0
 	.globl	Task_ShowStartMenu
 	.type	 Task_ShowStartMenu,function
@@ -1048,57 +1119,57 @@ Task_ShowStartMenu:
 	lsl	r0, r5, #0x2
 	add	r0, r0, r5
 	lsl	r0, r0, #0x3
-	ldr	r1, .L137
+	ldr	r1, .L147
 	add	r4, r0, r1
 	mov	r1, #0x8
 	ldrsh	r0, [r4, r1]
 	cmp	r0, #0
-	beq	.L131	@cond_branch
+	beq	.L141	@cond_branch
 	cmp	r0, #0x1
-	beq	.L133	@cond_branch
-	b	.L130
-.L138:
+	beq	.L143	@cond_branch
+	b	.L140
+.L148:
 	.align	2, 0
-.L137:
+.L147:
 	.word	gTasks
-.L131:
+.L141:
 	bl	InUnionRoom
 	cmp	r0, #0x1
-	bne	.L132	@cond_branch
+	bne	.L142	@cond_branch
 	bl	SetUsingUnionRoomStartMenu
-.L132:
-	ldr	r1, .L139
-	ldr	r0, .L139+0x4
+.L142:
+	ldr	r1, .L149
+	ldr	r0, .L149+0x4
 	str	r0, [r1]
 	ldrh	r0, [r4, #0x8]
 	add	r0, r0, #0x1
 	strh	r0, [r4, #0x8]
-	b	.L130
-.L140:
+	b	.L140
+.L150:
 	.align	2, 0
-.L139:
+.L149:
 	.word	gMenuCallback
 	.word	HandleStartMenuInput
-.L133:
-	ldr	r0, .L141
+.L143:
+	ldr	r0, .L151
 	ldr	r0, [r0]
 	bl	_call_via_r0
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	cmp	r0, #0x1
-	bne	.L130	@cond_branch
+	bne	.L140	@cond_branch
 	add	r0, r5, #0
 	bl	DestroyTask
-.L130:
+.L140:
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.L142:
+.L152:
 	.align	2, 0
-.L141:
+.L151:
 	.word	gMenuCallback
-.Lfe21:
-	.size	 Task_ShowStartMenu,.Lfe21-Task_ShowStartMenu
+.Lfe22:
+	.size	 Task_ShowStartMenu,.Lfe22-Task_ShowStartMenu
 	.align	2, 0
 	.globl	ShowStartMenu
 	.type	 ShowStartMenu,function
@@ -1107,63 +1178,63 @@ ShowStartMenu:
 	push	{lr}
 	bl	IsUpdateLinkStateCBActive
 	cmp	r0, #0
-	bne	.L144	@cond_branch
+	bne	.L154	@cond_branch
 	bl	FreezeObjectEvents
 	bl	sub_808B864
 	bl	sub_808BCF4
-.L144:
-	ldr	r0, .L145
+.L154:
+	ldr	r0, .L155
 	bl	CreateStartMenuTask
 	bl	ScriptContext2_Enable
 	pop	{r0}
 	bx	r0
-.L146:
+.L156:
 	.align	2, 0
-.L145:
+.L155:
 	.word	Task_ShowStartMenu
-.Lfe22:
-	.size	 ShowStartMenu,.Lfe22-ShowStartMenu
+.Lfe23:
+	.size	 ShowStartMenu,.Lfe23-ShowStartMenu
 	.align	2, 0
 	.type	 HandleStartMenuInput,function
 	.thumb_func
 HandleStartMenuInput:
 	push	{r4, lr}
-	ldr	r4, .L169
+	ldr	r4, .L210
 	ldrh	r1, [r4, #0x2e]
 	mov	r0, #0x40
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L148	@cond_branch
+	beq	.L158	@cond_branch
 	mov	r0, #0x5
 	bl	PlaySE
 	mov	r0, #0x1
 	neg	r0, r0
 	bl	Menu_MoveCursor
-	ldr	r1, .L169+0x4
+	ldr	r1, .L210+0x4
 	strb	r0, [r1]
-.L148:
+.L158:
 	ldrh	r1, [r4, #0x2e]
 	mov	r0, #0x80
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L149	@cond_branch
+	beq	.L159	@cond_branch
 	mov	r0, #0x5
 	bl	PlaySE
 	mov	r0, #0x1
 	bl	Menu_MoveCursor
-	ldr	r1, .L169+0x4
+	ldr	r1, .L210+0x4
 	strb	r0, [r1]
-.L149:
+.L159:
 	ldrh	r1, [r4, #0x2e]
 	mov	r0, #0x1
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L150	@cond_branch
+	beq	.L160	@cond_branch
 	mov	r0, #0x5
 	bl	PlaySE
-	ldr	r1, .L169+0x8
-	ldr	r2, .L169+0xc
-	ldr	r0, .L169+0x4
+	ldr	r1, .L210+0x8
+	ldr	r2, .L210+0xc
+	ldr	r0, .L210+0x4
 	ldrb	r0, [r0]
 	add	r0, r0, r2
 	ldrb	r0, [r0]
@@ -1171,21 +1242,21 @@ HandleStartMenuInput:
 	add	r1, r1, #0x4
 	add	r0, r0, r1
 	ldr	r1, [r0]
-	ldr	r0, .L169+0x10
+	ldr	r0, .L210+0x10
 	cmp	r1, r0
-	bne	.L151	@cond_branch
+	bne	.L161	@cond_branch
 	mov	r0, #0x0
 	bl	GetNationalPokedexCount
 	lsl	r0, r0, #0x10
 	cmp	r0, #0
-	bne	.LCB1248
-	b	.L167	@long jump
-.LCB1248:
-.L151:
-	ldr	r3, .L169+0x14
-	ldr	r1, .L169+0x8
-	ldr	r2, .L169+0xc
-	ldr	r0, .L169+0x4
+	bne	.LCB1325
+	b	.L209	@long jump
+.LCB1325:
+.L161:
+	ldr	r3, .L210+0x14
+	ldr	r1, .L210+0x8
+	ldr	r2, .L210+0xc
+	ldr	r0, .L210+0x4
 	ldrb	r0, [r0]
 	add	r0, r0, r2
 	ldrb	r0, [r0]
@@ -1194,33 +1265,33 @@ HandleStartMenuInput:
 	add	r0, r0, r1
 	ldr	r1, [r0]
 	str	r1, [r3]
-	ldr	r0, .L169+0x18
+	ldr	r0, .L210+0x18
 	cmp	r1, r0
-	bne	.LCB1264
-	b	.L167	@long jump
-.LCB1264:
-	ldr	r0, .L169+0x1c
+	bne	.LCB1341
+	b	.L209	@long jump
+.LCB1341:
+	ldr	r0, .L210+0x1c
 	cmp	r1, r0
-	bne	.LCB1267
-	b	.L167	@long jump
-.LCB1267:
-	ldr	r0, .L169+0x20
+	bne	.LCB1344
+	b	.L209	@long jump
+.LCB1344:
+	ldr	r0, .L210+0x20
 	cmp	r1, r0
-	bne	.LCB1270
-	b	.L167	@long jump
-.LCB1270:
-	ldr	r0, .L169+0x24
+	bne	.LCB1347
+	b	.L209	@long jump
+.LCB1347:
+	ldr	r0, .L210+0x24
 	cmp	r1, r0
-	bne	.LCB1273
-	b	.L167	@long jump
-.LCB1273:
+	bne	.LCB1350
+	b	.L209	@long jump
+.LCB1350:
 	mov	r0, #0x1
 	mov	r1, #0x0
 	bl	FadeScreen
-	b	.L167
-.L170:
+	b	.L209
+.L211:
 	.align	2, 0
-.L169:
+.L210:
 	.word	gMain
 	.word	sStartMenuCursorPos
 	.word	sStartMenuItems
@@ -1231,485 +1302,364 @@ HandleStartMenuInput:
 	.word	StartMenuExitCallback
 	.word	StartMenuSafariZoneRetireCallback
 	.word	StartMenuBattlePyramidRetireCallback
-.L150:
+.L160:
 	mov	r0, #0x20
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L154	@cond_branch
+	beq	.L164	@cond_branch
 	bl	GetSafariZoneFlag
 	cmp	r0, #0
-	bne	.L154	@cond_branch
+	bne	.L164	@cond_branch
 	bl	InBattlePyramid
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	bne	.L154	@cond_branch
+	bne	.L164	@cond_branch
+	ldr	r1, .L212
+	ldrb	r0, [r1]
+	cmp	r0, #0
+	bne	.L166	@cond_branch
+	mov	r0, #0x2
+	b	.L207
+.L213:
+	.align	2, 0
+.L212:
+	.word	sStartMenuSecondCursorPos
+.L166:
+	sub	r0, r0, #0x1
+.L207:
+	strb	r0, [r1]
+	bl	IsBikingDisallowedByPlayer
+	lsl	r0, r0, #0x18
+	cmp	r0, #0
+	beq	.L168	@cond_branch
+	ldr	r1, .L214
+	ldrb	r0, [r1]
+	cmp	r0, #0
+	bne	.L168	@cond_branch
+	mov	r0, #0x2
+	strb	r0, [r1]
+.L168:
+	ldr	r0, .L214
+	ldrb	r0, [r0]
+	cmp	r0, #0x1
+	beq	.L171	@cond_branch
+	cmp	r0, #0x1
+	bgt	.L175	@cond_branch
+	cmp	r0, #0
+	beq	.L170	@cond_branch
+	b	.L164
+.L215:
+	.align	2, 0
+.L214:
+	.word	sStartMenuSecondCursorPos
+.L175:
+	cmp	r0, #0x2
+	beq	.L172	@cond_branch
+	b	.L164
+.L170:
+	bl	RemoveExtraStartMenuWindows
+	bl	ShowBikeMenu
+	b	.L164
+.L171:
+	bl	RemoveExtraStartMenuWindows
+	bl	ShowClockWindow
+	b	.L164
+.L172:
 	bl	RemoveExtraStartMenuWindows
 	bl	ShowGameVersionWindow
-.L154:
-	ldr	r0, .L171
+.L164:
+	ldr	r0, .L216
 	ldrh	r1, [r0, #0x2e]
 	mov	r0, #0x10
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L156	@cond_branch
+	beq	.L176	@cond_branch
 	bl	GetSafariZoneFlag
 	cmp	r0, #0
-	bne	.L156	@cond_branch
+	bne	.L176	@cond_branch
 	bl	InBattlePyramid
 	lsl	r0, r0, #0x18
+	lsr	r2, r0, #0x18
+	cmp	r2, #0
+	bne	.L176	@cond_branch
+	ldr	r1, .L216+0x4
+	ldrb	r0, [r1]
+	cmp	r0, #0x2
+	bne	.L178	@cond_branch
+	strb	r2, [r1]
+	b	.L179
+.L217:
+	.align	2, 0
+.L216:
+	.word	gMain
+	.word	sStartMenuSecondCursorPos
+.L178:
+	add	r0, r0, #0x1
+	strb	r0, [r1]
+.L179:
+	bl	IsBikingDisallowedByPlayer
+	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	bne	.L156	@cond_branch
+	beq	.L180	@cond_branch
+	ldr	r1, .L218
+	ldrb	r0, [r1]
+	cmp	r0, #0
+	bne	.L180	@cond_branch
+	mov	r0, #0x1
+	strb	r0, [r1]
+.L180:
+	ldr	r0, .L218
+	ldrb	r0, [r0]
+	cmp	r0, #0x1
+	beq	.L183	@cond_branch
+	cmp	r0, #0x1
+	bgt	.L187	@cond_branch
+	cmp	r0, #0
+	beq	.L182	@cond_branch
+	b	.L176
+.L219:
+	.align	2, 0
+.L218:
+	.word	sStartMenuSecondCursorPos
+.L187:
+	cmp	r0, #0x2
+	beq	.L184	@cond_branch
+	b	.L176
+.L182:
+	bl	RemoveExtraStartMenuWindows
+	bl	ShowBikeMenu
+	b	.L176
+.L183:
 	bl	RemoveExtraStartMenuWindows
 	bl	ShowClockWindow
-.L156:
-	ldr	r0, .L171
+	b	.L176
+.L184:
+	bl	RemoveExtraStartMenuWindows
+	bl	ShowGameVersionWindow
+.L176:
+	ldr	r0, .L220
 	ldrh	r1, [r0, #0x2e]
 	mov	r0, #0x80
 	lsl	r0, r0, #0x1
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L158	@cond_branch
+	beq	.L188	@cond_branch
 	bl	GetSafariZoneFlag
 	cmp	r0, #0
-	bne	.L159	@cond_branch
+	bne	.L188	@cond_branch
 	bl	InBattlePyramid
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	bne	.L159	@cond_branch
+	bne	.L188	@cond_branch
+	ldr	r0, .L220+0x4
+	ldrb	r0, [r0]
+	cmp	r0, #0
+	beq	.L191	@cond_branch
+	cmp	r0, #0x1
+	beq	.L197	@cond_branch
+	b	.L188
+.L221:
+	.align	2, 0
+.L220:
+	.word	gMain
+	.word	sStartMenuSecondCursorPos
+.L191:
+	bl	IsBikingDisallowedByPlayer
+	lsl	r0, r0, #0x18
+	cmp	r0, #0
+	bne	.L209	@cond_branch
+	bl	RemoveExtraStartMenuWindows
+	ldr	r2, .L222
+	ldrb	r1, [r2]
+	mov	r0, #0x2
+	and	r0, r0, r1
+	cmp	r0, #0
+	beq	.L193	@cond_branch
+	mov	r0, #0x1
+	bl	SetPlayerAvatarTransitionFlags
+	b	.L194
+.L223:
+	.align	2, 0
+.L222:
+	.word	gPlayerAvatar
+.L193:
+	mov	r0, #0x4
+	and	r0, r0, r1
+	cmp	r0, #0
+	beq	.L195	@cond_branch
+	sub	r0, r1, #0x2
+	strb	r0, [r2]
+	mov	r0, #0x2
+	bl	SetPlayerAvatarTransitionFlags
+	b	.L194
+.L195:
+	add	r0, r1, #0x2
+	strb	r0, [r2]
+	mov	r0, #0x4
+	bl	SetPlayerAvatarTransitionFlags
+.L194:
+	mov	r0, #0x22
+	bl	PlaySE
+	bl	ShowBikeMenu
+	b	.L209
+.L197:
 	bl	RemoveExtraStartMenuWindows
 	mov	r0, #0x5
 	bl	PlaySE
-	mov	r4, #0xd5
-	lsl	r4, r4, #0x1
-	add	r0, r4, #0
+	mov	r0, #0x35
 	bl	FlagGet
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.L160	@cond_branch
-	add	r0, r4, #0
+	beq	.L198	@cond_branch
+	mov	r0, #0x35
 	bl	FlagClear
-	b	.L161
-.L172:
-	.align	2, 0
-.L171:
-	.word	gMain
-.L160:
-	add	r0, r4, #0
+	b	.L199
+.L198:
+	mov	r0, #0x35
 	bl	FlagSet
-.L161:
+.L199:
 	bl	ShowClockWindow
-	b	.L158
-.L159:
+.L209:
+	mov	r0, #0x0
+	b	.L205
+.L188:
+	ldr	r0, .L224
+	ldrh	r1, [r0, #0x2e]
+	mov	r0, #0x4
+	and	r0, r0, r1
+	cmp	r0, #0
+	beq	.L202	@cond_branch
 	mov	r0, #0x5
 	bl	PlaySE
-	mov	r4, #0xd5
-	lsl	r4, r4, #0x1
-	add	r0, r4, #0
-	bl	FlagGet
-	lsl	r0, r0, #0x18
-	cmp	r0, #0
-	beq	.L163	@cond_branch
-	add	r0, r4, #0
-	bl	FlagClear
-	ldr	r0, .L173
-	bl	ScriptContext1_SetupScript
-	b	.L165
-.L174:
+	ldr	r1, .L224+0x4
+	ldr	r0, .L224+0x8
+	str	r0, [r1]
+	b	.L209
+.L225:
 	.align	2, 0
-.L173:
-	.word	EventScript_DisableAutoRun
-.L163:
-	add	r0, r4, #0
-	bl	FlagSet
-	ldr	r0, .L175
-	bl	ScriptContext1_SetupScript
-	b	.L168
-.L176:
-	.align	2, 0
-.L175:
-	.word	EventScript_EnableAutoRun
-.L158:
-	ldr	r0, .L177
-	ldrh	r1, [r0, #0x2e]
+.L224:
+	.word	gMain
+	.word	gMenuCallback
+	.word	StartMenuSaveCallback
+.L202:
 	mov	r0, #0xa
 	and	r0, r0, r1
 	cmp	r0, #0
-	bne	.L165	@cond_branch
-.L167:
-	mov	r0, #0x0
-	b	.L166
-.L178:
-	.align	2, 0
-.L177:
-	.word	gMain
-.L168:
-.L165:
+	beq	.L209	@cond_branch
 	bl	RemoveExtraStartMenuWindows
 	bl	HideStartMenu
 	mov	r0, #0x1
-.L166:
+.L205:
 	pop	{r4}
 	pop	{r1}
 	bx	r1
-.Lfe23:
-	.size	 HandleStartMenuInput,.Lfe23-HandleStartMenuInput
+.Lfe24:
+	.size	 HandleStartMenuInput,.Lfe24-HandleStartMenuInput
 	.align	2, 0
 	.type	 StartMenuPokedexCallback,function
 	.thumb_func
 StartMenuPokedexCallback:
 	push	{lr}
-	ldr	r0, .L182
+	ldr	r0, .L229
 	ldrb	r1, [r0, #0x7]
 	mov	r0, #0x80
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L180	@cond_branch
+	beq	.L227	@cond_branch
 	mov	r0, #0x0
-	b	.L181
-.L183:
+	b	.L228
+.L230:
 	.align	2, 0
-.L182:
+.L229:
 	.word	gPaletteFade
-.L180:
+.L227:
 	mov	r0, #0x29
 	bl	IncrementGameStat
 	bl	PlayRainStoppingSoundEffect
 	bl	RemoveExtraStartMenuWindows
 	bl	CleanupOverworldWindowsAndTilemaps
-	ldr	r0, .L184
+	ldr	r0, .L231
 	bl	SetMainCallback2
 	mov	r0, #0x1
-.L181:
+.L228:
 	pop	{r1}
 	bx	r1
-.L185:
+.L232:
 	.align	2, 0
-.L184:
+.L231:
 	.word	CB2_OpenPokedex
-.Lfe24:
-	.size	 StartMenuPokedexCallback,.Lfe24-StartMenuPokedexCallback
+.Lfe25:
+	.size	 StartMenuPokedexCallback,.Lfe25-StartMenuPokedexCallback
 	.align	2, 0
 	.type	 StartMenuPokemonCallback,function
 	.thumb_func
 StartMenuPokemonCallback:
 	push	{lr}
-	ldr	r0, .L189
+	ldr	r0, .L236
 	ldrb	r1, [r0, #0x7]
 	mov	r0, #0x80
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L187	@cond_branch
+	beq	.L234	@cond_branch
 	mov	r0, #0x0
-	b	.L188
-.L190:
+	b	.L235
+.L237:
 	.align	2, 0
-.L189:
+.L236:
 	.word	gPaletteFade
-.L187:
+.L234:
 	bl	PlayRainStoppingSoundEffect
 	bl	RemoveExtraStartMenuWindows
 	bl	CleanupOverworldWindowsAndTilemaps
-	ldr	r0, .L191
+	ldr	r0, .L238
 	bl	SetMainCallback2
 	mov	r0, #0x1
-.L188:
+.L235:
 	pop	{r1}
 	bx	r1
-.L192:
+.L239:
 	.align	2, 0
-.L191:
+.L238:
 	.word	CB2_PartyMenuFromStartMenu
-.Lfe25:
-	.size	 StartMenuPokemonCallback,.Lfe25-StartMenuPokemonCallback
+.Lfe26:
+	.size	 StartMenuPokemonCallback,.Lfe26-StartMenuPokemonCallback
 	.align	2, 0
 	.type	 StartMenuBagCallback,function
 	.thumb_func
 StartMenuBagCallback:
 	push	{lr}
-	ldr	r0, .L196
+	ldr	r0, .L243
 	ldrb	r1, [r0, #0x7]
 	mov	r0, #0x80
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L194	@cond_branch
+	beq	.L241	@cond_branch
 	mov	r0, #0x0
-	b	.L195
-.L197:
+	b	.L242
+.L244:
 	.align	2, 0
-.L196:
+.L243:
 	.word	gPaletteFade
-.L194:
+.L241:
 	bl	PlayRainStoppingSoundEffect
 	bl	RemoveExtraStartMenuWindows
 	bl	CleanupOverworldWindowsAndTilemaps
-	ldr	r0, .L198
+	ldr	r0, .L245
 	bl	SetMainCallback2
 	mov	r0, #0x1
-.L195:
+.L242:
 	pop	{r1}
 	bx	r1
-.L199:
+.L246:
 	.align	2, 0
-.L198:
+.L245:
 	.word	CB2_BagMenuFromStartMenu
-.Lfe26:
-	.size	 StartMenuBagCallback,.Lfe26-StartMenuBagCallback
+.Lfe27:
+	.size	 StartMenuBagCallback,.Lfe27-StartMenuBagCallback
 	.align	2, 0
 	.type	 StartMenuPokeNavCallback,function
 	.thumb_func
 StartMenuPokeNavCallback:
-	push	{lr}
-	ldr	r0, .L203
-	ldrb	r1, [r0, #0x7]
-	mov	r0, #0x80
-	and	r0, r0, r1
-	cmp	r0, #0
-	beq	.L201	@cond_branch
-	mov	r0, #0x0
-	b	.L202
-.L204:
-	.align	2, 0
-.L203:
-	.word	gPaletteFade
-.L201:
-	bl	PlayRainStoppingSoundEffect
-	bl	RemoveExtraStartMenuWindows
-	bl	CleanupOverworldWindowsAndTilemaps
-	ldr	r0, .L205
-	bl	SetMainCallback2
-	mov	r0, #0x1
-.L202:
-	pop	{r1}
-	bx	r1
-.L206:
-	.align	2, 0
-.L205:
-	.word	CB2_InitPokeNav
-.Lfe27:
-	.size	 StartMenuPokeNavCallback,.Lfe27-StartMenuPokeNavCallback
-	.align	2, 0
-	.type	 StartMenuPlayerNameCallback,function
-	.thumb_func
-StartMenuPlayerNameCallback:
-	push	{lr}
-	ldr	r0, .L215
-	ldrb	r1, [r0, #0x7]
-	mov	r0, #0x80
-	and	r0, r0, r1
-	cmp	r0, #0
-	bne	.L208	@cond_branch
-	bl	PlayRainStoppingSoundEffect
-	bl	RemoveExtraStartMenuWindows
-	bl	CleanupOverworldWindowsAndTilemaps
-	bl	IsUpdateLinkStateCBActive
-	cmp	r0, #0
-	bne	.L210	@cond_branch
-	bl	InUnionRoom
-	cmp	r0, #0
-	beq	.L209	@cond_branch
-.L210:
-	ldr	r0, .L215+0x4
-	bl	ShowPlayerTrainerCard
-	b	.L211
-.L216:
-	.align	2, 0
-.L215:
-	.word	gPaletteFade
-	.word	CB2_ReturnToFieldWithOpenMenu
-.L209:
-	ldr	r0, .L217
-	bl	FlagGet
-	lsl	r0, r0, #0x18
-	cmp	r0, #0
-	beq	.L212	@cond_branch
-	ldr	r0, .L217+0x4
-	bl	ShowFrontierPass
-	b	.L211
-.L218:
-	.align	2, 0
-.L217:
-	.word	0x8d2
-	.word	CB2_ReturnToFieldWithOpenMenu
-.L212:
-	ldr	r0, .L219
-	bl	ShowPlayerTrainerCard
-.L211:
-	mov	r0, #0x1
-	b	.L214
-.L220:
-	.align	2, 0
-.L219:
-	.word	CB2_ReturnToFieldWithOpenMenu
-.L208:
-	mov	r0, #0x0
-.L214:
-	pop	{r1}
-	bx	r1
-.Lfe28:
-	.size	 StartMenuPlayerNameCallback,.Lfe28-StartMenuPlayerNameCallback
-	.align	2, 0
-	.type	 StartMenuSaveCallback,function
-	.thumb_func
-StartMenuSaveCallback:
-	push	{lr}
-	bl	InBattlePyramid
-	lsl	r0, r0, #0x18
-	cmp	r0, #0
-	beq	.L222	@cond_branch
-	bl	RemoveExtraStartMenuWindows
-.L222:
-	ldr	r1, .L223
-	ldr	r0, .L223+0x4
-	str	r0, [r1]
-	mov	r0, #0x0
-	pop	{r1}
-	bx	r1
-.L224:
-	.align	2, 0
-.L223:
-	.word	gMenuCallback
-	.word	SaveStartCallback
-.Lfe29:
-	.size	 StartMenuSaveCallback,.Lfe29-StartMenuSaveCallback
-	.align	2, 0
-	.type	 StartMenuOptionCallback,function
-	.thumb_func
-StartMenuOptionCallback:
-	push	{lr}
-	ldr	r0, .L228
-	ldrb	r1, [r0, #0x7]
-	mov	r0, #0x80
-	and	r0, r0, r1
-	cmp	r0, #0
-	beq	.L226	@cond_branch
-	mov	r0, #0x0
-	b	.L227
-.L229:
-	.align	2, 0
-.L228:
-	.word	gPaletteFade
-.L226:
-	bl	PlayRainStoppingSoundEffect
-	bl	RemoveExtraStartMenuWindows
-	bl	CleanupOverworldWindowsAndTilemaps
-	ldr	r0, .L230
-	bl	SetMainCallback2
-	ldr	r1, .L230+0x4
-	ldr	r0, .L230+0x8
-	str	r0, [r1, #0x8]
-	mov	r0, #0x1
-.L227:
-	pop	{r1}
-	bx	r1
-.L231:
-	.align	2, 0
-.L230:
-	.word	CB2_InitOptionMenu
-	.word	gMain
-	.word	CB2_ReturnToFieldWithOpenMenu
-.Lfe30:
-	.size	 StartMenuOptionCallback,.Lfe30-StartMenuOptionCallback
-	.align	2, 0
-	.type	 StartMenuExitCallback,function
-	.thumb_func
-StartMenuExitCallback:
-	push	{lr}
-	bl	RemoveExtraStartMenuWindows
-	bl	HideStartMenu
-	mov	r0, #0x1
-	pop	{r1}
-	bx	r1
-.Lfe31:
-	.size	 StartMenuExitCallback,.Lfe31-StartMenuExitCallback
-	.align	2, 0
-	.type	 StartMenuSafariZoneRetireCallback,function
-	.thumb_func
-StartMenuSafariZoneRetireCallback:
-	push	{lr}
-	bl	RemoveExtraStartMenuWindows
-	bl	HideStartMenu
-	bl	SafariZoneRetirePrompt
-	mov	r0, #0x1
-	pop	{r1}
-	bx	r1
-.Lfe32:
-	.size	 StartMenuSafariZoneRetireCallback,.Lfe32-StartMenuSafariZoneRetireCallback
-	.align	2, 0
-	.type	 StartMenuLinkModePlayerNameCallback,function
-	.thumb_func
-StartMenuLinkModePlayerNameCallback:
-	push	{lr}
-	ldr	r0, .L237
-	ldrb	r1, [r0, #0x7]
-	mov	r0, #0x80
-	and	r0, r0, r1
-	cmp	r0, #0
-	beq	.L235	@cond_branch
-	mov	r0, #0x0
-	b	.L236
-.L238:
-	.align	2, 0
-.L237:
-	.word	gPaletteFade
-.L235:
-	bl	PlayRainStoppingSoundEffect
-	bl	CleanupOverworldWindowsAndTilemaps
-	ldr	r0, .L239
-	ldrb	r0, [r0]
-	ldr	r1, .L239+0x4
-	bl	ShowTrainerCardInLink
-	mov	r0, #0x1
-.L236:
-	pop	{r1}
-	bx	r1
-.L240:
-	.align	2, 0
-.L239:
-	.word	gLocalLinkPlayerId
-	.word	CB2_ReturnToFieldWithOpenMenu
-.Lfe33:
-	.size	 StartMenuLinkModePlayerNameCallback,.Lfe33-StartMenuLinkModePlayerNameCallback
-	.align	2, 0
-	.type	 StartMenuBattlePyramidRetireCallback,function
-	.thumb_func
-StartMenuBattlePyramidRetireCallback:
-	ldr	r1, .L242
-	ldr	r0, .L242+0x4
-	str	r0, [r1]
-	mov	r0, #0x0
-	bx	lr
-.L243:
-	.align	2, 0
-.L242:
-	.word	gMenuCallback
-	.word	BattlePyramidRetireStartCallback
-.Lfe34:
-	.size	 StartMenuBattlePyramidRetireCallback,.Lfe34-StartMenuBattlePyramidRetireCallback
-	.align	2, 0
-	.globl	ShowBattlePyramidStartMenu
-	.type	 ShowBattlePyramidStartMenu,function
-	.thumb_func
-ShowBattlePyramidStartMenu:
-	push	{lr}
-	mov	r0, #0x0
-	mov	r1, #0x0
-	bl	ClearDialogWindowAndFrameToTransparent
-	bl	ScriptUnfreezeObjectEvents
-	ldr	r0, .L245
-	bl	CreateStartMenuTask
-	bl	ScriptContext2_Enable
-	pop	{r0}
-	bx	r0
-.L246:
-	.align	2, 0
-.L245:
-	.word	Task_ShowStartMenu
-.Lfe35:
-	.size	 ShowBattlePyramidStartMenu,.Lfe35-ShowBattlePyramidStartMenu
-	.align	2, 0
-	.type	 StartMenuBattlePyramidBagCallback,function
-	.thumb_func
-StartMenuBattlePyramidBagCallback:
 	push	{lr}
 	ldr	r0, .L250
 	ldrb	r1, [r0, #0x7]
@@ -1736,81 +1686,80 @@ StartMenuBattlePyramidBagCallback:
 .L253:
 	.align	2, 0
 .L252:
-	.word	CB2_PyramidBagMenuFromStartMenu
-.Lfe36:
-	.size	 StartMenuBattlePyramidBagCallback,.Lfe36-StartMenuBattlePyramidBagCallback
+	.word	CB2_InitPokeNav
+.Lfe28:
+	.size	 StartMenuPokeNavCallback,.Lfe28-StartMenuPokeNavCallback
 	.align	2, 0
-	.type	 SaveStartCallback,function
+	.type	 StartMenuPlayerNameCallback,function
 	.thumb_func
-SaveStartCallback:
+StartMenuPlayerNameCallback:
 	push	{lr}
-	bl	InitSave
-	ldr	r1, .L255
-	ldr	r0, .L255+0x4
-	str	r0, [r1]
-	mov	r0, #0x0
-	pop	{r1}
-	bx	r1
-.L256:
-	.align	2, 0
-.L255:
-	.word	gMenuCallback
-	.word	SaveCallback
-.Lfe37:
-	.size	 SaveStartCallback,.Lfe37-SaveStartCallback
-	.align	2, 0
-	.type	 SaveCallback,function
-	.thumb_func
-SaveCallback:
-	push	{lr}
-	bl	RunSaveCallback
-	lsl	r0, r0, #0x18
-	lsr	r0, r0, #0x18
-	cmp	r0, #0x1
-	beq	.L262	@cond_branch
-	cmp	r0, #0x1
-	ble	.L258	@cond_branch
-	cmp	r0, #0x2
-	beq	.L260	@cond_branch
-	cmp	r0, #0x3
-	beq	.L262	@cond_branch
+	ldr	r0, .L262
+	ldrb	r1, [r0, #0x7]
+	mov	r0, #0x80
+	and	r0, r0, r1
+	cmp	r0, #0
+	bne	.L255	@cond_branch
+	bl	PlayRainStoppingSoundEffect
+	bl	RemoveExtraStartMenuWindows
+	bl	CleanupOverworldWindowsAndTilemaps
+	bl	IsUpdateLinkStateCBActive
+	cmp	r0, #0
+	bne	.L257	@cond_branch
+	bl	InUnionRoom
+	cmp	r0, #0
+	beq	.L256	@cond_branch
+.L257:
+	ldr	r0, .L262+0x4
+	bl	ShowPlayerTrainerCard
 	b	.L258
-.L260:
-	mov	r0, #0x0
-	mov	r1, #0x0
-	bl	ClearDialogWindowAndFrameToTransparent
-	bl	InitStartMenu
-	ldr	r1, .L267
-	ldr	r0, .L267+0x4
-	str	r0, [r1]
-	b	.L258
-.L268:
+.L263:
 	.align	2, 0
-.L267:
-	.word	gMenuCallback
-	.word	HandleStartMenuInput
 .L262:
-	mov	r0, #0x0
-	mov	r1, #0x1
-	bl	ClearDialogWindowAndFrameToTransparent
-	bl	ScriptUnfreezeObjectEvents
-	bl	ScriptContext2_Disable
-	bl	SoftResetInBattlePyramid
-	mov	r0, #0x1
-	b	.L266
+	.word	gPaletteFade
+	.word	CB2_ReturnToFieldWithOpenMenu
+.L256:
+	ldr	r0, .L264
+	bl	FlagGet
+	lsl	r0, r0, #0x18
+	cmp	r0, #0
+	beq	.L259	@cond_branch
+	ldr	r0, .L264+0x4
+	bl	ShowFrontierPass
+	b	.L258
+.L265:
+	.align	2, 0
+.L264:
+	.word	0x8d2
+	.word	CB2_ReturnToFieldWithOpenMenu
+.L259:
+	ldr	r0, .L266
+	bl	ShowPlayerTrainerCard
 .L258:
-	mov	r0, #0x0
+	mov	r0, #0x1
+	b	.L261
+.L267:
+	.align	2, 0
 .L266:
+	.word	CB2_ReturnToFieldWithOpenMenu
+.L255:
+	mov	r0, #0x0
+.L261:
 	pop	{r1}
 	bx	r1
-.Lfe38:
-	.size	 SaveCallback,.Lfe38-SaveCallback
+.Lfe29:
+	.size	 StartMenuPlayerNameCallback,.Lfe29-StartMenuPlayerNameCallback
 	.align	2, 0
-	.type	 BattlePyramidRetireStartCallback,function
+	.type	 StartMenuSaveCallback,function
 	.thumb_func
-BattlePyramidRetireStartCallback:
+StartMenuSaveCallback:
 	push	{lr}
-	bl	InitBattlePyramidRetire
+	bl	InBattlePyramid
+	lsl	r0, r0, #0x18
+	cmp	r0, #0
+	beq	.L269	@cond_branch
+	bl	RemoveExtraStartMenuWindows
+.L269:
 	ldr	r1, .L270
 	ldr	r0, .L270+0x4
 	str	r0, [r1]
@@ -1821,28 +1770,281 @@ BattlePyramidRetireStartCallback:
 	.align	2, 0
 .L270:
 	.word	gMenuCallback
-	.word	BattlePyramidRetireCallback
+	.word	SaveStartCallback
+.Lfe30:
+	.size	 StartMenuSaveCallback,.Lfe30-StartMenuSaveCallback
+	.align	2, 0
+	.type	 StartMenuOptionCallback,function
+	.thumb_func
+StartMenuOptionCallback:
+	push	{lr}
+	ldr	r0, .L275
+	ldrb	r1, [r0, #0x7]
+	mov	r0, #0x80
+	and	r0, r0, r1
+	cmp	r0, #0
+	beq	.L273	@cond_branch
+	mov	r0, #0x0
+	b	.L274
+.L276:
+	.align	2, 0
+.L275:
+	.word	gPaletteFade
+.L273:
+	bl	PlayRainStoppingSoundEffect
+	bl	RemoveExtraStartMenuWindows
+	bl	CleanupOverworldWindowsAndTilemaps
+	ldr	r0, .L277
+	bl	SetMainCallback2
+	ldr	r1, .L277+0x4
+	ldr	r0, .L277+0x8
+	str	r0, [r1, #0x8]
+	mov	r0, #0x1
+.L274:
+	pop	{r1}
+	bx	r1
+.L278:
+	.align	2, 0
+.L277:
+	.word	CB2_InitOptionMenu
+	.word	gMain
+	.word	CB2_ReturnToFieldWithOpenMenu
+.Lfe31:
+	.size	 StartMenuOptionCallback,.Lfe31-StartMenuOptionCallback
+	.align	2, 0
+	.type	 StartMenuExitCallback,function
+	.thumb_func
+StartMenuExitCallback:
+	push	{lr}
+	bl	RemoveExtraStartMenuWindows
+	bl	HideStartMenu
+	mov	r0, #0x1
+	pop	{r1}
+	bx	r1
+.Lfe32:
+	.size	 StartMenuExitCallback,.Lfe32-StartMenuExitCallback
+	.align	2, 0
+	.type	 StartMenuSafariZoneRetireCallback,function
+	.thumb_func
+StartMenuSafariZoneRetireCallback:
+	push	{lr}
+	bl	RemoveExtraStartMenuWindows
+	bl	HideStartMenu
+	bl	SafariZoneRetirePrompt
+	mov	r0, #0x1
+	pop	{r1}
+	bx	r1
+.Lfe33:
+	.size	 StartMenuSafariZoneRetireCallback,.Lfe33-StartMenuSafariZoneRetireCallback
+	.align	2, 0
+	.type	 StartMenuLinkModePlayerNameCallback,function
+	.thumb_func
+StartMenuLinkModePlayerNameCallback:
+	push	{lr}
+	ldr	r0, .L284
+	ldrb	r1, [r0, #0x7]
+	mov	r0, #0x80
+	and	r0, r0, r1
+	cmp	r0, #0
+	beq	.L282	@cond_branch
+	mov	r0, #0x0
+	b	.L283
+.L285:
+	.align	2, 0
+.L284:
+	.word	gPaletteFade
+.L282:
+	bl	PlayRainStoppingSoundEffect
+	bl	CleanupOverworldWindowsAndTilemaps
+	ldr	r0, .L286
+	ldrb	r0, [r0]
+	ldr	r1, .L286+0x4
+	bl	ShowTrainerCardInLink
+	mov	r0, #0x1
+.L283:
+	pop	{r1}
+	bx	r1
+.L287:
+	.align	2, 0
+.L286:
+	.word	gLocalLinkPlayerId
+	.word	CB2_ReturnToFieldWithOpenMenu
+.Lfe34:
+	.size	 StartMenuLinkModePlayerNameCallback,.Lfe34-StartMenuLinkModePlayerNameCallback
+	.align	2, 0
+	.type	 StartMenuBattlePyramidRetireCallback,function
+	.thumb_func
+StartMenuBattlePyramidRetireCallback:
+	ldr	r1, .L289
+	ldr	r0, .L289+0x4
+	str	r0, [r1]
+	mov	r0, #0x0
+	bx	lr
+.L290:
+	.align	2, 0
+.L289:
+	.word	gMenuCallback
+	.word	BattlePyramidRetireStartCallback
+.Lfe35:
+	.size	 StartMenuBattlePyramidRetireCallback,.Lfe35-StartMenuBattlePyramidRetireCallback
+	.align	2, 0
+	.globl	ShowBattlePyramidStartMenu
+	.type	 ShowBattlePyramidStartMenu,function
+	.thumb_func
+ShowBattlePyramidStartMenu:
+	push	{lr}
+	mov	r0, #0x0
+	mov	r1, #0x0
+	bl	ClearDialogWindowAndFrameToTransparent
+	bl	ScriptUnfreezeObjectEvents
+	ldr	r0, .L292
+	bl	CreateStartMenuTask
+	bl	ScriptContext2_Enable
+	pop	{r0}
+	bx	r0
+.L293:
+	.align	2, 0
+.L292:
+	.word	Task_ShowStartMenu
+.Lfe36:
+	.size	 ShowBattlePyramidStartMenu,.Lfe36-ShowBattlePyramidStartMenu
+	.align	2, 0
+	.type	 StartMenuBattlePyramidBagCallback,function
+	.thumb_func
+StartMenuBattlePyramidBagCallback:
+	push	{lr}
+	ldr	r0, .L297
+	ldrb	r1, [r0, #0x7]
+	mov	r0, #0x80
+	and	r0, r0, r1
+	cmp	r0, #0
+	beq	.L295	@cond_branch
+	mov	r0, #0x0
+	b	.L296
+.L298:
+	.align	2, 0
+.L297:
+	.word	gPaletteFade
+.L295:
+	bl	PlayRainStoppingSoundEffect
+	bl	RemoveExtraStartMenuWindows
+	bl	CleanupOverworldWindowsAndTilemaps
+	ldr	r0, .L299
+	bl	SetMainCallback2
+	mov	r0, #0x1
+.L296:
+	pop	{r1}
+	bx	r1
+.L300:
+	.align	2, 0
+.L299:
+	.word	CB2_PyramidBagMenuFromStartMenu
+.Lfe37:
+	.size	 StartMenuBattlePyramidBagCallback,.Lfe37-StartMenuBattlePyramidBagCallback
+	.align	2, 0
+	.type	 SaveStartCallback,function
+	.thumb_func
+SaveStartCallback:
+	push	{lr}
+	bl	InitSave
+	ldr	r1, .L302
+	ldr	r0, .L302+0x4
+	str	r0, [r1]
+	mov	r0, #0x0
+	pop	{r1}
+	bx	r1
+.L303:
+	.align	2, 0
+.L302:
+	.word	gMenuCallback
+	.word	SaveCallback
+.Lfe38:
+	.size	 SaveStartCallback,.Lfe38-SaveStartCallback
+	.align	2, 0
+	.type	 SaveCallback,function
+	.thumb_func
+SaveCallback:
+	push	{lr}
+	bl	RunSaveCallback
+	lsl	r0, r0, #0x18
+	lsr	r0, r0, #0x18
+	cmp	r0, #0x1
+	beq	.L309	@cond_branch
+	cmp	r0, #0x1
+	ble	.L305	@cond_branch
+	cmp	r0, #0x2
+	beq	.L307	@cond_branch
+	cmp	r0, #0x3
+	beq	.L309	@cond_branch
+	b	.L305
+.L307:
+	mov	r0, #0x0
+	mov	r1, #0x0
+	bl	ClearDialogWindowAndFrameToTransparent
+	bl	InitStartMenu
+	ldr	r1, .L314
+	ldr	r0, .L314+0x4
+	str	r0, [r1]
+	b	.L305
+.L315:
+	.align	2, 0
+.L314:
+	.word	gMenuCallback
+	.word	HandleStartMenuInput
+.L309:
+	mov	r0, #0x0
+	mov	r1, #0x1
+	bl	ClearDialogWindowAndFrameToTransparent
+	bl	ScriptUnfreezeObjectEvents
+	bl	ScriptContext2_Disable
+	bl	SoftResetInBattlePyramid
+	mov	r0, #0x1
+	b	.L313
+.L305:
+	mov	r0, #0x0
+.L313:
+	pop	{r1}
+	bx	r1
 .Lfe39:
-	.size	 BattlePyramidRetireStartCallback,.Lfe39-BattlePyramidRetireStartCallback
+	.size	 SaveCallback,.Lfe39-SaveCallback
+	.align	2, 0
+	.type	 BattlePyramidRetireStartCallback,function
+	.thumb_func
+BattlePyramidRetireStartCallback:
+	push	{lr}
+	bl	InitBattlePyramidRetire
+	ldr	r1, .L317
+	ldr	r0, .L317+0x4
+	str	r0, [r1]
+	mov	r0, #0x0
+	pop	{r1}
+	bx	r1
+.L318:
+	.align	2, 0
+.L317:
+	.word	gMenuCallback
+	.word	BattlePyramidRetireCallback
+.Lfe40:
+	.size	 BattlePyramidRetireStartCallback,.Lfe40-BattlePyramidRetireStartCallback
 	.align	2, 0
 	.type	 BattlePyramidRetireReturnCallback,function
 	.thumb_func
 BattlePyramidRetireReturnCallback:
 	push	{lr}
 	bl	InitStartMenu
-	ldr	r1, .L273
-	ldr	r0, .L273+0x4
+	ldr	r1, .L320
+	ldr	r0, .L320+0x4
 	str	r0, [r1]
 	mov	r0, #0x0
 	pop	{r1}
 	bx	r1
-.L274:
+.L321:
 	.align	2, 0
-.L273:
+.L320:
 	.word	gMenuCallback
 	.word	HandleStartMenuInput
-.Lfe40:
-	.size	 BattlePyramidRetireReturnCallback,.Lfe40-BattlePyramidRetireReturnCallback
+.Lfe41:
+	.size	 BattlePyramidRetireReturnCallback,.Lfe41-BattlePyramidRetireReturnCallback
 	.align	2, 0
 	.type	 BattlePyramidRetireCallback,function
 	.thumb_func
@@ -1852,66 +2054,66 @@ BattlePyramidRetireCallback:
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	cmp	r0, #0x1
-	beq	.L277	@cond_branch
+	beq	.L324	@cond_branch
 	cmp	r0, #0x1
-	ble	.L276	@cond_branch
+	ble	.L323	@cond_branch
 	cmp	r0, #0x2
-	beq	.L279	@cond_branch
-	b	.L276
-.L277:
+	beq	.L326	@cond_branch
+	b	.L323
+.L324:
 	bl	RemoveExtraStartMenuWindows
-	ldr	r1, .L284
-	ldr	r0, .L284+0x4
+	ldr	r1, .L331
+	ldr	r0, .L331+0x4
 	str	r0, [r1]
-	b	.L276
-.L285:
+	b	.L323
+.L332:
 	.align	2, 0
-.L284:
+.L331:
 	.word	gMenuCallback
 	.word	BattlePyramidRetireReturnCallback
-.L279:
+.L326:
 	mov	r0, #0x0
 	mov	r1, #0x1
 	bl	ClearDialogWindowAndFrameToTransparent
 	bl	ScriptUnfreezeObjectEvents
 	bl	ScriptContext2_Disable
-	ldr	r0, .L286
+	ldr	r0, .L333
 	bl	ScriptContext1_SetupScript
 	mov	r0, #0x1
-	b	.L283
-.L287:
+	b	.L330
+.L334:
 	.align	2, 0
-.L286:
+.L333:
 	.word	BattlePyramid_Retire
-.L276:
+.L323:
 	mov	r0, #0x0
-.L283:
+.L330:
 	pop	{r1}
 	bx	r1
-.Lfe41:
-	.size	 BattlePyramidRetireCallback,.Lfe41-BattlePyramidRetireCallback
+.Lfe42:
+	.size	 BattlePyramidRetireCallback,.Lfe42-BattlePyramidRetireCallback
 	.align	2, 0
 	.type	 InitSave,function
 	.thumb_func
 InitSave:
 	push	{lr}
 	bl	save_serialize_map
-	ldr	r1, .L289
-	ldr	r0, .L289+0x4
+	ldr	r1, .L336
+	ldr	r0, .L336+0x4
 	str	r0, [r1]
-	ldr	r1, .L289+0x8
+	ldr	r1, .L336+0x8
 	mov	r0, #0x0
 	strb	r0, [r1]
 	pop	{r0}
 	bx	r0
-.L290:
+.L337:
 	.align	2, 0
-.L289:
+.L336:
 	.word	sSaveDialogCallback
 	.word	SaveConfirmSaveCallback
 	.word	sSavingComplete
-.Lfe42:
-	.size	 InitSave,.Lfe42-InitSave
+.Lfe43:
+	.size	 InitSave,.Lfe43-InitSave
 	.align	2, 0
 	.type	 RunSaveCallback,function
 	.thumb_func
@@ -1921,28 +2123,28 @@ RunSaveCallback:
 	lsl	r0, r0, #0x10
 	lsr	r0, r0, #0x10
 	cmp	r0, #0x1
-	beq	.L292	@cond_branch
-	ldr	r1, .L294
+	beq	.L339	@cond_branch
+	ldr	r1, .L341
 	mov	r0, #0x0
 	strb	r0, [r1]
-	ldr	r0, .L294+0x4
+	ldr	r0, .L341+0x4
 	ldr	r0, [r0]
 	bl	_call_via_r0
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
-	b	.L293
-.L295:
+	b	.L340
+.L342:
 	.align	2, 0
-.L294:
+.L341:
 	.word	sSavingComplete
 	.word	sSaveDialogCallback
-.L292:
+.L339:
 	mov	r0, #0x0
-.L293:
+.L340:
 	pop	{r1}
 	bx	r1
-.Lfe43:
-	.size	 RunSaveCallback,.Lfe43-RunSaveCallback
+.Lfe44:
+	.size	 RunSaveCallback,.Lfe44-RunSaveCallback
 	.align	2, 0
 	.globl	SaveGame
 	.type	 SaveGame,function
@@ -1950,17 +2152,17 @@ RunSaveCallback:
 SaveGame:
 	push	{lr}
 	bl	InitSave
-	ldr	r0, .L297
+	ldr	r0, .L344
 	mov	r1, #0x50
 	bl	CreateTask
 	pop	{r0}
 	bx	r0
-.L298:
+.L345:
 	.align	2, 0
-.L297:
+.L344:
 	.word	SaveGameTask
-.Lfe44:
-	.size	 SaveGame,.Lfe44-SaveGame
+.Lfe45:
+	.size	 SaveGame,.Lfe45-SaveGame
 	.align	2, 0
 	.type	 ShowSaveMessage,function
 	.thumb_func
@@ -1968,7 +2170,7 @@ ShowSaveMessage:
 	push	{r4, lr}
 	add	r2, r0, #0
 	add	r4, r1, #0
-	ldr	r0, .L300
+	ldr	r0, .L347
 	add	r1, r2, #0
 	bl	StringExpandPlaceholders
 	mov	r0, #0x0
@@ -1976,22 +2178,22 @@ ShowSaveMessage:
 	bl	sub_819786C
 	mov	r0, #0x1
 	bl	AddTextPrinterForMessage_2
-	ldr	r1, .L300+0x4
+	ldr	r1, .L347+0x4
 	mov	r0, #0x1
 	strb	r0, [r1]
-	ldr	r0, .L300+0x8
+	ldr	r0, .L347+0x8
 	str	r4, [r0]
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L301:
+.L348:
 	.align	2, 0
-.L300:
+.L347:
 	.word	gStringVar4
 	.word	sSavingComplete
 	.word	sSaveDialogCallback
-.Lfe45:
-	.size	 ShowSaveMessage,.Lfe45-ShowSaveMessage
+.Lfe46:
+	.size	 ShowSaveMessage,.Lfe46-ShowSaveMessage
 	.align	2, 0
 	.type	 SaveGameTask,function
 	.thumb_func
@@ -2003,40 +2205,40 @@ SaveGameTask:
 	lsl	r0, r0, #0x18
 	lsr	r1, r0, #0x18
 	cmp	r1, #0x1
-	beq	.L306	@cond_branch
+	beq	.L353	@cond_branch
 	cmp	r1, #0x1
-	bgt	.L310	@cond_branch
+	bgt	.L357	@cond_branch
 	cmp	r1, #0
-	beq	.L302	@cond_branch
-	b	.L303
-.L310:
+	beq	.L349	@cond_branch
+	b	.L350
+.L357:
 	cmp	r1, #0x3
-	bgt	.L303	@cond_branch
-	ldr	r1, .L311
+	bgt	.L350	@cond_branch
+	ldr	r1, .L358
 	mov	r0, #0x0
 	strh	r0, [r1]
-	b	.L303
-.L312:
+	b	.L350
+.L359:
 	.align	2, 0
-.L311:
+.L358:
 	.word	gSpecialVar_Result
-.L306:
-	ldr	r0, .L313
+.L353:
+	ldr	r0, .L360
 	strh	r1, [r0]
-.L303:
+.L350:
 	add	r0, r4, #0
 	bl	DestroyTask
 	bl	EnableBothScriptContexts
-.L302:
+.L349:
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L314:
+.L361:
 	.align	2, 0
-.L313:
+.L360:
 	.word	gSpecialVar_Result
-.Lfe46:
-	.size	 SaveGameTask,.Lfe46-SaveGameTask
+.Lfe47:
+	.size	 SaveGameTask,.Lfe47-SaveGameTask
 	.align	2, 0
 	.type	 sub_80A0014,function
 	.thumb_func
@@ -2047,8 +2249,8 @@ sub_80A0014:
 	bl	ClearDialogWindowAndFrame
 	pop	{r0}
 	bx	r0
-.Lfe47:
-	.size	 sub_80A0014,.Lfe47-sub_80A0014
+.Lfe48:
+	.size	 sub_80A0014,.Lfe48-sub_80A0014
 	.align	2, 0
 	.type	 HideSaveInfoWindow,function
 	.thumb_func
@@ -2057,89 +2259,89 @@ HideSaveInfoWindow:
 	bl	RemoveSaveInfoWindow
 	pop	{r0}
 	bx	r0
-.Lfe48:
-	.size	 HideSaveInfoWindow,.Lfe48-HideSaveInfoWindow
+.Lfe49:
+	.size	 HideSaveInfoWindow,.Lfe49-HideSaveInfoWindow
 	.align	2, 0
 	.type	 SaveStartTimer,function
 	.thumb_func
 SaveStartTimer:
-	ldr	r1, .L318
+	ldr	r1, .L365
 	mov	r0, #0x3c
 	strb	r0, [r1]
 	bx	lr
-.L319:
+.L366:
 	.align	2, 0
-.L318:
+.L365:
 	.word	sSaveDialogTimer
-.Lfe49:
-	.size	 SaveStartTimer,.Lfe49-SaveStartTimer
+.Lfe50:
+	.size	 SaveStartTimer,.Lfe50-SaveStartTimer
 	.align	2, 0
 	.type	 SaveSuccesTimer,function
 	.thumb_func
 SaveSuccesTimer:
 	push	{lr}
-	ldr	r1, .L324
+	ldr	r1, .L371
 	ldrb	r0, [r1]
 	sub	r2, r0, #0x1
 	strb	r2, [r1]
-	ldr	r0, .L324+0x4
+	ldr	r0, .L371+0x4
 	ldrh	r1, [r0, #0x2c]
 	mov	r0, #0x1
 	and	r0, r0, r1
 	cmp	r0, #0
-	bne	.L321	@cond_branch
+	bne	.L368	@cond_branch
 	lsl	r0, r2, #0x18
 	cmp	r0, #0
-	beq	.L322	@cond_branch
+	beq	.L369	@cond_branch
 	mov	r0, #0x0
-	b	.L323
-.L325:
+	b	.L370
+.L372:
 	.align	2, 0
-.L324:
+.L371:
 	.word	sSaveDialogTimer
 	.word	gMain
-.L321:
+.L368:
 	mov	r0, #0x5
 	bl	PlaySE
-.L322:
+.L369:
 	mov	r0, #0x1
-.L323:
+.L370:
 	pop	{r1}
 	bx	r1
-.Lfe50:
-	.size	 SaveSuccesTimer,.Lfe50-SaveSuccesTimer
+.Lfe51:
+	.size	 SaveSuccesTimer,.Lfe51-SaveSuccesTimer
 	.align	2, 0
 	.type	 SaveErrorTimer,function
 	.thumb_func
 SaveErrorTimer:
 	push	{lr}
-	ldr	r1, .L331
+	ldr	r1, .L378
 	ldrb	r0, [r1]
 	cmp	r0, #0
-	bne	.L327	@cond_branch
-	ldr	r0, .L331+0x4
+	bne	.L374	@cond_branch
+	ldr	r0, .L378+0x4
 	ldrh	r1, [r0, #0x2c]
 	mov	r0, #0x1
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L328	@cond_branch
+	beq	.L375	@cond_branch
 	mov	r0, #0x1
-	b	.L330
-.L332:
+	b	.L377
+.L379:
 	.align	2, 0
-.L331:
+.L378:
 	.word	sSaveDialogTimer
 	.word	gMain
-.L327:
+.L374:
 	sub	r0, r0, #0x1
 	strb	r0, [r1]
-.L328:
+.L375:
 	mov	r0, #0x0
-.L330:
+.L377:
 	pop	{r1}
 	bx	r1
-.Lfe51:
-	.size	 SaveErrorTimer,.Lfe51-SaveErrorTimer
+.Lfe52:
+	.size	 SaveErrorTimer,.Lfe52-SaveErrorTimer
 	.align	2, 0
 	.type	 SaveConfirmSaveCallback,function
 	.thumb_func
@@ -2155,50 +2357,50 @@ SaveConfirmSaveCallback:
 	bl	InBattlePyramid
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.L334	@cond_branch
-	ldr	r0, .L336
-	ldr	r1, .L336+0x4
+	beq	.L381	@cond_branch
+	ldr	r0, .L383
+	ldr	r1, .L383+0x4
 	bl	ShowSaveMessage
-	b	.L335
-.L337:
+	b	.L382
+.L384:
 	.align	2, 0
-.L336:
+.L383:
 	.word	gText_BattlePyramidConfirmRest
 	.word	SaveYesNoCallback
-.L334:
-	ldr	r0, .L338
-	ldr	r1, .L338+0x4
+.L381:
+	ldr	r0, .L385
+	ldr	r1, .L385+0x4
 	bl	ShowSaveMessage
-.L335:
+.L382:
 	mov	r0, #0x0
 	pop	{r1}
 	bx	r1
-.L339:
+.L386:
 	.align	2, 0
-.L338:
+.L385:
 	.word	gText_ConfirmSave
 	.word	SaveYesNoCallback
-.Lfe52:
-	.size	 SaveConfirmSaveCallback,.Lfe52-SaveConfirmSaveCallback
+.Lfe53:
+	.size	 SaveConfirmSaveCallback,.Lfe53-SaveConfirmSaveCallback
 	.align	2, 0
 	.type	 SaveYesNoCallback,function
 	.thumb_func
 SaveYesNoCallback:
 	push	{lr}
 	bl	DisplayYesNoMenuDefaultYes
-	ldr	r1, .L341
-	ldr	r0, .L341+0x4
+	ldr	r1, .L388
+	ldr	r0, .L388+0x4
 	str	r0, [r1]
 	mov	r0, #0x0
 	pop	{r1}
 	bx	r1
-.L342:
+.L389:
 	.align	2, 0
-.L341:
+.L388:
 	.word	sSaveDialogCallback
 	.word	SaveConfirmInputCallback
-.Lfe53:
-	.size	 SaveYesNoCallback,.Lfe53-SaveYesNoCallback
+.Lfe54:
+	.size	 SaveYesNoCallback,.Lfe54-SaveYesNoCallback
 	.align	2, 0
 	.type	 SaveConfirmInputCallback,function
 	.thumb_func
@@ -2208,98 +2410,98 @@ SaveConfirmInputCallback:
 	lsl	r0, r0, #0x18
 	asr	r1, r0, #0x18
 	cmp	r1, #0
-	beq	.L345	@cond_branch
+	beq	.L392	@cond_branch
 	cmp	r1, #0
-	bgt	.L356	@cond_branch
+	bgt	.L403	@cond_branch
 	mov	r0, #0x1
 	neg	r0, r0
 	cmp	r1, r0
-	beq	.L353	@cond_branch
-	b	.L344
-.L356:
+	beq	.L400	@cond_branch
+	b	.L391
+.L403:
 	cmp	r1, #0x1
-	beq	.L353	@cond_branch
-	b	.L344
-.L345:
-	ldr	r0, .L359
+	beq	.L400	@cond_branch
+	b	.L391
+.L392:
+	ldr	r0, .L406
 	ldrh	r0, [r0]
 	cmp	r0, #0
-	beq	.L348	@cond_branch
+	beq	.L395	@cond_branch
 	cmp	r0, #0x2
-	bne	.L358	@cond_branch
-.L348:
-	ldr	r0, .L359+0x4
+	bne	.L405	@cond_branch
+.L395:
+	ldr	r0, .L406+0x4
 	ldrb	r0, [r0]
 	cmp	r0, #0
-	bne	.L349	@cond_branch
-.L358:
-	ldr	r1, .L359+0x8
-	ldr	r0, .L359+0xc
+	bne	.L396	@cond_branch
+.L405:
+	ldr	r1, .L406+0x8
+	ldr	r0, .L406+0xc
 	str	r0, [r1]
-	b	.L344
-.L360:
+	b	.L391
+.L407:
 	.align	2, 0
-.L359:
+.L406:
 	.word	gSaveFileStatus
 	.word	gDifferentSaveFile
 	.word	sSaveDialogCallback
 	.word	SaveFileExistsCallback
-.L349:
-	ldr	r1, .L361
-	ldr	r0, .L361+0x4
+.L396:
+	ldr	r1, .L408
+	ldr	r0, .L408+0x4
 	str	r0, [r1]
-	b	.L344
-.L362:
+	b	.L391
+.L409:
 	.align	2, 0
-.L361:
+.L408:
 	.word	sSaveDialogCallback
 	.word	SaveSavingMessageCallback
-.L353:
+.L400:
 	bl	HideSaveInfoWindow
 	bl	sub_80A0014
 	mov	r0, #0x2
-	b	.L357
-.L344:
+	b	.L404
+.L391:
 	mov	r0, #0x0
-.L357:
+.L404:
 	pop	{r1}
 	bx	r1
-.Lfe54:
-	.size	 SaveConfirmInputCallback,.Lfe54-SaveConfirmInputCallback
+.Lfe55:
+	.size	 SaveConfirmInputCallback,.Lfe55-SaveConfirmInputCallback
 	.align	2, 0
 	.type	 SaveFileExistsCallback,function
 	.thumb_func
 SaveFileExistsCallback:
 	push	{lr}
-	ldr	r0, .L366
+	ldr	r0, .L413
 	ldrb	r0, [r0]
 	cmp	r0, #0x1
-	bne	.L364	@cond_branch
-	ldr	r0, .L366+0x4
-	ldr	r1, .L366+0x8
+	bne	.L411	@cond_branch
+	ldr	r0, .L413+0x4
+	ldr	r1, .L413+0x8
 	bl	ShowSaveMessage
-	b	.L365
-.L367:
+	b	.L412
+.L414:
 	.align	2, 0
-.L366:
+.L413:
 	.word	gDifferentSaveFile
 	.word	gText_DifferentSaveFile
 	.word	SaveConfirmOverwriteDefaultNoCallback
-.L364:
-	ldr	r1, .L368
-	ldr	r0, .L368+0x4
+.L411:
+	ldr	r1, .L415
+	ldr	r0, .L415+0x4
 	str	r0, [r1]
-.L365:
+.L412:
 	mov	r0, #0x0
 	pop	{r1}
 	bx	r1
-.L369:
+.L416:
 	.align	2, 0
-.L368:
+.L415:
 	.word	sSaveDialogCallback
 	.word	SaveSavingMessageCallback
-.Lfe55:
-	.size	 SaveFileExistsCallback,.Lfe55-SaveFileExistsCallback
+.Lfe56:
+	.size	 SaveFileExistsCallback,.Lfe56-SaveFileExistsCallback
 	.align	2, 0
 	.type	 SaveConfirmOverwriteDefaultNoCallback,function
 	.thumb_func
@@ -2307,38 +2509,38 @@ SaveConfirmOverwriteDefaultNoCallback:
 	push	{lr}
 	mov	r0, #0x1
 	bl	DisplayYesNoMenuWithDefault
-	ldr	r1, .L371
-	ldr	r0, .L371+0x4
+	ldr	r1, .L418
+	ldr	r0, .L418+0x4
 	str	r0, [r1]
 	mov	r0, #0x0
 	pop	{r1}
 	bx	r1
-.L372:
+.L419:
 	.align	2, 0
-.L371:
+.L418:
 	.word	sSaveDialogCallback
 	.word	SaveOverwriteInputCallback
-.Lfe56:
-	.size	 SaveConfirmOverwriteDefaultNoCallback,.Lfe56-SaveConfirmOverwriteDefaultNoCallback
+.Lfe57:
+	.size	 SaveConfirmOverwriteDefaultNoCallback,.Lfe57-SaveConfirmOverwriteDefaultNoCallback
 	.align	2, 0
 	.type	 SaveConfirmOverwriteCallback,function
 	.thumb_func
 SaveConfirmOverwriteCallback:
 	push	{lr}
 	bl	DisplayYesNoMenuDefaultYes
-	ldr	r1, .L374
-	ldr	r0, .L374+0x4
+	ldr	r1, .L421
+	ldr	r0, .L421+0x4
 	str	r0, [r1]
 	mov	r0, #0x0
 	pop	{r1}
 	bx	r1
-.L375:
+.L422:
 	.align	2, 0
-.L374:
+.L421:
 	.word	sSaveDialogCallback
 	.word	SaveOverwriteInputCallback
-.Lfe57:
-	.size	 SaveConfirmOverwriteCallback,.Lfe57-SaveConfirmOverwriteCallback
+.Lfe58:
+	.size	 SaveConfirmOverwriteCallback,.Lfe58-SaveConfirmOverwriteCallback
 	.align	2, 0
 	.type	 SaveOverwriteInputCallback,function
 	.thumb_func
@@ -2348,58 +2550,58 @@ SaveOverwriteInputCallback:
 	lsl	r0, r0, #0x18
 	asr	r1, r0, #0x18
 	cmp	r1, #0
-	beq	.L378	@cond_branch
+	beq	.L425	@cond_branch
 	cmp	r1, #0
-	bgt	.L383	@cond_branch
+	bgt	.L430	@cond_branch
 	mov	r0, #0x1
 	neg	r0, r0
 	cmp	r1, r0
-	beq	.L380	@cond_branch
-	b	.L377
-.L383:
+	beq	.L427	@cond_branch
+	b	.L424
+.L430:
 	cmp	r1, #0x1
-	beq	.L380	@cond_branch
-	b	.L377
-.L378:
-	ldr	r1, .L385
-	ldr	r0, .L385+0x4
+	beq	.L427	@cond_branch
+	b	.L424
+.L425:
+	ldr	r1, .L432
+	ldr	r0, .L432+0x4
 	str	r0, [r1]
-	b	.L377
-.L386:
+	b	.L424
+.L433:
 	.align	2, 0
-.L385:
+.L432:
 	.word	sSaveDialogCallback
 	.word	SaveSavingMessageCallback
-.L380:
+.L427:
 	bl	HideSaveInfoWindow
 	bl	sub_80A0014
 	mov	r0, #0x2
-	b	.L384
-.L377:
+	b	.L431
+.L424:
 	mov	r0, #0x0
-.L384:
+.L431:
 	pop	{r1}
 	bx	r1
-.Lfe58:
-	.size	 SaveOverwriteInputCallback,.Lfe58-SaveOverwriteInputCallback
+.Lfe59:
+	.size	 SaveOverwriteInputCallback,.Lfe59-SaveOverwriteInputCallback
 	.align	2, 0
 	.type	 SaveSavingMessageCallback,function
 	.thumb_func
 SaveSavingMessageCallback:
 	push	{lr}
-	ldr	r0, .L388
-	ldr	r1, .L388+0x4
+	ldr	r0, .L435
+	ldr	r1, .L435+0x4
 	bl	ShowSaveMessage
 	mov	r0, #0x0
 	pop	{r1}
 	bx	r1
-.L389:
+.L436:
 	.align	2, 0
-.L388:
+.L435:
 	.word	gText_SavingDontTurnOff
 	.word	SaveDoSaveCallback
-.Lfe59:
-	.size	 SaveSavingMessageCallback,.Lfe59-SaveSavingMessageCallback
+.Lfe60:
+	.size	 SaveSavingMessageCallback,.Lfe60-SaveSavingMessageCallback
 	.align	2, 0
 	.type	 SaveDoSaveCallback,function
 	.thumb_func
@@ -2408,55 +2610,55 @@ SaveDoSaveCallback:
 	mov	r0, #0x0
 	bl	IncrementGameStat
 	bl	PausePyramidChallenge
-	ldr	r4, .L395
+	ldr	r4, .L442
 	ldrb	r0, [r4]
 	cmp	r0, #0x1
-	bne	.L391	@cond_branch
+	bne	.L438	@cond_branch
 	mov	r0, #0x4
 	bl	TrySavingData
 	lsl	r0, r0, #0x18
 	lsr	r1, r0, #0x18
 	mov	r0, #0x0
 	strb	r0, [r4]
-	b	.L392
-.L396:
+	b	.L439
+.L443:
 	.align	2, 0
-.L395:
+.L442:
 	.word	gDifferentSaveFile
-.L391:
+.L438:
 	mov	r0, #0x0
 	bl	TrySavingData
 	lsl	r0, r0, #0x18
 	lsr	r1, r0, #0x18
-.L392:
+.L439:
 	cmp	r1, #0x1
-	bne	.L393	@cond_branch
-	ldr	r0, .L397
-	ldr	r1, .L397+0x4
+	bne	.L440	@cond_branch
+	ldr	r0, .L444
+	ldr	r1, .L444+0x4
 	bl	ShowSaveMessage
-	b	.L394
-.L398:
+	b	.L441
+.L445:
 	.align	2, 0
-.L397:
+.L444:
 	.word	gText_PlayerSavedGame
 	.word	SaveSuccessCallback
-.L393:
-	ldr	r0, .L399
-	ldr	r1, .L399+0x4
+.L440:
+	ldr	r0, .L446
+	ldr	r1, .L446+0x4
 	bl	ShowSaveMessage
-.L394:
+.L441:
 	bl	SaveStartTimer
 	mov	r0, #0x0
 	pop	{r4}
 	pop	{r1}
 	bx	r1
-.L400:
+.L447:
 	.align	2, 0
-.L399:
+.L446:
 	.word	gText_SaveError
 	.word	SaveErrorCallback
-.Lfe60:
-	.size	 SaveDoSaveCallback,.Lfe60-SaveDoSaveCallback
+.Lfe61:
+	.size	 SaveDoSaveCallback,.Lfe61-SaveDoSaveCallback
 	.align	2, 0
 	.type	 SaveSuccessCallback,function
 	.thumb_func
@@ -2466,23 +2668,23 @@ SaveSuccessCallback:
 	bl	IsTextPrinterActive
 	lsl	r0, r0, #0x10
 	cmp	r0, #0
-	bne	.L402	@cond_branch
+	bne	.L449	@cond_branch
 	mov	r0, #0x37
 	bl	PlaySE
-	ldr	r1, .L403
-	ldr	r0, .L403+0x4
+	ldr	r1, .L450
+	ldr	r0, .L450+0x4
 	str	r0, [r1]
-.L402:
+.L449:
 	mov	r0, #0x0
 	pop	{r1}
 	bx	r1
-.L404:
+.L451:
 	.align	2, 0
-.L403:
+.L450:
 	.word	sSaveDialogCallback
 	.word	SaveReturnSuccessCallback
-.Lfe61:
-	.size	 SaveSuccessCallback,.Lfe61-SaveSuccessCallback
+.Lfe62:
+	.size	 SaveSuccessCallback,.Lfe62-SaveSuccessCallback
 	.align	2, 0
 	.type	 SaveReturnSuccessCallback,function
 	.thumb_func
@@ -2491,21 +2693,21 @@ SaveReturnSuccessCallback:
 	bl	IsSEPlaying
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	bne	.L406	@cond_branch
+	bne	.L453	@cond_branch
 	bl	SaveSuccesTimer
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.L406	@cond_branch
+	beq	.L453	@cond_branch
 	bl	HideSaveInfoWindow
 	mov	r0, #0x1
-	b	.L408
-.L406:
+	b	.L455
+.L453:
 	mov	r0, #0x0
-.L408:
+.L455:
 	pop	{r1}
 	bx	r1
-.Lfe62:
-	.size	 SaveReturnSuccessCallback,.Lfe62-SaveReturnSuccessCallback
+.Lfe63:
+	.size	 SaveReturnSuccessCallback,.Lfe63-SaveReturnSuccessCallback
 	.align	2, 0
 	.type	 SaveErrorCallback,function
 	.thumb_func
@@ -2515,23 +2717,23 @@ SaveErrorCallback:
 	bl	IsTextPrinterActive
 	lsl	r0, r0, #0x10
 	cmp	r0, #0
-	bne	.L410	@cond_branch
+	bne	.L457	@cond_branch
 	mov	r0, #0x16
 	bl	PlaySE
-	ldr	r1, .L411
-	ldr	r0, .L411+0x4
+	ldr	r1, .L458
+	ldr	r0, .L458+0x4
 	str	r0, [r1]
-.L410:
+.L457:
 	mov	r0, #0x0
 	pop	{r1}
 	bx	r1
-.L412:
+.L459:
 	.align	2, 0
-.L411:
+.L458:
 	.word	sSaveDialogCallback
 	.word	SaveReturnErrorCallback
-.Lfe63:
-	.size	 SaveErrorCallback,.Lfe63-SaveErrorCallback
+.Lfe64:
+	.size	 SaveErrorCallback,.Lfe64-SaveErrorCallback
 	.align	2, 0
 	.type	 SaveReturnErrorCallback,function
 	.thumb_func
@@ -2540,36 +2742,36 @@ SaveReturnErrorCallback:
 	bl	SaveErrorTimer
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.L414	@cond_branch
+	beq	.L461	@cond_branch
 	bl	HideSaveInfoWindow
 	mov	r0, #0x3
-	b	.L416
-.L414:
+	b	.L463
+.L461:
 	mov	r0, #0x0
-.L416:
+.L463:
 	pop	{r1}
 	bx	r1
-.Lfe64:
-	.size	 SaveReturnErrorCallback,.Lfe64-SaveReturnErrorCallback
+.Lfe65:
+	.size	 SaveReturnErrorCallback,.Lfe65-SaveReturnErrorCallback
 	.align	2, 0
 	.type	 InitBattlePyramidRetire,function
 	.thumb_func
 InitBattlePyramidRetire:
-	ldr	r1, .L418
-	ldr	r0, .L418+0x4
+	ldr	r1, .L465
+	ldr	r0, .L465+0x4
 	str	r0, [r1]
-	ldr	r1, .L418+0x8
+	ldr	r1, .L465+0x8
 	mov	r0, #0x0
 	strb	r0, [r1]
 	bx	lr
-.L419:
+.L466:
 	.align	2, 0
-.L418:
+.L465:
 	.word	sSaveDialogCallback
 	.word	BattlePyramidConfirmRetireCallback
 	.word	sSavingComplete
-.Lfe65:
-	.size	 InitBattlePyramidRetire,.Lfe65-InitBattlePyramidRetire
+.Lfe66:
+	.size	 InitBattlePyramidRetire,.Lfe66-InitBattlePyramidRetire
 	.align	2, 0
 	.type	 BattlePyramidConfirmRetireCallback,function
 	.thumb_func
@@ -2581,19 +2783,19 @@ BattlePyramidConfirmRetireCallback:
 	mov	r1, #0x0
 	bl	ClearStdWindowAndFrame
 	bl	RemoveStartMenuWindow
-	ldr	r0, .L421
-	ldr	r1, .L421+0x4
+	ldr	r0, .L468
+	ldr	r1, .L468+0x4
 	bl	ShowSaveMessage
 	mov	r0, #0x0
 	pop	{r1}
 	bx	r1
-.L422:
+.L469:
 	.align	2, 0
-.L421:
+.L468:
 	.word	gText_BattlePyramidConfirmRetire
 	.word	BattlePyramidRetireYesNoCallback
-.Lfe66:
-	.size	 BattlePyramidConfirmRetireCallback,.Lfe66-BattlePyramidConfirmRetireCallback
+.Lfe67:
+	.size	 BattlePyramidConfirmRetireCallback,.Lfe67-BattlePyramidConfirmRetireCallback
 	.align	2, 0
 	.type	 BattlePyramidRetireYesNoCallback,function
 	.thumb_func
@@ -2601,19 +2803,19 @@ BattlePyramidRetireYesNoCallback:
 	push	{lr}
 	mov	r0, #0x1
 	bl	DisplayYesNoMenuWithDefault
-	ldr	r1, .L424
-	ldr	r0, .L424+0x4
+	ldr	r1, .L471
+	ldr	r0, .L471+0x4
 	str	r0, [r1]
 	mov	r0, #0x0
 	pop	{r1}
 	bx	r1
-.L425:
+.L472:
 	.align	2, 0
-.L424:
+.L471:
 	.word	sSaveDialogCallback
 	.word	BattlePyramidRetireInputCallback
-.Lfe67:
-	.size	 BattlePyramidRetireYesNoCallback,.Lfe67-BattlePyramidRetireYesNoCallback
+.Lfe68:
+	.size	 BattlePyramidRetireYesNoCallback,.Lfe68-BattlePyramidRetireYesNoCallback
 	.align	2, 0
 	.type	 BattlePyramidRetireInputCallback,function
 	.thumb_func
@@ -2623,32 +2825,32 @@ BattlePyramidRetireInputCallback:
 	lsl	r0, r0, #0x18
 	asr	r1, r0, #0x18
 	cmp	r1, #0
-	beq	.L428	@cond_branch
+	beq	.L475	@cond_branch
 	cmp	r1, #0
-	bgt	.L433	@cond_branch
+	bgt	.L480	@cond_branch
 	mov	r0, #0x1
 	neg	r0, r0
 	cmp	r1, r0
-	beq	.L430	@cond_branch
-	b	.L427
-.L433:
+	beq	.L477	@cond_branch
+	b	.L474
+.L480:
 	cmp	r1, #0x1
-	beq	.L430	@cond_branch
-	b	.L427
-.L428:
+	beq	.L477	@cond_branch
+	b	.L474
+.L475:
 	mov	r0, #0x2
-	b	.L434
-.L430:
+	b	.L481
+.L477:
 	bl	sub_80A0014
 	mov	r0, #0x1
-	b	.L434
-.L427:
+	b	.L481
+.L474:
 	mov	r0, #0x0
-.L434:
+.L481:
 	pop	{r1}
 	bx	r1
-.Lfe68:
-	.size	 BattlePyramidRetireInputCallback,.Lfe68-BattlePyramidRetireInputCallback
+.Lfe69:
+	.size	 BattlePyramidRetireInputCallback,.Lfe69-BattlePyramidRetireInputCallback
 	.align	2, 0
 	.type	 sub_80A03D8,function
 	.thumb_func
@@ -2657,8 +2859,8 @@ sub_80A03D8:
 	bl	TransferPlttBuffer
 	pop	{r0}
 	bx	r0
-.Lfe69:
-	.size	 sub_80A03D8,.Lfe69-sub_80A03D8
+.Lfe70:
+	.size	 sub_80A03D8,.Lfe70-sub_80A03D8
 	.align	2, 0
 	.type	 InitSaveWindowAfterLinkBattle,function
 	.thumb_func
@@ -2672,27 +2874,27 @@ InitSaveWindowAfterLinkBattle:
 	mov	r9, r0
 	ldrb	r0, [r0]
 	cmp	r0, #0x4
-	bls	.LCB3170
-	b	.L437	@long jump
-.LCB3170:
+	bls	.LCB3430
+	b	.L484	@long jump
+.LCB3430:
 	lsl	r0, r0, #0x2
-	ldr	r1, .L451
+	ldr	r1, .L498
 	add	r0, r0, r1
 	ldr	r0, [r0]
 	mov	pc, r0
-.L452:
+.L499:
 	.align	2, 0
-.L451:
-	.word	.L448
+.L498:
+	.word	.L495
 	.align	2, 0
 	.align	2, 0
-.L448:
-	.word	.L438
-	.word	.L444
-	.word	.L445
-	.word	.L446
-	.word	.L447
-.L438:
+.L495:
+	.word	.L485
+	.word	.L491
+	.word	.L492
+	.word	.L493
+	.word	.L494
+.L485:
 	mov	r0, #0x0
 	mov	r1, #0x0
 	bl	SetGpuReg
@@ -2708,8 +2910,8 @@ InitSaveWindowAfterLinkBattle:
 	mov	r0, sp
 	mov	r1, #0xa0
 	lsl	r1, r1, #0x13
-	ldr	r2, .L453
-	ldr	r3, .L453+0x4
+	ldr	r2, .L500
+	ldr	r3, .L500+0x4
 	stmia r3!, {r0, r1, r2}
 	.code	16
 	mov	r7, #0xc0
@@ -2718,23 +2920,23 @@ InitSaveWindowAfterLinkBattle:
 	lsl	r4, r4, #0x9
 	mov	sl, sp
 	mov	r3, #0x0
-	ldr	r5, .L453+0x8
+	ldr	r5, .L500+0x8
 	mov	r8, r5
 	mov	r6, #0x80
 	lsl	r6, r6, #0x5
-.L441:
+.L488:
 	mov	r0, sl
 	strh	r3, [r0]
 	mov	r0, sp
 	add	r1, r7, #0
 	mov	r2, r8
-	ldr	r5, .L453+0x4
+	ldr	r5, .L500+0x4
 	stmia r5!, {r0, r1, r2}
 	.code	16
 	add	r7, r7, r6
 	sub	r4, r4, r6
 	cmp	r4, r6
-	bhi	.L441	@cond_branch
+	bhi	.L488	@cond_branch
 	mov	r0, sl
 	strh	r3, [r0]
 	lsr	r2, r4, #0x1
@@ -2742,30 +2944,30 @@ InitSaveWindowAfterLinkBattle:
 	add	r1, r7, #0
 	mov	r3, ip
 	orr	r2, r2, r3
-	ldr	r5, .L453+0x4
+	ldr	r5, .L500+0x4
 	stmia r5!, {r0, r1, r2}
 	.code	16
-	b	.L437
-.L454:
+	b	.L484
+.L501:
 	.align	2, 0
-.L453:
+.L500:
 	.word	-0x7efffe00
 	.word	0x40000d4
 	.word	-0x7efff800
-.L444:
+.L491:
 	bl	ResetSpriteData
 	bl	ResetTasks
 	bl	ResetPaletteFade
 	bl	ScanlineEffect_Clear
-	b	.L437
-.L445:
+	b	.L484
+.L492:
 	mov	r0, #0x0
 	bl	ResetBgsAndClearDma3BusyFlags
-	ldr	r1, .L455
+	ldr	r1, .L502
 	mov	r0, #0x0
 	mov	r2, #0x1
 	bl	InitBgsFromTemplates
-	ldr	r0, .L455+0x4
+	ldr	r0, .L502+0x4
 	bl	InitWindows
 	mov	r0, #0x0
 	mov	r1, #0x8
@@ -2773,13 +2975,13 @@ InitSaveWindowAfterLinkBattle:
 	bl	LoadUserWindowBorderGfx_
 	mov	r0, #0xf0
 	bl	Menu_LoadStdPalAt
-	b	.L437
-.L456:
+	b	.L484
+.L503:
 	.align	2, 0
-.L455:
+.L502:
 	.word	sUnknown_085105A8
 	.word	sUnknown_085105AC
-.L446:
+.L493:
 	mov	r0, #0x0
 	bl	ShowBg
 	mov	r0, #0x1
@@ -2787,25 +2989,25 @@ InitSaveWindowAfterLinkBattle:
 	mov	r1, #0x10
 	mov	r2, #0x0
 	bl	BlendPalettes
-	ldr	r0, .L457
+	ldr	r0, .L504
 	bl	SetVBlankCallback
 	mov	r0, #0x1
 	bl	EnableInterrupts
-	b	.L437
-.L458:
+	b	.L484
+.L505:
 	.align	2, 0
-.L457:
+.L504:
 	.word	sub_80A03D8
-.L447:
+.L494:
 	mov	r0, #0x1
-	b	.L450
-.L437:
+	b	.L497
+.L484:
 	mov	r1, r9
 	ldrb	r0, [r1]
 	add	r0, r0, #0x1
 	strb	r0, [r1]
 	mov	r0, #0x0
-.L450:
+.L497:
 	add	sp, sp, #0x4
 	pop	{r3, r4, r5}
 	mov	r8, r3
@@ -2814,34 +3016,34 @@ InitSaveWindowAfterLinkBattle:
 	pop	{r4, r5, r6, r7}
 	pop	{r1}
 	bx	r1
-.Lfe70:
-	.size	 InitSaveWindowAfterLinkBattle,.Lfe70-InitSaveWindowAfterLinkBattle
+.Lfe71:
+	.size	 InitSaveWindowAfterLinkBattle,.Lfe71-InitSaveWindowAfterLinkBattle
 	.align	2, 0
 	.globl	CB2_SetUpSaveAfterLinkBattle
 	.type	 CB2_SetUpSaveAfterLinkBattle,function
 	.thumb_func
 CB2_SetUpSaveAfterLinkBattle:
 	push	{lr}
-	ldr	r0, .L461
+	ldr	r0, .L508
 	bl	InitSaveWindowAfterLinkBattle
 	cmp	r0, #0
-	beq	.L460	@cond_branch
-	ldr	r0, .L461+0x4
+	beq	.L507	@cond_branch
+	ldr	r0, .L508+0x4
 	mov	r1, #0x50
 	bl	CreateTask
-	ldr	r0, .L461+0x8
+	ldr	r0, .L508+0x8
 	bl	SetMainCallback2
-.L460:
+.L507:
 	pop	{r0}
 	bx	r0
-.L462:
+.L509:
 	.align	2, 0
-.L461:
+.L508:
 	.word	gMain+0x438
 	.word	Task_SaveAfterLinkBattle
 	.word	CB2_SaveAfterLinkBattle
-.Lfe71:
-	.size	 CB2_SetUpSaveAfterLinkBattle,.Lfe71-CB2_SetUpSaveAfterLinkBattle
+.Lfe72:
+	.size	 CB2_SetUpSaveAfterLinkBattle,.Lfe72-CB2_SetUpSaveAfterLinkBattle
 	.align	2, 0
 	.type	 CB2_SaveAfterLinkBattle,function
 	.thumb_func
@@ -2851,8 +3053,8 @@ CB2_SaveAfterLinkBattle:
 	bl	UpdatePaletteFade
 	pop	{r0}
 	bx	r0
-.Lfe72:
-	.size	 CB2_SaveAfterLinkBattle,.Lfe72-CB2_SaveAfterLinkBattle
+.Lfe73:
+	.size	 CB2_SaveAfterLinkBattle,.Lfe73-CB2_SaveAfterLinkBattle
 	.align	2, 0
 	.type	 Task_SaveAfterLinkBattle,function
 	.thumb_func
@@ -2864,48 +3066,48 @@ Task_SaveAfterLinkBattle:
 	lsl	r0, r4, #0x2
 	add	r0, r0, r4
 	lsl	r0, r0, #0x3
-	ldr	r1, .L483
+	ldr	r1, .L530
 	add	r5, r0, r1
-	ldr	r0, .L483+0x4
+	ldr	r0, .L530+0x4
 	ldrb	r1, [r0, #0x7]
 	mov	r0, #0x80
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.LCB3419
-	b	.L465	@long jump
-.LCB3419:
+	beq	.LCB3679
+	b	.L512	@long jump
+.LCB3679:
 	mov	r1, #0x0
 	ldrsh	r0, [r5, r1]
 	cmp	r0, #0x6
-	bls	.LCB3423
-	b	.L465	@long jump
-.LCB3423:
+	bls	.LCB3683
+	b	.L512	@long jump
+.LCB3683:
 	lsl	r0, r0, #0x2
-	ldr	r1, .L483+0x8
+	ldr	r1, .L530+0x8
 	add	r0, r0, r1
 	ldr	r0, [r0]
 	mov	pc, r0
-.L484:
+.L531:
 	.align	2, 0
-.L483:
+.L530:
 	.word	gTasks+0x8
 	.word	gPaletteFade
-	.word	.L480
+	.word	.L527
 	.align	2, 0
 	.align	2, 0
-.L480:
-	.word	.L467
-	.word	.L472
-	.word	.L473
-	.word	.L475
-	.word	.L476
-	.word	.L477
-	.word	.L478
-.L467:
+.L527:
+	.word	.L514
+	.word	.L519
+	.word	.L520
+	.word	.L522
+	.word	.L523
+	.word	.L524
+	.word	.L525
+.L514:
 	mov	r0, #0x0
 	mov	r1, #0x11
 	bl	FillWindowPixelBuffer
-	ldr	r2, .L485
+	ldr	r2, .L532
 	mov	r4, #0x0
 	str	r4, [sp]
 	mov	r0, #0x2
@@ -2934,58 +3136,58 @@ Task_SaveAfterLinkBattle:
 	mov	r2, #0x10
 	mov	r3, #0x0
 	bl	BeginNormalPaletteFade
-	ldr	r0, .L485+0x4
+	ldr	r0, .L532+0x4
 	ldrb	r0, [r0]
 	cmp	r0, #0
-	beq	.L468	@cond_branch
+	beq	.L515	@cond_branch
 	bl	InUnionRoom
 	cmp	r0, #0
-	beq	.L468	@cond_branch
+	beq	.L515	@cond_branch
 	bl	Link_AnyPartnersPlayingFRLG_JP
 	cmp	r0, #0
-	beq	.L469	@cond_branch
+	beq	.L516	@cond_branch
 	strh	r6, [r5]
-	b	.L465
-.L486:
+	b	.L512
+.L533:
 	.align	2, 0
-.L485:
+.L532:
 	.word	gText_SavingDontTurnOffPower
 	.word	gWirelessCommType
-.L469:
+.L516:
 	mov	r0, #0x5
-	b	.L482
-.L468:
-	ldr	r0, .L487
+	b	.L529
+.L515:
+	ldr	r0, .L534
 	mov	r1, #0x1
 	strb	r1, [r0]
 	mov	r0, #0x1
-	b	.L482
-.L488:
+	b	.L529
+.L535:
 	.align	2, 0
-.L487:
+.L534:
 	.word	gSoftResetDisabled
-.L472:
+.L519:
 	bl	SetContinueGameWarpStatusToDynamicWarp
 	bl	FullSaveGame
 	mov	r0, #0x2
-	b	.L482
-.L473:
+	b	.L529
+.L520:
 	bl	CheckSaveFile
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.L465	@cond_branch
+	beq	.L512	@cond_branch
 	bl	ClearContinueGameWarpStatus2
 	mov	r0, #0x3
 	strh	r0, [r5]
-	ldr	r1, .L489
+	ldr	r1, .L536
 	mov	r0, #0x0
 	strb	r0, [r1]
-	b	.L465
-.L490:
+	b	.L512
+.L537:
 	.align	2, 0
-.L489:
+.L536:
 	.word	gSoftResetDisabled
-.L475:
+.L522:
 	mov	r0, #0x1
 	neg	r0, r0
 	mov	r1, #0x0
@@ -2994,100 +3196,98 @@ Task_SaveAfterLinkBattle:
 	mov	r3, #0x10
 	bl	BeginNormalPaletteFade
 	mov	r0, #0x4
-	b	.L482
-.L476:
+	b	.L529
+.L523:
 	bl	FreeAllWindowBuffers
-	ldr	r0, .L491
+	ldr	r0, .L538
 	ldr	r0, [r0, #0x8]
 	bl	SetMainCallback2
 	add	r0, r4, #0
 	bl	DestroyTask
-	b	.L465
-.L492:
+	b	.L512
+.L539:
 	.align	2, 0
-.L491:
+.L538:
 	.word	gMain
-.L477:
-	ldr	r0, .L493
+.L524:
+	ldr	r0, .L540
 	mov	r1, #0x5
 	bl	CreateTask
 	mov	r0, #0x6
-	b	.L482
-.L494:
+	b	.L529
+.L541:
 	.align	2, 0
-.L493:
+.L540:
 	.word	Task_LinkSave
-.L478:
-	ldr	r0, .L495
+.L525:
+	ldr	r0, .L542
 	bl	FuncIsActiveTask
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	bne	.L465	@cond_branch
+	bne	.L512	@cond_branch
 	mov	r0, #0x3
-.L482:
+.L529:
 	strh	r0, [r5]
-.L465:
+.L512:
 	add	sp, sp, #0x10
 	pop	{r4, r5, r6}
 	pop	{r0}
 	bx	r0
-.L496:
+.L543:
 	.align	2, 0
-.L495:
+.L542:
 	.word	Task_LinkSave
-.Lfe73:
-	.size	 Task_SaveAfterLinkBattle,.Lfe73-Task_SaveAfterLinkBattle
+.Lfe74:
+	.size	 Task_SaveAfterLinkBattle,.Lfe74-Task_SaveAfterLinkBattle
 	.align	2, 0
 	.type	 ShowSaveInfoWindow,function
 	.thumb_func
 ShowSaveInfoWindow:
 	push	{r4, r5, r6, r7, lr}
-	mov	r7, sl
-	mov	r6, r9
-	mov	r5, r8
-	push	{r5, r6, r7}
+	mov	r7, r9
+	mov	r6, r8
+	push	{r6, r7}
 	add	sp, sp, #-0x14
-	ldr	r0, .L501
+	ldr	r0, .L548
 	ldr	r1, [r0, #0x4]		@ created by thumb_load_double_from_address
 	ldr	r0, [r0]		@ created by thumb_load_double_from_address
 	str	r0, [sp, #0xc]
 	str	r1, [sp, #0x10]
-	ldr	r0, .L501+0x4
-	mov	sl, r0
+	mov	r0, #0x33
 	bl	FlagGet
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	bne	.L498	@cond_branch
+	bne	.L545	@cond_branch
 	add	r0, sp, #0xc
 	ldrb	r1, [r0, #0x4]
 	sub	r1, r1, #0x2
 	lsl	r1, r1, #0x18
 	lsr	r1, r1, #0x18
-	ldr	r2, .L501+0x8
+	ldr	r2, .L548+0x4
 	ldr	r0, [sp, #0x10]
 	and	r0, r0, r2
 	orr	r0, r0, r1
 	str	r0, [sp, #0x10]
-.L498:
-	ldr	r6, .L501+0xc
+.L545:
+	ldr	r6, .L548+0x8
 	add	r0, sp, #0xc
 	bl	AddWindow
 	strb	r0, [r6]
 	ldrb	r0, [r6]
 	mov	r1, #0x0
 	bl	DrawStdWindowFrame
-	ldr	r0, .L501+0x10
+	ldr	r0, .L548+0xc
 	ldr	r0, [r0]
 	ldrb	r0, [r0, #0x8]
 	mov	r1, #0x4
 	mov	r9, r1
 	cmp	r0, #0
-	bne	.L499	@cond_branch
+	bne	.L546	@cond_branch
 	mov	r0, #0x8
 	mov	r9, r0
-.L499:
+.L546:
 	mov	r4, #0x1
-	ldr	r5, .L501+0x14
+	ldr	r5, .L548+0x10
 	mov	r0, #0x3
 	add	r1, r5, #0
 	mov	r2, #0x6
@@ -3105,7 +3305,7 @@ ShowSaveInfoWindow:
 	bl	AddTextPrinterParameterized
 	mov	r4, #0x11
 	ldrb	r0, [r6]
-	ldr	r2, .L501+0x18
+	ldr	r2, .L548+0x14
 	str	r4, [sp]
 	mov	r1, r8
 	str	r1, [sp, #0x4]
@@ -3130,7 +3330,7 @@ ShowSaveInfoWindow:
 	bl	PrintPlayerNameOnWindow
 	mov	r4, #0x21
 	ldrb	r0, [r6]
-	ldr	r2, .L501+0x1c
+	ldr	r2, .L548+0x18
 	str	r4, [sp]
 	mov	r1, r8
 	str	r1, [sp, #0x4]
@@ -3157,15 +3357,15 @@ ShowSaveInfoWindow:
 	mov	r1, #0x1
 	add	r2, r5, #0
 	bl	AddTextPrinterParameterized
-	mov	r0, sl
+	mov	r0, #0x33
 	bl	FlagGet
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	cmp	r0, #0x1
-	bne	.L500	@cond_branch
+	bne	.L547	@cond_branch
 	mov	r4, #0x31
 	ldrb	r0, [r6]
-	ldr	r2, .L501+0x20
+	ldr	r2, .L548+0x1c
 	str	r4, [sp]
 	mov	r1, r8
 	str	r1, [sp, #0x4]
@@ -3192,10 +3392,10 @@ ShowSaveInfoWindow:
 	mov	r1, #0x1
 	add	r2, r5, #0
 	bl	AddTextPrinterParameterized
-.L500:
+.L547:
 	add	r4, r4, #0x10
 	ldrb	r0, [r6]
-	ldr	r2, .L501+0x24
+	ldr	r2, .L548+0x20
 	lsl	r4, r4, #0x18
 	lsr	r4, r4, #0x18
 	str	r4, [sp]
@@ -3228,18 +3428,16 @@ ShowSaveInfoWindow:
 	mov	r1, #0x2
 	bl	CopyWindowToVram
 	add	sp, sp, #0x14
-	pop	{r3, r4, r5}
+	pop	{r3, r4}
 	mov	r8, r3
 	mov	r9, r4
-	mov	sl, r5
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-.L502:
+.L549:
 	.align	2, 0
-.L501:
+.L548:
 	.word	sSaveInfoWindowTemplate
-	.word	0x861
 	.word	-0x100
 	.word	sSaveInfoWindowId
 	.word	gSaveBlock2Ptr
@@ -3248,14 +3446,14 @@ ShowSaveInfoWindow:
 	.word	gText_SavingBadges
 	.word	gText_SavingPokedex
 	.word	gText_SavingTime
-.Lfe74:
-	.size	 ShowSaveInfoWindow,.Lfe74-ShowSaveInfoWindow
+.Lfe75:
+	.size	 ShowSaveInfoWindow,.Lfe75-ShowSaveInfoWindow
 	.align	2, 0
 	.type	 RemoveSaveInfoWindow,function
 	.thumb_func
 RemoveSaveInfoWindow:
 	push	{r4, lr}
-	ldr	r4, .L504
+	ldr	r4, .L551
 	ldrb	r0, [r4]
 	mov	r1, #0x0
 	bl	ClearStdWindowAndFrame
@@ -3264,12 +3462,12 @@ RemoveSaveInfoWindow:
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L505:
+.L552:
 	.align	2, 0
-.L504:
+.L551:
 	.word	sSaveInfoWindowId
-.Lfe75:
-	.size	 RemoveSaveInfoWindow,.Lfe75-RemoveSaveInfoWindow
+.Lfe76:
+	.size	 RemoveSaveInfoWindow,.Lfe76-RemoveSaveInfoWindow
 	.align	2, 0
 	.type	 Task_WaitForBattleTowerLinkSave,function
 	.thumb_func
@@ -3277,44 +3475,44 @@ Task_WaitForBattleTowerLinkSave:
 	push	{r4, lr}
 	lsl	r0, r0, #0x18
 	lsr	r4, r0, #0x18
-	ldr	r0, .L508
+	ldr	r0, .L555
 	bl	FuncIsActiveTask
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	bne	.L507	@cond_branch
+	bne	.L554	@cond_branch
 	add	r0, r4, #0
 	bl	DestroyTask
 	bl	EnableBothScriptContexts
-.L507:
+.L554:
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L509:
+.L556:
 	.align	2, 0
-.L508:
+.L555:
 	.word	Task_LinkSave
-.Lfe76:
-	.size	 Task_WaitForBattleTowerLinkSave,.Lfe76-Task_WaitForBattleTowerLinkSave
+.Lfe77:
+	.size	 Task_WaitForBattleTowerLinkSave,.Lfe77-Task_WaitForBattleTowerLinkSave
 	.align	2, 0
 	.globl	SaveForBattleTowerLink
 	.type	 SaveForBattleTowerLink,function
 	.thumb_func
 SaveForBattleTowerLink:
 	push	{r4, r5, lr}
-	ldr	r0, .L511
+	ldr	r0, .L558
 	mov	r1, #0x5
 	bl	CreateTask
 	add	r4, r0, #0
 	lsl	r4, r4, #0x18
 	lsr	r4, r4, #0x18
-	ldr	r5, .L511+0x4
+	ldr	r5, .L558+0x4
 	lsl	r0, r4, #0x2
 	add	r0, r0, r4
 	lsl	r0, r0, #0x3
 	add	r0, r0, r5
 	mov	r1, #0x1
 	strh	r1, [r0, #0xc]
-	ldr	r0, .L511+0x8
+	ldr	r0, .L558+0x8
 	mov	r1, #0x6
 	bl	CreateTask
 	lsl	r0, r0, #0x18
@@ -3327,14 +3525,14 @@ SaveForBattleTowerLink:
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.L512:
+.L559:
 	.align	2, 0
-.L511:
+.L558:
 	.word	Task_LinkSave
 	.word	gTasks
 	.word	Task_WaitForBattleTowerLinkSave
-.Lfe77:
-	.size	 SaveForBattleTowerLink,.Lfe77-SaveForBattleTowerLink
+.Lfe78:
+	.size	 SaveForBattleTowerLink,.Lfe78-SaveForBattleTowerLink
 	.align	2, 0
 	.type	 HideStartMenuWindow,function
 	.thumb_func
@@ -3350,8 +3548,8 @@ HideStartMenuWindow:
 	bl	ScriptContext2_Disable
 	pop	{r0}
 	bx	r0
-.Lfe78:
-	.size	 HideStartMenuWindow,.Lfe78-HideStartMenuWindow
+.Lfe79:
+	.size	 HideStartMenuWindow,.Lfe79-HideStartMenuWindow
 	.align	2, 0
 	.globl	HideStartMenu
 	.type	 HideStartMenu,function
@@ -3363,8 +3561,8 @@ HideStartMenu:
 	bl	HideStartMenuWindow
 	pop	{r0}
 	bx	r0
-.Lfe79:
-	.size	 HideStartMenu,.Lfe79-HideStartMenu
+.Lfe80:
+	.size	 HideStartMenu,.Lfe80-HideStartMenu
 	.align	2, 0
 	.globl	AppendToList
 	.type	 AppendToList,function
@@ -3377,28 +3575,28 @@ AppendToList:
 	add	r0, r0, #0x1
 	strb	r0, [r1]
 	bx	lr
-.Lfe80:
-	.size	 AppendToList,.Lfe80-AppendToList
+.Lfe81:
+	.size	 AppendToList,.Lfe81-AppendToList
 	.align	2, 0
 	.type	 StartMenuDexNavCallback,function
 	.thumb_func
 StartMenuDexNavCallback:
 	push	{lr}
-	ldr	r0, .L517
+	ldr	r0, .L564
 	mov	r1, #0x0
 	bl	CreateTask
 	mov	r0, #0x1
 	pop	{r1}
 	bx	r1
-.L518:
+.L565:
 	.align	2, 0
-.L517:
+.L564:
 	.word	Task_OpenDexNavFromStartMenu
-.Lfe81:
-	.size	 StartMenuDexNavCallback,.Lfe81-StartMenuDexNavCallback
+.Lfe82:
+	.size	 StartMenuDexNavCallback,.Lfe82-StartMenuDexNavCallback
 	.section .rodata
-	.type	 AutoRunOn.246,object
-AutoRunOn.246:
+	.type	 AutoRunOn.249,object
+AutoRunOn.249:
 	.byte	0xbb
 	.byte	0xe9
 	.byte	0xe8
@@ -3448,8 +3646,8 @@ AutoRunOn.246:
 	.byte	0xe8
 	.byte	0xff
 	.byte	0xff
-	.type	 AutoRunOff.247,object
-AutoRunOff.247:
+	.type	 AutoRunOff.250,object
+AutoRunOff.250:
 	.byte	0xbb
 	.byte	0xe9
 	.byte	0xe8
@@ -3506,8 +3704,8 @@ AutoRunOff.247:
 ShowClockWindow:
 	push	{r4, lr}
 	add	sp, sp, #-0xc
-	ldr	r4, .L522
-	ldr	r0, .L522+0x4
+	ldr	r4, .L569
+	ldr	r0, .L569+0x4
 	bl	AddWindow
 	strb	r0, [r4]
 	ldrb	r0, [r4]
@@ -3515,31 +3713,30 @@ ShowClockWindow:
 	ldrb	r0, [r4]
 	mov	r1, #0x0
 	bl	DrawStdWindowFrame
-	mov	r0, #0xd5
-	lsl	r0, r0, #0x1
+	mov	r0, #0x35
 	bl	FlagGet
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.L520	@cond_branch
-	ldr	r0, .L522+0x8
-	ldr	r1, .L522+0xc
+	beq	.L567	@cond_branch
+	ldr	r0, .L569+0x8
+	ldr	r1, .L569+0xc
 	bl	StringExpandPlaceholders
-	b	.L521
-.L523:
+	b	.L568
+.L570:
 	.align	2, 0
-.L522:
+.L569:
 	.word	sSafariBallsWindowId
 	.word	sClockWindowTemplate
 	.word	gStringVar4
-	.word	AutoRunOn.246
-.L520:
-	ldr	r0, .L524
-	ldr	r1, .L524+0x4
+	.word	AutoRunOn.249
+.L567:
+	ldr	r0, .L571
+	ldr	r1, .L571+0x4
 	bl	StringExpandPlaceholders
-.L521:
-	ldr	r4, .L524+0x8
+.L568:
+	ldr	r4, .L571+0x8
 	ldrb	r0, [r4]
-	ldr	r2, .L524
+	ldr	r2, .L571
 	mov	r1, #0x1
 	str	r1, [sp]
 	mov	r1, #0xff
@@ -3556,17 +3753,17 @@ ShowClockWindow:
 	pop	{r4}
 	pop	{r0}
 	bx	r0
-.L525:
+.L572:
 	.align	2, 0
-.L524:
+.L571:
 	.word	gStringVar4
-	.word	AutoRunOff.247
+	.word	AutoRunOff.250
 	.word	sSafariBallsWindowId
-.Lfe82:
-	.size	 ShowClockWindow,.Lfe82-ShowClockWindow
+.Lfe83:
+	.size	 ShowClockWindow,.Lfe83-ShowClockWindow
 	.section .rodata
-	.type	 GameVersion.251,object
-GameVersion.251:
+	.type	 GameVersion.254,object
+GameVersion.254:
 	.byte	0xc1
 	.byte	0xd5
 	.byte	0xe1
@@ -3582,18 +3779,14 @@ GameVersion.251:
 	.byte	0x0
 	.byte	0xa2
 	.byte	0xad
-	.byte	0xa4
-	.byte	0xad
-	.byte	0xa4
-	.byte	0xad
-	.byte	0xa3
+	.byte	0xa5
 	.byte	0xfe
 	.byte	0xfd
 	.byte	0x2
 	.byte	0xff
 	.byte	0xff
-	.type	 hardmodeText.252,object
-hardmodeText.252:
+	.type	 hardmodeText.255,object
+hardmodeText.255:
 	.byte	0xfc
 	.byte	0x1
 	.byte	0x4
@@ -3608,8 +3801,8 @@ hardmodeText.252:
 	.byte	0xd9
 	.byte	0xff
 	.byte	0xff
-	.type	 normalmodeText.253,object
-normalmodeText.253:
+	.type	 normalmodeText.256,object
+normalmodeText.256:
 	.byte	0xfc
 	.byte	0x1
 	.byte	0x6
@@ -3633,8 +3826,8 @@ normalmodeText.253:
 ShowGameVersionWindow:
 	push	{r4, r5, lr}
 	add	sp, sp, #-0xc
-	ldr	r4, .L529
-	ldr	r0, .L529+0x4
+	ldr	r4, .L576
+	ldr	r0, .L576+0x4
 	bl	AddWindow
 	strb	r0, [r4]
 	ldrb	r0, [r4]
@@ -3642,35 +3835,35 @@ ShowGameVersionWindow:
 	ldrb	r0, [r4]
 	mov	r1, #0x0
 	bl	DrawStdWindowFrame
-	ldr	r0, .L529+0x8
+	ldr	r0, .L576+0x8
 	ldr	r0, [r0]
 	ldrb	r1, [r0, #0x15]
 	mov	r0, #0x80
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.L527	@cond_branch
-	ldr	r0, .L529+0xc
-	ldr	r1, .L529+0x10
+	beq	.L574	@cond_branch
+	ldr	r0, .L576+0xc
+	ldr	r1, .L576+0x10
 	bl	StringCopy
-	b	.L528
-.L530:
+	b	.L575
+.L577:
 	.align	2, 0
-.L529:
+.L576:
 	.word	sSafariBallsWindowId
 	.word	sClockWindowTemplate
 	.word	gSaveBlock2Ptr
 	.word	gStringVar1
-	.word	hardmodeText.252
-.L527:
-	ldr	r0, .L531
-	ldr	r1, .L531+0x4
+	.word	hardmodeText.255
+.L574:
+	ldr	r0, .L578
+	ldr	r1, .L578+0x4
 	bl	StringCopy
-.L528:
-	ldr	r5, .L531+0x8
-	ldr	r1, .L531+0xc
+.L575:
+	ldr	r5, .L578+0x8
+	ldr	r1, .L578+0xc
 	add	r0, r5, #0
 	bl	StringExpandPlaceholders
-	ldr	r4, .L531+0x10
+	ldr	r4, .L578+0x10
 	ldrb	r0, [r4]
 	mov	r1, #0x1
 	str	r1, [sp]
@@ -3689,16 +3882,203 @@ ShowGameVersionWindow:
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-.L532:
+.L579:
 	.align	2, 0
-.L531:
+.L578:
 	.word	gStringVar1
-	.word	normalmodeText.253
+	.word	normalmodeText.256
 	.word	gStringVar4
-	.word	GameVersion.251
+	.word	GameVersion.254
 	.word	sSafariBallsWindowId
-.Lfe83:
-	.size	 ShowGameVersionWindow,.Lfe83-ShowGameVersionWindow
+.Lfe84:
+	.size	 ShowGameVersionWindow,.Lfe84-ShowGameVersionWindow
+	.section .rodata
+	.type	 BikeChangeAcro.260,object
+BikeChangeAcro.260:
+	.byte	0xca
+	.byte	0xe6
+	.byte	0xd9
+	.byte	0xe7
+	.byte	0xe7
+	.byte	0x0
+	.byte	0xcc
+	.byte	0x0
+	.byte	0xe8
+	.byte	0xe3
+	.byte	0x0
+	.byte	0xcf
+	.byte	0xe7
+	.byte	0xd9
+	.byte	0xfe
+	.byte	0xe8
+	.byte	0xdc
+	.byte	0xd9
+	.byte	0x0
+	.byte	0xbb
+	.byte	0xd7
+	.byte	0xe6
+	.byte	0xe3
+	.byte	0x0
+	.byte	0xbc
+	.byte	0xdd
+	.byte	0xdf
+	.byte	0xd9
+	.byte	0xff
+	.byte	0xff
+	.type	 BikeChangeMach.261,object
+BikeChangeMach.261:
+	.byte	0xca
+	.byte	0xe6
+	.byte	0xd9
+	.byte	0xe7
+	.byte	0xe7
+	.byte	0x0
+	.byte	0xcc
+	.byte	0x0
+	.byte	0xe8
+	.byte	0xe3
+	.byte	0x0
+	.byte	0xbd
+	.byte	0xdc
+	.byte	0xd5
+	.byte	0xe2
+	.byte	0xdb
+	.byte	0xd9
+	.byte	0xfe
+	.byte	0xe8
+	.byte	0xe3
+	.byte	0x0
+	.byte	0xe8
+	.byte	0xdc
+	.byte	0xd9
+	.byte	0x0
+	.byte	0xfc
+	.byte	0x1
+	.byte	0x6
+	.byte	0xc7
+	.byte	0xd5
+	.byte	0xd7
+	.byte	0xdc
+	.byte	0x0
+	.byte	0xbc
+	.byte	0xdd
+	.byte	0xdf
+	.byte	0xd9
+	.byte	0xff
+	.byte	0xff
+	.type	 BikeChangeOff.262,object
+BikeChangeOff.262:
+	.byte	0xca
+	.byte	0xe6
+	.byte	0xd9
+	.byte	0xe7
+	.byte	0xe7
+	.byte	0x0
+	.byte	0xcc
+	.byte	0x0
+	.byte	0xe8
+	.byte	0xe3
+	.byte	0x0
+	.byte	0xbe
+	.byte	0xdd
+	.byte	0xe7
+	.byte	0xe1
+	.byte	0xe3
+	.byte	0xe9
+	.byte	0xe2
+	.byte	0xe8
+	.byte	0xfe
+	.byte	0xed
+	.byte	0xe3
+	.byte	0xe9
+	.byte	0xe6
+	.byte	0x0
+	.byte	0xbc
+	.byte	0xdd
+	.byte	0xdf
+	.byte	0xd9
+	.byte	0xff
+	.byte	0xff
+.text
+	.align	2, 0
+	.type	 ShowBikeMenu,function
+	.thumb_func
+ShowBikeMenu:
+	push	{r4, lr}
+	add	sp, sp, #-0xc
+	ldr	r4, .L585
+	ldr	r0, .L585+0x4
+	bl	AddWindow
+	strb	r0, [r4]
+	ldrb	r0, [r4]
+	bl	PutWindowTilemap
+	ldrb	r0, [r4]
+	mov	r1, #0x0
+	bl	DrawStdWindowFrame
+	ldr	r0, .L585+0x8
+	ldrb	r1, [r0]
+	mov	r0, #0x2
+	and	r0, r0, r1
+	cmp	r0, #0
+	beq	.L581	@cond_branch
+	ldr	r0, .L585+0xc
+	ldr	r1, .L585+0x10
+	bl	StringExpandPlaceholders
+	b	.L582
+.L586:
+	.align	2, 0
+.L585:
+	.word	sSafariBallsWindowId
+	.word	sClockWindowTemplate
+	.word	gPlayerAvatar
+	.word	gStringVar4
+	.word	BikeChangeOff.262
+.L581:
+	mov	r0, #0x4
+	and	r0, r0, r1
+	cmp	r0, #0
+	beq	.L583	@cond_branch
+	ldr	r0, .L587
+	ldr	r1, .L587+0x4
+	bl	StringExpandPlaceholders
+	b	.L582
+.L588:
+	.align	2, 0
+.L587:
+	.word	gStringVar4
+	.word	BikeChangeMach.261
+.L583:
+	ldr	r0, .L589
+	ldr	r1, .L589+0x4
+	bl	StringExpandPlaceholders
+.L582:
+	ldr	r4, .L589+0x8
+	ldrb	r0, [r4]
+	ldr	r2, .L589
+	mov	r1, #0x1
+	str	r1, [sp]
+	mov	r1, #0xff
+	str	r1, [sp, #0x4]
+	mov	r1, #0x0
+	str	r1, [sp, #0x8]
+	mov	r1, #0x1
+	mov	r3, #0x0
+	bl	AddTextPrinterParameterized
+	ldrb	r0, [r4]
+	mov	r1, #0x2
+	bl	CopyWindowToVram
+	add	sp, sp, #0xc
+	pop	{r4}
+	pop	{r0}
+	bx	r0
+.L590:
+	.align	2, 0
+.L589:
+	.word	gStringVar4
+	.word	BikeChangeAcro.260
+	.word	sSafariBallsWindowId
+.Lfe85:
+	.size	 ShowBikeMenu,.Lfe85-ShowBikeMenu
 	.comm	gMenuCallback, 4	@ 4
 .text
 	.align	2, 0

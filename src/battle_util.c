@@ -1373,6 +1373,7 @@ u8 TrySetCantSelectMoveBattleScript(void)
     u32 move = gBattleMons[gActiveBattler].moves[moveId];
     u32 holdEffect = GetBattlerHoldEffect(gActiveBattler, TRUE);
     u16 *choicedMove = &gBattleStruct->choicedMove[gActiveBattler];
+	u16 ability = gBattleMons[gActiveBattler].ability;
 
     if (gDisableStructs[gActiveBattler].disabledMove == move && move != MOVE_NONE)
     {
@@ -1389,6 +1390,21 @@ u8 TrySetCantSelectMoveBattleScript(void)
             limitations++;
         }
     }
+	
+	//Does not work lmao
+	/*/if (ability == ABILITY_GORILLA_TACTICS && *choicedMove != gBattleMons[gActiveBattler].moves[moveId] && *choicedMove != MOVE_NONE && *choicedMove != 0)
+    {
+        gCurrentMove = *choicedMove;
+        if (gBattleTypeFlags & BATTLE_TYPE_PALACE)
+        {
+            gProtectStructs[gActiveBattler].palaceUnableToUseMove = 1;
+        }
+        else
+        {
+            gSelectionBattleScripts[gActiveBattler] = BattleScript_SelectingNotAllowedMoveChoiceItem;
+            limitations++;
+        }
+    }/*/
 
     if (move == gLastMoves[gActiveBattler] && move != MOVE_STRUGGLE && (gBattleMons[gActiveBattler].status2 & STATUS2_TORMENT))
     {
@@ -3485,6 +3501,7 @@ static bool32 ShouldChangeFormHpBased(u32 battler)
     static const u16 forms[][4] =
     {
         {ABILITY_ZEN_MODE, SPECIES_DARMANITAN, SPECIES_DARMANITAN_ZEN_MODE, 2},
+		{ABILITY_ZEN_MODE, SPECIES_DARMANITAN_GALARIAN, SPECIES_DARMANITAN_ZEN_MODE_GALARIAN, 2},
         {ABILITY_SHIELDS_DOWN, SPECIES_MINIOR, SPECIES_MINIOR_CORE_RED, 2},
         {ABILITY_SHIELDS_DOWN, SPECIES_MINIOR_METEOR_BLUE, SPECIES_MINIOR_CORE_BLUE, 2},
         {ABILITY_SHIELDS_DOWN, SPECIES_MINIOR_METEOR_GREEN, SPECIES_MINIOR_CORE_GREEN, 2},
@@ -3494,12 +3511,14 @@ static bool32 ShouldChangeFormHpBased(u32 battler)
         {ABILITY_SHIELDS_DOWN, SPECIES_MINIOR_METEOR_YELLOW, SPECIES_MINIOR_CORE_YELLOW, 2},
         {ABILITY_SCHOOLING, SPECIES_WISHIWASHI_SCHOOL, SPECIES_WISHIWASHI, 4},
     };
-    u32 i;
+    u32 i;	
 
     for (i = 0; i < ARRAY_COUNT(forms); i++)
     {
         if (gBattleMons[battler].ability == forms[i][0])
         {
+			
+			
             if (gBattleMons[battler].species == forms[i][2]
                 && gBattleMons[battler].hp > gBattleMons[battler].maxHP / forms[i][3])
             {
@@ -7690,6 +7709,8 @@ void UndoFormChange(u32 monId, u32 side)
         {SPECIES_CASTFORM_SUNNY, SPECIES_CASTFORM},
 		{SPECIES_CASTFORM_SNOWY, SPECIES_CASTFORM},
 		{SPECIES_CASTFORM_RAINY, SPECIES_CASTFORM},
+		{SPECIES_DARMANITAN_ZEN_MODE, SPECIES_DARMANITAN},
+		{SPECIES_DARMANITAN_ZEN_MODE_GALARIAN, SPECIES_DARMANITAN_GALARIAN},
 		{SPECIES_AEGISLASH_BLADE, SPECIES_AEGISLASH},
         {SPECIES_MIMIKYU_BUSTED, SPECIES_MIMIKYU},
         {SPECIES_DARMANITAN_ZEN_MODE, SPECIES_DARMANITAN},

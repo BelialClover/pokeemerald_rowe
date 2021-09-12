@@ -6038,6 +6038,23 @@ extern const u8 gText_Region_Kanto[];
 extern const u8 gText_Region_Jotho[];
 extern const u8 gText_Region_Hoenn[];
 extern const u8 gText_Region_Sinnoh[];
+
+extern const u8 gText_Difficulty_Level[];
+extern const u8 gText_Game_Modes[];
+extern const u8 gText_Start_Game[];
+extern const u8 gText_Difficulty_Easy[];
+extern const u8 gText_Difficulty_Normal[];
+extern const u8 gText_Difficulty_Hard[];
+extern const u8 gText_Game_Modes_Random[];
+extern const u8 gText_Game_Modes_Double[];
+extern const u8 gText_Game_Modes_Inverse[];
+extern const u8 gText_Game_Modes_Perfect_Iv[];
+extern const u8 gText_Game_Modes_No_Evs[];
+extern const u8 gText_Game_Modes_Default[];
+extern const u8 gText_Game_Modes_Save[];
+extern const u8 gText_Game_Modes_Enable[];
+extern const u8 gText_Game_Modes_Disable[];
+extern const u8 gText_Game_Modes_Info[];
 # 3 "src/strings.c" 2
 
 __attribute__((aligned(4)))
@@ -8053,3 +8070,24 @@ const u8 gText_Region_Kanto[] = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}Kanto  ");
 const u8 gText_Region_Jotho[] = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}Johto  ");
 const u8 gText_Region_Hoenn[] = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}Hoenn  ");
 const u8 gText_Region_Sinnoh[] = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}Sinnoh");
+
+const u8 gText_Difficulty_Level[] = _("Select Difficulty Level");
+const u8 gText_Game_Modes[] = _("Change Game Modes");
+const u8 gText_Start_Game[] = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}Start Game");
+
+const u8 gText_Difficulty_Easy[] = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}Easy");
+const u8 gText_Difficulty_Normal[] = _("{COLOR BLUE}{SHADOW LIGHT_BLUE}Normal");
+const u8 gText_Difficulty_Hard[] = _("{COLOR RED}{SHADOW LIGHT_RED}Hard");
+
+const u8 gText_Game_Modes_Random[] = _("Randomized Mode");
+const u8 gText_Game_Modes_Double[] = _("Double Battle Mode");
+const u8 gText_Game_Modes_Inverse[] = _("Inverse Mode");
+const u8 gText_Game_Modes_Perfect_Iv[] = _("Perfect Iv Mode");
+const u8 gText_Game_Modes_No_Evs[] = _("No Evs Mode");
+
+const u8 gText_Game_Modes_Default[] = _("Set Default Options");
+const u8 gText_Game_Modes_Save[] = _("Save");
+
+const u8 gText_Game_Modes_Enable[] = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}Enable");
+const u8 gText_Game_Modes_Disable[] = _("{COLOR RED}{SHADOW LIGHT_RED}Disable");
+const u8 gText_Game_Modes_Info[] = _("Info");

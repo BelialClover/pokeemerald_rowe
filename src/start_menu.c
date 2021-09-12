@@ -3,6 +3,7 @@
 #include "battle_pyramid.h"
 #include "battle_pyramid_bag.h"
 #include "bg.h"
+#include "bike.h"
 #include "day_night.h"
 #include "event_data.h"
 #include "event_object_movement.h"
@@ -44,9 +45,11 @@
 #include "text_window.h"
 #include "trainer_card.h"
 #include "window.h"
+#include "wild_encounter.h"
 #include "constants/songs.h"
 #include "union_room.h"
 #include "dexnav.h"
+#include "constants/map_types.h"
 #include "constants/rgb.h"
 
 // Menu actions
@@ -84,6 +87,7 @@ bool8 (*gMenuCallback)(void);
 EWRAM_DATA static u8 sSafariBallsWindowId = 0;
 EWRAM_DATA static u8 sBattlePyramidFloorWindowId = 0;
 EWRAM_DATA static u8 sStartMenuCursorPos = 0;
+EWRAM_DATA static u8 sStartMenuSecondCursorPos = 0;
 EWRAM_DATA static u8 sNumStartMenuActions = 0;
 EWRAM_DATA static u8 sCurrentStartMenuActions[9] = {0};
 EWRAM_DATA static u8 sInitStartMenuData[2] = {0};
@@ -202,6 +206,7 @@ static const struct WindowTemplate sSaveInfoWindowTemplate = {0, 1, 1, 0xE, 0xA,
 static void BuildStartMenuActions(void);
 static void AddStartMenuAction(u8 action);
 static void BuildNormalStartMenu(void);
+bool8 HasMapMons(void);
 static void BuildSafariZoneStartMenu(void);
 static void BuildLinkModeStartMenu(void);
 static void BuildUnionRoomStartMenu(void);
@@ -212,6 +217,7 @@ static void ShowSafariBallsWindow(void);
 static void ShowPyramidFloorWindow(void);
 static void ShowClockWindow(void);
 static void ShowGameVersionWindow(void);
+static void ShowBikeMenu(void);
 static void RemoveExtraStartMenuWindows(void);
 static bool32 PrintStartMenuActions(s8 *pIndex, u32 count);
 static bool32 InitStartMenuStep(void);
@@ -279,12 +285,31 @@ static void AddStartMenuAction(u8 action)
     AppendToList(sCurrentStartMenuActions, &sNumStartMenuActions, action);
 }
 
+bool8 HasMapMons(void){
+	u16 i;
+
+    for (i = 0; ; i++)
+    {
+        const struct WildPokemonHeader *wildHeader = &gWildMonHeaders[i];
+        if (wildHeader->mapGroup == 0xFF)
+            break;
+
+        if (gWildMonHeaders[i].mapGroup == gSaveBlock1Ptr->location.mapGroup &&
+            gWildMonHeaders[i].mapNum == gSaveBlock1Ptr->location.mapNum)
+        {
+			return TRUE;
+        }
+    }
+
+    return FALSE;
+}
+
 static void BuildNormalStartMenu(void)
 {    
     if (FlagGet(FLAG_SYS_POKEDEX_GET) == TRUE)
         AddStartMenuAction(MENU_ACTION_POKEDEX);
     
-    if (FlagGet(FLAG_SYS_DEXNAV_GET))
+    if (FlagGet(FLAG_SYS_DEXNAV_GET) && HasMapMons())
         AddStartMenuAction(MENU_ACTION_DEXNAV);
     
     if (FlagGet(FLAG_SYS_POKEMON_GET) == TRUE)
@@ -309,7 +334,7 @@ static void BuildSafariZoneStartMenu(void)
 {
     AddStartMenuAction(MENU_ACTION_RETIRE_SAFARI);
     AddStartMenuAction(MENU_ACTION_POKEDEX);
-	if (FlagGet(FLAG_SYS_DEXNAV_GET))
+	if (FlagGet(FLAG_SYS_DEXNAV_GET) && HasMapMons())
         AddStartMenuAction(MENU_ACTION_DEXNAV);
     AddStartMenuAction(MENU_ACTION_POKEMON);
     AddStartMenuAction(MENU_ACTION_BAG);
@@ -477,6 +502,8 @@ static bool32 InitStartMenuStep(void)
             ShowSafariBallsWindow();
 		else if (InBattlePyramid())
             ShowPyramidFloorWindow();
+		else if(!IsBikingDisallowedByPlayer())
+			ShowBikeMenu();
 		else
 			ShowClockWindow();
         sInitStartMenuData[0]++;
@@ -487,6 +514,10 @@ static bool32 InitStartMenuStep(void)
         break;
     case 5:
         sStartMenuCursorPos = Menu_InitCursor(GetStartMenuWindowId(), 1, 0, 9, 16, sNumStartMenuActions, sStartMenuCursorPos);
+		if(!IsBikingDisallowedByPlayer())
+			sStartMenuSecondCursorPos = 0;
+		else
+			sStartMenuSecondCursorPos = 1;
         CopyWindowToVram(GetStartMenuWindowId(), TRUE);
         return TRUE;
     }
@@ -572,6 +603,8 @@ extern const u8 EventScript_DisableAutoRun[];
 extern const u8 EventScript_EnableAutoRun[];
 static bool8 HandleStartMenuInput(void)
 {
+	
+	
     if (JOY_NEW(DPAD_UP))
     {
         PlaySE(SE_SELECT);
@@ -610,53 +643,123 @@ static bool8 HandleStartMenuInput(void)
     {
 		if (!GetSafariZoneFlag() && !InBattlePyramid())
 		{
-			RemoveExtraStartMenuWindows();
-			ShowGameVersionWindow();
-		}
+		if(sStartMenuSecondCursorPos == 0)
+			sStartMenuSecondCursorPos = 2;
+		else
+		sStartMenuSecondCursorPos--;
+	
+		if(IsBikingDisallowedByPlayer() && sStartMenuSecondCursorPos == 0)
+			sStartMenuSecondCursorPos = 2;
+		//Menu Function
+		switch(sStartMenuSecondCursorPos){
+		case 0:
+		RemoveExtraStartMenuWindows();
+		ShowBikeMenu();
+		break;
+		case 1:
+		RemoveExtraStartMenuWindows();
+		ShowClockWindow();
+		break;
+		case 2:
+		RemoveExtraStartMenuWindows();
+		ShowGameVersionWindow();
+		break;
+		}}
 	}
 	
 	if (JOY_NEW(DPAD_RIGHT))
     {
 		if (!GetSafariZoneFlag() && !InBattlePyramid())
 		{
-			RemoveExtraStartMenuWindows();
-			ShowClockWindow();
-		}
+		if(sStartMenuSecondCursorPos == 2)
+			sStartMenuSecondCursorPos = 0;
+		else
+		sStartMenuSecondCursorPos++;
+		if(IsBikingDisallowedByPlayer() && sStartMenuSecondCursorPos == 0)
+			sStartMenuSecondCursorPos = 1;
+		//Menu Function
+		switch(sStartMenuSecondCursorPos){
+		case 0:
+		RemoveExtraStartMenuWindows();
+		ShowBikeMenu();
+		break;
+		case 1:
+		RemoveExtraStartMenuWindows();
+		ShowClockWindow();
+		break;
+		case 2:
+		RemoveExtraStartMenuWindows();
+		ShowGameVersionWindow();
+		break;
+		}}
 	}
 	
 	if (JOY_NEW(R_BUTTON))
     {
 		if (!GetSafariZoneFlag() && !InBattlePyramid())
 		{
-			//Remove Window
+		//Menu Function
+		switch(sStartMenuSecondCursorPos){
+		case 0://Bike Menu
+			if(!IsBikingDisallowedByPlayer()){
+			RemoveExtraStartMenuWindows();
+			if (gPlayerAvatar.flags & PLAYER_AVATAR_FLAG_MACH_BIKE)
+			{
+				/*/gPlayerAvatar.flags -= PLAYER_AVATAR_FLAG_MACH_BIKE;
+				gPlayerAvatar.flags += PLAYER_AVATAR_FLAG_ACRO_BIKE;
+				SetPlayerAvatarTransitionFlags(PLAYER_AVATAR_FLAG_ACRO_BIKE);/*/
+				SetPlayerAvatarTransitionFlags(PLAYER_AVATAR_FLAG_ON_FOOT);
+				//Overworld_ClearSavedMusic();
+				//Overworld_PlaySpecialMapMusic();
+			}
+			else if (gPlayerAvatar.flags & PLAYER_AVATAR_FLAG_ACRO_BIKE)
+			{
+				gPlayerAvatar.flags -= PLAYER_AVATAR_FLAG_ACRO_BIKE;
+				gPlayerAvatar.flags += PLAYER_AVATAR_FLAG_MACH_BIKE;
+				SetPlayerAvatarTransitionFlags(PLAYER_AVATAR_FLAG_MACH_BIKE);
+				//Overworld_SetSavedMusic(MUS_CYCLING);
+				//Overworld_ChangeMusicTo(MUS_CYCLING);
+			}
+			else
+			{
+				gPlayerAvatar.flags -= PLAYER_AVATAR_FLAG_MACH_BIKE;
+				gPlayerAvatar.flags += PLAYER_AVATAR_FLAG_ACRO_BIKE;
+				SetPlayerAvatarTransitionFlags(PLAYER_AVATAR_FLAG_ACRO_BIKE);
+				//Overworld_SetSavedMusic(MUS_CYCLING);
+				//Overworld_ChangeMusicTo(MUS_CYCLING);
+			}
+			PlaySE(SE_BIKE_HOP);
+			ShowBikeMenu();}
+			return FALSE;
+		break;
+		case 1: //Auto Run Menu
 			RemoveExtraStartMenuWindows();
 			PlaySE(SE_SELECT);
-			if (FlagGet(FLAG_UNUSED_0x1AA))
-				FlagClear(FLAG_UNUSED_0x1AA);
+			if (FlagGet(FLAG_SYS_AUTO_RUN))
+				FlagClear(FLAG_SYS_AUTO_RUN);
 			else
-				FlagSet(FLAG_UNUSED_0x1AA);
-			
+				FlagSet(FLAG_SYS_AUTO_RUN);
 			ShowClockWindow();
-			//return FALSE;
-		}else{	
-		
-	    PlaySE(SE_SELECT);
-		if (FlagGet(FLAG_UNUSED_0x1AA))
-		{
-			FlagClear(FLAG_UNUSED_0x1AA);
-			ScriptContext1_SetupScript(EventScript_DisableAutoRun);
-		}
-		else
-		{
-			FlagSet(FLAG_UNUSED_0x1AA);
-			ScriptContext1_SetupScript(EventScript_EnableAutoRun);
-		}
-		RemoveExtraStartMenuWindows();
-        HideStartMenu();
-		return TRUE;
-		}
+			return FALSE;
+		break;
+		}}
 	}
+	
+	if (JOY_NEW(SELECT_BUTTON))
+    {
+        PlaySE(SE_SELECT);
+		gMenuCallback = StartMenuSaveCallback;
+        if (gMenuCallback != StartMenuSaveCallback
+            && gMenuCallback != StartMenuExitCallback
+            && gMenuCallback != StartMenuSafariZoneRetireCallback
+            && gMenuCallback != StartMenuBattlePyramidRetireCallback)
+        {
+           FadeScreen(FADE_TO_BLACK, 0);
+        }
 
+        return FALSE;
+    }
+	
     if (JOY_NEW(START_BUTTON | B_BUTTON))
     {
         RemoveExtraStartMenuWindows();
@@ -1484,7 +1587,7 @@ static void ShowClockWindow(void)
 	sSafariBallsWindowId = AddWindow(&sClockWindowTemplate);
     PutWindowTilemap(sSafariBallsWindowId);
     DrawStdWindowFrame(sSafariBallsWindowId, FALSE);
-	if(FlagGet(FLAG_UNUSED_0x1AA))
+	if(FlagGet(FLAG_SYS_AUTO_RUN))
 		StringExpandPlaceholders(gStringVar4, AutoRunOn);
 	else
 		StringExpandPlaceholders(gStringVar4, AutoRunOff);
@@ -1494,7 +1597,7 @@ static void ShowClockWindow(void)
 
 static void ShowGameVersionWindow(void)
 {
-	static const u8 GameVersion[] =  _("Game Version 1.3.3.2\n{STR_VAR_1}$");
+	static const u8 GameVersion[] =  _("Game Version 1.4\n{STR_VAR_1}$");
 	static const u8 hardmodeText[] = _("{COLOR RED}Hard Mode$");
 	static const u8 normalmodeText[] = _("{COLOR GREEN}Normal Mode$");
 	sSafariBallsWindowId = AddWindow(&sClockWindowTemplate);
@@ -1505,6 +1608,25 @@ static void ShowGameVersionWindow(void)
 	else
 		StringCopy(gStringVar1, normalmodeText);
 	StringExpandPlaceholders(gStringVar4, GameVersion);
+    AddTextPrinterParameterized(sSafariBallsWindowId, 1, gStringVar4, 0, 1, 0xFF, NULL);
+    CopyWindowToVram(sSafariBallsWindowId, 2);
+}
+
+static void ShowBikeMenu(void)
+{
+	//static const u8 BikeChangeAcro[] =  _("Press R to Change\nto the {COLOR GREEN}Acro Bike$");
+	static const u8 BikeChangeAcro[] =  _("Press R to Use\nthe Acro Bike$");
+	static const u8 BikeChangeMach[] =  _("Press R to Change\nto the {COLOR GREEN}Mach Bike$");
+	static const u8 BikeChangeOff[] =  _("Press R to Dismount\nyour Bike$");
+	sSafariBallsWindowId = AddWindow(&sClockWindowTemplate);
+    PutWindowTilemap(sSafariBallsWindowId);
+    DrawStdWindowFrame(sSafariBallsWindowId, FALSE);
+	if(gPlayerAvatar.flags & PLAYER_AVATAR_FLAG_MACH_BIKE)
+		StringExpandPlaceholders(gStringVar4, BikeChangeOff);
+	else if(gPlayerAvatar.flags & PLAYER_AVATAR_FLAG_ACRO_BIKE)
+		StringExpandPlaceholders(gStringVar4, BikeChangeMach);
+	else
+		StringExpandPlaceholders(gStringVar4, BikeChangeAcro);
     AddTextPrinterParameterized(sSafariBallsWindowId, 1, gStringVar4, 0, 1, 0xFF, NULL);
     CopyWindowToVram(sSafariBallsWindowId, 2);
 }

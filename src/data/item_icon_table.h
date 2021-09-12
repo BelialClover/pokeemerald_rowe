@@ -386,8 +386,8 @@ const u32 *const gItemIconTable[][2] =
     //[ITEM_OAKS_PARCEL] = {gItemIcon_OaksParcel, gItemIconPalette_OaksParcel},
 	[ITEM_ABILITY_PATCH] = {gItemIcon_AbilityCapsule, gItemIconPalette_AbilityCapsule},
     //[ITEM_POKE_FLUTE] = {gItemIcon_PokeFlute, gItemIconPalette_PokeFlute},
-    [ITEM_SECRET_KEY] = {gItemIcon_SecretKey, gItemIconPalette_SecretKey},
-    [ITEM_BIKE_VOUCHER] = {gItemIcon_BikeVoucher, gItemIconPalette_BikeVoucher},
+    //[ITEM_SECRET_KEY] = {gItemIcon_SecretKey, gItemIconPalette_SecretKey},
+    //[ITEM_BIKE_VOUCHER] = {gItemIcon_BikeVoucher, gItemIconPalette_BikeVoucher},
     [ITEM_GOLD_TEETH] = {gItemIcon_GoldTeeth, gItemIconPalette_GoldTeeth},
     [ITEM_OLD_AMBER] = {gItemIcon_OldAmber, gItemIconPalette_OldAmber},
     [ITEM_CARD_KEY] = {gItemIcon_CardKey, gItemIconPalette_CardKey},
@@ -723,5 +723,8 @@ const u32 *const gItemIconTable[][2] =
     [ITEM_PARK_BALL_SEAL] = {gItemIcon_ParkBall, gItemIconPalette_ParkBall},
     [ITEM_DREAM_BALL_SEAL] = {gItemIcon_DreamBall, gItemIconPalette_DreamBall},
     [ITEM_BEAST_BALL_SEAL] = {gItemIcon_BeastBall, gItemIconPalette_BeastBall},
+	//
+	[ITEM_SOUR_APPLE] = {gItemIcon_SourApple, gItemIconPalette_BabiriBerry},
+	[ITEM_SWEET_APPLE] = {gItemIcon_SweetApple, gItemIconPalette_RedApricorn},
 	
 };

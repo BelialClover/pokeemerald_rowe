@@ -7024,6 +7024,23 @@ extern const u8 gText_Region_Kanto[];
 extern const u8 gText_Region_Jotho[];
 extern const u8 gText_Region_Hoenn[];
 extern const u8 gText_Region_Sinnoh[];
+
+extern const u8 gText_Difficulty_Level[];
+extern const u8 gText_Game_Modes[];
+extern const u8 gText_Start_Game[];
+extern const u8 gText_Difficulty_Easy[];
+extern const u8 gText_Difficulty_Normal[];
+extern const u8 gText_Difficulty_Hard[];
+extern const u8 gText_Game_Modes_Random[];
+extern const u8 gText_Game_Modes_Double[];
+extern const u8 gText_Game_Modes_Inverse[];
+extern const u8 gText_Game_Modes_Perfect_Iv[];
+extern const u8 gText_Game_Modes_No_Evs[];
+extern const u8 gText_Game_Modes_Default[];
+extern const u8 gText_Game_Modes_Save[];
+extern const u8 gText_Game_Modes_Enable[];
+extern const u8 gText_Game_Modes_Disable[];
+extern const u8 gText_Game_Modes_Info[];
 # 14 "src/script_menu.c" 2
 # 1 "include/task.h" 1
 # 15 "src/script_menu.c" 2
@@ -7951,6 +7968,51 @@ struct MultichoiceListStruct
     u8 count;
 };
 
+static const struct MenuAction MultichoiceList_New_Game_Questions[] =
+{
+    {gText_Difficulty_Level},
+    {gText_Game_Modes},
+    {gText_Start_Game},
+};
+
+static const struct MenuAction MultichoiceList_Difficulty_Level[] =
+{
+    {gText_Difficulty_Easy},
+    {gText_Difficulty_Normal},
+    {gText_Difficulty_Hard},
+};
+
+static const struct MenuAction MultichoiceList_Game_Modes[] =
+{
+ {gText_Game_Modes_Perfect_Iv},
+    {gText_Game_Modes_No_Evs},
+ {gText_Game_Modes_Double},
+    {gText_Game_Modes_Inverse},
+ {gText_Game_Modes_Random},
+ {gText_Game_Modes_Save},
+};
+
+static const struct MenuAction MultichoiceList_Game_Modes_Enable[] =
+{
+ {gText_Game_Modes_Enable},
+    {gText_Game_Modes_Info},
+ {gText_Cancel2},
+};
+
+static const struct MenuAction MultichoiceList_Game_Modes_Disable[] =
+{
+ {gText_Game_Modes_Disable},
+    {gText_Game_Modes_Info},
+ {gText_Cancel2},
+};
+
+static const struct MenuAction MultichoiceList_Game_Modes_Save[] =
+{
+ {gText_No},
+    {gText_Yes},
+ {gText_Game_Modes_Default},
+};
+
 static const struct MultichoiceListStruct sMultichoiceLists[] =
 {
     [0] = {MultichoiceList_BrineyOnDewford, (size_t)(sizeof(MultichoiceList_BrineyOnDewford) / sizeof((MultichoiceList_BrineyOnDewford)[0]))},
@@ -8068,6 +8130,12 @@ static const struct MultichoiceListStruct sMultichoiceLists[] =
     [112] = {MultichoiceList_FallarborTentRules, (size_t)(sizeof(MultichoiceList_FallarborTentRules) / sizeof((MultichoiceList_FallarborTentRules)[0]))},
     [113] = {MultichoiceList_TagMatchType, (size_t)(sizeof(MultichoiceList_TagMatchType) / sizeof((MultichoiceList_TagMatchType)[0]))},
     [114] = {MultichoiceList_RotomAppliances, (size_t)(sizeof(MultichoiceList_RotomAppliances) / sizeof((MultichoiceList_RotomAppliances)[0]))},
+ [115] = {MultichoiceList_New_Game_Questions, (size_t)(sizeof(MultichoiceList_New_Game_Questions) / sizeof((MultichoiceList_New_Game_Questions)[0]))},
+ [116] = {MultichoiceList_Difficulty_Level, (size_t)(sizeof(MultichoiceList_Difficulty_Level) / sizeof((MultichoiceList_Difficulty_Level)[0]))},
+ [117] = {MultichoiceList_Game_Modes, (size_t)(sizeof(MultichoiceList_Game_Modes) / sizeof((MultichoiceList_Game_Modes)[0]))},
+ [118] = {MultichoiceList_Game_Modes_Enable, (size_t)(sizeof(MultichoiceList_Game_Modes_Enable) / sizeof((MultichoiceList_Game_Modes_Enable)[0]))},
+ [119] = {MultichoiceList_Game_Modes_Disable, (size_t)(sizeof(MultichoiceList_Game_Modes_Disable) / sizeof((MultichoiceList_Game_Modes_Disable)[0]))},
+ [120] = {MultichoiceList_Game_Modes_Save, (size_t)(sizeof(MultichoiceList_Game_Modes_Save) / sizeof((MultichoiceList_Game_Modes_Save)[0]))},
 };
 
 const u8 *const gStdStrings[] =

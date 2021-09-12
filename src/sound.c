@@ -556,8 +556,41 @@ void PlayBGM(u16 songNum)
 
 u16 RegionalMusicHandler(u16 songNum)
 {
+	bool8 music_enabled = TRUE;
+	bool8 Gen4 = FALSE;
 	switch(songNum)
 	{
+	//Introduction
+	case MUS_ROUTE122:
+		/*/if (gSaveBlock2Ptr->optionsMusicGame == OPTIONS_MUSIC_KANTO)
+			return MUS_RG_SURF;else /*/
+		if (gSaveBlock2Ptr->optionsMusicGame == OPTIONS_MUSIC_JOTHO)
+			return HG_SEQ_GS_STARTING;
+		else if(gSaveBlock2Ptr->optionsMusicGame == OPTIONS_MUSIC_SINNOH)
+			return DP_SEQ_OPENING;
+		else 
+			return songNum;
+	//Route 101
+	case MUS_ROUTE101:
+		if (gSaveBlock2Ptr->optionsMusicGame == OPTIONS_MUSIC_KANTO && music_enabled)
+			return MUS_RG_ROUTE1;
+		else if (gSaveBlock2Ptr->optionsMusicGame == OPTIONS_MUSIC_JOTHO && music_enabled)
+			return HG_SEQ_GS_R_1_29;
+		else if(gSaveBlock2Ptr->optionsMusicGame == OPTIONS_MUSIC_SINNOH && music_enabled)
+			return HG_SEQ_GS_RADIO_R_201;
+		else 
+			return songNum;
+	//Bicycle
+	case MUS_CYCLING:
+		if (gSaveBlock2Ptr->optionsMusicGame == OPTIONS_MUSIC_KANTO)
+			return MUS_RG_CYCLING;
+		else if(gSaveBlock2Ptr->optionsMusicGame == OPTIONS_MUSIC_JOTHO)
+			return HG_SEQ_PL_BICYCLE;
+		else if(gSaveBlock2Ptr->optionsMusicGame == OPTIONS_MUSIC_SINNOH)
+			return DP_SEQ_BICYCLE;
+		else 
+			return songNum;
+	break;
 	//Surf
 	case MUS_SURF:
 		if (gSaveBlock2Ptr->optionsMusicGame == OPTIONS_MUSIC_KANTO)
@@ -566,6 +599,18 @@ u16 RegionalMusicHandler(u16 songNum)
 			return HG_SEQ_GS_NAMINORI;
 		else if(gSaveBlock2Ptr->optionsMusicGame == OPTIONS_MUSIC_SINNOH)
 			return DP_SEQ_NAMINORI;
+		else 
+			return songNum;
+	break;
+	//Pokemon Center SFX
+	case MUS_HEAL:
+		RtcCalcLocalTime();
+		if (gSaveBlock2Ptr->optionsMusicGame == OPTIONS_MUSIC_KANTO)
+			return MUS_RG_HEAL;
+		else if(gSaveBlock2Ptr->optionsMusicGame == OPTIONS_MUSIC_JOTHO)
+			return HG_SEQ_ME_ASA;
+		else if(gSaveBlock2Ptr->optionsMusicGame == OPTIONS_MUSIC_SINNOH)
+			return DP_SEQ_ASA;
 		else 
 			return songNum;
 	break;
@@ -592,8 +637,10 @@ u16 RegionalMusicHandler(u16 songNum)
 	break;
 	//Wild Battle
 	case MUS_VS_WILD:
-		if (gSaveBlock2Ptr->optionsMusicGame == OPTIONS_MUSIC_KANTO)
+		if (gSaveBlock2Ptr->optionsMusicGame == OPTIONS_MUSIC_KANTO && !Gen4)
 			return MUS_RG_VS_WILD;
+		else if (gSaveBlock2Ptr->optionsMusicGame == OPTIONS_MUSIC_KANTO && Gen4)
+			return HG_SEQ_GS_VS_NORAPOKE_KANTO;
 		else if(gSaveBlock2Ptr->optionsMusicGame == OPTIONS_MUSIC_JOTHO)
 			return HG_SEQ_GS_VS_NORAPOKE;
 		else if(gSaveBlock2Ptr->optionsMusicGame == OPTIONS_MUSIC_SINNOH)
@@ -603,12 +650,23 @@ u16 RegionalMusicHandler(u16 songNum)
 	break;
 	//Vs Trainer
 	case MUS_VS_TRAINER:
-	if (gSaveBlock2Ptr->optionsMusicGame == OPTIONS_MUSIC_KANTO)
+	if (gSaveBlock2Ptr->optionsMusicGame == OPTIONS_MUSIC_KANTO && !Gen4)
 			return MUS_RG_VS_TRAINER;
+		else if (gSaveBlock2Ptr->optionsMusicGame == OPTIONS_MUSIC_KANTO && Gen4)
+			return HG_SEQ_GS_VS_TRAINER_KANTO;
 		else if(gSaveBlock2Ptr->optionsMusicGame == OPTIONS_MUSIC_JOTHO)
 			return HG_SEQ_GS_VS_TRAINER;
 		else if(gSaveBlock2Ptr->optionsMusicGame == OPTIONS_MUSIC_SINNOH)
 			return DP_SEQ_BA_TRAIN;
+		else 
+			return songNum;
+	break;
+	//Vs Frontier Brain
+	case MUS_VS_FRONTIER_BRAIN:
+		if(gSaveBlock2Ptr->optionsMusicGame == OPTIONS_MUSIC_JOTHO)
+			return HG_SEQ_GS_BA_BRAIN;
+		else if(gSaveBlock2Ptr->optionsMusicGame == OPTIONS_MUSIC_SINNOH)
+			return PL_SEQ_PL_BA_BRAIN;
 		else 
 			return songNum;
 	break;
@@ -671,8 +729,65 @@ u16 RegionalMusicHandler(u16 songNum)
 			return DP_SEQ_D_01;
 		else 
 			return songNum;
+	break;
+	//Safari Zone
+	case MUS_SAFARI_ZONE:
+	if(gSaveBlock2Ptr->optionsMusicGame == OPTIONS_MUSIC_JOTHO)
+			return HG_SEQ_GS_SAFARI_HOUSE;
+		else if(gSaveBlock2Ptr->optionsMusicGame == OPTIONS_MUSIC_SINNOH)
+			return DP_SEQ_D_SAFARI;
+		else 
+			return songNum;
+	break;
 	}
 	return songNum;
+	
+	//return HQ_SEQ_ME_LVUP;		Level up SFX HGSS
+	//return HQ_SEQ_GS_STARTING;	Introduction HGSS
+	//return DP_SEQ_KENKYUJO;		Rowan DPPt
+	//return DP_SEQ_OPENING;		Introducction DPPt
+	//return PL_SEQ_PL_BA_BRAIN;	Vs Frontier Brain Platinum
+	//return DP_SEQ_BLD_GAME;		Game Corner(DPPt)?
+	//return DP_SEQ_BA_AGAKI;	
+	//return MUS_CAUGHT;			Pokemon Caught RSE
+	//return DP_SEQ_FANFA5;			Pokemon Caught DPPt
+	//return MUS_RG_CAUGHT;			Pokemon Caught FRLG
+	//return MUS_RG_CAUGHT_INTRO;	Pokemon Caught Intro FRLG
+	//return DP_SEQ_FANFA1;			
+	//return DP_SEQ_WAZA;			Item Obtained DPPt
+	//return MUS_RG_ENCOUNTER_RIVAL 
+	//return DP_SEQ_BA_RIVAL;		Vs Barry
+	//return DP_SEQ_BADGE;			Badge Obtained DPPt
+	//return DP_SEQ_SHINKA;			Evolution DPPt
+	//return MUS_EVOLUTION;			Evolution RSE
+	//return MUS_EVOLUTION_INTRO;	Evolution Intro RSE
+	//return HG_SEQ_GS_VS_CHAMP;	Vs Champion HGSS
+	//return DP_SEQ_BA_CHANP;		Vs Champion DP
+	//return MUS_VS_CHAMPION				Vs Champion(RSE)
+	//return DP_SEQ_D_03;			Ghost Masion(DP)?
+	//return MUS_RG_POKE_TOWER;		Pokemon Tower(FRLG)
+	//return MUS_MT_PYRE			Mt Pyre
+	//return DP_SEQ_D_02;				Eterna Forest
+	//return MUS_RG_VIRIDIAN_FOREST;	Viridian Forest
+	//return MUS_PETALBURG_WOODS		Petalburg woods
+	//return DP_SEQ_FS;				Shops (DP)
+	//return MUS_POKE_MART;			Shops (RSE)
+	//return MUS_RG_POKE_MART;		Shops (FRLG)
+	//return DP_SEQ_D_LAKE;			Lakes DPPt
+	//DP_SEQ_ROAD_A_AN;				First Route DPPt?
+	//DP_SEQ_ROAD_A_D;				First Route DPPt?
+	//DP_SEQ_TOWN01_N;				First City DPPt(this shit is slow like the battles lmao)
+	//DP_SEQ_TOWN01_D;				First City DPPt(this shit is slow like the battles lmao)
+	//MUS_RG_PALLET;				Pallet Town(FRLG)
+	//MUS_RG_CYCLING;				Bike (FRLG)
+	//MUS_CYCLING;					Bike (FRLG)
+	//MUS_GAME_CORNER				Game Corner(RSE)			
+	//MUS_RG_GAME_CORNER			Game Corner(FRLG)
+	//MUS_VS_ELITE_FOUR				Elite Four(RSE)
+	//MUS_VS_RIVAL					Vs Rival(RSE)
+	//MUS_ENCOUNTER_ELITE_FOUR		Elite four overworld
+	//MUS_UNDERWATER				Underwater music
+	//MUS_BIRCH_LAB					Birch lab
 }
 
 void PlaySE(u16 songNum)

@@ -4926,13 +4926,16 @@ void sub_81DB620(int windowId, int columnStart, int rowStart, int numFillTiles, 
 
 
 u8 IsHardMode(void);
+u8 GetGameDifficultyLevel(void);;
 u8 GetNumBadges(void);
 u8 getLevelBoost(void);
 u8 GetPlayerUsableMons(void);
-u8 getTrainerLevel(u8 Level);
-u8 getWildLevel(u8 Ability);
+u8 getTrainerMinLevel(void);
 u8 getTrainerPokemonNum(void);
+u8 getGymLeaderMinLevel(void);
 u8 getLeaderPokemonNum(void);
+u8 getWildPokemonLevel(void);
+u8 getMinWildPokemonLevel(void);
 u8 getDoubleTrainerPokemonNum(void);
 u16 GetWildPokemon(u16 basespecies, u8 level, u16 heldItem);
 u16 GetTrainerPokemon(u16 basespecies, u8 level);
@@ -4942,6 +4945,7 @@ u16 GetFirstEvolution(u16 species);
 u8 GetEvsfromPokemon(u8 evs);
 bool8 IsMoveUsable(u8 movepower);
 u16 GetMapRandomPokemon(u16 TrainerClass, u16 species);
+u16 GetScaledItem(u16 itemId);
 # 11 "src/script_pokemon_util.c" 2
 # 1 "include/link.h" 1
 # 106 "include/link.h"
@@ -6606,7 +6610,7 @@ u8 ScriptGiveMon(u16 species, u8 level, u16 item, u32 ability, u32 unused2, u8 u
     struct Pokemon mon;
     u8 formId = GetFormIdFromFormSpeciesId(species);
     u16 baseSpecies = GetFormSpeciesId(species, 0);
- u8 scaledlevel = getWildLevel(0);
+ u8 scaledlevel = getWildPokemonLevel();
  u16 WonderTradeSpecie = CreateWonderTradePokemon();
  u16 FirstStage = WonderTradeGetFirstStage(WonderTradeSpecie);
  u16 Specie = WonderTradeGetEvolvedForm(FirstStage, level);
@@ -6617,8 +6621,10 @@ u8 ScriptGiveMon(u16 species, u8 level, u16 item, u32 ability, u32 unused2, u8 u
 
  if(baseSpecies != 151)
   CreateMon(&mon, baseSpecies, scaledlevel, 32, 0, 0, 0, 0, formId);
- else
+ else{
   CreateMon(&mon, Specie, scaledlevel, 32, 0, 0, 0, 0, formId);
+  baseSpecies = Specie;
+ }
     heldItem[0] = item;
     heldItem[1] = item >> 8;
     SetMonData(&mon, 12, heldItem);
@@ -6691,7 +6697,11 @@ bool8 DoesPartyHaveEnigmaBerry(void)
 void CreateScriptedWildMon(u16 species, u8 level, u16 item)
 {
     u8 heldItem[2];
-
+ u8 abilityNum = 2;
+ if(level <= 4)
+  level = getWildPokemonLevel();
+ if(level == 2|| level == 4)
+  species = GetWildPokemon(species,level,item);
     ZeroEnemyPartyMons();
     CreateMon(&gEnemyParty[0], species, level, 32, 0, 0, 0, 0, 0);
     if (item)
@@ -6699,6 +6709,10 @@ void CreateScriptedWildMon(u16 species, u8 level, u16 item)
         heldItem[0] = item;
         heldItem[1] = item >> 8;
         SetMonData(&gEnemyParty[0], 12, heldItem);
+    }
+ if(level == 4||level == 3)
+ {
+        SetMonData(&gEnemyParty[0], 46, &abilityNum);
     }
 }
 void CreateScriptedDoubleWildMon(u16 species1, u8 level1, u16 item1, u16 species2, u8 level2, u16 item2)

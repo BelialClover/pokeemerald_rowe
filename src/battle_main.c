@@ -1819,13 +1819,12 @@ static u8 CreateNPCTrainerParty(struct Pokemon *party, u16 trainerNum, bool8 fir
     s32 i, j;
     u8 monsCount;
 	u8 numBadges = GetNumBadges();
-	u8 rand = Random() % (numBadges + 3);
 	u8 TrainerMonsCount = getTrainerPokemonNum();
 	u8 DoubleTrainerMonsCount = getDoubleTrainerPokemonNum();
 	u8 LeaderMonsCount = getLeaderPokemonNum();
-	u8 TrainerMinLevel = getTrainerLevel(0);
-	u8 TrainerMaxLevel = getTrainerLevel(2);
-	u8 LeaderMinLevel = getTrainerLevel(5);
+	u8 TrainerMinLevel = getTrainerMinLevel();
+	u8 TrainerMaxLevel = getGymLeaderMinLevel()-2;
+	u8 LeaderMinLevel = getGymLeaderMinLevel();
 	u8 TrainerLevel[] = {5,5,5,5,5,5};
 	u8 levelboost = getLevelBoost();
 	u8 PokemonEvs[] = {0,0,0,0,0,0};
@@ -1835,7 +1834,7 @@ static u8 CreateNPCTrainerParty(struct Pokemon *party, u16 trainerNum, bool8 fir
 	u8 isDoubleBattle = gTrainers[trainerNum].doubleBattle;
 	u8 PartySize = GetPlayerUsableMons();
 	
-	if(PartySize >= 2 && gTrainers[trainerNum].partySize >= 2 && FlagGet(FLAG_UNUSED_0x2A2))
+	if(PartySize >= 2 && gTrainers[trainerNum].partySize >= 2 && FlagGet(FLAG_DOUBLE_BATTLE_MODE))
 		isDoubleBattle = TRUE;
 	
 	if(IsHardMode() == 1 && PartySize > LeaderMonsCount+1)
@@ -4155,7 +4154,7 @@ static void HandleTurnActionSelectionState(void)
                     MarkBattlerForControllerExec(gActiveBattler);
                     return;
                 case B_ACTION_DEBUG:
-					if(FlagGet(FLAG_UNUSED_0x020)){
+					if(FlagGet(FLAG_DEBUG_MODE)){
                     BtlController_EmitDebugMenu(0);
                     MarkBattlerForControllerExec(gActiveBattler);
 					}

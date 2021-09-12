@@ -2338,7 +2338,7 @@ SetPlayerCardData:
 	strh	r0, [r5, #0x8]
 	strh	r0, [r5, #0xa]
 .L213:
-	ldr	r0, .L227+0x8
+	mov	r0, #0x33
 	bl	FlagGet
 	strb	r0, [r5, #0x2]
 	bl	HasAllHoennMons
@@ -2351,7 +2351,7 @@ SetPlayerCardData:
 	ldrb	r0, [r0, #0xa]
 	orr	r0, r0, r1
 	strh	r0, [r5, #0xe]
-	ldr	r4, .L227+0xc
+	ldr	r4, .L227+0x8
 	mov	r0, #0x17
 	add	r1, r4, #0
 	bl	GetCappedGameStat
@@ -2360,11 +2360,11 @@ SetPlayerCardData:
 	add	r1, r4, #0
 	bl	GetCappedGameStat
 	strh	r0, [r5, #0x16]
-	ldr	r1, .L227+0x10
+	ldr	r1, .L227+0xc
 	mov	r0, #0x15
 	bl	GetCappedGameStat
 	strh	r0, [r5, #0x20]
-	ldr	r4, .L227+0x14
+	ldr	r4, .L227+0x10
 	ldr	r0, [r4]
 	mov	r1, #0x92
 	lsl	r1, r1, #0x3
@@ -2377,7 +2377,7 @@ SetPlayerCardData:
 	add	r6, r5, #0
 	add	r6, r6, #0x28
 	ldr	r0, [r4]
-	ldr	r1, .L227+0x18
+	ldr	r1, .L227+0x14
 	add	r3, r0, r1
 .L217:
 	lsl	r0, r2, #0x1
@@ -2407,7 +2407,6 @@ SetPlayerCardData:
 .L227:
 	.word	gSaveBlock2Ptr
 	.word	0x3e7
-	.word	0x861
 	.word	0x270f
 	.word	0xffff
 	.word	gSaveBlock1Ptr
@@ -3461,24 +3460,24 @@ GetCaughtMonsCount:
 PrintPokedexOnCard:
 	push	{r4, r5, lr}
 	add	sp, sp, #-0xc
-	ldr	r0, .L362
+	mov	r0, #0x33
 	bl	FlagGet
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
 	beq	.L357	@cond_branch
-	ldr	r0, .L362+0x4
+	ldr	r0, .L362
 	ldr	r0, [r0]
-	ldr	r1, .L362+0x8
+	ldr	r1, .L362+0x4
 	add	r0, r0, r1
 	ldrb	r0, [r0]
 	cmp	r0, #0
 	bne	.L358	@cond_branch
-	ldr	r0, .L362+0xc
+	ldr	r0, .L362+0x8
 	str	r0, [sp]
 	mov	r0, #0x1
 	neg	r0, r0
 	str	r0, [sp, #0x4]
-	ldr	r0, .L362+0x10
+	ldr	r0, .L362+0xc
 	str	r0, [sp, #0x8]
 	mov	r0, #0x1
 	mov	r1, #0x1
@@ -3489,7 +3488,6 @@ PrintPokedexOnCard:
 .L363:
 	.align	2, 0
 .L362:
-	.word	0x861
 	.word	sData
 	.word	0x52b
 	.word	sTrainerCardTextColors
@@ -5151,9 +5149,9 @@ SetCardBgsAndPals:
 	ldr	r0, [r0]
 	ldrb	r0, [r0, #0x3]
 	cmp	r0, #0x4
-	bls	.LCB4921
+	bls	.LCB4917
 	b	.L545	@long jump
-.LCB4921:
+.LCB4917:
 	lsl	r0, r0, #0x2
 	ldr	r1, .L549+0x4
 	add	r0, r0, r1

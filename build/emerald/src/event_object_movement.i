@@ -5478,7 +5478,7 @@ const u16 gObjectEventPalette_Articuno[] = INCBIN_U16("graphics/object_events/pi
 const u16 gObjectEventPalette_Zapdos[] = INCBIN_U16("graphics/object_events/pics/pokemon/zapdos.gbapal");
 const u16 gObjectEventPalette_Moltres[] = INCBIN_U16("graphics/object_events/pics/pokemon/moltres.gbapal");
 const u16 gObjectEventPalette31[] = INCBIN_U16("graphics/object_events/palettes/31.gbapal");
-
+const u32 gObjectEventPic_Hoopa_Ring[] = INCBIN_U32("graphics/object_events/pics/misc/hoopa_ring.4bpp");
 const u32 gFieldEffectObjectPic_CaveDust[] = INCBIN_U32("graphics/field_effects/pics/cave_dust.4bpp");
 const u16 gFieldEffectObjectPalette_CaveDust[] = INCBIN_U16("graphics/field_effects/palettes/cave_dust.gbapal");
 # 150 "src/event_object_movement.c" 2
@@ -5988,9 +5988,10 @@ const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_TMBall;
 const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Articuno;
 const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Zapdos;
 const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Moltres;
+const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Hoopa_Ring;
 
 
-const struct ObjectEventGraphicsInfo *const gObjectEventGraphicsInfoPointers[243] = {
+const struct ObjectEventGraphicsInfo *const gObjectEventGraphicsInfoPointers[244] = {
     [0] = &gObjectEventGraphicsInfo_BrendanNormal,
     [1] = &gObjectEventGraphicsInfo_BrendanMachBike,
     [2] = &gObjectEventGraphicsInfo_BrendanSurfing,
@@ -6234,6 +6235,7 @@ const struct ObjectEventGraphicsInfo *const gObjectEventGraphicsInfoPointers[243
  [240] = &gObjectEventGraphicsInfo_Articuno,
  [241] = &gObjectEventGraphicsInfo_Zapdos,
  [242] = &gObjectEventGraphicsInfo_Moltres,
+ [243] = &gObjectEventGraphicsInfo_Hoopa_Ring,
 };
 
 const struct ObjectEventGraphicsInfo *const gMauvilleOldManGraphicsInfoPointers[] = {
@@ -8509,38 +8511,50 @@ const struct SpriteFrameImage gObjectEventPicTable_RubySapphireMay[] = {
 
 const struct SpriteFrameImage gObjectEventPicTable_Articuno[] = {
     {.data = (u8 *)gObjectEventPic_Articuno + (4 * 4 * 0 * 64)/2, .size = (4 * 4 * 64)/2},
-    {.data = (u8 *)gObjectEventPic_Articuno + (4 * 4 * 0 * 64)/2, .size = (4 * 4 * 64)/2},
-    {.data = (u8 *)gObjectEventPic_Articuno + (4 * 4 * 0 * 64)/2, .size = (4 * 4 * 64)/2},
-    {.data = (u8 *)gObjectEventPic_Articuno + (4 * 4 * 0 * 64)/2, .size = (4 * 4 * 64)/2},
     {.data = (u8 *)gObjectEventPic_Articuno + (4 * 4 * 1 * 64)/2, .size = (4 * 4 * 64)/2},
-    {.data = (u8 *)gObjectEventPic_Articuno + (4 * 4 * 0 * 64)/2, .size = (4 * 4 * 64)/2},
-    {.data = (u8 *)gObjectEventPic_Articuno + (4 * 4 * 1 * 64)/2, .size = (4 * 4 * 64)/2},
-    {.data = (u8 *)gObjectEventPic_Articuno + (4 * 4 * 0 * 64)/2, .size = (4 * 4 * 64)/2},
-    {.data = (u8 *)gObjectEventPic_Articuno + (4 * 4 * 1 * 64)/2, .size = (4 * 4 * 64)/2},
+    {.data = (u8 *)gObjectEventPic_Articuno + (4 * 4 * 2 * 64)/2, .size = (4 * 4 * 64)/2},
+    {.data = (u8 *)gObjectEventPic_Articuno + (4 * 4 * 3 * 64)/2, .size = (4 * 4 * 64)/2},
+    {.data = (u8 *)gObjectEventPic_Articuno + (4 * 4 * 4 * 64)/2, .size = (4 * 4 * 64)/2},
+    {.data = (u8 *)gObjectEventPic_Articuno + (4 * 4 * 5 * 64)/2, .size = (4 * 4 * 64)/2},
+    {.data = (u8 *)gObjectEventPic_Articuno + (4 * 4 * 6 * 64)/2, .size = (4 * 4 * 64)/2},
+    {.data = (u8 *)gObjectEventPic_Articuno + (4 * 4 * 7 * 64)/2, .size = (4 * 4 * 64)/2},
+    {.data = (u8 *)gObjectEventPic_Articuno + (4 * 4 * 8 * 64)/2, .size = (4 * 4 * 64)/2},
 };
 
 const struct SpriteFrameImage gObjectEventPicTable_Zapdos[] = {
     {.data = (u8 *)gObjectEventPic_Zapdos + (4 * 4 * 0 * 64)/2, .size = (4 * 4 * 64)/2},
-    {.data = (u8 *)gObjectEventPic_Zapdos + (4 * 4 * 0 * 64)/2, .size = (4 * 4 * 64)/2},
-    {.data = (u8 *)gObjectEventPic_Zapdos + (4 * 4 * 0 * 64)/2, .size = (4 * 4 * 64)/2},
-    {.data = (u8 *)gObjectEventPic_Zapdos + (4 * 4 * 0 * 64)/2, .size = (4 * 4 * 64)/2},
     {.data = (u8 *)gObjectEventPic_Zapdos + (4 * 4 * 1 * 64)/2, .size = (4 * 4 * 64)/2},
-    {.data = (u8 *)gObjectEventPic_Zapdos + (4 * 4 * 0 * 64)/2, .size = (4 * 4 * 64)/2},
-    {.data = (u8 *)gObjectEventPic_Zapdos + (4 * 4 * 1 * 64)/2, .size = (4 * 4 * 64)/2},
-    {.data = (u8 *)gObjectEventPic_Zapdos + (4 * 4 * 0 * 64)/2, .size = (4 * 4 * 64)/2},
-    {.data = (u8 *)gObjectEventPic_Zapdos + (4 * 4 * 1 * 64)/2, .size = (4 * 4 * 64)/2},
+    {.data = (u8 *)gObjectEventPic_Zapdos + (4 * 4 * 2 * 64)/2, .size = (4 * 4 * 64)/2},
+    {.data = (u8 *)gObjectEventPic_Zapdos + (4 * 4 * 3 * 64)/2, .size = (4 * 4 * 64)/2},
+    {.data = (u8 *)gObjectEventPic_Zapdos + (4 * 4 * 4 * 64)/2, .size = (4 * 4 * 64)/2},
+    {.data = (u8 *)gObjectEventPic_Zapdos + (4 * 4 * 5 * 64)/2, .size = (4 * 4 * 64)/2},
+    {.data = (u8 *)gObjectEventPic_Zapdos + (4 * 4 * 6 * 64)/2, .size = (4 * 4 * 64)/2},
+    {.data = (u8 *)gObjectEventPic_Zapdos + (4 * 4 * 7 * 64)/2, .size = (4 * 4 * 64)/2},
+    {.data = (u8 *)gObjectEventPic_Zapdos + (4 * 4 * 8 * 64)/2, .size = (4 * 4 * 64)/2},
 };
 
 const struct SpriteFrameImage gObjectEventPicTable_Moltres[] = {
     {.data = (u8 *)gObjectEventPic_Moltres + (4 * 4 * 0 * 64)/2, .size = (4 * 4 * 64)/2},
-    {.data = (u8 *)gObjectEventPic_Moltres + (4 * 4 * 0 * 64)/2, .size = (4 * 4 * 64)/2},
-    {.data = (u8 *)gObjectEventPic_Moltres + (4 * 4 * 0 * 64)/2, .size = (4 * 4 * 64)/2},
-    {.data = (u8 *)gObjectEventPic_Moltres + (4 * 4 * 0 * 64)/2, .size = (4 * 4 * 64)/2},
     {.data = (u8 *)gObjectEventPic_Moltres + (4 * 4 * 1 * 64)/2, .size = (4 * 4 * 64)/2},
-    {.data = (u8 *)gObjectEventPic_Moltres + (4 * 4 * 0 * 64)/2, .size = (4 * 4 * 64)/2},
-    {.data = (u8 *)gObjectEventPic_Moltres + (4 * 4 * 1 * 64)/2, .size = (4 * 4 * 64)/2},
-    {.data = (u8 *)gObjectEventPic_Moltres + (4 * 4 * 0 * 64)/2, .size = (4 * 4 * 64)/2},
-    {.data = (u8 *)gObjectEventPic_Moltres + (4 * 4 * 1 * 64)/2, .size = (4 * 4 * 64)/2},
+    {.data = (u8 *)gObjectEventPic_Moltres + (4 * 4 * 2 * 64)/2, .size = (4 * 4 * 64)/2},
+    {.data = (u8 *)gObjectEventPic_Moltres + (4 * 4 * 3 * 64)/2, .size = (4 * 4 * 64)/2},
+    {.data = (u8 *)gObjectEventPic_Moltres + (4 * 4 * 4 * 64)/2, .size = (4 * 4 * 64)/2},
+    {.data = (u8 *)gObjectEventPic_Moltres + (4 * 4 * 5 * 64)/2, .size = (4 * 4 * 64)/2},
+    {.data = (u8 *)gObjectEventPic_Moltres + (4 * 4 * 6 * 64)/2, .size = (4 * 4 * 64)/2},
+    {.data = (u8 *)gObjectEventPic_Moltres + (4 * 4 * 7 * 64)/2, .size = (4 * 4 * 64)/2},
+    {.data = (u8 *)gObjectEventPic_Moltres + (4 * 4 * 8 * 64)/2, .size = (4 * 4 * 64)/2},
+};
+
+const struct SpriteFrameImage gObjectEventPicTable_Hoopa_Ring[] = {
+    {.data = (u8 *)gObjectEventPic_Hoopa_Ring + (4 * 4 * 0 * 64)/2, .size = (4 * 4 * 64)/2},
+    {.data = (u8 *)gObjectEventPic_Hoopa_Ring + (4 * 4 * 1 * 64)/2, .size = (4 * 4 * 64)/2},
+    {.data = (u8 *)gObjectEventPic_Hoopa_Ring + (4 * 4 * 2 * 64)/2, .size = (4 * 4 * 64)/2},
+    {.data = (u8 *)gObjectEventPic_Hoopa_Ring + (4 * 4 * 3 * 64)/2, .size = (4 * 4 * 64)/2},
+    {.data = (u8 *)gObjectEventPic_Hoopa_Ring + (4 * 4 * 4 * 64)/2, .size = (4 * 4 * 64)/2},
+    {.data = (u8 *)gObjectEventPic_Hoopa_Ring + (4 * 4 * 5 * 64)/2, .size = (4 * 4 * 64)/2},
+    {.data = (u8 *)gObjectEventPic_Hoopa_Ring + (4 * 4 * 6 * 64)/2, .size = (4 * 4 * 64)/2},
+    {.data = (u8 *)gObjectEventPic_Hoopa_Ring + (4 * 4 * 7 * 64)/2, .size = (4 * 4 * 64)/2},
+    {.data = (u8 *)gObjectEventPic_Hoopa_Ring + (4 * 4 * 8 * 64)/2, .size = (4 * 4 * 64)/2},
 };
 # 448 "src/event_object_movement.c" 2
 # 1 "src/data/object_events/object_event_anims.h" 1
@@ -11544,9 +11558,10 @@ const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_RubySapphireMay = 
 const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Lugia = {0xFFFF, 0x1121, 0x11FF, 512, 32, 32, 10, 1, 0, 0, 1, &gObjectEventBaseOam_32x32, gObjectEventSpriteOamTables_32x32, gObjectEventImageAnimTable_Standard, gObjectEventPicTable_Lugia, gDummySpriteAffineAnimTable};
 const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_HoOh = {0xFFFF, 0x1120, 0x11FF, 512, 32, 32, 10, 1, 0, 0, 1, &gObjectEventBaseOam_32x32, gObjectEventSpriteOamTables_32x32, gObjectEventImageAnimTable_HoOh, gObjectEventPicTable_HoOh, gDummySpriteAffineAnimTable};
 const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_TMBall = { 0xFFFF, 0x1104, 0x11FF, 128, 16, 16, 3, 0, 1, 0, 0, &gObjectEventBaseOam_16x16, gObjectEventSpriteOamTables_16x16, gObjectEventImageAnimTable_Inanimate, gObjectEventPicTable_TMBall, gDummySpriteAffineAnimTable };
-const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Zapdos = {0xFFFF, 0x1125, 0x11FF, 512, 32, 32, 2, 1, 0, 0, 1, &gObjectEventBaseOam_32x32, gObjectEventSpriteOamTables_32x32, gObjectEventImageAnimTable_Standard, gObjectEventPicTable_Zapdos, gDummySpriteAffineAnimTable};
-const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Moltres = {0xFFFF, 0x1126, 0x11FF, 512, 32, 32, 2, 1, 0, 0, 1, &gObjectEventBaseOam_32x32, gObjectEventSpriteOamTables_32x32, gObjectEventImageAnimTable_Standard, gObjectEventPicTable_Moltres, gDummySpriteAffineAnimTable};
-const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Articuno = {0xFFFF, 0x1124, 0x11FF, 512, 32, 32, 3, 1, 0, 0, 1, &gObjectEventBaseOam_32x32, gObjectEventSpriteOamTables_32x32, gObjectEventImageAnimTable_Standard, gObjectEventPicTable_Articuno, gDummySpriteAffineAnimTable};
+const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Zapdos = {0xFFFF, 0x1125, 0x11FF, 512, 32, 32, 10, 1, 0, 0, 1, &gObjectEventBaseOam_32x32, gObjectEventSpriteOamTables_32x32, gObjectEventImageAnimTable_Standard, gObjectEventPicTable_Zapdos, gDummySpriteAffineAnimTable};
+const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Moltres = {0xFFFF, 0x1126, 0x11FF, 512, 32, 32, 10, 1, 0, 0, 1, &gObjectEventBaseOam_32x32, gObjectEventSpriteOamTables_32x32, gObjectEventImageAnimTable_Standard, gObjectEventPicTable_Moltres, gDummySpriteAffineAnimTable};
+const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Articuno = {0xFFFF, 0x1124, 0x11FF, 512, 32, 32, 10, 1, 0, 0, 1, &gObjectEventBaseOam_32x32, gObjectEventSpriteOamTables_32x32, gObjectEventImageAnimTable_Standard, gObjectEventPicTable_Articuno, gDummySpriteAffineAnimTable};
+const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Hoopa_Ring = {0xFFFF, 0x1104, 0x11FF, 512, 32, 32, 3, 1, 0, 0, 0, &gObjectEventBaseOam_32x32, gObjectEventSpriteOamTables_32x32, gObjectEventImageAnimTable_Standard, gObjectEventPicTable_Hoopa_Ring, gDummySpriteAffineAnimTable};
 # 452 "src/event_object_movement.c" 2
 
 const struct SpritePalette sObjectEventSpritePalettes[] = {
@@ -17023,9 +17038,9 @@ const struct ObjectEventGraphicsInfo *GetObjectEventGraphicsInfo(u8 graphicsId)
 {
     u8 bard;
 
-    if (graphicsId >= (243 + 1))
+    if (graphicsId >= (244 + 1))
     {
-        graphicsId = VarGetObjectEventGraphicsId(graphicsId - (243 + 1));
+        graphicsId = VarGetObjectEventGraphicsId(graphicsId - (244 + 1));
     }
     if (graphicsId == 69)
     {
@@ -17033,7 +17048,7 @@ const struct ObjectEventGraphicsInfo *GetObjectEventGraphicsInfo(u8 graphicsId)
         return gMauvilleOldManGraphicsInfoPointers[bard];
     }
 
-    if (graphicsId >= 243)
+    if (graphicsId >= 244)
     {
         graphicsId = 5;
     }
@@ -17043,9 +17058,9 @@ const struct ObjectEventGraphicsInfo *GetObjectEventGraphicsInfo(u8 graphicsId)
 
 static void SetObjectEventDynamicGraphicsId(struct ObjectEvent *objectEvent)
 {
-    if (objectEvent->graphicsId >= (243 + 1))
+    if (objectEvent->graphicsId >= (244 + 1))
     {
-        objectEvent->graphicsId = VarGetObjectEventGraphicsId(objectEvent->graphicsId - (243 + 1));
+        objectEvent->graphicsId = VarGetObjectEventGraphicsId(objectEvent->graphicsId - (244 + 1));
     }
 }
 

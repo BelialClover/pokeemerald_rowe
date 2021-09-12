@@ -930,3 +930,27 @@ gTileset_FRLG_General::
 	.4byte gMetatileAttributes_FRLG_General
 	.4byte NULL @ animation callback
 	.4byte NULL @ palette overrides
+
+	.align 2
+gTileset_Power_Plant::
+	.byte TRUE @ is compressed
+	.byte TRUE @ is secondary
+	.2byte 0
+	.4byte gTilesetTiles_Power_Plant
+	.4byte gTilesetPalettes_Power_Plant
+	.4byte gMetatiles_Power_Plant
+	.4byte gMetatileAttributes_Power_Plant
+	.4byte NULL @ animation callback
+	.4byte NULL @ palette overrides
+
+	.align 2
+gTileset_FRLG_Building::
+	.byte TRUE @ is compressed
+	.byte FALSE @ is secondary
+	.2byte 0
+	.4byte gTilesetTiles_FRLG_Building
+	.4byte gTilesetPalettes_FRLG_Building
+	.4byte gMetatiles_FRLG_Building
+	.4byte gMetatileAttributes_FRLG_Building
+	.4byte NULL @ animation callback
+	.4byte NULL @ palette overrides

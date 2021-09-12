@@ -1342,11 +1342,20 @@ static bool32 TryAegiFormChange(void)
         gBattleMons[gBattlerAttacker].species = SPECIES_MORPEKO_HANGRY;
         break;
 	case SPECIES_CASTFORM:
-		if (gBattleMoves[gCurrentMove].type == TYPE_FIRE)
+	case SPECIES_CASTFORM_RAINY:
+	case SPECIES_CASTFORM_SNOWY:
+	case SPECIES_CASTFORM_SUNNY:
+		if (gBattleMoves[gCurrentMove].type == TYPE_NORMAL
+		&& gBattleMons[gBattlerAttacker].species != SPECIES_CASTFORM)
+		gBattleMons[gBattlerAttacker].species = SPECIES_CASTFORM;
+		if (gBattleMoves[gCurrentMove].type == TYPE_FIRE 
+		&& gBattleMons[gBattlerAttacker].species != SPECIES_CASTFORM_SUNNY)
 		gBattleMons[gBattlerAttacker].species = SPECIES_CASTFORM_SUNNY;
-        else if (gBattleMoves[gCurrentMove].type == TYPE_ICE)
+        else if (gBattleMoves[gCurrentMove].type == TYPE_ICE
+		&& gBattleMons[gBattlerAttacker].species != SPECIES_CASTFORM_SNOWY)
 		gBattleMons[gBattlerAttacker].species = SPECIES_CASTFORM_SNOWY;
-        else if (gBattleMoves[gCurrentMove].type == TYPE_WATER)
+        else if (gBattleMoves[gCurrentMove].type == TYPE_WATER
+		&& gBattleMons[gBattlerAttacker].species != SPECIES_CASTFORM_RAINY)
 		gBattleMons[gBattlerAttacker].species = SPECIES_CASTFORM_RAINY;
 		else
 			return FALSE;
@@ -1384,7 +1393,7 @@ static void Cmd_attackcanceler(void)
 
     // Check Protean activation.
     GET_MOVE_TYPE(gCurrentMove, moveType);
-    if (GetBattlerAbility(gBattlerAttacker) == ABILITY_PROTEAN
+    if ((GetBattlerAbility(gBattlerAttacker) == ABILITY_PROTEAN || GetBattlerAbility(gBattlerAttacker) == ABILITY_LIBERO)
         && (gBattleMons[gBattlerAttacker].type1 != moveType || gBattleMons[gBattlerAttacker].type2 != moveType ||
             (gBattleMons[gBattlerAttacker].type3 != moveType && gBattleMons[gBattlerAttacker].type3 != TYPE_MYSTERY))
         && gCurrentMove != MOVE_STRUGGLE)

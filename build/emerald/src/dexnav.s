@@ -4011,8 +4011,7 @@ DexNavTryGenerateMonLevel:
 	bl	__udivsi3
 	lsl	r0, r0, #0x18
 	lsr	r4, r0, #0x18
-	mov	r0, #0xc1
-	bl	getWildLevel
+	bl	getMinWildPokemonLevel
 	lsl	r0, r0, #0x18
 	lsr	r6, r0, #0x18
 	cmp	r5, #0xff
@@ -6698,9 +6697,9 @@ DexNav_DoGfxSetup:
 	add	r0, r0, r1
 	ldrb	r0, [r0]
 	cmp	r0, #0xc
-	bls	.LCB6697
+	bls	.LCB6696
 	b	.L795	@long jump
-.LCB6697:
+.LCB6696:
 	lsl	r0, r0, #0x2
 	ldr	r1, .L799+0x4
 	add	r0, r0, r1
@@ -6765,9 +6764,9 @@ DexNav_DoGfxSetup:
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	cmp	r0, #0x1
-	beq	.LCB6772
+	beq	.LCB6771
 	b	.L778	@long jump
-.LCB6772:
+.LCB6771:
 	b	.L798
 .L788:
 	bl	DexNav_InitWindows
@@ -7027,9 +7026,9 @@ Task_DexNavMain:
 	lsl	r0, r0, #0x18
 	lsr	r4, r0, #0x18
 	cmp	r4, #0
-	beq	.LCB7107
+	beq	.LCB7106
 	b	.L834	@long jump
-.LCB7107:
+.LCB7106:
 	ldr	r0, .L889+0x4
 	ldrh	r1, [r0, #0x2e]
 	mov	r6, #0x2
@@ -7362,9 +7361,9 @@ TryFindHiddenPokemon:
 	strh	r0, [r4]
 	lsl	r0, r0, #0x10
 	cmp	r0, #0
-	beq	.LCB7571
+	beq	.LCB7570
 	b	.L908	@long jump
-.LCB7571:
+.LCB7570:
 	bl	Random
 	lsl	r0, r0, #0x10
 	lsr	r0, r0, #0x10
@@ -7373,9 +7372,9 @@ TryFindHiddenPokemon:
 	lsl	r0, r0, #0x10
 	lsr	r0, r0, #0x10
 	cmp	r0, #0x3b
-	bls	.LCB7583
+	bls	.LCB7582
 	b	.L908	@long jump
-.LCB7583:
+.LCB7582:
 	bl	GetCurrentMapWildMonHeaderId
 	lsl	r0, r0, #0x10
 	ldr	r6, .L935
@@ -7387,9 +7386,9 @@ TryFindHiddenPokemon:
 	mov	r1, #0x0
 	mov	r8, r1
 	cmp	r4, #0
-	bne	.LCB7598
+	bne	.LCB7597
 	b	.L908	@long jump
-.LCB7598:
+.LCB7597:
 	ldrb	r0, [r4]
 	cmp	r0, #0
 	beq	.L911	@cond_branch
@@ -7414,9 +7413,9 @@ TryFindHiddenPokemon:
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	cmp	r0, #0xff
-	bne	.LCB7634
+	bne	.LCB7633
 	b	.L908	@long jump
-.LCB7634:
+.LCB7633:
 	ldr	r1, [r4, #0x4]
 	lsl	r0, r0, #0x2
 	add	r0, r0, r1
@@ -7442,9 +7441,9 @@ TryFindHiddenPokemon:
 	bl	TestPlayerAvatarFlags
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	bne	.LCB7667
+	bne	.LCB7666
 	b	.L908	@long jump
-.LCB7667:
+.LCB7666:
 	bl	Random
 	lsl	r0, r0, #0x10
 	lsr	r0, r0, #0x10
@@ -7458,9 +7457,9 @@ TryFindHiddenPokemon:
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	cmp	r0, #0xff
-	bne	.LCB7687
+	bne	.LCB7686
 	b	.L908	@long jump
-.LCB7687:
+.LCB7686:
 	ldr	r1, [r4, #0x4]
 	lsl	r0, r0, #0x2
 	add	r0, r0, r1
