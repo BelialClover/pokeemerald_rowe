@@ -15,8 +15,8 @@ InitTimeBasedEvents:
 	ldr	r2, .L3+0x8
 	ldr	r0, [r2]		@ created by thumb_load_double_from_address
 	ldr	r1, [r2, #0x4]		@ created by thumb_load_double_from_address
-	str	r0, [r3, #0x3c]
-	str	r1, [r3, #0x40]
+	str	r0, [r3, #0x38]
+	str	r1, [r3, #0x3c]
 	ldr	r0, .L3+0xc
 	ldrh	r1, [r2]
 	bl	VarSet
@@ -126,7 +126,7 @@ UpdatePerMinute:
 	mov	r4, sp
 	ldr	r6, .L16
 	ldr	r1, [r6]
-	add	r1, r1, #0x3c
+	add	r1, r1, #0x38
 	mov	r0, sp
 	add	r2, r5, #0
 	bl	CalcTimeDifference
@@ -155,8 +155,8 @@ UpdatePerMinute:
 	ldr	r2, [r6]
 	ldr	r0, [r5]		@ created by thumb_load_double_from_address
 	ldr	r1, [r5, #0x4]		@ created by thumb_load_double_from_address
-	str	r0, [r2, #0x3c]
-	str	r1, [r2, #0x40]
+	str	r0, [r2, #0x38]
+	str	r1, [r2, #0x3c]
 .L14:
 	add	sp, sp, #0x8
 	pop	{r4, r5, r6}

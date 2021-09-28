@@ -1368,12 +1368,13 @@ InitArenaChallenge:
 	ldrb	r0, [r0]
 	lsl	r0, r0, #0x1e
 	lsr	r5, r0, #0x1e
-	ldr	r0, .L162+0x8
+	mov	r0, #0xc3
+	lsl	r0, r0, #0x4
 	add	r1, r1, r0
 	mov	r2, #0x0
 	strb	r2, [r1]
 	ldr	r1, [r4]
-	ldr	r6, .L162+0xc
+	ldr	r6, .L162+0x8
 	add	r0, r1, r6
 	strh	r2, [r0]
 	add	r1, r1, r3
@@ -1392,7 +1393,7 @@ InitArenaChallenge:
 	cmp	r5, #0
 	beq	.L158	@cond_branch
 	ldr	r0, [r4]
-	ldr	r1, .L162+0x10
+	ldr	r1, .L162+0xc
 	add	r0, r0, r1
 	ldr	r2, [r0]
 	mov	r0, #0x80
@@ -1401,10 +1402,9 @@ InitArenaChallenge:
 	.align	2, 0
 .L162:
 	.word	gSaveBlock2Ptr
-	.word	0xc35
-	.word	0xc34
-	.word	0xc3e
-	.word	0xc68
+	.word	0xc31
+	.word	0xc3a
+	.word	0xc64
 .L158:
 	ldr	r0, [r4]
 	ldr	r3, .L164
@@ -1441,8 +1441,8 @@ InitArenaChallenge:
 .L165:
 	.align	2, 0
 .L164:
-	.word	0xc68
-	.word	0xd66
+	.word	0xc64
+	.word	0xd62
 	.word	gSaveBlock1Ptr
 	.word	gTrainerBattleOpponent_A
 .Lfe10:
@@ -1472,7 +1472,7 @@ GetArenaData:
 	.align	2, 0
 .L178:
 	.word	gSaveBlock2Ptr
-	.word	0xc35
+	.word	0xc31
 	.word	gSpecialVar_0x8005
 .L175:
 	cmp	r0, #0x2
@@ -1480,7 +1480,8 @@ GetArenaData:
 	b	.L167
 .L168:
 	ldr	r0, .L180
-	ldr	r2, .L180+0x4
+	mov	r2, #0xd6
+	lsl	r2, r2, #0x4
 	add	r1, r3, r2
 	ldrh	r1, [r1]
 	strh	r1, [r0]
@@ -1489,7 +1490,6 @@ GetArenaData:
 	.align	2, 0
 .L180:
 	.word	gSpecialVar_Result
-	.word	0xd64
 .L169:
 	ldr	r2, .L182
 	lsl	r1, r1, #0x1
@@ -1502,7 +1502,7 @@ GetArenaData:
 	.align	2, 0
 .L182:
 	.word	gSpecialVar_Result
-	.word	0xd66
+	.word	0xd62
 .L170:
 	cmp	r1, #0
 	beq	.L171	@cond_branch
@@ -1516,7 +1516,7 @@ GetArenaData:
 	.align	2, 0
 .L184:
 	.word	gSpecialVar_Result
-	.word	0xc68
+	.word	0xc64
 .L171:
 	ldr	r2, .L186
 	ldr	r4, .L186+0x4
@@ -1535,7 +1535,7 @@ GetArenaData:
 	.align	2, 0
 .L186:
 	.word	gSpecialVar_Result
-	.word	0xc68
+	.word	0xc64
 .Lfe11:
 	.size	 GetArenaData,.Lfe11-GetArenaData
 	.align	2, 0
@@ -1563,7 +1563,7 @@ SetArenaData:
 	.align	2, 0
 .L204:
 	.word	gSaveBlock2Ptr
-	.word	0xc35
+	.word	0xc31
 	.word	gSpecialVar_0x8005
 .L201:
 	cmp	r0, #0x2
@@ -1572,7 +1572,8 @@ SetArenaData:
 .L190:
 	ldr	r0, .L206
 	ldrh	r1, [r0]
-	ldr	r3, .L206+0x4
+	mov	r3, #0xd6
+	lsl	r3, r3, #0x4
 	add	r0, r2, r3
 	strh	r1, [r0]
 	b	.L189
@@ -1580,7 +1581,6 @@ SetArenaData:
 	.align	2, 0
 .L206:
 	.word	gSpecialVar_0x8006
-	.word	0xd64
 .L191:
 	lsl	r1, r1, #0x1
 	ldr	r3, .L208
@@ -1593,7 +1593,7 @@ SetArenaData:
 .L209:
 	.align	2, 0
 .L208:
-	.word	0xd66
+	.word	0xd62
 	.word	gSpecialVar_0x8006
 .L192:
 	cmp	r1, #0
@@ -1612,7 +1612,7 @@ SetArenaData:
 	.align	2, 0
 .L210:
 	.word	gSpecialVar_0x8006
-	.word	0xc68
+	.word	0xc64
 .L194:
 	ldr	r3, .L212
 	add	r0, r2, r3
@@ -1623,7 +1623,7 @@ SetArenaData:
 .L213:
 	.align	2, 0
 .L212:
-	.word	0xc68
+	.word	0xc64
 .L193:
 	ldr	r0, .L214
 	ldrh	r0, [r0]
@@ -1639,7 +1639,7 @@ SetArenaData:
 	.align	2, 0
 .L214:
 	.word	gSpecialVar_0x8006
-	.word	0xc68
+	.word	0xc64
 .L197:
 	ldr	r3, .L216
 	add	r0, r2, r3
@@ -1656,7 +1656,7 @@ SetArenaData:
 .L217:
 	.align	2, 0
 .L216:
-	.word	0xc68
+	.word	0xc64
 .Lfe12:
 	.size	 SetArenaData,.Lfe12-SetArenaData
 	.align	2, 0
@@ -1668,7 +1668,8 @@ SaveArenaChallenge:
 	ldr	r0, [r4]
 	ldr	r1, .L219+0x4
 	ldrh	r1, [r1]
-	ldr	r2, .L219+0x8
+	mov	r2, #0xc3
+	lsl	r2, r2, #0x4
 	add	r0, r0, r2
 	strb	r1, [r0]
 	mov	r0, #0x80
@@ -1676,7 +1677,7 @@ SaveArenaChallenge:
 	mov	r1, #0x0
 	bl	VarSet
 	ldr	r1, [r4]
-	ldr	r0, .L219+0xc
+	ldr	r0, .L219+0x8
 	add	r1, r1, r0
 	ldrb	r0, [r1]
 	mov	r2, #0x4
@@ -1691,8 +1692,7 @@ SaveArenaChallenge:
 .L219:
 	.word	gSaveBlock2Ptr
 	.word	gSpecialVar_0x8005
-	.word	0xc34
-	.word	0xc35
+	.word	0xc31
 .Lfe13:
 	.size	 SaveArenaChallenge,.Lfe13-SaveArenaChallenge
 	.align	2, 0
@@ -1724,17 +1724,17 @@ SetArenaPrize:
 	lsr	r0, r0, #0xf
 	add	r0, r0, r5
 	ldrh	r0, [r0]
-	ldr	r1, .L225+0x10
+	mov	r1, #0xd6
+	lsl	r1, r1, #0x4
 	add	r4, r4, r1
 	b	.L224
 .L226:
 	.align	2, 0
 .L225:
 	.word	gSaveBlock2Ptr
-	.word	0xc35
-	.word	0xd66
+	.word	0xc31
+	.word	0xd62
 	.word	sLongStreakPrizeItems
-	.word	0xd64
 .L222:
 	bl	Random
 	ldr	r4, [r4]
@@ -1747,7 +1747,8 @@ SetArenaPrize:
 	lsr	r0, r0, #0xf
 	add	r0, r0, r5
 	ldrh	r0, [r0]
-	ldr	r2, .L227+0x4
+	mov	r2, #0xd6
+	lsl	r2, r2, #0x4
 	add	r4, r4, r2
 .L224:
 	strh	r0, [r4]
@@ -1758,7 +1759,6 @@ SetArenaPrize:
 	.align	2, 0
 .L227:
 	.word	sShortStreakPrizeItems
-	.word	0xd64
 .Lfe14:
 	.size	 SetArenaPrize,.Lfe14-SetArenaPrize
 	.align	2, 0
@@ -1768,7 +1768,8 @@ GiveArenaPrize:
 	push	{r4, r5, lr}
 	ldr	r4, .L232
 	ldr	r0, [r4]
-	ldr	r1, .L232+0x4
+	mov	r1, #0xd6
+	lsl	r1, r1, #0x4
 	add	r0, r0, r1
 	ldrh	r0, [r0]
 	mov	r1, #0x1
@@ -1778,24 +1779,25 @@ GiveArenaPrize:
 	cmp	r5, #0x1
 	bne	.L230	@cond_branch
 	ldr	r0, [r4]
-	ldr	r1, .L232+0x4
+	mov	r1, #0xd6
+	lsl	r1, r1, #0x4
 	add	r0, r0, r1
 	ldrh	r0, [r0]
-	ldr	r1, .L232+0x8
+	ldr	r1, .L232+0x4
 	bl	CopyItemName
 	ldr	r0, [r4]
-	ldr	r1, .L232+0x4
+	mov	r1, #0xd6
+	lsl	r1, r1, #0x4
 	add	r0, r0, r1
 	mov	r1, #0x0
 	strh	r1, [r0]
-	ldr	r0, .L232+0xc
+	ldr	r0, .L232+0x8
 	strh	r5, [r0]
 	b	.L231
 .L233:
 	.align	2, 0
 .L232:
 	.word	gSaveBlock2Ptr
-	.word	0xd64
 	.word	gStringVar1
 	.word	gSpecialVar_Result
 .L230:

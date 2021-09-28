@@ -131162,7 +131162,7 @@ CreateBattleTowerMon2:
 	.align	2, 0
 .L142:
 	.word	gSaveBlock2Ptr
-	.word	0xc35
+	.word	0xc31
 .L131:
 	mov	r3, #0x32
 	cmp	r2, #0
@@ -146470,7 +146470,7 @@ HandleSetPokedexFlag:
 	bne	.L2613	@cond_branch
 	ldr	r0, .L2616
 	ldr	r0, [r0]
-	str	r6, [r0, #0x20]
+	str	r6, [r0, #0x1c]
 .L2613:
 	add	r0, r4, #0
 	bl	NationalPokedexNumToSpecies
@@ -146480,7 +146480,7 @@ HandleSetPokedexFlag:
 	bne	.L2612	@cond_branch
 	ldr	r0, .L2616
 	ldr	r0, [r0]
-	str	r6, [r0, #0x24]
+	str	r6, [r0, #0x20]
 .L2612:
 	cmp	r5, #0x2
 	bne	.L2615	@cond_branch

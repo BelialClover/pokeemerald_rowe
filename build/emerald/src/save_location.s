@@ -276,7 +276,7 @@ TrySetMapSaveWarpStatus:
 SetUnlockedPokedexFlags:
 	ldr	r0, .L47
 	ldr	r2, [r0]
-	ldr	r0, [r2, #0x44]
+	ldr	r0, [r2, #0x40]
 	mov	r1, #0x80
 	lsl	r1, r1, #0x8
 	orr	r0, r0, r1
@@ -292,7 +292,7 @@ SetUnlockedPokedexFlags:
 	orr	r0, r0, r1
 	mov	r1, #0x8
 	orr	r0, r0, r1
-	str	r0, [r2, #0x44]
+	str	r0, [r2, #0x40]
 	bx	lr
 .L48:
 	.align	2, 0

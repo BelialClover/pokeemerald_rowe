@@ -1399,7 +1399,7 @@ sTradeData:
 	.align	2, 0
 	.type	 sUnusedStructSizes,object
 sUnusedStructSizes:
-	.word	0xf1c
+	.word	0xf18
 	.word	0x3620
 	.word	0x1c
 	.word	0x24

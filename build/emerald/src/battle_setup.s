@@ -1657,7 +1657,7 @@ BattleSetup_StartLegendaryBattle:
 	ldr	r0, .L117
 	ldr	r0, [r0]
 	ldrb	r0, [r0, #0x15]
-	mov	r1, #0x1f
+	mov	r1, #0x7
 	and	r1, r1, r0
 	cmp	r1, #0x1
 	beq	.L65	@cond_branch
@@ -1687,7 +1687,7 @@ BattleSetup_StartLegendaryBattle:
 	ldr	r0, .L119
 	ldr	r0, [r0]
 	ldrb	r0, [r0, #0x15]
-	mov	r1, #0x1f
+	mov	r1, #0x7
 	and	r1, r1, r0
 	cmp	r1, #0x1
 	beq	.L69	@cond_branch
@@ -1717,7 +1717,7 @@ BattleSetup_StartLegendaryBattle:
 	ldr	r0, .L121
 	ldr	r0, [r0]
 	ldrb	r0, [r0, #0x15]
-	mov	r1, #0x1f
+	mov	r1, #0x7
 	and	r1, r1, r0
 	cmp	r1, #0x1
 	beq	.L73	@cond_branch
@@ -1898,7 +1898,7 @@ StartRegiBattle:
 	ldr	r0, .L148
 	ldr	r0, [r0]
 	ldrb	r1, [r0, #0x15]
-	mov	r0, #0x1f
+	mov	r0, #0x7
 	and	r0, r0, r1
 	cmp	r0, #0x3
 	bne	.L142	@cond_branch
@@ -2800,8 +2800,7 @@ GetSpecialBattleTransition:
 	add	r0, r1, r2
 	ldrh	r0, [r0]
 	lsl	r2, r0, #0x2
-	mov	r3, #0xc4
-	lsl	r3, r3, #0x4
+	ldr	r3, .L353+0x8
 	add	r1, r1, r3
 	add	r2, r1, r2
 	lsl	r0, r0, #0x1
@@ -2813,7 +2812,7 @@ GetSpecialBattleTransition:
 	add	r0, r0, r2
 	lsl	r0, r0, #0x10
 	lsr	r0, r0, #0x10
-	ldr	r4, .L353+0x8
+	ldr	r4, .L353+0xc
 .L335:
 	mov	r1, #0xc
 .L331:
@@ -2831,7 +2830,8 @@ GetSpecialBattleTransition:
 	.align	2, 0
 .L353:
 	.word	gSaveBlock2Ptr
-	.word	0xc3e
+	.word	0xc3a
+	.word	0xc3c
 	.word	sBattleTransitionTable_BattleFrontier
 .Lfe27:
 	.size	 GetSpecialBattleTransition,.Lfe27-GetSpecialBattleTransition

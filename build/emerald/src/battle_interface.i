@@ -694,7 +694,7 @@ struct SaveBlock2
              u8 optionsButtonMode;
              u16 optionsTextSpeed:3;
              u16 optionsWindowFrameType:5;
-    u16 optionsMusicGame:5;
+    u16 optionsMusicGame:3;
              u16 optionsSound:2;
              u16 optionsBattleStyle:1;
              u16 optionsBattleSceneOff:1;
@@ -16655,6 +16655,7 @@ static void TryToggleHealboxVisibility(u8 priority, u8 healthboxLeftSpriteId, u8
         case 0x19:
         case 0x1A:
         case 0x1B:
+  case 0x20:
             break;
         }
         return;
@@ -17105,7 +17106,7 @@ void ChangeMegaTriggerSprite(u8 spriteId, u8 animId)
 {
     StartSpriteAnim(&gSprites[spriteId], animId);
 }
-# 1450 "src/battle_interface.c"
+# 1451 "src/battle_interface.c"
 void CreateMegaTriggerSprite(u8 battlerId, u8 palId)
 {
     LoadSpritePalette(&sSpritePalette_MegaTrigger);
@@ -17272,7 +17273,7 @@ static void SpriteCb_MegaIndicator(struct Sprite *sprite)
 {
 
 }
-# 1626 "src/battle_interface.c"
+# 1627 "src/battle_interface.c"
 u8 CreatePartyStatusSummarySprites(u8 battlerId, struct HpAndStatus *partyInfo, u8 arg2, bool8 isBattleStart)
 {
     bool8 isOpponent;
@@ -18458,7 +18459,7 @@ static void SafariTextIntoHealthboxObject(void *dest, u8 *windowTileData, u32 wi
     CpuSet(windowTileData, dest, 0x04000000 | ((windowWidth * 32)/(32/8) & 0x1FFFFF));
     CpuSet(windowTileData + 256, dest + 256, 0x04000000 | ((windowWidth * 32)/(32/8) & 0x1FFFFF));
 }
-# 2826 "src/battle_interface.c"
+# 2827 "src/battle_interface.c"
 static const u8 sAbilityPopUpGfx[] = INCBIN_U8("graphics/battle_interface/ability_pop_up.4bpp");
 static const u16 sAbilityPopUpPalette[] = INCBIN_U16("graphics/battle_interface/ability_pop_up.gbapal");
 
@@ -18636,7 +18637,7 @@ static void PrintAbilityOnAbilityPopUp(u32 ability, u8 spriteId1, u8 spriteId2)
                         4,
                         7, 9, 1);
 }
-# 3014 "src/battle_interface.c"
+# 3015 "src/battle_interface.c"
 static const u16 sOverwrittenPixelsTable[][2] =
 {
  {( ((0 / 8) * 32 * 8) + ((0 / 8) * 32) + ((((0) - ((0 / 8) * 8))) * 4) + ((((0) - ((0 / 8) * 8)) / 2))), 5},
@@ -18892,7 +18893,7 @@ static const struct SpriteSheet sSpriteSheet_LastUsedBallWindow =
 {
     sLastUsedBallWindowGfx, sizeof(sLastUsedBallWindowGfx), 0xD721
 };
-# 3280 "src/battle_interface.c"
+# 3281 "src/battle_interface.c"
 bool32 CanThrowLastUsedBall(void)
 {
     return (!(CanThrowBall() != 0

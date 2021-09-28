@@ -19942,7 +19942,7 @@ ShowEasyChatScreen:
 	ldr	r0, .L138
 	ldr	r0, [r0]
 	add	r4, r0, #0
-	add	r4, r4, #0xa0
+	add	r4, r4, #0x9c
 	b	.L71
 .L139:
 	.align	2, 0

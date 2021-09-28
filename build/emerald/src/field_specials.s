@@ -5614,8 +5614,8 @@ ShowFrontierManiacMessage:
 	.align	2, 0
 .L981:
 	.word	gSaveBlock2Ptr
-	.word	0xc6c
-	.word	0xc6e
+	.word	0xc68
+	.word	0xc6a
 .L951:
 	ldr	r0, .L983
 	ldr	r0, [r0]
@@ -5633,33 +5633,33 @@ ShowFrontierManiacMessage:
 	.align	2, 0
 .L983:
 	.word	gSaveBlock2Ptr
-	.word	0xc98
+	.word	0xc94
 .L954:
 	ldr	r0, .L985
 	ldr	r0, [r0]
 	ldr	r1, .L985+0x4
 	add	r2, r0, r1
-	mov	r3, #0xd7
-	lsl	r3, r3, #0x4
+	ldr	r3, .L985+0x8
 	b	.L978
 .L986:
 	.align	2, 0
 .L985:
 	.word	gSaveBlock2Ptr
-	.word	0xd6e
+	.word	0xd6a
+	.word	0xd6c
 .L957:
 	ldr	r0, .L987
 	ldr	r0, [r0]
-	ldr	r1, .L987+0x4
+	mov	r1, #0xd5
+	lsl	r1, r1, #0x4
 	add	r2, r0, r1
-	ldr	r3, .L987+0x8
+	ldr	r3, .L987+0x4
 	b	.L978
 .L988:
 	.align	2, 0
 .L987:
 	.word	gSaveBlock2Ptr
-	.word	0xd54
-	.word	0xd56
+	.word	0xd52
 .L960:
 	ldr	r0, .L989
 	ldr	r0, [r0]
@@ -5671,21 +5671,21 @@ ShowFrontierManiacMessage:
 	.align	2, 0
 .L989:
 	.word	gSaveBlock2Ptr
-	.word	0xd66
-	.word	0xd68
+	.word	0xd62
+	.word	0xd64
 .L963:
 	ldr	r0, .L991
 	ldr	r0, [r0]
-	mov	r1, #0xd9
-	lsl	r1, r1, #0x4
+	ldr	r1, .L991+0x4
 	add	r2, r0, r1
-	ldr	r3, .L991+0x4
+	ldr	r3, .L991+0x8
 	b	.L978
 .L992:
 	.align	2, 0
 .L991:
 	.word	gSaveBlock2Ptr
-	.word	0xd92
+	.word	0xd8c
+	.word	0xd8e
 .L966:
 	ldr	r0, .L993
 	ldr	r0, [r0]
@@ -5704,8 +5704,8 @@ ShowFrontierManiacMessage:
 	.align	2, 0
 .L993:
 	.word	gSaveBlock2Ptr
-	.word	0xda6
-	.word	0xda8
+	.word	0xda2
+	.word	0xda4
 .L967:
 	ldrh	r4, [r1]
 .L944:
@@ -5799,7 +5799,7 @@ BufferBattleTowerElevatorFloors:
 .L1007:
 	.word	0x40ce
 	.word	gSaveBlock2Ptr
-	.word	0xc35
+	.word	0xc31
 	.word	gSpecialVar_0x8005
 	.word	gSpecialVar_0x8006
 .L1005:
@@ -5848,7 +5848,7 @@ BufferBattleTowerElevatorFloors:
 	.word	gSpecialVar_0x8006
 	.word	sBattleTowerStreakThresholds.347
 	.word	gSaveBlock2Ptr
-	.word	0xc6c
+	.word	0xc68
 .Lfe113:
 	.size	 BufferBattleTowerElevatorFloors,.Lfe113-BufferBattleTowerElevatorFloors
 	.align	2, 0
@@ -7180,21 +7180,22 @@ UpdateBattlePointsWindow:
 	add	sp, sp, #-0x2c
 	ldr	r0, .L1133
 	ldr	r0, [r0]
-	ldr	r1, .L1133+0x4
+	mov	r1, #0xe4
+	lsl	r1, r1, #0x4
 	add	r0, r0, r1
 	ldrh	r1, [r0]
 	add	r0, sp, #0xc
 	mov	r2, #0x1
 	mov	r3, #0x4
 	bl	ConvertIntToDecimalStringN
-	ldr	r1, .L1133+0x8
+	ldr	r1, .L1133+0x4
 	bl	StringCopy
 	mov	r0, #0x1
 	add	r1, sp, #0xc
 	mov	r2, #0x30
 	bl	GetStringRightAlignXOffset
 	add	r3, r0, #0
-	ldr	r0, .L1133+0xc
+	ldr	r0, .L1133+0x8
 	ldrb	r0, [r0]
 	lsl	r3, r3, #0x18
 	lsr	r3, r3, #0x18
@@ -7213,7 +7214,6 @@ UpdateBattlePointsWindow:
 	.align	2, 0
 .L1133:
 	.word	gSaveBlock2Ptr
-	.word	0xe44
 	.word	gText_BP
 	.word	sBattlePointsWindowId
 .Lfe132:
@@ -7287,9 +7287,10 @@ TakeFrontierBattlePoints:
 	push	{lr}
 	ldr	r0, .L1145
 	ldr	r0, [r0]
-	ldr	r2, .L1145+0x4
+	mov	r2, #0xe4
+	lsl	r2, r2, #0x4
 	add	r1, r0, r2
-	ldr	r0, .L1145+0x8
+	ldr	r0, .L1145+0x4
 	ldrh	r2, [r1]
 	ldrh	r0, [r0]
 	cmp	r2, r0
@@ -7300,7 +7301,6 @@ TakeFrontierBattlePoints:
 	.align	2, 0
 .L1145:
 	.word	gSaveBlock2Ptr
-	.word	0xe44
 	.word	gSpecialVar_0x8004
 .L1142:
 	sub	r0, r2, r0
@@ -7318,13 +7318,14 @@ GiveFrontierBattlePoints:
 	push	{lr}
 	ldr	r0, .L1150
 	ldr	r0, [r0]
-	ldr	r1, .L1150+0x4
+	mov	r1, #0xe4
+	lsl	r1, r1, #0x4
 	add	r2, r0, r1
 	ldrh	r1, [r2]
-	ldr	r0, .L1150+0x8
+	ldr	r0, .L1150+0x4
 	ldrh	r0, [r0]
 	add	r1, r1, r0
-	ldr	r0, .L1150+0xc
+	ldr	r0, .L1150+0x8
 	cmp	r1, r0
 	ble	.L1148	@cond_branch
 	strh	r0, [r2]
@@ -7333,7 +7334,6 @@ GiveFrontierBattlePoints:
 	.align	2, 0
 .L1150:
 	.word	gSaveBlock2Ptr
-	.word	0xe44
 	.word	gSpecialVar_0x8004
 	.word	0x270f
 .L1148:
@@ -7351,13 +7351,14 @@ GiveFrontierBattlePointsMidChallenge:
 	push	{r4, lr}
 	ldr	r3, .L1156
 	ldr	r0, [r3]
-	ldr	r1, .L1156+0x4
+	mov	r1, #0xe4
+	lsl	r1, r1, #0x4
 	add	r4, r0, r1
 	ldrh	r1, [r4]
-	ldr	r2, .L1156+0x8
+	ldr	r2, .L1156+0x4
 	ldrh	r0, [r2]
 	add	r1, r1, r0
-	ldr	r0, .L1156+0xc
+	ldr	r0, .L1156+0x8
 	cmp	r1, r0
 	ble	.L1153	@cond_branch
 	strh	r0, [r4]
@@ -7366,7 +7367,6 @@ GiveFrontierBattlePointsMidChallenge:
 	.align	2, 0
 .L1156:
 	.word	gSaveBlock2Ptr
-	.word	0xe44
 	.word	gSpecialVar_0x8004
 	.word	0x270f
 .L1153:
@@ -7390,7 +7390,7 @@ GiveFrontierBattlePointsMidChallenge:
 .L1159:
 	.align	2, 0
 .L1158:
-	.word	0xe46
+	.word	0xe42
 	.word	0xffff
 .Lfe137:
 	.size	 GiveFrontierBattlePointsMidChallenge,.Lfe137-GiveFrontierBattlePointsMidChallenge
@@ -7401,7 +7401,8 @@ GiveFrontierBattlePointsMidChallenge:
 GetFrontierBattlePoints:
 	ldr	r0, .L1161
 	ldr	r0, [r0]
-	ldr	r1, .L1161+0x4
+	mov	r1, #0xe4
+	lsl	r1, r1, #0x4
 	add	r0, r0, r1
 	ldrh	r0, [r0]
 	bx	lr
@@ -7409,7 +7410,6 @@ GetFrontierBattlePoints:
 	.align	2, 0
 .L1161:
 	.word	gSaveBlock2Ptr
-	.word	0xe44
 .Lfe138:
 	.size	 GetFrontierBattlePoints,.Lfe138-GetFrontierBattlePoints
 	.section .rodata

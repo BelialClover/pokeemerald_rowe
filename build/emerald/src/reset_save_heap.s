@@ -46,7 +46,7 @@ sub_81700F8:
 	ldr	r0, .L5+0x10
 	ldr	r0, [r0]
 	ldrb	r0, [r0, #0x15]
-	lsl	r0, r0, #0x19
+	lsl	r0, r0, #0x1b
 	lsr	r0, r0, #0x1e
 	bl	SetPokemonCryStereo
 	ldr	r0, .L5+0x14

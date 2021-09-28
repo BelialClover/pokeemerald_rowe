@@ -51216,7 +51216,7 @@ GetBagItemQuantity:
 	add	r1, r0, #0
 	ldr	r0, .L3
 	ldr	r0, [r0]
-	ldr	r0, [r0, #0x48]
+	ldr	r0, [r0, #0x44]
 	ldrh	r1, [r1]
 	eor	r0, r0, r1
 	lsl	r0, r0, #0x10
@@ -51236,7 +51236,7 @@ SetBagItemQuantity:
 	lsr	r1, r1, #0x10
 	ldr	r2, .L6
 	ldr	r2, [r2]
-	ldr	r2, [r2, #0x48]
+	ldr	r2, [r2, #0x44]
 	eor	r1, r1, r2
 	strh	r1, [r0]
 	bx	lr
@@ -51386,7 +51386,7 @@ DeserializeTmHmItemSlots:
 	ldr	r0, .L38+0xc
 	ldr	r0, [r0]
 	ldrb	r1, [r0, #0x16]
-	lsl	r1, r1, #0x1b
+	lsl	r1, r1, #0x1d
 	lsr	r1, r1, #0x1e
 	mov	r0, #0x8
 	bl	SortItemsInBag
@@ -53335,8 +53335,7 @@ CheckPyramidBagHasItem:
 	lsl	r0, r1, #0x2
 	add	r0, r0, r1
 	lsl	r0, r0, #0x1
-	mov	r1, #0xde
-	lsl	r1, r1, #0x4
+	ldr	r1, .L417+0xc
 	add	r0, r0, r1
 	add	r3, r3, r0
 	mov	r1, #0x0
@@ -53362,8 +53361,9 @@ CheckPyramidBagHasItem:
 	.align	2, 0
 .L417:
 	.word	gSaveBlock2Ptr
-	.word	0xc35
-	.word	0xdb8
+	.word	0xc31
+	.word	0xdb4
+	.word	0xddc
 .L409:
 	add	r0, r1, #0x1
 	lsl	r0, r0, #0x18
@@ -53403,8 +53403,7 @@ CheckPyramidBagHasSpace:
 	lsl	r0, r1, #0x2
 	add	r0, r0, r1
 	lsl	r0, r0, #0x1
-	mov	r1, #0xde
-	lsl	r1, r1, #0x4
+	ldr	r1, .L431+0xc
 	add	r0, r0, r1
 	add	r3, r3, r0
 	mov	r1, #0x0
@@ -53434,8 +53433,9 @@ CheckPyramidBagHasSpace:
 	.align	2, 0
 .L431:
 	.word	gSaveBlock2Ptr
-	.word	0xc35
-	.word	0xdb8
+	.word	0xc31
+	.word	0xdb4
+	.word	0xddc
 .L422:
 	add	r0, r1, #0x1
 	lsl	r0, r0, #0x18
@@ -53480,8 +53480,7 @@ AddPyramidBagItem:
 	lsl	r0, r1, #0x2
 	add	r0, r0, r1
 	lsl	r0, r0, #0x1
-	mov	r1, #0xde
-	lsl	r1, r1, #0x4
+	ldr	r1, .L456+0xc
 	add	r0, r0, r1
 	add	r3, r3, r0
 	mov	r8, r3
@@ -53527,8 +53526,9 @@ AddPyramidBagItem:
 	.align	2, 0
 .L456:
 	.word	gSaveBlock2Ptr
-	.word	0xc35
-	.word	0xdb8
+	.word	0xc31
+	.word	0xdb4
+	.word	0xddc
 .L439:
 	mov	r4, #0x0
 .L440:
@@ -53637,11 +53637,10 @@ RemovePyramidBagItem:
 	lsl	r0, r1, #0x2
 	add	r0, r0, r1
 	lsl	r0, r0, #0x1
-	mov	r1, #0xde
-	lsl	r1, r1, #0x4
+	ldr	r1, .L476+0xc
 	add	r0, r0, r1
 	add	r7, r3, r0
-	ldr	r1, .L476+0xc
+	ldr	r1, .L476+0x10
 	ldrh	r0, [r1, #0x8]
 	ldrh	r1, [r1, #0x6]
 	add	r0, r0, r1
@@ -53669,8 +53668,9 @@ RemovePyramidBagItem:
 	.align	2, 0
 .L476:
 	.word	gSaveBlock2Ptr
-	.word	0xc35
-	.word	0xdb8
+	.word	0xc31
+	.word	0xdb4
+	.word	0xddc
 	.word	gPyramidBagCursorData
 .L459:
 	mov	r0, #0x14
@@ -54184,7 +54184,7 @@ GetSetItemObtained:
 	.align	2, 0
 .L531:
 	.word	gSaveBlock2Ptr
-	.word	0xeb8
+	.word	0xeb4
 .L527:
 	ldr	r0, .L533
 	ldr	r1, [r0]
@@ -54204,7 +54204,7 @@ GetSetItemObtained:
 	.align	2, 0
 .L533:
 	.word	gSaveBlock2Ptr
-	.word	0xeb8
+	.word	0xeb4
 .Lfe56:
 	.size	 GetSetItemObtained,.Lfe56-GetSetItemObtained
 	.align	2, 0

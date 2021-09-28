@@ -400,8 +400,8 @@ HandleMainMenuInput:
 .L58:
 	ldr	r0, .L74
 	ldr	r0, [r0]
-	ldrb	r1, [r0, #0x16]
-	mov	r0, #0x2
+	ldrb	r1, [r0, #0x15]
+	mov	r0, #0x80
 	and	r0, r0, r1
 	mov	r1, #0x1
 	cmp	r0, #0

@@ -2537,7 +2537,8 @@ WriteBattlePyramidViewScanlineEffectBuffer:
 	ldr	r4, .L370
 	ldr	r0, .L370+0x4
 	ldr	r0, [r0]
-	ldr	r1, .L370+0x8
+	mov	r1, #0xdf
+	lsl	r1, r1, #0x4
 	add	r0, r0, r1
 	ldrb	r3, [r0]
 	add	r0, r4, #0
@@ -2559,7 +2560,6 @@ WriteBattlePyramidViewScanlineEffectBuffer:
 .L370:
 	.word	gScanlineEffectRegBuffers
 	.word	gSaveBlock2Ptr
-	.word	0xdf4
 .Lfe66:
 	.size	 WriteBattlePyramidViewScanlineEffectBuffer,.Lfe66-WriteBattlePyramidViewScanlineEffectBuffer
 	.align	2, 0

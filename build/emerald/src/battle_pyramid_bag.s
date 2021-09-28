@@ -957,8 +957,8 @@ SetBagItemsListTemplate:
 	.align	2, 0
 .L104:
 	.word	gSaveBlock2Ptr
-	.word	0xc35
-	.word	0xdb8
+	.word	0xc31
+	.word	0xdb4
 	.word	gPyramidBagResources
 	.word	0x821
 	.word	0x87c
@@ -1072,8 +1072,8 @@ PyramidBagMoveCursorFunc:
 	.word	gPyramidBagResources
 	.word	0x814
 	.word	gSaveBlock2Ptr
-	.word	0xc35
-	.word	0xdb8
+	.word	0xc31
+	.word	0xdb4
 	.word	0x815
 .L114:
 	ldr	r0, .L118
@@ -1157,16 +1157,15 @@ PrintItemQuantity:
 	add	r1, r1, r2
 	lsl	r1, r1, #0x1
 	add	r1, r4, r1
-	mov	r2, #0xde
-	lsl	r2, r2, #0x4
+	ldr	r2, .L127+0xc
 	add	r3, r3, r2
 	add	r3, r3, r1
 	ldrb	r1, [r3]
 	mov	r2, #0x1
 	mov	r3, #0x2
 	bl	ConvertIntToDecimalStringN
-	ldr	r4, .L127+0xc
-	ldr	r1, .L127+0x10
+	ldr	r4, .L127+0x10
+	ldr	r1, .L127+0x14
 	add	r0, r4, #0
 	bl	StringExpandPlaceholders
 	mov	r0, #0x7
@@ -1196,7 +1195,8 @@ PrintItemQuantity:
 .L127:
 	.word	gStringVar1
 	.word	gSaveBlock2Ptr
-	.word	0xc35
+	.word	0xc31
+	.word	0xddc
 	.word	gStringVar4
 	.word	gText_xVar1
 .Lfe17:
@@ -1235,8 +1235,8 @@ PrintItemDescription:
 	.align	2, 0
 .L132:
 	.word	gSaveBlock2Ptr
-	.word	0xc35
-	.word	0xdb8
+	.word	0xc31
+	.word	0xdb4
 .L130:
 	ldr	r0, .L134
 	ldr	r2, .L134+0x4
@@ -1419,8 +1419,7 @@ SwapItems:
 	lsl	r2, r3, #0x2
 	add	r2, r2, r3
 	lsl	r2, r2, #0x1
-	mov	r3, #0xde
-	lsl	r3, r3, #0x4
+	ldr	r3, .L148+0xc
 	add	r2, r2, r3
 	add	r6, r6, r2
 	lsl	r5, r0, #0x1
@@ -1448,8 +1447,9 @@ SwapItems:
 	.align	2, 0
 .L148:
 	.word	gSaveBlock2Ptr
-	.word	0xc35
-	.word	0xdb8
+	.word	0xc31
+	.word	0xdb4
+	.word	0xddc
 .Lfe22:
 	.size	 SwapItems,.Lfe22-SwapItems
 	.align	2, 0
@@ -1481,8 +1481,7 @@ MovePyramidBagItemSlotInList:
 	lsl	r0, r1, #0x2
 	add	r0, r0, r1
 	lsl	r0, r0, #0x1
-	mov	r1, #0xde
-	lsl	r1, r1, #0x4
+	ldr	r1, .L164+0xc
 	add	r0, r0, r1
 	add	r3, r3, r0
 	cmp	r4, r5
@@ -1521,8 +1520,9 @@ MovePyramidBagItemSlotInList:
 	.align	2, 0
 .L164:
 	.word	gSaveBlock2Ptr
-	.word	0xc35
-	.word	0xdb8
+	.word	0xc31
+	.word	0xdb4
+	.word	0xddc
 .L152:
 	lsl	r2, r7, #0x10
 	cmp	r7, r5
@@ -1585,8 +1585,7 @@ CompactItems:
 	lsl	r0, r1, #0x2
 	add	r0, r0, r1
 	lsl	r0, r0, #0x1
-	mov	r4, #0xde
-	lsl	r4, r4, #0x4
+	ldr	r4, .L186+0xc
 	add	r0, r0, r4
 	add	r3, r3, r0
 	mov	r8, r3
@@ -1658,8 +1657,9 @@ CompactItems:
 	.align	2, 0
 .L186:
 	.word	gSaveBlock2Ptr
-	.word	0xc35
-	.word	0xdb8
+	.word	0xc31
+	.word	0xdb4
+	.word	0xddc
 .Lfe24:
 	.size	 CompactItems,.Lfe24-CompactItems
 	.align	2, 0
@@ -1728,8 +1728,8 @@ sub_81C5924:
 	.align	2, 0
 .L197:
 	.word	gSaveBlock2Ptr
-	.word	0xc35
-	.word	0xdb8
+	.word	0xc31
+	.word	0xdb4
 	.word	gPyramidBagResources
 	.word	0x821
 	.word	0x822
@@ -2177,8 +2177,7 @@ Task_HandlePyramidBagInput:
 	add	r0, r0, r1
 	lsl	r0, r0, #0x1
 	add	r0, r6, r0
-	mov	r1, #0xde
-	lsl	r1, r1, #0x4
+	ldr	r1, .L254+0x10
 	add	r2, r2, r1
 	add	r2, r2, r0
 	ldrb	r0, [r2]
@@ -2196,8 +2195,9 @@ Task_HandlePyramidBagInput:
 .L254:
 	.word	gSpecialVar_ItemId
 	.word	gSaveBlock2Ptr
-	.word	0xc35
-	.word	0xdb8
+	.word	0xc31
+	.word	0xdb4
+	.word	0xddc
 .L245:
 	add	r0, r5, #0
 	bl	sub_81C5D20
@@ -3716,8 +3716,8 @@ Task_BeginItemSwap:
 	.word	gPyramidBagResources
 	.word	0x814
 	.word	gSaveBlock2Ptr
-	.word	0xc35
-	.word	0xdb8
+	.word	0xc31
+	.word	0xdb4
 	.word	gStringVar1
 	.word	gStringVar4
 	.word	gText_MoveVar1Where
@@ -4011,8 +4011,7 @@ TryStoreHeldItemsInPyramidBag:
 	add	r1, r1, r0
 	lsl	r1, r1, #0x1
 	add	r1, r1, r2
-	mov	r0, #0xde
-	lsl	r0, r0, #0x4
+	ldr	r0, .L473+0x10
 	add	r1, r1, r0
 	add	r0, r5, #0
 	mov	r2, #0xa
@@ -4060,8 +4059,7 @@ TryStoreHeldItemsInPyramidBag:
 	add	r0, r0, r1
 	lsl	r0, r0, #0x1
 	add	r0, r0, r2
-	mov	r1, #0xde
-	lsl	r1, r1, #0x4
+	ldr	r1, .L473+0x10
 	add	r0, r0, r1
 	add	r1, r5, #0
 	mov	r2, #0xa
@@ -4070,7 +4068,7 @@ TryStoreHeldItemsInPyramidBag:
 	bl	Free
 	add	r0, r5, #0
 	bl	Free
-	ldr	r1, .L473+0x10
+	ldr	r1, .L473+0x14
 	mov	r0, #0x1
 	strh	r0, [r1]
 	b	.L461
@@ -4079,8 +4077,9 @@ TryStoreHeldItemsInPyramidBag:
 .L473:
 	.word	gPlayerParty
 	.word	gSaveBlock2Ptr
-	.word	0xc35
-	.word	0xdb8
+	.word	0xc31
+	.word	0xdb4
+	.word	0xddc
 	.word	gSpecialVar_Result
 .L464:
 	add	r0, r6, #0x1
@@ -4559,7 +4558,7 @@ sub_81C6E98:
 .L513:
 	.word	gBattleFrontierGfx_PyramidBag_Pal
 	.word	gSaveBlock2Ptr
-	.word	0xc35
+	.word	0xc31
 	.word	-0x10000
 	.word	0x1024
 .Lfe73:

@@ -10280,15 +10280,11 @@ PlayerHandleDrawTrainerPic:
 .L1138:
 	ldr	r0, .L1149+0x18
 	ldr	r0, [r0]
-	ldrb	r2, [r0, #0x17]
-	lsr	r2, r2, #0x7
-	ldrb	r0, [r0, #0x18]
-	mov	r1, #0x1
+	ldrb	r1, [r0, #0x17]
+	mov	r0, #0x60
 	and	r0, r0, r1
-	lsl	r0, r0, #0x1
-	orr	r0, r0, r2
 	ldr	r5, .L1149
-	cmp	r0, #0x1
+	cmp	r0, #0x20
 	bne	.L1139	@cond_branch
 	ldr	r2, .L1149+0xc
 	ldr	r3, .L1149+0x8
@@ -10956,9 +10952,9 @@ PlayerHandleMoveAnimation:
 	bl	mplay_80342A4
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.LCB12975
+	beq	.LCB12968
 	b	.L1199	@long jump
-.LCB12975:
+.LCB12968:
 	ldr	r0, .L1202+0x4
 	ldr	r0, [r0]
 	mov	ip, r0
@@ -13808,7 +13804,7 @@ PlayerHandleCmd55:
 	.word	gActiveBattler
 	.word	gBattleOutcome
 	.word	gSaveBlock2Ptr
-	.word	0xc35
+	.word	0xc31
 	.word	gBattlerControllerFuncs
 	.word	sub_80587B0
 .Lfe128:

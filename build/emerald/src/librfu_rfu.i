@@ -699,7 +699,7 @@ struct SaveBlock2
              u8 optionsButtonMode;
              u16 optionsTextSpeed:3;
              u16 optionsWindowFrameType:5;
-    u16 optionsMusicGame:5;
+    u16 optionsMusicGame:3;
              u16 optionsSound:2;
              u16 optionsBattleStyle:1;
              u16 optionsBattleSceneOff:1;

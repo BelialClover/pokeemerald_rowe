@@ -9937,9 +9937,9 @@ SortItemsInBag:
 	mov	r0, #0x3
 	add	r1, r6, #0
 	and	r1, r1, r0
-	lsl	r1, r1, #0x3
+	lsl	r1, r1, #0x1
 	ldrb	r2, [r3, #0x16]
-	mov	r0, #0x19
+	mov	r0, #0x7
 	neg	r0, r0
 	and	r0, r0, r2
 	orr	r0, r0, r1

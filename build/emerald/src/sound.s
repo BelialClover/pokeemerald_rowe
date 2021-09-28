@@ -66,9 +66,9 @@ InitMapMusic:
 	ldr	r0, .L4+0x4
 	ldr	r0, [r0]
 	ldrb	r1, [r0, #0x15]
-	mov	r0, #0x60
+	mov	r0, #0x18
 	and	r0, r0, r1
-	cmp	r0, #0x40
+	cmp	r0, #0x10
 	bne	.L3	@cond_branch
 	mov	r2, #0x1
 .L3:
@@ -1698,7 +1698,7 @@ RegionalMusicHandler:
 	ldr	r0, .L376
 	ldr	r0, [r0]
 	ldrb	r0, [r0, #0x15]
-	mov	r1, #0x1f
+	mov	r1, #0x7
 	and	r1, r1, r0
 	cmp	r1, #0x1
 	bne	.L250	@cond_branch
@@ -1724,7 +1724,7 @@ RegionalMusicHandler:
 	ldr	r0, .L380
 	ldr	r0, [r0]
 	ldrb	r0, [r0, #0x15]
-	mov	r1, #0x1f
+	mov	r1, #0x7
 	and	r1, r1, r0
 	cmp	r1, #0
 	bne	.L255	@cond_branch
@@ -1761,7 +1761,7 @@ RegionalMusicHandler:
 	ldr	r0, .L384
 	ldr	r0, [r0]
 	ldrb	r0, [r0, #0x15]
-	mov	r1, #0x1f
+	mov	r1, #0x7
 	and	r1, r1, r0
 	cmp	r1, #0
 	bne	.L262	@cond_branch
@@ -1796,7 +1796,7 @@ RegionalMusicHandler:
 	ldr	r0, .L390
 	ldr	r0, [r0]
 	ldrb	r0, [r0, #0x15]
-	mov	r1, #0x1f
+	mov	r1, #0x7
 	and	r1, r1, r0
 	cmp	r1, #0
 	bne	.L269	@cond_branch
@@ -1829,7 +1829,7 @@ RegionalMusicHandler:
 	ldr	r0, .L394
 	ldr	r0, [r0]
 	ldrb	r0, [r0, #0x15]
-	mov	r1, #0x1f
+	mov	r1, #0x7
 	and	r1, r1, r0
 	cmp	r1, #0
 	bne	.L276	@cond_branch
@@ -1862,7 +1862,7 @@ RegionalMusicHandler:
 	ldr	r5, .L398
 	ldr	r0, [r5]
 	ldrb	r0, [r0, #0x15]
-	mov	r6, #0x1f
+	mov	r6, #0x7
 	add	r1, r6, #0
 	and	r1, r1, r0
 	cmp	r1, #0
@@ -1920,7 +1920,7 @@ RegionalMusicHandler:
 	ldr	r0, .L404
 	ldr	r0, [r0]
 	ldrb	r1, [r0, #0x15]
-	mov	r0, #0x1f
+	mov	r0, #0x7
 	and	r0, r0, r1
 	cmp	r0, #0x3
 	beq	.LCB2224
@@ -1937,7 +1937,7 @@ RegionalMusicHandler:
 	ldr	r0, .L406
 	ldr	r0, [r0]
 	ldrb	r0, [r0, #0x15]
-	mov	r1, #0x1f
+	mov	r1, #0x7
 	and	r1, r1, r0
 	cmp	r1, #0
 	bne	.L297	@cond_branch
@@ -1972,7 +1972,7 @@ RegionalMusicHandler:
 	ldr	r0, .L412
 	ldr	r0, [r0]
 	ldrb	r0, [r0, #0x15]
-	mov	r1, #0x1f
+	mov	r1, #0x7
 	and	r1, r1, r0
 	cmp	r1, #0
 	bne	.L306	@cond_branch
@@ -2007,7 +2007,7 @@ RegionalMusicHandler:
 	ldr	r0, .L418
 	ldr	r0, [r0]
 	ldrb	r0, [r0, #0x15]
-	mov	r1, #0x1f
+	mov	r1, #0x7
 	and	r1, r1, r0
 	cmp	r1, #0x1
 	bne	.L313	@cond_branch
@@ -2030,7 +2030,7 @@ RegionalMusicHandler:
 	ldr	r0, .L420
 	ldr	r0, [r0]
 	ldrb	r0, [r0, #0x15]
-	mov	r1, #0x1f
+	mov	r1, #0x7
 	and	r1, r1, r0
 	cmp	r1, #0
 	bne	.L318	@cond_branch
@@ -2065,7 +2065,7 @@ RegionalMusicHandler:
 	ldr	r0, .L426
 	ldr	r0, [r0]
 	ldrb	r0, [r0, #0x15]
-	mov	r1, #0x1f
+	mov	r1, #0x7
 	and	r1, r1, r0
 	cmp	r1, #0
 	bne	.L325	@cond_branch
@@ -2092,7 +2092,7 @@ RegionalMusicHandler:
 	ldr	r0, .L428
 	ldr	r0, [r0]
 	ldrb	r0, [r0, #0x15]
-	mov	r1, #0x1f
+	mov	r1, #0x7
 	and	r1, r1, r0
 	cmp	r1, #0x1
 	bne	.L332	@cond_branch
@@ -2116,7 +2116,7 @@ RegionalMusicHandler:
 	ldr	r0, .L432
 	ldr	r0, [r0]
 	ldrb	r0, [r0, #0x15]
-	mov	r1, #0x1f
+	mov	r1, #0x7
 	and	r1, r1, r0
 	cmp	r1, #0x1
 	bne	.L337	@cond_branch
@@ -2140,7 +2140,7 @@ RegionalMusicHandler:
 	ldr	r0, .L436
 	ldr	r0, [r0]
 	ldrb	r0, [r0, #0x15]
-	mov	r1, #0x1f
+	mov	r1, #0x7
 	and	r1, r1, r0
 	cmp	r1, #0x1
 	bne	.L342	@cond_branch
@@ -2161,7 +2161,7 @@ RegionalMusicHandler:
 	ldr	r0, .L438
 	ldr	r0, [r0]
 	ldrb	r0, [r0, #0x15]
-	mov	r1, #0x1f
+	mov	r1, #0x7
 	and	r1, r1, r0
 	cmp	r1, #0
 	bne	.L347	@cond_branch
@@ -2194,7 +2194,7 @@ RegionalMusicHandler:
 	ldr	r0, .L444
 	ldr	r0, [r0]
 	ldrb	r0, [r0, #0x15]
-	mov	r1, #0x1f
+	mov	r1, #0x7
 	and	r1, r1, r0
 	cmp	r1, #0x1
 	bne	.L354	@cond_branch

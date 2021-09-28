@@ -1400,17 +1400,17 @@ Task_ShowResetRtcPrompt:
 	bl	AddTextPrinterParameterized
 	ldr	r0, .L108+0xc
 	ldr	r1, [r0]
-	ldrh	r3, [r1, #0x3c]
+	ldrh	r3, [r1, #0x38]
 	add	r0, r1, #0
-	add	r0, r0, #0x3e
+	add	r0, r0, #0x3a
 	ldrb	r0, [r0]
 	str	r0, [sp]
 	add	r0, r1, #0
-	add	r0, r0, #0x3f
+	add	r0, r0, #0x3b
 	ldrb	r0, [r0]
 	str	r0, [sp, #0x4]
 	add	r0, r1, #0
-	add	r0, r0, #0x40
+	add	r0, r0, #0x3c
 	ldrb	r0, [r0]
 	str	r0, [sp, #0x8]
 	mov	r0, #0x0
@@ -1579,8 +1579,8 @@ Task_ResetRtcScreen:
 	ldr	r2, .L143+0x8
 	ldr	r0, .L143+0xc
 	ldr	r0, [r0]
-	ldr	r1, [r0, #0x40]		@ created by thumb_load_double_from_address
-	ldr	r0, [r0, #0x3c]		@ created by thumb_load_double_from_address
+	ldr	r1, [r0, #0x3c]		@ created by thumb_load_double_from_address
+	ldr	r0, [r0, #0x38]		@ created by thumb_load_double_from_address
 	str	r0, [r2]
 	str	r1, [r2, #0x4]
 	ldr	r0, .L143+0x10
@@ -1644,8 +1644,8 @@ Task_ResetRtcScreen:
 	ldr	r2, [r0]
 	ldr	r0, [r4]		@ created by thumb_load_double_from_address
 	ldr	r1, [r4, #0x4]		@ created by thumb_load_double_from_address
-	str	r0, [r2, #0x3c]
-	str	r1, [r2, #0x40]
+	str	r0, [r2, #0x38]
+	str	r1, [r2, #0x3c]
 	ldr	r0, .L147+0x8
 	ldrh	r1, [r4]
 	bl	VarSet

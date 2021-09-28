@@ -11126,7 +11126,7 @@ GetPkmnExpMultiplier:
 	ldr	r0, .L1266+0x8
 	ldr	r0, [r0]
 	ldrb	r1, [r0, #0x15]
-	mov	r0, #0x80
+	mov	r0, #0x20
 	and	r0, r0, r1
 	cmp	r0, #0
 	beq	.L1261	@cond_branch
@@ -11322,7 +11322,7 @@ Cmd_getexp:
 	strh	r4, [r1]
 	ldr	r0, [r0]
 	ldrb	r1, [r0, #0x15]
-	mov	r0, #0x80
+	mov	r0, #0x20
 	and	r0, r0, r1
 	cmp	r0, #0
 	beq	.L1289	@cond_branch
@@ -11382,9 +11382,9 @@ Cmd_getexp:
 	ldr	r0, .L1351+0xc
 	ldr	r0, [r0]
 	cmp	r0, #0
-	beq	.LCB12063
+	beq	.LCB12064
 	b	.L1271	@long jump
-.LCB12063:
+.LCB12064:
 	ldr	r0, .L1351+0x8
 	ldr	r0, [r0]
 	ldrb	r1, [r0, #0x10]
@@ -11416,7 +11416,8 @@ Cmd_getexp:
 	ldr	r0, .L1353
 	ldr	r0, [r0]
 	ldrb	r1, [r0, #0x16]
-	mov	r0, #0x4
+	mov	r2, #0x1
+	add	r0, r2, #0
 	and	r0, r0, r1
 	ldr	r5, .L1353+0x4
 	cmp	r0, #0
@@ -11425,7 +11426,6 @@ Cmd_getexp:
 	add	r1, r0, #0
 	add	r1, r1, #0x53
 	ldrb	r0, [r1]
-	mov	r2, #0x1
 	and	r2, r2, r0
 	cmp	r2, #0
 	bne	.L1297	@cond_branch
@@ -11527,9 +11527,9 @@ Cmd_getexp:
 	mov	r1, #0x39
 	bl	GetMonData
 	cmp	r0, #0
-	bne	.LCB12250
+	bne	.LCB12252
 	b	.L1303	@long jump
-.LCB12250:
+.LCB12252:
 	ldr	r0, [r4]
 	ldrb	r0, [r0, #0x10]
 	mul	r0, r0, r6
@@ -11573,7 +11573,7 @@ Cmd_getexp:
 	ldr	r0, .L1359+0x4
 	ldr	r0, [r0]
 	ldrb	r1, [r0, #0x16]
-	mov	r0, #0x4
+	mov	r0, #0x1
 	and	r0, r0, r1
 	cmp	r0, #0
 	bne	.L1307	@cond_branch
@@ -11816,9 +11816,9 @@ Cmd_getexp:
 	ldr	r0, .L1367
 	ldr	r2, [r0]
 	cmp	r2, #0
-	beq	.LCB12621
+	beq	.LCB12623
 	b	.L1271	@long jump
-.LCB12621:
+.LCB12623:
 	ldr	r7, .L1367+0x4
 	ldr	r1, [r7]
 	ldr	r6, .L1367+0x8
@@ -11936,9 +11936,9 @@ Cmd_getexp:
 	ldr	r0, .L1369
 	ldr	r0, [r0]
 	cmp	r0, #0
-	beq	.LCB12768
+	beq	.LCB12770
 	b	.L1271	@long jump
-.LCB12768:
+.LCB12770:
 	ldr	r1, .L1369+0x4
 	ldr	r0, .L1369+0x8
 	ldr	r4, [r0]
@@ -11956,17 +11956,17 @@ Cmd_getexp:
 	add	r0, r0, r1
 	ldrb	r0, [r0]
 	cmp	r0, #0x21
-	beq	.LCB12790
+	beq	.LCB12792
 	b	.L1325	@long jump
-.LCB12790:
+.LCB12792:
 	add	r5, r5, #0x1
 	add	r0, r2, r5
 	add	r0, r0, r1
 	ldrb	r0, [r0]
 	cmp	r0, #0xb
-	beq	.LCB12799
+	beq	.LCB12801
 	b	.L1325	@long jump
-.LCB12799:
+.LCB12801:
 	mov	r0, #0xff
 	str	r0, [sp]
 	ldr	r0, .L1369+0x10
@@ -12521,9 +12521,9 @@ atk24:
 	ldr	r0, .L1443
 	ldr	r0, [r0]
 	cmp	r0, #0
-	beq	.LCB13482
+	beq	.LCB13484
 	b	.L1418	@long jump
-.LCB13482:
+.LCB13484:
 	bl	NoAliveMonsForPlayer
 	cmp	r0, #0
 	beq	.L1420	@cond_branch
@@ -14997,15 +14997,15 @@ Cmd_moveend:
 .L1915:
 	mov	r2, r8
 	cmp	r2, #0
-	beq	.LCB16430
+	beq	.LCB16432
 	bl	.L1766	@far jump
-.LCB16430:
+.LCB16432:
 .L1765:
 	ldrb	r0, [r4, #0x14]
 	cmp	r0, #0x19
-	bls	.LCB16436
+	bls	.LCB16438
 	bl	.L1768	@far jump
-.LCB16436:
+.LCB16438:
 	lsl	r0, r0, #0x2
 	ldr	r1, .L1936
 	add	r0, r0, r1
@@ -15057,9 +15057,9 @@ Cmd_moveend:
 	mov	r5, #0x1
 	and	r0, r0, r5
 	cmp	r0, #0
-	bne	.LCB16468
+	bne	.LCB16470
 	b	.L1770	@long jump
-.LCB16468:
+.LCB16470:
 	ldr	r1, .L1938+0x8
 	ldr	r0, .L1938+0xc
 	ldrb	r0, [r0]
@@ -15734,9 +15734,9 @@ Cmd_moveend:
 	mov	r1, #0x80
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.LCB17326
+	beq	.LCB17328
 	b	.L1917	@long jump
-.LCB17326:
+.LCB17328:
 .L1827:
 	ldr	r1, .L1972+0x10
 	bl	.L1922	@ far jump
@@ -15845,9 +15845,9 @@ Cmd_moveend:
 	ldr	r1, .L1978+0x10
 	and	r0, r0, r1
 	cmp	r0, #0
-	bne	.LCB17459
+	bne	.LCB17461
 	b	.L1918	@long jump
-.LCB17459:
+.LCB17461:
 .L1832:
 	ldr	r1, .L1978+0x14
 	bl	.L1922	@ far jump
@@ -16033,18 +16033,18 @@ Cmd_moveend:
 	ldr	r2, [r0]
 	and	r1, r1, r2
 	cmp	r1, #0
-	beq	.LCB17696
+	beq	.LCB17698
 	b	.L1846	@long jump
-.LCB17696:
+.LCB17698:
 	ldr	r1, .L1984
 	ldr	r0, [r1]
 	add	r0, r0, #0x8a
 	ldrb	r0, [r0]
 	and	r0, r0, r2
 	cmp	r0, #0
-	beq	.LCB17704
+	beq	.LCB17706
 	b	.L1846	@long jump
-.LCB17704:
+.LCB17706:
 	ldr	r1, .L1984+0x40
 	ldr	r2, [sp, #0x14]
 	lsl	r0, r2, #0x2
@@ -16054,13 +16054,13 @@ Cmd_moveend:
 	ldrh	r0, [r0]
 	mov	ip, r1
 	cmp	r0, #0x7f
-	bne	.LCB17716
-	b	.L1846	@long jump
-.LCB17716:
-	cmp	r0, #0x6e
 	bne	.LCB17718
 	b	.L1846	@long jump
 .LCB17718:
+	cmp	r0, #0x6e
+	bne	.LCB17720
+	b	.L1846	@long jump
+.LCB17720:
 	ldr	r0, [r6]
 	mov	r1, #0x80
 	lsl	r1, r1, #0x12
@@ -16431,9 +16431,9 @@ Cmd_moveend:
 	add	r0, r4, #0
 	bl	IsBattlerAlive
 	cmp	r0, #0
-	beq	.LCB18192
+	beq	.LCB18194
 	bl	.L1919	@far jump
-.LCB18192:
+.LCB18194:
 	ldr	r2, .L2000+0x4
 	ldr	r1, [r2]
 	mov	r0, #0x80
@@ -16895,9 +16895,9 @@ Cmd_moveend:
 .L1767:
 	ldrb	r0, [r4, #0x14]
 	cmp	r0, #0x19
-	beq	.LCB18772
+	beq	.LCB18774
 	bl	.L1915	@far jump
-.LCB18772:
+.LCB18774:
 .L1766:
 	ldrb	r0, [r4, #0x14]
 	cmp	r0, #0x19
@@ -17106,9 +17106,9 @@ Cmd_switchindataupdate:
 	ldr	r0, .L2044
 	ldr	r0, [r0]
 	cmp	r0, #0
-	beq	.LCB19002
+	beq	.LCB19004
 	b	.L2029	@long jump
-.LCB19002:
+.LCB19004:
 	ldr	r0, .L2044+0x4
 	ldr	r0, [r0]
 	ldrb	r0, [r0, #0x1]
@@ -17464,9 +17464,9 @@ CanBattlerSwitch:
 	lsl	r2, r2, #0xf
 	and	r1, r1, r2
 	cmp	r1, #0
-	bne	.LCB19433
+	bne	.LCB19435
 	b	.L2062	@long jump
-.LCB19433:
+.LCB19435:
 	ldr	r0, .L2118+0x4
 	ldrh	r1, [r0]
 	ldr	r0, .L2118+0x8
@@ -17520,9 +17520,9 @@ CanBattlerSwitch:
 	add	r0, r0, r1
 	ldrh	r0, [r0]
 	cmp	r5, r0
-	beq	.LCB19507
+	beq	.LCB19509
 	b	.L2110	@long jump
-.LCB19507:
+.LCB19509:
 .L2056:
 	add	r5, r5, #0x1
 	cmp	r5, #0x5
@@ -18061,9 +18061,9 @@ Cmd_openpartyscreen:
 	add	r0, r1, #0
 	mov	ip, r6
 	cmp	r0, #0x5
-	beq	.LCB20189
+	beq	.LCB20191
 	b	.L2153	@long jump
-.LCB20189:
+.LCB20191:
 	ldr	r0, .L2236+0x4
 	ldr	r0, [r0]
 	mov	r1, #0x41
@@ -18075,9 +18075,9 @@ Cmd_openpartyscreen:
 	ldr	r0, .L2236+0xc
 	ldrb	r0, [r0]
 	cmp	r7, r0
-	bcc	.LCB20206
+	bcc	.LCB20208
 	b	.L2165	@long jump
-.LCB20206:
+.LCB20208:
 	ldr	r7, .L2236+0x10
 	ldr	r6, .L2236+0x14
 	add	r4, r1, #0
@@ -18185,9 +18185,9 @@ Cmd_openpartyscreen:
 .L2154:
 	and	r0, r0, r1
 	cmp	r0, #0
-	bne	.LCB20345
+	bne	.LCB20347
 	b	.L2165	@long jump
-.LCB20345:
+.LCB20347:
 	ldr	r0, .L2242
 	mov	r8, r0
 	ldr	r0, [r0]
@@ -18645,23 +18645,23 @@ Cmd_openpartyscreen:
 	.word	gBattlescriptCurrInstr
 .L2153:
 	cmp	r0, #0x6
-	beq	.LCB20915
+	beq	.LCB20917
 	b	.L2198	@long jump
-.LCB20915:
+.LCB20917:
 	ldr	r0, .L2264
 	ldr	r1, [r0]
 	mov	r0, #0x40
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.LCB20922
+	beq	.LCB20924
 	b	.L2199	@long jump
-.LCB20922:
+.LCB20924:
 	mov	r0, #0x1
 	and	r1, r1, r0
 	cmp	r1, #0
-	bne	.LCB20927
+	bne	.LCB20929
 	b	.L2200	@long jump
-.LCB20927:
+.LCB20929:
 	ldr	r7, .L2264+0x4
 	ldr	r0, [r7]
 	lsr	r5, r0, #0x1c
@@ -18879,9 +18879,9 @@ Cmd_openpartyscreen:
 	ldrb	r0, [r1]
 	ldrb	r6, [r6]
 	cmp	r0, r6
-	beq	.LCB21211
+	beq	.LCB21213
 	b	.L2197	@long jump
-.LCB21211:
+.LCB21213:
 	mov	r1, r8
 	mov	r2, ip
 	str	r1, [r2]
@@ -19125,9 +19125,9 @@ Cmd_switchhandleorder:
 	ldr	r0, .L2303
 	ldr	r0, [r0]
 	cmp	r0, #0
-	beq	.LCB21516
+	beq	.LCB21518
 	b	.L2280	@long jump
-.LCB21516:
+.LCB21518:
 	ldr	r4, .L2303+0x4
 	ldr	r0, [r4]
 	ldrb	r0, [r0, #0x1]
@@ -19160,9 +19160,9 @@ Cmd_switchhandleorder:
 	ldr	r0, .L2305
 	ldrb	r0, [r0]
 	cmp	r5, r0
-	blt	.LCB21559
+	blt	.LCB21561
 	b	.L2282	@long jump
-.LCB21559:
+.LCB21561:
 	ldr	r7, .L2305+0x4
 .L2287:
 	ldr	r2, [r7]
@@ -19227,9 +19227,9 @@ Cmd_switchhandleorder:
 	mov	r1, #0x40
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.LCB21641
+	beq	.LCB21643
 	b	.L2282	@long jump
-.LCB21641:
+.LCB21643:
 	ldrb	r0, [r5]
 	bl	SwitchPartyOrder
 	b	.L2282
@@ -19718,9 +19718,9 @@ Cmd_switchineffects:
 	ldr	r1, .L2362+0x10
 	str	r0, [r1]
 	cmp	r0, #0
-	bne	.LCB22226
+	bne	.LCB22228
 	b	.L2325	@long jump
-.LCB22226:
+.LCB22228:
 	ldrb	r0, [r4]
 	mov	r1, #0x1
 	bl	SetDmgHazardsBattlescript
@@ -19747,9 +19747,9 @@ Cmd_switchineffects:
 	lsl	r4, r4, #0x9
 	and	r0, r0, r4
 	cmp	r0, #0
-	beq	.LCB22260
+	beq	.LCB22262
 	b	.L2332	@long jump
-.LCB22260:
+.LCB22262:
 	ldrb	r0, [r5]
 	bl	GetBattlerSide
 	lsl	r0, r0, #0x18
@@ -19760,15 +19760,15 @@ Cmd_switchineffects:
 	lsl	r1, r1, #0x6
 	and	r0, r0, r1
 	cmp	r0, #0
-	bne	.LCB22274
+	bne	.LCB22276
 	b	.L2332	@long jump
-.LCB22274:
+.LCB22276:
 	ldrb	r0, [r5]
 	bl	IsBattlerGrounded
 	cmp	r0, #0
-	bne	.LCB22280
+	bne	.LCB22282
 	b	.L2332	@long jump
-.LCB22280:
+.LCB22282:
 	ldrb	r0, [r5]
 	bl	GetBattlerSide
 	lsl	r0, r0, #0x18
@@ -19844,27 +19844,27 @@ Cmd_switchineffects:
 	add	r0, r3, r7
 	ldrb	r0, [r0]
 	cmp	r0, #0
-	beq	.LCB22379
-	b	.L2325	@long jump
-.LCB22379:
-	cmp	r4, #0x8
-	bne	.LCB22381
+	beq	.LCB22381
 	b	.L2325	@long jump
 .LCB22381:
-	cmp	r2, #0x8
+	cmp	r4, #0x8
 	bne	.LCB22383
 	b	.L2325	@long jump
 .LCB22383:
-	cmp	r1, #0x8
+	cmp	r2, #0x8
 	bne	.LCB22385
 	b	.L2325	@long jump
 .LCB22385:
+	cmp	r1, #0x8
+	bne	.LCB22387
+	b	.L2325	@long jump
+.LCB22387:
 	add	r0, r6, #0
 	bl	GetBattlerAbility
 	cmp	r0, #0x11
-	bne	.LCB22390
+	bne	.LCB22392
 	b	.L2325	@long jump
-.LCB22390:
+.LCB22392:
 	ldrb	r0, [r5]
 	bl	GetBattlerSide
 	lsl	r0, r0, #0x18
@@ -19874,9 +19874,9 @@ Cmd_switchineffects:
 	mov	r1, #0x20
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.LCB22403
+	beq	.LCB22405
 	b	.L2325	@long jump
-.LCB22403:
+.LCB22405:
 	ldr	r4, .L2366
 	ldrb	r0, [r5]
 	bl	GetBattlerSide
@@ -20040,9 +20040,9 @@ Cmd_switchineffects:
 	bl	AbilityBattleEffects
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.LCB22610
+	beq	.LCB22612
 	b	.L2325	@long jump
-.LCB22610:
+.LCB22612:
 	ldrb	r1, [r5]
 	mov	r0, #0x0
 	mov	r2, #0x0
@@ -20050,9 +20050,9 @@ Cmd_switchineffects:
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.LCB22620
+	beq	.LCB22622
 	b	.L2325	@long jump
-.LCB22620:
+.LCB22622:
 	str	r0, [sp]
 	mov	r0, #0xb
 	mov	r1, #0x0
@@ -20062,9 +20062,9 @@ Cmd_switchineffects:
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.LCB22631
+	beq	.LCB22633
 	b	.L2325	@long jump
-.LCB22631:
+.LCB22633:
 	str	r0, [sp]
 	mov	r0, #0xd
 	mov	r1, #0x0
@@ -20572,9 +20572,9 @@ Cmd_yesnoboxlearnmove:
 	ldrb	r1, [r0, #0x1f]
 	add	r2, r0, #0
 	cmp	r1, #0x6
-	bls	.LCB23250
+	bls	.LCB23252
 	b	.L2413	@long jump
-.LCB23250:
+.LCB23252:
 	lsl	r0, r1, #0x2
 	ldr	r1, .L2443+0x8
 	add	r0, r0, r1
@@ -20695,9 +20695,9 @@ Cmd_yesnoboxlearnmove:
 	mov	r0, #0x2
 	and	r0, r0, r1
 	cmp	r0, #0
-	bne	.LCB23414
+	bne	.LCB23416
 	b	.L2413	@long jump
-.LCB23414:
+.LCB23416:
 	mov	r0, #0x5
 	bl	PlaySE
 	b	.L2441
@@ -20707,9 +20707,9 @@ Cmd_yesnoboxlearnmove:
 	mov	r0, #0x80
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.LCB23428
+	beq	.LCB23430
 	b	.L2413	@long jump
-.LCB23428:
+.LCB23430:
 	bl	FreeAllWindowBuffers
 	ldr	r0, .L2449+0x4
 	ldr	r1, .L2449+0x8
@@ -20747,16 +20747,16 @@ Cmd_yesnoboxlearnmove:
 	mov	r0, #0x80
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.LCB23476
+	beq	.LCB23478
 	b	.L2413	@long jump
-.LCB23476:
+.LCB23478:
 	ldr	r0, .L2451+0x4
 	ldr	r1, [r0, #0x4]
 	ldr	r0, .L2451+0x8
 	cmp	r1, r0
-	beq	.LCB23481
+	beq	.LCB23483
 	b	.L2413	@long jump
-.LCB23481:
+.LCB23483:
 	ldrb	r0, [r2, #0x1f]
 	add	r0, r0, #0x1
 	b	.L2442
@@ -20772,16 +20772,16 @@ Cmd_yesnoboxlearnmove:
 	mov	r0, #0x80
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.LCB23504
+	beq	.LCB23506
 	b	.L2413	@long jump
-.LCB23504:
+.LCB23506:
 	ldr	r0, .L2453+0x4
 	ldr	r1, [r0, #0x4]
 	ldr	r0, .L2453+0x8
 	cmp	r1, r0
-	beq	.LCB23509
+	beq	.LCB23511
 	b	.L2413	@long jump
-.LCB23509:
+.LCB23511:
 	bl	GetMoveSlotToReplace
 	lsl	r0, r0, #0x18
 	lsr	r5, r0, #0x18
@@ -22700,9 +22700,9 @@ Cmd_drawlvlupbox:
 	ldrb	r0, [r4, #0x1e]
 	sub	r0, r0, #0x1
 	cmp	r0, #0x9
-	bls	.LCB25905
+	bls	.LCB25907
 	b	.L2678	@long jump
-.LCB25905:
+.LCB25907:
 	lsl	r0, r0, #0x2
 	ldr	r1, .L2701
 	add	r0, r0, r1
@@ -22749,9 +22749,9 @@ Cmd_drawlvlupbox:
 	bl	sub_804F1CC
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.LCB25952
+	beq	.LCB25954
 	b	.L2678	@long jump
-.LCB25952:
+.LCB25954:
 	ldr	r1, .L2705
 	mov	r0, #0x3
 	strb	r0, [r1, #0x1e]
@@ -24331,18 +24331,18 @@ ClearDefogHazards:
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	cmp	r0, r9
-	bne	.LCB27864
+	bne	.LCB27866
 	b	.L2898	@long jump
-.LCB27864:
+.LCB27866:
 	ldr	r1, [r5]
 	mov	r3, #0x1
 	and	r3, r3, r1
 	cmp	r3, #0
 	beq	.L2899	@cond_branch
 	cmp	r6, #0
-	bne	.LCB27874
+	bne	.LCB27876
 	b	.L2924	@long jump
-.LCB27874:
+.LCB27876:
 	mov	r2, sl
 	strb	r2, [r4]
 	mov	r0, #0x2
@@ -24381,9 +24381,9 @@ ClearDefogHazards:
 	cmp	r2, #0
 	beq	.L2902	@cond_branch
 	cmp	r6, #0
-	bne	.LCB27920
+	bne	.LCB27922
 	b	.L2924	@long jump
-.LCB27920:
+.LCB27922:
 	mov	r2, sl
 	strb	r2, [r4]
 	strb	r7, [r4, #0x1]
@@ -24415,9 +24415,9 @@ ClearDefogHazards:
 	cmp	r3, #0
 	beq	.L2905	@cond_branch
 	cmp	r6, #0
-	bne	.LCB27959
+	bne	.LCB27961
 	b	.L2924	@long jump
-.LCB27959:
+.LCB27961:
 	mov	r0, sl
 	strb	r0, [r4]
 	strb	r7, [r4, #0x1]
@@ -24449,9 +24449,9 @@ ClearDefogHazards:
 	cmp	r2, #0
 	beq	.L2908	@cond_branch
 	cmp	r6, #0
-	bne	.LCB27998
+	bne	.LCB28000
 	b	.L2924	@long jump
-.LCB27998:
+.LCB28000:
 	mov	r2, sl
 	strb	r2, [r4]
 	strb	r7, [r4, #0x1]
@@ -24605,9 +24605,9 @@ ClearDefogHazards:
 	add	r9, r9, r0
 	mov	r1, r9
 	cmp	r1, #0x1
-	bgt	.LCB28195
+	bgt	.LCB28197
 	b	.L2897	@long jump
-.LCB28195:
+.LCB28197:
 	mov	r0, #0x0
 .L2927:
 	add	sp, sp, #0x8
@@ -24894,9 +24894,9 @@ Cmd_various:
 	ldr	r0, .L3495
 	ldr	r0, [r0]
 	cmp	r0, #0
-	beq	.LCB28549
+	beq	.LCB28551
 	bl	.L2980	@far jump
-.LCB28549:
+.LCB28551:
 	ldr	r4, .L3495+0x4
 	ldr	r0, [r4]
 	ldrb	r0, [r0, #0x1]
@@ -24906,9 +24906,9 @@ Cmd_various:
 	ldr	r0, [r4]
 	ldrb	r0, [r0, #0x2]
 	cmp	r0, #0x66
-	bls	.LCB28563
+	bls	.LCB28565
 	bl	.L2982	@far jump
-.LCB28563:
+.LCB28565:
 	lsl	r0, r0, #0x2
 	ldr	r1, .L3495+0xc
 	add	r0, r0, r1
@@ -25056,9 +25056,9 @@ Cmd_various:
 	eor	r0, r0, r1
 	bl	IsBattlerAlive
 	cmp	r0, #0
-	beq	.LCB28624
+	beq	.LCB28626
 	bl	.L3456	@far jump
-.LCB28624:
+.LCB28626:
 .L2984:
 	ldr	r0, .L3497
 	ldr	r0, [r0]
@@ -25079,9 +25079,9 @@ Cmd_various:
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	cmp	r0, #0x1
-	bne	.LCB28649
+	bne	.LCB28651
 	bl	.L3456	@far jump
-.LCB28649:
+.LCB28651:
 .L2986:
 	ldr	r1, .L3497+0xc
 	ldr	r0, [r1]
@@ -25099,9 +25099,9 @@ Cmd_various:
 	ldrb	r0, [r0]
 	bl	IsBattlerAlive
 	cmp	r0, #0
-	bne	.LCB28672
+	bne	.LCB28674
 	bl	.L3456	@far jump
-.LCB28672:
+.LCB28674:
 	ldr	r1, .L3499+0x4
 	ldr	r0, [r1]
 	add	r0, r0, #0x7
@@ -25116,9 +25116,9 @@ Cmd_various:
 	ldrb	r0, [r0]
 	bl	IsShieldsDownProtected
 	cmp	r0, #0
-	beq	.LCB28692
+	beq	.LCB28694
 	bl	.L3456	@far jump
-.LCB28692:
+.LCB28694:
 	ldr	r1, .L3501+0x4
 	ldr	r0, [r1]
 	add	r0, r0, #0x7
@@ -25164,9 +25164,9 @@ Cmd_various:
 	eor	r0, r0, r1
 	bl	IsBattlerAlive
 	cmp	r0, #0
-	bne	.LCB28752
+	bne	.LCB28754
 	bl	.L3456	@far jump
-.LCB28752:
+.LCB28754:
 	ldr	r1, .L3505+0x4
 	ldr	r0, [r1]
 	add	r0, r0, #0x7
@@ -25237,9 +25237,9 @@ Cmd_various:
 	add	r0, r1, #0
 	and	r0, r0, r2
 	cmp	r0, #0
-	beq	.LCB28835
+	beq	.LCB28837
 	bl	.L3456	@far jump
-.LCB28835:
+.LCB28837:
 	orr	r1, r1, r2
 	str	r1, [r3]
 	ldr	r1, .L3511+0x4
@@ -25323,9 +25323,9 @@ Cmd_various:
 	ldrh	r1, [r0, #0x2a]
 	ldrh	r0, [r0, #0x2e]
 	cmp	r1, r0
-	bne	.LCB28931
+	bne	.LCB28933
 	bl	.L3456	@far jump
-.LCB28931:
+.LCB28933:
 	ldr	r1, .L3515+0x8
 	ldr	r0, [r1]
 	add	r0, r0, #0x7
@@ -25402,9 +25402,9 @@ Cmd_various:
 	add	r1, r0, r2
 	ldrb	r0, [r1]
 	cmp	r0, #0
-	beq	.LCB29037
+	beq	.LCB29039
 	bl	.L3464	@far jump
-.LCB29037:
+.LCB29039:
 	strb	r6, [r1]
 	ldr	r1, .L3517+0x24
 	ldr	r0, .L3517+0x28
@@ -25542,9 +25542,9 @@ Cmd_various:
 	ldrb	r0, [r0]
 	bl	GetIllusionMonPtr
 	cmp	r0, #0
-	bne	.LCB29212
+	bne	.LCB29214
 	bl	.L2982	@far jump
-.LCB29212:
+.LCB29214:
 	ldr	r4, .L3527+0x4
 	ldr	r0, [r4]
 	add	r0, r0, #0x3
@@ -25636,9 +25636,9 @@ Cmd_various:
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	cmp	r0, #0x7
-	beq	.LCB29324
+	beq	.LCB29326
 	bl	.L3456	@far jump
-.LCB29324:
+.LCB29326:
 	ldr	r1, .L3535+0x8
 	ldr	r0, [r1]
 	add	r0, r0, #0x7
@@ -25659,9 +25659,9 @@ Cmd_various:
 	ldr	r1, .L3537+0x8
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.LCB29348
+	beq	.LCB29350
 	bl	.L3456	@far jump
-.LCB29348:
+.LCB29350:
 	ldr	r5, .L3537+0xc
 	mov	r4, #0x5c
 	mov	r0, r2
@@ -25670,19 +25670,19 @@ Cmd_various:
 	ldrh	r1, [r0, #0x2a]
 	ldrh	r0, [r0, #0x2e]
 	cmp	r1, r0
-	bne	.LCB29361
-	bl	.L3456	@far jump
-.LCB29361:
-	cmp	r1, #0
 	bne	.LCB29363
 	bl	.L3456	@far jump
 .LCB29363:
+	cmp	r1, #0
+	bne	.LCB29365
+	bl	.L3456	@far jump
+.LCB29365:
 	add	r0, r2, #0
 	bl	IsBattlerGrounded
 	cmp	r0, #0
-	bne	.LCB29368
+	bne	.LCB29370
 	bl	.L3456	@far jump
-.LCB29368:
+.LCB29370:
 	ldr	r1, .L3537+0x10
 	ldrb	r0, [r6]
 	mul	r0, r0, r4
@@ -25774,9 +25774,9 @@ Cmd_various:
 	mov	r3, #0x0
 	bl	ChangeStatBuffs
 	cmp	r0, #0
-	bne	.LCB29481
+	bne	.LCB29483
 	bl	.L3465	@far jump
-.LCB29481:
+.LCB29483:
 .L3043:
 	add	r7, r7, #0x1
 	cmp	r7, #0x7
@@ -25834,9 +25834,9 @@ Cmd_various:
 	cmp	r7, #0x7
 	ble	.L3053	@cond_branch
 	cmp	r5, #0
-	bne	.LCB29560
+	bne	.LCB29562
 	bl	.L3456	@far jump
-.LCB29560:
+.LCB29562:
 	ldr	r4, .L3545+0x8
 .L3057:
 	bl	Random
@@ -26027,9 +26027,9 @@ Cmd_various:
 	beq	.L3461	@cond_branch
 	ldrh	r0, [r3, #0x4]
 	cmp	r0, r1
-	beq	.LCB29809
+	beq	.LCB29811
 	bl	.L2982	@far jump
-.LCB29809:
+.LCB29811:
 	cmp	r2, r0
 	bne	.L3076	@cond_branch
 .L3461:
@@ -26073,9 +26073,9 @@ Cmd_various:
 	ble	.L3081	@cond_branch
 .L3079:
 	cmp	r7, #0x4
-	beq	.LCB29870
+	beq	.LCB29872
 	bl	.L2982	@far jump
-.LCB29870:
+.LCB29872:
 	mov	r0, #0x0
 	strh	r0, [r3]
 	bl	.L2982	@ far jump
@@ -26091,22 +26091,22 @@ Cmd_various:
 	mov	r1, #0xb
 	and	r0, r0, r1
 	cmp	r0, #0x8
-	beq	.LCB29889
+	beq	.LCB29891
 	bl	.L2982	@far jump
-.LCB29889:
+.LCB29891:
 	ldr	r1, .L3567+0x4
 	ldrh	r0, [r1, #0x2a]
 	cmp	r0, #0
-	bne	.LCB29895
+	bne	.LCB29897
 	bl	.L2982	@far jump
-.LCB29895:
+.LCB29897:
 	add	r0, r1, #0
 	add	r0, r0, #0x86
 	ldrh	r0, [r0]
 	cmp	r0, #0
-	bne	.LCB29902
+	bne	.LCB29904
 	bl	.L2982	@far jump
-.LCB29902:
+.LCB29904:
 	ldr	r0, .L3567+0x8
 	ldr	r1, [r0]
 	ldr	r2, .L3567+0xc
@@ -26146,9 +26146,9 @@ Cmd_various:
 	add	r0, r3, #0
 	and	r0, r0, r5
 	cmp	r0, #0
-	beq	.LCB29946
+	beq	.LCB29948
 	bl	.L2982	@far jump
-.LCB29946:
+.LCB29948:
 	ldr	r4, .L3569+0x14
 	mov	r0, #0x5c
 	mov	r9, r0
@@ -26160,13 +26160,13 @@ Cmd_various:
 	lsr	r0, r0, #0x1
 	ldrh	r1, [r1, #0x2a]
 	cmp	r0, r1
-	bcs	.LCB29961
-	bl	.L2982	@far jump
-.LCB29961:
-	cmp	r1, #0
-	bne	.LCB29963
+	bcs	.LCB29963
 	bl	.L2982	@far jump
 .LCB29963:
+	cmp	r1, #0
+	bne	.LCB29965
+	bl	.L2982	@far jump
+.LCB29965:
 	add	r0, r4, #0
 	add	r0, r0, #0x50
 	add	r0, r2, r0
@@ -26174,9 +26174,9 @@ Cmd_various:
 	mov	r1, #0x7
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.LCB29971
+	beq	.LCB29973
 	bl	.L2982	@far jump
-.LCB29971:
+.LCB29973:
 	orr	r3, r3, r5
 	strb	r3, [r7]
 	mov	r0, #0x1
@@ -26216,9 +26216,9 @@ Cmd_various:
 	lsl	r0, r0, #0x18
 	lsr	r7, r0, #0x18
 	cmp	r7, #0
-	bne	.LCB30017
+	bne	.LCB30019
 	bl	.L2980	@far jump
-.LCB30017:
+.LCB30019:
 	strb	r7, [r4, #0x1]
 	bl	.L2982	@ far jump
 .L3572:
@@ -26407,9 +26407,9 @@ Cmd_various:
 	bl	IsCryFinished
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	bne	.LCB30239
+	bne	.LCB30241
 	bl	.L2980	@far jump
-.LCB30239:
+.LCB30241:
 	bl	.L2982	@ far jump
 .L3102:
 	ldr	r4, .L3581
@@ -26419,9 +26419,9 @@ Cmd_various:
 	add	r0, r0, #0x5c
 	ldrh	r0, [r0, #0x2a]
 	cmp	r0, #0
-	bne	.LCB30252
+	bne	.LCB30254
 	bl	.L2982	@far jump
-.LCB30252:
+.LCB30254:
 	mov	r0, #0x0
 	mov	r1, #0x0
 	bl	BtlController_EmitReturnMonToBall
@@ -26435,9 +26435,9 @@ Cmd_various:
 	ldr	r0, .L3583
 	ldrb	r0, [r0]
 	cmp	r0, #0x3
-	bhi	.LCB30273
+	bhi	.LCB30275
 	bl	.L2982	@far jump
-.LCB30273:
+.LCB30275:
 	ldr	r4, .L3583+0x4
 	mov	r0, #0x3
 	strb	r0, [r4]
@@ -26447,9 +26447,9 @@ Cmd_various:
 	add	r0, r0, r6
 	ldrh	r0, [r0, #0x2a]
 	cmp	r0, #0
-	bne	.LCB30287
+	bne	.LCB30289
 	bl	.L2982	@far jump
-.LCB30287:
+.LCB30289:
 	mov	r0, #0x0
 	mov	r1, #0x0
 	bl	BtlController_EmitReturnMonToBall
@@ -26511,9 +26511,9 @@ Cmd_various:
 	bl	sub_805725C
 .L3477:
 	cmp	r0, #0
-	beq	.LCB30371
+	beq	.LCB30373
 	bl	.L2980	@far jump
-.LCB30371:
+.LCB30373:
 	bl	.L2982	@ far jump
 .L3592:
 	.align	2, 0
@@ -26789,19 +26789,19 @@ Cmd_various:
 	ldrb	r0, [r0]
 	bl	GetBattlerAbility
 	cmp	r0, #0x99
-	beq	.LCB30723
+	beq	.LCB30725
 	bl	.L2982	@far jump
-.LCB30723:
+.LCB30725:
 	bl	HasAttackerFaintedTarget
 	cmp	r0, #0
-	bne	.LCB30727
+	bne	.LCB30729
 	bl	.L2982	@far jump
-.LCB30727:
+.LCB30729:
 	bl	NoAliveMonsForEitherParty
 	cmp	r0, #0
-	beq	.LCB30731
+	beq	.LCB30733
 	bl	.L2982	@far jump
-.LCB30731:
+.LCB30733:
 	ldr	r2, .L3613+0x4
 	ldr	r0, .L3613+0x8
 	ldrb	r1, [r0]
@@ -26812,9 +26812,9 @@ Cmd_various:
 	mov	r0, #0x19
 	ldrsb	r0, [r1, r0]
 	cmp	r0, #0xc
-	bne	.LCB30742
+	bne	.LCB30744
 	bl	.L2982	@far jump
-.LCB30742:
+.LCB30744:
 	add	r0, r2, #0x1
 	strb	r0, [r1, #0x19]
 	ldr	r1, .L3613+0xc
@@ -26849,15 +26849,15 @@ Cmd_various:
 	ldrb	r0, [r4]
 	bl	IsBattlerAlive
 	cmp	r0, #0
-	bne	.LCB30789
+	bne	.LCB30791
 	bl	.L2982	@far jump
-.LCB30789:
+.LCB30791:
 	add	r0, r7, #0
 	sub	r0, r0, #0xde
 	cmp	r0, #0x1
-	bls	.LCB30793
+	bls	.LCB30795
 	bl	.L2982	@far jump
-.LCB30793:
+.LCB30795:
 	ldr	r2, .L3615+0x8
 	ldrb	r1, [r5]
 	mov	r0, #0x5c
@@ -26866,27 +26866,27 @@ Cmd_various:
 	ldrh	r0, [r0, #0x20]
 	add	r4, r2, #0
 	cmp	r0, #0xa1
-	bne	.LCB30803
+	bne	.LCB30805
 	bl	.L2982	@far jump
-.LCB30803:
+.LCB30805:
 	cmp	r0, #0xa1
 	bgt	.L3155	@cond_branch
 	cmp	r0, #0x7a
 	bgt	.L3156	@cond_branch
 	cmp	r0, #0x79
-	blt	.LCB30809
-	bl	.L2982	@far jump
-.LCB30809:
-	cmp	r0, #0x24
-	bne	.LCB30811
+	blt	.LCB30811
 	bl	.L2982	@far jump
 .LCB30811:
 	cmp	r0, #0x24
+	bne	.LCB30813
+	bl	.L2982	@far jump
+.LCB30813:
+	cmp	r0, #0x24
 	bgt	.L3157	@cond_branch
 	cmp	r0, #0x19
-	bne	.LCB30815
+	bne	.LCB30817
 	bl	.L2982	@far jump
-.LCB30815:
+.LCB30817:
 	b	.L3153
 .L3616:
 	.align	2, 0
@@ -26896,9 +26896,9 @@ Cmd_various:
 	.word	gBattleMons
 .L3157:
 	cmp	r0, #0x3b
-	bne	.LCB30828
+	bne	.LCB30830
 	bl	.L2982	@far jump
-.LCB30828:
+.LCB30830:
 	b	.L3153
 .L3156:
 	cmp	r0, #0x96
@@ -26910,35 +26910,35 @@ Cmd_various:
 	cmp	r0, #0xd3
 	bgt	.L3158	@cond_branch
 	cmp	r0, #0xd0
-	blt	.LCB30842
-	bl	.L2982	@far jump
-.LCB30842:
-	cmp	r0, #0xb0
-	bne	.LCB30844
+	blt	.LCB30844
 	bl	.L2982	@far jump
 .LCB30844:
-	cmp	r0, #0xc5
+	cmp	r0, #0xb0
 	bne	.LCB30846
 	bl	.L2982	@far jump
 .LCB30846:
+	cmp	r0, #0xc5
+	bne	.LCB30848
+	bl	.L2982	@far jump
+.LCB30848:
 	b	.L3153
 .L3158:
 	cmp	r0, #0xdf
 	bgt	.L3159	@cond_branch
 	cmp	r0, #0xde
-	blt	.LCB30853
-	bl	.L2982	@far jump
-.LCB30853:
-	cmp	r0, #0xd5
-	bne	.LCB30855
+	blt	.LCB30855
 	bl	.L2982	@far jump
 .LCB30855:
+	cmp	r0, #0xd5
+	bne	.LCB30857
+	bl	.L2982	@far jump
+.LCB30857:
 	b	.L3153
 .L3159:
 	cmp	r0, #0xe1
-	bne	.LCB30860
+	bne	.LCB30862
 	bl	.L2982	@far jump
-.LCB30860:
+.LCB30862:
 .L3153:
 	ldr	r0, .L3617
 	ldr	r1, [r0]
@@ -26983,19 +26983,19 @@ Cmd_various:
 	ldrb	r0, [r4]
 	bl	GetBattlerAbility
 	cmp	r0, #0xe0
-	beq	.LCB30916
+	beq	.LCB30918
 	bl	.L2982	@far jump
-.LCB30916:
+.LCB30918:
 	bl	HasAttackerFaintedTarget
 	cmp	r0, #0
-	bne	.LCB30920
+	bne	.LCB30922
 	bl	.L2982	@far jump
-.LCB30920:
+.LCB30922:
 	bl	NoAliveMonsForEitherParty
 	cmp	r0, #0
-	beq	.LCB30924
+	beq	.LCB30926
 	bl	.L2982	@far jump
-.LCB30924:
+.LCB30926:
 	ldr	r1, .L3619+0x4
 	ldr	r0, .L3619+0x8
 	ldrb	r2, [r0]
@@ -27008,9 +27008,9 @@ Cmd_various:
 	mov	r0, #0x0
 	ldrsb	r0, [r1, r0]
 	cmp	r0, #0xc
-	bne	.LCB30937
+	bne	.LCB30939
 	bl	.L2982	@far jump
-.LCB30937:
+.LCB30939:
 	add	r0, r2, #0x1
 	strb	r0, [r1]
 	ldr	r1, .L3619+0xc
@@ -27083,9 +27083,9 @@ Cmd_various:
 	mov	r0, #0x1c
 	ldrsb	r0, [r1, r0]
 	cmp	r0, #0xc
-	beq	.LCB31036
+	beq	.LCB31038
 	bl	.L3466	@far jump
-.LCB31036:
+.LCB31038:
 .L3163:
 	ldr	r2, .L3621
 	ldr	r0, [r2]
@@ -27123,19 +27123,19 @@ Cmd_various:
 	add	r0, r0, r2
 	ldrh	r0, [r0]
 	cmp	r0, #0x8d
-	beq	.LCB31089
+	beq	.LCB31091
 	bl	.L2982	@far jump
-.LCB31089:
+.LCB31091:
 	bl	HasAttackerFaintedTarget
 	cmp	r0, #0
-	bne	.LCB31093
+	bne	.LCB31095
 	bl	.L2982	@far jump
-.LCB31093:
+.LCB31095:
 	bl	NoAliveMonsForEitherParty
 	cmp	r0, #0
-	beq	.LCB31097
+	beq	.LCB31099
 	bl	.L2982	@far jump
-.LCB31097:
+.LCB31099:
 	ldr	r2, .L3623+0x8
 	ldr	r0, .L3623+0xc
 	ldrb	r1, [r0]
@@ -27146,9 +27146,9 @@ Cmd_various:
 	lsl	r0, r0, #24
 	asr	r0, r0, #24
 	cmp	r0, #0xc
-	bne	.LCB31108
+	bne	.LCB31110
 	bl	.L2982	@far jump
-.LCB31108:
+.LCB31110:
 	ldr	r1, .L3623+0x10
 	mov	r0, #0x19
 	strb	r0, [r1, #0x1a]
@@ -27242,9 +27242,9 @@ Cmd_various:
 	lsl	r4, r4, #0x5
 	and	r0, r0, r4
 	cmp	r0, #0
-	beq	.LCB31223
+	beq	.LCB31225
 	bl	.L3456	@far jump
-.LCB31223:
+.LCB31225:
 	ldrb	r0, [r5]
 	bl	GetBattlerPosition
 	add	r1, r6, #0
@@ -27297,9 +27297,9 @@ Cmd_various:
 	lsl	r4, r4, #0x18
 	lsl	r0, r0, #0x18
 	cmp	r4, r0
-	bls	.LCB31300
+	bls	.LCB31302
 	bl	.L3456	@far jump
-.LCB31300:
+.LCB31302:
 	ldr	r4, .L3629+0x8
 	ldr	r2, .L3629+0xc
 	ldr	r0, .L3629+0x10
@@ -27321,9 +27321,9 @@ Cmd_various:
 	add	r0, r0, r4
 	ldrb	r0, [r0, #0x2]
 	cmp	r0, #0
-	bne	.LCB31324
+	bne	.LCB31326
 	bl	.L3456	@far jump
-.LCB31324:
+.LCB31326:
 	ldr	r1, .L3629+0x14
 	ldr	r0, [r1]
 	add	r0, r0, #0x7
@@ -27347,19 +27347,19 @@ Cmd_various:
 	ldrh	r0, [r0, #0x20]
 	add	r4, r3, #0
 	cmp	r0, #0x79
-	bne	.LCB31353
+	bne	.LCB31355
 	bl	.L3456	@far jump
-.LCB31353:
+.LCB31355:
 	cmp	r0, #0x79
 	bgt	.L3190	@cond_branch
 	cmp	r0, #0x36
-	bne	.LCB31357
-	bl	.L3456	@far jump
-.LCB31357:
-	cmp	r0, #0x56
 	bne	.LCB31359
 	bl	.L3456	@far jump
 .LCB31359:
+	cmp	r0, #0x56
+	bne	.LCB31361
+	bl	.L3456	@far jump
+.LCB31361:
 	b	.L3188
 .L3632:
 	.align	2, 0
@@ -27368,13 +27368,13 @@ Cmd_various:
 	.word	gActiveBattler
 .L3190:
 	cmp	r0, #0xb0
-	bne	.LCB31371
-	bl	.L3456	@far jump
-.LCB31371:
-	cmp	r0, #0xd1
 	bne	.LCB31373
 	bl	.L3456	@far jump
 .LCB31373:
+	cmp	r0, #0xd1
+	bne	.LCB31375
+	bl	.L3456	@far jump
+.LCB31375:
 .L3188:
 	ldrb	r1, [r2]
 	mov	r0, #0x5c
@@ -27401,21 +27401,21 @@ Cmd_various:
 	mov	ip, r2
 	add	r4, r3, #0
 	cmp	r0, #0xc5
-	bne	.LCB31408
+	bne	.LCB31410
 	bl	.L3456	@far jump
-.LCB31408:
+.LCB31410:
 	cmp	r0, #0xc5
 	bgt	.L3204	@cond_branch
 	cmp	r0, #0x79
-	bne	.LCB31412
+	bne	.LCB31414
 	bl	.L3456	@far jump
-.LCB31412:
+.LCB31414:
 	cmp	r0, #0x79
 	bgt	.L3205	@cond_branch
 	cmp	r0, #0x36
-	bne	.LCB31416
+	bne	.LCB31418
 	bl	.L3456	@far jump
-.LCB31416:
+.LCB31418:
 	b	.L3192
 .L3636:
 	.align	2, 0
@@ -27424,15 +27424,15 @@ Cmd_various:
 	.word	gBattlerTarget
 .L3205:
 	cmp	r0, #0xb0
-	bne	.LCB31428
+	bne	.LCB31430
 	bl	.L3456	@far jump
-.LCB31428:
+.LCB31430:
 	b	.L3192
 .L3204:
 	cmp	r0, #0xd5
-	bne	.LCB31433
+	bne	.LCB31435
 	bl	.L3456	@far jump
-.LCB31433:
+.LCB31435:
 	cmp	r0, #0xd5
 	bgt	.L3206	@cond_branch
 	cmp	r0, #0xd2
@@ -27442,9 +27442,9 @@ Cmd_various:
 	bl	.L3456	@ far jump
 .L3206:
 	cmp	r0, #0xe1
-	bne	.LCB31444
+	bne	.LCB31446
 	bl	.L3456	@far jump
-.LCB31444:
+.LCB31446:
 .L3192:
 	ldr	r2, .L3637
 	ldrb	r1, [r2]
@@ -27456,19 +27456,19 @@ Cmd_various:
 	cmp	r0, #0x96
 	bgt	.L3220	@cond_branch
 	cmp	r0, #0x95
-	blt	.LCB31460
-	bl	.L3456	@far jump
-.LCB31460:
-	cmp	r0, #0x3b
-	bne	.LCB31462
+	blt	.LCB31462
 	bl	.L3456	@far jump
 .LCB31462:
 	cmp	r0, #0x3b
+	bne	.LCB31464
+	bl	.L3456	@far jump
+.LCB31464:
+	cmp	r0, #0x3b
 	bgt	.L3221	@cond_branch
 	cmp	r0, #0x24
-	bne	.LCB31466
+	bne	.LCB31468
 	bl	.L3456	@far jump
-.LCB31466:
+.LCB31468:
 	b	.L3207
 .L3638:
 	.align	2, 0
@@ -27476,33 +27476,33 @@ Cmd_various:
 	.word	gBattlerAttacker
 .L3221:
 	cmp	r0, #0x7a
-	bne	.LCB31477
+	bne	.LCB31479
 	bl	.L3456	@far jump
-.LCB31477:
+.LCB31479:
 	b	.L3207
 .L3220:
 	cmp	r0, #0xd3
-	bne	.LCB31482
+	bne	.LCB31484
 	bl	.L3456	@far jump
-.LCB31482:
+.LCB31484:
 	cmp	r0, #0xd3
 	bgt	.L3222	@cond_branch
 	cmp	r0, #0xa1
-	bne	.LCB31486
-	bl	.L3456	@far jump
-.LCB31486:
-	cmp	r0, #0xd1
 	bne	.LCB31488
 	bl	.L3456	@far jump
 .LCB31488:
+	cmp	r0, #0xd1
+	bne	.LCB31490
+	bl	.L3456	@far jump
+.LCB31490:
 	b	.L3207
 .L3222:
 	cmp	r0, #0xdf
 	bgt	.L3207	@cond_branch
 	cmp	r0, #0xde
-	blt	.LCB31495
+	blt	.LCB31497
 	bl	.L3456	@far jump
-.LCB31495:
+.LCB31497:
 .L3207:
 	mov	r6, ip
 	ldrb	r0, [r6]
@@ -27515,9 +27515,9 @@ Cmd_various:
 	ldrh	r1, [r0, #0x20]
 	ldrh	r0, [r2, #0x20]
 	cmp	r0, r1
-	bne	.LCB31517
+	bne	.LCB31519
 	bl	.L3456	@far jump
-.LCB31517:
+.LCB31519:
 	strh	r1, [r2, #0x20]
 	ldr	r1, .L3639
 	ldr	r0, [r1]
@@ -27554,9 +27554,9 @@ Cmd_various:
 	ldrh	r1, [r0, #0x2a]
 	ldrh	r0, [r0, #0x2e]
 	cmp	r1, r0
-	bne	.LCB31567
+	bne	.LCB31569
 	bl	.L3456	@far jump
-.LCB31567:
+.LCB31569:
 	ldr	r0, .L3643+0x8
 	ldrb	r0, [r0]
 	bl	GetBattlerAbility
@@ -27642,9 +27642,9 @@ Cmd_various:
 	lsl	r4, r4, #0x18
 	lsl	r0, r0, #0x18
 	cmp	r4, r0
-	bls	.LCB31674
+	bls	.LCB31676
 	bl	.L3456	@far jump
-.LCB31674:
+.LCB31676:
 	mov	r7, #0x0
 	ldr	r2, .L3647+0x8
 	ldr	r0, .L3647+0xc
@@ -27794,9 +27794,9 @@ Cmd_various:
 	lsl	r4, r4, #0x18
 	lsl	r0, r0, #0x18
 	cmp	r4, r0
-	bls	.LCB31884
+	bls	.LCB31886
 	bl	.L3456	@far jump
-.LCB31884:
+.LCB31886:
 	ldr	r4, .L3653+0x8
 	ldr	r2, .L3653+0xc
 	ldr	r0, .L3653+0x10
@@ -27818,27 +27818,27 @@ Cmd_various:
 	add	r0, r0, r4
 	ldrb	r0, [r0, #0x2]
 	cmp	r0, #0
-	bne	.LCB31908
+	bne	.LCB31910
 	bl	.L3456	@far jump
-.LCB31908:
+.LCB31910:
 	mov	r0, #0x84
 	lsl	r0, r0, #0x1
 	cmp	r1, r0
-	bne	.LCB31915
+	bne	.LCB31917
 	bl	.L3456	@far jump
-.LCB31915:
+.LCB31917:
 	cmp	r1, r0
 	bgt	.L3279	@cond_branch
 	cmp	r1, #0xa5
-	bne	.LCB31919
+	bne	.LCB31921
 	bl	.L3456	@far jump
-.LCB31919:
+.LCB31921:
 	cmp	r1, #0xa5
 	bgt	.L3280	@cond_branch
 	cmp	r1, #0x44
-	bne	.LCB31923
+	bne	.LCB31925
 	bl	.L3456	@far jump
-.LCB31923:
+.LCB31925:
 	b	.L3277
 .L3654:
 	.align	2, 0
@@ -27850,21 +27850,21 @@ Cmd_various:
 	.word	gBattleStruct
 .L3280:
 	cmp	r1, #0xa8
-	bne	.LCB31938
-	bl	.L3456	@far jump
-.LCB31938:
-	cmp	r1, #0xf3
 	bne	.LCB31940
 	bl	.L3456	@far jump
 .LCB31940:
+	cmp	r1, #0xf3
+	bne	.LCB31942
+	bl	.L3456	@far jump
+.LCB31942:
 	b	.L3277
 .L3279:
 	mov	r0, #0xb8
 	lsl	r0, r0, #0x1
 	cmp	r1, r0
-	bne	.LCB31947
+	bne	.LCB31949
 	bl	.L3456	@far jump
-.LCB31947:
+.LCB31949:
 	cmp	r1, r0
 	bgt	.L3281	@cond_branch
 	sub	r0, r0, #0x19
@@ -27873,15 +27873,15 @@ Cmd_various:
 	mov	r0, #0xbf
 	lsl	r0, r0, #0x1
 	cmp	r1, r0
-	bne	.LCB31957
+	bne	.LCB31959
 	bl	.L3456	@far jump
-.LCB31957:
+.LCB31959:
 	add	r0, r0, #0x42
 .L3494:
 	cmp	r1, r0
-	bne	.LCB31961
+	bne	.LCB31963
 	bl	.L3456	@far jump
-.LCB31961:
+.LCB31963:
 .L3277:
 	ldr	r3, .L3655
 	strh	r1, [r3]
@@ -27922,9 +27922,9 @@ Cmd_various:
 .L3282:
 	bl	NoAliveMonsForEitherParty
 	cmp	r0, #0
-	beq	.LCB32011
+	beq	.LCB32013
 	bl	.L3456	@far jump
-.LCB32011:
+.LCB32013:
 	ldr	r1, .L3657
 	ldr	r0, [r1]
 	add	r0, r0, #0x7
@@ -27944,9 +27944,9 @@ Cmd_various:
 	lsl	r4, r4, #0x18
 	lsl	r0, r0, #0x18
 	cmp	r4, r0
-	bls	.LCB32039
+	bls	.LCB32041
 	bl	.L3456	@far jump
-.LCB32039:
+.LCB32041:
 	ldr	r0, .L3659+0x8
 	ldrb	r1, [r5]
 	lsl	r1, r1, #0x2
@@ -27980,14 +27980,14 @@ Cmd_various:
 	mov	ip, r1
 	add	r4, r2, #0
 	cmp	r6, r0
-	bne	.LCB32083
+	bne	.LCB32085
 	bl	.L3456	@far jump
-.LCB32083:
+.LCB32085:
 	ldr	r0, .L3661+0xc
 	cmp	r6, r0
-	bne	.LCB32091
+	bne	.LCB32093
 	bl	.L3456	@far jump
-.LCB32091:
+.LCB32093:
 	add	r0, r5, #0
 	add	r0, r0, #0x22
 	ldrb	r2, [r0]
@@ -27996,9 +27996,9 @@ Cmd_various:
 	add	r0, r0, #0x1
 	ldrb	r2, [r0]
 	cmp	r2, #0x9
-	bne	.LCB32106
+	bne	.LCB32108
 	bl	.L3456	@far jump
-.LCB32106:
+.LCB32108:
 	ldr	r1, .L3661+0x10
 	ldrb	r0, [r1]
 	mul	r0, r0, r7
@@ -28116,9 +28116,9 @@ Cmd_various:
 	add	r0, r0, #0x23
 	ldrb	r0, [r0]
 	cmp	r0, #0xb
-	bne	.LCB32255
+	bne	.LCB32257
 	bl	.L3456	@far jump
-.LCB32255:
+.LCB32257:
 .L3299:
 	mov	r6, ip
 	ldrb	r0, [r6]
@@ -28187,9 +28187,9 @@ Cmd_various:
 	ldr	r0, [r0]
 	ldrb	r6, [r0, #0x3]
 	cmp	r6, #0
-	beq	.LCB32339
+	beq	.LCB32341
 	b	.L3304	@long jump
-.LCB32339:
+.LCB32341:
 	ldr	r6, .L3671+0xc
 	ldr	r1, [r6]
 	ldr	r4, .L3671+0x10
@@ -28592,9 +28592,9 @@ Cmd_various:
 	ldrb	r0, [r0]
 	bl	CanUseLastResort
 	cmp	r0, #0
-	bne	.LCB32861
+	bne	.LCB32863
 	bl	.L3456	@far jump
-.LCB32861:
+.LCB32863:
 	ldr	r1, .L3685+0x4
 	ldr	r0, [r1]
 	add	r0, r0, #0x7
@@ -28680,9 +28680,9 @@ Cmd_various:
 	strh	r0, [r1, #0x2e]
 	ldrh	r0, [r1, #0x2e]
 	cmp	r0, #0
-	bne	.LCB32981
+	bne	.LCB32983
 	bl	.L2982	@far jump
-.LCB32981:
+.LCB32983:
 	ldr	r4, .L3699+0x4
 	ldr	r0, [r4]
 	add	r0, r0, #0x3
@@ -28701,24 +28701,24 @@ Cmd_various:
 	ldrb	r0, [r0]
 	bl	IsBattlerAlive
 	cmp	r0, #0
-	bne	.LCB33007
+	bne	.LCB33009
 	bl	.L3456	@far jump
-.LCB33007:
+.LCB33009:
 	ldr	r4, .L3701+0x4
 	ldrb	r0, [r4]
 	bl	IsBattlerAlive
 	cmp	r0, #0
-	bne	.LCB33014
+	bne	.LCB33016
 	bl	.L3456	@far jump
-.LCB33014:
+.LCB33016:
 	ldr	r0, .L3701+0x8
 	ldrh	r1, [r0]
 	mov	r0, #0x29
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.LCB33022
+	beq	.LCB33024
 	bl	.L3456	@far jump
-.LCB33022:
+.LCB33024:
 	ldr	r2, .L3701+0xc
 	ldrb	r1, [r4]
 	lsl	r0, r1, #0x1
@@ -28735,9 +28735,9 @@ Cmd_various:
 	add	r0, r1, r0
 	ldr	r0, [r0]
 	cmp	r0, #0
-	bne	.LCB33039
+	bne	.LCB33041
 	bl	.L3456	@far jump
-.LCB33039:
+.LCB33041:
 .L3335:
 	ldr	r1, .L3701+0x10
 	ldr	r0, .L3701+0x14
@@ -28756,9 +28756,9 @@ Cmd_various:
 	ldrb	r0, [r4]
 	bl	GetBattlerWeight
 	cmp	r0, #0x1
-	bhi	.LCB33065
+	bhi	.LCB33067
 	bl	.L3456	@far jump
-.LCB33065:
+.LCB33067:
 	ldr	r2, .L3703+0x4
 	ldrb	r1, [r4]
 	lsl	r0, r1, #0x2
@@ -28783,9 +28783,9 @@ Cmd_various:
 	ldrh	r1, [r2]
 	ldr	r0, .L3705+0x4
 	cmp	r1, r0
-	bne	.LCB33099
+	bne	.LCB33101
 	bl	.L3456	@far jump
-.LCB33099:
+.LCB33101:
 	ldr	r0, .L3705+0x8
 	add	r2, r1, #0
 	add	r0, r2, r0
@@ -28793,9 +28793,9 @@ Cmd_various:
 	mov	r0, #0x8
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.LCB33109
+	beq	.LCB33111
 	bl	.L3456	@far jump
-.LCB33109:
+.LCB33111:
 	ldr	r3, .L3705+0xc
 	strh	r2, [r3]
 	ldr	r2, .L3705+0x10
@@ -29068,9 +29068,9 @@ Cmd_various:
 	mov	r1, #0x1
 	bl	ClearDefogHazards
 	cmp	r0, #0
-	beq	.LCB33480
+	beq	.LCB33482
 	bl	.L2980	@far jump
-.LCB33480:
+.LCB33482:
 	b	.L3487
 .L3716:
 	.align	2, 0
@@ -29118,9 +29118,9 @@ Cmd_various:
 	lsl	r4, r4, #0x18
 	lsl	r0, r0, #0x18
 	cmp	r4, r0
-	bne	.LCB33543
+	bne	.LCB33545
 	bl	.L3456	@far jump
-.LCB33543:
+.LCB33545:
 	ldr	r1, .L3719+0x8
 	ldr	r0, [r1]
 	add	r0, r0, #0x7
@@ -29138,9 +29138,9 @@ Cmd_various:
 	ldrb	r1, [r1]
 	bl	DoBattlersShareType
 	cmp	r0, #0
-	bne	.LCB33567
+	bne	.LCB33569
 	bl	.L3456	@far jump
-.LCB33567:
+.LCB33569:
 	ldr	r1, .L3721+0x8
 	ldr	r0, [r1]
 	add	r0, r0, #0x7
@@ -29503,9 +29503,9 @@ Cmd_various:
 	strb	r0, [r1, #0x5]
 .L3391:
 	cmp	r7, #0x1
-	beq	.LCB34029
+	beq	.LCB34031
 	b	.L2980	@long jump
-.LCB34029:
+.LCB34031:
 	ldr	r2, .L3747+0x4
 	ldr	r5, .L3747+0x8
 	ldrb	r0, [r5]
@@ -29617,9 +29617,9 @@ Cmd_various:
 	lsl	r4, r4, #0x18
 	lsl	r0, r0, #0x18
 	cmp	r4, r0
-	bls	.LCB34160
+	bls	.LCB34162
 	b	.L3456	@long jump
-.LCB34160:
+.LCB34162:
 	ldrb	r0, [r5]
 	bl	GetBattlerTurnOrderNum
 	add	r4, r0, #0
@@ -29631,9 +29631,9 @@ Cmd_various:
 	lsr	r0, r0, #0x18
 	add	r0, r0, #0x1
 	cmp	r4, r0
-	bne	.LCB34175
+	bne	.LCB34177
 	b	.L3456	@long jump
-.LCB34175:
+.LCB34177:
 	mov	r7, #0x0
 	ldr	r2, .L3753+0x8
 	add	r3, r5, #0
@@ -29740,9 +29740,9 @@ Cmd_various:
 	add	r1, r0, r5
 	ldrh	r0, [r1, #0x30]
 	cmp	r0, #0
-	bne	.LCB34315
+	bne	.LCB34317
 	b	.L3456	@long jump
-.LCB34315:
+.LCB34317:
 	ldr	r6, .L3759+0x8
 	mov	sl, r6
 	ldrb	r0, [r6]
@@ -29750,16 +29750,16 @@ Cmd_various:
 	add	r0, r0, r8
 	ldrh	r5, [r0, #0x30]
 	cmp	r5, #0
-	beq	.LCB34325
+	beq	.LCB34327
 	b	.L3456	@long jump
-.LCB34325:
+.LCB34327:
 	ldrh	r1, [r1, #0x30]
 	add	r0, r2, #0
 	bl	CanBattlerGetOrLoseItem
 	cmp	r0, #0
-	bne	.LCB34332
+	bne	.LCB34334
 	b	.L3456	@long jump
-.LCB34332:
+.LCB34334:
 	ldrb	r0, [r6]
 	mov	r2, r9
 	ldrb	r1, [r2]
@@ -29768,9 +29768,9 @@ Cmd_various:
 	ldrh	r1, [r1, #0x30]
 	bl	CanBattlerGetOrLoseItem
 	cmp	r0, #0
-	bne	.LCB34344
+	bne	.LCB34346
 	b	.L3456	@long jump
-.LCB34344:
+.LCB34346:
 	ldr	r6, .L3759+0xc
 	mov	r3, r9
 	ldrb	r0, [r3]
@@ -29869,9 +29869,9 @@ Cmd_various:
 	ldrb	r0, [r0]
 	bl	IsBattlerGrounded
 	cmp	r0, #0
-	bne	.LCB34456
+	bne	.LCB34458
 	b	.L3456	@long jump
-.LCB34456:
+.LCB34458:
 	ldr	r1, .L3763+0x4
 	ldr	r0, [r1]
 	add	r0, r0, #0x7
@@ -29985,9 +29985,9 @@ Cmd_various:
 .L3492:
 	bl	ShouldDoTrainerSlide
 	cmp	r0, #0
-	bne	.LCB34609
+	bne	.LCB34611
 	b	.L2982	@long jump
-.LCB34609:
+.LCB34611:
 	ldr	r4, .L3773+0x8
 	ldr	r0, [r4]
 	add	r0, r0, #0x3
@@ -30338,13 +30338,13 @@ Cmd_setprotectlike:
 	lsl	r0, r0, #0x10
 	lsr	r0, r0, #0x10
 	cmp	r1, r0
-	bcs	.LCB35045
-	b	.L3796	@long jump
-.LCB35045:
-	cmp	r6, #0
-	bne	.LCB35047
+	bcs	.LCB35047
 	b	.L3796	@long jump
 .LCB35047:
+	cmp	r6, #0
+	bne	.LCB35049
+	b	.L3796	@long jump
+.LCB35049:
 	ldr	r6, .L3821+0x1c
 	ldrh	r2, [r6]
 	lsl	r0, r2, #0x2
@@ -31384,9 +31384,9 @@ Cmd_manipulatedamage:
 	ldr	r0, [r0]
 	ldrb	r0, [r0, #0x1]
 	cmp	r0, #0x7
-	bls	.LCB36321
+	bls	.LCB36323
 	b	.L3935	@long jump
-.LCB36321:
+.LCB36323:
 	lsl	r0, r0, #0x2
 	ldr	r1, .L3951+0x4
 	add	r0, r0, r1
@@ -32493,9 +32493,9 @@ ChangeStatBuffs:
 	strb	r0, [r1, #0x3]
 	lsl	r0, r5, #0x18
 	cmp	r0, #0
-	blt	.LCB37611
+	blt	.LCB37613
 	b	.L4078	@long jump
-.LCB37611:
+.LCB37613:
 	ldr	r4, .L4139+0x4
 	ldr	r6, .L4139+0x8
 	ldrb	r0, [r6]
@@ -32764,9 +32764,9 @@ ChangeStatBuffs:
 	cmp	r1, #0x6
 	bne	.L4098	@cond_branch
 	cmp	r7, #0x1
-	beq	.LCB37960
+	beq	.LCB37962
 	b	.L4134	@long jump
-.LCB37960:
+.LCB37962:
 	mov	r0, r8
 	bl	BattleScriptPush
 	ldr	r0, .L4153+0x4
@@ -32807,9 +32807,9 @@ ChangeStatBuffs:
 	cmp	r1, #0x1
 	bne	.L4101	@cond_branch
 	cmp	r7, #0x1
-	beq	.LCB38013
+	beq	.LCB38015
 	b	.L4134	@long jump
-.LCB38013:
+.LCB38015:
 	mov	r0, r8
 	bl	BattleScriptPush
 	ldr	r0, .L4155+0x4
@@ -32844,9 +32844,9 @@ ChangeStatBuffs:
 	cmp	r0, #0x13
 	bne	.L4104	@cond_branch
 	cmp	r7, #0
-	bne	.LCB38059
+	bne	.LCB38061
 	b	.L4134	@long jump
-.LCB38059:
+.LCB38061:
 .L4104:
 	lsl	r0, r5, #0x18
 	asr	r0, r0, #0x1b
@@ -33125,9 +33125,9 @@ ChangeStatBuffs:
 	cmp	r0, #0x2
 	bne	.L4128	@cond_branch
 	cmp	r3, #0
-	bne	.LCB38405
+	bne	.LCB38407
 	b	.L4134	@long jump
-.LCB38405:
+.LCB38407:
 .L4128:
 	mov	r0, #0x0
 .L4129:
@@ -33497,9 +33497,9 @@ Cmd_forcerandomswitch:
 	mov	r0, #0xb
 	and	r1, r1, r0
 	cmp	r1, #0x1
-	beq	.LCB38847
+	beq	.LCB38849
 	b	.L4221	@long jump
-.LCB38847:
+.LCB38849:
 	ldr	r0, .L4270+0x4
 	ldrb	r0, [r0]
 	bl	GetBattlerSide
@@ -33529,25 +33529,25 @@ Cmd_forcerandomswitch:
 	mov	r1, #0xb
 	and	r0, r0, r1
 	cmp	r0, #0x1
-	beq	.LCB38888
+	beq	.LCB38890
 	b	.L4221	@long jump
-.LCB38888:
+.LCB38890:
 	ldr	r0, .L4270+0x4
 	ldrb	r0, [r0]
 	bl	GetBattlerSide
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.LCB38897
+	beq	.LCB38899
 	b	.L4221	@long jump
-.LCB38897:
+.LCB38899:
 	ldr	r0, .L4270+0x8
 	ldrb	r0, [r0]
 	bl	GetBattlerSide
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.LCB38906
+	beq	.LCB38908
 	b	.L4221	@long jump
-.LCB38906:
+.LCB38908:
 .L4222:
 	ldr	r4, .L4270+0x8
 	ldrb	r0, [r4]
@@ -33807,9 +33807,9 @@ Cmd_forcerandomswitch:
 .L4247:
 	ldr	r1, [sp, #0x4]
 	cmp	r1, r8
-	bgt	.LCB39243
+	bgt	.LCB39245
 	b	.L4264	@long jump
-.LCB39243:
+.LCB39245:
 	ldr	r0, .L4282+0x4
 	ldrb	r1, [r0]
 	ldr	r0, .L4282+0x8
@@ -34936,25 +34936,25 @@ Cmd_weatherdamage:
 	ldrb	r0, [r6]
 	bl	IsBattlerAlive
 	cmp	r0, #0
-	bne	.LCB40628
+	bne	.LCB40630
 	b	.L4400	@long jump
-.LCB40628:
+.LCB40630:
 	mov	r0, #0xd
 	bl	IsAbilityOnField
 	cmp	r0, #0
-	beq	.LCB40633
+	beq	.LCB40635
 	b	.L4400	@long jump
-.LCB40633:
+.LCB40635:
 	mov	r0, #0x4c
 	bl	IsAbilityOnField
 	cmp	r0, #0
-	beq	.LCB40638
-	b	.L4400	@long jump
-.LCB40638:
-	cmp	r4, #0x62
-	bne	.LCB40640
+	beq	.LCB40640
 	b	.L4400	@long jump
 .LCB40640:
+	cmp	r4, #0x62
+	bne	.LCB40642
+	b	.L4400	@long jump
+.LCB40642:
 	ldr	r0, .L4411+0x8
 	ldrh	r1, [r0]
 	mov	r0, #0x18
@@ -37070,14 +37070,14 @@ Cmd_settypetorandomresistance:
 	add	r2, r0, r1
 	ldrh	r1, [r2]
 	cmp	r1, #0
-	bne	.LCB43121
+	bne	.LCB43123
 	b	.L4613	@long jump
-.LCB43121:
+.LCB43123:
 	ldr	r0, .L4614+0x8
 	cmp	r1, r0
-	bne	.LCB43126
+	bne	.LCB43128
 	b	.L4613	@long jump
-.LCB43126:
+.LCB43128:
 	ldrh	r0, [r2]
 	bl	IsTwoTurnsMove
 	lsl	r0, r0, #0x18
@@ -37326,9 +37326,9 @@ Cmd_copymovepermanently:
 	mov	ip, r3
 	mov	sl, r2
 	cmp	r1, #0
-	beq	.LCB43413
+	beq	.LCB43415
 	b	.L4624	@long jump
-.LCB43413:
+.LCB43415:
 	ldr	r0, .L4640+0x10
 	ldr	r2, .L4640+0x14
 	ldrb	r1, [r2]
@@ -37338,21 +37338,21 @@ Cmd_copymovepermanently:
 	mov	r9, r0
 	mov	r8, r2
 	cmp	r1, #0xa5
-	bne	.LCB43425
-	b	.L4624	@long jump
-.LCB43425:
-	cmp	r1, #0
 	bne	.LCB43427
 	b	.L4624	@long jump
 .LCB43427:
-	cmp	r1, r5
-	bne	.LCB43431
+	cmp	r1, #0
+	bne	.LCB43429
 	b	.L4624	@long jump
-.LCB43431:
-	cmp	r1, #0xa6
+.LCB43429:
+	cmp	r1, r5
 	bne	.LCB43433
 	b	.L4624	@long jump
 .LCB43433:
+	cmp	r1, #0xa6
+	bne	.LCB43435
+	b	.L4624	@long jump
+.LCB43435:
 	mov	r7, #0x0
 	mov	r5, r9
 	mov	r0, ip
@@ -37376,9 +37376,9 @@ Cmd_copymovepermanently:
 	ble	.L4628	@cond_branch
 .L4626:
 	cmp	r7, #0x4
-	beq	.LCB43475
+	beq	.LCB43477
 	b	.L4624	@long jump
-.LCB43475:
+.LCB43477:
 	ldr	r4, .L4640+0x18
 	ldrb	r1, [r4]
 	lsl	r1, r1, #0x1
@@ -37939,14 +37939,14 @@ Cmd_tryspiteppreduce:
 	mov	ip, r0
 	mov	r8, r2
 	cmp	r3, #0
-	bne	.LCB44145
+	bne	.LCB44147
 	b	.L4696	@long jump
-.LCB44145:
+.LCB44147:
 	ldr	r0, .L4709+0x8
 	cmp	r3, r0
-	bne	.LCB44150
+	bne	.LCB44152
 	b	.L4696	@long jump
-.LCB44150:
+.LCB44152:
 	mov	r6, #0x0
 	ldr	r0, .L4709+0xc
 	mov	r1, #0x5c
@@ -37978,9 +37978,9 @@ Cmd_tryspiteppreduce:
 	bne	.L4699	@cond_branch
 .L4698:
 	cmp	r6, #0x4
-	bne	.LCB44199
+	bne	.LCB44201
 	b	.L4703	@long jump
-.LCB44199:
+.LCB44201:
 	mov	r1, r8
 	ldrb	r0, [r1]
 	mov	r2, #0x5c
@@ -37995,9 +37995,9 @@ Cmd_tryspiteppreduce:
 	add	r1, r0, r1
 	ldrb	r0, [r1]
 	cmp	r0, #0
-	bne	.LCB44217
+	bne	.LCB44219
 	b	.L4703	@long jump
-.LCB44217:
+.LCB44219:
 	mov	r7, #0x4
 	cmp	r0, #0x4
 	bge	.L4704	@cond_branch
@@ -38167,9 +38167,9 @@ Cmd_healpartystatus:
 	ldr	r0, .L4737
 	ldrh	r0, [r0]
 	cmp	r0, #0xd7
-	beq	.LCB44410
+	beq	.LCB44412
 	b	.L4714	@long jump
-.LCB44410:
+.LCB44412:
 	ldr	r6, .L4737+0x4
 	mov	r0, r8
 	strb	r0, [r6, #0x5]
@@ -39555,9 +39555,9 @@ Cmd_jumpifnopursuitswitchdmg:
 	add	r0, r3, r0
 	ldrb	r0, [r0]
 	cmp	r0, #0
-	beq	.LCB46082
+	beq	.LCB46084
 	b	.L4886	@long jump
-.LCB46082:
+.LCB46084:
 	ldr	r5, .L4899+0x8
 	ldr	r0, .L4899+0xc
 	ldr	r1, [r0]
@@ -40566,9 +40566,9 @@ Cmd_trydobeatup:
 	ldrb	r0, [r6]
 	mov	r8, r0
 	cmp	r0, #0x5
-	bls	.LCB47305
+	bls	.LCB47307
 	b	.L5022	@long jump
-.LCB47305:
+.LCB47307:
 	add	r4, r6, #0
 	mov	r5, #0x64
 .L5019:
@@ -40615,9 +40615,9 @@ Cmd_trydobeatup:
 	mov	r9, r1
 	ldrb	r2, [r1]
 	cmp	r2, #0x5
-	bls	.LCB47368
+	bls	.LCB47370
 	b	.L5022	@long jump
-.LCB47368:
+.LCB47370:
 	ldr	r1, .L5030+0x8
 	mov	r0, #0xfd
 	strb	r0, [r1]
@@ -43632,15 +43632,15 @@ Cmd_pickup:
 	bl	InBattlePike
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	beq	.LCB50939
+	beq	.LCB50941
 	b	.L5443	@long jump
-.LCB50939:
+.LCB50941:
 	bl	InBattlePyramid
 	lsl	r0, r0, #0x18
 	cmp	r0, #0
-	bne	.LCB50945
+	bne	.LCB50947
 	b	.L5444	@long jump
-.LCB50945:
+.LCB50947:
 	mov	r0, #0x0
 	mov	r9, r0
 	ldr	r1, .L5494
@@ -43779,9 +43779,9 @@ Cmd_pickup:
 	add	r9, r9, r0
 	mov	r1, r9
 	cmp	r1, #0x5
-	bgt	.LCB51129
+	bgt	.LCB51131
 	b	.L5448	@long jump
-.LCB51129:
+.LCB51131:
 	b	.L5443
 .L5444:
 	mov	r0, #0x0
@@ -43897,15 +43897,15 @@ Cmd_pickup:
 	add	r0, r4, #0
 	sub	r0, r0, #0x62
 	cmp	r0, #0x1
-	bhi	.LCB51282
+	bhi	.LCB51284
 	b	.L5490	@long jump
-.LCB51282:
+.LCB51284:
 	add	r2, r2, #0x1
 .L5470:
 	cmp	r2, #0x8
-	ble	.LCB51287
+	ble	.LCB51289
 	b	.L5462	@long jump
-.LCB51287:
+.LCB51289:
 	ldr	r0, .L5502
 	add	r0, r2, r0
 	ldrb	r0, [r0]
@@ -43950,9 +43950,9 @@ Cmd_pickup:
 	mov	r6, r9
 	add	r6, r6, #0x1
 	cmp	r4, r0
-	bgt	.LCB51346
+	bgt	.LCB51348
 	b	.L5462	@long jump
-.LCB51346:
+.LCB51348:
 	mov	r0, #0x82
 	mov	r1, r8
 	strh	r0, [r1]
@@ -44099,9 +44099,9 @@ Cmd_pickup:
 .L5462:
 	mov	r9, r6
 	cmp	r6, #0x5
-	bgt	.LCB51547
+	bgt	.LCB51549
 	b	.L5463	@long jump
-.LCB51547:
+.LCB51549:
 .L5443:
 	ldr	r1, .L5510+0x8
 	ldr	r0, [r1]
@@ -44918,9 +44918,9 @@ Cmd_handleballthrow:
 	ldr	r0, .L5711
 	ldr	r0, [r0]
 	cmp	r0, #0
-	beq	.LCB52489
+	beq	.LCB52491
 	b	.L5600	@long jump
-.LCB52489:
+.LCB52491:
 	ldr	r4, .L5711+0x4
 	ldr	r0, .L5711+0x8
 	ldrb	r0, [r0]
@@ -44976,7 +44976,7 @@ Cmd_handleballthrow:
 	ldr	r1, [r0]
 	ldr	r2, .L5715+0x4
 	ldrh	r0, [r2]
-	strh	r0, [r1, #0x2c]
+	strh	r0, [r1, #0x28]
 	lsl	r0, r0, #0x10
 	lsr	r0, r0, #0x10
 	add	r4, r2, #0
@@ -45046,9 +45046,9 @@ Cmd_handleballthrow:
 	ldrh	r0, [r0]
 	mov	r7, #0x1
 	cmp	r0, #0x1b
-	beq	.LCB52644
+	beq	.LCB52646
 	b	.L5611	@long jump
-.LCB52644:
+.LCB52646:
 .L5709:
 	mov	r7, #0x32
 	b	.L5611
@@ -45062,14 +45062,14 @@ Cmd_handleballthrow:
 .L5608:
 	ldrh	r0, [r4]
 	cmp	r0, #0x5
-	bhi	.LCB52665
+	bhi	.LCB52667
 	b	.L5612	@long jump
-.LCB52665:
+.LCB52667:
 	sub	r0, r0, #0x6
 	cmp	r0, #0x15
-	bls	.LCB52670
+	bls	.LCB52672
 	b	.L5611	@long jump
-.LCB52670:
+.LCB52672:
 	lsl	r0, r0, #0x2
 	ldr	r1, .L5719
 	add	r0, r0, r1
@@ -45129,9 +45129,9 @@ Cmd_handleballthrow:
 	cmp	r2, #0x6
 	beq	.L5709	@cond_branch
 	cmp	r0, #0x6
-	beq	.LCB52721
+	beq	.LCB52723
 	b	.L5611	@long jump
-.LCB52721:
+.LCB52723:
 	b	.L5709
 .L5722:
 	.align	2, 0
@@ -45166,9 +45166,9 @@ Cmd_handleballthrow:
 	add	r0, r0, #0x2c
 	ldrb	r1, [r0]
 	cmp	r1, #0x1d
-	bls	.LCB52769
+	bls	.LCB52771
 	b	.L5611	@long jump
-.LCB52769:
+.LCB52771:
 	mov	r0, #0x29
 	sub	r0, r0, r1
 	lsl	r0, r0, #0x18
@@ -45197,9 +45197,9 @@ Cmd_handleballthrow:
 	lsl	r0, r0, #0x18
 .L5708:
 	cmp	r0, #0
-	bne	.LCB52808
+	bne	.LCB52810
 	b	.L5611	@long jump
-.LCB52808:
+.LCB52810:
 .L5702:
 	mov	r7, #0x23
 	b	.L5611
@@ -45217,9 +45217,9 @@ Cmd_handleballthrow:
 	lsl	r0, r0, #0x18
 	lsr	r7, r0, #0x18
 	cmp	r7, #0x28
-	bhi	.LCB52829
+	bhi	.LCB52831
 	b	.L5611	@long jump
-.LCB52829:
+.LCB52831:
 .L5710:
 	mov	r7, #0x28
 	b	.L5611
@@ -45255,9 +45255,9 @@ Cmd_handleballthrow:
 	cmp	r3, r0
 	bgt	.L5710	@cond_branch
 	cmp	r3, r1
-	bhi	.LCB52876
+	bhi	.LCB52878
 	b	.L5611	@long jump
-.LCB52876:
+.LCB52878:
 	mov	r7, #0x14
 	b	.L5611
 .L5732:
@@ -45270,9 +45270,9 @@ Cmd_handleballthrow:
 	ldr	r0, .L5733
 	ldrb	r0, [r0]
 	cmp	r0, #0
-	bne	.LCB52894
+	bne	.LCB52896
 	b	.L5611	@long jump
-.LCB52894:
+.LCB52896:
 	b	.L5709
 .L5734:
 	.align	2, 0
@@ -45340,9 +45340,9 @@ Cmd_handleballthrow:
 	ldrh	r0, [r0]
 	lsl	r0, r0, #0x15
 	cmp	r1, r0
-	beq	.LCB52988
+	beq	.LCB52990
 	b	.L5611	@long jump
-.LCB52988:
+.LCB52990:
 	ldr	r5, .L5737+0xc
 	lsl	r0, r4, #0x1
 	add	r0, r0, r5
@@ -45366,17 +45366,17 @@ Cmd_handleballthrow:
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	cmp	r6, r0
-	bne	.LCB53017
-	b	.L5611	@long jump
-.LCB53017:
-	cmp	r6, #0xff
 	bne	.LCB53019
 	b	.L5611	@long jump
 .LCB53019:
-	cmp	r0, #0xff
+	cmp	r6, #0xff
 	bne	.LCB53021
 	b	.L5611	@long jump
 .LCB53021:
+	cmp	r0, #0xff
+	bne	.LCB53023
+	b	.L5611	@long jump
+.LCB53023:
 .L5703:
 	mov	r7, #0x50
 	b	.L5611
@@ -46190,9 +46190,9 @@ Cmd_displaydexinfo:
 	ldr	r0, .L5810+0x8
 	ldrb	r0, [r0]
 	cmp	r0, #0x5
-	bls	.LCB54033
+	bls	.LCB54035
 	b	.L5795	@long jump
-.LCB54033:
+.LCB54035:
 	lsl	r0, r0, #0x2
 	ldr	r1, .L5810+0xc
 	add	r0, r0, r1
@@ -46229,9 +46229,9 @@ Cmd_displaydexinfo:
 	mov	r0, #0x80
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.LCB54074
+	beq	.LCB54076
 	b	.L5795	@long jump
-.LCB54074:
+.LCB54076:
 	bl	FreeAllWindowBuffers
 	add	r0, r4, #0
 	bl	SpeciesToNationalPokedexNum
@@ -46624,9 +46624,9 @@ Cmd_trygivecaughtmonnick:
 	ldrb	r1, [r0]
 	add	r4, r0, #0
 	cmp	r1, #0x4
-	bls	.LCB54550
+	bls	.LCB54552
 	b	.L5874	@long jump
-.LCB54550:
+.LCB54552:
 	lsl	r0, r1, #0x2
 	ldr	r1, .L5894+0x4
 	add	r0, r0, r1
@@ -46732,9 +46732,9 @@ Cmd_trygivecaughtmonnick:
 	mov	r0, #0x2
 	and	r0, r0, r1
 	cmp	r0, #0
-	bne	.LCB54701
+	bne	.LCB54703
 	b	.L5874	@long jump
-.LCB54701:
+.LCB54703:
 	mov	r0, #0x5
 	bl	PlaySE
 	ldr	r1, .L5900
@@ -46752,9 +46752,9 @@ Cmd_trygivecaughtmonnick:
 	mov	r0, #0x80
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.LCB54725
+	beq	.LCB54727
 	b	.L5874	@long jump
-.LCB54725:
+.LCB54727:
 	ldr	r0, .L5902+0x4
 	mov	sl, r0
 	ldr	r1, .L5902+0x8

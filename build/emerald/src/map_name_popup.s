@@ -12224,7 +12224,7 @@ ShowMapNamePopUpWindow:
 .L43:
 	.word	gBattlePyramid_MapHeaderStrings
 	.word	gSaveBlock2Ptr
-	.word	0xc3e
+	.word	0xc3a
 .L37:
 	mov	r4, sp
 	add	r4, r4, #0xf

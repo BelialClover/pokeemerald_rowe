@@ -228,7 +228,7 @@ DisableNationalPokedex:
 	ldr	r1, .L12+0x4
 	ldr	r2, [r1]
 	mov	r1, #0x0
-	strb	r1, [r2, #0x1e]
+	strb	r1, [r2, #0x1a]
 	strh	r1, [r0]
 	ldr	r0, .L12+0x8
 	bl	FlagClear
@@ -254,7 +254,7 @@ EnableNationalPokedex:
 	ldr	r2, [r4]
 	mov	r5, #0x0
 	mov	r1, #0xda
-	strb	r1, [r2, #0x1e]
+	strb	r1, [r2, #0x1a]
 	ldr	r2, .L15+0x8
 	add	r1, r2, #0
 	strh	r1, [r0]
@@ -262,9 +262,9 @@ EnableNationalPokedex:
 	bl	FlagSet
 	ldr	r1, [r4]
 	mov	r0, #0x1
-	strb	r0, [r1, #0x1d]
+	strb	r0, [r1, #0x19]
 	ldr	r0, [r4]
-	strb	r5, [r0, #0x1c]
+	strb	r5, [r0, #0x18]
 	bl	ResetPokedexScrollPositions
 	pop	{r4, r5}
 	pop	{r0}

@@ -414,17 +414,13 @@ BeginNormalPaletteFade:
 .L53:
 	.word	gPaletteFade
 .L45:
-	ldr	r3, .L55
+	ldr	r1, .L55
 	ldr	r0, .L55+0x4
 	ldr	r0, [r0]
-	ldrb	r2, [r0, #0x17]
-	lsr	r2, r2, #0x7
-	ldrb	r0, [r0, #0x18]
-	mov	r1, #0x1
-	and	r0, r0, r1
-	lsl	r0, r0, #0x1
-	orr	r0, r0, r2
-	add	r0, r0, r3
+	ldrb	r0, [r0, #0x17]
+	lsl	r0, r0, #0x19
+	lsr	r0, r0, #0x1e
+	add	r0, r0, r1
 	ldrb	r1, [r0]
 	mov	r0, #0xf
 	and	r0, r0, r1
@@ -1829,20 +1825,20 @@ UpdateFastPaletteFade:
 	.word	gPaletteFade
 .L264:
 	cmp	r0, #0x2
-	bne	.LCB2299
+	bne	.LCB2292
 	b	.L244	@long jump
-.LCB2299:
+.LCB2292:
 	cmp	r0, #0x3
-	bne	.LCB2301
+	bne	.LCB2294
 	b	.L253	@long jump
-.LCB2301:
+.LCB2294:
 	b	.L225
 .L226:
 	add	r7, r2, #0
 	cmp	r7, sl
-	bcc	.LCB2309
+	bcc	.LCB2302
 	b	.L225	@long jump
-.LCB2309:
+.LCB2302:
 .L230:
 	lsl	r2, r7, #0x1
 	ldr	r0, .L285
@@ -1922,9 +1918,9 @@ UpdateFastPaletteFade:
 .L235:
 	add	r7, r2, #0
 	cmp	r7, sl
-	bcc	.LCB2414
+	bcc	.LCB2407
 	b	.L225	@long jump
-.LCB2414:
+.LCB2407:
 .L239:
 	lsl	r1, r7, #0x1
 	ldr	r0, .L287

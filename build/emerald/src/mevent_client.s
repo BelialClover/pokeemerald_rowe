@@ -510,7 +510,7 @@ mainseq_4:
 	.align	2, 0
 .L68:
 	.word	gSaveBlock2Ptr
-	.word	0xb78
+	.word	0xb74
 .L61:
 	ldr	r0, .L70
 	ldr	r1, [r4, #0x18]

@@ -3997,12 +3997,13 @@ InitPyramidChallenge:
 	ldrb	r0, [r0]
 	lsl	r0, r0, #0x1e
 	lsr	r5, r0, #0x1e
-	ldr	r0, .L10+0x8
+	mov	r0, #0xc3
+	lsl	r0, r0, #0x4
 	add	r1, r1, r0
 	mov	r2, #0x0
 	strb	r2, [r1]
 	ldr	r1, [r3]
-	ldr	r6, .L10+0xc
+	ldr	r6, .L10+0x8
 	add	r0, r1, r6
 	strh	r2, [r0]
 	add	r1, r1, r4
@@ -4014,7 +4015,7 @@ InitPyramidChallenge:
 	cmp	r5, #0
 	beq	.L6	@cond_branch
 	ldr	r0, [r3]
-	ldr	r1, .L10+0x10
+	ldr	r1, .L10+0xc
 	add	r0, r0, r1
 	ldr	r2, [r0]
 	mov	r0, #0x80
@@ -4024,10 +4025,9 @@ InitPyramidChallenge:
 	.align	2, 0
 .L10:
 	.word	gSaveBlock2Ptr
-	.word	0xc35
-	.word	0xc34
-	.word	0xc3e
-	.word	0xc68
+	.word	0xc31
+	.word	0xc3a
+	.word	0xc64
 .L6:
 	ldr	r0, [r3]
 	ldr	r6, .L12
@@ -4060,8 +4060,8 @@ InitPyramidChallenge:
 .L13:
 	.align	2, 0
 .L12:
-	.word	0xc68
-	.word	0xda6
+	.word	0xc64
+	.word	0xda2
 	.word	gTrainerBattleOpponent_A
 	.word	gBattleOutcome
 .Lfe2:
@@ -4082,9 +4082,7 @@ GetBattlePyramidData:
 	ldrh	r0, [r0]
 	add	r3, r1, #0
 	cmp	r0, #0x6
-	bls	.LCB144
-	b	.L15	@long jump
-.LCB144:
+	bhi	.L15	@cond_branch
 	lsl	r0, r0, #0x2
 	ldr	r1, .L32+0xc
 	add	r0, r0, r1
@@ -4094,7 +4092,7 @@ GetBattlePyramidData:
 	.align	2, 0
 .L32:
 	.word	gSaveBlock2Ptr
-	.word	0xc35
+	.word	0xc31
 	.word	gSpecialVar_0x8005
 	.word	.L25
 	.align	2, 0
@@ -4110,13 +4108,13 @@ GetBattlePyramidData:
 .L16:
 	ldr	r0, .L34
 	ldr	r1, [r3]
-	ldr	r3, .L34+0x4
+	mov	r3, #0xda
+	lsl	r3, r3, #0x4
 	b	.L27
 .L35:
 	.align	2, 0
 .L34:
 	.word	gSpecialVar_Result
-	.word	0xda4
 .L17:
 	ldr	r2, .L36
 	ldr	r0, [r3]
@@ -4130,7 +4128,7 @@ GetBattlePyramidData:
 	.align	2, 0
 .L36:
 	.word	gSpecialVar_Result
-	.word	0xda6
+	.word	0xda2
 .L18:
 	cmp	r4, #0
 	beq	.L19	@cond_branch
@@ -4143,7 +4141,7 @@ GetBattlePyramidData:
 	.align	2, 0
 .L38:
 	.word	gSpecialVar_Result
-	.word	0xc68
+	.word	0xc64
 .L19:
 	ldr	r2, .L40
 	ldr	r0, [r3]
@@ -4157,7 +4155,7 @@ GetBattlePyramidData:
 	.align	2, 0
 .L40:
 	.word	gSpecialVar_Result
-	.word	0xc68
+	.word	0xc64
 .L21:
 	ldr	r0, .L42
 	ldr	r1, [r3]
@@ -4168,7 +4166,7 @@ GetBattlePyramidData:
 	.align	2, 0
 .L42:
 	.word	gSpecialVar_Result
-	.word	0xda6
+	.word	0xda2
 .L22:
 	ldr	r0, .L44
 	ldr	r1, [r3]
@@ -4183,7 +4181,7 @@ GetBattlePyramidData:
 	.align	2, 0
 .L44:
 	.word	gSpecialVar_Result
-	.word	0xda8
+	.word	0xda4
 .L23:
 	ldr	r2, .L46
 	ldr	r0, [r3]
@@ -4197,7 +4195,7 @@ GetBattlePyramidData:
 	.align	2, 0
 .L46:
 	.word	gSpecialVar_Result
-	.word	0xc68
+	.word	0xc64
 .L24:
 	ldr	r2, .L48
 	ldr	r0, [r3]
@@ -4219,7 +4217,7 @@ GetBattlePyramidData:
 	.align	2, 0
 .L48:
 	.word	gSpecialVar_Result
-	.word	0xc68
+	.word	0xc64
 .Lfe3:
 	.size	 GetBattlePyramidData,.Lfe3-GetBattlePyramidData
 	.align	2, 0
@@ -4247,7 +4245,7 @@ SetBattlePyramidData:
 	.align	2, 0
 .L67:
 	.word	gSaveBlock2Ptr
-	.word	0xc35
+	.word	0xc31
 	.word	gSpecialVar_0x8005
 .L64:
 	cmp	r0, #0x2
@@ -4258,7 +4256,8 @@ SetBattlePyramidData:
 .L52:
 	ldr	r0, .L69
 	ldrh	r1, [r0]
-	ldr	r3, .L69+0x4
+	mov	r3, #0xda
+	lsl	r3, r3, #0x4
 	add	r0, r2, r3
 	strh	r1, [r0]
 	b	.L51
@@ -4266,7 +4265,6 @@ SetBattlePyramidData:
 	.align	2, 0
 .L69:
 	.word	gSpecialVar_0x8006
-	.word	0xda4
 .L53:
 	lsl	r1, r1, #0x1
 	ldr	r3, .L71
@@ -4279,7 +4277,7 @@ SetBattlePyramidData:
 .L72:
 	.align	2, 0
 .L71:
-	.word	0xda6
+	.word	0xda2
 	.word	gSpecialVar_0x8006
 .L54:
 	cmp	r1, #0
@@ -4298,7 +4296,7 @@ SetBattlePyramidData:
 	.align	2, 0
 .L73:
 	.word	gSpecialVar_0x8006
-	.word	0xc68
+	.word	0xc64
 .L56:
 	ldr	r3, .L75
 	add	r0, r2, r3
@@ -4308,7 +4306,7 @@ SetBattlePyramidData:
 .L76:
 	.align	2, 0
 .L75:
-	.word	0xc68
+	.word	0xc64
 	.word	-0x2001
 .L55:
 	ldr	r0, .L77
@@ -4328,7 +4326,7 @@ SetBattlePyramidData:
 	.align	2, 0
 .L77:
 	.word	gSpecialVar_0x8006
-	.word	0xc68
+	.word	0xc64
 .L59:
 	ldr	r3, .L79
 	add	r0, r2, r3
@@ -4341,7 +4339,7 @@ SetBattlePyramidData:
 .L80:
 	.align	2, 0
 .L79:
-	.word	0xc68
+	.word	0xc64
 	.word	-0x1001
 .L61:
 	ldr	r0, .L81
@@ -4356,7 +4354,7 @@ SetBattlePyramidData:
 	.align	2, 0
 .L81:
 	.word	gSpecialVar_0x8006
-	.word	0xdb6
+	.word	0xdb2
 .Lfe4:
 	.size	 SetBattlePyramidData,.Lfe4-SetBattlePyramidData
 	.align	2, 0
@@ -4368,7 +4366,8 @@ SavePyramidChallenge:
 	ldr	r0, [r4]
 	ldr	r1, .L84+0x4
 	ldrh	r1, [r1]
-	ldr	r2, .L84+0x8
+	mov	r2, #0xc3
+	lsl	r2, r2, #0x4
 	add	r0, r0, r2
 	strb	r1, [r0]
 	mov	r0, #0x80
@@ -4376,7 +4375,7 @@ SavePyramidChallenge:
 	mov	r1, #0x0
 	bl	VarSet
 	ldr	r1, [r4]
-	ldr	r0, .L84+0xc
+	ldr	r0, .L84+0x8
 	add	r1, r1, r0
 	ldrb	r0, [r1]
 	mov	r2, #0x4
@@ -4393,8 +4392,7 @@ SavePyramidChallenge:
 .L84:
 	.word	gSaveBlock2Ptr
 	.word	gSpecialVar_0x8005
-	.word	0xc34
-	.word	0xc35
+	.word	0xc31
 .Lfe5:
 	.size	 SavePyramidChallenge,.Lfe5-SavePyramidChallenge
 	.align	2, 0
@@ -4426,17 +4424,17 @@ SetBattlePyramidPrize:
 	lsr	r0, r0, #0xf
 	add	r0, r0, r5
 	ldrh	r0, [r0]
-	ldr	r1, .L90+0x10
+	mov	r1, #0xda
+	lsl	r1, r1, #0x4
 	add	r4, r4, r1
 	b	.L89
 .L91:
 	.align	2, 0
 .L90:
 	.word	gSaveBlock2Ptr
-	.word	0xc35
-	.word	0xda6
+	.word	0xc31
+	.word	0xda2
 	.word	sLongStreakRewardItems
-	.word	0xda4
 .L87:
 	bl	Random
 	ldr	r4, [r4]
@@ -4449,7 +4447,8 @@ SetBattlePyramidPrize:
 	lsr	r0, r0, #0xf
 	add	r0, r0, r5
 	ldrh	r0, [r0]
-	ldr	r2, .L92+0x4
+	mov	r2, #0xda
+	lsl	r2, r2, #0x4
 	add	r4, r4, r2
 .L89:
 	strh	r0, [r4]
@@ -4460,7 +4459,6 @@ SetBattlePyramidPrize:
 	.align	2, 0
 .L92:
 	.word	sShortStreakRewardItems
-	.word	0xda4
 .Lfe6:
 	.size	 SetBattlePyramidPrize,.Lfe6-SetBattlePyramidPrize
 	.align	2, 0
@@ -4470,7 +4468,8 @@ GiveBattlePyramidPrize:
 	push	{r4, r5, lr}
 	ldr	r4, .L97
 	ldr	r0, [r4]
-	ldr	r1, .L97+0x4
+	mov	r1, #0xda
+	lsl	r1, r1, #0x4
 	add	r0, r0, r1
 	ldrh	r0, [r0]
 	mov	r1, #0x1
@@ -4480,24 +4479,25 @@ GiveBattlePyramidPrize:
 	cmp	r5, #0x1
 	bne	.L95	@cond_branch
 	ldr	r0, [r4]
-	ldr	r1, .L97+0x4
+	mov	r1, #0xda
+	lsl	r1, r1, #0x4
 	add	r0, r0, r1
 	ldrh	r0, [r0]
-	ldr	r1, .L97+0x8
+	ldr	r1, .L97+0x4
 	bl	CopyItemName
 	ldr	r0, [r4]
-	ldr	r1, .L97+0x4
+	mov	r1, #0xda
+	lsl	r1, r1, #0x4
 	add	r0, r0, r1
 	mov	r1, #0x0
 	strh	r1, [r0]
-	ldr	r0, .L97+0xc
+	ldr	r0, .L97+0x8
 	strh	r5, [r0]
 	b	.L96
 .L98:
 	.align	2, 0
 .L97:
 	.word	gSaveBlock2Ptr
-	.word	0xda4
 	.word	gStringVar1
 	.word	gSpecialVar_Result
 .L95:
@@ -4545,8 +4545,8 @@ SeedPyramidFloor:
 	.align	2, 0
 .L107:
 	.word	gSaveBlock2Ptr
-	.word	0xdae
-	.word	0xdb6
+	.word	0xdaa
+	.word	0xdb2
 .Lfe8:
 	.size	 SeedPyramidFloor,.Lfe8-SeedPyramidFloor
 	.align	2, 0
@@ -4664,11 +4664,11 @@ SetPickupItem:
 	.align	2, 0
 .L125:
 	.word	gSaveBlock2Ptr
-	.word	0xc35
-	.word	0xda6
+	.word	0xc31
+	.word	0xda2
 	.word	gSpecialVar_LastTalked
 	.word	sPyramidFloorTemplates
-	.word	0xdae
+	.word	0xdaa
 	.word	sPickupItemOffsets
 	.word	sPickupItemSlots
 	.word	gSpecialVar_0x8000
@@ -4861,9 +4861,9 @@ ShowPostBattleHintText:
 .L152:
 	ldr	r0, [sp]
 	cmp	r0, #0x8
-	bls	.LCB1146
+	bls	.LCB1148
 	b	.L150	@long jump
-.LCB1146:
+.LCB1148:
 	lsl	r0, r0, #0x2
 	ldr	r1, .L183+0x14
 	add	r0, r0, r1
@@ -4967,7 +4967,7 @@ ShowPostBattleHintText:
 .L187:
 	.word	sPyramidFloorTemplates
 	.word	gSaveBlock2Ptr
-	.word	0xdb6
+	.word	0xdb2
 	.word	gBitTable
 .L169:
 	mov	r0, sp
@@ -5002,9 +5002,9 @@ ShowPostBattleHintText:
 	bl	GetPostBattleDirectionHintTextIndex
 .L150:
 	cmp	r6, #0
-	bne	.LCB1334
+	bne	.LCB1336
 	b	.L152	@long jump
-.LCB1334:
+.LCB1336:
 .L151:
 	ldr	r1, .L189
 	add	r1, r1, r9
@@ -5071,10 +5071,10 @@ UpdatePyramidWinStreak:
 	.align	2, 0
 .L194:
 	.word	gSaveBlock2Ptr
-	.word	0xc35
-	.word	0xda6
+	.word	0xc31
+	.word	0xda2
 	.word	0x3e6
-	.word	0xdaa
+	.word	0xda6
 .Lfe13:
 	.size	 UpdatePyramidWinStreak,.Lfe13-UpdatePyramidWinStreak
 	.align	2, 0
@@ -5117,7 +5117,8 @@ UpdatePyramidLightRadius:
 	ldr	r0, [r0]
 	ldr	r1, .L220+0x4
 	ldrh	r1, [r1]
-	ldr	r2, .L220+0x8
+	mov	r2, #0xdf
+	lsl	r2, r2, #0x4
 	add	r0, r0, r2
 	strb	r1, [r0]
 	b	.L200
@@ -5126,7 +5127,6 @@ UpdatePyramidLightRadius:
 .L220:
 	.word	gSaveBlock2Ptr
 	.word	gSpecialVar_0x8005
-	.word	0xdf4
 .L202:
 	ldr	r4, .L222
 	ldrh	r0, [r4]
@@ -5144,7 +5144,8 @@ UpdatePyramidLightRadius:
 	bne	.L200	@cond_branch
 	ldr	r0, .L222+0x8
 	ldr	r0, [r0]
-	ldr	r2, .L222+0xc
+	mov	r2, #0xdf
+	lsl	r2, r2, #0x4
 	add	r1, r0, r2
 	ldrb	r0, [r1]
 	cmp	r0, #0x77
@@ -5158,7 +5159,6 @@ UpdatePyramidLightRadius:
 	.word	gSpecialVar_Result
 	.word	gPaletteFade
 	.word	gSaveBlock2Ptr
-	.word	0xdf4
 .L206:
 	ldr	r0, .L224
 	ldrh	r0, [r0]
@@ -5183,7 +5183,8 @@ UpdatePyramidLightRadius:
 	strh	r0, [r1]
 	ldr	r3, .L226+0x4
 	ldr	r1, [r3]
-	ldr	r2, .L226+0x8
+	mov	r2, #0xdf
+	lsl	r2, r2, #0x4
 	add	r1, r1, r2
 	ldrb	r0, [r1]
 	add	r0, r0, #0x1
@@ -5206,7 +5207,6 @@ UpdatePyramidLightRadius:
 .L226:
 	.word	gSpecialVar_0x8005
 	.word	gSaveBlock2Ptr
-	.word	0xdf4
 .L209:
 	mov	r0, #0x2
 	strh	r0, [r4]
@@ -5275,7 +5275,7 @@ ClearPyramidPartyHeldItems:
 .L240:
 	.word	gPlayerParty
 	.word	gSaveBlock2Ptr
-	.word	0xc36
+	.word	0xc32
 .Lfe16:
 	.size	 ClearPyramidPartyHeldItems,.Lfe16-ClearPyramidPartyHeldItems
 	.align	2, 0
@@ -5329,7 +5329,7 @@ Task_SetPyramidFloorPalette:
 .L247:
 	.word	gPaletteFade
 	.word	gSaveBlock2Ptr
-	.word	0xc3e
+	.word	0xc3a
 	.word	gUnknown_08D856C8
 	.word	gPlttBufferUnfaded+0xc0
 .Lfe18:
@@ -5417,7 +5417,7 @@ RestorePyramidPlayerParty:
 	.align	2, 0
 .L279:
 	.word	gSaveBlock2Ptr
-	.word	0xc36
+	.word	0xc32
 	.word	gSaveBlock1Ptr
 	.word	gPlayerParty
 .L266:
@@ -5493,9 +5493,9 @@ RestorePyramidPlayerParty:
 	add	r1, r1, #0x1
 	str	r1, [sp]
 	cmp	r1, #0x2
-	bgt	.LCB1955
+	bgt	.LCB1957
 	b	.L254	@long jump
-.LCB1955:
+.LCB1957:
 	mov	r2, #0x0
 	str	r2, [sp]
 	ldr	r4, .L283
@@ -5526,7 +5526,7 @@ RestorePyramidPlayerParty:
 	.align	2, 0
 .L283:
 	.word	gSaveBlock2Ptr
-	.word	0xc36
+	.word	0xc32
 	.word	gSelectedOrderFromParty
 .Lfe20:
 	.size	 RestorePyramidPlayerParty,.Lfe20-RestorePyramidPlayerParty
@@ -5700,7 +5700,7 @@ LocalIdToPyramidTrainerId:
 	.align	2, 0
 .L327:
 	.word	gSaveBlock2Ptr
-	.word	0xc3e
+	.word	0xc3a
 .Lfe22:
 	.size	 LocalIdToPyramidTrainerId,.Lfe22-LocalIdToPyramidTrainerId
 	.align	2, 0
@@ -5735,7 +5735,7 @@ GetBattlePyramidTrainerFlag:
 	.align	2, 0
 .L330:
 	.word	gSaveBlock2Ptr
-	.word	0xdb6
+	.word	0xdb2
 	.word	gBitTable
 	.word	gObjectEvents
 .Lfe23:
@@ -5794,10 +5794,9 @@ MarkPyramidTrainerAsBattled:
 	mov	sl, r1
 	ldr	r7, .L343+0xc
 	mov	r9, r7
-	mov	r0, #0xc4
-	lsl	r0, r0, #0x4
+	ldr	r0, .L343+0x10
 	mov	r8, r0
-	ldr	r4, .L343+0x10
+	ldr	r4, .L343+0x14
 .L340:
 	mov	r1, r9
 	ldr	r2, [r1]
@@ -5808,7 +5807,7 @@ MarkPyramidTrainerAsBattled:
 	ldrh	r0, [r1]
 	cmp	r0, r5
 	bne	.L339	@cond_branch
-	ldr	r1, .L343+0x14
+	ldr	r1, .L343+0x18
 	add	r0, r2, r1
 	ldr	r1, [r4]
 	ldrb	r2, [r0]
@@ -5828,14 +5827,14 @@ MarkPyramidTrainerAsBattled:
 	strb	r3, [r0, #0x6]
 	mov	r7, sl
 	ldr	r2, [r7]
-	ldr	r0, .L343+0x18
+	ldr	r0, .L343+0x1c
 	ldrh	r1, [r0]
 	sub	r1, r1, #0x1
 	lsl	r0, r1, #0x1
 	add	r0, r0, r1
 	lsl	r0, r0, #0x3
 	add	r2, r2, r0
-	ldr	r1, .L343+0x1c
+	ldr	r1, .L343+0x20
 	add	r2, r2, r1
 	strb	r3, [r2]
 	ldrb	r1, [r6]
@@ -5866,8 +5865,9 @@ MarkPyramidTrainerAsBattled:
 	.word	gSelectedObjectEvent
 	.word	gSaveBlock1Ptr
 	.word	gSaveBlock2Ptr
+	.word	0xc3c
 	.word	gBitTable
-	.word	0xdb6
+	.word	0xdb2
 	.word	gSpecialVar_LastTalked
 	.word	0x1259
 .Lfe25:
@@ -5911,8 +5911,8 @@ GenerateBattlePyramidWildMon:
 	.align	2, 0
 .L372:
 	.word	gSaveBlock2Ptr
-	.word	0xc35
-	.word	0xda6
+	.word	0xc31
+	.word	0xda2
 	.word	sOpenLevelWildMonPointers
 .L347:
 	ldr	r1, .L374
@@ -6139,7 +6139,7 @@ GenerateBattlePyramidWildMon:
 .L380:
 	.word	gEnemyParty
 	.word	gSaveBlock2Ptr
-	.word	0xda6
+	.word	0xda2
 .Lfe26:
 	.size	 GenerateBattlePyramidWildMon,.Lfe26-GenerateBattlePyramidWildMon
 	.align	2, 0
@@ -6235,11 +6235,12 @@ PausePyramidChallenge:
 	bl	RestorePyramidPlayerParty
 	ldr	r0, .L400
 	ldr	r0, [r0]
-	ldr	r1, .L400+0x4
+	mov	r1, #0xc3
+	lsl	r1, r1, #0x4
 	add	r0, r0, r1
 	mov	r1, #0x2
 	strb	r1, [r0]
-	ldr	r0, .L400+0x8
+	ldr	r0, .L400+0x4
 	mov	r1, #0x0
 	bl	VarSet
 	bl	LoadPlayerParty
@@ -6250,7 +6251,6 @@ PausePyramidChallenge:
 	.align	2, 0
 .L400:
 	.word	gSaveBlock2Ptr
-	.word	0xc34
 	.word	0x400e
 .Lfe30:
 	.size	 PausePyramidChallenge,.Lfe30-PausePyramidChallenge
@@ -6442,8 +6442,7 @@ GetUniqueTrainerId:
 	bge	.L430	@cond_branch
 	ldr	r1, .L451
 	ldr	r0, [r1]
-	mov	r4, #0xc4
-	lsl	r4, r4, #0x4
+	ldr	r4, .L451+0x10
 	add	r0, r0, r4
 	ldrh	r0, [r0]
 	cmp	r0, r3
@@ -6468,9 +6467,10 @@ GetUniqueTrainerId:
 	.align	2, 0
 .L451:
 	.word	gSaveBlock2Ptr
-	.word	0xc35
-	.word	0xda6
-	.word	0xc3e
+	.word	0xc31
+	.word	0xda2
+	.word	0xc3a
+	.word	0xc3c
 .L427:
 	lsl	r1, r1, #0x18
 	mov	r8, r1
@@ -6487,8 +6487,7 @@ GetUniqueTrainerId:
 	bge	.L442	@cond_branch
 	ldr	r1, .L453
 	ldr	r0, [r1]
-	mov	r4, #0xc4
-	lsl	r4, r4, #0x4
+	ldr	r4, .L453+0x4
 	add	r0, r0, r4
 	ldrh	r0, [r0]
 	cmp	r0, r3
@@ -6519,6 +6518,7 @@ GetUniqueTrainerId:
 	.align	2, 0
 .L453:
 	.word	gSaveBlock2Ptr
+	.word	0xc3c
 .Lfe37:
 	.size	 GetUniqueTrainerId,.Lfe37-GetUniqueTrainerId
 	.align	2, 0
@@ -6690,9 +6690,9 @@ GenerateBattlePyramidFloorLayout:
 .L458:
 	ldr	r7, [sp, #0x10]
 	cmp	r7, #0xf
-	bgt	.LCB3459
+	bgt	.LCB3461
 	b	.L459	@long jump
-.LCB3459:
+.LCB3461:
 	bl	RunOnLoadMapScript
 	ldr	r0, [sp, #0xc]
 	bl	Free
@@ -6721,9 +6721,8 @@ LoadBattlePyramidObjectEventTemplates:
 	add	r0, sp, #0x4
 	mov	r8, r0
 	ldr	r4, .L508
-	mov	r3, #0xc4
-	lsl	r3, r3, #0x4
-	ldr	r0, .L508+0x4
+	ldr	r3, .L508+0x4
+	ldr	r0, .L508+0x8
 	add	r2, r0, #0
 .L486:
 	ldr	r0, [r4]
@@ -6744,18 +6743,18 @@ LoadBattlePyramidObjectEventTemplates:
 	bl	GetPyramidEntranceAndExitSquareIds
 	mov	r0, #0x0
 	str	r0, [sp, #0x4]
-	ldr	r0, .L508+0x8
-	ldr	r1, [r0]
 	ldr	r0, .L508+0xc
+	ldr	r1, [r0]
+	ldr	r0, .L508+0x10
 	add	r1, r1, r0
-	ldr	r2, .L508+0x10
+	ldr	r2, .L508+0x14
 	mov	r0, r8
 	bl	CpuSet
 	mov	r5, #0x0
 .L491:
 	cmp	r5, #0
 	bne	.L492	@cond_branch
-	ldr	r1, .L508+0x14
+	ldr	r1, .L508+0x18
 	lsl	r0, r7, #0x4
 	add	r0, r0, r1
 	ldrb	r0, [r0, #0x3]
@@ -6764,6 +6763,7 @@ LoadBattlePyramidObjectEventTemplates:
 	.align	2, 0
 .L508:
 	.word	gSaveBlock2Ptr
+	.word	0xc3c
 	.word	0xffff
 	.word	gSaveBlock1Ptr
 	.word	0x1250
@@ -6903,13 +6903,14 @@ GetPyramidEntranceAndExitSquareIds:
 	add	r6, r1, #0
 	ldr	r5, .L526
 	ldr	r1, [r5]
-	ldr	r2, .L526+0x4
+	mov	r2, #0xdb
+	lsl	r2, r2, #0x4
 	add	r0, r1, r2
 	ldrh	r2, [r0]
 	mov	r3, #0xf
 	and	r2, r2, r3
 	strb	r2, [r4]
-	ldr	r7, .L526+0x8
+	ldr	r7, .L526+0x4
 	add	r1, r1, r7
 	ldrh	r0, [r1]
 	and	r0, r0, r3
@@ -6917,7 +6918,8 @@ GetPyramidEntranceAndExitSquareIds:
 	cmp	r2, r0
 	bne	.L523	@cond_branch
 	ldr	r1, [r5]
-	ldr	r2, .L526+0x4
+	mov	r2, #0xdb
+	lsl	r2, r2, #0x4
 	add	r0, r1, r2
 	ldrh	r2, [r0]
 	add	r3, r2, #0x1
@@ -6943,8 +6945,7 @@ GetPyramidEntranceAndExitSquareIds:
 	.align	2, 0
 .L526:
 	.word	gSaveBlock2Ptr
-	.word	0xdb4
-	.word	0xdae
+	.word	0xdaa
 .Lfe41:
 	.size	 GetPyramidEntranceAndExitSquareIds,.Lfe41-GetPyramidEntranceAndExitSquareIds
 	.align	2, 0
@@ -6990,7 +6991,7 @@ SetPyramidObjectPositionsUniformly:
 	.align	2, 0
 .L556:
 	.word	gSaveBlock2Ptr
-	.word	0xdb2
+	.word	0xdae
 	.word	sPyramidFloorTemplates
 .L529:
 	ldr	r1, .L558
@@ -7031,7 +7032,8 @@ SetPyramidObjectPositionsUniformly:
 	ldr	r0, .L560
 	mov	ip, r0
 	ldr	r6, .L560+0x4
-	ldr	r7, .L560+0x8
+	mov	r7, #0xdb
+	lsl	r7, r7, #0x4
 	mov	r3, #0x2
 	lsl	r0, r4, #0x2
 	mov	r1, ip
@@ -7054,7 +7056,6 @@ SetPyramidObjectPositionsUniformly:
 .L560:
 	.word	gBitTable
 	.word	gSaveBlock2Ptr
-	.word	0xdb4
 .L541:
 	ldr	r0, [r6]
 	add	r0, r0, r7
@@ -7092,7 +7093,7 @@ SetPyramidObjectPositionsUniformly:
 .L563:
 	.align	2, 0
 .L562:
-	.word	0xdb2
+	.word	0xdae
 .L547:
 	orr	r5, r5, r1
 .L540:
@@ -7544,7 +7545,7 @@ TrySetPyramidObjectEventPositionInSquare:
 	.align	2, 0
 .L654:
 	.word	gSaveBlock2Ptr
-	.word	0xdae
+	.word	0xdaa
 .L652:
 .L653:
 	mov	r0, #0x0
@@ -7627,9 +7628,9 @@ TrySetPyramidObjectEventPositionAtCoords:
 	ldr	r1, [r5, #0x4]
 	ldrb	r2, [r1]
 	cmp	r7, r2
-	blt	.LCB4661
+	blt	.LCB4664
 	b	.L658	@long jump
-.LCB4661:
+.LCB4664:
 	mov	r0, #0x3
 	and	r0, r0, r4
 	lsl	r0, r0, #0x3
@@ -7742,8 +7743,7 @@ TrySetPyramidObjectEventPositionAtCoords:
 	strb	r0, [r5, #0x1]
 	ldr	r0, .L677+0x8
 	ldr	r0, [r0]
-	mov	r1, #0xc4
-	lsl	r1, r1, #0x4
+	ldr	r1, .L677+0xc
 	add	r0, r0, r1
 	add	r0, r0, r8
 	strh	r4, [r0]
@@ -7756,6 +7756,7 @@ TrySetPyramidObjectEventPositionAtCoords:
 	.word	gSaveBlock1Ptr
 	.word	0x1250
 	.word	gSaveBlock2Ptr
+	.word	0xc3c
 .L659:
 	add	r7, r7, #0x1
 	mov	r1, ip
@@ -7786,8 +7787,7 @@ GetPyramidFloorLayoutOffsets:
 	ldr	r2, .L686+0x4
 	add	r1, r0, r2
 	ldrh	r4, [r1]
-	mov	r1, #0xdb
-	lsl	r1, r1, #0x4
+	ldr	r1, .L686+0x8
 	add	r0, r0, r1
 	ldrh	r0, [r0]
 	lsl	r0, r0, #0x10
@@ -7796,7 +7796,7 @@ GetPyramidFloorLayoutOffsets:
 	lsl	r0, r0, #0x18
 	lsr	r5, r0, #0x18
 	mov	r3, #0x0
-	ldr	r2, .L686+0x8
+	ldr	r2, .L686+0xc
 	mov	ip, r2
 	mov	r7, #0x7
 .L683:
@@ -7813,10 +7813,11 @@ GetPyramidFloorLayoutOffsets:
 	bne	.L682	@cond_branch
 	ldr	r0, .L686
 	ldr	r1, [r0]
-	ldr	r2, .L686+0xc
+	ldr	r2, .L686+0x10
 	add	r0, r1, r2
 	ldrh	r4, [r0]
-	ldr	r0, .L686+0x10
+	mov	r0, #0xdb
+	lsl	r0, r0, #0x4
 	add	r1, r1, r0
 	ldrh	r0, [r1]
 	lsl	r0, r0, #0x10
@@ -7833,10 +7834,10 @@ GetPyramidFloorLayoutOffsets:
 	.align	2, 0
 .L686:
 	.word	gSaveBlock2Ptr
-	.word	0xdae
+	.word	0xdaa
+	.word	0xdac
 	.word	sPyramidFloorTemplates+0x5
-	.word	0xdb2
-	.word	0xdb4
+	.word	0xdae
 .Lfe47:
 	.size	 GetPyramidFloorLayoutOffsets,.Lfe47-GetPyramidFloorLayoutOffsets
 	.align	2, 0
@@ -7846,22 +7847,23 @@ GetPyramidFloorTemplateId:
 	push	{r4, lr}
 	ldr	r0, .L696
 	ldr	r4, [r0]
-	ldr	r1, .L696+0x4
+	mov	r1, #0xdb
+	lsl	r1, r1, #0x4
 	add	r0, r4, r1
 	ldrh	r0, [r0]
 	mov	r1, #0x64
 	bl	__umodsi3
 	lsl	r0, r0, #0x10
 	lsr	r3, r0, #0x10
-	ldr	r0, .L696+0x8
+	ldr	r0, .L696+0x4
 	add	r4, r4, r0
 	ldrh	r0, [r4]
-	ldr	r1, .L696+0xc
+	ldr	r1, .L696+0x8
 	add	r0, r0, r1
 	ldrb	r2, [r0]
 	cmp	r2, #0x21
 	bhi	.L690	@cond_branch
-	ldr	r1, .L696+0x10
+	ldr	r1, .L696+0xc
 	lsl	r0, r2, #0x1
 	add	r0, r0, r1
 .L692:
@@ -7874,8 +7876,7 @@ GetPyramidFloorTemplateId:
 	.align	2, 0
 .L696:
 	.word	gSaveBlock2Ptr
-	.word	0xdb4
-	.word	0xc3e
+	.word	0xc3a
 	.word	sFloorTemplateOffsets
 	.word	sPyramidFloorTemplateOptions
 .L691:
@@ -7949,8 +7950,7 @@ InitPyramidBagItems:
 	lsl	r4, r1, #0x1
 	ldr	r7, .L714+0x4
 	mov	r6, #0x0
-	mov	r5, #0xde
-	lsl	r5, r5, #0x4
+	ldr	r5, .L714+0x8
 	lsl	r2, r1, #0x2
 .L712:
 	mov	r1, r8
@@ -7982,7 +7982,8 @@ InitPyramidBagItems:
 	.align	2, 0
 .L714:
 	.word	gSaveBlock2Ptr
-	.word	0xdb8
+	.word	0xdb4
+	.word	0xddc
 .Lfe50:
 	.size	 InitPyramidBagItems,.Lfe50-InitPyramidBagItems
 	.align	2, 0
@@ -8046,8 +8047,8 @@ GetBattlePyramidPickupItemId:
 	.align	2, 0
 .L731:
 	.word	gSaveBlock2Ptr
-	.word	0xc35
-	.word	0xda6
+	.word	0xc31
+	.word	0xda2
 	.word	sPickupPercentages
 	.word	sPickupItemsLvl50
 .L725:

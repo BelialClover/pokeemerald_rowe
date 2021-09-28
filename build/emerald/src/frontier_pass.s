@@ -2302,7 +2302,8 @@ AllocateFrontierPassData:
 	ldr	r1, [r5]
 	ldr	r0, .L26+0x4
 	ldr	r0, [r0]
-	ldr	r2, .L26+0x8
+	mov	r2, #0xe4
+	lsl	r2, r2, #0x4
 	add	r0, r0, r2
 	ldrh	r0, [r0]
 	strh	r0, [r1, #0x6]
@@ -2334,7 +2335,7 @@ AllocateFrontierPassData:
 	add	r6, r5, #0
 .L19:
 	lsl	r5, r4, #0x1
-	ldr	r1, .L26+0xc
+	ldr	r1, .L26+0x8
 	add	r0, r5, r1
 	bl	FlagGet
 	lsl	r0, r0, #0x18
@@ -2347,7 +2348,7 @@ AllocateFrontierPassData:
 	add	r0, r0, #0x1
 	strb	r0, [r1]
 .L20:
-	ldr	r2, .L26+0x10
+	ldr	r2, .L26+0xc
 	add	r0, r5, r2
 	bl	FlagGet
 	lsl	r0, r0, #0x18
@@ -2375,7 +2376,6 @@ AllocateFrontierPassData:
 .L26:
 	.word	sPassData
 	.word	gSaveBlock2Ptr
-	.word	0xe44
 	.word	0x8c4
 	.word	0x8c5
 .Lfe4:

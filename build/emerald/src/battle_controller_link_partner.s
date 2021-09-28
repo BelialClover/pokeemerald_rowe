@@ -7012,7 +7012,7 @@ LinkPartnerHandleCmd55:
 	.word	gActiveBattler
 	.word	gBattleOutcome
 	.word	gSaveBlock2Ptr
-	.word	0xc35
+	.word	0xc31
 	.word	gBattlerControllerFuncs
 	.word	sub_80587B0
 .Lfe84:

@@ -6,7 +6,7 @@
 	.type	 sSaveSectionOffsets,object
 sSaveSectionOffsets:
 	.short	0x0
-	.short	0xf1c
+	.short	0xf18
 	.short	0x0
 	.short	0xf80
 	.short	0xf80

@@ -9954,7 +9954,7 @@ sub_802749C:
 	add	r2, r0, #0
 	ldr	r3, .L1016+0xc
 	ldr	r0, [r3]
-	mov	r6, #0xcc
+	mov	r6, #0xca
 	lsl	r6, r6, #0x1
 	add	r1, r0, r6
 	ldr	r0, [r1]
@@ -9963,7 +9963,7 @@ sub_802749C:
 	str	r2, [r1]
 .L1013:
 	ldr	r0, [r3]
-	mov	r2, #0xce
+	mov	r2, #0xcc
 	lsl	r2, r2, #0x1
 	add	r1, r0, r2
 	ldrh	r0, [r1]
@@ -9972,7 +9972,7 @@ sub_802749C:
 	strh	r4, [r1]
 .L1014:
 	ldr	r0, [r3]
-	mov	r6, #0xcf
+	mov	r6, #0xcd
 	lsl	r6, r6, #0x1
 	add	r2, r0, r6
 	ldr	r0, [r5]
@@ -11105,7 +11105,7 @@ sub_8027BEC:
 	lsr	r7, r0, #0x18
 	ldr	r0, .L1222
 	ldr	r1, [r0]
-	mov	r2, #0xce
+	mov	r2, #0xcc
 	lsl	r2, r2, #0x1
 	add	r0, r1, r2
 	ldrh	r0, [r0]

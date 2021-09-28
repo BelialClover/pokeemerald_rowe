@@ -7619,7 +7619,7 @@ LinkOpponentHandleCmd55:
 	.word	gSaveBlock2Ptr
 	.word	gBattleResources
 	.word	gActiveBattler
-	.word	0xc35
+	.word	0xc31
 	.word	gBattlerControllerFuncs
 	.word	sub_80587B0
 .Lfe86:

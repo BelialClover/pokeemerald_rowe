@@ -13040,7 +13040,7 @@ ResetTrainerHillResults:
 	.align	2, 0
 .L11:
 	.word	gSaveBlock2Ptr
-	.word	0xe85
+	.word	0xe81
 	.word	gSaveBlock1Ptr
 	.word	0x3144
 	.word	0x2ff0
@@ -13585,7 +13585,7 @@ TrainerHillStartChallenge:
 	.word	0x314a
 	.word	0x3148
 	.word	gSaveBlock2Ptr
-	.word	0xe6c
+	.word	0xe68
 	.word	gBattleOutcome
 .Lfe12:
 	.size	 TrainerHillStartChallenge,.Lfe12-TrainerHillStartChallenge
@@ -13706,7 +13706,7 @@ GiveChallengePrize:
 .L93:
 	.word	gStringVar2
 	.word	gSaveBlock2Ptr
-	.word	0xe85
+	.word	0xe81
 	.word	gSpecialVar_Result
 .L89:
 	ldr	r0, .L95
@@ -14326,9 +14326,8 @@ LoadTrainerHillObjectEventTemplates:
 	bl	SetUpDataStruct
 	mov	r7, #0x0
 	ldr	r4, .L186+0x8
-	mov	r3, #0xc4
-	lsl	r3, r3, #0x4
-	ldr	r0, .L186+0xc
+	ldr	r3, .L186+0xc
+	ldr	r0, .L186+0x10
 	add	r2, r0, #0
 .L179:
 	ldr	r1, [r4]
@@ -14349,7 +14348,7 @@ LoadTrainerHillObjectEventTemplates:
 	ldr	r1, [r0]
 	ldr	r2, .L186+0x4
 	add	r1, r1, r2
-	ldr	r2, .L186+0x10
+	ldr	r2, .L186+0x14
 	mov	r0, sp
 	bl	CpuSet
 	bl	GetFloorId
@@ -14357,7 +14356,7 @@ LoadTrainerHillObjectEventTemplates:
 	lsr	r0, r0, #0x18
 	mov	r9, r0
 	mov	r7, #0x0
-	ldr	r3, .L186+0x14
+	ldr	r3, .L186+0x18
 	mov	sl, r3
 .L184:
 	lsl	r4, r7, #0x1
@@ -14367,7 +14366,7 @@ LoadTrainerHillObjectEventTemplates:
 	ldr	r0, [sp, #0x4]
 	add	r5, r5, r0
 	add	r1, r5, #0
-	ldr	r0, .L186+0x18
+	ldr	r0, .L186+0x1c
 	ldmia	r0!, {r2, r3, r4}
 	stmia	r1!, {r2, r3, r4}
 	ldmia	r0!, {r2, r3, r4}
@@ -14412,7 +14411,7 @@ LoadTrainerHillObjectEventTemplates:
 	lsl	r1, r7, #0x1a
 	lsr	r1, r1, #0x18
 	add	r3, r3, r4
-	ldr	r2, .L186+0x1c
+	ldr	r2, .L186+0x20
 	add	r3, r3, r2
 	ldrb	r0, [r3]
 	asr	r0, r0, r1
@@ -14423,19 +14422,18 @@ LoadTrainerHillObjectEventTemplates:
 	mov	r2, sl
 	ldr	r0, [r2]
 	add	r0, r0, r4
-	ldr	r3, .L186+0x20
+	ldr	r3, .L186+0x24
 	add	r0, r0, r3
 	ldrb	r0, [r0]
 	asr	r0, r0, r1
 	mov	r1, #0xf
 	and	r0, r0, r1
 	strh	r0, [r5, #0xe]
-	ldr	r0, .L186+0x24
+	ldr	r0, .L186+0x28
 	str	r0, [r5, #0x10]
 	ldr	r0, .L186+0x8
 	ldr	r0, [r0]
-	mov	r4, #0xc4
-	lsl	r4, r4, #0x4
+	ldr	r4, .L186+0xc
 	add	r0, r0, r4
 	add	r0, r0, r8
 	strh	r6, [r0]
@@ -14459,6 +14457,7 @@ LoadTrainerHillObjectEventTemplates:
 	.word	gSaveBlock1Ptr
 	.word	0x1250
 	.word	gSaveBlock2Ptr
+	.word	0xc3c
 	.word	0xffff
 	.word	0x5000180
 	.word	sHillData
@@ -14834,7 +14833,7 @@ LocalIdToHillTrainerId:
 	.align	2, 0
 .L257:
 	.word	gSaveBlock2Ptr
-	.word	0xc3e
+	.word	0xc3a
 .Lfe38:
 	.size	 LocalIdToHillTrainerId,.Lfe38-LocalIdToHillTrainerId
 	.align	2, 0
@@ -14876,7 +14875,7 @@ GetHillTrainerFlag:
 .L260:
 	.word	gObjectEvents
 	.word	gSaveBlock2Ptr
-	.word	0xe6c
+	.word	0xe68
 	.word	gBitTable
 .Lfe39:
 	.size	 GetHillTrainerFlag,.Lfe39-GetHillTrainerFlag
@@ -14901,8 +14900,7 @@ SetHillTrainerFlag:
 .L266:
 	ldr	r2, [r5]
 	lsl	r0, r3, #0x1
-	mov	r7, #0xc4
-	lsl	r7, r7, #0x4
+	ldr	r7, .L276+0xc
 	add	r1, r2, r7
 	add	r1, r1, r0
 	ldrh	r0, [r1]
@@ -14910,7 +14908,7 @@ SetHillTrainerFlag:
 	ldrh	r1, [r1]
 	cmp	r0, r1
 	bne	.L265	@cond_branch
-	ldr	r7, .L276+0xc
+	ldr	r7, .L276+0x10
 	add	r2, r2, r7
 	add	r0, r4, r3
 	lsl	r0, r0, #0x2
@@ -14926,7 +14924,8 @@ SetHillTrainerFlag:
 	.word	gTrainerBattleOpponent_A
 	.word	gSaveBlock2Ptr
 	.word	gBitTable
-	.word	0xe6c
+	.word	0xc3c
+	.word	0xe68
 .L265:
 	add	r0, r3, #0x1
 	lsl	r0, r0, #0x18
@@ -14948,15 +14947,14 @@ SetHillTrainerFlag:
 .L273:
 	ldr	r2, [r6]
 	lsl	r0, r3, #0x1
-	mov	r7, #0xc4
-	lsl	r7, r7, #0x4
+	ldr	r7, .L278+0xc
 	add	r1, r2, r7
 	add	r1, r1, r0
 	ldrh	r0, [r1]
 	ldrh	r1, [r5]
 	cmp	r0, r1
 	bne	.L272	@cond_branch
-	ldr	r7, .L278+0xc
+	ldr	r7, .L278+0x10
 	add	r2, r2, r7
 	add	r0, r4, r3
 	lsl	r0, r0, #0x2
@@ -14972,7 +14970,8 @@ SetHillTrainerFlag:
 	.word	gBattleTypeFlags
 	.word	gTrainerBattleOpponent_B
 	.word	gBitTable
-	.word	0xe6c
+	.word	0xc3c
+	.word	0xe68
 .L272:
 	add	r0, r3, #0x1
 	lsl	r0, r0, #0x18
@@ -15312,7 +15311,7 @@ SetAllTrainerFlags:
 	.align	2, 0
 .L319:
 	.word	gSaveBlock2Ptr
-	.word	0xe6c
+	.word	0xe68
 .Lfe50:
 	.size	 SetAllTrainerFlags,.Lfe50-SetAllTrainerFlags
 	.align	2, 0
@@ -15355,7 +15354,7 @@ GetGameSaved:
 .L326:
 	.word	gSpecialVar_Result
 	.word	gSaveBlock2Ptr
-	.word	0xe85
+	.word	0xe81
 .Lfe52:
 	.size	 GetGameSaved,.Lfe52-GetGameSaved
 	.align	2, 0
@@ -15375,7 +15374,7 @@ SetGameSaved:
 	.align	2, 0
 .L329:
 	.word	gSaveBlock2Ptr
-	.word	0xe85
+	.word	0xe81
 .Lfe53:
 	.size	 SetGameSaved,.Lfe53-SetGameSaved
 	.align	2, 0
@@ -15395,7 +15394,7 @@ ClearGameSaved:
 	.align	2, 0
 .L332:
 	.word	gSaveBlock2Ptr
-	.word	0xe85
+	.word	0xe81
 .Lfe54:
 	.size	 ClearGameSaved,.Lfe54-ClearGameSaved
 	.align	2, 0

@@ -694,7 +694,7 @@ struct SaveBlock2
              u8 optionsButtonMode;
              u16 optionsTextSpeed:3;
              u16 optionsWindowFrameType:5;
-    u16 optionsMusicGame:5;
+    u16 optionsMusicGame:3;
              u16 optionsSound:2;
              u16 optionsBattleStyle:1;
              u16 optionsBattleSceneOff:1;
@@ -5388,6 +5388,8 @@ extern const u8 BattleScript_EmergencyExitWild[];
 extern const u8 BattleScript_EmergencyExitWildNoPopUp[];
 extern const u8 BattleScript_CheekPouchActivates[];
 extern const u8 BattleScript_AnnounceAirLockCloudNine[];
+extern const u8 BattleScript_GulpMissileGorging[];
+extern const u8 BattleScript_GulpMissileGulping[];
 # 12 "src/battle_main.c" 2
 # 1 "include/battle_setup.h" 1
 

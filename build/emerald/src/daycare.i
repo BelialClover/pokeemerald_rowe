@@ -694,7 +694,7 @@ struct SaveBlock2
              u8 optionsButtonMode;
              u16 optionsTextSpeed:3;
              u16 optionsWindowFrameType:5;
-    u16 optionsMusicGame:5;
+    u16 optionsMusicGame:3;
              u16 optionsSound:2;
              u16 optionsBattleStyle:1;
              u16 optionsBattleSceneOff:1;
@@ -8289,8 +8289,54 @@ bool8 CanLearnTutorMove(u16, u8);
 void ItemUseCB_Mints(u8 taskId, TaskFunc task);
 void ItemUseCB_Seal(u8 taskId, TaskFunc task);
 # 20 "src/daycare.c" 2
-# 1 "include/list_menu.h" 1
+# 1 "include/pokedex.h" 1
+
+
+
+extern u8 gUnusedPokedexU8;
+extern void (*gPokedexVBlankCB)(void);
+
+enum
+{
+    DEX_MODE_HOENN,
+    DEX_MODE_NATIONAL
+};
+
+enum
+{
+    FLAG_GET_SEEN,
+    FLAG_GET_CAUGHT,
+    FLAG_SET_SEEN,
+    FLAG_SET_CAUGHT
+};
+
+struct PokedexEntry
+{
+             u8 categoryName[13];
+             u16 height;
+             u16 weight;
+             const u8 *description;
+             u16 unused;
+             u16 pokemonScale;
+             u16 pokemonOffset;
+             u16 trainerScale;
+             u16 trainerOffset;
+};
+
+void ResetPokedex(void);
+u16 GetPokedexHeightWeight(u16 dexNum, u8 data);
+u16 GetNationalPokedexCount(u8);
+u16 GetHoennPokedexCount(u8);
+u8 DisplayCaughtMonDexPage(u16 dexNum, u32 otId, u32 personality);
+s8 GetSetPokedexFlag(u16 nationalNum, u8 caseId);
+u16 CreateMonSpriteFromNationalDexNumber(u16, s16, s16, u16);
+bool16 HasAllHoennMons(void);
+void ResetPokedexScrollPositions(void);
+bool16 HasAllMons(void);
+void CB2_OpenPokedex(void);
 # 21 "src/daycare.c" 2
+# 1 "include/list_menu.h" 1
+# 22 "src/daycare.c" 2
 # 1 "include/overworld.h" 1
 # 29 "include/overworld.h"
 struct InitialPlayerAvatarState
@@ -8425,7 +8471,7 @@ bool32 sub_80875C8(void);
 bool32 sub_8087634(void);
 bool32 sub_808766C(void);
 void ClearLinkPlayerObjectEvents(void);
-# 22 "src/daycare.c" 2
+# 23 "src/daycare.c" 2
 # 1 "include/item.h" 1
 
 
@@ -8567,13 +8613,13 @@ enum ItemObtainFlags
     FLAG_GET_OBTAINED,
     FLAG_SET_OBTAINED,
 };
-# 23 "src/daycare.c" 2
-# 1 "include/constants/items.h" 1
 # 24 "src/daycare.c" 2
-# 1 "include/constants/moves.h" 1
+# 1 "include/constants/items.h" 1
 # 25 "src/daycare.c" 2
-# 1 "include/constants/region_map_sections.h" 1
+# 1 "include/constants/moves.h" 1
 # 26 "src/daycare.c" 2
+# 1 "include/constants/region_map_sections.h" 1
+# 27 "src/daycare.c" 2
 
 
 static void ClearDaycareMonMail(struct DayCareMail *mail);
@@ -10396,7 +10442,7 @@ const u16 gEggMoves[] = {
 
     0xFFFF
 };
-# 43 "src/daycare.c" 2
+# 44 "src/daycare.c" 2
 
 static const struct WindowTemplate sDaycareLevelMenuWindowTemplate =
 {
@@ -10613,7 +10659,7 @@ static u16 TakeSelectedPokemonFromDaycare(struct DaycareMon *daycareMon)
     GetBoxMonNickname(&daycareMon->mon, gStringVar1);
     species = GetBoxMonData(&daycareMon->mon, 11);
     BoxMonToMon(&daycareMon->mon, &pokemon);
-# 268 "src/daycare.c"
+# 269 "src/daycare.c"
     gPlayerParty[6 - 1] = pokemon;
     if (daycareMon->mail.message.itemId)
     {
@@ -11261,6 +11307,7 @@ static void _GiveEggFromDaycare(struct DayCare *daycare)
     u16 species;
  u8 formId;
     u8 parentSlots[2];
+ u16 nationalDexNum;
     bool8 isEgg;
 
     species = DetermineEggSpeciesAndParentSlots(daycare, parentSlots);
@@ -11270,6 +11317,9 @@ static void _GiveEggFromDaycare(struct DayCare *daycare)
     InheritIVs(&egg, daycare);
     BuildEggMoveset(&egg, &daycare->mons[parentSlots[1]].mon, &daycare->mons[parentSlots[0]].mon);
  SetMonData(&egg, 89, &formId);
+ nationalDexNum = SpeciesToNationalPokedexNum(species);
+    GetSetPokedexFlag(species, FLAG_SET_SEEN);
+    GetSetPokedexFlag(species, FLAG_SET_CAUGHT);
 
     if (species == 172)
         GiveVoltTackleIfLightBall(&egg, daycare);

@@ -3202,6 +3202,42 @@ sub_8020E58:
 .L45:
 	ldr	r5, .L61
 	ldr	r1, [r5]
+	mov	r0, #0xc2
+	lsl	r0, r0, #0x1
+	add	r1, r1, r0
+	lsl	r0, r3, #0x10
+	lsr	r0, r0, #0x10
+	ldrh	r1, [r1]
+	cmp	r0, r1
+	bls	.L44	@cond_branch
+	add	r2, r2, #0x25
+	ldrb	r0, [r2]
+	mov	r1, #0x2
+	orr	r0, r0, r1
+	strb	r0, [r2]
+	ldr	r0, [r5]
+	ldr	r1, [r4]
+	ldrh	r1, [r1, #0x16]
+	mov	r2, #0xc2
+	lsl	r2, r2, #0x1
+	b	.L57
+.L62:
+	.align	2, 0
+.L61:
+	.word	gSaveBlock2Ptr
+.L47:
+	ldr	r5, .L63
+	ldr	r0, [r5]
+	mov	r6, #0xc3
+	lsl	r6, r6, #0x1
+	b	.L58
+.L64:
+	.align	2, 0
+.L63:
+	.word	gSaveBlock2Ptr
+.L49:
+	ldr	r5, .L65
+	ldr	r1, [r5]
 	mov	r0, #0xc4
 	lsl	r0, r0, #0x1
 	add	r1, r1, r0
@@ -3220,42 +3256,6 @@ sub_8020E58:
 	ldrh	r1, [r1, #0x16]
 	mov	r2, #0xc4
 	lsl	r2, r2, #0x1
-	b	.L57
-.L62:
-	.align	2, 0
-.L61:
-	.word	gSaveBlock2Ptr
-.L47:
-	ldr	r5, .L63
-	ldr	r0, [r5]
-	mov	r6, #0xc5
-	lsl	r6, r6, #0x1
-	b	.L58
-.L64:
-	.align	2, 0
-.L63:
-	.word	gSaveBlock2Ptr
-.L49:
-	ldr	r5, .L65
-	ldr	r1, [r5]
-	mov	r0, #0xc6
-	lsl	r0, r0, #0x1
-	add	r1, r1, r0
-	lsl	r0, r3, #0x10
-	lsr	r0, r0, #0x10
-	ldrh	r1, [r1]
-	cmp	r0, r1
-	bls	.L44	@cond_branch
-	add	r2, r2, #0x25
-	ldrb	r0, [r2]
-	mov	r1, #0x2
-	orr	r0, r0, r1
-	strb	r0, [r2]
-	ldr	r0, [r5]
-	ldr	r1, [r4]
-	ldrh	r1, [r1, #0x16]
-	mov	r2, #0xc6
-	lsl	r2, r2, #0x1
 .L57:
 	add	r0, r0, r2
 	strh	r1, [r0]
@@ -3267,7 +3267,7 @@ sub_8020E58:
 .L51:
 	ldr	r5, .L67
 	ldr	r0, [r5]
-	mov	r6, #0xc7
+	mov	r6, #0xc5
 	lsl	r6, r6, #0x1
 .L58:
 	add	r1, r0, r6
@@ -6090,7 +6090,7 @@ ShowBerryCrushRankings:
 	add	r1, r1, r2
 	ldr	r0, .L359+0x8
 	ldr	r2, [r0]
-	mov	r3, #0xc4
+	mov	r3, #0xc2
 	lsl	r3, r3, #0x1
 	add	r0, r2, r3
 	ldrh	r0, [r0]

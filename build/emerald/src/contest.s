@@ -14231,13 +14231,12 @@ SaveLinkContestResults:
 	ldrh	r0, [r0]
 	lsl	r0, r0, #0x3
 	add	r1, r1, r0
-	mov	r0, #0xb6
-	lsl	r0, r0, #0x3
+	ldr	r0, .L1287+0x14
 	add	r2, r2, r0
 	add	r2, r2, r1
 	ldrh	r0, [r2]
 	add	r0, r0, #0x1
-	ldr	r1, .L1287+0x14
+	ldr	r1, .L1287+0x18
 	cmp	r0, r1
 	ble	.L1286	@cond_branch
 	add	r0, r1, #0
@@ -14254,6 +14253,7 @@ SaveLinkContestResults:
 	.word	gContestFinalStandings
 	.word	gContestPlayerMonIndex
 	.word	gSpecialVar_ContestCategory
+	.word	0x5ac
 	.word	0x270f
 .Lfe100:
 	.size	 SaveLinkContestResults,.Lfe100-SaveLinkContestResults
@@ -20761,8 +20761,7 @@ ResetContestLinkResults:
 	push	{r4, r5, r6, lr}
 	mov	r0, #0x0
 	ldr	r6, .L2169
-	mov	r5, #0xb6
-	lsl	r5, r5, #0x3
+	ldr	r5, .L2169+0x4
 	mov	r4, #0x0
 .L2162:
 	add	r3, r0, #0x1
@@ -20787,6 +20786,7 @@ ResetContestLinkResults:
 	.align	2, 0
 .L2169:
 	.word	gSaveBlock2Ptr
+	.word	0x5ac
 .Lfe193:
 	.size	 ResetContestLinkResults,.Lfe193-ResetContestLinkResults
 	.align	2, 0

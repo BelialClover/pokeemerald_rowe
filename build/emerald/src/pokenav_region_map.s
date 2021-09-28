@@ -875,15 +875,12 @@ FreeRegionMapSubstruct1:
 	bl	IsRegionMapZoomed
 	ldr	r1, .L17
 	ldr	r3, [r1]
-	mov	r1, #0x1
-	and	r1, r1, r0
-	lsl	r1, r1, #0x1
-	ldrb	r2, [r3, #0x16]
-	mov	r0, #0x3
-	neg	r0, r0
-	and	r0, r0, r2
-	orr	r0, r0, r1
-	strb	r0, [r3, #0x16]
+	lsl	r0, r0, #0x7
+	ldrb	r2, [r3, #0x15]
+	mov	r1, #0x7f
+	and	r1, r1, r2
+	orr	r1, r1, r0
+	strb	r1, [r3, #0x15]
 	mov	r0, #0x10
 	bl	FreePokenavSubstruct
 	mov	r0, #0x3
@@ -1154,10 +1151,8 @@ ShouldOpenRegionMapZoomed:
 	bne	.L56	@cond_branch
 	ldr	r0, .L58
 	ldr	r0, [r0]
-	ldrb	r0, [r0, #0x16]
-	lsr	r0, r0, #0x1
-	mov	r1, #0x1
-	and	r0, r0, r1
+	ldrb	r0, [r0, #0x15]
+	lsr	r0, r0, #0x7
 	b	.L57
 .L59:
 	.align	2, 0
@@ -1180,9 +1175,9 @@ LoopedTask_OpenRegionMap:
 	bl	GetSubstructPtr
 	add	r5, r0, #0
 	cmp	r4, #0x7
-	bls	.LCB469
+	bls	.LCB462
 	b	.L80	@long jump
-.LCB469:
+.LCB462:
 	lsl	r0, r4, #0x2
 	ldr	r1, .L89
 	add	r0, r0, r1
@@ -1713,9 +1708,9 @@ UpdateMapSecInfoWindow:
 	add	r5, r0, #0
 	ldrb	r0, [r5, #0x2]
 	cmp	r0, #0x4
-	bls	.LCB1142
+	bls	.LCB1135
 	b	.L164	@long jump
-.LCB1142:
+.LCB1135:
 	lsl	r0, r0, #0x2
 	ldr	r1, .L173
 	add	r0, r0, r1

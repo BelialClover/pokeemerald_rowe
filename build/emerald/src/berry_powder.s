@@ -94,7 +94,7 @@ DecryptBerryPowder:
 	ldr	r1, .L3
 	ldr	r1, [r1]
 	ldr	r0, [r0]
-	ldr	r1, [r1, #0x48]
+	ldr	r1, [r1, #0x44]
 	eor	r0, r0, r1
 	bx	lr
 .L4:
@@ -110,7 +110,7 @@ DecryptBerryPowder:
 SetBerryPowder:
 	ldr	r2, .L6
 	ldr	r2, [r2]
-	ldr	r2, [r2, #0x48]
+	ldr	r2, [r2, #0x44]
 	eor	r2, r2, r1
 	str	r2, [r0]
 	bx	lr
@@ -129,7 +129,7 @@ ApplyNewEncryptionKeyToBerryPowder:
 	add	r1, r0, #0
 	ldr	r0, .L9
 	ldr	r0, [r0]
-	mov	r2, #0xc8
+	mov	r2, #0xc6
 	lsl	r2, r2, #0x1
 	add	r0, r0, r2
 	bl	ApplyNewEncryptionKeyToWord
@@ -149,7 +149,7 @@ HasEnoughBerryPowder_:
 	add	r4, r0, #0
 	ldr	r0, .L15
 	ldr	r0, [r0]
-	mov	r1, #0xc8
+	mov	r1, #0xc6
 	lsl	r1, r1, #0x1
 	add	r0, r0, r1
 	bl	DecryptBerryPowder
@@ -177,7 +177,7 @@ HasEnoughBerryPowder:
 	push	{lr}
 	ldr	r0, .L21
 	ldr	r0, [r0]
-	mov	r1, #0xc8
+	mov	r1, #0xc6
 	lsl	r1, r1, #0x1
 	add	r0, r0, r1
 	bl	DecryptBerryPowder
@@ -208,7 +208,7 @@ GiveBerryPowder:
 	add	r4, r0, #0
 	ldr	r0, .L27
 	ldr	r0, [r0]
-	mov	r1, #0xc8
+	mov	r1, #0xc6
 	lsl	r1, r1, #0x1
 	add	r5, r0, r1
 	add	r0, r5, #0
@@ -245,7 +245,7 @@ TakeBerryPowder_:
 	add	r5, r0, #0
 	ldr	r0, .L32
 	ldr	r0, [r0]
-	mov	r1, #0xc8
+	mov	r1, #0xc6
 	lsl	r1, r1, #0x1
 	add	r4, r0, r1
 	add	r0, r5, #0
@@ -281,7 +281,7 @@ TakeBerryPowder:
 	push	{r4, r5, lr}
 	ldr	r0, .L37
 	ldr	r0, [r0]
-	mov	r1, #0xc8
+	mov	r1, #0xc6
 	lsl	r1, r1, #0x1
 	add	r4, r0, r1
 	ldr	r5, .L37+0x4
@@ -320,7 +320,7 @@ GetBerryPowder:
 	push	{lr}
 	ldr	r0, .L40
 	ldr	r0, [r0]
-	mov	r1, #0xc8
+	mov	r1, #0xc6
 	lsl	r1, r1, #0x1
 	add	r0, r0, r1
 	bl	DecryptBerryPowder

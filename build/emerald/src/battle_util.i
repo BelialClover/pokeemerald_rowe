@@ -694,7 +694,7 @@ struct SaveBlock2
              u8 optionsButtonMode;
              u16 optionsTextSpeed:3;
              u16 optionsWindowFrameType:5;
-    u16 optionsMusicGame:5;
+    u16 optionsMusicGame:3;
              u16 optionsSound:2;
              u16 optionsBattleStyle:1;
              u16 optionsBattleSceneOff:1;
@@ -6352,6 +6352,8 @@ extern const u8 BattleScript_EmergencyExitWild[];
 extern const u8 BattleScript_EmergencyExitWildNoPopUp[];
 extern const u8 BattleScript_CheekPouchActivates[];
 extern const u8 BattleScript_AnnounceAirLockCloudNine[];
+extern const u8 BattleScript_GulpMissileGorging[];
+extern const u8 BattleScript_GulpMissileGulping[];
 # 16 "src/battle_util.c" 2
 # 1 "include/random.h" 1
 
@@ -10581,6 +10583,8 @@ static bool32 ShouldChangeFormHpBased(u32 battler)
         {197, 898 + 273, 898 + 280, 2},
         {197, 898 + 269, 898 + 276, 2},
         {208, 898 + 250, 746, 4},
+  {241, 845, 898 + 287, 2},
+        {241, 845, 898 + 286, 1},
     };
     u32 i;
 
@@ -11691,6 +11695,39 @@ u8 AbilityBattleEffects(u8 caseID, u8 battler, u16 ability, u8 special, u16 move
                 effect++;
             }
             break;
+  case 241:
+            if (!(gMoveResultFlags & ((1 << 0) | (1 << 3) | (1 << 5)))
+             && !gProtectStructs[gBattlerAttacker].confusionSelfDmg
+             && ((gSpecialStatuses[gBattlerTarget].physicalDmg != 0 || gSpecialStatuses[gBattlerTarget].specialDmg != 0))
+             && IsBattlerAlive(battler)
+             && gBattleMons[battler].species == 898 + 287)
+            {
+                gBattleStruct->changedSpecies[gBattlerPartyIndexes[battler]] = gBattleMons[battler].species;
+                gBattleMons[battler].species = 845;
+                gBattleMoveDamage = gBattleMons[gBattlerAttacker].maxHP / 4;
+                if (gBattleMoveDamage == 0)
+                    gBattleMoveDamage = 1;
+                BattleScriptPushCursor();
+                gBattlescriptCurrInstr = BattleScript_GulpMissileGorging;
+                effect++;
+            }
+            else if (!(gMoveResultFlags & ((1 << 0) | (1 << 3) | (1 << 5)))
+             && !gProtectStructs[gBattlerAttacker].confusionSelfDmg
+             && ((gSpecialStatuses[gBattlerTarget].physicalDmg != 0 || gSpecialStatuses[gBattlerTarget].specialDmg != 0))
+             && IsBattlerAlive(battler)
+             && gBattleMons[battler].species == 898 + 286)
+            {
+                gBattleStruct->changedSpecies[gBattlerPartyIndexes[battler]] = gBattleMons[battler].species;
+                gBattleMons[battler].species = 845;
+                gBattleMoveDamage = gBattleMons[gBattlerAttacker].maxHP / 4;
+                if (gBattleMoveDamage == 0)
+                    gBattleMoveDamage = 1;
+                (gBattleScripting.statChanger = (2) + ((1) << 3) + (1 << 7));
+                BattleScriptPushCursor();
+                gBattlescriptCurrInstr = BattleScript_GulpMissileGulping;
+                effect++;
+            }
+            break;
         }
         break;
     case 0x4:
@@ -11713,6 +11750,16 @@ u8 AbilityBattleEffects(u8 caseID, u8 battler, u16 ability, u8 special, u16 move
                 BattleScriptPushCursor();
                 gBattlescriptCurrInstr = BattleScript_AbilityStatusEffect;
                 gHitMarker |= (1 << 13);
+                effect++;
+            }
+            break;
+  case 241:
+            if ((effect = ShouldChangeFormHpBased(battler))
+             && (gCurrentMove == 57
+             || gStatuses3[battler] & (1 << 18)))
+            {
+                BattleScriptPushCursor();
+                gBattlescriptCurrInstr = BattleScript_AttackerFormChange;
                 effect++;
             }
             break;
@@ -11783,6 +11830,7 @@ u8 AbilityBattleEffects(u8 caseID, u8 battler, u16 ability, u8 special, u16 move
                 }
                 break;
             case 41:
+   case 199:
                 if (gBattleMons[battler].status1 & (1 << 4))
                 {
                     StringCopy(gBattleTextBuff1, gStatusConditionString_BurnJpn);
@@ -13131,7 +13179,7 @@ static bool32 HasObedientBitSet(u8 battlerId)
 
 u8 IsMonDisobedient(void)
 {
-# 6172 "src/battle_util.c"
+# 6218 "src/battle_util.c"
  return 0;
 }
 
@@ -14685,6 +14733,8 @@ void UndoFormChange(u32 monId, u32 side)
         {898 + 273, 898 + 280},
         {898 + 269, 898 + 276},
         {898 + 250, 746},
+  {898 + 287, 845},
+        {898 + 286, 845},
   {898 + 301, 877},
     };
 

@@ -624,71 +624,67 @@ CB2_InitOptionMenu:
 	mov	r0, #0x14
 	bl	AllocZeroed
 	str	r0, [r4]
-	ldr	r3, .L52+0x8
-	ldr	r1, [r3]
+	ldr	r2, .L52+0x8
+	ldr	r1, [r2]
 	ldrb	r1, [r1, #0x14]
 	lsl	r1, r1, #0x1d
 	lsr	r1, r1, #0x1d
 	strb	r1, [r0]
 	ldr	r1, [r4]
-	ldr	r0, [r3]
-	ldrb	r0, [r0, #0x16]
-	lsl	r0, r0, #0x1f
+	ldr	r0, [r2]
+	ldrb	r0, [r0, #0x15]
+	lsl	r0, r0, #0x19
 	lsr	r0, r0, #0x1f
 	strb	r0, [r1, #0x1]
 	ldr	r1, [r4]
-	ldr	r0, [r3]
+	ldr	r0, [r2]
 	ldrb	r0, [r0, #0x15]
-	lsr	r0, r0, #0x7
+	lsl	r0, r0, #0x1a
+	lsr	r0, r0, #0x1f
 	strb	r0, [r1, #0x2]
 	ldr	r1, [r4]
-	ldr	r0, [r3]
+	ldr	r0, [r2]
 	ldrb	r0, [r0, #0x15]
-	lsl	r0, r0, #0x19
+	lsl	r0, r0, #0x1b
 	lsr	r0, r0, #0x1e
 	strb	r0, [r1, #0x3]
 	ldr	r1, [r4]
-	ldr	r0, [r3]
+	ldr	r0, [r2]
 	ldrb	r0, [r0, #0x15]
-	lsl	r0, r0, #0x1b
-	lsr	r0, r0, #0x1b
+	lsl	r0, r0, #0x1d
+	lsr	r0, r0, #0x1d
 	strb	r0, [r1, #0x4]
 	ldr	r1, [r4]
-	ldr	r0, [r3]
+	ldr	r0, [r2]
 	ldrb	r0, [r0, #0x13]
 	strb	r0, [r1, #0x5]
 	ldr	r1, [r4]
-	ldr	r0, [r3]
+	ldr	r0, [r2]
 	ldrb	r0, [r0, #0x14]
 	lsr	r0, r0, #0x3
 	strb	r0, [r1, #0x6]
 	ldr	r1, [r4]
-	ldr	r0, [r3]
-	ldrh	r0, [r0, #0x16]
-	lsl	r0, r0, #0x17
+	ldr	r0, [r2]
+	ldrb	r0, [r0, #0x16]
+	lsl	r0, r0, #0x19
 	lsr	r0, r0, #0x1c
 	strb	r0, [r1, #0x7]
 	ldr	r1, [r4]
-	ldr	r0, [r3]
-	ldrb	r0, [r0, #0x17]
-	lsl	r0, r0, #0x1b
+	ldr	r0, [r2]
+	ldrh	r0, [r0, #0x16]
+	lsl	r0, r0, #0x15
 	lsr	r0, r0, #0x1c
 	strb	r0, [r1, #0x8]
-	ldr	r5, [r4]
-	ldr	r0, [r3]
-	ldrb	r2, [r0, #0x17]
-	lsr	r2, r2, #0x7
-	ldrb	r0, [r0, #0x18]
-	mov	r1, #0x1
-	and	r0, r0, r1
-	lsl	r0, r0, #0x1
-	orr	r0, r0, r2
-	strb	r0, [r5, #0x9]
 	ldr	r1, [r4]
-	ldr	r0, [r3]
-	ldrb	r0, [r0, #0x18]
-	lsl	r0, r0, #0x1e
-	lsr	r0, r0, #0x1f
+	ldr	r0, [r2]
+	ldrb	r0, [r0, #0x17]
+	lsl	r0, r0, #0x19
+	lsr	r0, r0, #0x1e
+	strb	r0, [r1, #0x9]
+	ldr	r1, [r4]
+	ldr	r0, [r2]
+	ldrb	r0, [r0, #0x17]
+	lsr	r0, r0, #0x7
 	strb	r0, [r1, #0xa]
 	mov	r4, #0x0
 .L30:
@@ -964,9 +960,9 @@ Task_OptionMenuProcessInput:
 	ldr	r0, [r0]
 	ldr	r0, [r0, #0xc]
 	cmp	r0, #0xb
-	beq	.LCB832
+	beq	.LCB825
 	b	.L83	@long jump
-.LCB832:
+.LCB825:
 	ldr	r0, .L108+0x8
 	lsl	r1, r2, #0x2
 	add	r1, r1, r2
@@ -1143,89 +1139,89 @@ Task_OptionMenuProcessInput:
 	.type	 Task_OptionMenuSave,function
 	.thumb_func
 Task_OptionMenuSave:
-	push	{r4, r5, r6, r7, lr}
-	mov	r7, sl
-	mov	r6, r9
-	mov	r5, r8
-	push	{r5, r6, r7}
+	push	{r4, r5, r6, lr}
+	mov	r6, sl
+	mov	r5, r9
+	mov	r4, r8
+	push	{r4, r5, r6}
 	add	sp, sp, #-0x4
-	mov	sl, r0
+	mov	r9, r0
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
-	mov	sl, r0
-	ldr	r1, .L121
-	mov	r8, r1
-	ldr	r3, [r1]
-	ldr	r6, .L121+0x4
-	ldr	r0, [r6]
-	mov	r2, #0x7
-	ldrb	r1, [r0]
-	and	r1, r1, r2
-	ldrb	r2, [r3, #0x14]
-	mov	r0, #0x8
-	neg	r0, r0
-	and	r0, r0, r2
-	orr	r0, r0, r1
-	strb	r0, [r3, #0x14]
-	mov	r2, r8
-	ldr	r3, [r2]
-	ldr	r0, [r6]
-	mov	r1, #0x1
-	mov	ip, r1
-	ldrb	r1, [r0, #0x1]
-	mov	r2, ip
-	and	r1, r1, r2
-	ldrb	r2, [r3, #0x16]
-	mov	r0, #0x2
-	neg	r0, r0
 	mov	r9, r0
+	ldr	r5, .L121
+	ldr	r6, [r5]
+	ldr	r4, .L121+0x4
+	ldr	r0, [r4]
+	mov	r1, #0x7
+	mov	sl, r1
+	ldrb	r1, [r0]
+	mov	r2, sl
+	and	r1, r1, r2
+	ldrb	r2, [r6, #0x14]
+	mov	r3, #0x8
+	neg	r3, r3
+	add	r0, r3, #0
 	and	r0, r0, r2
 	orr	r0, r0, r1
-	strb	r0, [r3, #0x16]
-	mov	r1, r8
-	ldr	r3, [r1]
-	ldr	r0, [r6]
+	strb	r0, [r6, #0x14]
+	ldr	r6, [r5]
+	ldr	r0, [r4]
+	mov	r1, #0x1
+	mov	r8, r1
+	ldrb	r1, [r0, #0x1]
+	mov	r2, r8
+	and	r1, r1, r2
+	lsl	r1, r1, #0x6
+	ldrb	r2, [r6, #0x15]
+	mov	r0, #0x41
+	neg	r0, r0
+	and	r0, r0, r2
+	orr	r0, r0, r1
+	strb	r0, [r6, #0x15]
+	ldr	r6, [r5]
+	ldr	r0, [r4]
 	ldrb	r1, [r0, #0x2]
-	lsl	r1, r1, #0x7
-	ldrb	r2, [r3, #0x15]
-	mov	r4, #0x7f
-	add	r0, r4, #0
-	and	r0, r0, r2
-	orr	r0, r0, r1
-	strb	r0, [r3, #0x15]
-	mov	r2, r8
-	ldr	r3, [r2]
-	ldr	r0, [r6]
-	mov	r2, #0x3
-	ldrb	r1, [r0, #0x3]
-	and	r1, r1, r2
-	lsl	r1, r1, #0x5
-	ldrb	r2, [r3, #0x15]
-	mov	r0, #0x61
-	neg	r0, r0
-	and	r0, r0, r2
-	orr	r0, r0, r1
-	strb	r0, [r3, #0x15]
 	mov	r0, r8
-	ldr	r3, [r0]
-	ldr	r0, [r6]
-	mov	r2, #0x1f
-	ldrb	r1, [r0, #0x4]
-	and	r1, r1, r2
-	ldrb	r2, [r3, #0x15]
-	mov	r0, #0x20
+	and	r1, r1, r0
+	lsl	r1, r1, #0x5
+	ldrb	r2, [r6, #0x15]
+	mov	r0, #0x21
 	neg	r0, r0
 	and	r0, r0, r2
 	orr	r0, r0, r1
-	strb	r0, [r3, #0x15]
+	strb	r0, [r6, #0x15]
+	ldr	r6, [r5]
+	ldr	r0, [r4]
+	mov	r1, #0x3
+	mov	r8, r1
+	ldrb	r1, [r0, #0x3]
 	mov	r2, r8
-	ldr	r1, [r2]
-	ldr	r0, [r6]
+	and	r1, r1, r2
+	lsl	r1, r1, #0x3
+	ldrb	r2, [r6, #0x15]
+	mov	r0, #0x19
+	neg	r0, r0
+	and	r0, r0, r2
+	orr	r0, r0, r1
+	strb	r0, [r6, #0x15]
+	ldr	r2, [r5]
+	ldr	r0, [r4]
+	ldrb	r0, [r0, #0x4]
+	mov	r1, sl
+	and	r0, r0, r1
+	ldrb	r1, [r2, #0x15]
+	and	r3, r3, r1
+	orr	r3, r3, r0
+	strb	r3, [r2, #0x15]
+	ldr	r1, [r5]
+	ldr	r0, [r4]
 	ldrb	r0, [r0, #0x5]
-	mov	r7, #0x0
+	mov	r2, #0x0
+	mov	sl, r2
 	strb	r0, [r1, #0x13]
-	ldr	r3, [r2]
-	ldr	r0, [r6]
+	ldr	r3, [r5]
+	ldr	r0, [r4]
 	ldrb	r1, [r0, #0x6]
 	lsl	r1, r1, #0x3
 	ldrb	r2, [r3, #0x14]
@@ -1233,74 +1229,60 @@ Task_OptionMenuSave:
 	and	r0, r0, r2
 	orr	r0, r0, r1
 	strb	r0, [r3, #0x14]
-	mov	r0, r8
-	ldr	r3, [r0]
-	ldr	r5, [r6]
-	ldrb	r1, [r5, #0x7]
+	ldr	r3, [r5]
+	ldr	r0, [r4]
+	mov	r2, #0xf
+	ldrb	r1, [r0, #0x7]
+	and	r1, r1, r2
+	lsl	r1, r1, #0x3
+	ldrb	r2, [r3, #0x16]
+	mov	r0, #0x79
+	neg	r0, r0
+	and	r0, r0, r2
+	orr	r0, r0, r1
+	strb	r0, [r3, #0x16]
+	ldr	r3, [r5]
+	ldr	r6, [r4]
+	ldrb	r1, [r6, #0x8]
 	mov	r0, #0xf
 	and	r1, r1, r0
-	lsl	r1, r1, #0x5
+	lsl	r1, r1, #0x7
 	ldrh	r2, [r3, #0x16]
 	ldr	r0, .L121+0x8
 	and	r0, r0, r2
 	orr	r0, r0, r1
 	strh	r0, [r3, #0x16]
-	mov	r0, #0xf
-	ldrb	r1, [r5, #0x8]
+	ldrb	r1, [r6, #0x9]
+	mov	r0, r8
 	and	r1, r1, r0
-	lsl	r1, r1, #0x1
+	lsl	r1, r1, #0x5
 	ldrb	r2, [r3, #0x17]
-	mov	r0, #0x1f
+	mov	r0, #0x61
 	neg	r0, r0
 	and	r0, r0, r2
 	orr	r0, r0, r1
 	strb	r0, [r3, #0x17]
-	mov	r1, r8
-	ldr	r3, [r1]
-	ldr	r0, [r6]
-	ldrb	r0, [r0, #0x9]
-	lsl	r0, r0, #0x10
-	lsr	r1, r0, #0x10
-	mov	r5, #0x1
-	and	r1, r1, r5
+	ldr	r3, [r5]
+	ldr	r0, [r4]
+	ldrb	r1, [r0, #0xa]
 	lsl	r1, r1, #0x7
 	ldrb	r2, [r3, #0x17]
-	and	r4, r4, r2
-	orr	r4, r4, r1
-	strb	r4, [r3, #0x17]
-	lsr	r0, r0, #0x11
-	and	r0, r0, r5
-	mov	r2, ip
-	and	r0, r0, r2
-	ldrb	r1, [r3, #0x18]
-	mov	r2, r9
-	and	r2, r2, r1
-	orr	r2, r2, r0
-	strb	r2, [r3, #0x18]
-	mov	r0, r8
-	ldr	r3, [r0]
-	ldr	r0, [r6]
-	ldrb	r1, [r0, #0xa]
-	mov	r2, ip
-	and	r1, r1, r2
-	lsl	r1, r1, #0x1
-	ldrb	r2, [r3, #0x18]
-	mov	r0, #0x3
-	neg	r0, r0
+	mov	r0, #0x7f
 	and	r0, r0, r2
 	orr	r0, r0, r1
-	strb	r0, [r3, #0x18]
+	strb	r0, [r3, #0x17]
 	mov	r0, #0x1
 	neg	r0, r0
-	str	r7, [sp]
+	mov	r1, sl
+	str	r1, [sp]
 	mov	r1, #0x0
 	mov	r2, #0x0
 	mov	r3, #0x10
 	bl	BeginNormalPaletteFade
 	ldr	r1, .L121+0xc
-	mov	r2, sl
+	mov	r2, r9
 	lsl	r0, r2, #0x2
-	add	r0, r0, sl
+	add	r0, r0, r9
 	lsl	r0, r0, #0x3
 	add	r0, r0, r1
 	ldr	r1, .L121+0x10
@@ -1310,7 +1292,7 @@ Task_OptionMenuSave:
 	mov	r8, r3
 	mov	r9, r4
 	mov	sl, r5
-	pop	{r4, r5, r6, r7}
+	pop	{r4, r5, r6}
 	pop	{r0}
 	bx	r0
 .L122:
@@ -1318,7 +1300,7 @@ Task_OptionMenuSave:
 .L121:
 	.word	gSaveBlock2Ptr
 	.word	sOptions
-	.word	-0x1e1
+	.word	-0x781
 	.word	gTasks
 	.word	Task_OptionMenuFadeOut
 .Lfe9:

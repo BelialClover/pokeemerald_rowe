@@ -5843,7 +5843,8 @@ InitDomeChallenge:
 	lsl	r0, r0, #0x10
 	lsr	r7, r0, #0x10
 	ldr	r0, [r4]
-	ldr	r2, .L7+0xc
+	mov	r2, #0xc3
+	lsl	r2, r2, #0x4
 	add	r0, r0, r2
 	mov	r6, #0x0
 	strb	r6, [r0]
@@ -5867,9 +5868,9 @@ InitDomeChallenge:
 	and	r0, r0, r2
 	strb	r0, [r1]
 	ldr	r4, [r4]
-	ldr	r0, .L7+0x10
+	ldr	r0, .L7+0xc
 	add	r3, r4, r0
-	ldr	r2, .L7+0x14
+	ldr	r2, .L7+0x10
 	lsl	r1, r5, #0x2
 	lsl	r0, r7, #0x3
 	add	r1, r1, r0
@@ -5882,12 +5883,12 @@ InitDomeChallenge:
 	lsl	r0, r5, #0x1
 	lsl	r1, r7, #0x2
 	add	r0, r0, r1
-	ldr	r2, .L7+0x18
+	ldr	r2, .L7+0x14
 	add	r1, r4, r2
 	add	r1, r1, r0
 	strh	r6, [r1]
 .L6:
-	ldr	r0, .L7+0x1c
+	ldr	r0, .L7+0x18
 	ldr	r0, [r0]
 	mov	r1, #0x4
 	ldrsb	r1, [r0, r1]
@@ -5897,7 +5898,7 @@ InitDomeChallenge:
 	neg	r3, r3
 	mov	r0, #0x0
 	bl	SetDynamicWarp
-	ldr	r0, .L7+0x20
+	ldr	r0, .L7+0x1c
 	strh	r6, [r0]
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
@@ -5906,12 +5907,11 @@ InitDomeChallenge:
 	.align	2, 0
 .L7:
 	.word	gSaveBlock2Ptr
-	.word	0xc35
+	.word	0xc31
 	.word	0x40ce
-	.word	0xc34
-	.word	0xc68
+	.word	0xc64
 	.word	sWinStreakFlags
-	.word	0xc98
+	.word	0xc94
 	.word	gSaveBlock1Ptr
 	.word	gTrainerBattleOpponent_A
 .Lfe2:
@@ -5947,7 +5947,7 @@ GetDomeData:
 	.align	2, 0
 .L38:
 	.word	gSaveBlock2Ptr
-	.word	0xc35
+	.word	0xc31
 	.word	0x40ce
 	.word	gSpecialVar_0x8005
 	.word	.L34
@@ -5982,7 +5982,7 @@ GetDomeData:
 .L40:
 	.word	gSpecialVar_Result
 	.word	gSaveBlock2Ptr
-	.word	0xc98
+	.word	0xc94
 .L12:
 	ldr	r4, .L42
 	ldr	r0, .L42+0x4
@@ -6007,13 +6007,14 @@ GetDomeData:
 .L42:
 	.word	gSpecialVar_Result
 	.word	gSaveBlock2Ptr
-	.word	0xc68
+	.word	0xc64
 	.word	sWinStreakFlags
 .L14:
 	ldr	r1, .L44
 	ldr	r0, .L44+0x4
 	ldr	r0, [r0]
-	ldr	r2, .L44+0x8
+	mov	r2, #0xc9
+	lsl	r2, r2, #0x4
 	add	r0, r0, r2
 	ldrb	r0, [r0]
 	lsl	r0, r0, #0x1f
@@ -6023,12 +6024,12 @@ GetDomeData:
 .L44:
 	.word	gSpecialVar_Result
 	.word	gSaveBlock2Ptr
-	.word	0xc94
 .L15:
 	ldr	r1, .L46
 	ldr	r0, .L46+0x4
 	ldr	r0, [r0]
-	ldr	r3, .L46+0x8
+	mov	r3, #0xc9
+	lsl	r3, r3, #0x4
 	add	r0, r0, r3
 	ldrb	r0, [r0]
 	lsl	r0, r0, #0x1e
@@ -6038,12 +6039,12 @@ GetDomeData:
 .L46:
 	.word	gSpecialVar_Result
 	.word	gSaveBlock2Ptr
-	.word	0xc94
 .L16:
 	ldr	r1, .L48
 	ldr	r0, .L48+0x4
 	ldr	r0, [r0]
-	ldr	r2, .L48+0x8
+	mov	r2, #0xc9
+	lsl	r2, r2, #0x4
 	add	r0, r0, r2
 	b	.L37
 .L49:
@@ -6051,12 +6052,12 @@ GetDomeData:
 .L48:
 	.word	gSpecialVar_Result
 	.word	gSaveBlock2Ptr
-	.word	0xc94
 .L17:
 	ldr	r1, .L50
 	ldr	r0, .L50+0x4
 	ldr	r0, [r0]
-	ldr	r3, .L50+0x8
+	mov	r3, #0xc9
+	lsl	r3, r3, #0x4
 	add	r0, r0, r3
 	ldrb	r0, [r0]
 	lsl	r0, r0, #0x1c
@@ -6066,7 +6067,6 @@ GetDomeData:
 .L50:
 	.word	gSpecialVar_Result
 	.word	gSaveBlock2Ptr
-	.word	0xc94
 .L18:
 	ldr	r0, .L52
 	bl	VarGet
@@ -6079,7 +6079,8 @@ GetDomeData:
 	ldr	r1, .L52+0x4
 	ldr	r0, .L52+0x8
 	ldr	r0, [r0]
-	ldr	r2, .L52+0xc
+	mov	r2, #0xc9
+	lsl	r2, r2, #0x4
 	add	r0, r0, r2
 	ldrb	r0, [r0]
 	lsl	r0, r0, #0x1a
@@ -6090,12 +6091,12 @@ GetDomeData:
 	.word	0x40ce
 	.word	gSpecialVar_Result
 	.word	gSaveBlock2Ptr
-	.word	0xc94
 .L20:
 	ldr	r1, .L54
 	ldr	r0, .L54+0x4
 	ldr	r0, [r0]
-	ldr	r3, .L54+0x8
+	mov	r3, #0xc9
+	lsl	r3, r3, #0x4
 	add	r0, r0, r3
 	ldrb	r0, [r0]
 	lsl	r0, r0, #0x1b
@@ -6105,14 +6106,14 @@ GetDomeData:
 .L54:
 	.word	gSpecialVar_Result
 	.word	gSaveBlock2Ptr
-	.word	0xc94
 .L19:
 	cmp	r5, #0
 	beq	.L23	@cond_branch
 	ldr	r1, .L56
 	ldr	r0, .L56+0x4
 	ldr	r0, [r0]
-	ldr	r2, .L56+0x8
+	mov	r2, #0xc9
+	lsl	r2, r2, #0x4
 	add	r0, r0, r2
 	ldrb	r0, [r0]
 	lsl	r0, r0, #0x1e
@@ -6122,12 +6123,12 @@ GetDomeData:
 .L56:
 	.word	gSpecialVar_Result
 	.word	gSaveBlock2Ptr
-	.word	0xc94
 .L23:
 	ldr	r1, .L58
 	ldr	r0, .L58+0x4
 	ldr	r0, [r0]
-	ldr	r3, .L58+0x8
+	mov	r3, #0xc9
+	lsl	r3, r3, #0x4
 	add	r0, r0, r3
 	ldrb	r0, [r0]
 	lsl	r0, r0, #0x1f
@@ -6137,7 +6138,6 @@ GetDomeData:
 .L58:
 	.word	gSpecialVar_Result
 	.word	gSaveBlock2Ptr
-	.word	0xc94
 .L25:
 	ldr	r0, .L60
 	bl	VarGet
@@ -6150,7 +6150,8 @@ GetDomeData:
 	ldr	r1, .L60+0x4
 	ldr	r0, .L60+0x8
 	ldr	r0, [r0]
-	ldr	r2, .L60+0xc
+	mov	r2, #0xc9
+	lsl	r2, r2, #0x4
 	add	r0, r0, r2
 	ldrb	r0, [r0]
 	lsr	r0, r0, #0x7
@@ -6162,12 +6163,12 @@ GetDomeData:
 	.word	0x40ce
 	.word	gSpecialVar_Result
 	.word	gSaveBlock2Ptr
-	.word	0xc94
 .L27:
 	ldr	r1, .L62
 	ldr	r0, .L62+0x4
 	ldr	r0, [r0]
-	ldr	r3, .L62+0x8
+	mov	r3, #0xc9
+	lsl	r3, r3, #0x4
 	add	r0, r0, r3
 	ldrb	r0, [r0]
 	lsl	r0, r0, #0x19
@@ -6177,14 +6178,14 @@ GetDomeData:
 .L62:
 	.word	gSpecialVar_Result
 	.word	gSaveBlock2Ptr
-	.word	0xc94
 .L26:
 	cmp	r5, #0
 	beq	.L30	@cond_branch
 	ldr	r1, .L64
 	ldr	r0, .L64+0x4
 	ldr	r0, [r0]
-	ldr	r2, .L64+0x8
+	mov	r2, #0xc9
+	lsl	r2, r2, #0x4
 	add	r0, r0, r2
 	ldrb	r0, [r0]
 	lsl	r0, r0, #0x1c
@@ -6194,12 +6195,12 @@ GetDomeData:
 .L64:
 	.word	gSpecialVar_Result
 	.word	gSaveBlock2Ptr
-	.word	0xc94
 .L30:
 	ldr	r1, .L66
 	ldr	r0, .L66+0x4
 	ldr	r0, [r0]
-	ldr	r3, .L66+0x8
+	mov	r3, #0xc9
+	lsl	r3, r3, #0x4
 	add	r0, r0, r3
 .L37:
 	ldrb	r0, [r0]
@@ -6213,7 +6214,6 @@ GetDomeData:
 .L66:
 	.word	gSpecialVar_Result
 	.word	gSaveBlock2Ptr
-	.word	0xc94
 .L32:
 	bl	ClearSelectedPartyOrder
 	ldr	r2, .L68
@@ -6232,7 +6232,7 @@ GetDomeData:
 .L68:
 	.word	gSelectedOrderFromParty
 	.word	gSaveBlock2Ptr
-	.word	0xc3c
+	.word	0xc38
 .L33:
 	ldr	r2, .L70
 	ldr	r0, .L70+0x4
@@ -6257,7 +6257,7 @@ GetDomeData:
 .L70:
 	.word	gSpecialVar_Result
 	.word	gSaveBlock2Ptr
-	.word	0xc96
+	.word	0xc92
 	.word	0xfffd
 .Lfe3:
 	.size	 GetDomeData,.Lfe3-GetDomeData
@@ -6292,7 +6292,7 @@ SetDomeData:
 	.align	2, 0
 .L102:
 	.word	gSaveBlock2Ptr
-	.word	0xc35
+	.word	0xc31
 	.word	0x40ce
 	.word	gSpecialVar_0x8005
 	.word	.L97
@@ -6325,7 +6325,7 @@ SetDomeData:
 	.align	2, 0
 .L104:
 	.word	gSaveBlock2Ptr
-	.word	0xc98
+	.word	0xc94
 	.word	gSpecialVar_0x8006
 .L75:
 	ldr	r0, .L106
@@ -6351,7 +6351,7 @@ SetDomeData:
 .L106:
 	.word	gSpecialVar_0x8006
 	.word	gSaveBlock2Ptr
-	.word	0xc68
+	.word	0xc64
 	.word	sWinStreakFlags
 .L76:
 	ldr	r0, .L108
@@ -6372,14 +6372,15 @@ SetDomeData:
 	.align	2, 0
 .L108:
 	.word	gSaveBlock2Ptr
-	.word	0xc68
+	.word	0xc64
 	.word	sWinStreakMasks
 .L78:
 	ldr	r0, .L110
 	ldr	r2, [r0]
 	ldr	r0, .L110+0x4
 	ldrb	r0, [r0]
-	ldr	r1, .L110+0x8
+	mov	r1, #0xc9
+	lsl	r1, r1, #0x4
 	add	r2, r2, r1
 	mov	r1, #0x1
 	and	r1, r1, r0
@@ -6392,13 +6393,13 @@ SetDomeData:
 .L110:
 	.word	gSaveBlock2Ptr
 	.word	gSpecialVar_0x8006
-	.word	0xc94
 .L79:
 	ldr	r0, .L112
 	ldr	r3, [r0]
 	ldr	r0, .L112+0x4
 	ldrb	r0, [r0]
-	ldr	r2, .L112+0x8
+	mov	r2, #0xc9
+	lsl	r2, r2, #0x4
 	add	r3, r3, r2
 	mov	r1, #0x1
 	and	r1, r1, r0
@@ -6412,13 +6413,13 @@ SetDomeData:
 .L112:
 	.word	gSaveBlock2Ptr
 	.word	gSpecialVar_0x8006
-	.word	0xc94
 .L80:
 	ldr	r0, .L114
 	ldr	r3, [r0]
 	ldr	r0, .L114+0x4
 	ldrb	r0, [r0]
-	ldr	r1, .L114+0x8
+	mov	r1, #0xc9
+	lsl	r1, r1, #0x4
 	add	r3, r3, r1
 	b	.L101
 .L115:
@@ -6426,13 +6427,13 @@ SetDomeData:
 .L114:
 	.word	gSaveBlock2Ptr
 	.word	gSpecialVar_0x8006
-	.word	0xc94
 .L81:
 	ldr	r0, .L116
 	ldr	r3, [r0]
 	ldr	r0, .L116+0x4
 	ldrb	r0, [r0]
-	ldr	r2, .L116+0x8
+	mov	r2, #0xc9
+	lsl	r2, r2, #0x4
 	add	r3, r3, r2
 	mov	r1, #0x1
 	and	r1, r1, r0
@@ -6446,7 +6447,6 @@ SetDomeData:
 .L116:
 	.word	gSaveBlock2Ptr
 	.word	gSpecialVar_0x8006
-	.word	0xc94
 .L82:
 	ldr	r0, .L118
 	bl	VarGet
@@ -6460,7 +6460,8 @@ SetDomeData:
 	ldr	r3, [r0]
 	ldr	r0, .L118+0x8
 	ldrb	r0, [r0]
-	ldr	r2, .L118+0xc
+	mov	r2, #0xc9
+	lsl	r2, r2, #0x4
 	add	r3, r3, r2
 	and	r1, r1, r0
 	lsl	r1, r1, #0x5
@@ -6474,13 +6475,13 @@ SetDomeData:
 	.word	0x40ce
 	.word	gSaveBlock2Ptr
 	.word	gSpecialVar_0x8006
-	.word	0xc94
 .L84:
 	ldr	r0, .L120
 	ldr	r3, [r0]
 	ldr	r0, .L120+0x4
 	ldrb	r0, [r0]
-	ldr	r2, .L120+0x8
+	mov	r2, #0xc9
+	lsl	r2, r2, #0x4
 	add	r3, r3, r2
 	and	r1, r1, r0
 	lsl	r1, r1, #0x4
@@ -6493,7 +6494,6 @@ SetDomeData:
 .L120:
 	.word	gSaveBlock2Ptr
 	.word	gSpecialVar_0x8006
-	.word	0xc94
 .L83:
 	cmp	r4, #0
 	beq	.L87	@cond_branch
@@ -6501,7 +6501,8 @@ SetDomeData:
 	ldr	r3, [r0]
 	ldr	r0, .L122+0x4
 	ldrb	r0, [r0]
-	ldr	r1, .L122+0x8
+	mov	r1, #0xc9
+	lsl	r1, r1, #0x4
 	add	r3, r3, r1
 	mov	r1, #0x1
 	and	r1, r1, r0
@@ -6515,13 +6516,13 @@ SetDomeData:
 .L122:
 	.word	gSaveBlock2Ptr
 	.word	gSpecialVar_0x8006
-	.word	0xc94
 .L87:
 	ldr	r0, .L124
 	ldr	r2, [r0]
 	ldr	r0, .L124+0x4
 	ldrb	r0, [r0]
-	ldr	r1, .L124+0x8
+	mov	r1, #0xc9
+	lsl	r1, r1, #0x4
 	add	r2, r2, r1
 	mov	r1, #0x1
 	and	r1, r1, r0
@@ -6534,7 +6535,6 @@ SetDomeData:
 .L124:
 	.word	gSaveBlock2Ptr
 	.word	gSpecialVar_0x8006
-	.word	0xc94
 .L89:
 	ldr	r0, .L126
 	bl	VarGet
@@ -6548,7 +6548,8 @@ SetDomeData:
 	ldr	r2, [r0]
 	ldr	r0, .L126+0x8
 	ldrb	r1, [r0]
-	ldr	r0, .L126+0xc
+	mov	r0, #0xc9
+	lsl	r0, r0, #0x4
 	add	r2, r2, r0
 	lsl	r1, r1, #0x7
 	ldrb	r3, [r2]
@@ -6564,13 +6565,13 @@ SetDomeData:
 	.word	0x40ce
 	.word	gSaveBlock2Ptr
 	.word	gSpecialVar_0x8006
-	.word	0xc94
 .L91:
 	ldr	r0, .L128
 	ldr	r3, [r0]
 	ldr	r0, .L128+0x4
 	ldrb	r0, [r0]
-	ldr	r2, .L128+0x8
+	mov	r2, #0xc9
+	lsl	r2, r2, #0x4
 	add	r3, r3, r2
 	and	r1, r1, r0
 	lsl	r1, r1, #0x6
@@ -6583,7 +6584,6 @@ SetDomeData:
 .L128:
 	.word	gSaveBlock2Ptr
 	.word	gSpecialVar_0x8006
-	.word	0xc94
 .L90:
 	cmp	r4, #0
 	beq	.L94	@cond_branch
@@ -6591,7 +6591,8 @@ SetDomeData:
 	ldr	r3, [r0]
 	ldr	r0, .L130+0x4
 	ldrb	r0, [r0]
-	ldr	r1, .L130+0x8
+	mov	r1, #0xc9
+	lsl	r1, r1, #0x4
 	add	r3, r3, r1
 	mov	r1, #0x1
 	and	r1, r1, r0
@@ -6605,13 +6606,13 @@ SetDomeData:
 .L130:
 	.word	gSaveBlock2Ptr
 	.word	gSpecialVar_0x8006
-	.word	0xc94
 .L94:
 	ldr	r0, .L132
 	ldr	r3, [r0]
 	ldr	r0, .L132+0x4
 	ldrb	r0, [r0]
-	ldr	r2, .L132+0x8
+	mov	r2, #0xc9
+	lsl	r2, r2, #0x4
 	add	r3, r3, r2
 .L101:
 	mov	r1, #0x1
@@ -6630,7 +6631,6 @@ SetDomeData:
 .L132:
 	.word	gSaveBlock2Ptr
 	.word	gSpecialVar_0x8006
-	.word	0xc94
 .L96:
 	ldr	r0, .L134
 	ldr	r2, [r0]
@@ -6651,7 +6651,7 @@ SetDomeData:
 .L134:
 	.word	gSaveBlock2Ptr
 	.word	gSelectedOrderFromParty
-	.word	0xc3c
+	.word	0xc38
 .Lfe4:
 	.size	 SetDomeData,.Lfe4-SetDomeData
 	.align	2, 0
@@ -6693,15 +6693,14 @@ InitDomeTrainers:
 	add	r1, r1, r5
 	strb	r0, [r1]
 	ldr	r2, [r4]
-	mov	r7, #0xcb
-	lsl	r7, r7, #0x4
+	ldr	r7, .L258+0x14
 	add	r3, r2, r7
 	ldrh	r0, [r3]
-	ldr	r5, .L258+0x14
+	ldr	r5, .L258+0x18
 	add	r1, r5, #0
 	orr	r0, r0, r1
 	strh	r0, [r3]
-	ldr	r3, .L258+0x18
+	ldr	r3, .L258+0x1c
 	add	r2, r2, r3
 	ldrb	r1, [r2]
 	mov	r0, #0x5
@@ -6724,13 +6723,13 @@ InitDomeTrainers:
 	mov	r7, #0x0
 	mov	sl, r7
 	mov	r8, r4
-	ldr	r0, .L258+0x1c
+	ldr	r0, .L258+0x20
 	mov	r9, r0
 	mov	r4, #0x0
 .L140:
 	mov	r1, r8
 	ldr	r0, [r1]
-	ldr	r2, .L258+0x20
+	ldr	r2, .L258+0x24
 	add	r0, r0, r2
 	add	r0, r0, r4
 	ldrh	r0, [r0]
@@ -6742,8 +6741,7 @@ InitDomeTrainers:
 	bl	GetMonData
 	mov	r5, r8
 	ldr	r1, [r5]
-	mov	r7, #0xcf
-	lsl	r7, r7, #0x4
+	ldr	r7, .L258+0x28
 	add	r1, r1, r7
 	add	r1, r1, r4
 	strh	r0, [r1]
@@ -6754,7 +6752,7 @@ InitDomeTrainers:
 .L144:
 	mov	r1, r8
 	ldr	r0, [r1]
-	ldr	r2, .L258+0x20
+	ldr	r2, .L258+0x24
 	add	r0, r0, r2
 	add	r0, r0, r4
 	ldrh	r0, [r0]
@@ -6767,7 +6765,7 @@ InitDomeTrainers:
 	bl	GetMonData
 	mov	r2, r8
 	ldr	r1, [r2]
-	ldr	r3, .L258+0x24
+	ldr	r3, .L258+0x2c
 	add	r1, r1, r3
 	add	r1, r1, r6
 	strh	r0, [r1]
@@ -6779,7 +6777,7 @@ InitDomeTrainers:
 	ldr	r6, .L258
 .L149:
 	ldr	r0, [r6]
-	ldr	r1, .L258+0x20
+	ldr	r1, .L258+0x24
 	add	r0, r0, r1
 	add	r0, r0, r4
 	ldrh	r0, [r0]
@@ -6792,8 +6790,7 @@ InitDomeTrainers:
 	bl	GetMonData
 	ldr	r1, [r6]
 	add	r2, r5, r7
-	mov	r3, #0xe9
-	lsl	r3, r3, #0x4
+	ldr	r3, .L258+0x30
 	add	r1, r1, r3
 	add	r1, r1, r2
 	strb	r0, [r1]
@@ -6802,7 +6799,7 @@ InitDomeTrainers:
 	ble	.L149	@cond_branch
 	mov	r5, r8
 	ldr	r0, [r5]
-	ldr	r1, .L258+0x20
+	ldr	r1, .L258+0x24
 	add	r0, r0, r1
 	add	r0, r0, r4
 	ldrh	r0, [r0]
@@ -6813,7 +6810,7 @@ InitDomeTrainers:
 	bl	GetNature
 	ldr	r1, [r5]
 	add	r1, r1, r7
-	ldr	r3, .L258+0x28
+	ldr	r3, .L258+0x34
 	add	r1, r1, r3
 	strb	r0, [r1]
 	add	r4, r4, #0x2
@@ -6844,7 +6841,8 @@ InitDomeTrainers:
 	bge	.L159	@cond_branch
 	ldr	r3, .L258
 	ldr	r0, [r3]
-	ldr	r7, .L258+0x2c
+	mov	r7, #0xcb
+	lsl	r7, r7, #0x4
 	add	r0, r0, r7
 	ldrh	r0, [r0]
 	lsl	r0, r0, #0x16
@@ -6852,8 +6850,7 @@ InitDomeTrainers:
 	add	r2, r3, #0
 	cmp	r0, r4
 	beq	.L159	@cond_branch
-	mov	r3, #0xcb
-	lsl	r3, r3, #0x4
+	ldr	r3, .L258+0x14
 .L162:
 	add	r5, r5, #0x1
 	cmp	r5, sl
@@ -6874,32 +6871,33 @@ InitDomeTrainers:
 	ldr	r3, [r0]
 	ldr	r1, [sp, #0x34]
 	add	r3, r3, r1
-	mov	r2, #0xcb
-	lsl	r2, r2, #0x4
+	ldr	r2, .L258+0x14
 	add	r3, r3, r2
-	ldr	r5, .L258+0x14
+	ldr	r5, .L258+0x18
 	add	r0, r5, #0
 	add	r2, r4, #0
 	and	r2, r2, r0
 	ldrh	r0, [r3]
-	ldr	r7, .L258+0x30
+	ldr	r7, .L258+0x38
 	add	r1, r7, #0
 	b	.L255
 .L259:
 	.align	2, 0
 .L258:
 	.word	gSaveBlock2Ptr
-	.word	0xc35
-	.word	0xc96
+	.word	0xc31
+	.word	0xc92
 	.word	0x40ce
-	.word	0xc97
+	.word	0xc93
+	.word	0xcac
 	.word	0x3ff
-	.word	0xcb1
+	.word	0xcad
 	.word	gPlayerParty+-0x64
-	.word	0xc36
-	.word	0xe88
-	.word	0xe96
-	.word	0xcb4
+	.word	0xc32
+	.word	0xcec
+	.word	0xe84
+	.word	0xe8c
+	.word	0xe92
 	.word	-0x400
 .L169:
 	bl	GetCurrentFacilityWinStreak
@@ -6915,7 +6913,8 @@ InitDomeTrainers:
 	bge	.L171	@cond_branch
 	ldr	r1, .L261
 	ldr	r0, [r1]
-	ldr	r2, .L261+0x4
+	mov	r2, #0xcb
+	lsl	r2, r2, #0x4
 	add	r0, r0, r2
 	ldrh	r0, [r0]
 	lsl	r0, r0, #0x16
@@ -6923,8 +6922,7 @@ InitDomeTrainers:
 	add	r2, r1, #0
 	cmp	r0, r4
 	beq	.L171	@cond_branch
-	mov	r3, #0xcb
-	lsl	r3, r3, #0x4
+	ldr	r3, .L261+0x4
 .L174:
 	add	r5, r5, #0x1
 	cmp	r5, sl
@@ -6945,8 +6943,7 @@ InitDomeTrainers:
 	ldr	r3, [r5]
 	ldr	r7, [sp, #0x34]
 	add	r3, r3, r7
-	mov	r0, #0xcb
-	lsl	r0, r0, #0x4
+	ldr	r0, .L261+0x4
 	add	r3, r3, r0
 	ldr	r1, .L261+0x8
 	add	r0, r1, #0
@@ -6986,8 +6983,7 @@ InitDomeTrainers:
 	mov	r8, r1
 	ldr	r2, [sp, #0xc]
 	mov	ip, r2
-	mov	r3, #0xcf
-	lsl	r3, r3, #0x4
+	ldr	r3, .L261+0x10
 	add	r0, r0, r3
 	ldr	r1, [sp, #0x20]
 	add	r4, r1, r0
@@ -6995,7 +6991,7 @@ InitDomeTrainers:
 	ldrh	r3, [r4]
 	cmp	r3, r6
 	beq	.L186	@cond_branch
-	ldr	r2, .L261+0x10
+	ldr	r2, .L261+0x14
 	ldr	r1, [r2]
 	lsl	r0, r6, #0x4
 	add	r2, r0, r1
@@ -7021,15 +7017,14 @@ InitDomeTrainers:
 	ldr	r0, [r3]
 	ldr	r1, [sp, #0x38]
 	add	r1, r1, r9
-	mov	r5, #0xcf
-	lsl	r5, r5, #0x4
+	ldr	r5, .L261+0x10
 	add	r0, r0, r5
 	add	r0, r0, r1
 	strh	r6, [r0]
 	ldr	r2, [sp, #0x28]
 	add	r2, r2, sp
 	add	r2, r2, #0x8
-	ldr	r0, .L261+0x10
+	ldr	r0, .L261+0x14
 	ldr	r1, [r0]
 	lsl	r0, r6, #0x4
 	add	r0, r0, r1
@@ -7041,7 +7036,7 @@ InitDomeTrainers:
 	ldr	r2, [r3]
 	ldr	r7, [sp, #0x34]
 	add	r2, r2, r7
-	ldr	r0, .L261+0x14
+	ldr	r0, .L261+0x18
 	add	r2, r2, r0
 	ldrb	r0, [r2]
 	mov	r3, #0x5
@@ -7052,7 +7047,7 @@ InitDomeTrainers:
 	ldr	r5, .L261
 	ldr	r2, [r5]
 	add	r2, r2, r7
-	ldr	r7, .L261+0x14
+	ldr	r7, .L261+0x18
 	add	r2, r2, r7
 	ldrb	r0, [r2]
 	sub	r3, r3, #0x14
@@ -7076,29 +7071,29 @@ InitDomeTrainers:
 	add	sl, sl, r0
 	mov	r1, sl
 	cmp	r1, #0xf
-	bgt	.LCB1636
+	bgt	.LCB1631
 	b	.L155	@long jump
-.LCB1636:
+.LCB1631:
 	mov	r7, #0x0
 	ldr	r2, [sp, #0x18]
 	strh	r7, [r2]
 	mov	r3, #0x0
 	mov	sl, r3
-	ldr	r6, .L261+0x18
-	ldr	r5, .L261+0x1c
+	ldr	r6, .L261+0x1c
+	ldr	r5, .L261+0x20
 .L201:
 	ldr	r0, .L261
 	ldr	r0, [r0]
 	mov	r2, sl
 	lsl	r1, r2, #0x1
-	ldr	r3, .L261+0x20
+	ldr	r3, .L261+0x24
 	add	r0, r0, r3
 	add	r0, r0, r1
 	ldrh	r0, [r0]
 	sub	r4, r0, #0x1
 	mov	r0, #0x64
 	mul	r4, r4, r0
-	ldr	r0, .L261+0x24
+	ldr	r0, .L261+0x28
 	add	r4, r4, r0
 	add	r0, r4, #0
 	mov	r1, #0x3b
@@ -7220,8 +7215,7 @@ InitDomeTrainers:
 	mov	r2, sl
 	lsl	r1, r2, #0x2
 	add	r0, r0, r1
-	mov	r3, #0xcb
-	lsl	r3, r3, #0x4
+	ldr	r3, .L261+0x4
 	add	r0, r0, r3
 	ldrh	r0, [r0]
 	lsl	r0, r0, #0x16
@@ -7240,12 +7234,11 @@ InitDomeTrainers:
 	add	r4, r4, sl
 	add	r4, r4, r5
 	lsl	r4, r4, #0x1
-	mov	r2, #0xcf
-	lsl	r2, r2, #0x4
+	ldr	r2, .L261+0x10
 	add	r0, r0, r2
 	add	r0, r0, r4
 	ldrh	r1, [r0]
-	ldr	r3, .L261+0x10
+	ldr	r3, .L261+0x14
 	ldr	r0, [r3]
 	lsl	r1, r1, #0x4
 	add	r1, r1, r0
@@ -7275,12 +7268,11 @@ InitDomeTrainers:
 	strh	r0, [r6]
 	ldr	r3, .L261
 	ldr	r0, [r3]
-	mov	r1, #0xcf
-	lsl	r1, r1, #0x4
+	ldr	r1, .L261+0x10
 	add	r0, r0, r1
 	add	r0, r0, r4
 	ldrh	r0, [r0]
-	ldr	r2, .L261+0x10
+	ldr	r2, .L261+0x14
 	ldr	r1, [r2]
 	lsl	r0, r0, #0x4
 	add	r0, r0, r1
@@ -7288,11 +7280,11 @@ InitDomeTrainers:
 	lsl	r1, r0, #0x3
 	add	r1, r1, r0
 	lsl	r1, r1, #0x2
-	ldr	r3, .L261+0x1c
+	ldr	r3, .L261+0x20
 	add	r1, r1, r3
 	ldrb	r0, [r1, #0x6]
 	lsl	r0, r0, #0x2
-	ldr	r2, .L261+0x18
+	ldr	r2, .L261+0x1c
 	add	r0, r0, r2
 	ldr	r0, [r0]
 	orr	r7, r7, r0
@@ -7362,41 +7354,40 @@ InitDomeTrainers:
 	ldr	r1, [r0]
 	lsl	r0, r5, #0x2
 	add	r0, r1, r0
-	mov	r2, #0xcb
-	lsl	r2, r2, #0x4
+	ldr	r2, .L261+0x4
 	add	r0, r0, r2
 	ldrh	r0, [r0]
 	lsl	r2, r0, #0x16
 	lsr	r0, r2, #0x16
 	cmp	r0, r8
-	b	.L260
-.L262:
-	.align	2, 0
-.L261:
-	.word	gSaveBlock2Ptr
-	.word	0xcb4
-	.word	0x3ff
-	.word	-0x400
-	.word	gFacilityTrainerMons
-	.word	0xcb1
-	.word	gBitTable
-	.word	gBaseStats
-	.word	0xc36
-	.word	gPlayerParty
-.L260:
 	bne	.L236	@cond_branch
 .L256:
 	mov	r0, sl
 	add	r1, r5, #0
 	ldr	r2, [sp, #0x18]
 	bl	SwapDomeTrainers
+	b	.L260
+.L262:
+	.align	2, 0
+.L261:
+	.word	gSaveBlock2Ptr
+	.word	0xcac
+	.word	0x3ff
+	.word	-0x400
+	.word	0xcec
+	.word	gFacilityTrainerMons
+	.word	0xcad
+	.word	gBitTable
+	.word	gBaseStats
+	.word	0xc32
+	.word	gPlayerParty
+.L260:
 	b	.L231
 .L236:
 	mov	r3, sl
 	lsl	r0, r3, #0x2
 	add	r0, r1, r0
-	mov	r1, #0xcb
-	lsl	r1, r1, #0x4
+	ldr	r1, .L263
 	add	r0, r0, r1
 	ldrh	r0, [r0]
 	lsl	r0, r0, #0x16
@@ -7422,17 +7413,16 @@ InitDomeTrainers:
 	beq	.L241	@cond_branch
 	mov	r3, #0x0
 	mov	sl, r3
-	ldr	r0, .L263
+	ldr	r0, .L263+0x4
 	ldr	r1, [r0]
-	mov	r4, #0xcb
-	lsl	r4, r4, #0x4
+	ldr	r4, .L263
 	add	r1, r1, r4
 	ldrh	r1, [r1]
 	lsl	r1, r1, #0x16
 	lsr	r1, r1, #0x16
-	ldr	r3, .L263+0x4
+	ldr	r3, .L263+0x8
 	add	r2, r0, #0
-	ldr	r6, .L263+0x8
+	ldr	r6, .L263+0xc
 	cmp	r1, r3
 	beq	.L243	@cond_branch
 	add	r5, r2, #0
@@ -7461,18 +7451,18 @@ InitDomeTrainers:
 	beq	.L248	@cond_branch
 	mov	r5, #0x0
 	ldr	r2, [r2]
-	mov	r3, #0xcb
-	lsl	r3, r3, #0x4
+	ldr	r3, .L263
 	add	r2, r2, r3
 	ldrh	r1, [r2]
-	ldr	r0, .L263+0xc
+	ldr	r0, .L263+0x10
 	and	r0, r0, r1
-	ldr	r7, .L263+0x10
+	ldr	r7, .L263+0x14
 	add	r1, r7, #0
 	b	.L257
 .L264:
 	.align	2, 0
 .L263:
+	.word	0xcac
 	.word	gSaveBlock2Ptr
 	.word	0x3ff
 	.word	sTrainerNamePositions
@@ -7481,12 +7471,13 @@ InitDomeTrainers:
 .L248:
 	mov	r5, #0x1
 	ldr	r2, [r2]
-	ldr	r0, .L265
+	mov	r0, #0xcb
+	lsl	r0, r0, #0x4
 	add	r2, r2, r0
 	ldrh	r1, [r2]
-	ldr	r0, .L265+0x4
+	ldr	r0, .L265
 	and	r0, r0, r1
-	ldr	r3, .L265+0x8
+	ldr	r3, .L265+0x4
 	add	r1, r3, #0
 .L257:
 	orr	r0, r0, r1
@@ -7501,10 +7492,9 @@ InitDomeTrainers:
 	lsl	r0, r1, #0x18
 	lsr	r0, r0, #0x18
 	bl	GetFrontierBrainMonSpecies
-	ldr	r1, .L265+0xc
+	ldr	r1, .L265+0x8
 	ldr	r1, [r1]
-	mov	r2, #0xcf
-	lsl	r2, r2, #0x4
+	ldr	r2, .L265+0xc
 	add	r1, r1, r2
 	add	r1, r1, r4
 	strh	r0, [r1]
@@ -7530,10 +7520,10 @@ InitDomeTrainers:
 .L266:
 	.align	2, 0
 .L265:
-	.word	0xcb4
 	.word	-0x400
 	.word	0x3fe
 	.word	gSaveBlock2Ptr
+	.word	0xcec
 .Lfe5:
 	.size	 InitDomeTrainers,.Lfe5-InitDomeTrainers
 	.align	2, 0
@@ -7807,8 +7797,7 @@ SwapDomeTrainers:
 	ldr	r5, [r2]
 	lsl	r6, r0, #0x2
 	add	r6, r5, r6
-	mov	r3, #0xcb
-	lsl	r3, r3, #0x4
+	ldr	r3, .L297+0x4
 	add	r6, r6, r3
 	ldrh	r7, [r6]
 	mov	sl, r7
@@ -7821,7 +7810,7 @@ SwapDomeTrainers:
 	ldrh	r4, [r5]
 	lsl	r4, r4, #0x16
 	lsr	r4, r4, #0x16
-	ldr	r3, .L297+0x4
+	ldr	r3, .L297+0x8
 	add	r2, r3, #0
 	mov	r7, sl
 	and	r2, r2, r7
@@ -7843,8 +7832,7 @@ SwapDomeTrainers:
 	lsl	r4, r3, #0x1
 	mov	r7, ip
 	lsl	r3, r7, #0x1
-	mov	r7, #0xcf
-	lsl	r7, r7, #0x4
+	ldr	r7, .L297+0xc
 	mov	r6, #0x2
 .L295:
 	mov	r1, r8
@@ -7872,7 +7860,9 @@ SwapDomeTrainers:
 	.align	2, 0
 .L297:
 	.word	gSaveBlock2Ptr
+	.word	0xcac
 	.word	-0x400
+	.word	0xcec
 .Lfe7:
 	.size	 SwapDomeTrainers,.Lfe7-SwapDomeTrainers
 	.align	2, 0
@@ -7899,7 +7889,7 @@ BufferDomeRoundText:
 	.word	gStringVar1
 	.word	gRoundsStringTable
 	.word	gSaveBlock2Ptr
-	.word	0xc3e
+	.word	0xc3a
 .Lfe8:
 	.size	 BufferDomeRoundText,.Lfe8-BufferDomeRoundText
 	.align	2, 0
@@ -7930,7 +7920,7 @@ BufferDomeOpponentName:
 	.word	gStringVar1
 	.word	gRoundsStringTable
 	.word	gSaveBlock2Ptr
-	.word	0xc3e
+	.word	0xc3a
 	.word	gStringVar2
 	.word	gTrainerBattleOpponent_A
 .Lfe9:
@@ -8026,12 +8016,11 @@ CreateDomeOpponentMon:
 	add	r1, r1, r3
 	lsl	r1, r1, #0x1
 	add	r1, r5, r1
-	mov	r6, #0xcf
-	lsl	r6, r6, #0x4
+	ldr	r6, .L315+0x8
 	add	r4, r4, r6
 	add	r4, r4, r1
 	ldrh	r3, [r4]
-	ldr	r7, .L315+0x8
+	ldr	r7, .L315+0xc
 	ldr	r7, [r7]
 	mov	r8, r7
 	lsl	r3, r3, #0x4
@@ -8058,10 +8047,9 @@ CreateDomeOpponentMon:
 	ldr	r2, [sp, #0x1c]
 	str	r2, [sp, #0x20]
 	mov	sl, r5
-	mov	r3, #0xcf
-	lsl	r3, r3, #0x4
-	mov	r9, r3
 	ldr	r3, .L315+0x8
+	mov	r9, r3
+	ldr	r3, .L315+0xc
 	mov	r4, sl
 	str	r4, [sp, #0x24]
 .L312:
@@ -8128,18 +8116,17 @@ CreateDomeOpponentMon:
 	ldr	r0, [r0]
 	ldr	r1, [sp, #0x24]
 	add	r1, r1, r8
-	mov	r2, #0xcf
-	lsl	r2, r2, #0x4
+	ldr	r2, .L315+0x8
 	add	r0, r0, r2
 	add	r0, r0, r1
 	ldrh	r0, [r0]
-	ldr	r1, .L315+0x8
+	ldr	r1, .L315+0xc
 	ldr	r1, [r1]
 	lsl	r0, r0, #0x4
 	add	r0, r0, r1
 	ldrb	r2, [r0, #0xa]
 	lsl	r2, r2, #0x1
-	ldr	r0, .L315+0xc
+	ldr	r0, .L315+0x10
 	add	r2, r2, r0
 	add	r0, r4, #0
 	mov	r1, #0xc
@@ -8157,6 +8144,7 @@ CreateDomeOpponentMon:
 .L315:
 	.word	gEnemyParty
 	.word	gSaveBlock2Ptr
+	.word	0xcec
 	.word	gFacilityTrainerMons
 	.word	gBattleFrontierHeldItems
 .Lfe11:
@@ -8325,13 +8313,12 @@ SelectOpponentMonsUsingPersonality:
 	ldr	r1, [r0]
 	ldr	r2, [sp, #0x18]
 	add	r0, r1, r2
-	mov	r2, #0xcb
-	lsl	r2, r2, #0x4
+	ldr	r2, .L356+0x4
 	add	r0, r0, r2
 	ldrh	r0, [r0]
 	lsl	r0, r0, #0x16
 	lsr	r0, r0, #0x16
-	ldr	r2, .L356+0x4
+	ldr	r2, .L356+0x8
 	cmp	r0, r2
 	bne	.L350	@cond_branch
 	mov	r1, r9
@@ -8348,6 +8335,7 @@ SelectOpponentMonsUsingPersonality:
 	.align	2, 0
 .L356:
 	.word	gSaveBlock2Ptr
+	.word	0xcac
 	.word	0x3fe
 .L350:
 	mov	r2, r8
@@ -8356,12 +8344,11 @@ SelectOpponentMonsUsingPersonality:
 	lsl	r0, r0, #0x1
 	ldr	r2, [sp, #0x10]
 	add	r0, r2, r0
-	mov	r2, #0xcf
-	lsl	r2, r2, #0x4
+	ldr	r2, .L358
 	add	r1, r1, r2
 	add	r1, r1, r0
 	ldrh	r0, [r1]
-	ldr	r1, .L358
+	ldr	r1, .L358+0x4
 	ldr	r1, [r1]
 	lsl	r0, r0, #0x4
 	add	r0, r0, r1
@@ -8372,7 +8359,7 @@ SelectOpponentMonsUsingPersonality:
 .L355:
 	mov	r0, #0x64
 	mul	r0, r0, r6
-	ldr	r1, .L358+0x4
+	ldr	r1, .L358+0x8
 	add	r0, r0, r1
 	mov	r1, #0xb
 	mov	r2, #0x0
@@ -8408,6 +8395,7 @@ SelectOpponentMonsUsingPersonality:
 .L359:
 	.align	2, 0
 .L358:
+	.word	0xcec
 	.word	gFacilityTrainerMons
 	.word	gPlayerParty
 .Lfe14:
@@ -8457,13 +8445,12 @@ SelectOpponentMonsUsingOtId:
 	ldr	r1, [r0]
 	ldr	r2, [sp, #0x18]
 	add	r0, r1, r2
-	mov	r2, #0xcb
-	lsl	r2, r2, #0x4
+	ldr	r2, .L379+0x4
 	add	r0, r0, r2
 	ldrh	r0, [r0]
 	lsl	r0, r0, #0x16
 	lsr	r0, r0, #0x16
-	ldr	r2, .L379+0x4
+	ldr	r2, .L379+0x8
 	cmp	r0, r2
 	bne	.L373	@cond_branch
 	mov	r1, r9
@@ -8480,6 +8467,7 @@ SelectOpponentMonsUsingOtId:
 	.align	2, 0
 .L379:
 	.word	gSaveBlock2Ptr
+	.word	0xcac
 	.word	0x3fe
 .L373:
 	mov	r2, r8
@@ -8488,12 +8476,11 @@ SelectOpponentMonsUsingOtId:
 	lsl	r0, r0, #0x1
 	ldr	r2, [sp, #0x10]
 	add	r0, r2, r0
-	mov	r2, #0xcf
-	lsl	r2, r2, #0x4
+	ldr	r2, .L381
 	add	r1, r1, r2
 	add	r1, r1, r0
 	ldrh	r0, [r1]
-	ldr	r1, .L381
+	ldr	r1, .L381+0x4
 	ldr	r1, [r1]
 	lsl	r0, r0, #0x4
 	add	r0, r0, r1
@@ -8504,7 +8491,7 @@ SelectOpponentMonsUsingOtId:
 .L378:
 	mov	r0, #0x64
 	mul	r0, r0, r6
-	ldr	r1, .L381+0x4
+	ldr	r1, .L381+0x8
 	add	r0, r0, r1
 	mov	r1, #0xb
 	mov	r2, #0x0
@@ -8540,6 +8527,7 @@ SelectOpponentMonsUsingOtId:
 .L382:
 	.align	2, 0
 .L381:
+	.word	0xcec
 	.word	gFacilityTrainerMons
 	.word	gPlayerParty
 .Lfe15:
@@ -8954,14 +8942,13 @@ TournamentIdOfOpponent:
 	mov	r5, #0x0
 	ldr	r0, .L513
 	ldr	r1, [r0]
-	mov	r4, #0xcb
-	lsl	r4, r4, #0x4
+	ldr	r4, .L513+0x4
 	add	r1, r1, r4
 	ldrh	r1, [r1]
 	lsl	r1, r1, #0x16
 	lsr	r1, r1, #0x16
 	mov	ip, r0
-	ldr	r6, .L513+0x4
+	ldr	r6, .L513+0x8
 	cmp	r1, r2
 	beq	.L491	@cond_branch
 	mov	r7, ip
@@ -8994,6 +8981,7 @@ TournamentIdOfOpponent:
 	.align	2, 0
 .L513:
 	.word	gSaveBlock2Ptr
+	.word	0xcac
 	.word	sIdToOpponentId
 .L497:
 	lsl	r0, r5, #0x2
@@ -9024,7 +9012,7 @@ TournamentIdOfOpponent:
 	.align	2, 0
 .L515:
 	.word	sTourneyTreeTrainerOpponentIds
-	.word	0xcb1
+	.word	0xcad
 .L501:
 	add	r2, r2, #0x1
 	cmp	r2, r4
@@ -9054,7 +9042,7 @@ TournamentIdOfOpponent:
 .L518:
 	.align	2, 0
 .L517:
-	.word	0xcb1
+	.word	0xcad
 	.word	sTourneyTreeTrainerOpponentIds
 .L496:
 	mov	r3, ip
@@ -9076,7 +9064,7 @@ TournamentIdOfOpponent:
 .L520:
 	.align	2, 0
 .L519:
-	.word	0xcb1
+	.word	0xcad
 .L508:
 	add	r0, r2, #0
 .L510:
@@ -9115,8 +9103,7 @@ TrainerIdOfPlayerOpponent:
 	bl	TournamentIdOfOpponent
 	lsl	r0, r0, #0x2
 	add	r4, r4, r0
-	mov	r0, #0xcb
-	lsl	r0, r0, #0x4
+	ldr	r0, .L525+0xc
 	add	r4, r4, r0
 	ldrh	r0, [r4]
 	lsl	r0, r0, #0x16
@@ -9128,8 +9115,9 @@ TrainerIdOfPlayerOpponent:
 	.align	2, 0
 .L525:
 	.word	gSaveBlock2Ptr
-	.word	0xc3e
+	.word	0xc3a
 	.word	0x3ff
+	.word	0xcac
 .Lfe21:
 	.size	 TrainerIdOfPlayerOpponent,.Lfe21-TrainerIdOfPlayerOpponent
 	.align	2, 0
@@ -9158,7 +9146,8 @@ SaveDomeChallenge:
 	ldr	r0, [r4]
 	ldr	r1, .L531+0x4
 	ldrh	r1, [r1]
-	ldr	r2, .L531+0x8
+	mov	r2, #0xc3
+	lsl	r2, r2, #0x4
 	add	r0, r0, r2
 	strb	r1, [r0]
 	mov	r0, #0x80
@@ -9166,7 +9155,7 @@ SaveDomeChallenge:
 	mov	r1, #0x0
 	bl	VarSet
 	ldr	r1, [r4]
-	ldr	r0, .L531+0xc
+	ldr	r0, .L531+0x8
 	add	r1, r1, r0
 	ldrb	r0, [r1]
 	mov	r2, #0x4
@@ -9181,8 +9170,7 @@ SaveDomeChallenge:
 .L531:
 	.word	gSaveBlock2Ptr
 	.word	gSpecialVar_0x8005
-	.word	0xc34
-	.word	0xc35
+	.word	0xc31
 .Lfe23:
 	.size	 SaveDomeChallenge,.Lfe23-SaveDomeChallenge
 	.align	2, 0
@@ -9227,8 +9215,7 @@ IncrementDomeStreaks:
 	ldr	r0, [r5]
 	add	r1, r0, r3
 	add	r1, r1, r4
-	mov	r2, #0xca
-	lsl	r2, r2, #0x4
+	ldr	r2, .L537+0x18
 	add	r0, r0, r2
 	add	r0, r0, r4
 	ldrh	r1, [r1]
@@ -9244,11 +9231,12 @@ IncrementDomeStreaks:
 	.align	2, 0
 .L537:
 	.word	gSaveBlock2Ptr
-	.word	0xc35
+	.word	0xc31
 	.word	0x40ce
-	.word	0xc98
+	.word	0xc94
 	.word	0x3e6
-	.word	0xca8
+	.word	0xca4
+	.word	0xc9c
 .Lfe24:
 	.size	 IncrementDomeStreaks,.Lfe24-IncrementDomeStreaks
 	.align	2, 0
@@ -9328,13 +9316,13 @@ Task_ShowTourneyInfoCard:
 	.word	gTasks
 .L562:
 	cmp	r4, #0x2
-	bne	.LCB4545
+	bne	.LCB4533
 	b	.L548	@long jump
-.LCB4545:
+.LCB4533:
 	cmp	r4, #0x3
-	bne	.LCB4547
+	bne	.LCB4535
 	b	.L550	@long jump
-.LCB4547:
+.LCB4535:
 	b	.L543
 .L544:
 	mov	r0, #0x0
@@ -10359,8 +10347,8 @@ SpriteCb_HorizontalScrollArrow:
 	.word	gTasks
 	.word	sTourneyTreeTrainerIds
 	.word	gSaveBlock2Ptr
-	.word	0xc3e
-	.word	0xcb1
+	.word	0xc3a
+	.word	0xcad
 	.word	sInfoCard
 .L666:
 	ldr	r0, .L689
@@ -10520,9 +10508,9 @@ Task_HandleInfoCardInput:
 	mov	r5, #0x8
 	ldrsh	r0, [r0, r5]
 	cmp	r0, #0x8
-	bls	.LCB6015
+	bls	.LCB6003
 	bl	.L710	@far jump
-.LCB6015:
+.LCB6003:
 	lsl	r0, r0, #0x2
 	ldr	r1, .L927+0x4
 	add	r0, r0, r1
@@ -10553,9 +10541,9 @@ Task_HandleInfoCardInput:
 	lsl	r0, r0, #0x18
 	lsr	r1, r0, #0x18
 	cmp	r1, #0
-	beq	.LCB6042
+	beq	.LCB6030
 	bl	.L710	@far jump
-.LCB6042:
+.LCB6030:
 	mov	r0, #0x1
 	neg	r0, r0
 	str	r1, [sp]
@@ -10583,9 +10571,9 @@ Task_HandleInfoCardInput:
 	mov	r0, #0x80
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.LCB6077
+	beq	.LCB6065
 	bl	.L710	@far jump
-.LCB6077:
+.LCB6065:
 	mov	r1, r8
 	lsl	r0, r1, #0x2
 	add	r0, r0, r8
@@ -10612,9 +10600,9 @@ Task_HandleInfoCardInput:
 	bl	.L710	@ far jump
 .L730:
 	cmp	r6, #0x9
-	beq	.LCB6111
+	beq	.LCB6099
 	bl	.L710	@far jump
-.LCB6111:
+.LCB6099:
 	mov	r0, #0x1
 	neg	r0, r0
 	mov	r1, #0x0
@@ -10694,9 +10682,9 @@ Task_HandleInfoCardInput:
 	sub	r0, r6, #0x1
 	mov	r9, r1
 	cmp	r0, #0x7
-	bls	.LCB6209
+	bls	.LCB6197
 	bl	.L710	@far jump
-.LCB6209:
+.LCB6197:
 	lsl	r0, r0, #0x2
 	ldr	r1, .L937+0x4
 	add	r0, r0, r1
@@ -13236,13 +13224,13 @@ Task_GetInfoCardInput:
 	mov	r1, #0xe
 	ldrsh	r0, [r3, r1]
 	cmp	r0, #0
-	bne	.LCB9354
+	bne	.LCB9342
 	b	.L1064	@long jump
-.LCB9354:
+.LCB9342:
 	cmp	r0, #0x1
-	beq	.LCB9356
+	beq	.LCB9344
 	b	.L1030	@long jump
-.LCB9356:
+.LCB9344:
 	mov	r0, #0x40
 	and	r0, r0, r4
 	cmp	r0, #0
@@ -13262,7 +13250,7 @@ Task_GetInfoCardInput:
 	.word	gTasks
 	.word	sTourneyTreeTrainerIds
 	.word	gSaveBlock2Ptr
-	.word	0xc3e
+	.word	0xc3a
 	.word	gMain
 	.word	sInfoCard
 .L1032:
@@ -13363,9 +13351,9 @@ Task_GetInfoCardInput:
 	mov	r7, #0x4
 .L1034:
 	cmp	r7, #0x9
-	beq	.LCB9537
+	beq	.LCB9525
 	b	.L1047	@long jump
-.LCB9537:
+.LCB9525:
 	ldr	r0, .L1075+0x8
 	ldr	r3, [r0]
 	ldrb	r0, [r3, #0x10]
@@ -13389,7 +13377,7 @@ Task_GetInfoCardInput:
 	.align	2, 0
 .L1075:
 	.word	gSaveBlock2Ptr
-	.word	0xcb1
+	.word	0xcad
 	.word	sInfoCard
 	.word	gTasks
 	.word	gUnknown_0860D1A0
@@ -13610,8 +13598,7 @@ DisplayTrainerInfoOnCard:
 	ldr	r3, [sp, #0x24]
 	lsl	r0, r3, #0x2
 	add	r0, r1, r0
-	mov	r2, #0xcb
-	lsl	r2, r2, #0x4
+	ldr	r2, .L1286+0x4
 	add	r0, r0, r2
 	ldrh	r0, [r0]
 	lsl	r0, r0, #0x16
@@ -13649,7 +13636,7 @@ DisplayTrainerInfoOnCard:
 	and	r0, r0, r2
 	cmp	r0, #0
 	beq	.L1095	@cond_branch
-	ldr	r3, .L1286+0x4
+	ldr	r3, .L1286+0x8
 	str	r3, [sp, #0x30]
 .L1095:
 	mov	r0, #0x10
@@ -13661,7 +13648,7 @@ DisplayTrainerInfoOnCard:
 	neg	r3, r3
 	str	r3, [sp, #0x34]
 .L1096:
-	ldr	r0, .L1286+0x8
+	ldr	r0, .L1286+0xc
 	ldr	r2, [sp, #0x28]
 	cmp	r2, r0
 	bne	.L1097	@cond_branch
@@ -13674,6 +13661,7 @@ DisplayTrainerInfoOnCard:
 	.align	2, 0
 .L1286:
 	.word	gSaveBlock2Ptr
+	.word	0xcac
 	.word	-0x100
 	.word	0x3ff
 .L1097:
@@ -13756,8 +13744,7 @@ DisplayTrainerInfoOnCard:
 	bne	.L1106	@cond_branch
 	ldr	r0, .L1290+0x10
 	ldr	r0, [r0]
-	mov	r2, #0xcf
-	lsl	r2, r2, #0x4
+	ldr	r2, .L1290+0x14
 	add	r0, r0, r2
 	add	r0, r0, r6
 	ldrh	r0, [r0]
@@ -13770,6 +13757,7 @@ DisplayTrainerInfoOnCard:
 	.word	gSprites
 	.word	0x3ff
 	.word	gSaveBlock2Ptr
+	.word	0xcec
 .L1106:
 	ldr	r0, .L1292
 	ldr	r1, [sp, #0x28]
@@ -13777,8 +13765,7 @@ DisplayTrainerInfoOnCard:
 	bne	.L1108	@cond_branch
 	ldr	r0, .L1292+0x4
 	ldr	r0, [r0]
-	mov	r2, #0xcf
-	lsl	r2, r2, #0x4
+	ldr	r2, .L1292+0x8
 	add	r0, r0, r2
 	add	r0, r0, r6
 	ldrh	r0, [r0]
@@ -13788,26 +13775,26 @@ DisplayTrainerInfoOnCard:
 .L1292:
 	.word	0x3fe
 	.word	gSaveBlock2Ptr
+	.word	0xcec
 .L1108:
 	ldr	r0, .L1294
 	ldr	r0, [r0]
-	mov	r1, #0xcf
-	lsl	r1, r1, #0x4
+	ldr	r1, .L1294+0x4
 	add	r0, r0, r1
 	add	r0, r0, r6
 	ldrh	r1, [r0]
-	ldr	r0, .L1294+0x4
+	ldr	r0, .L1294+0x8
 	ldr	r0, [r0]
 	lsl	r1, r1, #0x4
 	add	r1, r1, r0
 	ldrh	r0, [r1]
 .L1280:
-	ldr	r1, .L1294+0x8
+	ldr	r1, .L1294+0xc
 	add	r1, r7, r1
 	ldrb	r2, [r1]
 	ldr	r3, [sp, #0x30]
 	orr	r2, r2, r3
-	ldr	r1, .L1294+0xc
+	ldr	r1, .L1294+0x10
 	add	r1, r7, r1
 	ldrb	r3, [r1]
 	ldr	r1, [sp, #0x34]
@@ -13817,7 +13804,7 @@ DisplayTrainerInfoOnCard:
 	mov	r1, #0x1
 	str	r1, [sp, #0x8]
 	str	r5, [sp, #0xc]
-	ldr	r1, .L1294+0x10
+	ldr	r1, .L1294+0x14
 	bl	CreateMonIcon
 	mov	r2, r9
 	ldr	r1, [r2]
@@ -13891,11 +13878,11 @@ DisplayTrainerInfoOnCard:
 	mov	r0, #0xd0
 	strb	r0, [r1, #0xd]
 	mov	r7, #0x0
-	ldr	r0, .L1294+0x14
+	ldr	r0, .L1294+0x18
 	ldr	r3, [sp, #0x28]
 	cmp	r3, r0
 	bne	.L1112	@cond_branch
-	ldr	r0, .L1294+0x18
+	ldr	r0, .L1294+0x1c
 	add	r0, r0, #0x3c
 	ldrb	r5, [r0]
 	b	.L1113
@@ -13903,6 +13890,7 @@ DisplayTrainerInfoOnCard:
 	.align	2, 0
 .L1294:
 	.word	gSaveBlock2Ptr
+	.word	0xcec
 	.word	gFacilityTrainerMons
 	.word	sInfoTrainerMonX
 	.word	sInfoTrainerMonY
@@ -14050,8 +14038,7 @@ DisplayTrainerInfoOnCard:
 	ldr	r1, [r0]
 	lsl	r0, r7, #0x1
 	add	r0, r0, r9
-	mov	r2, #0xcf
-	lsl	r2, r2, #0x4
+	ldr	r2, .L1302+0x14
 	add	r1, r1, r2
 	b	.L1282
 .L1303:
@@ -14062,6 +14049,7 @@ DisplayTrainerInfoOnCard:
 	.word	sSpeciesNameTextYCoords
 	.word	0x3ff
 	.word	gSaveBlock2Ptr
+	.word	0xcec
 .L1129:
 	ldr	r0, .L1304
 	ldr	r4, [sp, #0x28]
@@ -14071,8 +14059,7 @@ DisplayTrainerInfoOnCard:
 	ldr	r1, [r0]
 	lsl	r0, r7, #0x1
 	add	r0, r0, r9
-	mov	r2, #0xcf
-	lsl	r2, r2, #0x4
+	ldr	r2, .L1304+0x8
 	add	r1, r1, r2
 	b	.L1282
 .L1305:
@@ -14080,17 +14067,17 @@ DisplayTrainerInfoOnCard:
 .L1304:
 	.word	0x3fe
 	.word	gSaveBlock2Ptr
+	.word	0xcec
 .L1131:
 	ldr	r4, .L1306
 	ldr	r1, [r4]
 	lsl	r0, r7, #0x1
 	add	r0, r0, r9
-	mov	r2, #0xcf
-	lsl	r2, r2, #0x4
+	ldr	r2, .L1306+0x4
 	add	r1, r1, r2
 	add	r1, r1, r0
 	ldrh	r1, [r1]
-	ldr	r0, .L1306+0x4
+	ldr	r0, .L1306+0x8
 	ldr	r0, [r0]
 	lsl	r1, r1, #0x4
 .L1282:
@@ -14099,7 +14086,7 @@ DisplayTrainerInfoOnCard:
 	mov	r3, sl
 	mul	r3, r3, r0
 	add	r0, r3, #0
-	ldr	r1, .L1306+0x8
+	ldr	r1, .L1306+0xc
 	add	r0, r0, r1
 	str	r0, [sp, #0x10]
 	add	r0, r7, #0x1
@@ -14116,6 +14103,7 @@ DisplayTrainerInfoOnCard:
 	.align	2, 0
 .L1306:
 	.word	gSaveBlock2Ptr
+	.word	0xcec
 	.word	gFacilityTrainerMons
 	.word	gSpeciesNames
 .L1133:
@@ -14238,7 +14226,7 @@ DisplayTrainerInfoOnCard:
 .L1312:
 	.word	0x3ff
 	.word	gSaveBlock2Ptr
-	.word	0xe88
+	.word	0xe84
 .L1152:
 	ldr	r0, .L1314
 	ldr	r0, [r0]
@@ -14250,12 +14238,11 @@ DisplayTrainerInfoOnCard:
 	lsl	r0, r0, #0x1
 	ldr	r1, [sp, #0x38]
 	add	r0, r1, r0
-	mov	r1, #0xcf
-	lsl	r1, r1, #0x4
+	ldr	r1, .L1314+0x4
 	add	r1, r1, ip
 	add	r1, r1, r0
 	ldrh	r0, [r1]
-	ldr	r1, .L1314+0x4
+	ldr	r1, .L1314+0x8
 	ldr	r1, [r1]
 	lsl	r0, r0, #0x4
 	add	r0, r0, r1
@@ -14283,9 +14270,9 @@ DisplayTrainerInfoOnCard:
 	cmp	r7, #0x2
 	ble	.L1141	@cond_branch
 	mov	r7, #0x0
-	ldr	r2, .L1314+0x8
+	ldr	r2, .L1314+0xc
 	mov	r9, r2
-	ldr	r3, .L1314+0xc
+	ldr	r3, .L1314+0x10
 	mov	sl, r3
 .L1160:
 	mov	r4, #0x0
@@ -14340,12 +14327,12 @@ DisplayTrainerInfoOnCard:
 	cmp	r0, r8
 	bge	.L1173	@cond_branch
 	ldr	r2, [sp, #0x28]
-	ldr	r3, .L1314+0x10
+	ldr	r3, .L1314+0x14
 	add	r0, r2, r3
 	cmp	r0, #0x1
-	bls	.LCB10877
+	bls	.LCB10864
 	b	.L1175	@long jump
-.LCB10877:
+.LCB10864:
 	mov	r7, #0x0
 	mov	r4, #0x0
 	mov	r9, r4
@@ -14354,7 +14341,7 @@ DisplayTrainerInfoOnCard:
 	mov	r4, r8
 	mov	r6, r9
 .L1183:
-	ldr	r0, .L1314+0x14
+	ldr	r0, .L1314+0x18
 	ldr	r1, [sp, #0x28]
 	cmp	r1, r0
 	bne	.L1184	@cond_branch
@@ -14369,6 +14356,7 @@ DisplayTrainerInfoOnCard:
 	.align	2, 0
 .L1314:
 	.word	gSaveBlock2Ptr
+	.word	0xcec
 	.word	gFacilityTrainerMons
 	.word	sBattleDomeOpponentStyleTexts
 	.word	sBattleStyleThresholds
@@ -14379,8 +14367,7 @@ DisplayTrainerInfoOnCard:
 	ldr	r0, [r0]
 	lsl	r1, r7, #0x4
 	add	r1, r5, r1
-	mov	r2, #0xe9
-	lsl	r2, r2, #0x4
+	ldr	r2, .L1316+0x4
 	add	r0, r0, r2
 	add	r0, r0, r1
 	ldrb	r0, [r0]
@@ -14398,7 +14385,7 @@ DisplayTrainerInfoOnCard:
 	mov	r5, #0x0
 	mov	r4, r8
 .L1190:
-	ldr	r0, .L1316+0x4
+	ldr	r0, .L1316+0x8
 	ldr	r1, [sp, #0x28]
 	cmp	r1, r0
 	bne	.L1191	@cond_branch
@@ -14412,6 +14399,7 @@ DisplayTrainerInfoOnCard:
 	.align	2, 0
 .L1316:
 	.word	gSaveBlock2Ptr
+	.word	0xe8c
 	.word	0x3fe
 .L1191:
 	ldr	r0, .L1318
@@ -14446,7 +14434,7 @@ DisplayTrainerInfoOnCard:
 	.align	2, 0
 .L1318:
 	.word	gSaveBlock2Ptr
-	.word	0xe96
+	.word	0xe92
 	.word	gNatureStatTable
 .L1193:
 	cmp	r0, #0
@@ -14479,9 +14467,9 @@ DisplayTrainerInfoOnCard:
 	add	r9, r9, r4
 	add	r7, r7, #0x1
 	cmp	r7, #0x2
-	bgt	.LCB11058
+	bgt	.LCB11046
 	b	.L1179	@long jump
-.LCB11058:
+.LCB11046:
 	mov	r5, #0x0
 	mov	r1, r8
 	mov	r7, #0x5
@@ -14520,8 +14508,7 @@ DisplayTrainerInfoOnCard:
 .L1213:
 	ldr	r3, .L1320+0x4
 	ldr	r0, [r3]
-	mov	r4, #0xcf
-	lsl	r4, r4, #0x4
+	ldr	r4, .L1320+0x8
 	add	r0, r0, r4
 	add	r0, r0, r9
 	ldrh	r0, [r0]
@@ -14555,8 +14542,7 @@ DisplayTrainerInfoOnCard:
 	add	r6, r0, #0
 	ldr	r3, .L1320+0x4
 	ldr	r0, [r3]
-	mov	r4, #0xcf
-	lsl	r4, r4, #0x4
+	ldr	r4, .L1320+0x8
 	add	r0, r0, r4
 	add	r0, r0, r9
 	ldrh	r0, [r0]
@@ -14590,8 +14576,7 @@ DisplayTrainerInfoOnCard:
 .L1229:
 	ldr	r1, .L1320+0x4
 	ldr	r0, [r1]
-	mov	r2, #0xcf
-	lsl	r2, r2, #0x4
+	ldr	r2, .L1320+0x8
 	add	r0, r0, r2
 	add	r0, r0, r9
 	ldrh	r0, [r0]
@@ -14603,7 +14588,7 @@ DisplayTrainerInfoOnCard:
 	lsl	r0, r2, #0x2
 	add	r0, r0, r2
 	add	r0, r5, r0
-	ldr	r1, .L1320+0x8
+	ldr	r1, .L1320+0xc
 	add	r0, r0, r1
 	ldrb	r0, [r0, #0]
 	lsl	r0, r0, #24
@@ -14625,6 +14610,7 @@ DisplayTrainerInfoOnCard:
 .L1320:
 	.word	gFacilityTrainerMons
 	.word	gSaveBlock2Ptr
+	.word	0xcec
 	.word	gNatureStatTable
 .L1230:
 	cmp	r0, #0
@@ -14656,9 +14642,9 @@ DisplayTrainerInfoOnCard:
 	add	r9, r9, r2
 	sub	r7, r7, #0x1
 	cmp	r7, #0
-	blt	.LCB11316
+	blt	.LCB11302
 	b	.L1213	@long jump
-.LCB11316:
+.LCB11302:
 	mov	r5, #0x0
 	mov	r1, r8
 	mov	r7, #0x5
@@ -14961,15 +14947,14 @@ BufferDomeWinString:
 	strb	r4, [r0]
 	ldr	r2, [r5]
 	add	r0, r2, r1
-	mov	r1, #0xcb
-	lsl	r1, r1, #0x4
+	ldr	r1, .L1358+0x18
 	add	r0, r0, r1
 	ldrh	r0, [r0]
 	lsl	r1, r0, #0x16
 	lsr	r0, r1, #0x16
 	cmp	r0, sl
 	bne	.L1334	@cond_branch
-	ldr	r0, .L1358+0x18
+	ldr	r0, .L1358+0x1c
 	add	r1, r2, #0
 	bl	StringCopy
 	b	.L1335
@@ -14981,7 +14966,8 @@ BufferDomeWinString:
 	.word	0x3ff
 	.word	0x3fe
 	.word	sTourneyTreeTrainerIds2
-	.word	0xcb1
+	.word	0xcad
+	.word	0xcac
 	.word	gStringVar1
 .L1334:
 	lsr	r0, r1, #0x16
@@ -15039,9 +15025,9 @@ BufferDomeWinString:
 	add	r0, r6, r0
 	str	r3, [sp, #0x8]
 	cmp	r6, r0
-	blt	.LCB11794
+	blt	.LCB11780
 	b	.L1341	@long jump
-.LCB11794:
+.LCB11780:
 	ldr	r5, .L1364
 	mov	sl, r5
 	ldr	r0, .L1364+0x4
@@ -15124,27 +15110,27 @@ BufferDomeWinString:
 	.align	2, 0
 .L1364:
 	.word	gSaveBlock2Ptr
-	.word	0xcb1
+	.word	0xcad
 	.word	sTourneyTreeTrainerIds2
-	.word	0xe4c
+	.word	0xe48
 	.word	gMoveNames
 	.word	gStringVar2
 .L1345:
-	mov	r5, #0xcb
-	lsl	r5, r5, #0x4
+	ldr	r5, .L1366
 	add	r0, r2, r5
 	ldrh	r0, [r0]
 	lsl	r1, r0, #0x16
-	ldr	r0, .L1366
+	ldr	r0, .L1366+0x4
 	cmp	r1, r0
 	bne	.L1348	@cond_branch
-	ldr	r0, .L1366+0x4
+	ldr	r0, .L1366+0x8
 	add	r1, r3, #0
 	bl	StringCopy
 	b	.L1344
 .L1367:
 	.align	2, 0
 .L1366:
+	.word	0xcac
 	.word	-0x400000
 	.word	gStringVar1
 .L1348:
@@ -15181,9 +15167,9 @@ BufferDomeWinString:
 	ldrb	r0, [r1]
 	add	r2, r2, r0
 	cmp	r6, r2
-	bge	.LCB11991
+	bge	.LCB11977
 	b	.L1343	@long jump
-.LCB11991:
+.LCB11977:
 .L1341:
 	cmp	r7, #0xe
 	beq	.L1354	@cond_branch
@@ -15351,8 +15337,7 @@ DisplayMatchInfoOnCard:
 	add	r1, r3, r7
 	lsl	r0, r0, #0x2
 	add	r0, r4, r0
-	mov	r7, #0xcb
-	lsl	r7, r7, #0x4
+	ldr	r7, .L1435+0x10
 	add	r0, r0, r7
 	ldrh	r0, [r0]
 	lsl	r0, r0, #0x16
@@ -15361,7 +15346,7 @@ DisplayMatchInfoOnCard:
 	ldr	r0, [r2]
 	lsl	r0, r0, #0x2
 	add	r0, r4, r0
-	ldr	r1, .L1435+0x10
+	ldr	r1, .L1435+0x14
 	add	r0, r0, r1
 	ldrb	r1, [r0]
 	lsl	r0, r1, #0x1b
@@ -15382,7 +15367,8 @@ DisplayMatchInfoOnCard:
 	.word	sInfoCard
 	.word	gSaveBlock2Ptr
 	.word	sCompetitorRangeByMatch+0x2
-	.word	0xcb1
+	.word	0xcac
+	.word	0xcad
 .L1382:
 	ldr	r7, [sp, #0x54]
 	add	r1, r3, r7
@@ -15606,12 +15592,11 @@ DisplayMatchInfoOnCard:
 	add	r0, r0, r1
 	lsl	r0, r0, #0x1
 	add	r0, r0, r9
-	mov	r3, #0xcf
-	lsl	r3, r3, #0x4
+	ldr	r3, .L1445+0x14
 	add	r2, r2, r3
 	add	r2, r2, r0
 	ldrh	r0, [r2]
-	ldr	r1, .L1445+0x14
+	ldr	r1, .L1445+0x18
 	add	r1, r5, r1
 	ldrb	r2, [r1]
 	ldr	r1, [sp, #0x44]
@@ -15625,6 +15610,7 @@ DisplayMatchInfoOnCard:
 	.word	gSprites
 	.word	0x3ff
 	.word	gSaveBlock2Ptr
+	.word	0xcec
 	.word	sLeftTrainerMonX
 .L1401:
 	ldr	r0, .L1447
@@ -15637,8 +15623,7 @@ DisplayMatchInfoOnCard:
 	add	r0, r0, r1
 	lsl	r0, r0, #0x1
 	add	r0, r0, r9
-	mov	r1, #0xcf
-	lsl	r1, r1, #0x4
+	ldr	r1, .L1447+0x8
 	add	r2, r2, r1
 	add	r2, r2, r0
 	ldrh	r0, [r2]
@@ -15648,6 +15633,7 @@ DisplayMatchInfoOnCard:
 .L1447:
 	.word	0x3fe
 	.word	gSaveBlock2Ptr
+	.word	0xcec
 .L1403:
 	ldr	r0, .L1449
 	ldr	r2, [r0]
@@ -15656,24 +15642,23 @@ DisplayMatchInfoOnCard:
 	add	r0, r0, r1
 	lsl	r0, r0, #0x1
 	add	r0, r0, r9
-	mov	r1, #0xcf
-	lsl	r1, r1, #0x4
+	ldr	r1, .L1449+0x4
 	add	r2, r2, r1
 	add	r2, r2, r0
 	ldrh	r1, [r2]
-	ldr	r0, .L1449+0x4
+	ldr	r0, .L1449+0x8
 	ldr	r0, [r0]
 	lsl	r1, r1, #0x4
 	add	r1, r1, r0
 	ldrh	r0, [r1]
 .L1433:
-	ldr	r1, .L1449+0x8
+	ldr	r1, .L1449+0xc
 	add	r1, r5, r1
 	ldrb	r2, [r1]
 	ldr	r3, [sp, #0x44]
 	orr	r2, r2, r3
 .L1432:
-	ldr	r1, .L1449+0xc
+	ldr	r1, .L1449+0x10
 	add	r1, r5, r1
 	ldrb	r3, [r1]
 	ldr	r1, [sp, #0x48]
@@ -15683,7 +15668,7 @@ DisplayMatchInfoOnCard:
 	mov	r1, sl
 	str	r1, [sp, #0x8]
 	str	r7, [sp, #0xc]
-	ldr	r1, .L1449+0x10
+	ldr	r1, .L1449+0x14
 	bl	CreateMonIcon
 	ldr	r1, [r6]
 	add	r1, r1, r4
@@ -15750,13 +15735,13 @@ DisplayMatchInfoOnCard:
 	add	r9, r9, r3
 	add	r5, r5, #0x1
 	cmp	r5, #0x2
-	bgt	.LCB12757
+	bgt	.LCB12742
 	b	.L1400	@long jump
-.LCB12757:
+.LCB12742:
 	mov	r5, #0x0
 	mov	r7, #0x0
-	ldr	r6, .L1449+0x14
-	ldr	r0, .L1449+0x18
+	ldr	r6, .L1449+0x18
+	ldr	r0, .L1449+0x1c
 	mov	r8, r0
 	ldr	r4, [sp, #0x60]
 	mov	r1, #0x0
@@ -15766,7 +15751,7 @@ DisplayMatchInfoOnCard:
 .L1411:
 	ldr	r3, [sp, #0x50]
 	ldr	r1, [r3, #0x4]
-	ldr	r0, .L1449+0x1c
+	ldr	r0, .L1449+0x20
 	cmp	r1, r0
 	bne	.L1412	@cond_branch
 	ldr	r0, .L1449
@@ -15777,8 +15762,7 @@ DisplayMatchInfoOnCard:
 	add	r0, r0, r1
 	lsl	r0, r0, #0x1
 	add	r0, r0, r9
-	mov	r1, #0xcf
-	lsl	r1, r1, #0x4
+	ldr	r1, .L1449+0x4
 	add	r2, r2, r1
 	add	r2, r2, r0
 	ldrh	r0, [r2]
@@ -15787,6 +15771,7 @@ DisplayMatchInfoOnCard:
 	.align	2, 0
 .L1449:
 	.word	gSaveBlock2Ptr
+	.word	0xcec
 	.word	gFacilityTrainerMons
 	.word	sLeftTrainerMonX
 	.word	sLeftTrainerMonY
@@ -15806,8 +15791,7 @@ DisplayMatchInfoOnCard:
 	add	r0, r0, r1
 	lsl	r0, r0, #0x1
 	add	r0, r0, r9
-	mov	r1, #0xcf
-	lsl	r1, r1, #0x4
+	ldr	r1, .L1451+0x8
 	add	r2, r2, r1
 	add	r2, r2, r0
 	ldrh	r0, [r2]
@@ -15817,6 +15801,7 @@ DisplayMatchInfoOnCard:
 .L1451:
 	.word	0x3fe
 	.word	gSaveBlock2Ptr
+	.word	0xcec
 .L1414:
 	ldr	r0, .L1453
 	ldr	r2, [r0]
@@ -15826,23 +15811,22 @@ DisplayMatchInfoOnCard:
 	add	r0, r0, r1
 	lsl	r0, r0, #0x1
 	add	r0, r0, r9
-	mov	r1, #0xcf
-	lsl	r1, r1, #0x4
+	ldr	r1, .L1453+0x4
 	add	r2, r2, r1
 	add	r2, r2, r0
 	ldrh	r1, [r2]
-	ldr	r0, .L1453+0x4
+	ldr	r0, .L1453+0x8
 	ldr	r0, [r0]
 	lsl	r1, r1, #0x4
 	add	r1, r1, r0
 	ldrh	r0, [r1]
 .L1434:
-	ldr	r1, .L1453+0x8
+	ldr	r1, .L1453+0xc
 	add	r1, r5, r1
 	ldrb	r2, [r1]
 	ldr	r3, [sp, #0x44]
 	orr	r2, r2, r3
-	ldr	r1, .L1453+0xc
+	ldr	r1, .L1453+0x10
 	add	r1, r5, r1
 	ldrb	r3, [r1]
 	ldr	r1, [sp, #0x48]
@@ -15852,7 +15836,7 @@ DisplayMatchInfoOnCard:
 	mov	r1, sl
 	str	r1, [sp, #0x8]
 	str	r7, [sp, #0xc]
-	ldr	r1, .L1453+0x10
+	ldr	r1, .L1453+0x14
 	bl	CreateMonIcon
 	ldr	r1, [r6]
 	add	r1, r1, r4
@@ -15920,9 +15904,9 @@ DisplayMatchInfoOnCard:
 	add	r9, r9, r0
 	add	r5, r5, #0x1
 	cmp	r5, #0x2
-	bgt	.LCB12987
+	bgt	.LCB12971
 	b	.L1411	@long jump
-.LCB12987:
+.LCB12971:
 	add	r0, sp, #0x10
 	mov	r5, #0x0
 	strb	r5, [r0, #0x6]
@@ -15954,8 +15938,8 @@ DisplayMatchInfoOnCard:
 	add	r1, r2, #0
 	mov	r0, #0xd0
 	strb	r0, [r1, #0xd]
-	ldr	r4, .L1453+0x14
-	ldr	r0, .L1453+0x18
+	ldr	r4, .L1453+0x18
+	ldr	r0, .L1453+0x1c
 	ldr	r1, [sp, #0x74]
 	add	r0, r1, r0
 	ldr	r1, [r0]
@@ -15984,10 +15968,10 @@ DisplayMatchInfoOnCard:
 	mov	r2, #0x0
 	bl	AddTextPrinter
 	ldr	r1, [sp, #0x28]
-	ldr	r0, .L1453+0x1c
+	ldr	r0, .L1453+0x20
 	cmp	r1, r0
 	bne	.L1419	@cond_branch
-	ldr	r0, .L1453+0x20
+	ldr	r0, .L1453+0x24
 	ldr	r1, .L1453
 	ldr	r1, [r1]
 	bl	StringCopy
@@ -15996,6 +15980,7 @@ DisplayMatchInfoOnCard:
 	.align	2, 0
 .L1453:
 	.word	gSaveBlock2Ptr
+	.word	0xcec
 	.word	gFacilityTrainerMons
 	.word	sRightTrainerMonX
 	.word	sRightTrainerMonY
@@ -16247,9 +16232,9 @@ ShowPreviousDomeTourneyTree:
 	.align	2, 0
 .L1467:
 	.word	gSaveBlock2Ptr
-	.word	0xc96
-	.word	0xc35
-	.word	0xc3e
+	.word	0xc92
+	.word	0xc31
+	.word	0xc3a
 	.word	Task_ShowTourneyTree
 	.word	gTasks
 	.word	CB2_TourneyTree
@@ -16274,9 +16259,9 @@ Task_HandleTourneyTreeInput:
 	ldrsh	r0, [r0, r2]
 	add	r2, r1, #0
 	cmp	r0, #0x7
-	bls	.LCB13422
+	bls	.LCB13407
 	b	.L1470	@long jump
-.LCB13422:
+.LCB13407:
 	lsl	r0, r0, #0x2
 	ldr	r1, .L1494+0x4
 	add	r0, r0, r1
@@ -16306,9 +16291,9 @@ Task_HandleTourneyTreeInput:
 	lsl	r0, r0, #0x18
 	lsr	r1, r0, #0x18
 	cmp	r1, #0
-	beq	.LCB13449
+	beq	.LCB13434
 	b	.L1470	@long jump
-.LCB13449:
+.LCB13434:
 	mov	r0, #0x1
 	neg	r0, r0
 	str	r1, [sp]
@@ -16343,9 +16328,9 @@ Task_HandleTourneyTreeInput:
 	mov	r0, #0x80
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.LCB13492
+	beq	.LCB13477
 	b	.L1470	@long jump
-.LCB13492:
+.LCB13477:
 	lsl	r0, r5, #0x2
 	add	r0, r0, r5
 	lsl	r0, r0, #0x3
@@ -16363,9 +16348,9 @@ Task_HandleTourneyTreeInput:
 	lsl	r0, r0, #0x18
 	lsr	r0, r0, #0x18
 	cmp	r0, #0x1
-	bne	.LCB13516
+	bne	.LCB13501
 	b	.L1470	@long jump
-.LCB13516:
+.LCB13501:
 	cmp	r0, #0x1
 	ble	.L1478	@cond_branch
 	cmp	r0, #0x2
@@ -16440,9 +16425,9 @@ Task_HandleTourneyTreeInput:
 	lsl	r0, r0, #0x18
 	lsr	r6, r0, #0x18
 	cmp	r6, #0
-	beq	.LCB13608
+	beq	.LCB13593
 	b	.L1470	@long jump
-.LCB13608:
+.LCB13593:
 	bl	FreeAllWindowBuffers
 	bl	ScanlineEffect_Stop
 	ldr	r4, .L1506+0x4
@@ -16622,7 +16607,7 @@ UpdateTourneyTreeCursor:
 .L1529:
 	.word	gTasks
 	.word	gSaveBlock2Ptr
-	.word	0xc3e
+	.word	0xc3a
 	.word	gMain
 .L1513:
 	cmp	r5, #0xf
@@ -16866,9 +16851,9 @@ ResolveDomeRoundWinners:
 	.word	gSpecialVar_0x8005
 	.word	gTrainerBattleOpponent_A
 	.word	gSaveBlock2Ptr
-	.word	0xcb1
-	.word	0xc3e
-	.word	0xe4c
+	.word	0xcad
+	.word	0xc3a
+	.word	0xe48
 	.word	gBattleResults
 .L1543:
 	ldr	r5, .L1555
@@ -16958,9 +16943,9 @@ ResolveDomeRoundWinners:
 .L1555:
 	.word	0x3ff
 	.word	gSaveBlock2Ptr
-	.word	0xcb1
-	.word	0xc3e
-	.word	0xe4c
+	.word	0xcad
+	.word	0xc3a
+	.word	0xe48
 	.word	gBattleResults
 	.word	gBattleOutcome
 .Lfe48:
@@ -17017,12 +17002,11 @@ GetWinningMove:
 	ldr	r3, [r0]
 	ldr	r1, [sp, #0x70]
 	add	r0, r3, r1
-	mov	r2, #0xcb
-	lsl	r2, r2, #0x4
+	ldr	r2, .L1626+0x4
 	add	r0, r0, r2
 	ldrh	r0, [r0]
 	lsl	r0, r0, #0x16
-	ldr	r1, .L1626+0x4
+	ldr	r1, .L1626+0x8
 	cmp	r0, r1
 	bne	.L1566	@cond_branch
 	ldr	r3, [sp, #0x50]
@@ -17040,6 +17024,7 @@ GetWinningMove:
 	.align	2, 0
 .L1626:
 	.word	gSaveBlock2Ptr
+	.word	0xcac
 	.word	-0x800000
 .L1566:
 	lsl	r2, r4, #0x1
@@ -17050,12 +17035,11 @@ GetWinningMove:
 	ldr	r4, [sp, #0x50]
 	add	r0, r0, r4
 	lsl	r0, r0, #0x1
-	mov	r5, #0xcf
-	lsl	r5, r5, #0x4
+	ldr	r5, .L1628
 	add	r1, r3, r5
 	add	r1, r1, r0
 	ldrh	r0, [r1]
-	ldr	r1, .L1628
+	ldr	r1, .L1628+0x4
 	ldr	r1, [r1]
 	lsl	r0, r0, #0x4
 	add	r0, r0, r1
@@ -17066,7 +17050,7 @@ GetWinningMove:
 	ldrh	r0, [r0]
 	strh	r0, [r2]
 .L1567:
-	ldr	r0, .L1628+0x4
+	ldr	r0, .L1628+0x8
 	ldr	r1, [sp, #0x78]
 	add	r1, r1, r9
 	lsl	r1, r1, #0x1
@@ -17084,6 +17068,7 @@ GetWinningMove:
 .L1629:
 	.align	2, 0
 .L1628:
+	.word	0xcec
 	.word	gFacilityTrainerMons
 	.word	gBattleMoves
 .L1568:
@@ -17128,12 +17113,11 @@ GetWinningMove:
 	orr	r5, r5, r0
 	ldr	r2, .L1630
 	ldr	r0, [r2]
-	mov	r4, #0xcf
-	lsl	r4, r4, #0x4
+	ldr	r4, .L1630+0x4
 	add	r0, r0, r4
 	add	r0, r0, r8
 	ldrh	r4, [r0]
-	ldr	r3, .L1630+0x4
+	ldr	r3, .L1630+0x8
 	ldr	r0, [r3]
 	lsl	r4, r4, #0x4
 	add	r4, r4, r0
@@ -17151,8 +17135,7 @@ GetWinningMove:
 	ldr	r0, [r2]
 	ldr	r2, [sp, #0x5c]
 	add	r1, r7, r2
-	mov	r4, #0xcf
-	lsl	r4, r4, #0x4
+	ldr	r4, .L1630+0x4
 	add	r0, r0, r4
 	add	r0, r0, r1
 	ldrh	r0, [r0]
@@ -17167,7 +17150,7 @@ GetWinningMove:
 	lsl	r0, r1, #0x3
 	add	r0, r0, r1
 	lsl	r0, r0, #0x2
-	ldr	r5, .L1630+0x8
+	ldr	r5, .L1630+0xc
 	add	r0, r0, r5
 	ldrh	r2, [r0, #0x1a]
 	b	.L1584
@@ -17175,6 +17158,7 @@ GetWinningMove:
 	.align	2, 0
 .L1630:
 	.word	gSaveBlock2Ptr
+	.word	0xcec
 	.word	gFacilityTrainerMons
 	.word	gBaseStats
 .L1583:
@@ -17270,15 +17254,15 @@ GetWinningMove:
 	ldr	r0, [sp, #0x68]
 	mov	r9, r0
 	cmp	r0, #0x3
-	bgt	.LCB14661
+	bgt	.LCB14645
 	b	.L1565	@long jump
-.LCB14661:
+.LCB14645:
 	ldr	r1, [sp, #0x64]
 	str	r1, [sp, #0x50]
 	cmp	r1, #0x2
-	bgt	.LCB14668
+	bgt	.LCB14652
 	b	.L1561	@long jump
-.LCB14668:
+.LCB14652:
 	ldr	r2, [sp, #0x58]
 	mov	r9, r2
 	b	.L1598
@@ -17406,7 +17390,7 @@ GetWinningMove:
 	.align	2, 0
 .L1634:
 	.word	gSaveBlock2Ptr
-	.word	0xe4c
+	.word	0xe48
 .Lfe49:
 	.size	 GetWinningMove,.Lfe49-GetWinningMove
 	.align	2, 0
@@ -17435,9 +17419,9 @@ Task_ShowTourneyTree:
 	mov	r1, #0x8
 	ldrsh	r0, [r0, r1]
 	cmp	r0, #0x5
-	bls	.LCB14876
+	bls	.LCB14860
 	b	.L1637	@long jump
-.LCB14876:
+.LCB14860:
 	lsl	r0, r0, #0x2
 	ldr	r1, .L1705+0x4
 	add	r0, r0, r1
@@ -17779,13 +17763,12 @@ Task_ShowTourneyTree:
 	ldr	r3, .L1717+0x4
 	ldr	r0, [r3]
 	add	r0, r0, r7
-	mov	r1, #0xcb
-	lsl	r1, r1, #0x4
+	ldr	r1, .L1717+0x8
 	add	r0, r0, r1
 	ldrh	r1, [r0]
 	lsl	r1, r1, #0x16
 	lsr	r1, r1, #0x16
-	ldr	r0, .L1717+0x8
+	ldr	r0, .L1717+0xc
 	bl	CopyDomeTrainerName
 	mov	r2, sl
 	cmp	r2, #0x1
@@ -17793,13 +17776,13 @@ Task_ShowTourneyTree:
 	ldr	r3, .L1717+0x4
 	ldr	r2, [r3]
 	add	r0, r2, r7
-	ldr	r1, .L1717+0xc
+	ldr	r1, .L1717+0x10
 	add	r0, r0, r1
 	ldrb	r1, [r0]
 	lsl	r0, r1, #0x1d
 	cmp	r0, #0
 	blt	.L1699	@cond_branch
-	ldr	r3, .L1717+0x10
+	ldr	r3, .L1717+0x14
 	add	r0, r2, r3
 	ldrh	r1, [r0]
 	cmp	r1, #0x1
@@ -17813,9 +17796,10 @@ Task_ShowTourneyTree:
 .L1717:
 	.word	gText_BattleTourney
 	.word	gSaveBlock2Ptr
+	.word	0xcac
 	.word	gDisplayedStringBattle
-	.word	0xcb1
-	.word	0xc3e
+	.word	0xcad
+	.word	0xc3a
 .L1655:
 	mov	r3, sl
 	cmp	r3, #0
@@ -17846,7 +17830,7 @@ Task_ShowTourneyTree:
 	.align	2, 0
 .L1719:
 	.word	gSaveBlock2Ptr
-	.word	0xcb1
+	.word	0xcad
 .L1662:
 	ldr	r3, .L1721
 	add	r1, r2, r3
@@ -17867,7 +17851,7 @@ Task_ShowTourneyTree:
 .L1722:
 	.align	2, 0
 .L1721:
-	.word	0xc3e
+	.word	0xc3a
 	.word	gTasks
 .L1666:
 	ldrh	r0, [r1]
@@ -17900,7 +17884,7 @@ Task_ShowTourneyTree:
 .L1723:
 	.word	gTasks
 	.word	gSaveBlock2Ptr
-	.word	0xc3e
+	.word	0xc3a
 .L1668:
 	ldr	r1, .L1725
 	ldr	r0, [r1]
@@ -17948,13 +17932,12 @@ Task_ShowTourneyTree:
 	lsl	r0, r0, #0x1d
 	cmp	r0, #0
 	bge	.L1670	@cond_branch
-	mov	r2, #0xcb
-	lsl	r2, r2, #0x4
+	ldr	r2, .L1725+0xc
 	add	r0, r1, r2
 	ldrh	r0, [r0]
 	lsl	r0, r0, #0x16
 	lsr	r0, r0, #0x16
-	ldr	r3, .L1725+0xc
+	ldr	r3, .L1725+0x10
 	cmp	r0, r3
 	bne	.L1673	@cond_branch
 	ldrb	r1, [r4, #0xc]
@@ -17972,8 +17955,9 @@ Task_ShowTourneyTree:
 	.align	2, 0
 .L1725:
 	.word	gSaveBlock2Ptr
-	.word	0xc3e
-	.word	0xcb1
+	.word	0xc3a
+	.word	0xcad
+	.word	0xcac
 	.word	0x3ff
 .L1673:
 	ldrb	r1, [r4, #0xc]
@@ -17984,13 +17968,12 @@ Task_ShowTourneyTree:
 .L1670:
 	ldr	r0, [r6]
 	add	r0, r0, r7
-	mov	r1, #0xcb
-	lsl	r1, r1, #0x4
+	ldr	r1, .L1727
 	add	r0, r0, r1
 	ldrh	r0, [r0]
 	lsl	r0, r0, #0x16
 	lsr	r0, r0, #0x16
-	ldr	r2, .L1727
+	ldr	r2, .L1727+0x4
 	cmp	r0, r2
 	bne	.L1676	@cond_branch
 	ldrb	r1, [r4, #0xc]
@@ -18007,6 +17990,7 @@ Task_ShowTourneyTree:
 .L1728:
 	.align	2, 0
 .L1727:
+	.word	0xcac
 	.word	0x3ff
 .L1676:
 	ldrb	r1, [r4, #0xc]
@@ -18070,9 +18054,9 @@ Task_ShowTourneyTree:
 	add	r7, r7, #0x4
 	sub	r5, r5, #0x1
 	cmp	r5, #0
-	blt	.LCB15704
+	blt	.LCB15688
 	b	.L1654	@long jump
-.LCB15704:
+.LCB15688:
 .L1698:
 	ldr	r0, .L1731+0xc
 	ldr	r1, [sp, #0x1c]
@@ -18305,9 +18289,9 @@ Task_HandleStaticTourneyTreeInput:
 	ldrsh	r0, [r0, r2]
 	add	r2, r1, #0
 	cmp	r0, #0x4
-	bls	.LCB16003
+	bls	.LCB15987
 	b	.L1748	@long jump
-.LCB16003:
+.LCB15987:
 	lsl	r0, r0, #0x2
 	ldr	r1, .L1770+0x4
 	add	r0, r0, r1
@@ -18352,9 +18336,9 @@ Task_HandleStaticTourneyTreeInput:
 	mov	r0, #0x80
 	and	r0, r0, r1
 	cmp	r0, #0
-	beq	.LCB16055
+	beq	.LCB16039
 	b	.L1748	@long jump
-.LCB16055:
+.LCB16039:
 	lsl	r0, r4, #0x2
 	add	r0, r0, r4
 	lsl	r0, r0, #0x3
@@ -18398,8 +18382,7 @@ Task_HandleStaticTourneyTreeInput:
 	mov	r2, r8
 	ldr	r0, [r2]
 	add	r0, r0, r5
-	mov	r1, #0xcb
-	lsl	r1, r1, #0x4
+	ldr	r1, .L1774+0x10
 	add	r0, r0, r1
 	ldrh	r1, [r0]
 	lsl	r1, r1, #0x16
@@ -18409,12 +18392,12 @@ Task_HandleStaticTourneyTreeInput:
 	mov	r0, r8
 	ldr	r2, [r0]
 	add	r0, r2, r5
-	ldr	r1, .L1774+0x10
+	ldr	r1, .L1774+0x14
 	add	r0, r0, r1
 	ldrb	r3, [r0]
 	lsl	r1, r3, #0x1b
 	lsr	r1, r1, #0x1e
-	ldr	r0, .L1774+0x14
+	ldr	r0, .L1774+0x18
 	add	r2, r2, r0
 	ldrh	r0, [r2]
 	sub	r0, r0, #0x1
@@ -18439,8 +18422,9 @@ Task_HandleStaticTourneyTreeInput:
 	.word	gDisplayedStringBattle
 	.word	gSaveBlock2Ptr
 	.word	sTrainerNamePositions
-	.word	0xcb1
-	.word	0xc3e
+	.word	0xcac
+	.word	0xcad
+	.word	0xc3a
 .L1757:
 	mov	r0, #0x3
 .L1769:
@@ -18484,7 +18468,7 @@ Task_HandleStaticTourneyTreeInput:
 .L1777:
 	.align	2, 0
 .L1776:
-	.word	0xcb1
+	.word	0xcad
 .L1761:
 	lsl	r0, r4, #0x2
 	add	r0, r0, r4
@@ -18860,7 +18844,7 @@ ResetSketchedMoves:
 .L1845:
 	.word	gSaveBlock2Ptr
 	.word	gSelectedOrderFromParty
-	.word	0xc36
+	.word	0xc32
 .L1840:
 	add	r5, r5, #0x1
 .L1837:
@@ -18986,7 +18970,7 @@ RestoreDomePlayerPartyHeldItems:
 	.word	gSaveBlock1Ptr
 	.word	gSaveBlock2Ptr
 	.word	gSelectedOrderFromParty
-	.word	0xc36
+	.word	0xc32
 	.word	gPlayerParty
 .Lfe59:
 	.size	 RestoreDomePlayerPartyHeldItems,.Lfe59-RestoreDomePlayerPartyHeldItems
@@ -19071,8 +19055,7 @@ BufferLastDomeWinnerName:
 	ldr	r1, [r1]
 	lsl	r2, r2, #0x2
 	add	r1, r1, r2
-	mov	r2, #0xcb
-	lsl	r2, r2, #0x4
+	ldr	r2, .L1873+0xc
 	add	r1, r1, r2
 	ldrh	r1, [r1]
 	lsl	r1, r1, #0x16
@@ -19085,8 +19068,9 @@ BufferLastDomeWinnerName:
 	.align	2, 0
 .L1873:
 	.word	gSaveBlock2Ptr
-	.word	0xcb1
+	.word	0xcad
 	.word	gStringVar1
+	.word	0xcac
 .Lfe62:
 	.size	 BufferLastDomeWinnerName,.Lfe62-BufferLastDomeWinnerName
 	.align	2, 0
@@ -19113,13 +19097,14 @@ InitRandomTourneyTreeResults:
 	ldrb	r0, [r0]
 	cmn	r1, r0
 	beq	.L1876	@cond_branch
-	ldr	r1, .L1949+0xc
+	mov	r1, #0xc3
+	lsl	r1, r1, #0x4
 	add	r0, r2, r1
 	ldrb	r0, [r0]
 	cmp	r0, #0x1
-	beq	.LCB17032
+	beq	.LCB17017
 	b	.L1875	@long jump
-.LCB17032:
+.LCB17017:
 .L1876:
 	mov	r0, #0x20
 	bl	AllocZeroed
@@ -19128,7 +19113,7 @@ InitRandomTourneyTreeResults:
 	bl	AllocZeroed
 	str	r0, [sp, #0x1c]
 	ldr	r1, [r4]
-	ldr	r2, .L1949+0x10
+	ldr	r2, .L1949+0xc
 	add	r1, r1, r2
 	ldrb	r2, [r1]
 	lsl	r0, r2, #0x1e
@@ -19167,10 +19152,9 @@ InitRandomTourneyTreeResults:
 	.align	2, 0
 .L1949:
 	.word	gSaveBlock2Ptr
-	.word	0xc96
-	.word	0xc97
-	.word	0xc34
-	.word	0xc35
+	.word	0xc92
+	.word	0xc93
+	.word	0xc31
 .L1884:
 	mov	r1, sl
 	cmp	r1, #0xe
@@ -19201,8 +19185,7 @@ InitRandomTourneyTreeResults:
 	bge	.L1883	@cond_branch
 	ldr	r2, .L1951
 	ldr	r0, [r2]
-	mov	r3, #0xcb
-	lsl	r3, r3, #0x4
+	ldr	r3, .L1951+0x4
 	add	r0, r0, r3
 	ldrh	r0, [r0]
 	lsl	r0, r0, #0x16
@@ -19210,8 +19193,7 @@ InitRandomTourneyTreeResults:
 	cmp	r0, r4
 	beq	.L1883	@cond_branch
 	add	r3, r2, #0
-	mov	r2, #0xcb
-	lsl	r2, r2, #0x4
+	ldr	r2, .L1951+0x4
 .L1890:
 	add	r6, r6, #0x1
 	cmp	r6, sl
@@ -19232,15 +19214,14 @@ InitRandomTourneyTreeResults:
 	ldr	r3, [r5]
 	ldr	r0, [sp, #0x38]
 	add	r3, r3, r0
-	mov	r1, #0xcb
-	lsl	r1, r1, #0x4
+	ldr	r1, .L1951+0x4
 	add	r3, r3, r1
-	ldr	r2, .L1951+0x4
+	ldr	r2, .L1951+0x8
 	add	r0, r2, #0
 	add	r2, r4, #0
 	and	r2, r2, r0
 	ldrh	r0, [r3]
-	ldr	r5, .L1951+0x8
+	ldr	r5, .L1951+0xc
 	add	r1, r5, #0
 	and	r0, r0, r1
 	orr	r0, r0, r2
@@ -19268,14 +19249,13 @@ InitRandomTourneyTreeResults:
 	bge	.L1902	@cond_branch
 	ldr	r0, .L1951
 	ldr	r0, [r0]
-	ldr	r1, .L1951+0xc
+	ldr	r1, .L1951+0x10
 	mov	r9, r1
 	ldr	r2, [sp, #0x8]
 	mov	r8, r2
 	ldr	r3, [sp, #0xc]
 	mov	ip, r3
-	mov	r4, #0xcf
-	lsl	r4, r4, #0x4
+	ldr	r4, .L1951+0x14
 	add	r0, r0, r4
 	ldr	r1, [sp, #0x20]
 	add	r4, r1, r0
@@ -19310,15 +19290,14 @@ InitRandomTourneyTreeResults:
 	ldr	r4, [sp, #0x28]
 	ldr	r2, [sp, #0x3c]
 	add	r1, r4, r2
-	mov	r3, #0xcf
-	lsl	r3, r3, #0x4
+	ldr	r3, .L1951+0x14
 	add	r0, r0, r3
 	add	r0, r0, r1
 	strh	r5, [r0]
 	ldr	r2, [sp, #0x2c]
 	add	r2, r2, sp
 	add	r2, r2, #0x8
-	ldr	r3, .L1951+0xc
+	ldr	r3, .L1951+0x10
 	ldr	r1, [r3]
 	lsl	r0, r5, #0x4
 	add	r0, r0, r1
@@ -19331,7 +19310,7 @@ InitRandomTourneyTreeResults:
 	ldr	r2, [r4]
 	ldr	r5, [sp, #0x38]
 	add	r2, r2, r5
-	ldr	r0, .L1951+0x10
+	ldr	r0, .L1951+0x18
 	add	r2, r2, r0
 	ldrb	r0, [r2]
 	mov	r4, #0x5
@@ -19343,7 +19322,7 @@ InitRandomTourneyTreeResults:
 	ldr	r2, [r5]
 	ldr	r0, [sp, #0x38]
 	add	r2, r2, r0
-	ldr	r1, .L1951+0x10
+	ldr	r1, .L1951+0x18
 	add	r2, r2, r1
 	ldrb	r0, [r2]
 	sub	r4, r4, #0x14
@@ -19353,7 +19332,7 @@ InitRandomTourneyTreeResults:
 	ldr	r1, [r5]
 	ldr	r5, [sp, #0x38]
 	add	r1, r1, r5
-	ldr	r0, .L1951+0x10
+	ldr	r0, .L1951+0x18
 	add	r1, r1, r0
 	ldrb	r2, [r1]
 	mov	r0, #0x1f
@@ -19368,9 +19347,9 @@ InitRandomTourneyTreeResults:
 	add	sl, sl, r2
 	mov	r4, sl
 	cmp	r4, #0xf
-	bgt	.LCB17366
+	bgt	.LCB17345
 	b	.L1881	@long jump
-.LCB17366:
+.LCB17345:
 	mov	r5, #0x0
 	mov	sl, r5
 	ldr	r5, [sp, #0x18]
@@ -19384,8 +19363,7 @@ InitRandomTourneyTreeResults:
 	mov	r2, sl
 	lsl	r1, r2, #0x2
 	add	r0, r0, r1
-	mov	r3, #0xcb
-	lsl	r3, r3, #0x4
+	ldr	r3, .L1951+0x4
 	add	r0, r0, r3
 	ldrh	r0, [r0]
 	lsl	r0, r0, #0x16
@@ -19404,12 +19382,11 @@ InitRandomTourneyTreeResults:
 	add	r4, r4, sl
 	add	r4, r4, r6
 	lsl	r4, r4, #0x1
-	mov	r2, #0xcf
-	lsl	r2, r2, #0x4
+	ldr	r2, .L1951+0x14
 	add	r0, r0, r2
 	add	r0, r0, r4
 	ldrh	r1, [r0]
-	ldr	r3, .L1951+0xc
+	ldr	r3, .L1951+0x10
 	ldr	r0, [r3]
 	lsl	r1, r1, #0x4
 	add	r1, r1, r0
@@ -19439,12 +19416,11 @@ InitRandomTourneyTreeResults:
 	strh	r0, [r5]
 	ldr	r3, .L1951
 	ldr	r0, [r3]
-	mov	r1, #0xcf
-	lsl	r1, r1, #0x4
+	ldr	r1, .L1951+0x14
 	add	r0, r0, r1
 	add	r0, r0, r4
 	ldrh	r0, [r0]
-	ldr	r2, .L1951+0xc
+	ldr	r2, .L1951+0x10
 	ldr	r1, [r2]
 	lsl	r0, r0, #0x4
 	add	r0, r0, r1
@@ -19452,11 +19428,11 @@ InitRandomTourneyTreeResults:
 	lsl	r1, r0, #0x3
 	add	r1, r1, r0
 	lsl	r1, r1, #0x2
-	ldr	r3, .L1951+0x14
+	ldr	r3, .L1951+0x1c
 	add	r1, r1, r3
 	ldrb	r0, [r1, #0x6]
 	lsl	r0, r0, #0x2
-	ldr	r4, .L1951+0x18
+	ldr	r4, .L1951+0x20
 	add	r0, r0, r4
 	ldr	r0, [r0]
 	orr	r7, r7, r0
@@ -19508,8 +19484,7 @@ InitRandomTourneyTreeResults:
 	cmp	r6, #0xf
 	bgt	.L1932	@cond_branch
 	mov	r8, r7
-	mov	r5, #0xcb
-	lsl	r5, r5, #0x4
+	ldr	r5, .L1951+0x4
 	lsl	r0, r6, #0x1
 	ldr	r1, [sp, #0x18]
 	add	r4, r0, r1
@@ -19528,10 +19503,12 @@ InitRandomTourneyTreeResults:
 	.align	2, 0
 .L1951:
 	.word	gSaveBlock2Ptr
+	.word	0xcac
 	.word	0x3ff
 	.word	-0x400
 	.word	gFacilityTrainerMons
-	.word	0xcb1
+	.word	0xcec
+	.word	0xcad
 	.word	gBaseStats
 	.word	gBitTable
 .L1938:
@@ -19608,7 +19585,7 @@ InitRandomTourneyTreeResults:
 	.align	2, 0
 .L1953:
 	.word	gSaveBlock2Ptr
-	.word	0xc35
+	.word	0xc31
 .Lfe63:
 	.size	 InitRandomTourneyTreeResults,.Lfe63-InitRandomTourneyTreeResults
 	.align	2, 0
@@ -19621,8 +19598,7 @@ TrainerIdToTournamentId:
 	mov	r2, #0x0
 	ldr	r4, .L1962
 	ldr	r0, [r4]
-	mov	r1, #0xcb
-	lsl	r1, r1, #0x4
+	ldr	r1, .L1962+0x4
 	add	r0, r0, r1
 	ldrh	r0, [r0]
 	lsl	r0, r0, #0x16
@@ -19653,6 +19629,7 @@ TrainerIdToTournamentId:
 	.align	2, 0
 .L1962:
 	.word	gSaveBlock2Ptr
+	.word	0xcac
 .Lfe64:
 	.size	 TrainerIdToTournamentId,.Lfe64-TrainerIdToTournamentId
 	.align	2, 0
@@ -19666,8 +19643,7 @@ TrainerIdToDomeTournamentId:
 	mov	r2, #0x0
 	ldr	r4, .L1971
 	ldr	r0, [r4]
-	mov	r1, #0xcb
-	lsl	r1, r1, #0x4
+	ldr	r1, .L1971+0x4
 	add	r0, r0, r1
 	ldrh	r0, [r0]
 	lsl	r0, r0, #0x16
@@ -19698,6 +19674,7 @@ TrainerIdToDomeTournamentId:
 	.align	2, 0
 .L1971:
 	.word	gSaveBlock2Ptr
+	.word	0xcac
 .Lfe65:
 	.size	 TrainerIdToDomeTournamentId,.Lfe65-TrainerIdToDomeTournamentId
 	.align	2, 0
@@ -19782,18 +19759,18 @@ DecideRoundWinners:
 	add	r2, r5, #0x1
 	str	r2, [sp, #0x24]
 	cmp	r0, #0
-	bge	.LCB17929
+	bge	.LCB17906
 	b	.L1983	@long jump
-.LCB17929:
+.LCB17906:
 	sub	r3, r3, #0x1
 	add	r0, r1, r3
 	ldrh	r0, [r0]
 	lsl	r1, r0, #0x16
 	ldr	r0, .L2031+0x8
 	cmp	r1, r0
-	bne	.LCB17943
+	bne	.LCB17920
 	b	.L1983	@long jump
-.LCB17943:
+.LCB17920:
 	str	r5, [sp, #0x4]
 	lsr	r1, r1, #0x16
 	ldr	r0, [sp]
@@ -19802,12 +19779,11 @@ DecideRoundWinners:
 	ldr	r0, .L2031
 	ldr	r3, [r0]
 	add	r0, r3, r4
-	mov	r1, #0xcb
-	lsl	r1, r1, #0x4
+	ldr	r1, .L2031+0xc
 	add	r0, r0, r1
 	ldrh	r0, [r0]
 	lsl	r0, r0, #0x16
-	ldr	r1, .L2031+0xc
+	ldr	r1, .L2031+0x10
 	cmp	r0, r1
 	bne	.L1987	@cond_branch
 	ldr	r2, [sp, #0x8]
@@ -19840,7 +19816,7 @@ DecideRoundWinners:
 	ldr	r1, [r3]
 	ldr	r5, [sp, #0x8]
 	lsl	r2, r5, #0x1
-	ldr	r3, .L2031+0x10
+	ldr	r3, .L2031+0x14
 	add	r1, r1, r3
 	add	r1, r1, r2
 	b	.L2029
@@ -19848,22 +19824,22 @@ DecideRoundWinners:
 	.align	2, 0
 .L2031:
 	.word	gSaveBlock2Ptr
-	.word	0xcb1
+	.word	0xcad
 	.word	-0x400000
+	.word	0xcac
 	.word	-0x800000
-	.word	0xe4c
+	.word	0xe48
 .L1987:
 	ldr	r4, .L2033
 	ldr	r3, [r4]
 	ldr	r0, [sp, #0x8]
 	lsl	r2, r0, #0x2
 	add	r0, r3, r2
-	mov	r1, #0xcb
-	lsl	r1, r1, #0x4
+	ldr	r1, .L2033+0x4
 	add	r0, r0, r1
 	ldrh	r0, [r0]
 	lsl	r0, r0, #0x16
-	ldr	r1, .L2033+0x4
+	ldr	r1, .L2033+0x8
 	str	r2, [sp, #0x30]
 	cmp	r0, r1
 	bne	.L1989	@cond_branch
@@ -19872,7 +19848,7 @@ DecideRoundWinners:
 	beq	.L1989	@cond_branch
 	lsl	r2, r2, #0x2
 	add	r1, r3, r2
-	ldr	r3, .L2033+0x8
+	ldr	r3, .L2033+0xc
 	add	r1, r1, r3
 	ldrb	r0, [r1]
 	mov	r3, #0x4
@@ -19880,7 +19856,7 @@ DecideRoundWinners:
 	strb	r0, [r1]
 	ldr	r1, [r4]
 	add	r1, r1, r2
-	ldr	r0, .L2033+0x8
+	ldr	r0, .L2033+0xc
 	add	r1, r1, r0
 	ldrb	r0, [r1]
 	mov	r2, #0x19
@@ -19896,7 +19872,7 @@ DecideRoundWinners:
 	ldr	r1, [r4]
 	ldr	r3, [sp, #0x4]
 	lsl	r2, r3, #0x1
-	ldr	r3, .L2033+0xc
+	ldr	r3, .L2033+0x10
 	add	r1, r1, r3
 	add	r1, r1, r2
 	strh	r0, [r1]
@@ -19907,17 +19883,18 @@ DecideRoundWinners:
 	.align	2, 0
 .L2033:
 	.word	gSaveBlock2Ptr
+	.word	0xcac
 	.word	-0x800000
-	.word	0xcb1
-	.word	0xe4c
+	.word	0xcad
+	.word	0xe48
 .L1989:
 	add	r5, r5, #0x1
 	str	r5, [sp, #0x24]
 	ldr	r5, [sp, #0x8]
 	cmp	r5, #0xff
-	bne	.LCB18094
+	bne	.LCB18071
 	b	.L1983	@long jump
-.LCB18094:
+.LCB18071:
 	mov	r0, #0x0
 	mov	sl, r0
 	lsl	r1, r5, #0x1
@@ -19943,13 +19920,12 @@ DecideRoundWinners:
 .L2003:
 	ldr	r2, .L2035
 	ldr	r1, [r2]
-	mov	r3, #0xcf
-	lsl	r3, r3, #0x4
+	ldr	r3, .L2035+0x4
 	add	r1, r1, r3
 	ldr	r2, [sp, #0x38]
 	add	r0, r1, r2
 	ldrh	r0, [r0]
-	ldr	r3, .L2035+0x4
+	ldr	r3, .L2035+0x8
 	mov	r8, r3
 	ldr	r2, [r3]
 	lsl	r0, r0, #0x4
@@ -19976,8 +19952,7 @@ DecideRoundWinners:
 	ble	.L1999	@cond_branch
 	ldr	r2, .L2035
 	ldr	r0, [r2]
-	mov	r3, #0xcf
-	lsl	r3, r3, #0x4
+	ldr	r3, .L2035+0x4
 	add	r0, r0, r3
 	add	r0, r0, r9
 	ldrh	r0, [r0]
@@ -19986,7 +19961,7 @@ DecideRoundWinners:
 	lsl	r0, r0, #0x4
 	add	r0, r0, r1
 	ldrh	r2, [r0]
-	ldr	r0, .L2035+0x8
+	ldr	r0, .L2035+0xc
 	lsl	r1, r2, #0x3
 	add	r1, r1, r2
 	lsl	r1, r1, #0x2
@@ -20050,13 +20025,12 @@ DecideRoundWinners:
 .L2018:
 	ldr	r5, .L2035
 	ldr	r1, [r5]
-	mov	r0, #0xcf
-	lsl	r0, r0, #0x4
+	ldr	r0, .L2035+0x4
 	add	r1, r1, r0
 	mov	r2, r8
 	add	r0, r1, r2
 	ldrh	r0, [r0]
-	ldr	r5, .L2035+0x4
+	ldr	r5, .L2035+0x8
 	mov	r9, r5
 	ldr	r2, [r5]
 	lsl	r0, r0, #0x4
@@ -20087,8 +20061,7 @@ DecideRoundWinners:
 	ldr	r0, [r2]
 	ldr	r5, [sp, #0x1c]
 	add	r1, r3, r5
-	mov	r2, #0xcf
-	lsl	r2, r2, #0x4
+	ldr	r2, .L2035+0x4
 	add	r0, r0, r2
 	add	r0, r0, r1
 	ldrh	r0, [r0]
@@ -20097,7 +20070,7 @@ DecideRoundWinners:
 	lsl	r0, r0, #0x4
 	add	r0, r0, r1
 	ldrh	r2, [r0]
-	ldr	r0, .L2035+0x8
+	ldr	r0, .L2035+0xc
 	lsl	r1, r2, #0x3
 	add	r1, r1, r2
 	lsl	r1, r1, #0x2
@@ -20136,7 +20109,7 @@ DecideRoundWinners:
 	ldr	r1, [r3]
 	ldr	r5, [sp, #0x30]
 	add	r1, r1, r5
-	ldr	r0, .L2035+0xc
+	ldr	r0, .L2035+0x10
 	add	r1, r1, r0
 	ldrb	r0, [r1]
 	mov	r2, #0x4
@@ -20144,7 +20117,7 @@ DecideRoundWinners:
 	strb	r0, [r1]
 	ldr	r1, [r3]
 	add	r1, r1, r5
-	ldr	r3, .L2035+0xc
+	ldr	r3, .L2035+0x10
 	add	r1, r1, r3
 	ldrb	r0, [r1]
 	mov	r5, #0x19
@@ -20159,7 +20132,7 @@ DecideRoundWinners:
 	bl	GetWinningMove
 	ldr	r3, .L2035
 	ldr	r1, [r3]
-	ldr	r5, .L2035+0x10
+	ldr	r5, .L2035+0x14
 	add	r1, r1, r5
 	ldr	r2, [sp, #0x2c]
 	add	r1, r1, r2
@@ -20168,10 +20141,11 @@ DecideRoundWinners:
 	.align	2, 0
 .L2035:
 	.word	gSaveBlock2Ptr
+	.word	0xcec
 	.word	gFacilityTrainerMons
 	.word	gBaseStats
-	.word	0xcb1
-	.word	0xe4c
+	.word	0xcad
+	.word	0xe48
 .L2022:
 	ldr	r3, [sp, #0xc]
 	ldr	r5, [sp, #0x10]
@@ -20214,8 +20188,8 @@ DecideRoundWinners:
 	.align	2, 0
 .L2037:
 	.word	gSaveBlock2Ptr
-	.word	0xcb1
-	.word	0xe4c
+	.word	0xcad
+	.word	0xe48
 .L2024:
 	ldr	r3, [sp, #0x4]
 	ldr	r5, [sp, #0x8]
@@ -20256,8 +20230,8 @@ DecideRoundWinners:
 	.align	2, 0
 .L2039:
 	.word	gSaveBlock2Ptr
-	.word	0xcb1
-	.word	0xe4c
+	.word	0xcad
+	.word	0xe48
 .L2026:
 	ldr	r5, .L2041
 	ldr	r1, [r5]
@@ -20297,9 +20271,9 @@ DecideRoundWinners:
 .L1983:
 	ldr	r5, [sp, #0x24]
 	cmp	r5, #0xf
-	bgt	.LCB18599
+	bgt	.LCB18573
 	b	.L1984	@long jump
-.LCB18599:
+.LCB18573:
 	add	sp, sp, #0x40
 	pop	{r3, r4, r5}
 	mov	r8, r3
@@ -20312,8 +20286,8 @@ DecideRoundWinners:
 	.align	2, 0
 .L2041:
 	.word	gSaveBlock2Ptr
-	.word	0xcb1
-	.word	0xe4c
+	.word	0xcad
+	.word	0xe48
 .Lfe67:
 	.size	 DecideRoundWinners,.Lfe67-DecideRoundWinners
 	.align	2, 0

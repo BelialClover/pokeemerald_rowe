@@ -17,6 +17,7 @@
 #include "task.h"
 #include "window.h"
 #include "party_menu.h"
+#include "pokedex.h"
 #include "list_menu.h"
 #include "overworld.h"
 #include "item.h"
@@ -912,6 +913,7 @@ static void _GiveEggFromDaycare(struct DayCare *daycare)
     u16 species;
 	u8 formId;
     u8 parentSlots[DAYCARE_MON_COUNT];
+	u16 nationalDexNum;
     bool8 isEgg;
 
     species = DetermineEggSpeciesAndParentSlots(daycare, parentSlots);
@@ -921,6 +923,9 @@ static void _GiveEggFromDaycare(struct DayCare *daycare)
     InheritIVs(&egg, daycare);
     BuildEggMoveset(&egg, &daycare->mons[parentSlots[1]].mon, &daycare->mons[parentSlots[0]].mon);
 	SetMonData(&egg, MON_DATA_FORM_ID, &formId);
+	nationalDexNum = SpeciesToNationalPokedexNum(species);
+    GetSetPokedexFlag(species, FLAG_SET_SEEN);
+    GetSetPokedexFlag(species, FLAG_SET_CAUGHT);
 	
     if (species == SPECIES_PICHU)
         GiveVoltTackleIfLightBall(&egg, daycare);

@@ -6970,19 +6970,19 @@ _GiveEggFromDaycare:
 	add	r6, sp, #0x64
 	add	r1, r6, #0
 	bl	DetermineEggSpeciesAndParentSlots
-	add	r5, sp, #0x68
-	strh	r0, [r5]
-	add	r0, r5, #0
+	add	r4, sp, #0x68
+	strh	r0, [r4]
+	add	r0, r4, #0
 	add	r1, r7, #0
 	bl	GetMonFormId
-	mov	r4, sp
-	add	r4, r4, #0x6a
-	strb	r0, [r4]
+	mov	r5, sp
+	add	r5, r5, #0x6a
+	strb	r0, [r5]
 	mov	r0, sp
 	mov	r1, #0x59
-	add	r2, r4, #0
+	add	r2, r5, #0
 	bl	SetMonData
-	ldrh	r1, [r5]
+	ldrh	r1, [r4]
 	mov	r0, sp
 	add	r2, r7, #0
 	bl	SetInitialEggData
@@ -7001,9 +7001,17 @@ _GiveEggFromDaycare:
 	bl	BuildEggMoveset
 	mov	r0, sp
 	mov	r1, #0x59
-	add	r2, r4, #0
+	add	r2, r5, #0
 	bl	SetMonData
-	ldrh	r0, [r5]
+	ldrh	r0, [r4]
+	bl	SpeciesToNationalPokedexNum
+	ldrh	r0, [r4]
+	mov	r1, #0x2
+	bl	GetSetPokedexFlag
+	ldrh	r0, [r4]
+	mov	r1, #0x3
+	bl	GetSetPokedexFlag
+	ldrh	r0, [r4]
 	cmp	r0, #0xac
 	bne	.L411	@cond_branch
 	mov	r0, sp

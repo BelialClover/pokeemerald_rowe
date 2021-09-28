@@ -4832,8 +4832,7 @@ GetFrontierStreakInfo:
 	mov	r3, #0x0
 	ldr	r0, .L413
 	ldr	r0, [r0]
-	mov	r1, #0xca
-	lsl	r1, r1, #0x4
+	ldr	r1, .L413+0x4
 	add	r0, r0, r1
 .L343:
 	lsl	r1, r3, #0x2
@@ -4858,10 +4857,12 @@ GetFrontierStreakInfo:
 	.align	2, 0
 .L413:
 	.word	gSaveBlock2Ptr
+	.word	0xc9c
 .L351:
 	ldr	r0, .L415
 	ldr	r0, [r0]
-	ldr	r1, .L415+0x4
+	mov	r1, #0xd9
+	lsl	r1, r1, #0x4
 	add	r0, r0, r1
 	mov	r3, #0x1
 .L355:
@@ -4880,7 +4881,6 @@ GetFrontierStreakInfo:
 	.align	2, 0
 .L415:
 	.word	gSaveBlock2Ptr
-	.word	0xd94
 .L358:
 	mov	r3, #0x0
 	ldr	r0, .L417
@@ -4911,7 +4911,7 @@ GetFrontierStreakInfo:
 	.align	2, 0
 .L417:
 	.word	gSaveBlock2Ptr
-	.word	0xc7c
+	.word	0xc78
 .L370:
 	mov	r3, #0x0
 	ldr	r0, .L419
@@ -4942,7 +4942,7 @@ GetFrontierStreakInfo:
 	.align	2, 0
 .L419:
 	.word	gSaveBlock2Ptr
-	.word	0xd5c
+	.word	0xd58
 .L382:
 	mov	r3, #0x0
 	ldr	r0, .L421
@@ -4973,7 +4973,7 @@ GetFrontierStreakInfo:
 	.align	2, 0
 .L421:
 	.word	gSaveBlock2Ptr
-	.word	0xd76
+	.word	0xd72
 .L394:
 	ldr	r0, .L423
 	ldr	r0, [r0]
@@ -4997,7 +4997,7 @@ GetFrontierStreakInfo:
 	.align	2, 0
 .L423:
 	.word	gSaveBlock2Ptr
-	.word	0xd6a
+	.word	0xd66
 .L401:
 	ldr	r0, .L425
 	ldr	r0, [r0]
@@ -5026,7 +5026,7 @@ GetFrontierStreakInfo:
 	.align	2, 0
 .L425:
 	.word	gSaveBlock2Ptr
-	.word	0xdaa
+	.word	0xda6
 .Lfe50:
 	.size	 GetFrontierStreakInfo,.Lfe50-GetFrontierStreakInfo
 	.align	2, 0

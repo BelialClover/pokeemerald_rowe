@@ -894,7 +894,7 @@ GetBattlePikeData:
 	.align	2, 0
 .L48:
 	.word	gSaveBlock2Ptr
-	.word	0xc35
+	.word	0xc31
 	.word	gSpecialVar_0x8005
 	.word	.L44
 	.align	2, 0
@@ -917,11 +917,30 @@ GetBattlePikeData:
 	.align	2, 0
 .L50:
 	.word	gSpecialVar_Result
-	.word	0xd8e
+	.word	0xd8a
 .L38:
 	ldr	r2, .L52
 	ldr	r1, [r3]
 	ldr	r3, .L52+0x4
+	add	r0, r1, r3
+	ldrb	r0, [r0]
+	lsl	r0, r0, #0x1e
+	lsr	r0, r0, #0x1d
+	ldr	r3, .L52+0x8
+	add	r1, r1, r3
+	add	r1, r1, r0
+	ldrh	r0, [r1]
+	b	.L46
+.L53:
+	.align	2, 0
+.L52:
+	.word	gSpecialVar_Result
+	.word	0xc31
+	.word	0xd8c
+.L39:
+	ldr	r2, .L54
+	ldr	r1, [r3]
+	ldr	r3, .L54+0x4
 	add	r0, r1, r3
 	ldrb	r0, [r0]
 	lsl	r0, r0, #0x1e
@@ -932,30 +951,11 @@ GetBattlePikeData:
 	add	r1, r1, r0
 	ldrh	r0, [r1]
 	b	.L46
-.L53:
-	.align	2, 0
-.L52:
-	.word	gSpecialVar_Result
-	.word	0xc35
-.L39:
-	ldr	r2, .L54
-	ldr	r1, [r3]
-	ldr	r3, .L54+0x4
-	add	r0, r1, r3
-	ldrb	r0, [r0]
-	lsl	r0, r0, #0x1e
-	lsr	r0, r0, #0x1d
-	ldr	r3, .L54+0x8
-	add	r1, r1, r3
-	add	r1, r1, r0
-	ldrh	r0, [r1]
-	b	.L46
 .L55:
 	.align	2, 0
 .L54:
 	.word	gSpecialVar_Result
-	.word	0xc35
-	.word	0xd94
+	.word	0xc31
 .L40:
 	ldr	r2, .L56
 	ldr	r1, [r3]
@@ -973,8 +973,8 @@ GetBattlePikeData:
 	.align	2, 0
 .L56:
 	.word	gSpecialVar_Result
-	.word	0xc35
-	.word	0xd98
+	.word	0xc31
+	.word	0xd94
 .L41:
 	cmp	r2, #0
 	beq	.L42	@cond_branch
@@ -990,7 +990,7 @@ GetBattlePikeData:
 	.align	2, 0
 .L58:
 	.word	gSpecialVar_Result
-	.word	0xc68
+	.word	0xc64
 .L42:
 	ldr	r2, .L60
 	ldr	r0, [r3]
@@ -1010,7 +1010,7 @@ GetBattlePikeData:
 	.align	2, 0
 .L60:
 	.word	gSpecialVar_Result
-	.word	0xc68
+	.word	0xc64
 .Lfe4:
 	.size	 GetBattlePikeData,.Lfe4-GetBattlePikeData
 	.align	2, 0
@@ -1041,7 +1041,7 @@ SetBattlePikeData:
 	.align	2, 0
 .L83:
 	.word	gSaveBlock2Ptr
-	.word	0xc35
+	.word	0xc31
 	.word	gSpecialVar_0x8005
 	.word	.L78
 	.align	2, 0
@@ -1064,7 +1064,7 @@ SetBattlePikeData:
 	.align	2, 0
 .L85:
 	.word	gSpecialVar_0x8006
-	.word	0xd8e
+	.word	0xd8a
 .L65:
 	ldr	r0, .L87
 	ldrh	r3, [r0]
@@ -1079,15 +1079,15 @@ SetBattlePikeData:
 	ldrb	r1, [r1]
 	lsl	r1, r1, #0x1e
 	lsr	r1, r1, #0x1d
-	mov	r5, #0xd9
-	lsl	r5, r5, #0x4
+	ldr	r5, .L87+0xc
 	b	.L80
 .L88:
 	.align	2, 0
 .L87:
 	.word	gSpecialVar_0x8006
 	.word	0x270f
-	.word	0xc35
+	.word	0xc31
+	.word	0xd8c
 .L67:
 	ldr	r0, .L89
 	ldrh	r4, [r0]
@@ -1101,7 +1101,8 @@ SetBattlePikeData:
 	ldrb	r0, [r0]
 	lsl	r2, r0, #0x1e
 	lsr	r0, r2, #0x1d
-	ldr	r5, .L89+0xc
+	mov	r5, #0xd9
+	lsl	r5, r5, #0x4
 	add	r1, r1, r5
 	add	r0, r1, r0
 	ldrh	r0, [r0]
@@ -1116,8 +1117,7 @@ SetBattlePikeData:
 .L89:
 	.word	gSpecialVar_0x8006
 	.word	0x270f
-	.word	0xc35
-	.word	0xd94
+	.word	0xc31
 .L69:
 	ldr	r0, .L91
 	ldrh	r3, [r0]
@@ -1141,8 +1141,8 @@ SetBattlePikeData:
 .L91:
 	.word	gSpecialVar_0x8006
 	.word	0x270f
-	.word	0xc35
-	.word	0xd98
+	.word	0xc31
+	.word	0xd94
 .L71:
 	cmp	r3, #0
 	beq	.L72	@cond_branch
@@ -1162,7 +1162,7 @@ SetBattlePikeData:
 	.align	2, 0
 .L93:
 	.word	gSpecialVar_0x8006
-	.word	0xc68
+	.word	0xc64
 .L73:
 	ldr	r0, [r2]
 	ldr	r2, .L95
@@ -1173,7 +1173,7 @@ SetBattlePikeData:
 .L96:
 	.align	2, 0
 .L95:
-	.word	0xc68
+	.word	0xc64
 	.word	-0x801
 .L72:
 	ldr	r0, .L97
@@ -1192,7 +1192,7 @@ SetBattlePikeData:
 	.align	2, 0
 .L97:
 	.word	gSpecialVar_0x8006
-	.word	0xc68
+	.word	0xc64
 .L76:
 	ldr	r0, [r2]
 	ldr	r1, .L99
@@ -1210,7 +1210,7 @@ SetBattlePikeData:
 .L100:
 	.align	2, 0
 .L99:
-	.word	0xc68
+	.word	0xc64
 	.word	-0x401
 .Lfe5:
 	.size	 SetBattlePikeData,.Lfe5-SetBattlePikeData
@@ -1233,7 +1233,7 @@ IsNextRoomFinal:
 	.align	2, 0
 .L105:
 	.word	gSaveBlock2Ptr
-	.word	0xc3e
+	.word	0xc3a
 	.word	gSpecialVar_Result
 .L102:
 	ldr	r1, .L107
@@ -1301,7 +1301,8 @@ SavePikeChallenge:
 	ldr	r0, [r4]
 	ldr	r1, .L119+0x4
 	ldrh	r1, [r1]
-	ldr	r2, .L119+0x8
+	mov	r2, #0xc3
+	lsl	r2, r2, #0x4
 	add	r0, r0, r2
 	strb	r1, [r0]
 	mov	r0, #0x80
@@ -1309,7 +1310,7 @@ SavePikeChallenge:
 	mov	r1, #0x0
 	bl	VarSet
 	ldr	r1, [r4]
-	ldr	r0, .L119+0xc
+	ldr	r0, .L119+0x8
 	add	r1, r1, r0
 	ldrb	r0, [r1]
 	mov	r2, #0x4
@@ -1326,8 +1327,7 @@ SavePikeChallenge:
 .L119:
 	.word	gSaveBlock2Ptr
 	.word	gSpecialVar_0x8005
-	.word	0xc34
-	.word	0xc35
+	.word	0xc31
 .Lfe10:
 	.size	 SavePikeChallenge,.Lfe10-SavePikeChallenge
 	.align	2, 0
@@ -1480,7 +1480,7 @@ BufferNPCMessage:
 	.align	2, 0
 .L157:
 	.word	gSaveBlock2Ptr
-	.word	0xc3e
+	.word	0xc3a
 	.word	sNPCTable
 	.word	sNpcId
 .L153:
@@ -1861,7 +1861,7 @@ TryInflictRandomStatus:
 	.align	2, 0
 .L282:
 	.word	gSaveBlock2Ptr
-	.word	0xc3e
+	.word	0xc3a
 	.word	sStatusFlags
 .L238:
 	cmp	r0, #0x3b
@@ -2105,7 +2105,7 @@ AtLeastOneHealthyMon:
 	.align	2, 0
 .L309:
 	.word	gSaveBlock2Ptr
-	.word	0xc3e
+	.word	0xc3a
 .L301:
 	add	r0, r5, #0x1
 	lsl	r0, r0, #0x18
@@ -2176,7 +2176,7 @@ GetNextRoomType:
 	.align	2, 0
 .L341:
 	.word	gSaveBlock2Ptr
-	.word	0xd9c
+	.word	0xd98
 .L314:
 	ldr	r0, .L343
 	lsl	r1, r2, #0x1d
@@ -2347,7 +2347,7 @@ GetNextRoomType:
 	.align	2, 0
 .L345:
 	.word	sRoomTypeHints
-	.word	0xd9c
+	.word	0xd98
 	.word	gSaveBlock2Ptr
 .Lfe23:
 	.size	 GetNextRoomType,.Lfe23-GetNextRoomType
@@ -2459,7 +2459,7 @@ TryGenerateBattlePikeWildMon:
 	.align	2, 0
 .L369:
 	.word	gSaveBlock2Ptr
-	.word	0xc35
+	.word	0xc31
 	.word	sWildMons
 	.word	gEnemyParty
 .L354:
@@ -2590,8 +2590,7 @@ GetBattlePikeWildMonHeaderId:
 	ldrb	r0, [r0]
 	lsl	r0, r0, #0x1e
 	lsr	r0, r0, #0x1d
-	mov	r2, #0xd9
-	lsl	r2, r2, #0x4
+	ldr	r2, .L380+0x8
 	add	r1, r1, r2
 	add	r1, r1, r0
 	ldrh	r1, [r1]
@@ -2606,7 +2605,8 @@ GetBattlePikeWildMonHeaderId:
 	.align	2, 0
 .L380:
 	.word	gSaveBlock2Ptr
-	.word	0xc35
+	.word	0xc31
+	.word	0xd8c
 .L374:
 	mov	r0, #0x8c
 	lsl	r0, r0, #0x2
@@ -3192,7 +3192,7 @@ SetHintedRoom:
 .L478:
 	.word	gSpecialVar_Result
 	.word	gSaveBlock2Ptr
-	.word	0xd9c
+	.word	0xd98
 .L463:
 	bl	Random
 	ldr	r7, .L480
@@ -3253,7 +3253,7 @@ SetHintedRoom:
 	.align	2, 0
 .L480:
 	.word	gSaveBlock2Ptr
-	.word	0xd9c
+	.word	0xd98
 .L471:
 	add	r0, r5, r2
 	strb	r2, [r0]
@@ -3340,7 +3340,7 @@ SetHintedRoom:
 	.align	2, 0
 .L482:
 	.word	gSaveBlock2Ptr
-	.word	0xd9c
+	.word	0xd98
 .Lfe37:
 	.size	 SetHintedRoom,.Lfe37-SetHintedRoom
 	.align	2, 0
@@ -3362,7 +3362,7 @@ GetHintedRoomIndex:
 .L485:
 	.word	gSpecialVar_Result
 	.word	gSaveBlock2Ptr
-	.word	0xd9c
+	.word	0xd98
 .Lfe38:
 	.size	 GetHintedRoomIndex,.Lfe38-GetHintedRoomIndex
 	.align	2, 0
@@ -3388,7 +3388,7 @@ GetRoomTypeHint:
 	.word	gSpecialVar_Result
 	.word	sRoomTypeHints
 	.word	gSaveBlock2Ptr
-	.word	0xd9c
+	.word	0xd98
 .Lfe39:
 	.size	 GetRoomTypeHint,.Lfe39-GetRoomTypeHint
 	.align	2, 0
@@ -3409,8 +3409,7 @@ PrepareOneTrainer:
 	ldrb	r0, [r0]
 	lsl	r0, r0, #0x1e
 	lsr	r0, r0, #0x1d
-	mov	r2, #0xd9
-	lsl	r2, r2, #0x4
+	ldr	r2, .L506+0x8
 	add	r1, r1, r2
 	add	r1, r1, r0
 	ldrh	r0, [r1]
@@ -3428,22 +3427,23 @@ PrepareOneTrainer:
 	lsr	r4, r0, #0x10
 	mov	r3, #0x0
 	ldr	r1, [r5]
-	ldr	r2, .L506+0x8
+	ldr	r2, .L506+0xc
 	add	r0, r1, r2
 	ldrh	r0, [r0]
 	sub	r2, r0, #0x1
 	cmp	r3, r2
 	bge	.L495	@cond_branch
-	mov	r0, #0xc4
-	lsl	r0, r0, #0x4
+	ldr	r0, .L506+0x10
 	add	r1, r1, r0
 	b	.L505
 .L507:
 	.align	2, 0
 .L506:
 	.word	gSaveBlock2Ptr
-	.word	0xc35
-	.word	0xc3e
+	.word	0xc31
+	.word	0xd8c
+	.word	0xc3a
+	.word	0xc3c
 .L498:
 	add	r1, r1, #0x2
 	add	r3, r3, #0x1
@@ -3478,8 +3478,7 @@ PrepareOneTrainer:
 	bhi	.L504	@cond_branch
 	sub	r0, r0, #0x1
 	lsl	r0, r0, #0x1
-	mov	r2, #0xc4
-	lsl	r2, r2, #0x4
+	ldr	r2, .L508+0x14
 	add	r1, r1, r2
 	add	r1, r1, r0
 	ldrh	r0, [r5]
@@ -3491,11 +3490,12 @@ PrepareOneTrainer:
 .L509:
 	.align	2, 0
 .L508:
-	.word	0xc3e
+	.word	0xc3a
 	.word	gTrainerBattleOpponent_A
 	.word	gFacilityTrainers
 	.word	gBattleFrontierTrainers
 	.word	gSaveBlock2Ptr
+	.word	0xc3c
 .Lfe40:
 	.size	 PrepareOneTrainer,.Lfe40-PrepareOneTrainer
 	.align	2, 0
@@ -3510,8 +3510,7 @@ PrepareTwoTrainers:
 	ldrb	r0, [r0]
 	lsl	r0, r0, #0x1e
 	lsr	r0, r0, #0x1d
-	mov	r2, #0xd9
-	lsl	r2, r2, #0x4
+	ldr	r2, .L536+0x8
 	add	r1, r1, r2
 	add	r1, r1, r0
 	ldrh	r0, [r1]
@@ -3519,8 +3518,8 @@ PrepareTwoTrainers:
 	bl	__udivsi3
 	lsl	r0, r0, #0x10
 	lsr	r5, r0, #0x10
-	ldr	r1, .L536+0x8
-	ldr	r0, .L536+0xc
+	ldr	r1, .L536+0xc
+	ldr	r0, .L536+0x10
 	str	r0, [r1]
 	lsl	r7, r5, #0x18
 	add	r6, r4, #0
@@ -3533,24 +3532,25 @@ PrepareTwoTrainers:
 	lsr	r4, r0, #0x10
 	mov	r3, #0x0
 	ldr	r1, [r6]
-	ldr	r2, .L536+0x10
+	ldr	r2, .L536+0x14
 	add	r0, r1, r2
 	ldrh	r0, [r0]
 	sub	r2, r0, #0x1
 	cmp	r3, r2
 	bge	.L513	@cond_branch
-	mov	r0, #0xc4
-	lsl	r0, r0, #0x4
+	ldr	r0, .L536+0x18
 	add	r1, r1, r0
 	b	.L535
 .L537:
 	.align	2, 0
 .L536:
 	.word	gSaveBlock2Ptr
-	.word	0xc35
+	.word	0xc31
+	.word	0xd8c
 	.word	gFacilityTrainers
 	.word	gBattleFrontierTrainers
-	.word	0xc3e
+	.word	0xc3a
+	.word	0xc3c
 .L516:
 	add	r1, r1, #0x2
 	add	r3, r3, #0x1
@@ -3582,8 +3582,7 @@ PrepareTwoTrainers:
 	bhi	.L522	@cond_branch
 	sub	r0, r0, #0x1
 	lsl	r0, r0, #0x1
-	mov	r2, #0xc4
-	lsl	r2, r2, #0x4
+	ldr	r2, .L538+0xc
 	add	r1, r1, r2
 	add	r1, r1, r0
 	ldrh	r0, [r5]
@@ -3613,8 +3612,7 @@ PrepareTwoTrainers:
 	sub	r2, r2, #0x2
 	add	r0, r1, r2
 	ldrh	r2, [r0]
-	mov	r0, #0xc4
-	lsl	r0, r0, #0x4
+	ldr	r0, .L538+0xc
 	add	r1, r1, r0
 .L528:
 	add	r1, r1, #0x2
@@ -3631,7 +3629,7 @@ PrepareTwoTrainers:
 	ldrh	r0, [r0]
 	cmp	r3, r0
 	bne	.L523	@cond_branch
-	ldr	r5, .L538+0xc
+	ldr	r5, .L538+0x10
 	strh	r4, [r5]
 	ldrh	r0, [r5]
 	mov	r1, #0x1
@@ -3645,8 +3643,7 @@ PrepareTwoTrainers:
 	bhi	.L534	@cond_branch
 	sub	r0, r0, #0x2
 	lsl	r0, r0, #0x1
-	mov	r2, #0xc4
-	lsl	r2, r2, #0x4
+	ldr	r2, .L538+0xc
 	add	r1, r1, r2
 	add	r1, r1, r0
 	ldrh	r0, [r5]
@@ -3658,9 +3655,10 @@ PrepareTwoTrainers:
 .L539:
 	.align	2, 0
 .L538:
-	.word	0xc3e
+	.word	0xc3a
 	.word	gTrainerBattleOpponent_A
 	.word	gSaveBlock2Ptr
+	.word	0xc3c
 	.word	gTrainerBattleOpponent_B
 .Lfe41:
 	.size	 PrepareTwoTrainers,.Lfe41-PrepareTwoTrainers
@@ -3671,9 +3669,8 @@ ClearPikeTrainerIds:
 	push	{r4, r5, lr}
 	mov	r2, #0x0
 	ldr	r5, .L546
-	mov	r4, #0xc4
-	lsl	r4, r4, #0x4
-	ldr	r0, .L546+0x4
+	ldr	r4, .L546+0x4
+	ldr	r0, .L546+0x8
 	add	r3, r0, #0
 .L544:
 	ldr	r1, [r5]
@@ -3695,6 +3692,7 @@ ClearPikeTrainerIds:
 	.align	2, 0
 .L546:
 	.word	gSaveBlock2Ptr
+	.word	0xc3c
 	.word	0xffff
 .Lfe42:
 	.size	 ClearPikeTrainerIds,.Lfe42-ClearPikeTrainerIds
@@ -3807,8 +3805,7 @@ GetPikeQueenFightType:
 	ldrb	r1, [r1]
 	lsl	r1, r1, #0x1e
 	lsr	r1, r1, #0x1d
-	mov	r3, #0xd9
-	lsl	r3, r3, #0x4
+	ldr	r3, .L582+0x8
 	add	r2, r2, r3
 	add	r2, r2, r1
 	lsr	r4, r0, #0x18
@@ -3824,7 +3821,7 @@ GetPikeQueenFightType:
 	blt	.L576	@cond_branch
 	cmp	r2, #0x1
 	bgt	.L576	@cond_branch
-	ldr	r1, .L582+0x8
+	ldr	r1, .L582+0xc
 	add	r0, r2, #0
 	add	r0, r0, #0x14
 	add	r0, r0, r1
@@ -3841,7 +3838,8 @@ GetPikeQueenFightType:
 	.align	2, 0
 .L582:
 	.word	gSaveBlock2Ptr
-	.word	0xc35
+	.word	0xc31
+	.word	0xd8c
 	.word	sFrontierBrainStreakAppearances
 .L576:
 	ldr	r5, .L584
@@ -3940,7 +3938,7 @@ HealSomeMonsBeforePikeQueen:
 	.word	sNumMonsToHealBeforePikeQueen
 	.word	gSpecialVar_0x8007
 	.word	gSaveBlock2Ptr
-	.word	0xd9c
+	.word	0xd98
 	.word	gSpecialVar_Result
 .Lfe47:
 	.size	 HealSomeMonsBeforePikeQueen,.Lfe47-HealSomeMonsBeforePikeQueen
@@ -3966,7 +3964,7 @@ SetHealingroomTypesDisabled:
 .L593:
 	.word	gSaveBlock2Ptr
 	.word	gSpecialVar_0x8005
-	.word	0xd9c
+	.word	0xd98
 .Lfe48:
 	.size	 SetHealingroomTypesDisabled,.Lfe48-SetHealingroomTypesDisabled
 	.align	2, 0
@@ -4124,8 +4122,8 @@ SaveMonHeldItems:
 .L620:
 	.word	gSaveBlock1Ptr
 	.word	gSaveBlock2Ptr
-	.word	0xc36
-	.word	0xd9e
+	.word	0xc32
+	.word	0xd9a
 .Lfe50:
 	.size	 SaveMonHeldItems,.Lfe50-SaveMonHeldItems
 	.align	2, 0
@@ -4163,9 +4161,9 @@ RestoreMonHeldItems:
 	.align	2, 0
 .L628:
 	.word	gSaveBlock2Ptr
-	.word	0xc36
+	.word	0xc32
 	.word	gPlayerParty+-0x64
-	.word	0xd9e
+	.word	0xd9a
 .Lfe51:
 	.size	 RestoreMonHeldItems,.Lfe51-RestoreMonHeldItems
 	.align	2, 0
@@ -4180,12 +4178,13 @@ InitPikeChallenge:
 	ldrb	r0, [r0]
 	lsl	r0, r0, #0x1e
 	lsr	r5, r0, #0x1e
-	ldr	r0, .L632+0x8
+	mov	r0, #0xc3
+	lsl	r0, r0, #0x4
 	add	r1, r1, r0
 	mov	r4, #0x0
 	strb	r4, [r1]
 	ldr	r1, [r3]
-	ldr	r6, .L632+0xc
+	ldr	r6, .L632+0x8
 	add	r0, r1, r6
 	strh	r4, [r0]
 	add	r1, r1, r2
@@ -4195,9 +4194,9 @@ InitPikeChallenge:
 	and	r0, r0, r2
 	strb	r0, [r1]
 	ldr	r3, [r3]
-	ldr	r0, .L632+0x10
+	ldr	r0, .L632+0xc
 	add	r2, r3, r0
-	ldr	r1, .L632+0x14
+	ldr	r1, .L632+0x10
 	lsl	r0, r5, #0x2
 	add	r0, r0, r1
 	ldr	r1, [r2]
@@ -4206,8 +4205,7 @@ InitPikeChallenge:
 	cmp	r1, #0
 	bne	.L631	@cond_branch
 	lsl	r1, r5, #0x1
-	mov	r2, #0xd9
-	lsl	r2, r2, #0x4
+	ldr	r2, .L632+0x14
 	add	r0, r3, r2
 	add	r0, r0, r1
 	strh	r4, [r0]
@@ -4224,11 +4222,11 @@ InitPikeChallenge:
 	.align	2, 0
 .L632:
 	.word	gSaveBlock2Ptr
-	.word	0xc35
-	.word	0xc34
-	.word	0xc3e
-	.word	0xc68
+	.word	0xc31
+	.word	0xc3a
+	.word	0xc64
 	.word	sWinStreakFlags
+	.word	0xd8c
 	.word	gTrainerBattleOpponent_A
 	.word	gBattleOutcome
 .Lfe52:

@@ -11690,7 +11690,7 @@ Task_TryBecomeLinkLeader:
 .L187:
 	.word	gSpecialVar_0x8004
 	.word	gSaveBlock2Ptr
-	.word	0xc35
+	.word	0xc31
 	.word	gPlayerCurrActivity
 	.word	sLinkGroupToActivityAndCapacity
 	.word	sPlayerActivityGroupSize
@@ -13391,7 +13391,7 @@ Task_TryJoinLinkGroup:
 .L518:
 	.word	gSpecialVar_0x8004
 	.word	gSaveBlock2Ptr
-	.word	0xc35
+	.word	0xc31
 	.word	gPlayerCurrActivity
 	.word	sLinkGroupToURoomActivity
 .L412:
